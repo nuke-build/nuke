@@ -60,7 +60,9 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
             GitHubActionsEnvironments.WindowsServer2019
         },
     On = new[] { Push },
-    InvokedTargets = new[] { nameof(Test), nameof(Pack) })]
+    InvokedTargets = new[] { nameof(Test), nameof(Pack) },
+    ImportGitHubTokenAs = nameof(GitHubToken),
+    ImportSecrets = new[] { nameof(SlackWebhook), nameof(GitterAuthToken) })]
 [AppVeyor(
     Images =
         new[]
@@ -85,6 +87,7 @@ partial class Build : NukeBuild
     [Parameter("ApiKey for the specified source")] readonly string ApiKey;
     [Parameter] readonly string Source = "https://api.nuget.org/v3/index.json";
 
+    [Parameter("GitHub token")] readonly string GitHubToken;
     [Parameter("Gitter authtoken")] readonly string GitterAuthToken;
     [Parameter("Slack webhook")] readonly string SlackWebhook;
 

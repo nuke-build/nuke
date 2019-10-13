@@ -3,6 +3,7 @@ Configuration:
 - Debug
 - Release
 Continue: 
+GitHubToken: 
 GitterAuthToken: 
 Help: 
 Host:

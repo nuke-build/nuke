@@ -43,6 +43,13 @@ project {
             value = "https://api.nuget.org/v3/index.json",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
+        text (
+            "env.GitHubToken",
+            label = "GitHubToken",
+            description = "GitHub token",
+            value = "",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
         param(
             "teamcity.runner.commandline.stdstreams.encoding",
             "IBM-437"

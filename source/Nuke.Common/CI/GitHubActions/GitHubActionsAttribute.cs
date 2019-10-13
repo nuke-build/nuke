@@ -50,7 +50,7 @@ namespace Nuke.Common.CI.GitHubActions
         public string OnCronSchedule { get; set; }
 
         public string[] ImportSecrets { get; set; }
-        public bool ImportGitHubToken { get; set; }
+        public string ImportGitHubTokenAs { get; set; }
 
         public string[] InvokedTargets { get; set; }
 
@@ -127,17 +127,13 @@ namespace Nuke.Common.CI.GitHubActions
 
         protected virtual IEnumerable<(string key, string value)> GetImports()
         {
-            foreach (var secret in GetSecrets())
-                yield return (secret, $"{{{{ secret.{secret} }}}}");
-        }
+            string GetSecretValue(string secret) => $"${{{{ secrets.{secret} }}}}";
 
-        protected virtual IEnumerable<string> GetSecrets()
-        {
-            if (ImportGitHubToken)
-                yield return "GITHUB_TOKEN";
+            if (ImportGitHubTokenAs != null)
+                yield return (ImportGitHubTokenAs, GetSecretValue("GITHUB_TOKEN"));
 
             foreach (var secret in ImportSecrets ?? new string[0])
-                yield return secret;
+                yield return (secret, GetSecretValue(secret));
         }
 
         protected virtual IEnumerable<GitHubActionsTrigger> GetTriggers()
