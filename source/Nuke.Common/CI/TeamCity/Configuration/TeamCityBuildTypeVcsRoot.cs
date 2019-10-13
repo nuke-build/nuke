@@ -18,6 +18,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
             using (writer.WriteBlock("vcs"))
             {
                 writer.WriteLine($"root({Root.Id})");
+                writer.WriteLine("cleanCheckout = true");
                 if (ShowDependenciesChanges)
                     writer.WriteLine("showDependenciesChanges = true");
             }
