@@ -16,12 +16,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GitVersion.CommandLine.DotNetCore" Version="5.0.1"/>
-    <PackageReference Include="JetBrains.dotCover.CommandLineTools" Version="2019.2.2"/>
-    <PackageReference Include="JetBrains.ReSharper.CommandLineTools" Version="2019.2.1"/>
-    <PackageReference Include="OpenCover" Version="4.7.922"/>
-    <PackageReference Include="ReportGenerator" Version="4.2.16"/>
-    <PackageReference Include="xunit.runner.console" Version="2.4.1"/>
+    <PackageDownload Include="GitVersion.CommandLine.DotNetCore" Version="[5.0.1]" />
+    <PackageDownload Include="JetBrains.dotCover.CommandLineTools" Version="[2019.2.2]" />
+    <PackageDownload Include="JetBrains.ReSharper.CommandLineTools" Version="[2019.2.1]" />
+    <PackageDownload Include="OpenCover" Version="[4.7.922]" />
+    <PackageDownload Include="ReportGenerator" Version="[4.2.16]" />
+    <PackageDownload Include="xunit.runner.console" Version="[2.4.1]" />
   </ItemGroup>
 
   <ItemGroup>
