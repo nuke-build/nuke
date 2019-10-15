@@ -41,6 +41,8 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
 [TeamCity(
     TeamCityAgentPlatform.Windows,
     DefaultBranch = DevelopBranch,
+    // TODO: https://github.com/dotnet/cli/issues/11424
+    CleanCheckoutDirectory = false,
     VcsTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
     NightlyTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
     ManuallyTriggeredTargets = new[] { nameof(Publish) },

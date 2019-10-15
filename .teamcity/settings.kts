@@ -69,7 +69,6 @@ object Compile : BuildType({
     name = "⚙️ Compile"
     vcs {
         root(VcsRoot)
-        cleanCheckout = true
     }
     steps {
         powerShell {
@@ -83,7 +82,6 @@ object Pack : BuildType({
     name = "📦 Pack"
     vcs {
         root(VcsRoot)
-        cleanCheckout = true
     }
     artifactRules = """
         output/*.nupkg
@@ -124,7 +122,6 @@ object Test_P1T2 : BuildType({
     name = "🚦 Test 🧩 1/2"
     vcs {
         root(VcsRoot)
-        cleanCheckout = true
     }
     steps {
         powerShell {
@@ -144,7 +141,6 @@ object Test_P2T2 : BuildType({
     name = "🚦 Test 🧩 2/2"
     vcs {
         root(VcsRoot)
-        cleanCheckout = true
     }
     steps {
         powerShell {
@@ -165,7 +161,6 @@ object Test : BuildType({
     type = Type.COMPOSITE
     vcs {
         root(VcsRoot)
-        cleanCheckout = true
         showDependenciesChanges = true
     }
     triggers {
@@ -201,7 +196,6 @@ object Publish : BuildType({
     name = "🚚 Publish"
     vcs {
         root(VcsRoot)
-        cleanCheckout = true
     }
     steps {
         powerShell {
@@ -253,7 +247,6 @@ object Announce : BuildType({
     name = "🗣 Announce"
     vcs {
         root(VcsRoot)
-        cleanCheckout = true
     }
     steps {
         powerShell {

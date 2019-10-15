@@ -37,6 +37,7 @@ namespace Nuke.Common.CI.TeamCity
         public TeamCityAgentPlatform Platform { get; }
         public string Description { get; set; }
         public string DefaultBranch { get; set; } = "develop";
+        public bool CleanCheckoutDirectory { get; set; } = true;
 
         public string VcsTriggerBranchFilter { get; set; } = "";
         public string VcsTriggerRules { get; set; } = "+:**";
@@ -169,7 +170,7 @@ namespace Nuke.Common.CI.TeamCity
                                      Partition = partition,
                                      PartitionTarget = executableTarget.Name,
                                      InvokedTargets = invokedTargets,
-                                     VcsRoot = new TeamCityBuildTypeVcsRoot { Root = vcsRoot },
+                                     VcsRoot = new TeamCityBuildTypeVcsRoot { Root = vcsRoot, CleanCheckoutDirectory = CleanCheckoutDirectory },
                                      Dependencies = snapshotDependencies.Concat(artifactDependencies).ToArray()
                                  };
                 }
