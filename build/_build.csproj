@@ -15,6 +15,10 @@
     <DefineConstants Condition="'$(OS)' != 'Windows_NT'">$(DefineConstants);UNIX</DefineConstants>
   </PropertyGroup>
 
+  <ItemDefinitionGroup>
+    <PackageDownload Visible="false" />
+  </ItemDefinitionGroup>
+
   <ItemGroup>
     <PackageDownload Include="GitVersion.CommandLine.DotNetCore" Version="[5.0.1]" />
     <PackageDownload Include="JetBrains.dotCover.CommandLineTools" Version="[2019.2.2]" />
