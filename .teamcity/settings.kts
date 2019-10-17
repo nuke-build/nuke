@@ -122,6 +122,7 @@ object Test_P1T2 : BuildType({
     name = "🚦 Test 🧩 1/2"
     vcs {
         root(VcsRoot)
+        cleanCheckout = true
     }
     steps {
         powerShell {
@@ -141,6 +142,7 @@ object Test_P2T2 : BuildType({
     name = "🚦 Test 🧩 2/2"
     vcs {
         root(VcsRoot)
+        cleanCheckout = true
     }
     steps {
         powerShell {
