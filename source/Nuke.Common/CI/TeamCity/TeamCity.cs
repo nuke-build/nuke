@@ -92,7 +92,13 @@ namespace Nuke.Common.CI.TeamCity
             _systemProperties = GetLazy(() => ParseDictionary(EnvironmentInfo.GetVariable<string>("TEAMCITY_BUILD_PROPERTIES_FILE")));
             _configurationProperties = GetLazy(() => ParseDictionary(SystemProperties?["teamcity.configuration.properties.file"]));
             _runnerProperties = GetLazy(() => ParseDictionary(SystemProperties?["teamcity.runner.properties.file"]));
-            _recentlyFailedTests = GetLazy(() => TextTasks.ReadAllLines(SystemProperties?["teamcity.tests.recentlyFailedTests.file"]).ToImmutableList() as IReadOnlyCollection<string>);
+            _recentlyFailedTests = GetLazy(() =>
+            {
+                var file = SystemProperties?["teamcity.tests.recentlyFailedTests.file"];
+                return File.Exists(file)
+                    ? TextTasks.ReadAllLines(file).ToImmutableList() as IReadOnlyCollection<string>
+                    : new string[0];
+            });
 
             _restClient = GetLazy(() => CreateRestClient<ITeamCityRestClient>());
         }
