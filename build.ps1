@@ -42,7 +42,7 @@ if (Test-Path $DotNetGlobalFile) {
 }
 
 # If dotnet is installed locally, and expected version is not set or installation matches the expected version
-if ((Get-Command "dotnet" -ErrorAction SilentlyContinue) -ne $null -and `
+if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue) -and `
      (!(Test-Path variable:DotNetVersion) -or $(& dotnet --version | Select-Object -First 1) -eq $DotNetVersion)) {
     $env:DOTNET_EXE = (Get-Command "dotnet").Path
 }
@@ -52,7 +52,7 @@ else {
 
     # Download install script
     $DotNetInstallFile = "$TempDirectory\dotnet-install.ps1"
-    md -force $TempDirectory > $null
+    New-Item -ItemType Directory -Path $TempDirectory | Out-Null
     (New-Object System.Net.WebClient).DownloadFile($DotNetInstallUrl, $DotNetInstallFile)
 
     # Install by channel or version
