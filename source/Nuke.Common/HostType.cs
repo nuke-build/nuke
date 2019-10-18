@@ -11,7 +11,7 @@ namespace Nuke.Common
     {
         Console,
         TeamCity,
-        AzureDevOps,
+        AzurePipelines,
         Bitrise,
         AppVeyor,
         Jenkins,

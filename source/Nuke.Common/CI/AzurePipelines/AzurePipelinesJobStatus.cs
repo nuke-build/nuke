@@ -6,12 +6,14 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.CI.AzureDevOps
+namespace Nuke.Common.CI.AzurePipelines
 {
     [PublicAPI]
-    public enum AzureDevOpsIssueType
+    public enum AzurePipelinesJobStatus
     {
-        Warning,
-        Error
+        Canceled,
+        Failed,
+        Succeeded,
+        SucceededWithIssues
     }
 }

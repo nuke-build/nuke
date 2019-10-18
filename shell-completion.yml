@@ -8,7 +8,7 @@ GitterAuthToken:
 Help: 
 Host:
 - AppVeyor
-- AzureDevOps
+- AzurePipelines
 - Bitrise
 - Console
 - GitHubActions

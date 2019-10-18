@@ -11,7 +11,7 @@ using FluentAssertions;
 using JetBrains.Annotations;
 using Nuke.Common.CI;
 using Nuke.Common.CI.AppVeyor;
-using Nuke.Common.CI.AzureDevOps;
+using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.Bitrise;
 using Nuke.Common.CI.GitLab;
 using Nuke.Common.CI.Jenkins;
@@ -44,9 +44,9 @@ namespace Nuke.Common.Tests
             AssertProperty(instance, property);
         }
 
-        [CITheory(typeof(AzureDevOps))]
-        [MemberData(nameof(Properties), typeof(AzureDevOps))]
-        public void TestAzureDevOps(PropertyInfo property, AzureDevOps instance)
+        [CITheory(typeof(AzurePipelines))]
+        [MemberData(nameof(Properties), typeof(AzurePipelines))]
+        public void TestAzureDevOps(PropertyInfo property, AzurePipelines instance)
         {
             AssertProperty(instance, property);
         }

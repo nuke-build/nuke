@@ -8,7 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
 using Nuke.Common.CI.AppVeyor;
-using Nuke.Common.CI.AzureDevOps;
+using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.Bitrise;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.CI.TeamCity;
@@ -96,7 +96,7 @@ namespace Nuke.Common
                     HostType.Bitrise => new BitriseOutputSink(),
                     HostType.Travis => new TravisCIOutputSink(),
                     HostType.TeamCity => new TeamCityOutputSink(new TeamCity()),
-                    HostType.AzureDevOps => new AzureDevOpsOutputSink(new AzureDevOps()),
+                    HostType.AzurePipelines => new AzurePipelinesOutputSink(new AzurePipelines()),
                     HostType.GitHubActions => new GitHubActionsOutputSink(new GitHubActions()),
                     HostType.AppVeyor => new AppVeyorOutputSink(new AppVeyor()),
                     _ => ConsoleOutputSink.Default

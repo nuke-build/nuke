@@ -9,15 +9,15 @@ using JetBrains.Annotations;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities;
 
-namespace Nuke.Common.CI.AzureDevOps
+namespace Nuke.Common.CI.AzurePipelines
 {
     [UsedImplicitly]
     [ExcludeFromCodeCoverage]
-    internal class AzureDevOpsOutputSink : AnsiColorOutputSink
+    internal class AzurePipelinesOutputSink : AnsiColorOutputSink
     {
-        private readonly AzureDevOps _azureDevOps;
+        private readonly AzurePipelines _azurePipelines;
 
-        internal AzureDevOpsOutputSink(AzureDevOps azureDevOps)
+        internal AzurePipelinesOutputSink(AzurePipelines azurePipelines)
             : base(
                 traceCode: "90",
                 informationCode: "36;1",
@@ -25,26 +25,26 @@ namespace Nuke.Common.CI.AzureDevOps
                 errorCode: "31;1",
                 successCode: "32;1")
         {
-            _azureDevOps = azureDevOps;
+            _azurePipelines = azurePipelines;
         }
 
         public override IDisposable WriteBlock(string text)
         {
             return DelegateDisposable.CreateBracket(
-                () => _azureDevOps.Group(text),
-                () => _azureDevOps.EndGroup(text));
+                () => _azurePipelines.Group(text),
+                () => _azurePipelines.EndGroup(text));
         }
 
         public override void WriteWarning(string text, string details = null)
         {
-            _azureDevOps.LogIssue(AzureDevOpsIssueType.Warning, text);
+            _azurePipelines.LogIssue(AzurePipelinesIssueType.Warning, text);
             if (details != null)
                 WriteNormal(details);
         }
 
         public override void WriteError(string text, string details = null)
         {
-            _azureDevOps.LogIssue(AzureDevOpsIssueType.Error, text);
+            _azurePipelines.LogIssue(AzurePipelinesIssueType.Error, text);
             if (details != null)
                 WriteNormal(details);
         }
