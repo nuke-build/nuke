@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.Tooling;
 
 namespace Nuke.Common.CI.GitHubActions
 {
@@ -14,32 +15,13 @@ namespace Nuke.Common.CI.GitHubActions
     [PublicAPI]
     public enum GitHubActionsImage
     {
-        WindowsServer2019,
-        WindowsServer2016R2,
-        Ubuntu1804,
-        Ubuntu1604,
-        MacOs1014,
-        WindowsLatest,
-        UbuntuLatest,
-        MacOsLatest
-    }
-
-    public static class GitHubActionsImageExtensions
-    {
-        public static string ConvertToString(this GitHubActionsImage image)
-        {
-            return image switch
-            {
-                GitHubActionsImage.WindowsServer2019 => "windows-2019",
-                GitHubActionsImage.WindowsLatest => "windows-latest",
-                GitHubActionsImage.WindowsServer2016R2 => "windows-2016",
-                GitHubActionsImage.Ubuntu1804 => "ubuntu-18.04",
-                GitHubActionsImage.UbuntuLatest => "ubuntu-latest",
-                GitHubActionsImage.Ubuntu1604 => "ubuntu-16.04",
-                GitHubActionsImage.MacOs1014 => "macOS-10.14",
-                GitHubActionsImage.MacOsLatest => "macOS-latest",
-                _ => throw new ArgumentOutOfRangeException(nameof(image), image, message: null)
-            };
-        }
+        [EnumValue("windows-2019")] WindowsServer2019,
+        [EnumValue("windows-2016")] WindowsServer2016R2,
+        [EnumValue("ubuntu-18.04")] Ubuntu1804,
+        [EnumValue("ubuntu-16.04")] Ubuntu1604,
+        [EnumValue("macOS-10.14")] MacOs1014,
+        [EnumValue("windows-latest")] WindowsLatest,
+        [EnumValue("ubuntu-latest")] UbuntuLatest,
+        [EnumValue("macOS-latest")] MacOsLatest
     }
 }

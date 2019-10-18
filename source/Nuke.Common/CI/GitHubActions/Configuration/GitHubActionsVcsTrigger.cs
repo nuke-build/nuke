@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -19,7 +20,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
 
         public override void Write(CustomFileWriter writer)
         {
-            writer.WriteLine(Kind.ConvertToString());
+            writer.WriteLine(Kind.GetValue());
 
             using (writer.Indent())
             {

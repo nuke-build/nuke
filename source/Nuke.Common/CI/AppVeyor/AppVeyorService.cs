@@ -33,12 +33,4 @@ namespace Nuke.Common.CI.AppVeyor
         IIS,
         MSMQ
     }
-
-    public static class AppVeyorServiceExtensions
-    {
-        public static string ConvertToString(this AppVeyorService service)
-        {
-            return service.ToString().ToLowerInvariant();
-        }
-    }
 }

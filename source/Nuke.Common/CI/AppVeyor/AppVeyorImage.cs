@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.Tooling;
 
 namespace Nuke.Common.CI.AppVeyor
 {
@@ -14,32 +15,13 @@ namespace Nuke.Common.CI.AppVeyor
     [PublicAPI]
     public enum AppVeyorImage
     {
-        VisualStudio2013,
-        VisualStudio2015,
-        VisualStudio2017,
-        VisualStudio2019,
-        VisualStudioLatest,
-        Ubuntu1604,
-        Ubuntu1804,
-        UbuntuLatest
-    }
-
-    public static class AppVeyorImageExtensions
-    {
-        public static string ConvertToString(this AppVeyorImage image)
-        {
-            return image switch
-            {
-                AppVeyorImage.VisualStudio2013 => "Visual Studio 2013",
-                AppVeyorImage.VisualStudio2015 => "Visual Studio 2015",
-                AppVeyorImage.VisualStudio2017 => "Visual Studio 2017",
-                AppVeyorImage.VisualStudio2019 => "Visual Studio 2019",
-                AppVeyorImage.VisualStudioLatest => ConvertToString(AppVeyorImage.VisualStudio2019),
-                AppVeyorImage.Ubuntu1604 => "Ubuntu1604",
-                AppVeyorImage.Ubuntu1804 => "Ubuntu1804",
-                AppVeyorImage.UbuntuLatest => ConvertToString(AppVeyorImage.Ubuntu1804),
-                _ => throw new ArgumentOutOfRangeException(nameof(image), image, message: null)
-            };
-        }
+        [EnumValue("Visual Studio 2013")] VisualStudio2013,
+        [EnumValue("Visual Studio 2015")] VisualStudio2015,
+        [EnumValue("Visual Studio 2017")] VisualStudio2017,
+        [EnumValue("Visual Studio 2019")] VisualStudio2019,
+        [EnumValue("Visual Studio 2019")] VisualStudioLatest,
+        [EnumValue("Ubuntu1604")] Ubuntu1604,
+        [EnumValue("Ubuntu1804")] Ubuntu1804,
+        [EnumValue("Ubuntu1804")] UbuntuLatest
     }
 }

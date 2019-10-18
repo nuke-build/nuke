@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -22,7 +23,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
             using (writer.Indent())
             {
                 writer.WriteLine($"name: {Name}");
-                writer.WriteLine($"runs-on: {Image.ConvertToString()}");
+                writer.WriteLine($"runs-on: {Image.GetValue()}");
                 writer.WriteLine("steps:");
                 using (writer.Indent())
                 {

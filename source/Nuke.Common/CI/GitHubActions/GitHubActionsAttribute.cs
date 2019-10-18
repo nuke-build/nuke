@@ -8,6 +8,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.CI.GitHubActions.Configuration;
 using Nuke.Common.Execution;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.IO.PathConstruction;
@@ -90,7 +91,7 @@ namespace Nuke.Common.CI.GitHubActions
         {
             return new GitHubActionsJob
                    {
-                       Name = image.ConvertToString().Replace(".", "_"),
+                       Name = image.GetValue().Replace(".", "_"),
                        Steps = GetSteps(image, relevantTargets).ToArray(),
                        Image = image
                    };

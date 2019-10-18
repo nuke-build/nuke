@@ -6,12 +6,38 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tooling
 {
+    [AttributeUsage(AttributeTargets.Field)]
+    public class EnumValueAttribute : Attribute
+    {
+        public EnumValueAttribute(string value)
+        {
+            Value = value;
+        }
+
+        public string Value { get; }
+    }
+
+    public static class EnumerationExtensions
+    {
+        public static string GetValue<T>(this T value)
+            where T : Enum
+        {
+            var name = Enum.GetName(typeof(T), value).NotNull($"Enum value {value} is not valid for {typeof(T).Name}");
+            var member = typeof(T).GetMember(name).Single();
+            var attribute = member.GetCustomAttribute<EnumValueAttribute>();
+            return attribute != null
+                ? attribute.Value
+                : value.ToString();
+        }
+    }
+
     [Serializable]
     [PublicAPI]
     public abstract class Enumeration

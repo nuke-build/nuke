@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -29,7 +30,7 @@ namespace Nuke.Common.CI.AppVeyor.Configuration
         {
             using (writer.WriteBlock("image:"))
             {
-                Images.ForEach(x => writer.WriteLine($"- {x.ConvertToString()}"));
+                Images.ForEach(x => writer.WriteLine($"- {x.GetValue()}"));
                 writer.WriteLine();
             }
 
@@ -37,7 +38,7 @@ namespace Nuke.Common.CI.AppVeyor.Configuration
             {
                 using (writer.WriteBlock("services:"))
                 {
-                    Services.ForEach(x => writer.WriteLine($"- {x.ConvertToString()}"));
+                    Services.ForEach(x => writer.WriteLine($"- {x.GetValue().ToLowerInvariant()}"));
                     writer.WriteLine();
                 }
             }
