@@ -110,10 +110,11 @@ namespace Nuke.Common.Tooling
                 // TODO: use xml namespaces
                 // TODO: version as tag
                 var versions = XmlTasks.XmlPeek(
-                    packagesConfigFile,
-                    IsLegacyFile(packagesConfigFile)
-                        ? $".//package[@id='{packageId}']/@version"
-                        : $".//*[local-name() = 'PackageReference' or local-name() = 'PackageDownload'][@Include='{packageId}']/@Version");
+                        packagesConfigFile,
+                        IsLegacyFile(packagesConfigFile)
+                            ? $".//package[@id='{packageId}']/@version"
+                            : $".//*[local-name() = 'PackageReference' or local-name() = 'PackageDownload'][@Include='{packageId}']/@Version")
+                    .SelectMany(x => x.Split(';'));
 
                 foreach (var version in versions)
                 {
