@@ -1,37 +1,109 @@
-jobs:
-  - job: Linux
+stages:
+  - stage: ubuntu_latest
+    displayName: 'ubuntu-latest'
+    dependsOn: [  ]
     pool:
-      vmImage: 'ubuntu-16.04'
-    steps:
-      - task: CmdLine@2
-        displayName: 'Run ./build.sh'
-        inputs:
-          script: |
-            ./build.sh
-
-  - job: macOS
+      vmImage: 'ubuntu-latest'
+    jobs:
+      - job: Compile
+        displayName: 'Compile'
+        dependsOn: [  ]
+        steps:
+          - task: PowerShell@2
+            inputs:
+              filePath: 'build.ps1'
+              arguments: 'Restore Compile --skip'
+      - job: Test
+        displayName: 'Test'
+        dependsOn: [ Compile ]
+        strategy:
+          parallel: 2
+        steps:
+          - task: PowerShell@2
+            inputs:
+              filePath: 'build.ps1'
+              arguments: 'Test --skip --test-partition $(System.JobPositionInPhase)'
+      - job: Pack
+        displayName: 'Pack'
+        dependsOn: [ Compile ]
+        steps:
+          - task: PowerShell@2
+            inputs:
+              filePath: 'build.ps1'
+              arguments: 'Pack --skip'
+          - task: PublishBuildArtifacts@1
+            inputs:
+              artifactName: output
+              pathtoPublish: 'output'
+  - stage: windows_latest
+    displayName: 'windows-latest'
+    dependsOn: [  ]
     pool:
-      vmImage: 'macOS-10.14'
-    steps:
-      # - task: CmdLine@2
-      #   displayName: 'Install Mono 5.18'
-      #   inputs:
-      #     script: |
-      #       curl -o ./mono.pkg https://download.mono-project.com/archive/5.18.0/macos-10-universal/MonoFramework-MDK-5.18.0.225.macos10.xamarin.universal.pkg
-      #       sudo installer -verbose -pkg ./mono.pkg -target /
-
-      - task: CmdLine@2
-        displayName: 'Run ./build.sh'
-        inputs:
-          script: |
-            ./build.sh
-
-  - job: Windows
+      vmImage: 'windows-latest'
+    jobs:
+      - job: Compile
+        displayName: 'Compile'
+        dependsOn: [  ]
+        steps:
+          - task: PowerShell@2
+            inputs:
+              filePath: 'build.ps1'
+              arguments: 'Restore Compile --skip'
+      - job: Test
+        displayName: 'Test'
+        dependsOn: [ Compile ]
+        strategy:
+          parallel: 2
+        steps:
+          - task: PowerShell@2
+            inputs:
+              filePath: 'build.ps1'
+              arguments: 'Test --skip --test-partition $(System.JobPositionInPhase)'
+      - job: Pack
+        displayName: 'Pack'
+        dependsOn: [ Compile ]
+        steps:
+          - task: PowerShell@2
+            inputs:
+              filePath: 'build.ps1'
+              arguments: 'Pack --skip'
+          - task: PublishBuildArtifacts@1
+            inputs:
+              artifactName: output
+              pathtoPublish: 'output'
+  - stage: macOS_latest
+    displayName: 'macOS-latest'
+    dependsOn: [  ]
     pool:
-      vmImage: 'windows-2019'
-    steps:
-      - task: CmdLine@2
-        displayName: 'Run .\build.ps1'
-        inputs:
-          script: |
-            powershell .\build.ps1
+      vmImage: 'macOS-latest'
+    jobs:
+      - job: Compile
+        displayName: 'Compile'
+        dependsOn: [  ]
+        steps:
+          - task: PowerShell@2
+            inputs:
+              filePath: 'build.ps1'
+              arguments: 'Restore Compile --skip'
+      - job: Test
+        displayName: 'Test'
+        dependsOn: [ Compile ]
+        strategy:
+          parallel: 2
+        steps:
+          - task: PowerShell@2
+            inputs:
+              filePath: 'build.ps1'
+              arguments: 'Test --skip --test-partition $(System.JobPositionInPhase)'
+      - job: Pack
+        displayName: 'Pack'
+        dependsOn: [ Compile ]
+        steps:
+          - task: PowerShell@2
+            inputs:
+              filePath: 'build.ps1'
+              arguments: 'Pack --skip'
+          - task: PublishBuildArtifacts@1
+            inputs:
+              artifactName: output
+              pathtoPublish: 'output'

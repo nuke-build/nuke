@@ -9,6 +9,7 @@ using System.Text;
 using Nuke.Common;
 using Nuke.Common.CI;
 using Nuke.Common.CI.AppVeyor;
+using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.Execution;
@@ -62,6 +63,13 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
     AppVeyorImage.Ubuntu1804,
     SkipTags = true,
     InvokedTargets = new[] { nameof(Test), nameof(Pack) })]
+[AzurePipelines(
+    AzurePipelinesImage.UbuntuLatest,
+    AzurePipelinesImage.WindowsLatest,
+    AzurePipelinesImage.MacOsLatest,
+    InvokedTargets = new[] { nameof(Test), nameof(Pack) },
+    NonEntryTargets = new[] { nameof(Restore) },
+    ExcludedTargets = new[] { nameof(Clean) })]
 partial class Build : NukeBuild
 {
     /// Support plugins are available for:
