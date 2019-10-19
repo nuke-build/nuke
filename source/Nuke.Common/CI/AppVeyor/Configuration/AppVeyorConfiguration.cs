@@ -13,6 +13,7 @@ namespace Nuke.Common.CI.AppVeyor.Configuration
     public class AppVeyorConfiguration : AppVeyorConfigurationEntity
     {
         public AppVeyorImage[] Images { get; set; }
+        public string BuildScript { get; set; }
         public AppVeyorService[] Services { get; set; }
         public AppVeyorBranches Branches { get; set; }
         public string[] Init { get; set; }
@@ -100,7 +101,7 @@ namespace Nuke.Common.CI.AppVeyor.Configuration
 
             using (writer.WriteBlock("build_script:"))
             {
-                writer.WriteLine($@"- ps: .\build.ps1 {InvokedTargets.JoinSpace()}");
+                writer.WriteLine($@"- ps: .\{BuildScript} {InvokedTargets.JoinSpace()}");
                 writer.WriteLine();
             }
 

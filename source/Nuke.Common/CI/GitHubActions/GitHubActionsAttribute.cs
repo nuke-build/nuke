@@ -105,8 +105,8 @@ namespace Nuke.Common.CI.GitHubActions
                          };
 
             var invocationCommand = image.ToString().StartsWithOrdinalIgnoreCase("Windows")
-                ? "powershell .\\build.ps1"
-                : "./build.sh";
+                ? $"powershell .\\{PowerShellScript}"
+                : $"./{BashScript}";
             yield return new GitHubActionsRunStep
                          {
                              Command = $"{invocationCommand} {InvokedTargets.JoinSpace()}",
@@ -114,8 +114,7 @@ namespace Nuke.Common.CI.GitHubActions
                          };
 
             var artifacts = relevantTargets
-                .Select(x => ArtifactExtensions.ArtifactProducts[x.Definition])
-                .SelectMany(x => x)
+                .SelectMany(x => ArtifactExtensions.ArtifactProducts[x.Definition])
                 .Select(x => (AbsolutePath) x)
                 // TODO: https://github.com/actions/upload-artifact/issues/11
                 .Select(x => x.DescendantsAndSelf(y => y.Parent).FirstOrDefault(y => !y.ToString().ContainsOrdinalIgnoreCase("*")))

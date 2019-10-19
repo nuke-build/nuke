@@ -38,10 +38,10 @@ partial class Build
             return base.GetBuildTypes(build, executableTarget, vcsRoot, buildTypes)
                 .ForEachLazy(x =>
                 {
-                    if (dictionary.TryGetValue(x.Name, out var prefix))
-                        x.Name = $"{prefix} {x.Name}";
-                    else if (dictionary.TryGetValue(x.PartitionTarget, out var prefix2))
-                        x.Name = $"{prefix2} {x.PartitionTarget} 🧩 {x.Partition}";
+                    var symbol = dictionary.GetValueOrDefault(x.InvokedTargets.Last()).NotNull("symbol != null");
+                    x.Name = x.PartitionName == null
+                        ? $"{symbol} {x.Name}"
+                        : $"{symbol} {x.InvokedTargets.Last()} 🧩 {x.Partition}";
                 });
         }
     }

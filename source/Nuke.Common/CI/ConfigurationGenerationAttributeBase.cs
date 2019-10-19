@@ -6,13 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using JetBrains.Annotations;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
+using static Nuke.Common.IO.PathConstruction;
 
 namespace Nuke.Common.CI
 {
+    [PublicAPI]
     [AttributeUsage(AttributeTargets.Class)]
     public abstract class ConfigurationGenerationAttributeBase : Attribute, IOnBeforeLogo
     {
@@ -20,6 +23,16 @@ namespace Nuke.Common.CI
 
         public bool AutoGenerate { get; set; } = true;
         protected abstract IEnumerable<string> GeneratedFiles { get; }
+
+        protected virtual string PowerShellScript =>
+            NukeBuild.RootDirectory.GlobFiles("build.ps1", "*/build.ps1")
+                .Select(x => (WinRelativePath) GetRelativePath(NukeBuild.RootDirectory, x))
+                .FirstOrDefault().NotNull("PowerShellScript != null");
+
+        protected virtual string BashScript =>
+            NukeBuild.RootDirectory.GlobFiles("build.sh", "*/build.sh")
+                .Select(x => (UnixRelativePath) GetRelativePath(NukeBuild.RootDirectory, x))
+                .FirstOrDefault().NotNull("BashScript != null");
 
         public void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {

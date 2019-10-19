@@ -163,19 +163,21 @@ namespace Nuke.Common.CI.TeamCity
 
             if (isPartitioned)
             {
-                var partitions = ArtifactExtensions.Partitions[executableTarget.Definition];
-                for (var i = 0; i < partitions; i++)
+                var (partitionName, totalPartitions) = ArtifactExtensions.Partitions[executableTarget.Definition];
+                for (var i = 0; i < totalPartitions; i++)
                 {
-                    var partition = new Partition { Part = i + 1, Total = partitions };
+                    var partition = new Partition { Part = i + 1, Total = totalPartitions };
                     yield return new TeamCityBuildType
                                  {
                                      Id = $"{executableTarget.Name}_P{partition.Part}T{partition.Total}",
                                      Name = $"{executableTarget.Name} {partition}",
                                      Description = executableTarget.Description,
                                      Platform = Platform,
+                                     BashScript = BashScript,
+                                     PowerShellScript = PowerShellScript,
                                      ArtifactRules = artifactRules,
                                      Partition = partition,
-                                     PartitionTarget = executableTarget.Name,
+                                     PartitionName = partitionName,
                                      InvokedTargets = invokedTargets,
                                      VcsRoot = new TeamCityBuildTypeVcsRoot { Root = vcsRoot, CleanCheckoutDirectory = CleanCheckoutDirectory },
                                      Dependencies = snapshotDependencies.Concat(artifactDependencies).ToArray()
@@ -203,6 +205,8 @@ namespace Nuke.Common.CI.TeamCity
                              Name = executableTarget.Name,
                              Description = executableTarget.Description,
                              Platform = Platform,
+                             BashScript = BashScript,
+                             PowerShellScript = PowerShellScript,
                              VcsRoot = new TeamCityBuildTypeVcsRoot
                                        {
                                            Root = vcsRoot,
