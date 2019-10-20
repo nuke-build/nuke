@@ -12,6 +12,7 @@ namespace Nuke.Common
         Console,
         TeamCity,
         AzurePipelines,
+        Bamboo,
         Bitrise,
         AppVeyor,
         Jenkins,

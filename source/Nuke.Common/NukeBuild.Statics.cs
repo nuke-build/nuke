@@ -9,6 +9,7 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
+using Nuke.Common.CI.Bamboo;
 using Nuke.Common.CI.Bitrise;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.CI.GitLab;
@@ -150,6 +151,8 @@ namespace Nuke.Common
                 return HostType.Jenkins;
             if (TeamCity.IsRunningTeamCity)
                 return HostType.TeamCity;
+            if (Bamboo.IsRunningBamboo)
+                return HostType.Bamboo;
             if (AzurePipelines.IsRunningAzurePipelines)
                 return HostType.AzurePipelines;
             if (Bitrise.IsRunningBitrise)
