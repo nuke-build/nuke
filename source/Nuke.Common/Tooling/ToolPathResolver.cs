@@ -35,8 +35,36 @@ namespace Nuke.Common.Tooling
         {
             ControlFlow.Assert(packageId != null && packageExecutable != null, "packageId != null && packageExecutable != null");
 
-            var packageIds = packageId.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
-            var packageDirectory = packageIds
+            var packageDirectory = GetPackageDirectory(packageId.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries), version);
+            var packageExecutables = packageExecutable.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+            var packageExecutablePaths = packageExecutables
+                .Select(x => Directory.GetFiles(packageDirectory, x, SearchOption.AllDirectories))
+                .FirstOrDefault(x => x.Length > 0)?.ToList();
+
+            ControlFlow.Assert(packageExecutablePaths != null,
+                $"Could not find {packageExecutables.Select(x => x.SingleQuote()).JoinCommaOr()} inside '{packageDirectory}'.");
+            if (packageExecutablePaths.Count == 1 && framework == null)
+                return packageExecutablePaths.Single();
+
+            string GetFramework(string file)
+            {
+                var directory = new FileInfo(file).Directory.NotNull();
+                return !directory.Name.EqualsOrdinalIgnoreCase("any")
+                    ? directory.Name
+                    : directory.Parent.NotNull().Name;
+            }
+
+            var frameworks = packageExecutablePaths.ToDictionary(GetFramework,x => x,StringComparer.OrdinalIgnoreCase);
+            ControlFlow.Assert(framework != null && frameworks.ContainsKey(framework),
+                new[] { $"Package executable {frameworks.First().Key.SingleQuote()} [{packageId}] requires a framework:" }
+                    .Concat(frameworks.Keys.Select(x => $" - {x}")).JoinNewLine());
+
+            return frameworks[framework];
+        }
+
+        private static string GetPackageDirectory(string[] packageIds, string version)
+        {
+            return packageIds
                 .SelectMany(x =>
                     new[]
                     {
@@ -77,22 +105,6 @@ namespace Nuke.Common.Tooling
                                     ? $"Paket packages config '{PaketPackagesConfigFile}'"
                                     : null
                             }.WhereNotNull().Select(x => $" - {x}")).JoinNewLine());
-
-            var packageExecutables = packageExecutable.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
-            var absolutePackageExecutables = packageExecutables
-                .Select(x => Directory.GetFiles(packageDirectory, x, SearchOption.AllDirectories))
-                .FirstOrDefault(x => x.Length > 0)?.ToList();
-
-            ControlFlow.Assert(absolutePackageExecutables != null,
-                $"Could not find {packageExecutables.Select(x => x.SingleQuote()).Join(", or")} inside '{packageDirectory}'.");
-            if (absolutePackageExecutables.Count == 1 && framework == null)
-                return absolutePackageExecutables.Single();
-
-            var frameworks = absolutePackageExecutables.Select(x => new FileInfo(x).Directory.NotNull().Name).ToList();
-            ControlFlow.Assert(frameworks.Contains(framework, StringComparer.OrdinalIgnoreCase),
-                $"Package executable {packageExecutable} [{packageId}] requires a framework: {frameworks.JoinComma()}");
-
-            return absolutePackageExecutables.Single(x => new FileInfo(x).Directory.NotNull().Name.EqualsOrdinalIgnoreCase(framework));
         }
 
         public static string GetPathExecutable(string pathExecutable)
