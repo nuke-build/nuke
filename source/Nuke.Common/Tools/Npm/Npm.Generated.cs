@@ -1,5 +1,4 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/Npm.json
-// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;

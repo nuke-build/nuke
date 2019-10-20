@@ -18,15 +18,12 @@ namespace Nuke.CodeGeneration.Generators
 {
     public static class ToolGenerator
     {
-        private static readonly Assembly s_assembly = typeof(ToolGenerator).GetTypeInfo().Assembly;
-
         public static void Run(Tool tool, StreamWriter streamWriter)
         {
             using var writer = new ToolWriter(tool, streamWriter);
             writer
                 // TODO [3]: extract license from dotsettings file
                 .WriteLineIfTrue(tool.SourceFile != null, $"// Generated from {tool.SourceFile}")
-                .WriteLine($"// Generated with {s_assembly.GetName().Name} {s_assembly.GetInformationalText()}")
                 .WriteLine(string.Empty)
                 .ForEach(GetNamespaceImports(), x => writer.WriteLine($"using {x};"))
                 .WriteLine(string.Empty)
