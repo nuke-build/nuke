@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
+using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Utilities;
 using static Nuke.Common.IO.PathConstruction;
 
@@ -17,11 +18,14 @@ namespace Nuke.Common.CI
 {
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Class)]
-    public abstract class ConfigurationGenerationAttributeBase : Attribute, IOnBeforeLogo
+    public abstract class ConfigurationGenerationAttributeBase : Attribute, IOnBeforeLogo, IOnBuildFinished
     {
         public const string ConfigurationParameterName = "configure-build-server";
 
         public bool AutoGenerate { get; set; } = true;
+
+        public bool ShutdownDotNetBuildServer { get; set; } = true;
+
         protected abstract IEnumerable<string> GeneratedFiles { get; }
 
         protected virtual string PowerShellScript =>
@@ -65,6 +69,18 @@ namespace Nuke.Common.CI
             }
         }
 
+        public void OnBuildFinished(NukeBuild build)
+        {
+            if (NukeBuild.Host != HostType)
+                return;
+
+            // Note https://github.com/dotnet/cli/issues/11424
+            if (ShutdownDotNetBuildServer)
+                DotNetTasks.DotNet("build-server shutdown");
+
+            OnBuildFinishedInternal(build);
+        }
+
         private string GetCurrentHash()
         {
             return GeneratedFiles.Select(FileSystemTasks.GetFileHash).JoinComma();
@@ -73,5 +89,9 @@ namespace Nuke.Common.CI
         protected abstract HostType HostType { get; }
 
         protected abstract void Generate(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets);
+
+        protected virtual void OnBuildFinishedInternal(NukeBuild build)
+        {
+        }
     }
 }

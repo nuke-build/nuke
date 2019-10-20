@@ -14,7 +14,6 @@ using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
-using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.IO.PathConstruction;
@@ -22,7 +21,7 @@ using static Nuke.Common.IO.PathConstruction;
 namespace Nuke.Common.CI.TeamCity
 {
     [PublicAPI]
-    public class TeamCityAttribute : ConfigurationGenerationAttributeBase, IOnBuildFinished
+    public class TeamCityAttribute : ConfigurationGenerationAttributeBase
     {
         public TeamCityAttribute(TeamCityAgentPlatform platform)
         {
@@ -52,17 +51,8 @@ namespace Nuke.Common.CI.TeamCity
         public string[] NonEntryTargets { get; set; } = new string[0];
         public string[] ExcludedTargets { get; set; } = new string[0];
 
-        public bool ShutdownDotNetBuildServer { get; set; } = true;
-
-        public void OnBuildFinished(NukeBuild build)
+        protected override void OnBuildFinishedInternal(NukeBuild build)
         {
-            if (TeamCity.Instance == null)
-                return;
-
-            // Note https://github.com/dotnet/cli/issues/11424
-            if (ShutdownDotNetBuildServer)
-                DotNetTasks.DotNet("build-server shutdown");
-
             // serialize difference to start object
 
             // var stateFile = NukeBuild.TemporaryDirectory / $"{TeamCity.Instance.BuildTypeId}.xml";
