@@ -20,7 +20,7 @@
   </ItemDefinitionGroup>
 
   <ItemGroup>
-    <PackageDownload Include="GitVersion.CommandLine.DotNetCore" Version="[5.0.1]" />
+    <PackageDownload Include="GitVersion.Tool" Version="[5.0.2-beta1.126]" />
     <PackageDownload Include="JetBrains.dotCover.CommandLineTools" Version="[2019.2.2]" />
     <PackageDownload Include="JetBrains.ReSharper.CommandLineTools" Version="[2019.2.1]" />
     <PackageDownload Include="OpenCover" Version="[4.7.922]" />
