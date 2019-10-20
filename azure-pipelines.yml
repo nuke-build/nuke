@@ -6,7 +6,7 @@ stages:
       vmImage: 'ubuntu-latest'
     jobs:
       - job: Compile
-        displayName: 'Compile'
+        displayName: '⚙️ Compile'
         dependsOn: [  ]
         steps:
           - task: PowerShell@2
@@ -14,7 +14,7 @@ stages:
               filePath: 'build.ps1'
               arguments: 'Restore Compile --skip'
       - job: Test
-        displayName: 'Test'
+        displayName: '🚦 Test 🧩'
         dependsOn: [ Compile ]
         strategy:
           parallel: 2
@@ -24,7 +24,7 @@ stages:
               filePath: 'build.ps1'
               arguments: 'Test --skip --test-partition $(System.JobPositionInPhase)'
       - job: Pack
-        displayName: 'Pack'
+        displayName: '📦 Pack'
         dependsOn: [ Compile ]
         steps:
           - task: PowerShell@2
@@ -42,7 +42,7 @@ stages:
       vmImage: 'windows-latest'
     jobs:
       - job: Compile
-        displayName: 'Compile'
+        displayName: '⚙️ Compile'
         dependsOn: [  ]
         steps:
           - task: PowerShell@2
@@ -50,7 +50,7 @@ stages:
               filePath: 'build.ps1'
               arguments: 'Restore Compile --skip'
       - job: Test
-        displayName: 'Test'
+        displayName: '🚦 Test 🧩'
         dependsOn: [ Compile ]
         strategy:
           parallel: 2
@@ -60,7 +60,7 @@ stages:
               filePath: 'build.ps1'
               arguments: 'Test --skip --test-partition $(System.JobPositionInPhase)'
       - job: Pack
-        displayName: 'Pack'
+        displayName: '📦 Pack'
         dependsOn: [ Compile ]
         steps:
           - task: PowerShell@2
@@ -78,7 +78,7 @@ stages:
       vmImage: 'macOS-latest'
     jobs:
       - job: Compile
-        displayName: 'Compile'
+        displayName: '⚙️ Compile'
         dependsOn: [  ]
         steps:
           - task: PowerShell@2
@@ -86,7 +86,7 @@ stages:
               filePath: 'build.ps1'
               arguments: 'Restore Compile --skip'
       - job: Test
-        displayName: 'Test'
+        displayName: '🚦 Test 🧩'
         dependsOn: [ Compile ]
         strategy:
           parallel: 2
@@ -96,7 +96,7 @@ stages:
               filePath: 'build.ps1'
               arguments: 'Test --skip --test-partition $(System.JobPositionInPhase)'
       - job: Pack
-        displayName: 'Pack'
+        displayName: '📦 Pack'
         dependsOn: [ Compile ]
         steps:
           - task: PowerShell@2

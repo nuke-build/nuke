@@ -10,6 +10,7 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
     public class AzurePipelinesJob : AzurePipelinesConfigurationEntity
     {
         public string Name { get; set; }
+        public string DisplayName { get; set; }
         public AzurePipelinesImage? Image { get; set; }
         public AzurePipelinesJob[] Dependencies { get; set; }
         public int Parallel { get; set; }
@@ -21,9 +22,9 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
 
         public override void Write(CustomFileWriter writer)
         {
-            using (writer.WriteBlock($"- job: {Name.Replace("-", "_")}"))
+            using (writer.WriteBlock($"- job: {Name}"))
             {
-                writer.WriteLine($"displayName: {Name.SingleQuote()}");
+                writer.WriteLine($"displayName: {DisplayName.SingleQuote()}");
                 writer.WriteLine($"dependsOn: [ {Dependencies.Select(x => x.Name).JoinComma()} ]");
 
                 if (Image != null)

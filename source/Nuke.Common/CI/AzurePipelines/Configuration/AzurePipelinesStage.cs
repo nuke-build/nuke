@@ -9,15 +9,16 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
     public class AzurePipelinesStage : AzurePipelinesConfigurationEntity
     {
         public string Name { get; set; }
+        public string DisplayName { get; set; }
         public AzurePipelinesImage? Image { get; set; }
         public AzurePipelinesStage[] Dependencies { get; set; }
         public AzurePipelinesJob[] Jobs { get; set; }
 
         public override void Write(CustomFileWriter writer)
         {
-            using (writer.WriteBlock($"- stage: {Name.Replace("-", "_")}"))
+            using (writer.WriteBlock($"- stage: {Name}"))
             {
-                writer.WriteLine($"displayName: {Name.SingleQuote()}");
+                writer.WriteLine($"displayName: {DisplayName.SingleQuote()}");
                 writer.WriteLine($"dependsOn: [ {Dependencies.Select(x => x.Name).JoinComma()} ]");
 
                 if (Image != null)
