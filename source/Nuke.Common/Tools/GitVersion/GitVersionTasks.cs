@@ -12,8 +12,24 @@ using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.GitVersion
 {
+    partial class GitVersionSettings
+    {
+        private string GetToolPath()
+        {
+            return GitVersionTasks.GetToolPath(Framework);
+        }
+    }
+
     partial class GitVersionTasks
     {
+        internal static string GetToolPath(string framework = null)
+        {
+            return ToolPathResolver.GetPackageExecutable(
+                packageId: "GitVersion.Tool|GitVersion.CommandLine",
+                packageExecutable: "GitVersion.dll|GitVersion.exe",
+                framework: framework);
+        }
+
         [CanBeNull]
         private static GitVersion GetResult(IProcess process, GitVersionSettings toolSettings)
         {

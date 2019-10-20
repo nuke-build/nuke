@@ -32,7 +32,7 @@ namespace Nuke.Common.Tools.GitVersion
         /// </summary>
         public static string GitVersionPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("GITVERSION_EXE") ??
-            ToolPathResolver.GetPackageExecutable("GitVersion.CommandLine.DotNetCore|GitVersion.CommandLine", "GitVersion.dll|GitVersion.exe");
+            GetToolPath();
         public static Action<OutputType, string> GitVersionLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p>
@@ -171,7 +171,7 @@ namespace Nuke.Common.Tools.GitVersion
         /// <summary>
         ///   Path to the GitVersion executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GitVersionTasks.GitVersionPath;
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         public override Action<OutputType, string> CustomLogger => GitVersionTasks.GitVersionLogger;
         /// <summary>
         ///   The directory containing .git. If not defined current directory is used. (Must be first argument).
@@ -270,6 +270,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   Set Verbosity level (<c>debug</c>, <c>info</c>, <c>warn</c>, <c>error</c>, <c>none</c>). Default is <c>info</c>.
         /// </summary>
         public virtual GitVersionVerbosity Verbosity { get; internal set; }
+        public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -1218,6 +1219,28 @@ namespace Nuke.Common.Tools.GitVersion
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Framework
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.Framework"/></em></p>
+        /// </summary>
+        [Pure]
+        public static GitVersionSettings SetFramework(this GitVersionSettings toolSettings, string framework)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = framework;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.Framework"/></em></p>
+        /// </summary>
+        [Pure]
+        public static GitVersionSettings ResetFramework(this GitVersionSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = null;
             return toolSettings;
         }
         #endregion
