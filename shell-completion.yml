@@ -9,6 +9,7 @@ Help:
 Host:
 - AppVeyor
 - AzurePipelines
+- Bamboo
 - Bitrise
 - Console
 - GitHubActions

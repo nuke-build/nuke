@@ -18,7 +18,7 @@ namespace Nuke.Common.CI
 {
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Class)]
-    public abstract class ConfigurationGenerationAttributeBase : Attribute, IOnBeforeLogo, IOnBuildFinished
+    public abstract class ConfigurationGenerationAttributeBase : Attribute, IOnBeforeLogo, IOnAfterLogo, IOnBuildFinished
     {
         public const string ConfigurationParameterName = "configure-build-server";
 
@@ -40,33 +40,35 @@ namespace Nuke.Common.CI
 
         public void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
-            if (!EnvironmentInfo.GetParameter<bool>(ConfigurationParameterName))
-            {
-                if (NukeBuild.IsLocalBuild && AutoGenerate)
-                {
-                    Logger.LogLevel = LogLevel.Trace;
-                    var previousHash = GetCurrentHash();
-
-                    var assembly = Assembly.GetEntryAssembly().NotNull("assembly != null");
-                    ProcessTasks.StartProcess(
-                            assembly.Location,
-                            $"--{ConfigurationParameterName} --host {HostType}",
-                            logInvocation: false,
-                            logOutput: true)
-                        .AssertZeroExitCode();
-
-                    if (GetCurrentHash() != previousHash)
-                        Logger.Warn($"Configuration files for {HostType} have changed.");
-                }
-
+            if (!EnvironmentInfo.GetParameter<bool>(ConfigurationParameterName) ||
+                NukeBuild.Host != HostType)
                 return;
-            }
 
-            if (NukeBuild.Host == HostType)
-            {
-                Generate(build, executableTargets);
-                Environment.Exit(0);
-            }
+            Generate(build, executableTargets);
+            Environment.Exit(0);
+        }
+
+        public void OnAfterLogo(
+            NukeBuild build,
+            IReadOnlyCollection<ExecutableTarget> executableTargets,
+            IReadOnlyCollection<ExecutableTarget> executionPlan)
+        {
+            if (!AutoGenerate || NukeBuild.IsServerBuild)
+                return;
+
+            Logger.LogLevel = LogLevel.Trace;
+            var previousHash = GetCurrentHash();
+
+            var assembly = Assembly.GetEntryAssembly().NotNull("assembly != null");
+            ProcessTasks.StartProcess(
+                    assembly.Location,
+                    $"--{ConfigurationParameterName} --host {HostType}",
+                    logInvocation: false,
+                    logOutput: true)
+                .AssertZeroExitCode();
+
+            if (GetCurrentHash() != previousHash)
+                Logger.Warn($"Configuration files for {HostType} have changed.");
         }
 
         public void OnBuildFinished(NukeBuild build)
