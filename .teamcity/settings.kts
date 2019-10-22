@@ -124,6 +124,10 @@ object Test_P1T2 : BuildType({
         root(VcsRoot)
         cleanCheckout = true
     }
+    artifactRules = """
+        output/*.trx
+        output/*.xml
+    """.trimIndent()
     steps {
         powerShell {
             scriptMode = file { path = "build.ps1" }
@@ -144,6 +148,10 @@ object Test_P2T2 : BuildType({
         root(VcsRoot)
         cleanCheckout = true
     }
+    artifactRules = """
+        output/*.trx
+        output/*.xml
+    """.trimIndent()
     steps {
         powerShell {
             scriptMode = file { path = "build.ps1" }
@@ -165,6 +173,10 @@ object Test : BuildType({
         root(VcsRoot)
         showDependenciesChanges = true
     }
+    artifactRules = """
+        output/*.trx
+        output/*.xml
+    """.trimIndent()
     triggers {
         vcs {
             branchFilter = ""

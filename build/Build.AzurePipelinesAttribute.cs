@@ -29,6 +29,7 @@ partial class Build
                                  { nameof(Compile), "⚙️" },
                                  { nameof(Test), "🚦" },
                                  { nameof(Pack), "📦" },
+                                 { nameof(Coverage), "📊" },
                                  { nameof(Publish), "🚚" },
                                  { nameof(Announce), "🗣" }
                              };
