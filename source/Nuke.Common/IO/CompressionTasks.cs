@@ -43,17 +43,17 @@ namespace Nuke.Common.IO
                 ControlFlow.Fail($"Unknown archive extension for archive '{Path.GetFileName(archiveFile)}'");
         }
 
-        public static void CompressZip(string directory, string archiveFile, Predicate<FileInfo> filter = null)
-        {
-            CompressZip(directory, archiveFile, filter, CompressionLevel.Optimal);
-        }
-
-        public static void CompressZip(string directory, string archiveFile, Predicate<FileInfo> filter, CompressionLevel compressionLevel)
+        public static void CompressZip(
+            string directory,
+            string archiveFile,
+            Predicate<FileInfo> filter = null,
+            CompressionLevel compressionLevel = CompressionLevel.Optimal,
+            FileMode fileMode = FileMode.CreateNew)
         {
             FileSystemTasks.EnsureExistingParentDirectory(archiveFile);
 
             var files = GetFiles(directory, filter);
-            using (var fileStream = File.Open(archiveFile, FileMode.CreateNew, FileAccess.ReadWrite))
+            using (var fileStream = File.Open(archiveFile, fileMode, FileAccess.ReadWrite))
             using (var zipArchive = new ZipArchive(fileStream, ZipArchiveMode.Create))
             {
                 // zipStream.SetLevel(1);
@@ -89,14 +89,22 @@ namespace Nuke.Common.IO
             Logger.Info($"Uncompressed '{archiveFile}' to '{directory}'.");
         }
 
-        public static void CompressTarGZip(string directory, string archiveFile, Predicate<FileInfo> filter = null)
+        public static void CompressTarGZip(
+            string directory,
+            string archiveFile,
+            Predicate<FileInfo> filter = null,
+            FileMode fileMode = FileMode.CreateNew)
         {
-            CompressTar(directory, archiveFile, filter, x => new GZipOutputStream(x));
+            CompressTar(directory, archiveFile, filter, fileMode, x => new GZipOutputStream(x));
         }
 
-        public static void CompressTarBZip2(string directory, string archiveFile, Predicate<FileInfo> filter = null)
+        public static void CompressTarBZip2(
+            string directory,
+            string archiveFile,
+            Predicate<FileInfo> filter = null,
+            FileMode fileMode = FileMode.CreateNew)
         {
-            CompressTar(directory, archiveFile, filter, x => new BZip2OutputStream(x));
+            CompressTar(directory, archiveFile, filter, fileMode, x => new BZip2OutputStream(x));
         }
 
         public static void UncompressTarGZip(string archiveFile, string directory)
@@ -109,12 +117,17 @@ namespace Nuke.Common.IO
             UncompressTar(archiveFile, directory, x => new BZip2InputStream(x));
         }
 
-        private static void CompressTar(string directory, string archiveFile, Predicate<FileInfo> filter, Func<Stream, Stream> outputStreamFactory)
+        private static void CompressTar(
+            string directory,
+            string archiveFile,
+            Predicate<FileInfo> filter,
+            FileMode fileMode,
+            Func<Stream, Stream> outputStreamFactory)
         {
             FileSystemTasks.EnsureExistingParentDirectory(archiveFile);
 
             var files = GetFiles(directory, filter);
-            using (var fileStream = File.Open(archiveFile, FileMode.CreateNew, FileAccess.ReadWrite))
+            using (var fileStream = File.Open(archiveFile, fileMode, FileAccess.ReadWrite))
             using (var outputStream = outputStreamFactory(fileStream))
             using (var tarArchive = TarArchive.CreateOutputTarArchive(outputStream))
             {
