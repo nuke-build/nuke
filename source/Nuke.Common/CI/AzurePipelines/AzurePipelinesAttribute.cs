@@ -25,23 +25,23 @@ namespace Nuke.Common.CI.AzurePipelines
             _images = new[] { image }.Concat(images).ToArray();
         }
 
-        public string[] InvokedTargets { get; set; }
-        public string[] NonEntryTargets { get; set; }
-        public string[] ExcludedTargets { get; set; }
+        public string[] InvokedTargets { get; set; } = new string[0];
+        public string[] NonEntryTargets { get; set; } = new string[0];
+        public string[] ExcludedTargets { get; set; } = new string[0];
 
         public bool TriggerBatch { get; set; }
-        public string[] TriggerBranchesInclude { get; set; }
-        public string[] TriggerBranchesExclude { get; set; }
-        public string[] TriggerTagsInclude { get; set; }
-        public string[] TriggerTagsExclude { get; set; }
-        public string[] TriggerPathsInclude { get; set; }
-        public string[] TriggerPathsExclude { get; set; }
+        public string[] TriggerBranchesInclude { get; set; } = new string[0];
+        public string[] TriggerBranchesExclude { get; set; } = new string[0];
+        public string[] TriggerTagsInclude { get; set; } = new string[0];
+        public string[] TriggerTagsExclude { get; set; } = new string[0];
+        public string[] TriggerPathsInclude { get; set; } = new string[0];
+        public string[] TriggerPathsExclude { get; set; } = new string[0];
 
         public bool PullRequestsAutoCancel { get; set; }
-        public string[] PullRequestsBranchesInclude { get; set; }
-        public string[] PullRequestsBranchesExclude { get; set; }
-        public string[] PullRequestsPathsInclude { get; set; }
-        public string[] PullRequestsPathsExclude { get; set; }
+        public string[] PullRequestsBranchesInclude { get; set; } = new string[0];
+        public string[] PullRequestsBranchesExclude { get; set; } = new string[0];
+        public string[] PullRequestsPathsInclude { get; set; } = new string[0];
+        public string[] PullRequestsPathsExclude { get; set; } = new string[0];
 
         protected virtual string ConfigurationFile => NukeBuild.RootDirectory / "azure-pipelines.yml";
 

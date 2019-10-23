@@ -10,9 +10,9 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.GitHubActions.Configuration
 {
-    public class GitHubActionsVcsTrigger : GitHubActionsTrigger
+    public class GitHubActionsVcsTrigger : GitHubActionsDetailedTrigger
     {
-        public CI.GitHubActions.GitHubActionsTrigger Kind { get; set; }
+        public GitHubActionsTrigger Kind { get; set; }
         public string[] Branches { get; set; }
         public string[] Tags { get; set; }
         public string[] IncludePaths { get; set; }
@@ -24,7 +24,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
 
             using (writer.Indent())
             {
-                if (Branches != null)
+                if (Branches.Length > 0)
                 {
                     writer.WriteLine("branches:");
                     using (writer.Indent())
@@ -33,7 +33,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
                     }
                 }
 
-                if (Tags != null)
+                if (Tags.Length > 0)
                 {
                     writer.WriteLine("tags:");
                     using (writer.Indent())
@@ -42,13 +42,13 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
                     }
                 }
 
-                if (IncludePaths != null || ExcludePaths != null)
+                if (IncludePaths.Length > 0 || ExcludePaths.Length > 0)
                 {
                     writer.WriteLine("paths:");
                     using (writer.Indent())
                     {
-                        (IncludePaths ?? new string[0]).ForEach(x => writer.WriteLine($"- {x}"));
-                        (ExcludePaths ?? new string[0]).ForEach(x => writer.WriteLine($"- !{x}"));
+                        (IncludePaths).ForEach(x => writer.WriteLine($"- {x}"));
+                        (ExcludePaths).ForEach(x => writer.WriteLine($"- !{x}"));
                     }
                 }
             }

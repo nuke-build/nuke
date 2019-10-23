@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Nuke.Common.CI.GitHubActions.Configuration
 {
-    public abstract class GitHubActionsTrigger : GitHubActionsConfigurationEntity
+    public abstract class GitHubActionsDetailedTrigger : GitHubActionsConfigurationEntity
     {
     }
 }

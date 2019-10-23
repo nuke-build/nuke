@@ -28,18 +28,18 @@ namespace Nuke.Common.CI.AppVeyor
             _images = new[] { image }.Concat(images).ToArray();
         }
 
-        public AppVeyorService[] Services { get; set; }
-        public string[] InvokedTargets { get; set; }
-        public string[] BranchesOnly { get; set; }
-        public string[] BranchesExcept { get; set; }
+        public AppVeyorService[] Services { get; set; } = new AppVeyorService[0];
+        public string[] InvokedTargets { get; set; } = new string[0];
+        public string[] BranchesOnly { get; set; } = new string[0];
+        public string[] BranchesExcept { get; set; } = new string[0];
         public bool SkipTags { get; set; }
         public bool SkipBranchesWithPullRequest { get; set; }
         public string OnlyCommitsMessage { get; set; }
         public string OnlyCommitsAuthor { get; set; }
         public string SkipCommitsMessage { get; set; }
         public string SkipCommitsAuthor { get; set; }
-        public string[] Init { get; set; }
-        public string[] Cache { get; set; }
+        public string[] Init { get; set; } = new string[0];
+        public string[] Cache { get; set; } = new string[0];
 
         protected virtual string ConfigurationFile => NukeBuild.RootDirectory / "appveyor.yml";
 
@@ -91,7 +91,7 @@ namespace Nuke.Common.CI.AppVeyor
 
         protected AppVeyorBranches GetBranches()
         {
-            if (BranchesOnly == null || BranchesExcept == null)
+            if (BranchesOnly.Length == 0 || BranchesExcept.Length == 0)
                 return null;
 
             return new AppVeyorBranches

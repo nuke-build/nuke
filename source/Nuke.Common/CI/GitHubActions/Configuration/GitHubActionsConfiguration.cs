@@ -13,8 +13,8 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
     {
         public string Name { get; set; }
 
-        public CI.GitHubActions.GitHubActionsTrigger[] ShortTriggers { get; set; }
-        public GitHubActionsTrigger[] DetailedTriggers { get; set; }
+        public GitHubActionsTrigger[] ShortTriggers { get; set; }
+        public GitHubActionsDetailedTrigger[] DetailedTriggers { get; set; }
         public GitHubActionsJob[] Jobs { get; set; }
 
         public override void Write(CustomFileWriter writer)
@@ -22,7 +22,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
             writer.WriteLine($"name: {Name}");
             writer.WriteLine();
 
-            if (ShortTriggers != null)
+            if (ShortTriggers.Length > 0)
                 writer.WriteLine($"on: [{ShortTriggers.Select(x => x.ToString().ToLowerInvariant()).JoinComma()}]");
             else
             {

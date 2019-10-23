@@ -8,7 +8,7 @@ using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.GitHubActions.Configuration
 {
-    public class GitHubActionsScheduledTrigger : GitHubActionsTrigger
+    public class GitHubActionsScheduledTrigger : GitHubActionsDetailedTrigger
     {
         public string Cron { get; set; }
 

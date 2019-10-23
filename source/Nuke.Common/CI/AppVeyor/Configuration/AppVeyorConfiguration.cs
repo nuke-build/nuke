@@ -35,7 +35,7 @@ namespace Nuke.Common.CI.AppVeyor.Configuration
                 writer.WriteLine();
             }
 
-            if (Services != null)
+            if (Services.Length > 0)
             {
                 using (writer.WriteBlock("services:"))
                 {
@@ -90,7 +90,7 @@ namespace Nuke.Common.CI.AppVeyor.Configuration
                 writer.WriteLine();
             }
 
-            if (Init != null)
+            if (Init.Length > 0)
             {
                 using (writer.WriteBlock("init:"))
                 {
@@ -105,7 +105,7 @@ namespace Nuke.Common.CI.AppVeyor.Configuration
                 writer.WriteLine();
             }
 
-            if (Cache != null)
+            if (Cache.Length > 0)
             {
                 using (writer.WriteBlock("cache:"))
                 {

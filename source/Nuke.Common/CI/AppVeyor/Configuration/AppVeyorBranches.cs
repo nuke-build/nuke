@@ -16,7 +16,7 @@ namespace Nuke.Common.CI.AppVeyor.Configuration
 
         public override void Write(CustomFileWriter writer)
         {
-            if (Only != null)
+            if (Only.Length > 0)
             {
                 using (writer.WriteBlock("only:"))
                 {
@@ -24,7 +24,7 @@ namespace Nuke.Common.CI.AppVeyor.Configuration
                 }
             }
 
-            if (Except != null)
+            if (Except.Length > 0)
             {
                 using (writer.WriteBlock("except:"))
                 {

@@ -43,21 +43,21 @@ namespace Nuke.Common.CI.GitHubActions
         protected override HostType HostType => HostType.GitHubActions;
 
 
-        public GitHubActionsTrigger[] On { get; set; }
-        public string[] OnPushBranches { get; set; }
-        public string[] OnPushTags { get; set; }
-        public string[] OnPushIncludePaths { get; set; }
-        public string[] OnPushExcludePaths { get; set; }
-        public string[] OnPullRequestBranches { get; set; }
-        public string[] OnPullRequestTags { get; set; }
-        public string[] OnPullRequestIncludePaths { get; set; }
-        public string[] OnPullRequestExcludePaths { get; set; }
+        public GitHubActionsTrigger[] On { get; set; } = new GitHubActionsTrigger[0];
+        public string[] OnPushBranches { get; set; } = new string[0];
+        public string[] OnPushTags { get; set; } = new string[0];
+        public string[] OnPushIncludePaths { get; set; } = new string[0];
+        public string[] OnPushExcludePaths { get; set; } = new string[0];
+        public string[] OnPullRequestBranches { get; set; } = new string[0];
+        public string[] OnPullRequestTags { get; set; } = new string[0];
+        public string[] OnPullRequestIncludePaths { get; set; } = new string[0];
+        public string[] OnPullRequestExcludePaths { get; set; } = new string[0];
         public string OnCronSchedule { get; set; }
 
-        public string[] ImportSecrets { get; set; }
+        public string[] ImportSecrets { get; set; } = new string[0];
         public string ImportGitHubTokenAs { get; set; }
 
-        public string[] InvokedTargets { get; set; }
+        public string[] InvokedTargets { get; set; } = new string[0];
 
         protected override void Generate(
             NukeBuild build,
@@ -136,16 +136,16 @@ namespace Nuke.Common.CI.GitHubActions
             if (ImportGitHubTokenAs != null)
                 yield return (ImportGitHubTokenAs, GetSecretValue("GITHUB_TOKEN"));
 
-            foreach (var secret in ImportSecrets ?? new string[0])
+            foreach (var secret in ImportSecrets)
                 yield return (secret, GetSecretValue(secret));
         }
 
-        protected virtual IEnumerable<Configuration.GitHubActionsTrigger> GetTriggers()
+        protected virtual IEnumerable<GitHubActionsDetailedTrigger> GetTriggers()
         {
-            if (OnPushBranches != null ||
-                OnPushTags != null ||
-                OnPushIncludePaths != null ||
-                OnPushExcludePaths != null)
+            if (OnPushBranches.Length > 0 ||
+                OnPushTags.Length > 0 ||
+                OnPushIncludePaths.Length > 0 ||
+                OnPushExcludePaths.Length > 0)
             {
                 yield return new GitHubActionsVcsTrigger
                              {
@@ -157,10 +157,10 @@ namespace Nuke.Common.CI.GitHubActions
                              };
             }
 
-            if (OnPullRequestBranches != null ||
-                OnPullRequestTags != null ||
-                OnPullRequestIncludePaths != null ||
-                OnPullRequestExcludePaths != null)
+            if (OnPullRequestBranches.Length > 0 ||
+                OnPullRequestTags.Length > 0 ||
+                OnPullRequestIncludePaths.Length > 0 ||
+                OnPullRequestExcludePaths.Length > 0)
             {
                 yield return new GitHubActionsVcsTrigger
                              {
