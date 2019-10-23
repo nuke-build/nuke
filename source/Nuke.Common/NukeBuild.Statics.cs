@@ -130,7 +130,7 @@ namespace Nuke.Common
         }
 
         [CanBeNull]
-        private static PathConstruction.AbsolutePath GetBuildProjectDirectory(PathConstruction.AbsolutePath buildAssemblyDirectory)
+        private static PathConstruction.AbsolutePath GetBuildProjectDirectory([CanBeNull] PathConstruction.AbsolutePath buildAssemblyDirectory)
         {
             if (buildAssemblyDirectory == null)
                 return null;

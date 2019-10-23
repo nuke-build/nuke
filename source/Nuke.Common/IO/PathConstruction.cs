@@ -201,7 +201,7 @@ namespace Nuke.Common.IO
             return null;
         }
 
-        public static string Combine([CanBeNull] string left, string right, char? separator = null)
+        public static string Combine([CanBeNull] string left, [CanBeNull] string right, char? separator = null)
         {
             // TODO: better something like "SafeHandleRoots"?
             left = Trim(left);
@@ -300,6 +300,7 @@ namespace Nuke.Common.IO
             ControlFlow.Assert(!IsUnixRoot(root) || separator == UnixSeparator, $"For Unix-rooted paths the separator must be '{UnixSeparator}'.");
         }
 
+        [CanBeNull]
         [ContractAnnotation("null => null; notnull => notnull")]
         private static string Trim([CanBeNull] string path)
         {
@@ -324,6 +325,7 @@ namespace Nuke.Common.IO
                 _separator = separator;
             }
 
+            [CanBeNull]
             public static explicit operator RelativePath([CanBeNull] string path)
             {
                 if (path is null)
@@ -332,6 +334,7 @@ namespace Nuke.Common.IO
                 return new RelativePath(NormalizePath(path));
             }
 
+            [CanBeNull]
             public static implicit operator string([CanBeNull] RelativePath path)
             {
                 return path?._path;

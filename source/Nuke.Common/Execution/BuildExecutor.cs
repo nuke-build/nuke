@@ -125,7 +125,7 @@ namespace Nuke.Common.Execution
             }
         }
 
-        private static void MarkSkippedTargets(NukeBuild build, IReadOnlyCollection<string> skippedTargets)
+        private static void MarkSkippedTargets(NukeBuild build, [CanBeNull] IReadOnlyCollection<string> skippedTargets)
         {
             void MarkTargetSkipped(ExecutableTarget target)
             {

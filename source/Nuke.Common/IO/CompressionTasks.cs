@@ -95,7 +95,7 @@ namespace Nuke.Common.IO
             Predicate<FileInfo> filter = null,
             FileMode fileMode = FileMode.CreateNew)
         {
-            CompressTar(directory, archiveFile, filter, fileMode, x => new GZipOutputStream(x));
+            CompressTar(directory, archiveFile, x => new GZipOutputStream(x), filter, fileMode);
         }
 
         public static void CompressTarBZip2(
@@ -104,7 +104,7 @@ namespace Nuke.Common.IO
             Predicate<FileInfo> filter = null,
             FileMode fileMode = FileMode.CreateNew)
         {
-            CompressTar(directory, archiveFile, filter, fileMode, x => new BZip2OutputStream(x));
+            CompressTar(directory, archiveFile, x => new BZip2OutputStream(x), filter, fileMode);
         }
 
         public static void UncompressTarGZip(string archiveFile, string directory)
@@ -120,9 +120,9 @@ namespace Nuke.Common.IO
         private static void CompressTar(
             string directory,
             string archiveFile,
-            Predicate<FileInfo> filter,
-            FileMode fileMode,
-            Func<Stream, Stream> outputStreamFactory)
+            Func<Stream, Stream> outputStreamFactory,
+            [CanBeNull] Predicate<FileInfo> filter,
+            FileMode fileMode)
         {
             FileSystemTasks.EnsureExistingParentDirectory(archiveFile);
 

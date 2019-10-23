@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using JetBrains.Annotations;
 
 namespace Nuke.Common.Execution
 {
@@ -21,6 +22,7 @@ namespace Nuke.Common.Execution
         internal MemberInfo Member { get; set; }
         internal TargetDefinition Definition { get; set; }
         public string Name { get; internal set; }
+        [CanBeNull]
         public string Description { get; internal set; }
         public bool Listed { get; internal set; }
         internal Target Factory { get; set; }
@@ -43,6 +45,8 @@ namespace Nuke.Common.Execution
         public ExecutionStatus Status { get; internal set; }
         public TimeSpan Duration { get; internal set; }
         public bool Invoked { get; internal set; }
+
+        [CanBeNull]
         public string SkipReason { get; internal set; }
     }
 }

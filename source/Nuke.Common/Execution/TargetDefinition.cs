@@ -7,11 +7,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace Nuke.Common.Execution
 {
     internal class TargetDefinition : ITargetDefinition
     {
+        [CanBeNull]
         internal string Description { get; set; }
         internal bool IsDefault { get; set; }
         internal TimeSpan Duration { get; set; }

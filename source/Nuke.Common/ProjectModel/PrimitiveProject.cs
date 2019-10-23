@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Nuke.Common.ProjectModel
 {
@@ -26,6 +27,7 @@ namespace Nuke.Common.ProjectModel
         public string Name { get; }
         public Guid TypeId { get; }
 
+        [CanBeNull]
         public SolutionFolder SolutionFolder
         {
             get => Solution.GetSolutionFolder(this);
