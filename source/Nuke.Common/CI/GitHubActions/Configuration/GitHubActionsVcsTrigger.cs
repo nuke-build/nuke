@@ -47,8 +47,8 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
                     writer.WriteLine("paths:");
                     using (writer.Indent())
                     {
-                        (IncludePaths).ForEach(x => writer.WriteLine($"- {x}"));
-                        (ExcludePaths).ForEach(x => writer.WriteLine($"- !{x}"));
+                        IncludePaths.ForEach(x => writer.WriteLine($"- {x}"));
+                        ExcludePaths.ForEach(x => writer.WriteLine($"- !{x}"));
                     }
                 }
             }

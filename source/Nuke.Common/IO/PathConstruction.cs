@@ -215,7 +215,7 @@ namespace Nuke.Common.IO
                 return !IsWinRoot(left) ? left : $@"{left}\";
 
             AssertSeparatorChoice(left, separator);
-            separator = separator ?? GetSeparator(left);
+            separator ??= GetSeparator(left);
 
             if (IsWinRoot(left))
                 return $@"{left}\{right}";
@@ -232,8 +232,8 @@ namespace Nuke.Common.IO
         {
             AssertSeparatorChoice(path, separator);
 
-            path = path ?? string.Empty;
-            separator = separator ?? GetSeparator(path);
+            path ??= string.Empty;
+            separator ??= GetSeparator(path);
             var root = GetPathRoot(path);
 
             var tail = root == null ? path : path.Substring(root.Length);

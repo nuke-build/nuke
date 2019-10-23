@@ -6,10 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Nuke.CodeGeneration.Model;
 using Nuke.CodeGeneration.Writers;
-using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 // ReSharper disable UnusedMethodReturnValue.Local

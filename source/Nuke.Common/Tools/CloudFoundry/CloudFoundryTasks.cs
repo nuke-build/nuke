@@ -3,16 +3,10 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using ICSharpCode.SharpZipLib.GZip;
-using ICSharpCode.SharpZipLib.Tar;
 using Nuke.Common.Tooling;
-using static Nuke.Common.IO.HttpTasks;
-using static Nuke.Common.IO.FileSystemTasks;
 
 namespace Nuke.Common.Tools.CloudFoundry
 {

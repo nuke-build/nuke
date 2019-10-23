@@ -115,8 +115,8 @@ namespace Nuke.Common.Utilities
             IReadOnlyCollection<string> definitions = null,
             IReadOnlyDictionary<string, string> replacements = null)
         {
-            definitions = definitions ?? new List<string>();
-            replacements = replacements ?? new Dictionary<string, string>();
+            definitions ??= new List<string>();
+            replacements ??= new Dictionary<string, string>();
 
             // TODO: checked build?
             // definitions.ForEach(x => ControlFlow.Assert(template.Contains(x),

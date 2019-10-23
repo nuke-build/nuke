@@ -60,7 +60,7 @@ namespace Nuke.Common.Tooling
                 toolPath = toolPathOverride;
             }
 
-            outputFilter = outputFilter ?? (x => x);
+            outputFilter ??= x => x;
             ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
             if (logInvocation ?? DefaultLogInvocation)
             {

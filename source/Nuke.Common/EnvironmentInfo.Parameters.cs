@@ -3,14 +3,12 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
-using Nuke.Common.Utilities;
 
 namespace Nuke.Common
 {

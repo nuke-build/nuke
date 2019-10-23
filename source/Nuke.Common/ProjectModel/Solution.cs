@@ -75,7 +75,7 @@ namespace Nuke.Common.ProjectModel
 
         public SolutionFolder AddSolutionFolder(string name, Guid? projectId = null, SolutionFolder solutionFolder = null)
         {
-            projectId = projectId ?? Guid.NewGuid();
+            projectId ??= Guid.NewGuid();
             var project = new SolutionFolder(this, projectId.Value, name, items: new Dictionary<string, string>());
             AddPrimitiveProject(project, solutionFolder);
             return project;
@@ -89,7 +89,7 @@ namespace Nuke.Common.ProjectModel
             IDictionary<string, string> configurationPlatforms = null,
             SolutionFolder solutionFolder = null)
         {
-            projectId = projectId ?? Guid.NewGuid();
+            projectId ??= Guid.NewGuid();
             var project = new Project(this, projectId.Value, name, path, typeId, configurationPlatforms ?? new Dictionary<string, string>());
             AddPrimitiveProject(project, solutionFolder);
             return project;

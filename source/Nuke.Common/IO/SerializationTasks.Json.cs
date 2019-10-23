@@ -28,7 +28,7 @@ namespace Nuke.Common.IO
         [Pure]
         public static string JsonSerialize<T>(T obj, Configure<JsonSerializerSettings> configurator = null)
         {
-            configurator = configurator ?? (x => x);
+            configurator ??= x => x;
             var settings = new JsonSerializerSettings
                            {
                                Formatting = Formatting.Indented,
