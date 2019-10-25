@@ -38,9 +38,6 @@ using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
 using static Nuke.Common.Tools.Slack.SlackTasks;
 
-// ReSharper disable VariableHidesOuterVariable
-// ReSharper disable HeapView.DelegateAllocation
-
 [CheckBuildProjectConfigurations]
 [DotNetVerbosityMapping]
 [UnsetVisualStudioEnvironmentVariables]
