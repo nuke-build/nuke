@@ -273,9 +273,10 @@ namespace Nuke.Common.CI.TeamCity
             var valueSet = ParameterService.GetParameterValueSet(member, build);
 
             var defaultValue = member.GetValue(build);
-            if (member.GetMemberType() == typeof(AbsolutePath) ||
-                member.GetMemberType() == typeof(Solution) ||
-                member.GetMemberType() == typeof(Project))
+            if (defaultValue != null &&
+                (member.GetMemberType() == typeof(AbsolutePath) ||
+                 member.GetMemberType() == typeof(Solution) ||
+                 member.GetMemberType() == typeof(Project)))
                 defaultValue = (UnixRelativePath) GetRelativePath(NukeBuild.RootDirectory, defaultValue.ToString());
 
             return new TeamCityConfigurationParameter
