@@ -42,6 +42,7 @@ partial class Build
         .Executes(() =>
         {
             var masterVersion = GitVersion(s => s
+                .SetFramework("netcoreapp3.0")
                 .SetUrl(RootDirectory)
                 .SetBranch(MasterBranch)
                 .DisableLogOutput()).Result;
