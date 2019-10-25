@@ -38,6 +38,7 @@ using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
 using static Nuke.Common.Tools.Slack.SlackTasks;
 
+// ReSharper disable VariableHidesOuterVariable
 // ReSharper disable HeapView.DelegateAllocation
 
 [CheckBuildProjectConfigurations]
@@ -117,7 +118,7 @@ partial class Build : NukeBuild
     Target Restore => _ => _
         .Executes(() =>
         {
-            DotNetRestore(s => s
+            DotNetRestore(_ => _
                 .SetProjectFile(Solution));
         });
 
@@ -128,7 +129,7 @@ partial class Build : NukeBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
-            DotNetBuild(s => s
+            DotNetBuild(_ => _
                 .SetProjectFile(Solution)
                 .EnableNoRestore()
                 .SetConfiguration(Configuration)
@@ -136,7 +137,7 @@ partial class Build : NukeBuild
                 .SetFileVersion(GitVersion.GetNormalizedFileVersion())
                 .SetInformationalVersion(GitVersion.InformationalVersion));
 
-            DotNetPublish(s => s
+            DotNetPublish(_ => _
                     .EnableNoRestore()
                     .SetConfiguration(Configuration)
                     .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
@@ -145,7 +146,7 @@ partial class Build : NukeBuild
                     .CombineWith(
                         from project in new[] { GlobalToolProject, MSBuildTaskRunnerProject }
                         from framework in project.GetTargetFrameworks()
-                        select new { project, framework }, (cs, v) => cs
+                        select new { project, framework }, (_, v) => _
                             .SetProject(v.project)
                             .SetFramework(v.framework)),
                 degreeOfParallelism: 10);
@@ -160,7 +161,7 @@ partial class Build : NukeBuild
         .Produces(OutputDirectory / "*.nupkg")
         .Executes(() =>
         {
-            DotNetPack(s => s
+            DotNetPack(_ => _
                 .SetProject(Solution)
                 .SetNoBuild(IsLocalBuild)
                 .SetConfiguration(Configuration)
@@ -186,22 +187,22 @@ partial class Build : NukeBuild
         .Partition(() => TestPartition)
         .Executes(() =>
         {
-            DotNetTest(s => s
+            DotNetTest(_ => _
                 .SetConfiguration(Configuration)
                 .SetNoBuild(ExecutingTargets.Contains(Compile))
                 .ResetVerbosity()
                 .SetResultsDirectory(OutputDirectory)
-                .When(InvokedTargets.Contains(Coverage), s => s
+                .When(InvokedTargets.Contains(Coverage), _ => _
                     .SetProperty("CollectCoverage", propertyValue: true)
                     .SetProperty("CoverletOutputFormat", "teamcity%2ccobertura")
                     .SetProperty("ExcludeByFile", "*.Generated.cs")
-                    .When(IsServerBuild, s => s
+                    .When(IsServerBuild, _ => _
                         .SetProperty("UseSourceLink", propertyValue: true)))
                 .CombineWith(
-                    TestPartition.GetCurrent(Solution.GetProjects("*.Tests")), (s, v) => s
+                    TestPartition.GetCurrent(Solution.GetProjects("*.Tests")), (_, v) => _
                         .SetProjectFile(v)
                         .SetLogger($"trx;LogFileName={v.Name}.trx")
-                        .When(InvokedTargets.Contains(Coverage), s => s
+                        .When(InvokedTargets.Contains(Coverage), _ => _
                             .SetProperty("CoverletOutput", OutputDirectory / $"{v.Name}.xml"))));
 
             OutputDirectory.GlobFiles("*.trx").Select(x => new FileInfo(x))
@@ -217,7 +218,7 @@ partial class Build : NukeBuild
         .DependsOn(Test)
         .Executes(() =>
         {
-            ReportGenerator(s => s
+            ReportGenerator(_ => _
                 .SetReports(OutputDirectory / "*.xml")
                 .SetReportTypes(ReportTypes.HtmlInline)
                 .SetTargetDirectory(CoverageReportDirectory));
@@ -232,7 +233,7 @@ partial class Build : NukeBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
-            InspectCode(s => s
+            InspectCode(_ => _
                 .SetTargetPath(Solution)
                 .SetOutput(OutputDirectory / "inspectCode.xml")
                 .AddExtensions(
@@ -260,11 +261,11 @@ partial class Build : NukeBuild
             var packages = OutputDirectory.GlobFiles("*.nupkg");
             Assert(packages.Count == 4, "packages.Count == 4");
 
-            DotNetNuGetPush(s => s
+            DotNetNuGetPush(_ => _
                     .SetSource(Source)
                     .SetApiKey(ApiKey)
                     .CombineWith(
-                        packages, (s, v) => s
+                        packages, (_, v) => _
                             .SetTargetPath(v)),
                 degreeOfParallelism: 5,
                 completeOnFailure: true);
@@ -276,7 +277,7 @@ partial class Build : NukeBuild
         .OnlyWhenStatic(() => GitRepository.IsOnMasterBranch())
         .Executes(() =>
         {
-            SendSlackMessage(m => m
+            SendSlackMessage(_ => _
                     .SetText(new StringBuilder()
                         .AppendLine($"<!here> :mega::shipit: *NUKE {GitVersion.SemVer} IS OUT!!!*")
                         .AppendLine()
