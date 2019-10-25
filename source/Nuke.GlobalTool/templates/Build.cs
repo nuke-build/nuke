@@ -78,16 +78,16 @@ class Build : NukeBuild
                 .SetTargetPath(Solution)                                                        // MSBUILD
                 .SetTargets("Rebuild")                                                          // MSBUILD
                 .SetConfiguration(Configuration)                                                // MSBUILD
-                .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())                  // MSBUILD && GITVERSION
-                .SetFileVersion(GitVersion.GetNormalizedFileVersion())                          // MSBUILD && GITVERSION
+                .SetAssemblyVersion(GitVersion.AssemblySemVer)                                  // MSBUILD && GITVERSION
+                .SetFileVersion(GitVersion.AssemblySemFileVer)                                  // MSBUILD && GITVERSION
                 .SetInformationalVersion(GitVersion.InformationalVersion)                       // MSBUILD && GITVERSION
                 .SetMaxCpuCount(Environment.ProcessorCount)                                     // MSBUILD
                 .SetNodeReuse(IsLocalBuild));                                                   // MSBUILD
             DotNetBuild(_ => _                                                                  // DOTNET
                 .SetProjectFile(Solution)                                                       // DOTNET
                 .SetConfiguration(Configuration)                                                // DOTNET
-                .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())                  // DOTNET && GITVERSION
-                .SetFileVersion(GitVersion.GetNormalizedFileVersion())                          // DOTNET && GITVERSION
+                .SetAssemblyVersion(GitVersion.AssemblySemVer)                                  // DOTNET && GITVERSION
+                .SetFileVersion(GitVersion.AssemblySemFileVer)                                  // DOTNET && GITVERSION
                 .SetInformationalVersion(GitVersion.InformationalVersion)                       // DOTNET && GITVERSION
                 .EnableNoRestore());                                                            // DOTNET
         });

@@ -133,15 +133,15 @@ partial class Build : NukeBuild
                 .SetProjectFile(Solution)
                 .EnableNoRestore()
                 .SetConfiguration(Configuration)
-                .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
-                .SetFileVersion(GitVersion.GetNormalizedFileVersion())
+                .SetAssemblyVersion(GitVersion.AssemblySemVer)
+                .SetFileVersion(GitVersion.AssemblySemFileVer)
                 .SetInformationalVersion(GitVersion.InformationalVersion));
 
             DotNetPublish(_ => _
                     .EnableNoRestore()
                     .SetConfiguration(Configuration)
-                    .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
-                    .SetFileVersion(GitVersion.GetNormalizedFileVersion())
+                    .SetAssemblyVersion(GitVersion.AssemblySemVer)
+                    .SetFileVersion(GitVersion.AssemblySemFileVer)
                     .SetInformationalVersion(GitVersion.InformationalVersion)
                     .CombineWith(
                         from project in new[] { GlobalToolProject, MSBuildTaskRunnerProject }
