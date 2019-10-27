@@ -82,19 +82,9 @@ partial class Build : NukeBuild
     ///   - Microsoft VSCode           https://nuke.build/vscode
     public static int Main() => Execute<Build>(x => x.Pack);
 
-    [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
-    readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
-
-    [Parameter("ApiKey for the specified source")] readonly string ApiKey;
-    [Parameter] readonly string Source = "https://api.nuget.org/v3/index.json";
-
-    [Parameter("GitHub token")] readonly string GitHubToken;
-    [Parameter("Gitter authtoken")] readonly string GitterAuthToken;
-    [Parameter("Slack webhook")] readonly string SlackWebhook;
-
-    [Solution] readonly Solution Solution;
     [GitRepository] readonly GitRepository GitRepository;
     [GitVersion] readonly GitVersion GitVersion;
+    [Solution] readonly Solution Solution;
 
     AbsolutePath OutputDirectory => RootDirectory / "output";
     AbsolutePath SourceDirectory => RootDirectory / "source";
@@ -122,6 +112,9 @@ partial class Build : NukeBuild
                 .SetIgnoreFailedSources(IgnoreFailedSources));
         });
 
+    [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
+    readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
+
     Project GlobalToolProject => Solution.GetProject("Nuke.GlobalTool");
     Project MSBuildTaskRunnerProject => Solution.GetProject("Nuke.MSBuildTaskRunner");
 
@@ -131,14 +124,14 @@ partial class Build : NukeBuild
         {
             DotNetBuild(_ => _
                 .SetProjectFile(Solution)
-                .EnableNoRestore()
+                .SetNoRestore(ExecutingTargets.Contains(Restore))
                 .SetConfiguration(Configuration)
                 .SetAssemblyVersion(GitVersion.AssemblySemVer)
                 .SetFileVersion(GitVersion.AssemblySemFileVer)
                 .SetInformationalVersion(GitVersion.InformationalVersion));
 
             DotNetPublish(_ => _
-                    .EnableNoRestore()
+                    .SetNoRestore(ExecutingTargets.Contains(Restore))
                     .SetConfiguration(Configuration)
                     .SetAssemblyVersion(GitVersion.AssemblySemVer)
                     .SetFileVersion(GitVersion.AssemblySemFileVer)
@@ -163,19 +156,11 @@ partial class Build : NukeBuild
         {
             DotNetPack(_ => _
                 .SetProject(Solution)
-                .SetNoBuild(IsLocalBuild)
+                .SetNoBuild(ExecutingTargets.Contains(Compile))
                 .SetConfiguration(Configuration)
                 .SetOutputDirectory(OutputDirectory)
                 .SetVersion(GitVersion.NuGetVersionV2)
                 .SetPackageReleaseNotes(GetNuGetReleaseNotes(ChangelogFile, GitRepository)));
-        });
-
-    Target Install => _ => _
-        .DependsOn(Pack)
-        .Executes(() =>
-        {
-            SuppressErrors(() => DotNet($"tool uninstall -g {GlobalToolProject.Name}"));
-            DotNet($"tool install -g {GlobalToolProject.Name} --add-source {OutputDirectory} --version {GitVersion.NuGetVersionV2}");
         });
 
     [Partition(2)] readonly Partition TestPartition;
@@ -244,6 +229,13 @@ partial class Build : NukeBuild
                     "ReSharper.XmlDocInspections"));
         });
 
+    [Parameter("NuGet Api Key")] readonly string ApiKey;
+    [Parameter("NuGet Source for Packages")] readonly string Source = "https://api.nuget.org/v3/index.json";
+
+    [Parameter("GitHub Token")] readonly string GitHubToken;
+    [Parameter("Gitter Auth Token")] readonly string GitterAuthToken;
+    [Parameter("Slack Webhook")] readonly string SlackWebhook;
+
     Target Publish => _ => _
         .DependsOn(Clean, Test, Pack)
         .Consumes(Pack)
@@ -290,5 +282,13 @@ partial class Build : NukeBuild
                     .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "* ")).JoinNewLine()).ToString(),
                 "593f3dadd73408ce4f66db89",
                 GitterAuthToken);
+        });
+
+    Target Install => _ => _
+        .DependsOn(Pack)
+        .Executes(() =>
+        {
+            SuppressErrors(() => DotNet($"tool uninstall -g {GlobalToolProject.Name}"));
+            DotNet($"tool install -g {GlobalToolProject.Name} --add-source {OutputDirectory} --version {GitVersion.NuGetVersionV2}");
         });
 }

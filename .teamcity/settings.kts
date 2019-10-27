@@ -46,20 +46,15 @@ project {
         text (
             "env.Source",
             label = "Source",
+            description = "NuGet Source for Packages",
             value = "https://api.nuget.org/v3/index.json",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         text (
             "env.GitHubToken",
             label = "GitHubToken",
-            description = "GitHub token",
+            description = "GitHub Token",
             value = "",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        text (
-            "env.IgnoreFailedSources",
-            label = "IgnoreFailedSources",
-            value = "False",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         param(
@@ -234,21 +229,21 @@ object Publish : BuildType({
         text (
             "env.ApiKey",
             label = "ApiKey",
-            description = "ApiKey for the specified source",
+            description = "NuGet Api Key",
             value = "",
             allowEmpty = false,
             display = ParameterDisplay.PROMPT)
         text (
             "env.SlackWebhook",
             label = "SlackWebhook",
-            description = "Slack webhook",
+            description = "Slack Webhook",
             value = "",
             allowEmpty = false,
             display = ParameterDisplay.PROMPT)
         text (
             "env.GitterAuthToken",
             label = "GitterAuthToken",
-            description = "Gitter authtoken",
+            description = "Gitter Auth Token",
             value = "",
             allowEmpty = false,
             display = ParameterDisplay.PROMPT)
