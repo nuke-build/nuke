@@ -17,6 +17,7 @@ Host:
 - Jenkins
 - TeamCity
 - Travis
+IgnoreFailedSources: 
 NoLogo: 
 Plan: 
 Root: 

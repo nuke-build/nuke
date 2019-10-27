@@ -38,6 +38,12 @@ project {
             options = listOf("Debug" to "Debug", "Release" to "Release"),
             display = ParameterDisplay.NORMAL)
         text (
+            "env.IgnoreFailedSources",
+            label = "IgnoreFailedSources",
+            value = "False",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
+        text (
             "env.Source",
             label = "Source",
             value = "https://api.nuget.org/v3/index.json",
@@ -48,6 +54,12 @@ project {
             label = "GitHubToken",
             description = "GitHub token",
             value = "",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
+        text (
+            "env.IgnoreFailedSources",
+            label = "IgnoreFailedSources",
+            value = "False",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         param(

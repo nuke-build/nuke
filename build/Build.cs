@@ -112,11 +112,14 @@ partial class Build : NukeBuild
             EnsureCleanDirectory(OutputDirectory);
         });
 
+    [Parameter] bool IgnoreFailedSources;
+
     Target Restore => _ => _
         .Executes(() =>
         {
             DotNetRestore(_ => _
-                .SetProjectFile(Solution));
+                .SetProjectFile(Solution)
+                .SetIgnoreFailedSources(IgnoreFailedSources));
         });
 
     Project GlobalToolProject => Solution.GetProject("Nuke.GlobalTool");
