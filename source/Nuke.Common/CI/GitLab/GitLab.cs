@@ -13,7 +13,7 @@ namespace Nuke.Common.CI.GitLab
     ///     Interface according to the <a href="https://docs.gitlab.com/ce/ci/variables/README.html">official website</a>.
     /// </summary>
     [PublicAPI]
-    [BuildServer]
+    [CI]
     [ExcludeFromCodeCoverage]
     public class GitLab
     {

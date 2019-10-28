@@ -12,7 +12,7 @@ using Nuke.Common.Utilities;
 namespace Nuke.Common.CI.GitHubActions
 {
     [PublicAPI]
-    [BuildServer]
+    [CI]
     [ExcludeFromCodeCoverage]
     public class GitHubActions
     {

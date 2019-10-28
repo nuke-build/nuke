@@ -82,6 +82,9 @@ partial class Build : NukeBuild
     ///   - Microsoft VSCode           https://nuke.build/vscode
     public static int Main() => Execute<Build>(x => x.Pack);
 
+    [CI] readonly TeamCity TeamCity;
+    [CI] readonly AzurePipelines AzurePipelines;
+
     [GitRepository] readonly GitRepository GitRepository;
     [GitVersion] readonly GitVersion GitVersion;
     [Solution] readonly Solution Solution;
@@ -191,9 +194,9 @@ partial class Build : NukeBuild
                             .SetProperty("CoverletOutput", OutputDirectory / $"{v.Name}.xml"))));
 
             OutputDirectory.GlobFiles("*.trx")
-                .ForEach(x => AzurePipelines.Instance?.PublishTestResults(
+                .ForEach(x => AzurePipelines?.PublishTestResults(
                     new[] { x.ToString() },
-                    $"{Path.GetFileNameWithoutExtension(x)} ({AzurePipelines.Instance.StageDisplayName})"));
+                    $"{Path.GetFileNameWithoutExtension(x)} ({AzurePipelines.StageDisplayName})"));
         });
 
     string CoverageReportDirectory => OutputDirectory / "coverage-report";

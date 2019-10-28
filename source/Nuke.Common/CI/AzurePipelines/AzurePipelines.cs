@@ -17,7 +17,7 @@ namespace Nuke.Common.CI.AzurePipelines
     /// <a href="https://github.com/Microsoft/azure-pipelines-tasks/blob/master/docs/authoring/commands.md">Azure Pipeline Tasks Documentation</a>
     /// </summary>
     [PublicAPI]
-    [BuildServer]
+    [CI]
     [ExcludeFromCodeCoverage]
     public class AzurePipelines
     {

@@ -32,7 +32,7 @@ namespace Nuke.Common.CI.AppVeyor
     /// Interface according to the <a href="https://www.appveyor.com/docs/environment-variables/">official website</a>.
     /// </summary>
     [PublicAPI]
-    [BuildServer]
+    [CI]
     [ExcludeFromCodeCoverage]
     public class AppVeyor
     {

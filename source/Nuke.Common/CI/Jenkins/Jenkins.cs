@@ -13,7 +13,7 @@ namespace Nuke.Common.CI.Jenkins
     /// Interface according to the <a href="https://wiki.jenkins.io/display/JENKINS/Building+a+software+project">official website</a>.
     /// </summary>
     [PublicAPI]
-    [BuildServer]
+    [CI]
     [ExcludeFromCodeCoverage]
     public class Jenkins
     {

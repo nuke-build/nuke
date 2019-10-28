@@ -12,7 +12,7 @@ namespace Nuke.Common.CI.Bamboo
     /// Interface according to the <a href="https://confluence.atlassian.com/bamboo/bamboo-variables-289277087.html">official website</a>.
     /// </summary>
     [PublicAPI]
-    [BuildServer]
+    [CI]
     [ExcludeFromCodeCoverage]
     public class Bamboo
     {

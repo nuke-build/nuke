@@ -13,7 +13,7 @@ namespace Nuke.Common.CI.TravisCI
     /// Interface according to the <a href="https://docs.travis-ci.com/user/environment-variables/">official website</a>.
     /// </summary>
     [PublicAPI]
-    [BuildServer]
+    [CI]
     [ExcludeFromCodeCoverage]
     public class TravisCI
     {
