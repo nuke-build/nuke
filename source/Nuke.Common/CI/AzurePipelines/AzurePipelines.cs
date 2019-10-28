@@ -5,9 +5,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.AzurePipelines
 {
@@ -93,37 +94,28 @@ namespace Nuke.Common.CI.AzurePipelines
             _messageSink($"##[endgroup]{group}");
         }
 
-        public void UploadLog(string localFilePath)
+        public void UploadLog(string path)
         {
-            _messageSink($"##vso[build.uploadlog]{localFilePath}");
+            WriteCommand("build.uploadlog", path);
         }
 
         public void UpdateBuildNumber(string buildNumber)
         {
-            _messageSink($"##vso[build.updatebuildnumber]{buildNumber}");
+            WriteCommand("build.updatebuildnumber", buildNumber);
         }
 
         public void AddBuildTag(string buildTag)
         {
-            _messageSink($"##vso[build.addbuildtag]{buildTag}");
+            WriteCommand("build.addbuildtag", buildTag);
         }
 
-        public void UploadAzureDevOpsArtifacts(string containerFolder, string artifactName, string packageDirectory)
+        public void UploadArtifacts(string containerDirectory, string artifactName, string packageDirectory)
         {
-            _messageSink($"##vso[artifact.upload containerfolder={containerFolder};artifactname={artifactName};]{packageDirectory}");
-        }
-
-        public void PublishAzureDevOpsTestResults(
-            IEnumerable<FileInfo> files,
-            string title,
-            bool mergeResults = false,
-            string platform = "x64",
-            string configuration = "Release",
-            string testType = "VSTest")
-        {
-            var resultFiles = string.Join(",", files.Select(x => x.FullName.Replace('\\', Path.DirectorySeparatorChar)));
-            _messageSink(
-                $"##vso[results.publish type={testType};mergeResults={mergeResults};platform={platform}4;config={configuration};runTitle='{title}';publishRunAttachments=true;resultFiles={resultFiles};]");
+            WriteCommand("artifact.upload",
+                packageDirectory,
+                dictionaryConfigurator: x => x
+                    .AddKeyValue("containerfolder", containerDirectory)
+                    .AddKeyValue("artifactname", artifactName));
         }
 
         public void LogError(
@@ -146,6 +138,27 @@ namespace Nuke.Common.CI.AzurePipelines
             LogIssue(AzurePipelinesIssueType.Warning, message, sourcePath, lineNumber, columnNumber, code);
         }
 
+        public void PublishTestResults(
+            IEnumerable<string> files,
+            string title,
+            bool? mergeResults = null,
+            string platform = null,
+            string configuration = null,
+            string type = null,
+            bool? publishRunAttachments = null)
+        {
+            WriteCommand(
+                "results.publish",
+                dictionaryConfigurator: x => x
+                    .AddKeyValue("type", type)
+                    .AddKeyValue("resultFiles", files.JoinComma())
+                    .AddKeyValue("mergeResults", mergeResults)
+                    .AddKeyValue("platform", platform)
+                    .AddKeyValue("config", configuration)
+                    .AddKeyValue("runTitle", title)
+                    .AddKeyValue("publishRunAttachments", publishRunAttachments));
+        }
+
         public void LogIssue(
             AzurePipelinesIssueType type,
             string message,
@@ -154,20 +167,15 @@ namespace Nuke.Common.CI.AzurePipelines
             string columnNumber = null,
             string code = null)
         {
-            var properties = $"type={GetText(type)};";
-            if (!string.IsNullOrEmpty(sourcePath))
-                properties += $"sourcepath={sourcePath};";
-
-            if (!string.IsNullOrEmpty(lineNumber))
-                properties += $"linenumber={lineNumber};";
-
-            if (!string.IsNullOrEmpty(columnNumber))
-                properties += $"columnnumber={columnNumber};";
-
-            if (!string.IsNullOrEmpty(code))
-                properties += $"code={code};";
-
-            _messageSink($"##vso[task.logissue {properties}]{message}");
+            WriteCommand(
+                "task.logissue",
+                message,
+                dictionaryConfigurator: x => x
+                    .AddKeyValue("type", GetText(type))
+                    .AddKeyValue("sourcepath", sourcePath)
+                    .AddKeyValue("linenumber", lineNumber)
+                    .AddKeyValue("columnnumber", columnNumber)
+                    .AddKeyValue("code", code));
         }
 
         private string GetText(AzurePipelinesIssueType type)
@@ -178,6 +186,45 @@ namespace Nuke.Common.CI.AzurePipelines
                 AzurePipelinesIssueType.Error => "error",
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, message: null)
             };
+        }
+
+        public void WriteCommand(
+            string command,
+            string message = null,
+            Func<IDictionary<string, object>, IDictionary<string, object>> dictionaryConfigurator = null)
+        {
+            var escapedTokens = new[] { command };
+
+            if (dictionaryConfigurator != null)
+            {
+                escapedTokens = escapedTokens.Concat(dictionaryConfigurator
+                    .Invoke(new Dictionary<string, object>())
+                    .Where(x => x.Value != null)
+                    .Select(x => $"{x.Key}={Escape(x.Value.ToString())}")).ToArray();
+            }
+
+            Write(escapedTokens, message);
+        }
+
+        private void Write(string[] escapedTokens, string message)
+        {
+            _messageSink.Invoke($"##vso[{escapedTokens.JoinSpace()}]{EscapeData(message)}");
+        }
+
+        private string EscapeData(string data)
+        {
+            return data
+                .Replace("\r", "%0D")
+                .Replace("\n", "%0A");
+        }
+
+        private string Escape(string value)
+        {
+            return value
+                .Replace("\r", "%0D")
+                .Replace("\n", "%0A")
+                .Replace("]", "%5D")
+                .Replace(";", "%3B");
         }
     }
 }

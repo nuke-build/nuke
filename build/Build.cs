@@ -190,10 +190,10 @@ partial class Build : NukeBuild
                         .When(InvokedTargets.Contains(Coverage), _ => _
                             .SetProperty("CoverletOutput", OutputDirectory / $"{v.Name}.xml"))));
 
-            OutputDirectory.GlobFiles("*.trx").Select(x => new FileInfo(x))
-                .ForEach(x => AzurePipelines.Instance?.PublishAzureDevOpsTestResults(
-                    new[] { x },
-                    $"{Path.GetFileNameWithoutExtension(x.FullName)} ({AzurePipelines.Instance.StageDisplayName})"));
+            OutputDirectory.GlobFiles("*.trx")
+                .ForEach(x => AzurePipelines.Instance?.PublishTestResults(
+                    new[] { x.ToString() },
+                    $"{Path.GetFileNameWithoutExtension(x)} ({AzurePipelines.Instance.StageDisplayName})"));
         });
 
     string CoverageReportDirectory => OutputDirectory / "coverage-report";
