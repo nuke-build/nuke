@@ -5,21 +5,25 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
-- Changed `CheckBuildProjectConfigurationsAttribute` to skip dot-prefixed directories
 - Changed target frameworks to `netcoreapp3.0` and `net472`
 - Changed `AzureDevOps` to `AzurePipelines`
+- Changed `CheckBuildProjectConfigurationsAttribute` to skip dot-prefixed directories
 - Removed `ProjectFromAttribute`
 - Removed `MSBuildTasks.MSBuildParseProject`
+- Removed `GitVersion.GetNormalizedAssemblyVersion` and `GetNormalizedFileVersion`
 - Added NuGet package resolution from `project.assets.json` file
+- Added CI interface resolution via `CIAttribute`
 - Added `Bamboo` interface
 - Added `TeamCityImportDotCoverPathAttribute` to address version mismatch
-- Added execution of `dotnet build-server shutdown` when build has finished
 - Added `GitHubActionsAttribute` for configuration generation
 - Added `AzurePipelinesAttribute` for configuration generation
 - Added `AppVeyorAttribute` for configuration generation
+- Added execution of `dotnet build-server shutdown` when build has finished
+- Added `NpmCi` task
 - Fixed `TeamCity` parameter dictionaries to use original keys
 - Fixed NuGet package resolution for project files without `PackageReference` items
 - Fixed code inspections in PowerShell script
+- Fixed resolution for legacy package directories
 - Fixed generation of `Partition` parameter and script paths
 - Fixed `ToolPathResolver` to support global tool packages
 - Fixed `ReportGeneratorTasks` and `GitVersionTasks` by providing `Framework` property
