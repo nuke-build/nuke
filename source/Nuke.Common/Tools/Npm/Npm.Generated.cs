@@ -44,6 +44,42 @@ namespace Nuke.Common.Tools.Npm
             return process.Output;
         }
         /// <summary>
+        ///   <p>Install a project with a clean slate. This command is similar to <a href="https://docs.npmjs.com/cli/install.html">npm install</a>, except it's meant to be used in automated environments such as test platforms, continuous integration, and deployment or any situation where you want to make sure you're doing a clean install of your dependencies. It can be significantly faster than a regular npm install by skipping certain user-oriented features. It is also more strict than a regular install, which can help catch errors or inconsistencies caused by the incrementally-installed local environments of most npm users.<p>In short, the main differences between using <b>npm install</b> and <b>npm ci</b> are:</p><ul><li>The project <b>must</b> have an existing <b>package-lock.json</b> or <b>npm-shrinkwrap.json</b>.</li><li>If dependencies in the package lock do not match those in <b>package.json</b>, <b>npm ci</b> will exit with an error, instead of updating the package lock.</li><li><b>npm ci</b> can only install entire projects at a time: individual dependencies cannot be added with this command.</li><li>If a <b>node_modules</b> is already present, it will be automatically removed before <b>npm ci</b> begins its install.</li><li>It will never write to <b>package.json</b> or any of the package-locks: installs are essentially frozen.</li></ul></p>
+        ///   <p>For more details, visit the <a href="https://www.npmjs.com/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> NpmCi(NpmCiSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new NpmCiSettings();
+            var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary>
+        ///   <p>Install a project with a clean slate. This command is similar to <a href="https://docs.npmjs.com/cli/install.html">npm install</a>, except it's meant to be used in automated environments such as test platforms, continuous integration, and deployment or any situation where you want to make sure you're doing a clean install of your dependencies. It can be significantly faster than a regular npm install by skipping certain user-oriented features. It is also more strict than a regular install, which can help catch errors or inconsistencies caused by the incrementally-installed local environments of most npm users.<p>In short, the main differences between using <b>npm install</b> and <b>npm ci</b> are:</p><ul><li>The project <b>must</b> have an existing <b>package-lock.json</b> or <b>npm-shrinkwrap.json</b>.</li><li>If dependencies in the package lock do not match those in <b>package.json</b>, <b>npm ci</b> will exit with an error, instead of updating the package lock.</li><li><b>npm ci</b> can only install entire projects at a time: individual dependencies cannot be added with this command.</li><li>If a <b>node_modules</b> is already present, it will be automatically removed before <b>npm ci</b> begins its install.</li><li>It will never write to <b>package.json</b> or any of the package-locks: installs are essentially frozen.</li></ul></p>
+        ///   <p>For more details, visit the <a href="https://www.npmjs.com/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> NpmCi(Configure<NpmCiSettings> configurator)
+        {
+            return NpmCi(configurator(new NpmCiSettings()));
+        }
+        /// <summary>
+        ///   <p>Install a project with a clean slate. This command is similar to <a href="https://docs.npmjs.com/cli/install.html">npm install</a>, except it's meant to be used in automated environments such as test platforms, continuous integration, and deployment or any situation where you want to make sure you're doing a clean install of your dependencies. It can be significantly faster than a regular npm install by skipping certain user-oriented features. It is also more strict than a regular install, which can help catch errors or inconsistencies caused by the incrementally-installed local environments of most npm users.<p>In short, the main differences between using <b>npm install</b> and <b>npm ci</b> are:</p><ul><li>The project <b>must</b> have an existing <b>package-lock.json</b> or <b>npm-shrinkwrap.json</b>.</li><li>If dependencies in the package lock do not match those in <b>package.json</b>, <b>npm ci</b> will exit with an error, instead of updating the package lock.</li><li><b>npm ci</b> can only install entire projects at a time: individual dependencies cannot be added with this command.</li><li>If a <b>node_modules</b> is already present, it will be automatically removed before <b>npm ci</b> begins its install.</li><li>It will never write to <b>package.json</b> or any of the package-locks: installs are essentially frozen.</li></ul></p>
+        ///   <p>For more details, visit the <a href="https://www.npmjs.com/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        /// </remarks>
+        public static IEnumerable<(NpmCiSettings Settings, IReadOnlyCollection<Output> Output)> NpmCi(CombinatorialConfigure<NpmCiSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+        {
+            return configurator.Invoke(NpmCi, NpmLogger, degreeOfParallelism, completeOnFailure);
+        }
+        /// <summary>
         ///   <p>Installs a package, and any packages that it depends on. If the package has a package-lock or shrinkwrap file, the installation of dependencies will be driven by that, with an <b>npm-shrinkwrap.json</b> taking precedence if both files exist. See <a href="https://docs.npmjs.com/files/package-lock.json">package-lock.json</a> and <a href="https://docs.npmjs.com/cli/shrinkwrap">npm-shrinkwrap</a>.<para/>A package is: <ul><li>a) A folder containing a program described by a <a href="https://docs.npmjs.com/files/package.json">package.json file</a></li><li>b) A gzipped tarball containing (b)</li><li>c) A url that resolves to (b)</li><li>d) a <c>&lt;name&gt;@&lt;version&gt;</c> that is published on the registry (see <a href="https://docs.npmjs.com/misc/registry">npm-registry</a>) with (c)</li><li>e) a <c>&lt;name&gt;@&lt;tag&gt;</c> (see <a href="https://docs.npmjs.com/cli/dist-tag">npm-dist-tag</a>) that points to (d)</li><li>f) a <c>&lt;name&gt;</c> that has a "latest" tag satisfying (e)</li><li>g) a <c>&lt;git remote url&gt;</c> that resolves to (a)</li></ul></p>
         ///   <p>For more details, visit the <a href="https://www.npmjs.com/">official website</a>.</p>
         /// </summary>
@@ -173,6 +209,22 @@ namespace Nuke.Common.Tools.Npm
             return configurator.Invoke(NpmRun, NpmLogger, degreeOfParallelism, completeOnFailure);
         }
     }
+    #region NpmCiSettings
+    /// <summary>
+    ///   Used within <see cref="NpmTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class NpmCiSettings : ToolSettings
+    {
+        /// <summary>
+        ///   Path to the Npm executable.
+        /// </summary>
+        public override string ToolPath => base.ToolPath ?? NpmTasks.NpmPath;
+        public override Action<OutputType, string> CustomLogger => NpmTasks.NpmLogger;
+    }
+    #endregion
     #region NpmInstallSettings
     /// <summary>
     ///   Used within <see cref="NpmTasks"/>.
@@ -292,6 +344,16 @@ namespace Nuke.Common.Tools.Npm
               .Add("-- {value}", Arguments, separator: ' ');
             return base.ConfigureArguments(arguments);
         }
+    }
+    #endregion
+    #region NpmCiSettingsExtensions
+    /// <summary>
+    ///   Used within <see cref="NpmTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class NpmCiSettingsExtensions
+    {
     }
     #endregion
     #region NpmInstallSettingsExtensions
