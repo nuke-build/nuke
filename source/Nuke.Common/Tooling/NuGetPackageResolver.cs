@@ -249,8 +249,9 @@ namespace Nuke.Common.Tooling
                 => packagesConfigFile != null
                     ? new FileInfo(packagesConfigFile).Directory.NotNull()
                         .DescendantsAndSelf(x => x.Parent)
-                        .SingleOrDefault(x => x.GetFiles("*.sln").Any() && x.GetDirectories("packages").Any())
-                        ?.FullName
+                        .Where(x => x.GetFiles("*.sln").Any())
+                        .Select(x => Path.Combine(x.FullName, "packages"))
+                        .FirstOrDefault(Directory.Exists)
                     : null;
 
             var packagesDirectory = TryGetFromEnvironmentVariable() ??
