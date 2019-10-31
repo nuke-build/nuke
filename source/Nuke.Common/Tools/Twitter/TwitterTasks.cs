@@ -62,15 +62,13 @@ namespace Nuke.Common.Tools.Twitter
             var authorization = GetOAuthHeader(data);
             var formData = new FormUrlEncodedContent(data.Where(kvp => !kvp.Key.StartsWith("oauth_")));
 
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Add("Authorization", authorization);
+            using var client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Authorization", authorization);
 
-                var response = await client.PostAsync(c_url, formData);
-                var responseBody = await response.Content.ReadAsStringAsync();
+            var response = await client.PostAsync(c_url, formData);
+            var responseBody = await response.Content.ReadAsStringAsync();
 
-                ControlFlow.Assert(response.StatusCode == HttpStatusCode.OK, $"StatusCode != 200 - '{GetErrorFromBody(responseBody)}'");
-            }
+            ControlFlow.Assert(response.StatusCode == HttpStatusCode.OK, $"StatusCode != 200 - '{GetErrorFromBody(responseBody)}'");
         }
 
         private static string GetOAuthSignature(Dictionary<string, string> data, string url, string consumerSecret, string tokenSecret)

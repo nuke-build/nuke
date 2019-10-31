@@ -5,30 +5,31 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
-namespace Nuke.Common.CI.AzureDevOps
+namespace Nuke.Common.CI.AzurePipelines
 {
     /// <summary>
     /// Interface according to the <a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&amp;tabs=yaml">official website</a>.
     /// <a href="https://github.com/Microsoft/azure-pipelines-tasks/blob/master/docs/authoring/commands.md">Azure Pipeline Tasks Documentation</a>
     /// </summary>
     [PublicAPI]
-    [BuildServer]
+    [CI]
     [ExcludeFromCodeCoverage]
-    public class AzureDevOps
+    public class AzurePipelines
     {
-        private static Lazy<AzureDevOps> s_instance = new Lazy<AzureDevOps>(() => new AzureDevOps());
+        private static Lazy<AzurePipelines> s_instance = new Lazy<AzurePipelines>(() => new AzurePipelines());
 
-        public static AzureDevOps Instance => NukeBuild.Host == HostType.AzureDevOps ? s_instance.Value : null;
+        public static AzurePipelines Instance => NukeBuild.Host == HostType.AzurePipelines ? s_instance.Value : null;
 
-        internal static bool IsRunningAzureDevOps => Environment.GetEnvironmentVariable("TF_BUILD") != null;
+        internal static bool IsRunningAzurePipelines => Environment.GetEnvironmentVariable("TF_BUILD") != null;
 
         private readonly Action<string> _messageSink;
 
-        internal AzureDevOps(Action<string> messageSink = null)
+        internal AzurePipelines(Action<string> messageSink = null)
         {
             _messageSink = messageSink ?? Console.WriteLine;
         }
@@ -36,7 +37,7 @@ namespace Nuke.Common.CI.AzureDevOps
         public string AgentBuildDirectory => EnvironmentInfo.GetVariable<string>("AGENT_BUILDDIRECTORY");
         public string AgentHomeDirectory => EnvironmentInfo.GetVariable<string>("AGENT_HOMEDIRECTORY");
         public long AgentId => EnvironmentInfo.GetVariable<long>("AGENT_ID");
-        public AzureDevOpsJobStatus AgentJobStatus => EnvironmentInfo.GetVariable<AzureDevOpsJobStatus>("AGENT_JOBSTATUS");
+        public AzurePipelinesJobStatus AgentJobStatus => EnvironmentInfo.GetVariable<AzurePipelinesJobStatus>("AGENT_JOBSTATUS");
         public string AgentMachineName => EnvironmentInfo.GetVariable<string>("AGENT_MACHINENAME");
         public string AgentName => EnvironmentInfo.GetVariable<string>("AGENT_NAME");
         public string AgentWorkFolder => EnvironmentInfo.GetVariable<string>("AGENT_WORKFOLDER");
@@ -49,11 +50,14 @@ namespace Nuke.Common.CI.AzureDevOps
         public long DefinitionVersion => EnvironmentInfo.GetVariable<long>("BUILD_DEFINITIONVERSION");
         public string QueuedBy => EnvironmentInfo.GetVariable<string>("BUILD_QUEUEDBY");
         public Guid QueuedById => EnvironmentInfo.GetVariable<Guid>("BUILD_QUEUEDBYID");
-        public AzureDevOpsBuildReason BuildReason => EnvironmentInfo.GetVariable<AzureDevOpsBuildReason>("BUILD_REASON");
+        public AzurePipelinesBuildReason BuildReason => EnvironmentInfo.GetVariable<AzurePipelinesBuildReason>("BUILD_REASON");
         public bool RepositoryClean => EnvironmentInfo.GetVariable<bool>("BUILD_REPOSITORY_CLEAN");
         public string RepositoryLocalPath => EnvironmentInfo.GetVariable<string>("BUILD_REPOSITORY_LOCALPATH");
         public string RepositoryName => EnvironmentInfo.GetVariable<string>("BUILD_REPOSITORY_NAME");
-        public AzureDevOpsRepositoryType RepositoryProvider => EnvironmentInfo.GetVariable<AzureDevOpsRepositoryType>("BUILD_REPOSITORY_PROVIDER");
+
+        public AzurePipelinesRepositoryType RepositoryProvider =>
+            EnvironmentInfo.GetVariable<AzurePipelinesRepositoryType>("BUILD_REPOSITORY_PROVIDER");
+
         [CanBeNull] public string RepositoryTfvcWorkspace => EnvironmentInfo.GetVariable<string>("BUILD_REPOSITORY_TFVC_WORKSPACE");
         public string RepositoryUri => EnvironmentInfo.GetVariable<string>("BUILD_REPOSITORY_URI");
         public string RequestedFor => EnvironmentInfo.GetVariable<string>("BUILD_REQUESTEDFOR");
@@ -74,41 +78,44 @@ namespace Nuke.Common.CI.AzureDevOps
         [CanBeNull] public long? PullRequestId => EnvironmentInfo.GetVariable<long?>("SYSTEM_PULLREQUEST_PULLREQUESTID");
         [CanBeNull] public string PullRequestSourceBranch => EnvironmentInfo.GetVariable<string>("SYSTEM_PULLREQUEST_SOURCEBRANCH");
         [CanBeNull] public string PullRequestTargetBranch => EnvironmentInfo.GetVariable<string>("SYSTEM_PULLREQUEST_TARGETBRANCH");
+        public string StageName => EnvironmentInfo.GetVariable<string>("SYSTEM_STAGENAME");
+        public string StageDisplayName => EnvironmentInfo.GetVariable<string>("SYSTEM_STAGEDISPLAYNAME");
         public string TeamFoundationCollectionUri => EnvironmentInfo.GetVariable<string>("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI");
         public string TeamProject => EnvironmentInfo.GetVariable<string>("SYSTEM_TEAMPROJECT");
         public Guid TeamProjectId => EnvironmentInfo.GetVariable<Guid>("SYSTEM_TEAMPROJECTID");
 
-        public void UploadLog(string localFilePath)
+        public void Group(string group)
         {
-            _messageSink($"##vso[build.uploadlog]{localFilePath}");
+            _messageSink($"##[group]{group}");
+        }
+
+        public void EndGroup(string group)
+        {
+            _messageSink($"##[endgroup]{group}");
+        }
+
+        public void UploadLog(string path)
+        {
+            WriteCommand("build.uploadlog", path);
         }
 
         public void UpdateBuildNumber(string buildNumber)
         {
-            _messageSink($"##vso[build.updatebuildnumber]{buildNumber}");
+            WriteCommand("build.updatebuildnumber", buildNumber);
         }
 
         public void AddBuildTag(string buildTag)
         {
-            _messageSink($"##vso[build.addbuildtag]{buildTag}");
+            WriteCommand("build.addbuildtag", buildTag);
         }
 
-        public void UploadAzureDevOpsArtifacts(string containerFolder, string artifactName, string packageDirectory)
+        public void UploadArtifacts(string containerDirectory, string artifactName, string packageDirectory)
         {
-            _messageSink($"##vso[artifact.upload containerfolder={containerFolder};artifactname={artifactName};]{packageDirectory}");
-        }
-
-        public void PublishAzureDevOpsTestResults(
-            IEnumerable<FileInfo> files,
-            string title,
-            bool mergeResults = false,
-            string platform = "x64",
-            string configuration = "Release",
-            string testType = "VSTest")
-        {
-            var resultFiles = string.Join(",", files.Select(x => x.FullName.Replace('\\', Path.DirectorySeparatorChar)));
-            _messageSink(
-                $"##vso[results.publish type={testType};mergeResults={mergeResults};platform={platform}4;config={configuration};runTitle='{title}';publishRunAttachments=true;resultFiles={resultFiles};]");
+            WriteCommand("artifact.upload",
+                packageDirectory,
+                dictionaryConfigurator: x => x
+                    .AddKeyValue("containerfolder", containerDirectory)
+                    .AddKeyValue("artifactname", artifactName));
         }
 
         public void LogError(
@@ -118,7 +125,7 @@ namespace Nuke.Common.CI.AzureDevOps
             string columnNumber = null,
             string code = null)
         {
-            LogIssue(AzureDevOpsIssueType.Error, message, sourcePath, lineNumber, columnNumber, code);
+            LogIssue(AzurePipelinesIssueType.Error, message, sourcePath, lineNumber, columnNumber, code);
         }
 
         public void LogWarning(
@@ -128,44 +135,96 @@ namespace Nuke.Common.CI.AzureDevOps
             string columnNumber = null,
             string code = null)
         {
-            LogIssue(AzureDevOpsIssueType.Warning, message, sourcePath, lineNumber, columnNumber, code);
+            LogIssue(AzurePipelinesIssueType.Warning, message, sourcePath, lineNumber, columnNumber, code);
+        }
+
+        public void PublishTestResults(
+            IEnumerable<string> files,
+            string title,
+            bool? mergeResults = null,
+            string platform = null,
+            string configuration = null,
+            string type = null,
+            bool? publishRunAttachments = null)
+        {
+            WriteCommand(
+                "results.publish",
+                dictionaryConfigurator: x => x
+                    .AddKeyValue("type", type)
+                    .AddKeyValue("resultFiles", files.JoinComma())
+                    .AddKeyValue("mergeResults", mergeResults)
+                    .AddKeyValue("platform", platform)
+                    .AddKeyValue("config", configuration)
+                    .AddKeyValue("runTitle", title)
+                    .AddKeyValue("publishRunAttachments", publishRunAttachments));
         }
 
         public void LogIssue(
-            AzureDevOpsIssueType type,
+            AzurePipelinesIssueType type,
             string message,
             string sourcePath = null,
             string lineNumber = null,
             string columnNumber = null,
             string code = null)
         {
-            var properties = $"type={GetText(type)};";
-            if (!string.IsNullOrEmpty(sourcePath))
-                properties += $"sourcepath={sourcePath};";
-
-            if (!string.IsNullOrEmpty(lineNumber))
-                properties += $"linenumber={lineNumber};";
-
-            if (!string.IsNullOrEmpty(columnNumber))
-                properties += $"columnnumber={columnNumber};";
-
-            if (!string.IsNullOrEmpty(code))
-                properties += $"code={code};";
-
-            _messageSink($"##vso[task.logissue {properties}]{message}");
+            WriteCommand(
+                "task.logissue",
+                message,
+                dictionaryConfigurator: x => x
+                    .AddKeyValue("type", GetText(type))
+                    .AddKeyValue("sourcepath", sourcePath)
+                    .AddKeyValue("linenumber", lineNumber)
+                    .AddKeyValue("columnnumber", columnNumber)
+                    .AddKeyValue("code", code));
         }
 
-        private string GetText(AzureDevOpsIssueType type)
+        private string GetText(AzurePipelinesIssueType type)
         {
-            switch (type)
+            return type switch
             {
-                case AzureDevOpsIssueType.Warning:
-                    return "warning";
-                case AzureDevOpsIssueType.Error:
-                    return "error";
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, message: null);
+                AzurePipelinesIssueType.Warning => "warning",
+                AzurePipelinesIssueType.Error => "error",
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, message: null)
+            };
+        }
+
+        public void WriteCommand(
+            string command,
+            string message = null,
+            Func<IDictionary<string, object>, IDictionary<string, object>> dictionaryConfigurator = null)
+        {
+            var escapedTokens = new[] { command };
+
+            if (dictionaryConfigurator != null)
+            {
+                escapedTokens = escapedTokens.Concat(dictionaryConfigurator
+                    .Invoke(new Dictionary<string, object>())
+                    .Where(x => x.Value != null)
+                    .Select(x => $"{x.Key}={Escape(x.Value.ToString())}")).ToArray();
             }
+
+            Write(escapedTokens, message);
+        }
+
+        private void Write(string[] escapedTokens, string message)
+        {
+            _messageSink.Invoke($"##vso[{escapedTokens.JoinSpace()}]{EscapeData(message)}");
+        }
+
+        private string EscapeData(string data)
+        {
+            return data
+                .Replace("\r", "%0D")
+                .Replace("\n", "%0A");
+        }
+
+        private string Escape(string value)
+        {
+            return value
+                .Replace("\r", "%0D")
+                .Replace("\n", "%0A")
+                .Replace("]", "%5D")
+                .Replace(";", "%3B");
         }
     }
 }

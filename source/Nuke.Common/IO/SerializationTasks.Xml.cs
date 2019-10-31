@@ -27,21 +27,19 @@ namespace Nuke.Common.IO
         public static string XmlSerialize<T>(T obj)
         {
             var xmlSerializer = new XmlSerializer(typeof(T));
-            using (var streamWriter = new StringWriter())
-            {
-                xmlSerializer.Serialize(streamWriter, obj);
-                return streamWriter.ToString();
-            }
+
+            using var streamWriter = new StringWriter();
+            xmlSerializer.Serialize(streamWriter, obj);
+            return streamWriter.ToString();
         }
 
         [Pure]
         public static T XmlDeserialize<T>(string content)
         {
             var xmlSerializer = new XmlSerializer(typeof(T));
-            using (var memoryStream = new StringReader(content))
-            {
-                return (T) xmlSerializer.Deserialize(memoryStream);
-            }
+
+            using var memoryStream = new StringReader(content);
+            return (T) xmlSerializer.Deserialize(memoryStream);
         }
     }
 }

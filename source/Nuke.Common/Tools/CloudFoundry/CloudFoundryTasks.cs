@@ -3,16 +3,10 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using ICSharpCode.SharpZipLib.GZip;
-using ICSharpCode.SharpZipLib.Tar;
 using Nuke.Common.Tooling;
-using static Nuke.Common.IO.HttpTasks;
-using static Nuke.Common.IO.FileSystemTasks;
 
 namespace Nuke.Common.Tools.CloudFoundry
 {
@@ -26,22 +20,13 @@ namespace Nuke.Common.Tools.CloudFoundry
         private static bool IsWindows => EnvironmentInfo.Platform == PlatformFamily.Windows;
 
         private static string CurrentOsRid
-        {
-            get
+            => EnvironmentInfo.Platform switch
             {
-                switch (EnvironmentInfo.Platform)
-                {
-                    case PlatformFamily.Windows:
-                        return Environment.Is64BitOperatingSystem ? "win-x64" : "win-x32";
-                    case PlatformFamily.Linux:
-                        return Environment.Is64BitOperatingSystem ? "linux-x64" : "linux-x32";
-                    case PlatformFamily.OSX:
-                        return "osx-x64";
-                    default:
-                        throw new PlatformNotSupportedException();
-                }
-            }
-        }
+                PlatformFamily.Windows => (Environment.Is64BitOperatingSystem ? "win-x64" : "win-x32"),
+                PlatformFamily.Linux => (Environment.Is64BitOperatingSystem ? "linux-x64" : "linux-x32"),
+                PlatformFamily.OSX => "osx-x64",
+                _ => throw new PlatformNotSupportedException()
+            };
 
         /// <summary>
         ///   Create task which will complete when creation of an asynchronous service is complete.

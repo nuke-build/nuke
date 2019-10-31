@@ -36,6 +36,24 @@ namespace Nuke.Common.Utilities
         }
 
         [Pure]
+        public static string JoinCommaOr(this IEnumerable<string> values)
+        {
+            var valuesList = values.ToArray();
+            return valuesList.Length >= 2
+                ? valuesList.Reverse().Skip(1).Reverse().JoinComma() + ", or " + valuesList.Last()
+                : valuesList.JoinComma();
+        }
+
+        [Pure]
+        public static string JoinCommaAnd(this IEnumerable<string> values)
+        {
+            var valuesList = values.ToArray();
+            return valuesList.Length >= 2
+                ? valuesList.Reverse().Skip(1).Reverse().JoinComma() + ", and " + valuesList.Last()
+                : valuesList.JoinComma();
+        }
+
+        [Pure]
         public static string JoinNewLine(this IEnumerable<string> values, PlatformFamily? platformFamily = null)
         {
             var newLine = !platformFamily.HasValue

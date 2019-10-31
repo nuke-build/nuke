@@ -26,17 +26,13 @@ namespace Nuke.Common.Execution
 
         public static object GetValue(this MemberInfo member, object obj = null, object[] args = null)
         {
-            switch (member)
+            return member switch
             {
-                case FieldInfo fieldInfo:
-                    return fieldInfo.GetValue(obj);
-                case PropertyInfo propertyInfo:
-                    return propertyInfo.GetValue(obj);
-                case MethodInfo methodInfo:
-                    return methodInfo.Invoke(obj, args);
-                default:
-                    throw new NotSupportedException();
-            }
+                FieldInfo fieldInfo => fieldInfo.GetValue(obj),
+                PropertyInfo propertyInfo => propertyInfo.GetValue(obj),
+                MethodInfo methodInfo => methodInfo.Invoke(obj, args),
+                _ => throw new NotSupportedException()
+            };
         }
 
         public static void SetValue(this MemberInfo member, object instance, object value)
@@ -93,17 +89,13 @@ namespace Nuke.Common.Execution
 
         public static Type GetMemberType(this MemberInfo member)
         {
-            switch (member)
+            return member switch
             {
-                case FieldInfo fieldInfo:
-                    return fieldInfo.FieldType;
-                case PropertyInfo propertyInfo:
-                    return propertyInfo.PropertyType;
-                case MethodInfo methodInfo:
-                    return methodInfo.ReturnType;
-                default:
-                    throw new NotSupportedException();
-            }
+                FieldInfo fieldInfo => fieldInfo.FieldType,
+                PropertyInfo propertyInfo => propertyInfo.PropertyType,
+                MethodInfo methodInfo => methodInfo.ReturnType,
+                _ => throw new NotSupportedException()
+            };
         }
 
         public static T Convert<T>(string value)

@@ -7,8 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
-using Nuke.Common.CI.AzureDevOps;
+using Nuke.Common.CI.AppVeyor;
+using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.Bitrise;
+using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.CI.TravisCI;
 using Nuke.Common.Execution;
@@ -89,26 +91,16 @@ namespace Nuke.Common
         {
             get
             {
-                IOutputSink innerOutputSink;
-
-                switch (Host)
+                var innerOutputSink = Host switch
                 {
-                    case HostType.Bitrise:
-                        innerOutputSink = new BitriseOutputSink();
-                        break;
-                    case HostType.Travis:
-                        innerOutputSink = new TravisCIOutputSink();
-                        break;
-                    case HostType.TeamCity:
-                        innerOutputSink = new TeamCityOutputSink(new TeamCity());
-                        break;
-                    case HostType.AzureDevOps:
-                        innerOutputSink = new AzureDevOpsOutputSink(new AzureDevOps());
-                        break;
-                    default:
-                        innerOutputSink = ConsoleOutputSink.Default;
-                        break;
-                }
+                    HostType.Bitrise => new BitriseOutputSink(),
+                    HostType.Travis => new TravisCIOutputSink(),
+                    HostType.TeamCity => new TeamCityOutputSink(new TeamCity()),
+                    HostType.AzurePipelines => new AzurePipelinesOutputSink(new AzurePipelines()),
+                    HostType.GitHubActions => new GitHubActionsOutputSink(new GitHubActions()),
+                    HostType.AppVeyor => new AppVeyorOutputSink(new AppVeyor()),
+                    _ => ConsoleOutputSink.Default
+                };
 
                 return new SevereMessagesOutputSink(innerOutputSink);
             }

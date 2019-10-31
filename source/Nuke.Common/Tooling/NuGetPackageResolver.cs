@@ -44,17 +44,56 @@ namespace Nuke.Common.Tooling
             string packageId,
             string packagesConfigFile,
             string version = null,
-            bool includeDependencies = false)
+            bool resolveDependencies = false)
         {
-            return GetLocalInstalledPackages(packagesConfigFile, includeDependencies)
+            return GetLocalInstalledPackages(packagesConfigFile, resolveDependencies)
                 .SingleOrDefaultOrError(
                     x => x.Id.EqualsOrdinalIgnoreCase(packageId) && (x.Version.ToString() == version || version == null),
                     $"Package '{packageId}' is referenced with multiple versions. Use NuGetPackageResolver and SetToolPath.");
         }
 
         // TODO: add HasLocalInstalledPackage() ?
-        // ReSharper disable once CyclomaticComplexity
         public static IEnumerable<InstalledPackage> GetLocalInstalledPackages(
+            string packagesConfigFile,
+            bool resolveDependencies = true)
+        {
+            return packagesConfigFile.EndsWithOrdinalIgnoreCase("json")
+                ? GetLocalInstalledPackagesFromAssetsFile(packagesConfigFile, resolveDependencies)
+                : GetLocalInstalledPackagesFromConfigFile(packagesConfigFile, resolveDependencies);
+        }
+
+        private static IEnumerable<InstalledPackage> GetLocalInstalledPackagesFromAssetsFile(
+            string packagesConfigFile,
+            bool resolveDependencies = true)
+        {
+            var assetsObject = SerializationTasks.JsonDeserializeFromFile<JObject>(packagesConfigFile);
+
+            // ReSharper disable HeapView.BoxingAllocation
+            var directReferences =
+                assetsObject["project"]["frameworks"]
+                    .Single().Single()["dependencies"]
+                    ?.Children<JProperty>()
+                    .Select(x => x.Name).ToList()
+                ?? new List<string>();
+
+            var allReferences =
+                assetsObject["libraries"]
+                    .Children<JProperty>()
+                    .Where(x => x.Value["type"].ToString() == "package")
+                    .Select(x => x.Name.Split('/'))
+                    .Select(x => (PackageId: x.First(), Version: x.Last())).ToList();
+            // ReSharper restore HeapView.BoxingAllocation
+
+            foreach (var (name, version) in allReferences)
+            {
+                if (!resolveDependencies && !directReferences.Contains(name))
+                    continue;
+
+                yield return GetGlobalInstalledPackage(name, version, packagesConfigFile);
+            }
+        }
+
+        private static IEnumerable<InstalledPackage> GetLocalInstalledPackagesFromConfigFile(
             string packagesConfigFile,
             bool resolveDependencies = true)
         {
@@ -71,10 +110,11 @@ namespace Nuke.Common.Tooling
                 // TODO: use xml namespaces
                 // TODO: version as tag
                 var versions = XmlTasks.XmlPeek(
-                    packagesConfigFile,
-                    IsLegacyFile(packagesConfigFile)
-                        ? $".//package[@id='{packageId}']/@version"
-                        : $".//*[local-name() = 'PackageReference' or local-name() = 'PackageDownload'][@Include='{packageId}']/@Version");
+                        packagesConfigFile,
+                        IsLegacyFile(packagesConfigFile)
+                            ? $".//package[@id='{packageId}']/@version"
+                            : $".//*[local-name() = 'PackageReference' or local-name() = 'PackageDownload'][@Include='{packageId}']/@Version")
+                    .SelectMany(x => x.Split(';'));
 
                 foreach (var version in versions)
                 {
@@ -209,8 +249,9 @@ namespace Nuke.Common.Tooling
                 => packagesConfigFile != null
                     ? new FileInfo(packagesConfigFile).Directory.NotNull()
                         .DescendantsAndSelf(x => x.Parent)
-                        .SingleOrDefault(x => x.GetFiles("*.sln").Any() && x.GetDirectories("packages").Any())
-                        ?.FullName
+                        .Where(x => x.GetFiles("*.sln").Any())
+                        .Select(x => Path.Combine(x.FullName, "packages"))
+                        .FirstOrDefault(Directory.Exists)
                     : null;
 
             var packagesDirectory = TryGetFromEnvironmentVariable() ??

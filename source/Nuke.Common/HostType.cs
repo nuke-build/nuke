@@ -11,11 +11,13 @@ namespace Nuke.Common
     {
         Console,
         TeamCity,
-        AzureDevOps,
+        AzurePipelines,
+        Bamboo,
         Bitrise,
         AppVeyor,
         Jenkins,
         Travis,
-        GitLab
+        GitLab,
+        GitHubActions
     }
 }

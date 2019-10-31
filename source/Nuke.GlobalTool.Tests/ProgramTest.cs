@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using FluentAssertions;
+using Nuke.Common.Utilities;
 using Xunit;
 
 namespace Nuke.GlobalTool.Tests
@@ -129,10 +130,10 @@ EndGlobal
 ")]
         public void TestUpdateSolutionFileContent(string input, string expected)
         {
-            var content = input.Split(Environment.NewLine).ToList();
+            var content = input.SplitLineBreaks().ToList();
             Program.UpdateSolutionFileContent(content, "RELATIVE", "GUID", "KIND", "NAME");
 
-            content.Should().BeEquivalentTo(expected.Split(Environment.NewLine));
+            content.Should().BeEquivalentTo(expected.SplitLineBreaks());
         }
     }
 }

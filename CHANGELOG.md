@@ -6,6 +6,30 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.23.0] / 2019-10-31
+- Changed target frameworks to `netcoreapp3.0` and `net472`
+- Changed `AzureDevOps` to `AzurePipelines`
+- Changed `CheckBuildProjectConfigurationsAttribute` to skip dot-prefixed directories
+- Removed `ProjectFromAttribute`
+- Removed `MSBuildTasks.MSBuildParseProject`
+- Removed `GitVersion.GetNormalizedAssemblyVersion` and `GetNormalizedFileVersion`
+- Added NuGet package resolution from `project.assets.json` file
+- Added CI interface resolution via `CIAttribute`
+- Added `Bamboo` interface
+- Added `TeamCityImportDotCoverPathAttribute` to address version mismatch
+- Added `GitHubActionsAttribute` for configuration generation
+- Added `AzurePipelinesAttribute` for configuration generation
+- Added `AppVeyorAttribute` for configuration generation
+- Added execution of `dotnet build-server shutdown` when build has finished
+- Added `NpmCi` task
+- Fixed `TeamCity` parameter dictionaries to use original keys
+- Fixed NuGet package resolution for project files without `PackageReference` items
+- Fixed code inspections in PowerShell script
+- Fixed resolution for legacy package directories
+- Fixed generation of `Partition` parameter and script paths
+- Fixed `ToolPathResolver` to support global tool packages
+- Fixed `ReportGeneratorTasks` and `GitVersionTasks` by providing `Framework` property
+
 ## [0.22.2] / 2019-09-29
 - Fixed SourceLink integration
 
@@ -38,6 +62,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Fixed `NuGetPackageResolver` to allow multiple versions of the same package
 - Fixed `TeamCity.SetParameter` and `TeamCity.ImportData`
 - Fixed `SolutionSerializer` to fall back to `ProjectConfiguration` section
+- Fixed `MSBuildLocator` package to have `vswhere.exe` embedded
 
 ## [0.21.2] / 2019-07-28
 - Fixed validation to exclude requirements of skipped targets
@@ -416,7 +441,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/common/compare/0.22.2...HEAD
+[vNext]: https://github.com/nuke-build/common/compare/0.23.0...HEAD
+[0.23.0]: https://github.com/nuke-build/common/compare/0.22.2...0.23.0
 [0.22.2]: https://github.com/nuke-build/common/compare/0.22.1...0.22.2
 [0.22.1]: https://github.com/nuke-build/common/compare/0.22.0...0.22.1
 [0.22.0]: https://github.com/nuke-build/common/compare/0.21.2...0.22.0

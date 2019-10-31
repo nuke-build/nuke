@@ -6,10 +6,10 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.CI.AzureDevOps
+namespace Nuke.Common.CI.AzurePipelines
 {
     [PublicAPI]
-    public enum AzureDevOpsBuildReason
+    public enum AzurePipelinesBuildReason
     {
         /// <summary>A user manually queued the build.</summary>
         Manual,

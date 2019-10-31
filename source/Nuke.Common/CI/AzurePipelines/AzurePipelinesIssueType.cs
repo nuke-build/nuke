@@ -6,11 +6,12 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.CI
+namespace Nuke.Common.CI.AzurePipelines
 {
-    [MeansImplicitUse(ImplicitUseTargetFlags.WithMembers)]
-    [AttributeUsage(AttributeTargets.Class)]
-    public class BuildServerAttribute : Attribute
+    [PublicAPI]
+    public enum AzurePipelinesIssueType
     {
+        Warning,
+        Error
     }
 }

@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using Nuke.Common.Execution;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.TeamCity.Configuration
@@ -15,9 +16,11 @@ namespace Nuke.Common.CI.TeamCity.Configuration
         public string Description { get; set; }
         public TeamCityBuildTypeVcsRoot VcsRoot { get; set; }
         public bool IsComposite { get; set; }
+        public string PowerShellScript { get; set; }
+        public string BashScript { get; set; }
         public string[] InvokedTargets { get; set; }
         public Partition Partition { get; set; }
-        public string PartitionTarget { get; set; }
+        public string PartitionName { get; set; }
         public TeamCityConfigurationParameter[] Parameters { get; set; }
         public string[] ArtifactRules { get; set; }
         public TeamCityAgentPlatform Platform { get; set; }
@@ -109,10 +112,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
             {
                 var arguments = $"{InvokedTargets.JoinSpace()} --skip";
                 if (Partition != null)
-                {
-                    arguments += $" --partition-{PartitionTarget.SplitCamelHumpsWithSeparator("-")}";
-                    arguments += $" {Partition.Part}/{Partition.Total}";
-                }
+                    arguments += $" --{ParameterService.GetParameterDashedName(PartitionName)} {Partition.Part}";
 
                 if (Platform == TeamCityAgentPlatform.Unix)
                     WriteExecStep(writer, arguments);
@@ -125,8 +125,8 @@ namespace Nuke.Common.CI.TeamCity.Configuration
         {
             using (writer.WriteBlock("exec"))
             {
-                writer.WriteLine("path = \"build.sh\"");
-                writer.WriteLine($"arguments = \"{arguments}\"");
+                writer.WriteLine($"path = {BashScript.DoubleQuote()}");
+                writer.WriteLine($"arguments = {arguments.DoubleQuote()}");
             }
         }
 
@@ -134,8 +134,8 @@ namespace Nuke.Common.CI.TeamCity.Configuration
         {
             using (writer.WriteBlock("powerShell"))
             {
-                writer.WriteLine("scriptMode = file { path = \"build.ps1\" }");
-                writer.WriteLine($"param(\"jetbrains_powershell_scriptArguments\",\"{arguments}\")");
+                writer.WriteLine($"scriptMode = file {{ path = {PowerShellScript.DoubleQuote()} }}");
+                writer.WriteLine($"param(\"jetbrains_powershell_scriptArguments\", {arguments.DoubleQuote()})");
                 writer.WriteLine("noProfile = true");
             }
         }

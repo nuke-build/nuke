@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -8,15 +8,15 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.OutputSinks;
 
-namespace Nuke.Common.CI.AzureDevOps
+namespace Nuke.Common.CI.AppVeyor
 {
     [UsedImplicitly]
     [ExcludeFromCodeCoverage]
-    internal class AzureDevOpsOutputSink : AnsiColorOutputSink
+    internal class AppVeyorOutputSink : AnsiColorOutputSink
     {
-        private readonly AzureDevOps _azureDevOps;
+        private readonly AppVeyor _appVeyor;
 
-        internal AzureDevOpsOutputSink(AzureDevOps azureDevOps)
+        internal AppVeyorOutputSink(AppVeyor appVeyor)
             : base(
                 traceCode: "90",
                 informationCode: "36;1",
@@ -24,21 +24,17 @@ namespace Nuke.Common.CI.AzureDevOps
                 errorCode: "31;1",
                 successCode: "32;1")
         {
-            _azureDevOps = azureDevOps;
+            _appVeyor = appVeyor;
         }
 
         public override void WriteWarning(string text, string details = null)
         {
-            _azureDevOps.LogIssue(AzureDevOpsIssueType.Warning, text);
-            if (details != null)
-                WriteNormal(details);
+            _appVeyor.WriteWarning(text, details);
         }
 
         public override void WriteError(string text, string details = null)
         {
-            _azureDevOps.LogIssue(AzureDevOpsIssueType.Error, text);
-            if (details != null)
-                WriteNormal(details);
+            _appVeyor.WriteError(text, details);
         }
     }
 }

@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -22,16 +21,23 @@ using static Nuke.Common.IO.PathConstruction;
 namespace Nuke.Common.CI.TeamCity
 {
     [PublicAPI]
-    public class TeamCityAttribute : ConfigurationGenerationAttributeBase, IOnBuildFinished
+    public class TeamCityAttribute : ConfigurationGenerationAttributeBase
     {
         public TeamCityAttribute(TeamCityAgentPlatform platform)
         {
             Platform = platform;
         }
 
+        private AbsolutePath TeamcityDirectory => NukeBuild.RootDirectory / ".teamcity";
+        private string SettingsFile => TeamcityDirectory / "settings.kts";
+        private string PomFile => TeamcityDirectory / "pom.xml";
+
+        protected override IEnumerable<string> GeneratedFiles => new[] { PomFile, SettingsFile };
+
         public TeamCityAgentPlatform Platform { get; }
         public string Description { get; set; }
         public string DefaultBranch { get; set; } = "develop";
+        public bool CleanCheckoutDirectory { get; set; } = true;
 
         public string VcsTriggerBranchFilter { get; set; } = "";
         public string VcsTriggerRules { get; set; } = "+:**";
@@ -45,11 +51,8 @@ namespace Nuke.Common.CI.TeamCity
         public string[] NonEntryTargets { get; set; } = new string[0];
         public string[] ExcludedTargets { get; set; } = new string[0];
 
-        public void OnBuildFinished(NukeBuild build)
+        protected override void OnBuildFinishedInternal(NukeBuild build)
         {
-            if (TeamCity.Instance == null)
-                return;
-
             // serialize difference to start object
 
             // var stateFile = NukeBuild.TemporaryDirectory / $"{TeamCity.Instance.BuildTypeId}.xml";
@@ -62,52 +65,29 @@ namespace Nuke.Common.CI.TeamCity
 
         protected override void Generate(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
-            ControlFlow.Assert(NukeBuild.RootDirectory != null, "NukeBuild.RootDirectory != null");
-            var teamcityDirectory = NukeBuild.RootDirectory / ".teamcity";
-
-            TextTasks.WriteAllLines(
-                teamcityDirectory / "pom.xml",
-                ResourceUtility.GetResourceAllLines<TeamCityConfigurationEntity>("pom.xml"));
-
-            using (var writer = new CustomFileWriter(teamcityDirectory / "settings.kts", indentationFactor: 4))
-            {
-                GetHeader().ForEach(writer.WriteLine);
-
-                var project = GetProject(build, executableTargets);
-                project.Write(writer);
-
-                project.VcsRoot.Write(writer);
-                project.BuildTypes.ForEach(x => x.Write(writer));
-            }
-        }
-
-        protected virtual IEnumerable<string> GetHeader()
-        {
-            return new[]
-                   {
-                       "// THIS FILE IS AUTO-GENERATED",
-                       "// ITS CONTENT IS OVERWRITTEN WITH EXCEPTION OF MARKED USER BLOCKS",
-                       "",
-                       "import jetbrains.buildServer.configs.kotlin.v2018_1.*",
-                       "import jetbrains.buildServer.configs.kotlin.v2018_1.buildFeatures.*",
-                       "import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.*",
-                       "import jetbrains.buildServer.configs.kotlin.v2018_1.triggers.*",
-                       "import jetbrains.buildServer.configs.kotlin.v2018_1.vcs.*",
-                       "",
-                       "version = \"2019.1\"",
-                       ""
-                   };
-        }
-
-        protected virtual TeamCityProject GetProject(
-            NukeBuild build,
-            IReadOnlyCollection<ExecutableTarget> executableTargets)
-        {
             var relevantTargets = VcsTriggeredTargets.Concat(ManuallyTriggeredTargets)
                 .SelectMany(x => ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { x }))
                 .Distinct()
                 .Where(x => !ExcludedTargets.Contains(x.Name) && !NonEntryTargets.Contains(x.Name)).ToList();
+            var configuration = GetConfiguration(build, relevantTargets);
 
+            ControlFlow.Assert(NukeBuild.RootDirectory != null, "NukeBuild.RootDirectory != null");
+
+            TextTasks.WriteAllLines(
+                PomFile,
+                ResourceUtility.GetResourceAllLines<TeamCityConfigurationEntity>("pom.xml"));
+
+            using var writer = new CustomFileWriter(SettingsFile, indentationFactor: 4);
+            configuration.Write(writer);
+        }
+
+        protected virtual TeamCityConfiguration GetConfiguration(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        {
+            return new TeamCityConfiguration { Project = GetProject(build, relevantTargets) };
+        }
+
+        protected virtual TeamCityProject GetProject(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        {
             var vcsRoot = GetVcsRoot(build);
             var lookupTable = new LookupTable<ExecutableTarget, TeamCityBuildType>();
             var buildTypes = relevantTargets
@@ -173,21 +153,23 @@ namespace Nuke.Common.CI.TeamCity
 
             if (isPartitioned)
             {
-                var partitions = ArtifactExtensions.Partitions[executableTarget.Definition];
-                for (var i = 0; i < partitions; i++)
+                var (partitionName, totalPartitions) = ArtifactExtensions.Partitions[executableTarget.Definition];
+                for (var i = 0; i < totalPartitions; i++)
                 {
-                    var partition = new Partition { Part = i + 1, Total = partitions };
+                    var partition = new Partition { Part = i + 1, Total = totalPartitions };
                     yield return new TeamCityBuildType
                                  {
                                      Id = $"{executableTarget.Name}_P{partition.Part}T{partition.Total}",
                                      Name = $"{executableTarget.Name} {partition}",
                                      Description = executableTarget.Description,
                                      Platform = Platform,
+                                     BashScript = BashScript,
+                                     PowerShellScript = PowerShellScript,
                                      ArtifactRules = artifactRules,
                                      Partition = partition,
-                                     PartitionTarget = executableTarget.Name,
+                                     PartitionName = partitionName,
                                      InvokedTargets = invokedTargets,
-                                     VcsRoot = new TeamCityBuildTypeVcsRoot { Root = vcsRoot },
+                                     VcsRoot = new TeamCityBuildTypeVcsRoot { Root = vcsRoot, CleanCheckoutDirectory = CleanCheckoutDirectory },
                                      Dependencies = snapshotDependencies.Concat(artifactDependencies).ToArray()
                                  };
                 }
@@ -213,6 +195,8 @@ namespace Nuke.Common.CI.TeamCity
                              Name = executableTarget.Name,
                              Description = executableTarget.Description,
                              Platform = Platform,
+                             BashScript = BashScript,
+                             PowerShellScript = PowerShellScript,
                              VcsRoot = new TeamCityBuildTypeVcsRoot
                                        {
                                            Root = vcsRoot,
@@ -289,9 +273,10 @@ namespace Nuke.Common.CI.TeamCity
             var valueSet = ParameterService.GetParameterValueSet(member, build);
 
             var defaultValue = member.GetValue(build);
-            if (member.GetMemberType() == typeof(AbsolutePath) ||
-                member.GetMemberType() == typeof(Solution) ||
-                member.GetMemberType() == typeof(Project))
+            if (defaultValue != null &&
+                (member.GetMemberType() == typeof(AbsolutePath) ||
+                 member.GetMemberType() == typeof(Solution) ||
+                 member.GetMemberType() == typeof(Project)))
                 defaultValue = (UnixRelativePath) GetRelativePath(NukeBuild.RootDirectory, defaultValue.ToString());
 
             return new TeamCityConfigurationParameter

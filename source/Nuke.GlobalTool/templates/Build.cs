@@ -63,10 +63,10 @@ class Build : NukeBuild
     Target Restore => _ => _
         .Executes(() =>
         {
-            MSBuild(s => s                                                                      // MSBUILD
+            MSBuild(_ => _                                                                      // MSBUILD
                 .SetTargetPath(Solution)                                                        // MSBUILD
                 .SetTargets("Restore"));                                                        // MSBUILD
-            DotNetRestore(s => s                                                                // DOTNET
+            DotNetRestore(_ => _                                                                // DOTNET
                 .SetProjectFile(Solution));                                                     // DOTNET
         });
 
@@ -74,20 +74,20 @@ class Build : NukeBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
-            MSBuild(s => s                                                                      // MSBUILD
+            MSBuild(_ => _                                                                      // MSBUILD
                 .SetTargetPath(Solution)                                                        // MSBUILD
                 .SetTargets("Rebuild")                                                          // MSBUILD
                 .SetConfiguration(Configuration)                                                // MSBUILD
-                .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())                  // MSBUILD && GITVERSION
-                .SetFileVersion(GitVersion.GetNormalizedFileVersion())                          // MSBUILD && GITVERSION
+                .SetAssemblyVersion(GitVersion.AssemblySemVer)                                  // MSBUILD && GITVERSION
+                .SetFileVersion(GitVersion.AssemblySemFileVer)                                  // MSBUILD && GITVERSION
                 .SetInformationalVersion(GitVersion.InformationalVersion)                       // MSBUILD && GITVERSION
                 .SetMaxCpuCount(Environment.ProcessorCount)                                     // MSBUILD
                 .SetNodeReuse(IsLocalBuild));                                                   // MSBUILD
-            DotNetBuild(s => s                                                                  // DOTNET
+            DotNetBuild(_ => _                                                                  // DOTNET
                 .SetProjectFile(Solution)                                                       // DOTNET
                 .SetConfiguration(Configuration)                                                // DOTNET
-                .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())                  // DOTNET && GITVERSION
-                .SetFileVersion(GitVersion.GetNormalizedFileVersion())                          // DOTNET && GITVERSION
+                .SetAssemblyVersion(GitVersion.AssemblySemVer)                                  // DOTNET && GITVERSION
+                .SetFileVersion(GitVersion.AssemblySemFileVer)                                  // DOTNET && GITVERSION
                 .SetInformationalVersion(GitVersion.InformationalVersion)                       // DOTNET && GITVERSION
                 .EnableNoRestore());                                                            // DOTNET
         });
@@ -98,7 +98,7 @@ class Build : NukeBuild
         .DependsOn(Compile)                                                                     // NUGET
         .Executes(() =>                                                                         // NUGET
         {                                                                                       // NUGET
-            MSBuild(s => s                                                                      // NUGET && MSBUILD
+            MSBuild(_ => _                                                                      // NUGET && MSBUILD
                 .SetTargetPath(Solution)                                                        // NUGET && MSBUILD
                 .SetTargets("Restore", "Pack")                                                  // NUGET && MSBUILD
                 .SetPackageVersion(GitVersion.NuGetVersionV2)                                   // NUGET && MSBUILD && GITVERSION
@@ -108,7 +108,7 @@ class Build : NukeBuild
                 .SetConfiguration(Configuration)                                                // NUGET && MSBUILD
                 .EnableIncludeSymbols()                                                         // NUGET && MSBUILD
                 .SetSymbolPackageFormat(NuGetSymbolPackageFormat.snupkg));                      // NUGET && MSBUILD
-            DotNetPack(s => s                                                                   // NUGET && DOTNET
+            DotNetPack(_ => _                                                                   // NUGET && DOTNET
                 .SetProject(Solution)                                                           // NUGET && DOTNET
                 .SetVersion(GitVersion.NuGetVersionV2)                                          // NUGET && DOTNET && GITVERSION
                 .SetPackageReleaseNotes(GetNuGetReleaseNotes(ChangelogFile, GitRepository))     // NUGET && DOTNET && CHANGELOG && GIT
@@ -126,14 +126,14 @@ class Build : NukeBuild
         .Requires(() => Configuration.Equals(Configuration.Release))                            // NUGET
         .Executes(() =>                                                                         // NUGET
         {                                                                                       // NUGET
-            DotNetNuGetPush(s => s                                                              // NUGET && DOTNET
-            NuGetPush(s => s                                                                    // NUGET && MSBUILD
+            DotNetNuGetPush(_ => _                                                              // NUGET && DOTNET
+            NuGetPush(_ => _                                                                    // NUGET && MSBUILD
                     .SetSource(Source)                                                          // NUGET
                     .SetSymbolSource(SymbolSource)                                              // NUGET
                     .SetApiKey(ApiKey)                                                          // NUGET
                     .CombineWith(                                                               // NUGET
-                        OutputDirectory.GlobFiles("*.nupkg"), (cs, v) => cs                     // NUGET && OUTPUT_DIR
-                        ArtifactsDirectory.GlobFiles("*.nupkg"), (cs, v) => cs                  // NUGET && ARTIFACTS_DIR
+                        OutputDirectory.GlobFiles("*.nupkg"), (_, v) => _                     // NUGET && OUTPUT_DIR
+                        ArtifactsDirectory.GlobFiles("*.nupkg"), (_, v) => _                  // NUGET && ARTIFACTS_DIR
                             .SetTargetPath(v)),                                                 // NUGET
                 degreeOfParallelism: 5,                                                         // NUGET
                 completeOnFailure: true);                                                       // NUGET

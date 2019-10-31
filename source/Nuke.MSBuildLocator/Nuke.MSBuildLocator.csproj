@@ -3,14 +3,19 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net461</TargetFramework>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <IsTool>True</IsTool>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" PrivateAssets="All" />
     <PackageReference Include="System.ValueTuple" Version="4.3.0" />
-    <PackageReference Include="vswhere" Version="2.5.2" />
+    <PackageReference Include="vswhere" Version="2.7.1" GeneratePathProperty="true" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="$(Pkgvswhere)\tools\vswhere.exe" PackagePath="tools" Pack="true" Visible="false" />
+    <Content Include="bin\$(Configuration)\$(TargetFramework)\System.ValueTuple.dll" PackagePath="tools" Pack="true" Visible="false" />
   </ItemGroup>
 
 </Project>

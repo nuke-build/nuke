@@ -13,11 +13,9 @@ namespace Nuke.Common.Utilities
     {
         public static string GetMD5Hash(this string str)
         {
-            using (var algorithm = MD5.Create())
-            {
-                var hash = algorithm.ComputeHash(Encoding.UTF8.GetBytes(str));
-                return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
-            }
+            using var algorithm = MD5.Create();
+            var hash = algorithm.ComputeHash(Encoding.UTF8.GetBytes(str));
+            return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
         }
     }
 }

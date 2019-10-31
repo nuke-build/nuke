@@ -42,7 +42,7 @@ namespace Nuke.Common.Tooling
         int ExitCode { get; }
 
         /// <summary>
-        /// Calls <see cref="Process.Kill"/>.
+        /// Calls <see cref="Process.Kill()"/>.
         /// </summary>
         void Kill();
 

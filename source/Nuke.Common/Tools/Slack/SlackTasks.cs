@@ -29,29 +29,28 @@ namespace Nuke.Common.Tools.Slack
             var payload = JsonConvert.SerializeObject(message);
             var data = new NameValueCollection { ["payload"] = payload };
 
-            using (var client = new WebClient())
+            using var client = new WebClient();
+
+            client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
+
+            var stringBuilder = new StringBuilder();
+            var str = string.Empty;
+            foreach (var key in data.AllKeys)
             {
-                client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
+                stringBuilder
+                    .Append(str)
+                    .Append(HttpUtility.UrlEncode(key))
+                    .Append(value: '=')
+                    .Append(HttpUtility.UrlEncode(data[key]));
 
-                var stringBuilder = new StringBuilder();
-                var str = string.Empty;
-                foreach (var key in data.AllKeys)
-                {
-                    stringBuilder
-                        .Append(str)
-                        .Append(HttpUtility.UrlEncode(key))
-                        .Append(value: '=')
-                        .Append(HttpUtility.UrlEncode(data[key]));
-
-                    str = "&";
-                }
-
-                var bytes = Encoding.ASCII.GetBytes(stringBuilder.ToString());
-
-                var response = await client.UploadDataTaskAsync(webhook, "POST", bytes);
-                var responseText = Encoding.UTF8.GetString(response);
-                ControlFlow.Assert(responseText == "ok", $"'{responseText}' == 'ok'");
+                str = "&";
             }
+
+            var bytes = Encoding.ASCII.GetBytes(stringBuilder.ToString());
+
+            var response = await client.UploadDataTaskAsync(webhook, "POST", bytes);
+            var responseText = Encoding.UTF8.GetString(response);
+            ControlFlow.Assert(responseText == "ok", $"'{responseText}' == 'ok'");
         }
     }
 }

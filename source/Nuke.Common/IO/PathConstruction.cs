@@ -13,6 +13,7 @@ using GlobExpressions;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 // ReSharper disable ArrangeMethodOrOperatorBody
 
@@ -71,20 +72,12 @@ namespace Nuke.Common.IO
         internal static GlobbingCaseSensitivity GlobbingCaseSensitivity;
 
         private static GlobOptions GlobOptions
-        {
-            get
+            => GlobbingCaseSensitivity switch
             {
-                switch (GlobbingCaseSensitivity)
-                {
-                    case GlobbingCaseSensitivity.CaseSensitive:
-                        return GlobOptions.None;
-                    case GlobbingCaseSensitivity.CaseInsensitive:
-                        return GlobOptions.CaseInsensitive;
-                    default:
-                        return EnvironmentInfo.IsWin ? GlobOptions.CaseInsensitive : GlobOptions.None;
-                }
-            }
-        }
+                GlobbingCaseSensitivity.CaseSensitive => GlobOptions.None,
+                GlobbingCaseSensitivity.CaseInsensitive => GlobOptions.CaseInsensitive,
+                _ => (EnvironmentInfo.IsWin ? GlobOptions.CaseInsensitive : GlobOptions.None)
+            };
 
         // TODO: check usages
         [Pure]
@@ -115,6 +108,9 @@ namespace Nuke.Common.IO
         [Pure]
         public static IReadOnlyCollection<string> GlobFiles(string directory, params string[] patterns)
         {
+            if (patterns.Length == 0)
+                (directory, patterns) = GetGlobFromSingleDefinition((AbsolutePath) directory);
+
             var directoryInfo = new DirectoryInfo(directory);
             return patterns.SelectMany(x => Glob.Files(directoryInfo, x, GlobOptions)).Select(x => x.FullName).ToList();
         }
@@ -127,6 +123,9 @@ namespace Nuke.Common.IO
         [Pure]
         public static IReadOnlyCollection<string> GlobDirectories(string directory, params string[] patterns)
         {
+            if (patterns.Length == 0)
+                (directory, patterns) = GetGlobFromSingleDefinition((AbsolutePath) directory);
+
             var directoryInfo = new DirectoryInfo(directory);
             return patterns.SelectMany(x => Glob.Directories(directoryInfo, x, GlobOptions)).Select(x => x.FullName).ToList();
         }
@@ -136,9 +135,18 @@ namespace Nuke.Common.IO
             return GlobDirectories((string) directory, patterns).Select(x => (AbsolutePath) x).ToList();
         }
 
+        private static (string Directory, string[] Patterns) GetGlobFromSingleDefinition(AbsolutePath definition)
+        {
+            var directory = definition.DescendantsAndSelf(x => x.Parent).FirstOrDefault(x => !x.ToString().ContainsOrdinalIgnoreCase("*"));
+            var pattern = definition.ToString().TrimStart(directory).TrimStart(s_allSeparators);
+            return (directory, new[] { pattern });
+        }
+
         private const char WinSeparator = '\\';
         private const char UncSeparator = '\\';
         private const char UnixSeparator = '/';
+
+        private static readonly char[] s_allSeparators = { WinSeparator, UncSeparator, UnixSeparator };
 
         private static bool IsSameDirectory([CanBeNull] string pathPart)
             => pathPart?.Length == 1 &&
@@ -207,7 +215,7 @@ namespace Nuke.Common.IO
                 return !IsWinRoot(left) ? left : $@"{left}\";
 
             AssertSeparatorChoice(left, separator);
-            separator = separator ?? GetSeparator(left);
+            separator ??= GetSeparator(left);
 
             if (IsWinRoot(left))
                 return $@"{left}\{right}";
@@ -224,12 +232,12 @@ namespace Nuke.Common.IO
         {
             AssertSeparatorChoice(path, separator);
 
-            path = path ?? string.Empty;
-            separator = separator ?? GetSeparator(path);
+            path ??= string.Empty;
+            separator ??= GetSeparator(path);
             var root = GetPathRoot(path);
 
             var tail = root == null ? path : path.Substring(root.Length);
-            var tailParts = tail.Split(new[] { WinSeparator, UncSeparator, UnixSeparator }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            var tailParts = tail.Split(s_allSeparators, StringSplitOptions.RemoveEmptyEntries).ToList();
             for (var i = 0; i < tailParts.Count;)
             {
                 var part = tailParts[i];
@@ -300,7 +308,7 @@ namespace Nuke.Common.IO
 
             return IsUnixRoot(path) // TODO: "//" ?
                 ? path
-                : path.TrimEnd(WinSeparator, UnixSeparator, UncSeparator);
+                : path.TrimEnd(s_allSeparators);
         }
 
         [Serializable]

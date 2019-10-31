@@ -26,21 +26,17 @@ namespace Nuke.Common.Tools.Unity
 
         public static string GetToolPath()
         {
-            switch (EnvironmentInfo.Platform)
+            return EnvironmentInfo.Platform switch
             {
-                case PlatformFamily.Windows:
-                    var programDirectory = EnvironmentInfo.SpecialFolder(
-                        EnvironmentInfo.Is32Bit
-                            ? SpecialFolders.ProgramFilesX86
-                            : SpecialFolders.ProgramFiles);
-                    return $@"{programDirectory}\Unity\Editor\Unity.exe";
-                case PlatformFamily.OSX:
-                    return "/Applications/Unity/Unity.app/Contents/MacOS/Unity";
-                case PlatformFamily.Linux:
-                case PlatformFamily.Unknown:
-                default:
-                    return null;
-            }
+                PlatformFamily.Windows => $@"{EnvironmentInfo.SpecialFolder(
+                    EnvironmentInfo.Is32Bit
+                        ? SpecialFolders.ProgramFilesX86
+                        : SpecialFolders.ProgramFiles)}\Unity\Editor\Unity.exe",
+                PlatformFamily.OSX => "/Applications/Unity/Unity.app/Contents/MacOS/Unity",
+                PlatformFamily.Linux => null,
+                PlatformFamily.Unknown => null,
+                _ => null
+            };
         }
 
         private static void PreProcess<T>(ref T unitySettings)

@@ -6,12 +6,12 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.CI.AzureDevOps
+namespace Nuke.Common.CI.AzurePipelines
 {
     [PublicAPI]
-    public enum AzureDevOpsIssueType
+    public enum AzurePipelinesCodeCoverageToolType
     {
-        Warning,
-        Error
+        JaCoCo,
+        Cobertura
     }
 }

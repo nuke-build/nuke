@@ -28,7 +28,7 @@ namespace Nuke.CodeGeneration.Generators
             where T : IWriterWrapper
         {
             var paragraphs = new List<string>();
-            paragraphs.Add((tool.Help).Paragraph());
+            paragraphs.Add(tool.Help.Paragraph());
             paragraphs.Add(GetOfficialUrlText(tool.OfficialUrl).Paragraph());
             return writerWrapper.WriteSummary(paragraphs.ToArray());
         }

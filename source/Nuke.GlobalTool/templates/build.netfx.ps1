@@ -4,7 +4,7 @@ Param(
     [string[]]$BuildArguments
 )
 
-Write-Output "Windows PowerShell $($Host.Version)"
+Write-Output "PowerShell $($PSVersionTable.PSEdition) version $($PSVersionTable.PSVersion)"
 
 Set-StrictMode -Version 2.0; $ErrorActionPreference = "Stop"; $ConfirmPreference = "None"; trap { exit 1 }
 $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
@@ -41,7 +41,7 @@ elseif ($NuGetVersion -eq "latest") {
 Write-Output $(& $env:NUGET_EXE help | select -First 1)
 
 ExecSafe { & $env:NUGET_EXE install Nuke.MSBuildLocator -ExcludeVersion -OutputDirectory $TempDirectory -SolutionDirectory $SolutionDirectory }
-$MSBuildFile = & "$TempDirectory\Nuke.MSBuildLocator\tools\Nuke.MSBuildLocator.exe" "$TempDirectory\vswhere\tools\vswhere.exe"
+$MSBuildFile = & "$TempDirectory\Nuke.MSBuildLocator\tools\Nuke.MSBuildLocator.exe"
 
 ExecSafe { & $env:NUGET_EXE restore $BuildProjectFile -SolutionDirectory $SolutionDirectory }
 ExecSafe { & $MSBuildFile $BuildProjectFile /nodeReuse:false }

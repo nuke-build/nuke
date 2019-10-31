@@ -6,10 +6,10 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.CI.AzureDevOps
+namespace Nuke.Common.CI.AzurePipelines
 {
     [PublicAPI]
-    public enum AzureDevOpsRepositoryType
+    public enum AzurePipelinesRepositoryType
     {
         /// <summary>
         /// <a href="https://docs.microsoft.com/en-us/azure/devops/repos/git/overview?view=azure-devops">Azure DevOps Git repository</a>.

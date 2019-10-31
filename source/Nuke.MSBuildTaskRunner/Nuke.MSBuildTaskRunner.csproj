@@ -3,13 +3,9 @@
   <PropertyGroup>
     <IsPackable>false</IsPackable>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.0</TargetFrameworks>
     <NoWarn>$(NoWarn);CS0649</NoWarn>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Nuke.CodeGeneration\Nuke.CodeGeneration.csproj" />

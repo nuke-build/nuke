@@ -276,21 +276,14 @@ namespace Nuke.Common.IO
             if (!File.Exists(targetFile))
                 return true;
 
-            switch (policy)
+            return policy switch
             {
-                case FileExistsPolicy.Fail:
-                    ControlFlow.Fail($"File '{targetFile}' already exists.");
-                    // ReSharper disable once HeuristicUnreachableCode
-                    return false;
-                case FileExistsPolicy.Skip:
-                    return false;
-                case FileExistsPolicy.Overwrite:
-                    return true;
-                case FileExistsPolicy.OverwriteIfNewer:
-                    return File.GetLastWriteTimeUtc(targetFile) < File.GetLastWriteTimeUtc(sourceFile);
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(policy), policy, message: null);
-            }
+                FileExistsPolicy.Fail => throw new Exception($"File '{targetFile}' already exists."),
+                FileExistsPolicy.Skip => false,
+                FileExistsPolicy.Overwrite => true,
+                FileExistsPolicy.OverwriteIfNewer => (File.GetLastWriteTimeUtc(targetFile) < File.GetLastWriteTimeUtc(sourceFile)),
+                _ => throw new ArgumentOutOfRangeException(nameof(policy), policy, message: null)
+            };
         }
 
         public static void Touch(string path, DateTime? time = null, bool createDirectories = true)
@@ -344,12 +337,10 @@ namespace Nuke.Common.IO
         {
             ControlFlow.Assert(File.Exists(file), $"File.Exists({file})");
 
-            using (var md5 = MD5.Create())
-            using (var stream = File.OpenRead(file))
-            {
-                var hash = md5.ComputeHash(stream);
-                return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
-            }
+            using var md5 = MD5.Create();
+            using var stream = File.OpenRead(file);
+            var hash = md5.ComputeHash(stream);
+            return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
         }
 
         public static string GetDirectoryHash(string directory, params string[] fileGlobPatterns)
@@ -361,23 +352,22 @@ namespace Nuke.Common.IO
                     : PathConstruction.GlobFiles(directory, fileGlobPatterns))
                 .OrderBy(x => x).ToList();
 
-            using (var md5 = MD5.Create())
+            using var md5 = MD5.Create();
+
+            foreach (var file in files)
             {
-                foreach (var file in files)
-                {
-                    var relativePath = PathConstruction.GetRelativePath(directory, file);
-                    var unixNormalizedPath = PathConstruction.NormalizePath(relativePath, separator: '/');
-                    var pathBytes = Encoding.UTF8.GetBytes(unixNormalizedPath);
-                    md5.TransformBlock(pathBytes, inputOffset: 0, inputCount: pathBytes.Length, outputBuffer: pathBytes, outputOffset: 0);
+                var relativePath = PathConstruction.GetRelativePath(directory, file);
+                var unixNormalizedPath = PathConstruction.NormalizePath(relativePath, separator: '/');
+                var pathBytes = Encoding.UTF8.GetBytes(unixNormalizedPath);
+                md5.TransformBlock(pathBytes, inputOffset: 0, inputCount: pathBytes.Length, outputBuffer: pathBytes, outputOffset: 0);
 
-                    var contentBytes = File.ReadAllBytes(file);
-                    md5.TransformBlock(contentBytes, inputOffset: 0, inputCount: contentBytes.Length, outputBuffer: contentBytes, outputOffset: 0);
-                }
-
-                md5.TransformFinalBlock(new byte[0], inputOffset: 0, inputCount: 0);
-
-                return BitConverter.ToString(md5.Hash).Replace("-", "").ToLower();
+                var contentBytes = File.ReadAllBytes(file);
+                md5.TransformBlock(contentBytes, inputOffset: 0, inputCount: contentBytes.Length, outputBuffer: contentBytes, outputOffset: 0);
             }
+
+            md5.TransformFinalBlock(new byte[0], inputOffset: 0, inputCount: 0);
+
+            return BitConverter.ToString(md5.Hash).Replace("-", "").ToLower();
         }
     }
 }

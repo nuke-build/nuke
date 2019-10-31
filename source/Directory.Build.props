@@ -1,14 +1,14 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
-    <IsPackable>False</IsPackable>
-  </PropertyGroup>
-
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>preview</LangVersion>
     <NoWarn>1701;1702;1591</NoWarn>
     <DefineConstants>$(DefineConstants);JETBRAINS_ANNOTATIONS</DefineConstants>
     <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -19,34 +19,24 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://nuke.build</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nuke-build/common</RepositoryUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/nuke-build/nuke/master/icon.png</PackageIconUrl>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(TargetFramework.StartsWith('netstandard')) OR $(TargetFramework.StartsWith('netcoreapp'))">
     <DefineConstants>$(DefineConstants);NETCORE</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
+    <IsPackable>False</IsPackable>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(IsPackable)' != 'False'">
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <DebugType>full</DebugType>
-    <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <DebugType>pdbonly</DebugType>
-    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
-    <Optimize>True</Optimize>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-  </PropertyGroup>
+  <ItemGroup Condition="">
+    <None Include="..\..\icon.png" Pack="true" PackagePath="" Visible="false" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" PrivateAssets="All"/>
@@ -57,6 +47,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
+    <PackageReference Include="coverlet.msbuild" Version="2.7.0" />
     <PackageReference Include="FluentAssertions" Version="5.9.0"/>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0"/>
     <PackageReference Include="TeamCity.VSTest.TestAdapter" Version="1.0.15"/>

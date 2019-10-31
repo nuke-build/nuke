@@ -15,9 +15,9 @@ namespace Nuke.Common.Utilities
     {
         public static IEnumerable<string> GetRelevantCompletionItems(
             string words,
-            IDictionary<string, string[]> completionItems)
+            IReadOnlyDictionary<string, string[]> completionItems)
         {
-            completionItems = new Dictionary<string, string[]>(completionItems, StringComparer.OrdinalIgnoreCase);
+            completionItems = new Dictionary<string, string[]>(completionItems.ToDictionary(x => x.Key, x => x.Value), StringComparer.OrdinalIgnoreCase).AsReadOnly();
             var suggestedItems = new List<string>();
 
             var parts = words.Split(separator: ' ');

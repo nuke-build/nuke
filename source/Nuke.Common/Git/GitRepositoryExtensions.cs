@@ -77,7 +77,7 @@ namespace Nuke.Common.Git
         {
             ControlFlow.Assert(repository.IsGitHubRepository(), "repository.IsGitHubRepository()");
 
-            branch = branch ?? repository.Branch.NotNull("repository.Branch != null");
+            branch ??= repository.Branch.NotNull("repository.Branch != null");
             var relativePath = GetRepositoryRelativePath(file, repository);
             return $"https://raw.githubusercontent.com/{repository.Identifier}/{branch}/{relativePath}";
         }
@@ -94,7 +94,7 @@ namespace Nuke.Common.Git
         {
             ControlFlow.Assert(repository.IsGitHubRepository(), "repository.IsGitHubRepository()");
 
-            branch = branch ?? repository.Branch.NotNull("repository.Branch != null");
+            branch ??= repository.Branch.NotNull("repository.Branch != null");
             var relativePath = GetRepositoryRelativePath(path, repository);
             var method = GetMethod(relativePath, itemType, repository);
             ControlFlow.Assert(path == null || method != null, "Could not determine item type.");

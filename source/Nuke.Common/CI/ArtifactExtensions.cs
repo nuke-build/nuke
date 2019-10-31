@@ -26,8 +26,8 @@ namespace Nuke.Common.CI
         // private static readonly TargetDefinitionMetadata<LookupTable<Target, string>> ArtifactDependenciesKey =
         //     new TargetDefinitionMetadata<LookupTable<Target, string>>(nameof(ArtifactDependenciesKey));
 
-        internal static readonly Dictionary<ITargetDefinition, int> Partitions =
-            new Dictionary<ITargetDefinition, int>();
+        internal static readonly Dictionary<ITargetDefinition, (string, int)> Partitions =
+            new Dictionary<ITargetDefinition, (string, int)>();
 
         internal static readonly LookupTable<ITargetDefinition, string> ArtifactProducts =
             new LookupTable<ITargetDefinition, string>();
@@ -55,7 +55,8 @@ namespace Nuke.Common.CI
 
         public static ITargetDefinition Partition(this ITargetDefinition targetDefinition, Expression<Func<Partition>> partition)
         {
-            Partitions.Add(targetDefinition, partition.GetMemberInfo().GetCustomAttribute<PartitionAttribute>().Total);
+            var member = partition.GetMemberInfo();
+            Partitions.Add(targetDefinition, (member.Name, member.GetCustomAttribute<PartitionAttribute>().Total));
             return targetDefinition;
         }
     }

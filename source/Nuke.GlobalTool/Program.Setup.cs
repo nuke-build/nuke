@@ -10,7 +10,6 @@ using System.Reflection;
 using System.Text;
 using JetBrains.Annotations;
 using Nuke.Common;
-using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
@@ -26,8 +25,8 @@ namespace Nuke.GlobalTool
 
         public const string PLATFORM_NETCORE = "netcore";
         public const string PLATFORM_NETFX = "netfx";
-        public const string FRAMEWORK_NET461 = "net461";
-        public const string FRAMEWORK_NETCOREAPP2 = "netcoreapp2.0";
+        public const string FRAMEWORK_NET461 = "net472";
+        public const string FRAMEWORK_NETCOREAPP2 = "netcoreapp3.0";
         public const string FORMAT_SDK = "sdk";
         public const string FORMAT_LEGACY = "legacy";
 

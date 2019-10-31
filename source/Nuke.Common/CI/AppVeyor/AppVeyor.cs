@@ -6,14 +6,33 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.Tooling;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.AppVeyor
 {
+    // [PublicAPI]
+    // [Headers("Accept: application/json")]
+    // public interface IAppVeyorRestClient
+    // {
+    //     [Post("/api/build/messages")]
+    //     Task WriteMessage(AppVeyorMessageCategory category, string message, string details = "");
+    // }
+    //
+
+    [PublicAPI]
+    public enum AppVeyorMessageCategory
+    {
+        Information,
+        Warning,
+        Error
+    }
+
     /// <summary>
     /// Interface according to the <a href="https://www.appveyor.com/docs/environment-variables/">official website</a>.
     /// </summary>
     [PublicAPI]
-    [BuildServer]
+    [CI]
     [ExcludeFromCodeCoverage]
     public class AppVeyor
     {
@@ -25,7 +44,10 @@ namespace Nuke.Common.CI.AppVeyor
 
         internal AppVeyor()
         {
+            _cli = ToolResolver.GetPathTool("appveyor");
         }
+
+        private readonly Tool _cli;
 
         public string ApiUrl => EnvironmentInfo.GetVariable<string>("APPVEYOR_API_URL");
         public string AccountName => EnvironmentInfo.GetVariable<string>("APPVEYOR_ACCOUNT_NAME");
@@ -59,5 +81,27 @@ namespace Nuke.Common.CI.AppVeyor
         public bool Rebuild => EnvironmentInfo.GetVariable<bool>("APPVEYOR_RE_BUILD");
         [CanBeNull] public string Platform => EnvironmentInfo.GetVariable<string>("PLATFORM");
         [CanBeNull] public string Configuration => EnvironmentInfo.GetVariable<string>("CONFIGURATION");
+
+        public void WriteInformation(string message, string details = null)
+        {
+            WriteMessage(AppVeyorMessageCategory.Information, message, details);
+        }
+
+        public void WriteWarning(string message, string details = null)
+        {
+            WriteMessage(AppVeyorMessageCategory.Warning, message, details);
+        }
+
+        public void WriteError(string message, string details = null)
+        {
+            WriteMessage(AppVeyorMessageCategory.Error, message, details);
+        }
+
+        private void WriteMessage(AppVeyorMessageCategory category, string message, string details)
+        {
+            _cli.Invoke($"AddMessage {message.DoubleQuote()} -Category {category} -Details {details.DoubleQuote()}",
+                logInvocation: false,
+                logOutput: false);
+        }
     }
 }

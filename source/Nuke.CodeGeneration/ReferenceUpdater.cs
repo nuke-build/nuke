@@ -36,7 +36,7 @@ namespace Nuke.CodeGeneration
             var index = tool.References.IndexOf(reference);
             try
             {
-                referencesDirectory = referencesDirectory ?? Path.GetDirectoryName(tool.SpecificationFile).NotNull();
+                referencesDirectory ??= Path.GetDirectoryName(tool.SpecificationFile).NotNull();
                 var referenceId = index.ToString().PadLeft(totalWidth: 3, paddingChar: '0');
                 var referenceFile = Path.Combine(
                     referencesDirectory,

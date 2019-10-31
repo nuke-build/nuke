@@ -14,17 +14,17 @@ namespace Nuke.Common.Tooling
         public static T NewInstance<T>(this T settingsEntity)
             where T : ISettingsEntity
         {
-            using (var memoryStream = new MemoryStream())
-            {
-                var binaryFormatter = new BinaryFormatter();
-                binaryFormatter.Serialize(memoryStream, settingsEntity);
-                memoryStream.Seek(offset: 0, loc: SeekOrigin.Begin);
-                var newInstance = (T) binaryFormatter.Deserialize(memoryStream);
-                var toolSettings = newInstance as ToolSettings;
-                if (toolSettings != null)
-                    toolSettings.ArgumentConfigurator = ((ToolSettings) (object) settingsEntity).ArgumentConfigurator;
-                return newInstance;
-            }
+            var binaryFormatter = new BinaryFormatter();
+
+            using var memoryStream = new MemoryStream();
+            binaryFormatter.Serialize(memoryStream, settingsEntity);
+            memoryStream.Seek(offset: 0, loc: SeekOrigin.Begin);
+
+            var newInstance = (T) binaryFormatter.Deserialize(memoryStream);
+            if (newInstance is ToolSettings toolSettings)
+                toolSettings.ArgumentConfigurator = ((ToolSettings) (object) settingsEntity).ArgumentConfigurator;
+
+            return newInstance;
         }
     }
 }

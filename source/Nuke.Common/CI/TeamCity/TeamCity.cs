@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,8 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using JetBrains.Annotations;
+using Nuke.Common.IO;
+using Nuke.Common.Tools.DotCover;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using Refit;
@@ -21,7 +24,7 @@ namespace Nuke.Common.CI.TeamCity
     /// Interface according to the <a href="https://confluence.jetbrains.com/display/TCDL/Build+Script+Interaction+with+TeamCity">official website</a>.
     /// </summary>
     [PublicAPI]
-    [BuildServer]
+    [CI]
     [ExcludeFromCodeCoverage]
     public class TeamCity
     {
@@ -65,7 +68,6 @@ namespace Nuke.Common.CI.TeamCity
 
                 var index = line.IndexOf(value: '=');
                 var key = line.Substring(startIndex: 0, length: index)
-                    .Replace(".", "_")
                     .Replace("secure:", string.Empty);
                 var value = line.Substring(index + 1);
 
@@ -80,6 +82,7 @@ namespace Nuke.Common.CI.TeamCity
         private readonly Lazy<IReadOnlyDictionary<string, string>> _systemProperties;
         private readonly Lazy<IReadOnlyDictionary<string, string>> _configurationProperties;
         private readonly Lazy<IReadOnlyDictionary<string, string>> _runnerProperties;
+        private readonly Lazy<IReadOnlyCollection<string>> _recentlyFailedTests;
         private readonly Lazy<ITeamCityRestClient> _restClient;
 
         internal TeamCity(Action<string> messageSink = null)
@@ -87,30 +90,38 @@ namespace Nuke.Common.CI.TeamCity
             _messageSink = messageSink ?? Console.WriteLine;
 
             _systemProperties = GetLazy(() => ParseDictionary(EnvironmentInfo.GetVariable<string>("TEAMCITY_BUILD_PROPERTIES_FILE")));
-            _configurationProperties = GetLazy(() => ParseDictionary(SystemProperties?["TEAMCITY_CONFIGURATION_PROPERTIES_FILE"]));
-            _runnerProperties = GetLazy(() => ParseDictionary(SystemProperties?["TEAMCITY_RUNNER_PROPERTIES_FILE"]));
+            _configurationProperties = GetLazy(() => ParseDictionary(SystemProperties?["teamcity.configuration.properties.file"]));
+            _runnerProperties = GetLazy(() => ParseDictionary(SystemProperties?["teamcity.runner.properties.file"]));
+            _recentlyFailedTests = GetLazy(() =>
+            {
+                var file = SystemProperties?["teamcity.tests.recentlyFailedTests.file"];
+                return File.Exists(file)
+                    ? TextTasks.ReadAllLines(file).ToImmutableList() as IReadOnlyCollection<string>
+                    : new string[0];
+            });
 
             _restClient = GetLazy(() => CreateRestClient<ITeamCityRestClient>());
         }
 
         public T CreateRestClient<T>()
         {
-            return CreateRestClient<T>(ServerUrl, SystemProperties["TEAMCITY_AUTH_USERID"], SystemProperties["TEAMCITY_AUTH_PASSWORD"]);
+            return CreateRestClient<T>(ServerUrl, SystemProperties["teamcity.auth.userId"], SystemProperties["teamcity.auth.password"]);
         }
 
         public IReadOnlyDictionary<string, string> ConfigurationProperties => _configurationProperties.Value;
         public IReadOnlyDictionary<string, string> SystemProperties => _systemProperties.Value;
         public IReadOnlyDictionary<string, string> RunnerProperties => _runnerProperties.Value;
+        public IReadOnlyCollection<string> RecentlyFailedTests => _recentlyFailedTests.Value;
 
         public ITeamCityRestClient RestClient => _restClient.Value;
 
-        public string BuildConfiguration => EnvironmentInfo.GetVariable<string>("TEAMCITY_BUILDCONF_NAME");
-        public string BuildTypeId => SystemProperties["TEAMCITY_BUILDTYPE_ID"];
-        [NoConvert] public string BuildNumber => EnvironmentInfo.GetVariable<string>("BUILD_NUMBER");
-        public string Version => EnvironmentInfo.GetVariable<string>("TEAMCITY_VERSION");
-        public string ProjectName => EnvironmentInfo.GetVariable<string>("TEAMCITY_PROJECT_NAME");
-        public string ServerUrl => ConfigurationProperties?["TEAMCITY_SERVERURL"];
-        [NoConvert] public string BranchName => ConfigurationProperties?["TEAMCITY_BUILD_BRANCH"];
+        public string BuildConfiguration => SystemProperties["teamcity.buildConfName"];
+        public string BuildTypeId => SystemProperties["teamcity.buildType.id"];
+        [NoConvert] public string BuildNumber => SystemProperties["build.number"];
+        public string Version => SystemProperties["teamcity.version"];
+        public string ProjectName => SystemProperties["teamcity.projectName"];
+        public string ServerUrl => ConfigurationProperties?["teamcity.serverUrl"];
+        [NoConvert] public string BranchName => ConfigurationProperties?["teamcity.build.branch"];
 
         public void DisableServiceMessages()
         {
@@ -130,8 +141,18 @@ namespace Nuke.Common.CI.TeamCity
             bool? parseOutOfDate = null,
             TeamCityNoDataPublishedAction? action = null)
         {
-            ControlFlow.Assert(type != TeamCityImportType.dotNetCoverage || tool != null,
-                "type != TeamCityImportType.dotNetCoverage || tool != null");
+            ControlFlow.Assert(
+                type != TeamCityImportType.dotNetCoverage || tool != null,
+                $"Importing data of type '{type}' requires to specify the tool.");
+            ControlFlow.AssertWarn(
+                tool == TeamCityImportTool.dotcover &&
+                ConfigurationProperties["teamcity.dotCover.home"].EndsWithOrdinalIgnoreCase("bundled"),
+                new[]
+                {
+                    "Configuration parameter 'teamcity.dotCover.home' is set to the bundled version.",
+                    $"Adding the '{nameof(TeamCitySetDotCoverHomePathAttribute)}' will automatically set " +
+                    $"it to '{nameof(DotCoverTasks)}.{DotCoverTasks.DotCoverPath}'."
+                }.JoinNewLine());
 
             Write("importData",
                 x => x
@@ -164,7 +185,7 @@ namespace Nuke.Common.CI.TeamCity
 
         public void SetConfigurationParameter(string name, string value)
         {
-            Write("setParameter", x => x.AddKeyValue("name", name).AddKeyValue("value", value));
+            Write("setParameter", x => x.AddKeyValue("name", name.Replace("_", ".")).AddKeyValue("value", value));
         }
 
         public void SetEnvironmentVariable(string name, string value)
@@ -286,29 +307,19 @@ namespace Nuke.Common.CI.TeamCity
 
         private string Escape(string str)
         {
-            return str.Aggregate(new StringBuilder(), (sb, c) => sb.Append(Escape(c)), sb => sb.ToString());
-        }
-
-        private string Escape(char c)
-        {
-            switch (c)
-            {
-                case '\n':
-                    return "|n";
-                case '\'':
-                    return "|'";
-                case '\r':
-                    return "|r";
-                case '|':
-                    return "||";
-                case '[':
-                    return "|[";
-                case ']':
-                    return "|]";
-                default:
-                    // TODO: unicode
-                    return c.ToString();
-            }
+            return str.Aggregate(
+                new StringBuilder(),
+                (sb, c) => sb.Append(c switch
+                {
+                    '\n' => "|n",
+                    '\'' => "|'",
+                    '\r' => "|r",
+                    '|' => "||",
+                    '[' => "|[",
+                    ']' => "|]",
+                    _ => c.ToString()
+                }),
+                sb => sb.ToString());
         }
     }
 }

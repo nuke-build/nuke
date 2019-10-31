@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using JetBrains.Annotations;
 
@@ -16,18 +17,14 @@ namespace Nuke.MSBuildLocator
     {
         private const string c_msbuildComponent = "Microsoft.Component.MSBuild";
         private const string c_netcoreComponent = "Microsoft.Net.Core.Component.SDK";
-        private const string c_vswhereExecutableName = "vswhere.exe";
 
         [STAThread]
         public static void Main(string[] args)
         {
-            var vswherePath = args.FirstOrDefault();
-            if (vswherePath != null && !vswherePath.EndsWith(c_vswhereExecutableName))
-                vswherePath = Path.Combine(vswherePath, c_vswhereExecutableName);
-
-            Trace.Assert(vswherePath != null, $"Path to {c_vswhereExecutableName} must be passed");
-            Trace.Assert(File.Exists(vswherePath), $"File '{vswherePath}' does not exists");
-
+            var assemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            Trace.Assert(assemblyDirectory != null, "assemblyDirectory != null");
+            var vswherePath = Path.Combine(assemblyDirectory, "vswhere.exe");
+            Trace.Assert(File.Exists(vswherePath), $"File.Exists({vswherePath})");
             var msbuildLocator = new MSBuildLocator(vswherePath);
             var msbuildPath = msbuildLocator.Resolve();
             Trace.Assert(msbuildPath != null, "msbuildPath != null");

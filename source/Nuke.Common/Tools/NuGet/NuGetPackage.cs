@@ -13,10 +13,8 @@ namespace Nuke.Common.Tools.NuGet
     {
         public static NuGetPackage LoadFrom(string fileName)
         {
-            using (var stream = File.OpenRead(fileName))
-            {
-                return LoadFrom(Manifest.ReadFrom(stream, validateSchema: true));
-            }
+            using var stream = File.OpenRead(fileName);
+            return LoadFrom(Manifest.ReadFrom(stream, validateSchema: true));
         }
 
         public static NuGetPackage LoadFrom(Manifest manifest)

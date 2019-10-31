@@ -30,12 +30,11 @@ namespace Nuke.Common.Tools.GitVersion
                 return null;
             }
 
-            return ControlFlow.SuppressErrors(() =>
-                    GitVersionTasks.GitVersion(s => s
-                            .DisableLogOutput()
-                            .SetUpdateAssemblyInfo(UpdateAssemblyInfo))
-                        .Result,
-                includeStackTrace: true);
+            return GitVersionTasks.GitVersion(s => s
+                    .SetFramework("netcoreapp3.0")
+                    .DisableLogOutput()
+                    .SetUpdateAssemblyInfo(UpdateAssemblyInfo))
+                .Result;
         }
     }
 }
