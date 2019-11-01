@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
@@ -12,6 +13,7 @@ using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.IO.PathConstruction;
 
 namespace Nuke.Common.CI
@@ -57,7 +59,9 @@ namespace Nuke.Common.CI
                 return;
 
             Logger.LogLevel = LogLevel.Trace;
-            var previousHash = GetCurrentHash();
+            var previousHashes = GeneratedFiles
+                .Where(File.Exists)
+                .ToDictionary(x => x, FileSystemTasks.GetFileHash);
 
             var assembly = Assembly.GetEntryAssembly().NotNull("assembly != null");
             ProcessTasks.StartProcess(
@@ -67,8 +71,15 @@ namespace Nuke.Common.CI
                     logOutput: true)
                 .AssertZeroExitCode();
 
-            if (GetCurrentHash() != previousHash)
-                Logger.Warn($"Configuration files for {HostType} have changed.");
+            var changedFiles = GeneratedFiles
+                .Where(x => FileSystemTasks.GetFileHash(x) != previousHashes.GetValueOrDefault(x))
+                .Select(x => GetRelativePath(NukeBuild.RootDirectory, x)).ToList();
+
+            if (changedFiles.Count > 0)
+            {
+                Logger.Warn($"{HostType} configuration files have changed.");
+                changedFiles.ForEach(x => Logger.Trace($"Updated {x}"));
+            }
         }
 
         public void OnBuildFinished(NukeBuild build)
