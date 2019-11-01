@@ -61,16 +61,18 @@ namespace Nuke.Common
         /// </summary>
         public static bool IsWsl { get; } = GetIsWsl();
 
-        private static bool GetIsWsl() {
-
+        private static bool GetIsWsl()
+        {
             if (!IsLinux)
                 return false;
 
-            try {
+            try
+            {
                 var version = File.ReadAllText("/proc/version");
                 return version.ContainsOrdinalIgnoreCase("Microsoft");
             }
-            catch (IOException) {
+            catch (IOException)
+            {
                 return false;
             }
         }
