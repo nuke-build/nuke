@@ -101,20 +101,21 @@ namespace Nuke.Common.CI.GitHubActions
             {
                 escapedTokens = escapedTokens.Concat(dictionaryConfigurator
                     .Invoke(new Dictionary<string, object>())
+                    .Where(x => x.Value != null)
                     .Select(x => $"{x.Key}={Escape(x.Value.ToString())}")).ToArray();
             }
 
             Write(escapedTokens, message);
         }
 
-        private void Write(string[] escapedTokens, string message)
+        private void Write(string[] escapedTokens, [CanBeNull] string message)
         {
-            Console.WriteLine($"##[{escapedTokens.JoinSpace()}]{EscapeData(message)}");
+            Console.WriteLine($"##[{escapedTokens.JoinSpace()}]{EscapeMessage(message)}");
         }
 
-        private string EscapeData(string data)
+        private string EscapeMessage([CanBeNull] string data)
         {
-            return data
+            return data?
                 .Replace("\r", "%0D")
                 .Replace("\n", "%0A");
         }

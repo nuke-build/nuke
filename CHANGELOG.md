@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.23.1] / 2019-11-02
+- Fixed checking hashes for non-existing configuration files
+- Fixed null-reference exception for commands without message
+
 ## [0.23.0] / 2019-10-31
 - Changed target frameworks to `netcoreapp3.0` and `net472`
 - Changed `AzureDevOps` to `AzurePipelines`
@@ -441,7 +445,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/common/compare/0.23.0...HEAD
+[vNext]: https://github.com/nuke-build/common/compare/0.23.1...HEAD
+[0.23.1]: https://github.com/nuke-build/common/compare/0.23.0...0.23.1
 [0.23.0]: https://github.com/nuke-build/common/compare/0.22.2...0.23.0
 [0.22.2]: https://github.com/nuke-build/common/compare/0.22.1...0.22.2
 [0.22.1]: https://github.com/nuke-build/common/compare/0.22.0...0.22.1
