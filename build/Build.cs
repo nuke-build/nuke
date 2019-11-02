@@ -195,8 +195,9 @@ partial class Build : NukeBuild
 
             OutputDirectory.GlobFiles("*.trx")
                 .ForEach(x => AzurePipelines?.PublishTestResults(
-                    new[] { x.ToString() },
-                    $"{Path.GetFileNameWithoutExtension(x)} ({AzurePipelines.StageDisplayName})"));
+                    type: "VSTest",
+                    title: $"{Path.GetFileNameWithoutExtension(x)} ({AzurePipelines.StageDisplayName})",
+                    files: new[] { x.ToString() }));
         });
 
     string CoverageReportDirectory => OutputDirectory / "coverage-report";

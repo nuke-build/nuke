@@ -139,12 +139,12 @@ namespace Nuke.Common.CI.AzurePipelines
         }
 
         public void PublishTestResults(
-            IEnumerable<string> files,
             string title,
+            string type,
+            IEnumerable<string> files,
             bool? mergeResults = null,
             string platform = null,
             string configuration = null,
-            string type = null,
             bool? publishRunAttachments = null)
         {
             WriteCommand(
@@ -155,7 +155,7 @@ namespace Nuke.Common.CI.AzurePipelines
                     .AddKeyValue("mergeResults", mergeResults)
                     .AddKeyValue("platform", platform)
                     .AddKeyValue("config", configuration)
-                    .AddKeyValue("runTitle", title)
+                    .AddKeyValue("runTitle", title.SingleQuote())
                     .AddKeyValue("publishRunAttachments", publishRunAttachments));
         }
 
@@ -193,22 +193,19 @@ namespace Nuke.Common.CI.AzurePipelines
             string message = null,
             Func<IDictionary<string, object>, IDictionary<string, object>> dictionaryConfigurator = null)
         {
-            var escapedTokens = new[] { command };
-
-            if (dictionaryConfigurator != null)
-            {
-                escapedTokens = escapedTokens.Concat(dictionaryConfigurator
+            var escapedTokens =
+                dictionaryConfigurator?
                     .Invoke(new Dictionary<string, object>())
                     .Where(x => x.Value != null)
-                    .Select(x => $"{x.Key}={EscapeValue(x.Value.ToString())}")).ToArray();
-            }
+                    .Select(x => $"{x.Key}={EscapeValue(x.Value.ToString())}").ToArray()
+                ?? new string[0];
 
-            Write(escapedTokens, message);
+            Write(command, escapedTokens, message);
         }
 
-        private void Write(string[] escapedTokens, [CanBeNull] string message)
+        private void Write(string command, string[] escapedTokens, [CanBeNull] string message)
         {
-            _messageSink.Invoke($"##vso[{escapedTokens.JoinSpace()}]{EscapeMessage(message)}");
+            _messageSink.Invoke($"##vso[{command} {escapedTokens.Join(";")}]{EscapeMessage(message)}");
         }
 
         private string EscapeMessage([CanBeNull] string data)
