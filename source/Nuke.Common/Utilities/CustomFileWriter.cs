@@ -5,6 +5,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using Nuke.Common.IO;
 
 namespace Nuke.Common.Utilities
 {
@@ -17,6 +18,7 @@ namespace Nuke.Common.Utilities
 
         public CustomFileWriter(string filename, int indentationFactor, FileMode fileMode = FileMode.Create)
         {
+            FileSystemTasks.EnsureExistingParentDirectory(filename);
             _fileStream = File.Open(filename, fileMode);
             _streamWriter = new StreamWriter(_fileStream);
 
