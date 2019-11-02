@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.23.3] / 2019-11-02
+- Fixed separator in Azure Pipelines service messages
+
 ## [0.23.2] / 2019-11-02
 - Fixed ensuring of existing directory for generation of configuration files
 - Fixed packaging of `MSBuildTaskRunner` in `Nuke.Common`
@@ -449,7 +452,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/common/compare/0.23.2...HEAD
+[vNext]: https://github.com/nuke-build/common/compare/0.23.3...HEAD
+[0.23.3]: https://github.com/nuke-build/common/compare/0.23.2...0.23.3
 [0.23.2]: https://github.com/nuke-build/common/compare/0.23.1...0.23.2
 [0.23.1]: https://github.com/nuke-build/common/compare/0.23.0...0.23.1
 [0.23.0]: https://github.com/nuke-build/common/compare/0.22.2...0.23.0
