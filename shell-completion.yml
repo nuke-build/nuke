@@ -1,4 +1,5 @@
 ApiKey: 
+AutoStash: 
 Configuration:
 - Debug
 - Release

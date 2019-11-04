@@ -57,6 +57,12 @@ project {
             value = "",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
+        text (
+            "env.AutoStash",
+            label = "AutoStash",
+            value = "True",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
         param(
             "teamcity.runner.commandline.stdstreams.encoding",
             "IBM-437"
