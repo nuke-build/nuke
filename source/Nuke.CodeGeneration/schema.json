@@ -19,6 +19,10 @@
           "description": "Enables generation of extension methods for modification.",
           "type": "boolean"
         },
+        "omitDataClass": {
+          "description": "Omits generation of the data class.",
+          "type": "boolean"
+        },
         "properties": {
           "description": "Properties of the data class.",
           "type": "array",
@@ -134,6 +138,9 @@
         "deprecationMessage": {
           "description": "Obsolete message. Property is marked as obsolete when specified.",
           "type": "string"
+        },
+        "onlyDelegates": {
+          "type": "boolean"
         }
       },
       "required": [
@@ -159,6 +166,10 @@
         },
         "extensionMethods": {
           "description": "Enables generation of extension methods for modification.",
+          "type": "boolean"
+        },
+        "omitDataClass": {
+          "description": "Omits generation of the data class.",
           "type": "boolean"
         },
         "properties": {
@@ -246,6 +257,12 @@
     },
     "references": {
       "description": "Contains all references on which this definition is based on. Allows checking for updates.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "imports": {
       "type": "array",
       "items": {
         "type": "string"

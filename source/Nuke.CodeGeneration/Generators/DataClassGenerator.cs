@@ -18,6 +18,9 @@ namespace Nuke.CodeGeneration.Generators
     {
         public static void Run(DataClass dataClass, ToolWriter toolWriter)
         {
+            if (dataClass.OmitDataClass)
+                return;
+
             if (dataClass.IsToolSettingsClass)
             {
                 foreach (var property in dataClass.Properties)

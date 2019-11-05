@@ -3,6 +3,9 @@
   "references": [
     "https://raw.githubusercontent.com/tonerdo/coverlet/master/README.md#global-tool"
   ],
+  "imports": [
+    "Nuke.Common.Tools.DotNet"
+  ],
   "name": "Coverlet",
   "officialUrl": "https://github.com/tonerdo/coverlet/",
   "help": "<c>Coverlet</c> is a cross platform code coverage library for .NET Core, with support for line, branch and method coverage.The <c>dotnet test</c> command is used to execute unit tests in a given project. Unit tests are console application projects that have dependencies on the unit test framework (for example, MSTest, NUnit, or xUnit) and the dotnet test runner for the unit testing framework. These are packaged as NuGet packages and are restored as ordinary dependencies for the project.",
@@ -90,6 +93,43 @@
       }
     }
   ],
+  "dataClasses": [
+    {
+      "name": "DotNetTestSettings",
+      "extensionMethods": true,
+      "omitDataClass": true,
+      "properties": [
+        {
+          "name": "Properties",
+          "type": "Dictionary<string, object>",
+          "help": "<p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\\Debug</c></p>",
+          "delegates": [
+            {
+              "name": "CollectCoverage",
+              "type": "bool"
+            },
+            {
+              "name": "CoverletOutputFormat",
+              "type": "CoverletOutputFormat"
+            },
+            {
+              "name": "ExcludeByFile",
+              "type": "string"
+            },
+            {
+              "name": "CoverletOutput",
+              "type": "string"
+            },
+            {
+              "name": "UseSourceLink",
+              "type": "bool"
+            }
+          ],
+          "onlyDelegates": true
+        }
+      ]
+    }
+  ],
   "enumerations": [
     {
       "name": "CoverletOutputFormat",
@@ -97,7 +137,8 @@
         "json",
         "Icov",
         "opencover",
-        "cobertura"
+        "cobertura",
+        "teamcity"
       ]
     },
     {

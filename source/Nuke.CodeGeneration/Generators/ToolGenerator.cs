@@ -23,7 +23,7 @@ namespace Nuke.CodeGeneration.Generators
                 // TODO [3]: extract license from dotsettings file
                 .WriteLineIfTrue(tool.SourceFile != null, $"// Generated from {tool.SourceFile}")
                 .WriteLine(string.Empty)
-                .ForEach(GetNamespaceImports(), x => writer.WriteLine($"using {x};"))
+                .ForEach(GetNamespaceImports(tool), x => writer.WriteLine($"using {x};"))
                 .WriteLine(string.Empty)
                 .WriteLineIfTrue(tool.Namespace != null, $"namespace {tool.Namespace}");
 
@@ -61,7 +61,7 @@ namespace Nuke.CodeGeneration.Generators
             return writer;
         }
 
-        private static IEnumerable<string> GetNamespaceImports()
+        private static IEnumerable<string> GetNamespaceImports(Tool tool)
         {
             return new[]
                    {
@@ -80,7 +80,9 @@ namespace Nuke.CodeGeneration.Generators
                        "System.IO",
                        "System.Linq",
                        "System.Text"
-                   };
+                   }
+                .Concat(tool.Imports ?? new List<string>())
+                .OrderBy(x => x);
         }
     }
 }

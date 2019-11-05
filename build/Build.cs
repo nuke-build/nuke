@@ -18,6 +18,7 @@ using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
+using Nuke.Common.Tools.Coverlet;
 using Nuke.Common.Tools.DotCover;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
@@ -181,17 +182,17 @@ partial class Build : NukeBuild
                 .ResetVerbosity()
                 .SetResultsDirectory(OutputDirectory)
                 .When(InvokedTargets.Contains(Coverage), _ => _
-                    .SetProperty("CollectCoverage", propertyValue: true)
-                    .SetProperty("CoverletOutputFormat", "teamcity%2ccobertura")
-                    .SetProperty("ExcludeByFile", "*.Generated.cs")
+                    .EnableCollectCoverage()
+                    .SetCoverletOutputFormat(CoverletOutputFormat.cobertura)
+                    .SetExcludeByFile("*.Generated.cs")
                     .When(IsServerBuild, _ => _
-                        .SetProperty("UseSourceLink", propertyValue: true)))
+                        .EnableUseSourceLink()))
                 .CombineWith(
                     TestPartition.GetCurrent(Solution.GetProjects("*.Tests")), (_, v) => _
                         .SetProjectFile(v)
                         .SetLogger($"trx;LogFileName={v.Name}.trx")
                         .When(InvokedTargets.Contains(Coverage), _ => _
-                            .SetProperty("CoverletOutput", OutputDirectory / $"{v.Name}.xml"))));
+                            .SetCoverletOutput(OutputDirectory / $"{v.Name}.xml"))));
 
             OutputDirectory.GlobFiles("*.trx").ForEach(x =>
                 AzurePipelines?.PublishTestResults(

@@ -36,6 +36,9 @@ namespace Nuke.CodeGeneration.Model
         [Description("Enables generation of extension methods for modification.")]
         public bool ExtensionMethods { get; set; }
 
+        [Description("Omits generation of the data class.")]
+        public bool OmitDataClass { get; set; }
+
         [Description("Properties of the data class.")]
         public List<Property> Properties { get; set; } = new List<Property>();
 

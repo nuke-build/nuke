@@ -6,6 +6,7 @@ using Nuke.Common;
 using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools;
+using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
@@ -824,6 +825,204 @@ namespace Nuke.Common.Tools.Coverlet
         #endregion
     }
     #endregion
+    #region DotNetTestSettingsExtensions
+    /// <summary>
+    ///   Used within <see cref="CoverletTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class DotNetTestSettingsExtensions
+    {
+        #region Properties
+        #region CollectCoverage
+        /// <summary>
+        ///   <p><em>Sets <c>CollectCoverage</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static DotNetTestSettings SetCollectCoverage(this DotNetTestSettings toolSettings, bool? collectCoverage)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["CollectCoverage"] = collectCoverage;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>CollectCoverage</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static DotNetTestSettings ResetCollectCoverage(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("CollectCoverage");
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <c>CollectCoverage</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static DotNetTestSettings EnableCollectCoverage(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["CollectCoverage"] = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <c>CollectCoverage</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static DotNetTestSettings DisableCollectCoverage(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["CollectCoverage"] = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <c>CollectCoverage</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static DotNetTestSettings ToggleCollectCoverage(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "CollectCoverage");
+            return toolSettings;
+        }
+        #endregion
+        #region CoverletOutputFormat
+        /// <summary>
+        ///   <p><em>Sets <c>CoverletOutputFormat</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static DotNetTestSettings SetCoverletOutputFormat(this DotNetTestSettings toolSettings, CoverletOutputFormat coverletOutputFormat)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["CoverletOutputFormat"] = coverletOutputFormat;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>CoverletOutputFormat</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static DotNetTestSettings ResetCoverletOutputFormat(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("CoverletOutputFormat");
+            return toolSettings;
+        }
+        #endregion
+        #region ExcludeByFile
+        /// <summary>
+        ///   <p><em>Sets <c>ExcludeByFile</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static DotNetTestSettings SetExcludeByFile(this DotNetTestSettings toolSettings, string excludeByFile)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["ExcludeByFile"] = excludeByFile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>ExcludeByFile</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static DotNetTestSettings ResetExcludeByFile(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("ExcludeByFile");
+            return toolSettings;
+        }
+        #endregion
+        #region CoverletOutput
+        /// <summary>
+        ///   <p><em>Sets <c>CoverletOutput</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static DotNetTestSettings SetCoverletOutput(this DotNetTestSettings toolSettings, string coverletOutput)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["CoverletOutput"] = coverletOutput;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>CoverletOutput</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static DotNetTestSettings ResetCoverletOutput(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("CoverletOutput");
+            return toolSettings;
+        }
+        #endregion
+        #region UseSourceLink
+        /// <summary>
+        ///   <p><em>Sets <c>UseSourceLink</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static DotNetTestSettings SetUseSourceLink(this DotNetTestSettings toolSettings, bool? useSourceLink)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["UseSourceLink"] = useSourceLink;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>UseSourceLink</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static DotNetTestSettings ResetUseSourceLink(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("UseSourceLink");
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <c>UseSourceLink</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static DotNetTestSettings EnableUseSourceLink(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["UseSourceLink"] = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <c>UseSourceLink</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static DotNetTestSettings DisableUseSourceLink(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["UseSourceLink"] = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <c>UseSourceLink</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static DotNetTestSettings ToggleUseSourceLink(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "UseSourceLink");
+            return toolSettings;
+        }
+        #endregion
+        #endregion
+    }
+    #endregion
     #region CoverletOutputFormat
     /// <summary>
     ///   Used within <see cref="CoverletTasks"/>.
@@ -838,6 +1037,7 @@ namespace Nuke.Common.Tools.Coverlet
         public static CoverletOutputFormat Icov = (CoverletOutputFormat) "Icov";
         public static CoverletOutputFormat opencover = (CoverletOutputFormat) "opencover";
         public static CoverletOutputFormat cobertura = (CoverletOutputFormat) "cobertura";
+        public static CoverletOutputFormat teamcity = (CoverletOutputFormat) "teamcity";
         public static explicit operator CoverletOutputFormat(string value)
         {
             return new CoverletOutputFormat { Value = value };

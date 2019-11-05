@@ -33,6 +33,7 @@ namespace Nuke.CodeGeneration.Model
 
         [Description("Contains all references on which this definition is based on. Allows checking for updates.")]
         public List<string> References { get; set; } = new List<string>();
+        public List<string> Imports { get; set; } = new List<string>();
 
         [JsonProperty(Required = Required.Always)]
         [RegularExpression(RegexPatterns.Name)]
