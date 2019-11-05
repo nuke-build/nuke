@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "$schema": "https://raw.githubusercontent.com/nuke-build/common/master/source/Nuke.CodeGeneration/schema.json",
   "references": [
     "https://developer.xamarin.com/guides/testcloud/uitest/working-with/submitting-tests-at-command-line#//div[@class='doc-content']/table"
   ],

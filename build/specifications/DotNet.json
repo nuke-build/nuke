@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "$schema": "https://raw.githubusercontent.com/nuke-build/common/master/source/Nuke.CodeGeneration/schema.json",
   "references": [
     "https://raw.githubusercontent.com/dotnet/docs/master/docs/core/tools/dotnet-test.md",
     "https://raw.githubusercontent.com/dotnet/docs/master/docs/core/tools/dotnet-run.md",
