@@ -193,8 +193,8 @@ partial class Build : NukeBuild
                         .When(InvokedTargets.Contains(Coverage), _ => _
                             .SetProperty("CoverletOutput", OutputDirectory / $"{v.Name}.xml"))));
 
-            OutputDirectory.GlobFiles("*.trx")
-                .ForEach(x => AzurePipelines?.PublishTestResults(
+            OutputDirectory.GlobFiles("*.trx").ForEach(x =>
+                AzurePipelines?.PublishTestResults(
                     type: "VSTest",
                     title: $"{Path.GetFileNameWithoutExtension(x)} ({AzurePipelines.StageDisplayName})",
                     files: new[] { x.ToString() }));
@@ -205,12 +205,16 @@ partial class Build : NukeBuild
 
     Target Coverage => _ => _
         .DependsOn(Test)
+        .Produces(CoverageReportArchive)
         .Executes(() =>
         {
             ReportGenerator(_ => _
                 .SetReports(OutputDirectory / "*.xml")
                 .SetReportTypes(ReportTypes.HtmlInline)
                 .SetTargetDirectory(CoverageReportDirectory));
+
+            OutputDirectory.GlobFiles("*.xml").ForEach(x =>
+                AzurePipelines?.PublishCodeCoverage("Cobertura", x, ""));
 
             CompressZip(
                 directory: CoverageReportDirectory,

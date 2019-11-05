@@ -138,6 +138,21 @@ namespace Nuke.Common.CI.AzurePipelines
             LogIssue(AzurePipelinesIssueType.Warning, message, sourcePath, lineNumber, columnNumber, code);
         }
 
+        public void PublishCodeCoverage(
+            string coverageTool,
+            string summaryFile,
+            string reportDirectory,
+            params string[] additionalCodeCoverageFiles)
+        {
+            WriteCommand(
+                "codecoverage.publish",
+                dictionaryConfigurator: x => x
+                    .AddKeyValue("coverageTool", coverageTool)
+                    .AddKeyValue("summaryFile", summaryFile)
+                    .AddKeyValue("reportDirectory", reportDirectory)
+                    .AddKeyValue("additionalCodeCoverageFiles", additionalCodeCoverageFiles.JoinComma()));
+        }
+
         public void PublishTestResults(
             string title,
             string type,
