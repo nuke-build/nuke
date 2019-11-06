@@ -139,7 +139,7 @@ namespace Nuke.Common.CI.AzurePipelines
         }
 
         public void PublishCodeCoverage(
-            string coverageTool,
+            AzurePipelinesCodeCoverageToolType coverageTool,
             string summaryFile,
             string reportDirectory,
             params string[] additionalCodeCoverageFiles)
@@ -155,7 +155,7 @@ namespace Nuke.Common.CI.AzurePipelines
 
         public void PublishTestResults(
             string title,
-            string type,
+            AzurePipelinesTestResultsType type,
             IEnumerable<string> files,
             bool? mergeResults = null,
             string platform = null,

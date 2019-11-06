@@ -196,9 +196,9 @@ partial class Build : NukeBuild
 
             OutputDirectory.GlobFiles("*.trx").ForEach(x =>
                 AzurePipelines?.PublishTestResults(
-                    type: "VSTest",
+                    type: AzurePipelinesTestResultsType.VSTest,
                     title: $"{Path.GetFileNameWithoutExtension(x)} ({AzurePipelines.StageDisplayName})",
-                    files: new[] { x.ToString() }));
+                    files: new string[] { x }));
         });
 
     string CoverageReportDirectory => OutputDirectory / "coverage-report";
@@ -215,7 +215,10 @@ partial class Build : NukeBuild
                 .SetTargetDirectory(CoverageReportDirectory));
 
             OutputDirectory.GlobFiles("*.xml").ForEach(x =>
-                AzurePipelines?.PublishCodeCoverage("Cobertura", x, ""));
+                AzurePipelines?.PublishCodeCoverage(
+                    AzurePipelinesCodeCoverageToolType.Cobertura,
+                    x,
+                    CoverageReportDirectory));
 
             CompressZip(
                 directory: CoverageReportDirectory,
