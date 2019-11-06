@@ -144,6 +144,7 @@ namespace Nuke.Common.CI.AzurePipelines
             string reportDirectory,
             params string[] additionalCodeCoverageFiles)
         {
+            // Taken from https://github.com/microsoft/azure-pipelines-tasks/blob/master/Tests-Legacy/L0/PublishCodeCoverageResults/_suite.ts#L45-L46
             WriteCommand(
                 "codecoverage.publish",
                 dictionaryConfigurator: x => x
@@ -203,6 +204,7 @@ namespace Nuke.Common.CI.AzurePipelines
             };
         }
 
+        // https://github.com/microsoft/azure-pipelines-tasks/blob/master/docs/authoring/commands.md
         public void WriteCommand(
             string command,
             string message = null,
