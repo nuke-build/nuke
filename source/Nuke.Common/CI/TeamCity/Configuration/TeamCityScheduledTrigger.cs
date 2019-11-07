@@ -12,7 +12,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
     {
         public string BranchFilter { get; set; }
         public string TriggerRules { get; set; }
-        public bool TriggerBuildAlways { get; set; } //TODO: check
+        public bool TriggerBuildAlways { get; set; }
         public bool WithPendingChangesOnly { get; set; }
         public bool EnableQueueOptimization { get; set; }
 
@@ -27,7 +27,10 @@ namespace Nuke.Common.CI.TeamCity.Configuration
 
                 writer.WriteLine($"branchFilter = {BranchFilter.DoubleQuote()}");
                 writer.WriteLine($"triggerRules = {TriggerRules.DoubleQuote()}");
-                writer.WriteLine("triggerBuild = always()");
+
+                if (TriggerBuildAlways)
+                    writer.WriteLine("triggerBuild = always()");
+
                 writer.WriteLine("withPendingChangesOnly = false");
                 writer.WriteLine($"enableQueueOptimization = {EnableQueueOptimization.ToString().ToLowerInvariant()}");
                 writer.WriteLine("param(\"cronExpression_min\", \"3\")");

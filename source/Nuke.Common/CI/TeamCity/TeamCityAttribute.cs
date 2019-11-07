@@ -43,6 +43,7 @@ namespace Nuke.Common.CI.TeamCity
         public string VcsTriggerRules { get; set; } = "+:**";
         public string[] VcsTriggeredTargets { get; set; } = new string[0];
 
+        public bool NightlyBuildAlways { get; set; } = true;
         public string NightlyTriggerBranchFilter { get; set; } = "";
         public string NightlyTriggerRules { get; set; } = "+:**";
         public string[] NightlyTriggeredTargets { get; set; } = new string[0];
@@ -232,7 +233,8 @@ namespace Nuke.Common.CI.TeamCity
                                  BranchFilter = NightlyTriggerBranchFilter,
                                  TriggerRules = NightlyTriggerRules,
                                  EnableQueueOptimization = true,
-                                 WithPendingChangesOnly = false
+                                 WithPendingChangesOnly = false,
+                                 TriggerBuildAlways = NightlyBuildAlways
                              };
             }
 
