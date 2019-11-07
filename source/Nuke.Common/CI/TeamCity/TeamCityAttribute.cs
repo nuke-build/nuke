@@ -32,7 +32,16 @@ namespace Nuke.Common.CI.TeamCity
         private string SettingsFile => TeamcityDirectory / "settings.kts";
         private string PomFile => TeamcityDirectory / "pom.xml";
 
+        protected override HostType HostType => HostType.TeamCity;
         protected override IEnumerable<string> GeneratedFiles => new[] { PomFile, SettingsFile };
+
+        protected override IEnumerable<string> RelevantTargetNames =>
+            VcsTriggeredTargets.Concat(NightlyTriggeredTargets).Concat(ManuallyTriggeredTargets);
+
+        protected override IEnumerable<string> IrrelevantTargetNames =>
+            NonEntryTargets.Concat(ExcludedTargets);
+
+        public string Version { get; set; } = "2018.2";
 
         public TeamCityAgentPlatform Platform { get; }
         public string Description { get; set; }
@@ -62,29 +71,22 @@ namespace Nuke.Common.CI.TeamCity
             // TeamCity.Instance.PublishArtifacts($"+:{stateFile} => .teamcity/states");
         }
 
-        protected override HostType HostType => HostType.TeamCity;
-
-        protected override void Generate(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        protected override CustomFileWriter CreateWriter()
         {
-            var relevantTargets = VcsTriggeredTargets.Concat(ManuallyTriggeredTargets)
-                .SelectMany(x => ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { x }))
-                .Distinct()
-                .Where(x => !ExcludedTargets.Contains(x.Name) && !NonEntryTargets.Contains(x.Name)).ToList();
-            var configuration = GetConfiguration(build, relevantTargets);
+            return new CustomFileWriter(SettingsFile, indentationFactor: 4, commentPrefix: "//");
+        }
 
-            ControlFlow.Assert(NukeBuild.RootDirectory != null, "NukeBuild.RootDirectory != null");
-
+        protected override ConfigurationEntity GetConfiguration(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        {
             TextTasks.WriteAllLines(
                 PomFile,
                 ResourceUtility.GetResourceAllLines<TeamCityConfiguration>("pom.xml"));
 
-            using var writer = new CustomFileWriter(SettingsFile, indentationFactor: 4);
-            configuration.Write(writer);
-        }
-
-        protected virtual TeamCityConfiguration GetConfiguration(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
-        {
-            return new TeamCityConfiguration { Project = GetProject(build, relevantTargets) };
+            return new TeamCityConfiguration
+                   {
+                       Version = Version,
+                       Project = GetProject(build, relevantTargets)
+                   };
         }
 
         protected virtual TeamCityProject GetProject(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)

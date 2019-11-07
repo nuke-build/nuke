@@ -25,6 +25,13 @@ namespace Nuke.Common.CI.AzurePipelines
             _images = new[] { image }.Concat(images).ToArray();
         }
 
+        private string ConfigurationFile => NukeBuild.RootDirectory / "azure-pipelines.yml";
+
+        protected override HostType HostType => HostType.AzurePipelines;
+        protected override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
+        protected override IEnumerable<string> RelevantTargetNames => InvokedTargets;
+        protected override IEnumerable<string> IrrelevantTargetNames => NonEntryTargets.Concat(ExcludedTargets);
+
         public string[] InvokedTargets { get; set; } = new string[0];
         public string[] NonEntryTargets { get; set; } = new string[0];
         public string[] ExcludedTargets { get; set; } = new string[0];
@@ -43,26 +50,12 @@ namespace Nuke.Common.CI.AzurePipelines
         public string[] PullRequestsPathsInclude { get; set; } = new string[0];
         public string[] PullRequestsPathsExclude { get; set; } = new string[0];
 
-        protected virtual string ConfigurationFile => NukeBuild.RootDirectory / "azure-pipelines.yml";
-
-        protected override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
-
-        protected override HostType HostType => HostType.AzurePipelines;
-
-        protected override void Generate(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        protected override CustomFileWriter CreateWriter()
         {
-            var relevantTargets = InvokedTargets
-                .SelectMany(x => ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { x }))
-                .Distinct()
-                .Where(x => !ExcludedTargets.Contains(x.Name) && !NonEntryTargets.Contains(x.Name)).ToList();
-
-            var configuration = GetConfiguration(relevantTargets);
-
-            using var writer = new CustomFileWriter(ConfigurationFile, indentationFactor: 2);
-            configuration.Write(writer);
+            return new CustomFileWriter(ConfigurationFile, indentationFactor: 2, commentPrefix: "#");
         }
 
-        protected virtual AzurePipelinesConfiguration GetConfiguration(IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        protected override ConfigurationEntity GetConfiguration(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             return new AzurePipelinesConfiguration
                    {

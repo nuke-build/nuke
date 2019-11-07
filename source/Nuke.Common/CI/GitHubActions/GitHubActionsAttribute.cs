@@ -34,13 +34,12 @@ namespace Nuke.Common.CI.GitHubActions
             _images = new[] { image }.Concat(images).ToArray();
         }
 
-        private AbsolutePath GitHubDirectory => NukeBuild.RootDirectory / ".github";
-        private AbsolutePath WorkflowsDirectory => GitHubDirectory / "workflows";
-        private string ConfigurationFile => WorkflowsDirectory / $"{_name}.yml";
-
-        protected override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
+        private string ConfigurationFile => NukeBuild.RootDirectory / ".github" / "workflows" / $"{_name}.yml";
 
         protected override HostType HostType => HostType.GitHubActions;
+        protected override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
+        protected override IEnumerable<string> RelevantTargetNames => InvokedTargets;
+        protected override IEnumerable<string> IrrelevantTargetNames => new string[0];
 
         public GitHubActionsTrigger[] On { get; set; } = new GitHubActionsTrigger[0];
         public string[] OnPushBranches { get; set; } = new string[0];
@@ -58,20 +57,14 @@ namespace Nuke.Common.CI.GitHubActions
 
         public string[] InvokedTargets { get; set; } = new string[0];
 
-        protected override void Generate(
-            NukeBuild build,
-            IReadOnlyCollection<ExecutableTarget> executableTargets)
+        protected override CustomFileWriter CreateWriter()
         {
-            var relevantTargets = InvokedTargets
-                .SelectMany(x => ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { x }))
-                .Distinct().ToList();
-            var configuration = GetConfiguration(build, relevantTargets);
-
-            using var writer = new CustomFileWriter(ConfigurationFile, indentationFactor: 2);
-            configuration.Write(writer);
+            return new CustomFileWriter(ConfigurationFile, indentationFactor: 2, commentPrefix: "#");
         }
 
-        protected virtual GitHubActionsConfiguration GetConfiguration(NukeBuild targets, IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        protected override ConfigurationEntity GetConfiguration(
+            NukeBuild build,
+            IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             var configuration = new GitHubActionsConfiguration
                                 {
