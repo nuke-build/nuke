@@ -120,8 +120,9 @@ namespace Nuke.Common.CI.TeamCity
         [NoConvert] public string BuildNumber => SystemProperties["build.number"];
         public string Version => SystemProperties["teamcity.version"];
         public string ProjectName => SystemProperties["teamcity.projectName"];
-        public string ServerUrl => ConfigurationProperties?["teamcity.serverUrl"];
-        [NoConvert] public string BranchName => ConfigurationProperties?["teamcity.build.branch"];
+        public string ServerUrl => ConfigurationProperties["teamcity.serverUrl"];
+        [NoConvert] public string BranchName => ConfigurationProperties.GetValueOrDefault("teamcity.build.branch")
+            .NotNull("Configuration property 'teamcity.build.branch' is null. See https://youtrack.jetbrains.com/issue/TW-62888.");
 
         public void DisableServiceMessages()
         {
