@@ -23,7 +23,6 @@ namespace Nuke.Common.CI.TeamCity.Configuration
                 using (writer.WriteBlock("schedulingPolicy = daily"))
                 {
                     writer.WriteLine("hour = 3");
-                    writer.WriteLine("timezone = \"Europe/Berlin\"");
                 }
 
                 writer.WriteLine($"branchFilter = {BranchFilter.DoubleQuote()}");
