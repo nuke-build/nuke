@@ -16,6 +16,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
         public string Description { get; set; }
         public TeamCityBuildTypeVcsRoot VcsRoot { get; set; }
         public bool IsComposite { get; set; }
+        public bool IsDeployment { get; set; }
         public string PowerShellScript { get; set; }
         public string BashScript { get; set; }
         public string[] InvokedTargets { get; set; }
@@ -40,6 +41,8 @@ namespace Nuke.Common.CI.TeamCity.Configuration
 
                 if (IsComposite)
                     writer.WriteLine("type = Type.COMPOSITE");
+                if (IsDeployment)
+                    writer.WriteLine("type = Type.DEPLOYMENT");
 
                 VcsRoot.Write(writer);
                 WriteArtifacts(writer);

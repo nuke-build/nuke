@@ -203,6 +203,7 @@ namespace Nuke.Common.CI.TeamCity
                                            ShowDependenciesChanges = isPartitioned
                                        },
                              IsComposite = isPartitioned,
+                             IsDeployment = ManuallyTriggeredTargets.Contains(executableTarget.Name),
                              InvokedTargets = invokedTargets,
                              ArtifactRules = artifactRules,
                              Dependencies = snapshotDependencies.Concat(artifactDependencies).ToArray(),
