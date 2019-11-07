@@ -8,7 +8,7 @@ using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.TeamCity.Configuration
 {
-    public class TeamCityProject : TeamCityConfigurationEntity
+    public class TeamCityProject : ConfigurationEntity
     {
         public string Description { get; set; }
         public TeamCityParameter[] Parameters { get; set; }

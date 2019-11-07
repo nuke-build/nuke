@@ -9,7 +9,7 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.TeamCity.Configuration
 {
-    public class TeamCityConfiguration : TeamCityConfigurationEntity
+    public class TeamCityConfiguration : ConfigurationEntity
     {
         public virtual string[] Header =>
             new[]

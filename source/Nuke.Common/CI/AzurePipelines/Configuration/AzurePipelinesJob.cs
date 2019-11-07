@@ -7,7 +7,7 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.AzurePipelines.Configuration
 {
-    public class AzurePipelinesJob : AzurePipelinesConfigurationEntity
+    public class AzurePipelinesJob : ConfigurationEntity
     {
         public string Name { get; set; }
         public string DisplayName { get; set; }

@@ -6,9 +6,9 @@ using System;
 using System.Linq;
 using Nuke.Common.Utilities;
 
-namespace Nuke.Common.CI.GitHubActions.Configuration
+namespace Nuke.Common.CI
 {
-    public abstract class GitHubActionsConfigurationEntity
+    public abstract class ConfigurationEntity
     {
         public abstract void Write(CustomFileWriter writer);
     }

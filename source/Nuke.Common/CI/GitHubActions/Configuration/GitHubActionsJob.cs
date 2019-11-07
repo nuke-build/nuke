@@ -10,7 +10,7 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.GitHubActions.Configuration
 {
-    public class GitHubActionsJob : GitHubActionsConfigurationEntity
+    public class GitHubActionsJob : ConfigurationEntity
     {
         public string Name { get; set; }
         public GitHubActionsImage Image { get; set; }

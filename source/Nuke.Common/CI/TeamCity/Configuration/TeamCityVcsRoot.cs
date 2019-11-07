@@ -8,7 +8,7 @@ using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.TeamCity.Configuration
 {
-    public class TeamCityVcsRoot : TeamCityConfigurationEntity
+    public class TeamCityVcsRoot : ConfigurationEntity
     {
         public string Id => "VcsRoot";
         public string Name { get; set; }

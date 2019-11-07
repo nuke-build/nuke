@@ -76,7 +76,7 @@ namespace Nuke.Common.CI.TeamCity
 
             TextTasks.WriteAllLines(
                 PomFile,
-                ResourceUtility.GetResourceAllLines<TeamCityConfigurationEntity>("pom.xml"));
+                ResourceUtility.GetResourceAllLines<TeamCityConfiguration>("pom.xml"));
 
             using var writer = new CustomFileWriter(SettingsFile, indentationFactor: 4);
             configuration.Write(writer);

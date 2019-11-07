@@ -9,7 +9,7 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.AppVeyor.Configuration
 {
-    public class AppVeyorBranches : AppVeyorConfigurationEntity
+    public class AppVeyorBranches : ConfigurationEntity
     {
         public string[] Only { get; set; }
         public string[] Except { get; set; }

@@ -9,7 +9,7 @@ using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.TeamCity.Configuration
 {
-    public class TeamCityBuildType : TeamCityConfigurationEntity
+    public class TeamCityBuildType : ConfigurationEntity
     {
         public string Id { get; set; }
         public string Name { get; set; }

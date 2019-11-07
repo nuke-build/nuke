@@ -10,7 +10,7 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.AppVeyor.Configuration
 {
-    public class AppVeyorConfiguration : AppVeyorConfigurationEntity
+    public class AppVeyorConfiguration : ConfigurationEntity
     {
         public AppVeyorImage[] Images { get; set; }
         public string BuildScript { get; set; }
