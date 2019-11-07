@@ -14,6 +14,7 @@ using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
 
 namespace Nuke.Common.CI
@@ -58,10 +59,12 @@ namespace Nuke.Common.CI
             if (!AutoGenerate || NukeBuild.IsServerBuild)
                 return;
 
+            GeneratedFiles.ForEach(EnsureExistingParentDirectory);
+
             Logger.LogLevel = LogLevel.Trace;
             var previousHashes = GeneratedFiles
                 .Where(File.Exists)
-                .ToDictionary(x => x, FileSystemTasks.GetFileHash);
+                .ToDictionary(x => x, GetFileHash);
 
             var assembly = Assembly.GetEntryAssembly().NotNull("assembly != null");
             ProcessTasks.StartProcess(
@@ -72,7 +75,7 @@ namespace Nuke.Common.CI
                 .AssertZeroExitCode();
 
             var changedFiles = GeneratedFiles
-                .Where(x => FileSystemTasks.GetFileHash(x) != previousHashes.GetValueOrDefault(x))
+                .Where(x => GetFileHash(x) != previousHashes.GetValueOrDefault(x))
                 .Select(x => GetRelativePath(NukeBuild.RootDirectory, x)).ToList();
 
             if (changedFiles.Count > 0)
@@ -96,7 +99,7 @@ namespace Nuke.Common.CI
 
         private string GetCurrentHash()
         {
-            return GeneratedFiles.Select(FileSystemTasks.GetFileHash).JoinComma();
+            return GeneratedFiles.Select(GetFileHash).JoinComma();
         }
 
         protected abstract HostType HostType { get; }
