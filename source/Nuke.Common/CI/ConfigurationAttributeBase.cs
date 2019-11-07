@@ -20,7 +20,7 @@ namespace Nuke.Common.CI
 {
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Class)]
-    public abstract class ConfigurationGenerationAttributeBase : Attribute, IOnBeforeLogo, IOnAfterLogo, IOnBuildFinished
+    public abstract class ConfigurationAttributeBase : Attribute, IOnBeforeLogo, IOnAfterLogo, IOnBuildFinished
     {
         public const string ConfigurationParameterName = "configure-build-server";
 

@@ -19,7 +19,7 @@ namespace Nuke.Common.CI.AppVeyor
     /// </summary>
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class AppVeyorAttribute : ConfigurationGenerationAttributeBase
+    public class AppVeyorAttribute : ConfigurationAttributeBase
     {
         private readonly AppVeyorImage[] _images;
 

@@ -20,7 +20,7 @@ namespace Nuke.Common.CI.GitHubActions
     /// </summary>
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class GitHubActionsAttribute : ConfigurationGenerationAttributeBase
+    public class GitHubActionsAttribute : ConfigurationAttributeBase
     {
         private readonly string _name;
         private readonly GitHubActionsImage[] _images;
@@ -41,7 +41,6 @@ namespace Nuke.Common.CI.GitHubActions
         protected override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
 
         protected override HostType HostType => HostType.GitHubActions;
-
 
         public GitHubActionsTrigger[] On { get; set; } = new GitHubActionsTrigger[0];
         public string[] OnPushBranches { get; set; } = new string[0];

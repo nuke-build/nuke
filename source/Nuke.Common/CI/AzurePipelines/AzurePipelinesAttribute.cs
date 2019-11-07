@@ -16,7 +16,7 @@ using static Nuke.Common.IO.PathConstruction;
 namespace Nuke.Common.CI.AzurePipelines
 {
     [PublicAPI]
-    public class AzurePipelinesAttribute : ConfigurationGenerationAttributeBase
+    public class AzurePipelinesAttribute : ConfigurationAttributeBase
     {
         private readonly AzurePipelinesImage[] _images;
 

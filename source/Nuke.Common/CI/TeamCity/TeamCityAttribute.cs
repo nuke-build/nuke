@@ -21,7 +21,7 @@ using static Nuke.Common.IO.PathConstruction;
 namespace Nuke.Common.CI.TeamCity
 {
     [PublicAPI]
-    public class TeamCityAttribute : ConfigurationGenerationAttributeBase
+    public class TeamCityAttribute : ConfigurationAttributeBase
     {
         public TeamCityAttribute(TeamCityAgentPlatform platform)
         {
