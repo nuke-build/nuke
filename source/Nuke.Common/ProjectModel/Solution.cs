@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -49,6 +49,16 @@ namespace Nuke.Common.ProjectModel
         public override string ToString()
         {
             return Path ?? "<in-memory solution>";
+        }
+
+        public SolutionFolder GetSolutionFolder(Guid projectId)
+        {
+            return AllSolutionFolders.Single(x => x.ProjectId == projectId);
+        }
+
+        public Project GetProject(Guid projectId)
+        {
+            return AllProjects.Single(x => x.ProjectId == projectId);
         }
 
         [CanBeNull]
