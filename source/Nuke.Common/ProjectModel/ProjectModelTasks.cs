@@ -16,6 +16,19 @@ namespace Nuke.Common.ProjectModel
     [PublicAPI]
     public static class ProjectModelTasks
     {
+        public static Solution CreateSolution(string fileName = null)
+        {
+            return SolutionSerializer.Deserialize(
+                new[]
+                {
+                    "Microsoft Visual Studio Solution File, Format Version 12.00",
+                    "# Visual Studio 15",
+                    "VisualStudioVersion = 15.0.26124.0",
+                    "MinimumVisualStudioVersion = 15.0.26124.0"
+                },
+                fileName);
+        }
+
         public static Solution ParseSolution(string solutionFile)
         {
             return SolutionSerializer.Deserialize(solutionFile);
