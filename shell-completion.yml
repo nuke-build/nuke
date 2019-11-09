@@ -40,6 +40,7 @@ Skip:
 - Release
 - Restore
 - Test
+- UpdateContributors
 SlackWebhook: 
 Source: 
 Target:
@@ -60,6 +61,8 @@ Target:
 - Release
 - Restore
 - Test
+- UpdateContributors
+UseSSH: 
 Verbosity:
 - Minimal
 - Normal
