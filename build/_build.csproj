@@ -20,6 +20,8 @@
   </ItemDefinitionGroup>
 
   <ItemGroup>
+    <PackageReference Include="Octokit" Version="0.36.0" />
+
     <PackageDownload Include="GitVersion.Tool" Version="[5.1.1]" />
     <PackageDownload Include="JetBrains.dotCover.CommandLineTools" Version="[2019.2.2]" />
     <PackageDownload Include="JetBrains.ReSharper.CommandLineTools" Version="[2019.2.1]" />

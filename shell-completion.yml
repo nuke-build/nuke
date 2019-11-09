@@ -26,9 +26,11 @@ Skip:
 - Analysis
 - Announce
 - Changelog
+- CheckoutExternalRepositories
 - Clean
 - Compile
 - Coverage
+- CreateGlobalSolution
 - Generate
 - Hotfix
 - Install
@@ -44,9 +46,11 @@ Target:
 - Analysis
 - Announce
 - Changelog
+- CheckoutExternalRepositories
 - Clean
 - Compile
 - Coverage
+- CreateGlobalSolution
 - Generate
 - Hotfix
 - Install
