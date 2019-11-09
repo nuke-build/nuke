@@ -1,7 +1,3 @@
-# About This Project
-
-This is the main project of NUKE.
-
 [![TeamCity Build](https://img.shields.io/teamcity/codebetter/matkoch_NukeBuild_NukeBuildCommonBuildType.svg?label=teamcity&style=flat-square&logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAEEAAAA%2FCAYAAAC%2F36X0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTCtCgrAAAAC%2B0lEQVR4Xu2aDZHCMBSETwISkIAEJCABCUjAARKQgAQkIAEJSMhl75KbtOzLC%2FDyhpuwMx%2B0e7RNtvmj3FcIYXio%2BR9YrVZhvV7%2Fgf35Z1r5ednv98EbFLwsSI3FYhG22204Ho%2Fher1GS9btdgvn8znsdruwXC5h0XOW5A13IYioSWHmoBKo%2BCtCIFrgecNdtRBw5w%2BHQ9y0E8KQWkbecJcUAvr25XKJm%2FZCV0G3ippcM2%2B4i4WAAFDQ3kqt7O%2B6ecNd8xC8AoBwnbJrvEUIKJBXANBms8FbrvtvCBg0WtD6KirCjmOUfRP7rcI10JxRkXKdkKdQLczamNBEmmpEpcrQYyVSoVShcrUZJYOZBZ9jYczHgsydUaNHCNriB0KFHl0RIoyyhaX1Bv0sNSWsQ2hpBc8EUIK7n7ox%2FTugpoR1COWdkpSuSY%2B3gpoSliGguWqqNWFLqClhGUKapqp6pRs8AjUlLENII70orR9bQk0JyxC08UCaznpATQnPEPA8IIoeaw01JTxDSNeix1pDTYlPCBHPEFqWyFZQU8IzBK81AqCmhGUI2hSZvlPQY62hpoRlCC2LJa9xgZoSliG0LJsfOd8rUFPCMgRwOp3iW13sIcijaC2KmhLWIfT%2BKo3WloOuhUlNCesQQOtDFe1uzkFw88eBUhB3Ro0eIbQMkFmYNrWf1rRfrVgQkx2NHiGAlrGhFK6DKRYVQpnwPQP7rT%2FazIOYFEajVwjou60VsFLZve4KVKNXCAB9mD0h7qH5anRSEI2eIQAE0TJQviK2HJ%2FsaPQOAcwflVsJrextZwcJFNiqe6BctVmFmhKeIQC0CoTx7KCJWSeVmZ4%2FQ00JFAonlej5dBh3ElMh%2BjTCLscOtBh4AFMl1h4oaxQ91xxqjgY1R4Oao0HN0aDmaFBzNKg5GtQcDWqOBjVHg5qjQc3RoOZoUHM0qDka1BwNao7Gzwt7StQb7ZckT%2FKGuzz%2FHUcjb7jrE0LUJ4SoTwhRbxcCG717846zw8CEr2%2Fmetn3QDyWVAAAAABJRU5ErkJggg%3D%3D)](https://teamcity.jetbrains.com/viewLog.html?buildTypeId=matkoch_NukeBuild_NukeBuildCommonBuildType&buildId=lastFinished)
 [![AzureDevOps Build](https://img.shields.io/azure-devops/build/nuke-build/6c8c128e-f661-413f-a023-46f47bbc1bbc/1.svg?style=flat-square&label=azure%20devops&logo=azure-pipelines&logoColor=white)](https://dev.azure.com/nuke-build/common/_build?definitionId=1)
 [![AppVeyor Build](https://img.shields.io/appveyor/ci/matkoch/nuke.svg?style=flat-square&label=appveyor&logo=appveyor&logoColor=white)](https://ci.appveyor.com/project/matkoch/nuke)
@@ -11,8 +7,33 @@ This is the main project of NUKE.
 
 # About NUKE
 
-[<img align="right" width="120px" src="https://github.com/nuke-build/nuke/raw/master/images/icon.png" />](https://nuke.build)
+[<img align="right" width="130px" src="https://github.com/nuke-build/nuke/raw/master/images/icon.png" />](https://nuke.build)
 
-Founded in April 2017, NUKE is a free, open-source build automation system for C#/.NET that runs cross-platform on .NET Core, .NET Framework, and Mono. While builds are bootstrapped with conventional Bash or PowerShell scripts, their actual implementation resides in simple [C# console applications](http://www.nuke.build/docs/authoring-builds/fundamentals.html). This approach unleashes the power of the type system and natively provides IDE features like code-completion, refactorings, and debugging. A custom [global tool](http://www.nuke.build/docs/running-builds/global-tool.html) and several [IDE extensions](http://www.nuke.build/docs/running-builds/from-ides.html) further improve how build projects are setup, authored and executed.
+Founded in April 2017, NUKE is a free, open-source build automation system for C#/.NET that runs cross-platform on .NET Core, .NET Framework, and Mono. While builds are bootstrapped with conventional Bash or PowerShell scripts, their actual implementation resides in simple [C# console applications](https://www.nuke.build/docs/authoring-builds/fundamentals.html). This approach unleashes the power of the type system and natively provides IDE features like code-completion, refactorings, and debugging. A custom [global tool](https://www.nuke.build/docs/running-builds/global-tool.html) and several [IDE extensions](https://www.nuke.build/docs/running-builds/from-ides.html) further improve how build projects are setup, authored and executed. A revolutionary code-generation approach ensures scalable [integration of third-party tools](https://www.nuke.build/docs/authoring-builds/cli-tools.html) like MSBuild or dotnet CLI.
 
-For more information, visit the [official website](https://nuke.build) or the [main repository](https://github.com/nuke-build/nuke).
+[<img align="right" width="130px" src="https://github.com/nuke-build/nuke/raw/master/images/dotnet-bot.png" />](https://dotnet.microsoft.com/)
+
+- _New to NUKE? Get started by either [reading](https://www.nuke.build/docs/getting-started/philosophy.html), [listening](https://dotnetrocks.com/?show=1598) or [watching](https://www.youtube.com/watch?v=7gEqxzD6hbs)._
+- _Enjoying it? Become a [stargazer](https://github.com/nuke-build/nuke/stargazers) and join us on [Slack](https://slofile.com/slack/nukebuildnet), [Gitter](https://gitter.im/nuke-build/nuke) or [Twitter](https://twitter.com/nukebuildnet)._
+- _Want to help us? Read our [contribution guidelines](CONTRIBUTING.md)._
+
+# Contributors
+
+Thanks to all the great people who've contributed to the project! 
+
+[![Contributors](https://opencollective.com/nuke/contributors.svg?button=false&avatarHeight=75&width=1400)](CONTRIBUTORS.md)
+
+# Backers & Sponsors
+
+[![OpenCollective](https://opencollective.com/nuke/backers/badge.svg?style=flat-square)](https://opencollective.com/nuke/order/7399) 
+[![OpenCollective](https://opencollective.com/nuke/sponsors/badge.svg?style=flat-square)](https://opencollective.com/nuke/order/7400)
+
+This project is driven by contributors investing their private free time. If it helps you improving your productivity and thus financial situation, please consider becoming a [backer](https://opencollective.com/nuke/order/7399) (individuals) or [sponsor](https://opencollective.com/nuke/order/7400) (companies). Your monetary contributions will be used to further promote the project (website, stickers, cups). Additional profits will be forwarded to non-profit associations.
+
+<img src="https://opencollective.com/nuke/sponsor.svg?avatarHeight=100&button=false"><img src="https://opencollective.com/nuke/backer.svg?&avatarHeight=100&button=false">
+
+# Acknowledgements
+
+Thanks to [JetBrains](https://jetbrains.com) for providing licenses for [Rider](https://jetbrains.com/rider) and access to the community [TeamCity](https://jetbrains.com/teamcity) instance, which both make open-source development a real pleasure!
+
+[<img src="https://raw.githubusercontent.com/nuke-build/nuke/master/images/jetbrains.png" width="450" />](https://jetbrains.com/)
