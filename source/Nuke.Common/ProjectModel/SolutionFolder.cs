@@ -22,7 +22,7 @@ namespace Nuke.Common.ProjectModel
             Items = items;
         }
 
-        public IDictionary<string, string> Items { get; }
+        public IDictionary<string, string> Items { get; set; }
 
         internal override string RelativePath => Name;
     }

@@ -18,10 +18,10 @@ namespace Nuke.Common.ProjectModel
     {
         public static Solution Deserialize(string solutionFile)
         {
-            return Deserialize(solutionFile, TextTasks.ReadAllLines(solutionFile));
+            return Deserialize(TextTasks.ReadAllLines(solutionFile), solutionFile);
         }
 
-        public static Solution Deserialize(string solutionFile, string[] content)
+        public static Solution Deserialize(string[] content, string solutionFile = null)
         {
             var trimmedContent = content.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
 
@@ -92,7 +92,8 @@ namespace Nuke.Common.ProjectModel
                 $@"^Project\(""{GuidPattern("typeId")}""\)\s*=\s*{TextPattern("name")},\s*{TextPattern("path")},\s*""{GuidPattern("projectId")}""$");
 
             var configurations = (content.GetGlobalSection("ProjectConfigurationPlatforms") ??
-                                  content.GetGlobalSection("ProjectConfiguration")).NotNull()
+                                  content.GetGlobalSection("ProjectConfiguration") ??
+                                  new Dictionary<string, string>())
                 .Select(x => new
                              {
                                  ProjectId = Guid.Parse(x.Key.Substring(startIndex: 1, length: 36)),
@@ -126,9 +127,7 @@ namespace Nuke.Common.ProjectModel
                         name,
                         path,
                         typeId,
-                        configurations.TryGetValue(projectId, out var projectConfigurations)
-                            ? projectConfigurations
-                            : new Dictionary<string, string>());
+                        configurations.GetValueOrDefault(projectId) ?? new Dictionary<string, string>());
                 }
                 else
                 {

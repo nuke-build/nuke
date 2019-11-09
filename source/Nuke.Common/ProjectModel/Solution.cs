@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -19,7 +19,7 @@ namespace Nuke.Common.ProjectModel
         internal Dictionary<PrimitiveProject, SolutionFolder> PrimitiveProjectParents { get; } = new Dictionary<PrimitiveProject, SolutionFolder>();
 
         [CanBeNull]
-        public PathConstruction.AbsolutePath Path { get; set; }
+        public PathConstruction.AbsolutePath Path { get; internal set; }
 
         [CanBeNull]
         public string Name => System.IO.Path.GetFileNameWithoutExtension(Path);
