@@ -12,6 +12,7 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Utilities.Collections;
 using Octokit;
 using static Nuke.Common.ControlFlow;
+using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.IO.SerializationTasks;
 using static Nuke.Common.ProjectModel.ProjectModelTasks;
@@ -76,5 +77,12 @@ partial class Build
                 .ForEach(x => AddSolution(x, global.AddSolutionFolder(x.Name)));
 
             global.SaveAs(RootDirectory / "nuke-global.sln");
+
+            CopyFile(
+                source: RootDirectory / "nuke-common.sln.DotSettings",
+                target: RootDirectory / $"{global.FileName}.DotSettings");
+            CopyFile(
+                source: RootDirectory / "nuke-common.sln.DotSettings.user",
+                target: RootDirectory / $"{global.FileName}.DotSettings.user");
         });
 }
