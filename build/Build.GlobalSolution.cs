@@ -9,8 +9,8 @@ using Nuke.Common;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
+using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Utilities.Collections;
-using Octokit;
 using static Nuke.Common.ControlFlow;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
@@ -29,22 +29,15 @@ partial class Build
         YamlDeserializeFromFile<string[]>(ExternalRepositoriesFile).Select(x => GitRepository.FromUrl(x));
 
     Target CheckoutExternalRepositories => _ => _
-        .Executes(() =>
+        .Executes(async () =>
         {
-            string GetDefaultBranch(GitRepository repository)
-            {
-                var client = new GitHubClient(new ProductHeaderValue(nameof(NukeBuild)));
-                var repo = client.Repository.Get(repository.GetGitHubOwner(), repository.GetGitHubName()).Result;
-                return repo.DefaultBranch;
-            }
-
             foreach (var repository in ExternalRepositories)
             {
                 var repositoryDirectory = ExternalRepositoriesDirectory / repository.GetGitHubName();
                 var origin = UseSSH ? repository.SshUrl : repository.HttpsUrl;
 
                 if (!Directory.Exists(repositoryDirectory))
-                    Git($"clone {origin} {repositoryDirectory} --branch {GetDefaultBranch(repository)} --progress");
+                    Git($"clone {origin} {repositoryDirectory} --branch {await repository.GetDefaultBranch()} --progress");
                 else
                 {
                     SuppressErrors(() => Git($"remote add origin {origin}", repositoryDirectory));
