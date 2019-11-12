@@ -11,6 +11,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
     {
         Select,
         Text,
-        Password
+        Password,
+        Checkbox
     }
 }

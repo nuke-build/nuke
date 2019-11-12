@@ -284,12 +284,21 @@ namespace Nuke.Common.CI.TeamCity
                  member.GetMemberType() == typeof(Project)))
                 defaultValue = (UnixRelativePath) GetRelativePath(NukeBuild.RootDirectory, defaultValue.ToString());
 
+            TeamCityParameterType GetParameterType()
+            {
+                if (member.GetMemberType() == typeof(bool))
+                    return TeamCityParameterType.Checkbox;
+                if (valueSet != null)
+                    return TeamCityParameterType.Select;
+                return TeamCityParameterType.Text;
+            }
+
             return new TeamCityConfigurationParameter
                    {
                        Name = member.Name,
                        Description = attribute.Description,
                        Options = valueSet?.ToDictionary(x => x.Item1, x => x.Item2),
-                       Type = valueSet != null ? TeamCityParameterType.Select : TeamCityParameterType.Text,
+                       Type = GetParameterType(),
                        DefaultValue = defaultValue?.ToString(),
                        Display = required ? TeamCityParameterDisplay.Prompt : TeamCityParameterDisplay.Normal,
                        AllowMultiple = member.GetMemberType().IsArray,
