@@ -16,7 +16,7 @@ using static Nuke.Common.IO.PathConstruction;
 namespace Nuke.Common.CI.AzurePipelines
 {
     [PublicAPI]
-    public class AzurePipelinesAttribute : ConfigurationAttributeBase
+    public class AzurePipelinesAttribute : ChainedConfigurationAttributeBase
     {
         private readonly AzurePipelinesImage[] _images;
 
@@ -30,11 +30,8 @@ namespace Nuke.Common.CI.AzurePipelines
         protected override HostType HostType => HostType.AzurePipelines;
         protected override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
         protected override IEnumerable<string> RelevantTargetNames => InvokedTargets;
-        protected override IEnumerable<string> IrrelevantTargetNames => NonEntryTargets.Concat(ExcludedTargets);
 
         public string[] InvokedTargets { get; set; } = new string[0];
-        public string[] NonEntryTargets { get; set; } = new string[0];
-        public string[] ExcludedTargets { get; set; } = new string[0];
 
         public bool TriggerBatch { get; set; }
         public string[] TriggerBranchesInclude { get; set; } = new string[0];
@@ -107,15 +104,8 @@ namespace Nuke.Common.CI.AzurePipelines
             //                ArtifactRules = rules
             //            }).ToArray<TeamCityDependency>();
 
-            var invokedTargets = executableTarget
-                .DescendantsAndSelf(x => x.ExecutionDependencies, x => NonEntryTargets.Contains(x.Name))
-                .Where(x => x == executableTarget || NonEntryTargets.Contains(x.Name))
-                .Reverse()
-                .Select(x => x.Name).ToArray();
-
-            var dependencies = executableTarget.ExecutionDependencies
-                .Where(x => !ExcludedTargets.Contains(x.Name) && !NonEntryTargets.Contains(x.Name))
-                .SelectMany(x => jobs[x]).ToArray();
+            var chainLinkNames = GetInvokedTargets(executableTarget).ToArray();
+            var dependencies = GetTargetDependencies(executableTarget).SelectMany(x => jobs[x]).ToArray();
             return new AzurePipelinesJob
                    {
                        Name = executableTarget.Name,
@@ -124,7 +114,7 @@ namespace Nuke.Common.CI.AzurePipelines
                        Dependencies = dependencies,
                        Parallel = totalPartitions,
                        PartitionName = partitionName,
-                       InvokedTargets = invokedTargets,
+                       InvokedTargets = chainLinkNames,
                        PublishArtifacts = publishedArtifacts
                    };
         }

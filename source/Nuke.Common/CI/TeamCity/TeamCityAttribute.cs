@@ -21,7 +21,7 @@ using static Nuke.Common.IO.PathConstruction;
 namespace Nuke.Common.CI.TeamCity
 {
     [PublicAPI]
-    public class TeamCityAttribute : ConfigurationAttributeBase
+    public class TeamCityAttribute : ChainedConfigurationAttributeBase
     {
         public TeamCityAttribute(TeamCityAgentPlatform platform)
         {
@@ -35,11 +35,10 @@ namespace Nuke.Common.CI.TeamCity
         protected override HostType HostType => HostType.TeamCity;
         protected override IEnumerable<string> GeneratedFiles => new[] { PomFile, SettingsFile };
 
-        protected override IEnumerable<string> RelevantTargetNames =>
-            VcsTriggeredTargets.Concat(NightlyTriggeredTargets).Concat(ManuallyTriggeredTargets);
-
-        protected override IEnumerable<string> IrrelevantTargetNames =>
-            NonEntryTargets.Concat(ExcludedTargets);
+        protected override IEnumerable<string> RelevantTargetNames => new string[0]
+            .Concat(VcsTriggeredTargets)
+            .Concat(NightlyTriggeredTargets)
+            .Concat(ManuallyTriggeredTargets);
 
         public string Version { get; set; } = "2018.2";
 
@@ -58,8 +57,6 @@ namespace Nuke.Common.CI.TeamCity
         public string[] NightlyTriggeredTargets { get; set; } = new string[0];
 
         public string[] ManuallyTriggeredTargets { get; set; } = new string[0];
-        public string[] NonEntryTargets { get; set; } = new string[0];
-        public string[] ExcludedTargets { get; set; } = new string[0];
 
         protected override void OnBuildFinishedInternal(NukeBuild build)
         {
@@ -138,13 +135,8 @@ namespace Nuke.Common.CI.TeamCity
                            ArtifactRules = rules
                        }).ToArray<TeamCityDependency>();
 
-            var invokedTargets = executableTarget
-                .DescendantsAndSelf(x => x.ExecutionDependencies, x => NonEntryTargets.Contains(x.Name))
-                .Where(x => x == executableTarget || NonEntryTargets.Contains(x.Name))
-                .Reverse()
-                .Select(x => x.Name).ToArray();
-            var snapshotDependencies = executableTarget.ExecutionDependencies
-                .Where(x => !ExcludedTargets.Contains(x.Name) && !NonEntryTargets.Contains(x.Name))
+            var chainLinkNames = GetInvokedTargets(executableTarget).ToArray();
+            var snapshotDependencies = GetTargetDependencies(executableTarget)
                 .SelectMany(x => buildTypes[x])
                 .Where(x => x.Partition == null)
                 .Select(x => new TeamCitySnapshotDependency
@@ -171,7 +163,7 @@ namespace Nuke.Common.CI.TeamCity
                                      ArtifactRules = artifactRules,
                                      Partition = partition,
                                      PartitionName = partitionName,
-                                     InvokedTargets = invokedTargets,
+                                     InvokedTargets = chainLinkNames,
                                      VcsRoot = new TeamCityBuildTypeVcsRoot { Root = vcsRoot, CleanCheckoutDirectory = CleanCheckoutDirectory },
                                      Dependencies = snapshotDependencies.Concat(artifactDependencies).ToArray()
                                  };
@@ -213,7 +205,7 @@ namespace Nuke.Common.CI.TeamCity
                                        },
                              IsComposite = isPartitioned,
                              IsDeployment = ManuallyTriggeredTargets.Contains(executableTarget.Name),
-                             InvokedTargets = invokedTargets,
+                             InvokedTargets = chainLinkNames,
                              ArtifactRules = artifactRules,
                              Dependencies = snapshotDependencies.Concat(artifactDependencies).ToArray(),
                              Parameters = parameters,
