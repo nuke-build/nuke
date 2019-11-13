@@ -177,6 +177,7 @@ namespace Nuke.Common.CI.TeamCity
                                  };
                 }
 
+                artifactRules = new[] { "**/*" };
                 snapshotDependencies = buildTypes[executableTarget]
                     .Select(x => new TeamCitySnapshotDependency
                                  {
@@ -184,7 +185,12 @@ namespace Nuke.Common.CI.TeamCity
                                      FailureAction = TeamCityDependencyFailureAction.FailToStart,
                                      CancelAction = TeamCityDependencyFailureAction.Cancel
                                  }).ToArray<TeamCityDependency>();
-                artifactDependencies = new TeamCityDependency[0];
+                artifactDependencies = buildTypes[executableTarget]
+                    .Select(x => new TeamCityArtifactDependency
+                                 {
+                                     BuildType = x,
+                                     ArtifactRules = new[] { "**/*" }
+                                 }).ToArray<TeamCityDependency>();
             }
 
             var parameters = executableTarget.Requirements
@@ -309,7 +315,10 @@ namespace Nuke.Common.CI.TeamCity
         protected virtual string GetArtifactRule(string rule)
         {
             if (IsDescendantPath(NukeBuild.RootDirectory, rule))
+            {
                 rule = GetRelativePath(NukeBuild.RootDirectory, rule);
+                rule += " => " + rule.Substring(startIndex: 0, length: rule.IndexOf('*') - 1);
+            }
 
             return HasPathRoot(rule)
                 ? rule
