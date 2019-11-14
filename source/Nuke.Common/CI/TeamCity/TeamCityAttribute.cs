@@ -304,17 +304,14 @@ namespace Nuke.Common.CI.TeamCity
                    };
         }
 
-        protected virtual string GetArtifactRule(string rule)
+        protected virtual string GetArtifactRule(string source)
         {
-            if (IsDescendantPath(NukeBuild.RootDirectory, rule))
-            {
-                rule = GetRelativePath(NukeBuild.RootDirectory, rule);
-                rule += " => " + rule.Substring(startIndex: 0, length: rule.IndexOf('*') - 1);
-            }
+            if (!IsDescendantPath(NukeBuild.RootDirectory, source))
+                return source;
 
-            return HasPathRoot(rule)
-                ? rule
-                : (UnixRelativePath) rule;
+            var relativeSource = (string) (UnixRelativePath) GetRelativePath(NukeBuild.RootDirectory, source);
+            var target = relativeSource.TakeWhile(x => x != '*').Reverse().SkipWhile(x => x != '/').Reverse();
+            return $"{relativeSource} => {new string(target.ToArray()).TrimEnd('/')}";
         }
     }
 }
