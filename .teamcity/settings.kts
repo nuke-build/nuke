@@ -30,10 +30,11 @@ project {
     buildType(Test_P1T2)
     buildType(Test_P2T2)
     buildType(Test)
+    buildType(Coverage)
     buildType(Publish)
     buildType(Announce)
 
-    buildTypesOrder = arrayListOf(Compile, Pack, Test_P1T2, Test_P2T2, Test, Publish, Announce)
+    buildTypesOrder = arrayListOf(Compile, Pack, Test_P1T2, Test_P2T2, Test, Coverage, Publish, Announce)
 
     params {
         select (
@@ -244,6 +245,39 @@ object Test : BuildType({
         artifacts(Test_P2T2) {
             artifactRules = """
                 **/*
+            """.trimIndent()
+        }
+    }
+})
+object Coverage : BuildType({
+    name = "📊 Coverage"
+    vcs {
+        root(VcsRoot)
+    }
+    artifactRules = """
+        output/coverage-report.zip => output
+    """.trimIndent()
+    steps {
+        powerShell {
+            scriptMode = file { path = "build.ps1" }
+            param("jetbrains_powershell_scriptArguments", "Coverage --skip")
+            noProfile = true
+        }
+    }
+    triggers {
+        finishBuildTrigger {
+            buildType = "Test"
+        }
+    }
+    dependencies {
+        snapshot(Test) {
+            onDependencyFailure = FailureAction.FAIL_TO_START
+            onDependencyCancel = FailureAction.CANCEL
+        }
+        artifacts(Test) {
+            artifactRules = """
+                output/*.trx => output
+                output/*.xml => output
             """.trimIndent()
         }
     }

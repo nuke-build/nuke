@@ -34,6 +34,10 @@ jobs:
         with:
           name: output
           path: output
+      - uses: actions/upload-artifact@v1
+        with:
+          name: coverage-report.zip
+          path: output/coverage-report.zip
   ubuntu-16_04:
     name: ubuntu-16_04
     runs-on: ubuntu-16.04
@@ -49,6 +53,10 @@ jobs:
         with:
           name: output
           path: output
+      - uses: actions/upload-artifact@v1
+        with:
+          name: coverage-report.zip
+          path: output/coverage-report.zip
   ubuntu-18_04:
     name: ubuntu-18_04
     runs-on: ubuntu-18.04
@@ -64,6 +72,10 @@ jobs:
         with:
           name: output
           path: output
+      - uses: actions/upload-artifact@v1
+        with:
+          name: coverage-report.zip
+          path: output/coverage-report.zip
   windows-2016:
     name: windows-2016
     runs-on: windows-2016
@@ -79,6 +91,10 @@ jobs:
         with:
           name: output
           path: output
+      - uses: actions/upload-artifact@v1
+        with:
+          name: coverage-report.zip
+          path: output/coverage-report.zip
   windows-2019:
     name: windows-2019
     runs-on: windows-2019
@@ -94,3 +110,7 @@ jobs:
         with:
           name: output
           path: output
+      - uses: actions/upload-artifact@v1
+        with:
+          name: coverage-report.zip
+          path: output/coverage-report.zip

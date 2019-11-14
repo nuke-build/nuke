@@ -182,7 +182,7 @@ partial class Build : NukeBuild
                 .SetNoBuild(ExecutingTargets.Contains(Compile))
                 .ResetVerbosity()
                 .SetResultsDirectory(OutputDirectory)
-                .When(InvokedTargets.Contains(Coverage), _ => _
+                .When(InvokedTargets.Contains(Coverage) || IsServerBuild, _ => _
                     .EnableCollectCoverage()
                     .SetCoverletOutputFormat(CoverletOutputFormat.cobertura)
                     .SetExcludeByFile("*.Generated.cs")
@@ -192,7 +192,7 @@ partial class Build : NukeBuild
                     TestPartition.GetCurrent(Solution.GetProjects("*.Tests")), (_, v) => _
                         .SetProjectFile(v)
                         .SetLogger($"trx;LogFileName={v.Name}.trx")
-                        .When(InvokedTargets.Contains(Coverage), _ => _
+                        .When(InvokedTargets.Contains(Coverage) || IsServerBuild, _ => _
                             .SetCoverletOutput(OutputDirectory / $"{v.Name}.xml"))));
 
             OutputDirectory.GlobFiles("*.trx").ForEach(x =>
@@ -207,13 +207,16 @@ partial class Build : NukeBuild
 
     Target Coverage => _ => _
         .DependsOn(Test)
+        .TriggeredBy(Test)
+        .Consumes(Test)
         .Produces(CoverageReportArchive)
         .Executes(() =>
         {
             ReportGenerator(_ => _
                 .SetReports(OutputDirectory / "*.xml")
                 .SetReportTypes(ReportTypes.HtmlInline)
-                .SetTargetDirectory(CoverageReportDirectory));
+                .SetTargetDirectory(CoverageReportDirectory)
+                .SetFramework("netcoreapp2.1"));
 
             OutputDirectory.GlobFiles("*.xml").ForEach(x =>
                 AzurePipelines?.PublishCodeCoverage(
