@@ -70,11 +70,11 @@ partial class Build
     void Checkout(string branch, string start)
     {
         if (AutoStash)
-            Git("git stash");
+            Git("stash");
 
         Git($"checkout -b {branch} {start}");
 
         if (AutoStash)
-            Git("git stash apply");
+            Git("stash apply");
     }
 }
