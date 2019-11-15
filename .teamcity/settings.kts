@@ -266,7 +266,7 @@ object Coverage : BuildType({
     }
     triggers {
         finishBuildTrigger {
-            buildType = "Test"
+            buildType = "${Test.id}"
         }
     }
     dependencies {
@@ -348,7 +348,7 @@ object Announce : BuildType({
     }
     triggers {
         finishBuildTrigger {
-            buildType = "Publish"
+            buildType = "${Publish.id}"
         }
     }
 })
