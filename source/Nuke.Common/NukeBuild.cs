@@ -112,6 +112,12 @@ namespace Nuke.Common
                 ? NuGetPackageResolver.GetPackagesConfigFile(BuildProjectDirectory)
                 : null;
 
+        [CanBeNull]
+        protected internal virtual string NuGetAssetsConfigFile =>
+            BuildProjectDirectory != null
+                ? BuildProjectDirectory / "obj" / "project.assets.json"
+                : null;
+
         internal bool IsSuccessful => ExecutionPlan
             .All(x => x.Status != ExecutionStatus.Failed &&
                       x.Status != ExecutionStatus.NotRun &&
