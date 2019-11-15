@@ -25,7 +25,7 @@
 
 For more information checkout the [resources](http://www.nuke.build/docs/getting-started/resources.html) and [FAQ](http://www.nuke.build/docs/getting-started/faq.html) sections.
 
-[![Slack](https://img.shields.io/badge/slack-nukebuildnet-red.svg?style=for-the-badge&colorB=F5015F&logo=slack)](https://publicslack.com/slacks/nukebuildnet/invites/new)
+[![Slack](https://img.shields.io/badge/slack-nukebuildnet-red.svg?style=for-the-badge&colorB=F5015F&logo=slack)](https://slofile.com/slack/nukebuildnet)
 [![Twitter](https://img.shields.io/badge/twitter-%40nukebuildnet-blue.svg?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/nukebuildnet)
 
 ## Features
