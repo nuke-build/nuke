@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -34,7 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="*.csproj.DotSettings" />
+    <None Remove="*.csproj.DotSettings;.editorconfig" />
 
     <None Include="..\build.ps1" />
     <None Include="..\build.sh" />
