@@ -105,6 +105,7 @@ object Compile : BuildType({
     name = "⚙️ Compile"
     vcs {
         root(VcsRoot)
+        cleanCheckout = true
     }
     steps {
         powerShell {
@@ -118,6 +119,7 @@ object Pack : BuildType({
     name = "📦 Pack"
     vcs {
         root(VcsRoot)
+        cleanCheckout = true
     }
     artifactRules = """
         output/*.nupkg => output
@@ -206,6 +208,7 @@ object Test : BuildType({
     type = Type.COMPOSITE
     vcs {
         root(VcsRoot)
+        cleanCheckout = true
         showDependenciesChanges = true
     }
     artifactRules = """
@@ -253,6 +256,7 @@ object Coverage : BuildType({
     name = "📊 Coverage"
     vcs {
         root(VcsRoot)
+        cleanCheckout = true
     }
     artifactRules = """
         output/coverage-report.zip => output
@@ -287,6 +291,7 @@ object Publish : BuildType({
     type = Type.DEPLOYMENT
     vcs {
         root(VcsRoot)
+        cleanCheckout = true
     }
     steps {
         powerShell {
@@ -338,6 +343,7 @@ object Announce : BuildType({
     name = "🗣 Announce"
     vcs {
         root(VcsRoot)
+        cleanCheckout = true
     }
     steps {
         powerShell {

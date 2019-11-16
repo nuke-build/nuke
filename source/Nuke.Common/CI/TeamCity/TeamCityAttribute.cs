@@ -201,7 +201,8 @@ namespace Nuke.Common.CI.TeamCity
                              VcsRoot = new TeamCityBuildTypeVcsRoot
                                        {
                                            Root = vcsRoot,
-                                           ShowDependenciesChanges = isPartitioned
+                                           ShowDependenciesChanges = isPartitioned,
+                                           CleanCheckoutDirectory = CleanCheckoutDirectory
                                        },
                              IsComposite = isPartitioned,
                              IsDeployment = ManuallyTriggeredTargets.Contains(executableTarget.Name),
