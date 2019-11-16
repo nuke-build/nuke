@@ -51,11 +51,11 @@ namespace Nuke.Common.Execution
                 Logger.OutputSink = build.OutputSink;
                 Logger.LogLevel = NukeBuild.LogLevel;
 
-                ToolPathResolver.ExecutingAssemblyDirectory = NukeBuild.BuildProjectDirectory != null
-                    ? Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
-                    : null;
-                ToolPathResolver.NuGetAssetsConfigFile = NukeBuild.BuildProjectDirectory / "obj" / "project.assets.json";
+                if (NukeBuild.BuildProjectDirectory != null)
+                    ToolPathResolver.ExecutingAssemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
                 ToolPathResolver.NuGetPackagesConfigFile = build.NuGetPackagesConfigFile;
+                ToolPathResolver.NuGetAssetsConfigFile = build.NuGetAssetsConfigFile;
 
                 if (!NukeBuild.NoLogo)
                 {
