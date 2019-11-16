@@ -180,6 +180,7 @@ partial class Build : NukeBuild
             DotNetTest(_ => _
                 .SetConfiguration(Configuration)
                 .SetNoBuild(ExecutingTargets.Contains(Compile))
+                .ResetVerbosity()
                 .SetResultsDirectory(OutputDirectory)
                 .When(InvokedTargets.Contains(Coverage) || IsServerBuild, _ => _
                     .EnableCollectCoverage()
