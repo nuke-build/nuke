@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed assignment for `NuGetAssetsConfigFile` when `BuildProjectDirectory` is null
+- Fixed `ToolPathResolver` to not require framework when only one file matches
 
 ## [0.23.3] / 2019-11-02
 - Fixed separator in Azure Pipelines service messages
