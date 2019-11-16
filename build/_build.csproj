@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -36,8 +36,8 @@
   <ItemGroup>
     <None Remove="*.csproj.DotSettings;.editorconfig" />
 
-    <None Include="..\build.ps1" />
-    <None Include="..\build.sh" />
+    <None Include="..\build.ps1" LinkBase="boot" />
+    <None Include="..\build.sh" LinkBase="boot" />
 
     <None Include="..\.nuke" LinkBase="config" />
     <None Include="..\global.json" LinkBase="config" Condition="Exists('..\global.json')" />

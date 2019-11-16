@@ -20,8 +20,8 @@
     <None Remove="*.csproj.DotSettings;.editorconfig" />
 
     <!-- Common build related files -->
-    <None Include="_SCRIPT_DIRECTORY_\build.ps1" />
-    <None Include="_SCRIPT_DIRECTORY_\build.sh" />
+    <None Include="_SCRIPT_DIRECTORY_\build.ps1" LinkBase="boot" />
+    <None Include="_SCRIPT_DIRECTORY_\build.sh" LinkBase="boot" />
 
     <None Include="_ROOT_DIRECTORY_\.nuke" LinkBase="config" />
     <None Include="_ROOT_DIRECTORY_\global.json" LinkBase="config" Condition="Exists('_ROOT_DIRECTORY_\global.json')" />
