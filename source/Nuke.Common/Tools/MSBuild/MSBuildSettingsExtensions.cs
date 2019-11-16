@@ -21,14 +21,5 @@ namespace Nuke.Common.Tools.MSBuild
         {
             return toolSettings.SetTargetPath(projectFile);
         }
-
-        public static MSBuildSettings AddTeamCityLogger(this MSBuildSettings toolSettings)
-        {
-            var teamCity = TeamCity.Instance.NotNull("TeamCity.Instance != null");
-            var teamCityLogger = teamCity.ConfigurationProperties["TEAMCITY_DOTNET_MSBUILD_EXTENSIONS4_0"];
-            return toolSettings
-                .AddLoggers($"JetBrains.BuildServer.MSBuildLoggers.MSBuildLogger,{teamCityLogger}")
-                .EnableNoConsoleLogger();
-        }
     }
 }
