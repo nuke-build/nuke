@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.23.4] / 2019-11-16
+- Fixed assignment for `NuGetAssetsConfigFile` when `BuildProjectDirectory` is null
+- Fixed `ToolPathResolver` to not require framework when only one file matches
+
 ## [0.23.3] / 2019-11-02
 - Fixed separator in Azure Pipelines service messages
 
@@ -452,61 +456,62 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/common/compare/0.23.3...HEAD
-[0.23.3]: https://github.com/nuke-build/common/compare/0.23.2...0.23.3
-[0.23.2]: https://github.com/nuke-build/common/compare/0.23.1...0.23.2
-[0.23.1]: https://github.com/nuke-build/common/compare/0.23.0...0.23.1
-[0.23.0]: https://github.com/nuke-build/common/compare/0.22.2...0.23.0
-[0.22.2]: https://github.com/nuke-build/common/compare/0.22.1...0.22.2
-[0.22.1]: https://github.com/nuke-build/common/compare/0.22.0...0.22.1
-[0.22.0]: https://github.com/nuke-build/common/compare/0.21.2...0.22.0
-[0.21.2]: https://github.com/nuke-build/common/compare/0.21.1...0.21.2
-[0.21.1]: https://github.com/nuke-build/common/compare/0.21.0...0.21.1
-[0.21.0]: https://github.com/nuke-build/common/compare/0.20.1...0.21.0
-[0.20.1]: https://github.com/nuke-build/common/compare/0.20.0...0.20.1
-[0.20.0]: https://github.com/nuke-build/common/compare/0.19.2...0.20.0
-[0.19.2]: https://github.com/nuke-build/common/compare/0.19.1...0.19.2
-[0.19.1]: https://github.com/nuke-build/common/compare/0.19.0...0.19.1
-[0.19.0]: https://github.com/nuke-build/common/compare/0.18.0...0.19.0
-[0.18.0]: https://github.com/nuke-build/common/compare/0.17.7...0.18.0
-[0.17.7]: https://github.com/nuke-build/common/compare/0.17.6...0.17.7
-[0.17.6]: https://github.com/nuke-build/common/compare/0.17.5...0.17.6
-[0.17.5]: https://github.com/nuke-build/common/compare/0.17.4...0.17.5
-[0.17.4]: https://github.com/nuke-build/common/compare/0.17.3...0.17.4
-[0.17.3]: https://github.com/nuke-build/common/compare/0.17.2...0.17.3
-[0.17.2]: https://github.com/nuke-build/common/compare/0.17.1...0.17.2
-[0.17.1]: https://github.com/nuke-build/common/compare/0.17.0...0.17.1
-[0.17.0]: https://github.com/nuke-build/common/compare/0.16.0...0.17.0
-[0.16.0]: https://github.com/nuke-build/common/compare/0.15.0...0.16.0
-[0.15.0]: https://github.com/nuke-build/common/compare/0.14.1...0.15.0
-[0.14.1]: https://github.com/nuke-build/common/compare/0.14.0...0.14.1
-[0.14.0]: https://github.com/nuke-build/common/compare/0.13.0...0.14.0
-[0.13.0]: https://github.com/nuke-build/common/compare/0.12.4...0.13.0
-[0.12.4]: https://github.com/nuke-build/common/compare/0.12.3...0.12.4
-[0.12.3]: https://github.com/nuke-build/common/compare/0.12.2...0.12.3
-[0.12.2]: https://github.com/nuke-build/common/compare/0.12.1...0.12.2
-[0.12.1]: https://github.com/nuke-build/common/compare/0.12.0...0.12.1
-[0.12.0]: https://github.com/nuke-build/common/compare/0.11.1...0.12.0
-[0.11.1]: https://github.com/nuke-build/common/compare/0.11.0...0.11.1
-[0.11.0]: https://github.com/nuke-build/common/compare/0.10.5...0.11.0
-[0.10.5]: https://github.com/nuke-build/common/compare/0.10.4...0.10.5
-[0.10.4]: https://github.com/nuke-build/common/compare/0.10.3...0.10.4
-[0.10.3]: https://github.com/nuke-build/common/compare/0.10.2...0.10.3
-[0.10.2]: https://github.com/nuke-build/common/compare/0.10.1...0.10.2
-[0.10.1]: https://github.com/nuke-build/common/compare/0.10.0...0.10.1
-[0.10.0]: https://github.com/nuke-build/common/compare/0.9.1...0.10.0
-[0.9.1]: https://github.com/nuke-build/common/compare/0.9.0...0.9.1
-[0.9.0]: https://github.com/nuke-build/common/compare/0.8.0...0.9.0
-[0.8.0]: https://github.com/nuke-build/common/compare/0.7.0...0.8.0
-[0.7.0]: https://github.com/nuke-build/common/compare/0.6.2...0.7.0
-[0.6.2]: https://github.com/nuke-build/common/compare/0.6.1...0.6.2
-[0.6.1]: https://github.com/nuke-build/common/compare/0.6.0...0.6.1
-[0.6.0]: https://github.com/nuke-build/common/compare/0.5.3...0.6.0
-[0.5.3]: https://github.com/nuke-build/common/compare/0.5.2...0.5.3
-[0.5.2]: https://github.com/nuke-build/common/compare/0.5.0...0.5.2
-[0.5.0]: https://github.com/nuke-build/common/compare/0.4.0...0.5.0
-[0.4.0]: https://github.com/nuke-build/common/compare/0.3.1...0.4.0
-[0.3.1]: https://github.com/nuke-build/common/compare/0.2.10...0.3.1
-[0.2.10]: https://github.com/nuke-build/common/compare/0.2.0...0.2.10
-[0.2.0]: https://github.com/nuke-build/common/tree/0.2.0
+[vNext]: https://github.com/nuke-build/nuke/compare/0.23.4...HEAD
+[0.23.4]: https://github.com/nuke-build/nuke/compare/0.23.3...0.23.4
+[0.23.3]: https://github.com/nuke-build/nuke/compare/0.23.2...0.23.3
+[0.23.2]: https://github.com/nuke-build/nuke/compare/0.23.1...0.23.2
+[0.23.1]: https://github.com/nuke-build/nuke/compare/0.23.0...0.23.1
+[0.23.0]: https://github.com/nuke-build/nuke/compare/0.22.2...0.23.0
+[0.22.2]: https://github.com/nuke-build/nuke/compare/0.22.1...0.22.2
+[0.22.1]: https://github.com/nuke-build/nuke/compare/0.22.0...0.22.1
+[0.22.0]: https://github.com/nuke-build/nuke/compare/0.21.2...0.22.0
+[0.21.2]: https://github.com/nuke-build/nuke/compare/0.21.1...0.21.2
+[0.21.1]: https://github.com/nuke-build/nuke/compare/0.21.0...0.21.1
+[0.21.0]: https://github.com/nuke-build/nuke/compare/0.20.1...0.21.0
+[0.20.1]: https://github.com/nuke-build/nuke/compare/0.20.0...0.20.1
+[0.20.0]: https://github.com/nuke-build/nuke/compare/0.19.2...0.20.0
+[0.19.2]: https://github.com/nuke-build/nuke/compare/0.19.1...0.19.2
+[0.19.1]: https://github.com/nuke-build/nuke/compare/0.19.0...0.19.1
+[0.19.0]: https://github.com/nuke-build/nuke/compare/0.18.0...0.19.0
+[0.18.0]: https://github.com/nuke-build/nuke/compare/0.17.7...0.18.0
+[0.17.7]: https://github.com/nuke-build/nuke/compare/0.17.6...0.17.7
+[0.17.6]: https://github.com/nuke-build/nuke/compare/0.17.5...0.17.6
+[0.17.5]: https://github.com/nuke-build/nuke/compare/0.17.4...0.17.5
+[0.17.4]: https://github.com/nuke-build/nuke/compare/0.17.3...0.17.4
+[0.17.3]: https://github.com/nuke-build/nuke/compare/0.17.2...0.17.3
+[0.17.2]: https://github.com/nuke-build/nuke/compare/0.17.1...0.17.2
+[0.17.1]: https://github.com/nuke-build/nuke/compare/0.17.0...0.17.1
+[0.17.0]: https://github.com/nuke-build/nuke/compare/0.16.0...0.17.0
+[0.16.0]: https://github.com/nuke-build/nuke/compare/0.15.0...0.16.0
+[0.15.0]: https://github.com/nuke-build/nuke/compare/0.14.1...0.15.0
+[0.14.1]: https://github.com/nuke-build/nuke/compare/0.14.0...0.14.1
+[0.14.0]: https://github.com/nuke-build/nuke/compare/0.13.0...0.14.0
+[0.13.0]: https://github.com/nuke-build/nuke/compare/0.12.4...0.13.0
+[0.12.4]: https://github.com/nuke-build/nuke/compare/0.12.3...0.12.4
+[0.12.3]: https://github.com/nuke-build/nuke/compare/0.12.2...0.12.3
+[0.12.2]: https://github.com/nuke-build/nuke/compare/0.12.1...0.12.2
+[0.12.1]: https://github.com/nuke-build/nuke/compare/0.12.0...0.12.1
+[0.12.0]: https://github.com/nuke-build/nuke/compare/0.11.1...0.12.0
+[0.11.1]: https://github.com/nuke-build/nuke/compare/0.11.0...0.11.1
+[0.11.0]: https://github.com/nuke-build/nuke/compare/0.10.5...0.11.0
+[0.10.5]: https://github.com/nuke-build/nuke/compare/0.10.4...0.10.5
+[0.10.4]: https://github.com/nuke-build/nuke/compare/0.10.3...0.10.4
+[0.10.3]: https://github.com/nuke-build/nuke/compare/0.10.2...0.10.3
+[0.10.2]: https://github.com/nuke-build/nuke/compare/0.10.1...0.10.2
+[0.10.1]: https://github.com/nuke-build/nuke/compare/0.10.0...0.10.1
+[0.10.0]: https://github.com/nuke-build/nuke/compare/0.9.1...0.10.0
+[0.9.1]: https://github.com/nuke-build/nuke/compare/0.9.0...0.9.1
+[0.9.0]: https://github.com/nuke-build/nuke/compare/0.8.0...0.9.0
+[0.8.0]: https://github.com/nuke-build/nuke/compare/0.7.0...0.8.0
+[0.7.0]: https://github.com/nuke-build/nuke/compare/0.6.2...0.7.0
+[0.6.2]: https://github.com/nuke-build/nuke/compare/0.6.1...0.6.2
+[0.6.1]: https://github.com/nuke-build/nuke/compare/0.6.0...0.6.1
+[0.6.0]: https://github.com/nuke-build/nuke/compare/0.5.3...0.6.0
+[0.5.3]: https://github.com/nuke-build/nuke/compare/0.5.2...0.5.3
+[0.5.2]: https://github.com/nuke-build/nuke/compare/0.5.0...0.5.2
+[0.5.0]: https://github.com/nuke-build/nuke/compare/0.4.0...0.5.0
+[0.4.0]: https://github.com/nuke-build/nuke/compare/0.3.1...0.4.0
+[0.3.1]: https://github.com/nuke-build/nuke/compare/0.2.10...0.3.1
+[0.2.10]: https://github.com/nuke-build/nuke/compare/0.2.0...0.2.10
+[0.2.0]: https://github.com/nuke-build/nuke/tree/0.2.0
 

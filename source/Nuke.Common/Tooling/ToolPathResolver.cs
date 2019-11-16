@@ -54,11 +54,14 @@ namespace Nuke.Common.Tooling
                     : directory.Parent.NotNull().Name;
             }
 
-            var frameworks = packageExecutablePaths.ToDictionary(GetFramework,x => x,StringComparer.OrdinalIgnoreCase);
-            ControlFlow.Assert(framework != null && frameworks.ContainsKey(framework),
-                new[] { $"Package executable {frameworks.First().Key.SingleQuote()} [{packageId}] requires a framework:" }
-                    .Concat(frameworks.Keys.Select(x => $" - {x}")).JoinNewLine());
+            var frameworks = packageExecutablePaths.ToDictionary(GetFramework, x => x, StringComparer.OrdinalIgnoreCase);
+            ControlFlow.Assert(frameworks.Count > 0, "frameworks.Count > 0");
+            if (frameworks.Count == 1)
+                return frameworks.Values.Single();
 
+            ControlFlow.Assert(framework != null && frameworks.ContainsKey(framework),
+                new[] { $"Package executable {packageExecutables.JoinCommaOr()} [{packageId}] requires a framework:" }
+                    .Concat(frameworks.Keys.Select(x => $" - {x}")).JoinNewLine());
             return frameworks[framework];
         }
 
