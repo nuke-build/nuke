@@ -360,6 +360,18 @@
             "type": "string",
             "format": "--version-suffix {value}",
             "help": "Defines the version suffix for an asterisk (<c>*</c>) in the version field of the project file. The format follows NuGet's version guidelines."
+          },
+          {
+            "name": "Loggers",
+            "type": "List<string>",
+            "format": "/logger:{value}",
+            "help": "Specifies the loggers to use to log events from MSBuild."
+          },
+          {
+            "name": "NoConsoleLogger",
+            "type": "bool",
+            "format": "/noconsolelogger",
+            "help": "Disable the default console logger, and don't log events to the console."
           }
         ]
       }

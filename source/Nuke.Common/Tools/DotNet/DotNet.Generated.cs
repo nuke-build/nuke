@@ -500,6 +500,8 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetBuildSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetBuildSettings.Verbosity"/></li>
         ///     <li><c>--version-suffix</c> via <see cref="DotNetBuildSettings.VersionSuffix"/></li>
+        ///     <li><c>/logger</c> via <see cref="DotNetBuildSettings.Loggers"/></li>
+        ///     <li><c>/noconsolelogger</c> via <see cref="DotNetBuildSettings.NoConsoleLogger"/></li>
         ///     <li><c>/property</c> via <see cref="DotNetBuildSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
@@ -537,6 +539,8 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetBuildSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetBuildSettings.Verbosity"/></li>
         ///     <li><c>--version-suffix</c> via <see cref="DotNetBuildSettings.VersionSuffix"/></li>
+        ///     <li><c>/logger</c> via <see cref="DotNetBuildSettings.Loggers"/></li>
+        ///     <li><c>/noconsolelogger</c> via <see cref="DotNetBuildSettings.NoConsoleLogger"/></li>
         ///     <li><c>/property</c> via <see cref="DotNetBuildSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
@@ -571,6 +575,8 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetBuildSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetBuildSettings.Verbosity"/></li>
         ///     <li><c>--version-suffix</c> via <see cref="DotNetBuildSettings.VersionSuffix"/></li>
+        ///     <li><c>/logger</c> via <see cref="DotNetBuildSettings.Loggers"/></li>
+        ///     <li><c>/noconsolelogger</c> via <see cref="DotNetBuildSettings.NoConsoleLogger"/></li>
         ///     <li><c>/property</c> via <see cref="DotNetBuildSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
@@ -1592,6 +1598,15 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual string VersionSuffix { get; internal set; }
         /// <summary>
+        ///   Specifies the loggers to use to log events from MSBuild.
+        /// </summary>
+        public virtual IReadOnlyList<string> Loggers => LoggersInternal.AsReadOnly();
+        internal List<string> LoggersInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Disable the default console logger, and don't log events to the console.
+        /// </summary>
+        public virtual bool? NoConsoleLogger { get; internal set; }
+        /// <summary>
         ///   Disables restoring multiple projects in parallel.
         /// </summary>
         public virtual bool? DisableParallel { get; internal set; }
@@ -1654,6 +1669,8 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--runtime {value}", Runtime)
               .Add("--verbosity {value}", Verbosity)
               .Add("--version-suffix {value}", VersionSuffix)
+              .Add("/logger:{value}", Loggers)
+              .Add("/noconsolelogger", NoConsoleLogger)
               .Add("--disable-parallel", DisableParallel)
               .Add("--force", Force)
               .Add("--ignore-failed-sources", IgnoreFailedSources)
@@ -9000,6 +9017,144 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VersionSuffix = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Loggers
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetBuildSettings.Loggers"/> to a new list</em></p>
+        ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings SetLoggers(this DotNetBuildSettings toolSettings, params string[] loggers)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LoggersInternal = loggers.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetBuildSettings.Loggers"/> to a new list</em></p>
+        ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings SetLoggers(this DotNetBuildSettings toolSettings, IEnumerable<string> loggers)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LoggersInternal = loggers.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotNetBuildSettings.Loggers"/></em></p>
+        ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings AddLoggers(this DotNetBuildSettings toolSettings, params string[] loggers)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LoggersInternal.AddRange(loggers);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotNetBuildSettings.Loggers"/></em></p>
+        ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings AddLoggers(this DotNetBuildSettings toolSettings, IEnumerable<string> loggers)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LoggersInternal.AddRange(loggers);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DotNetBuildSettings.Loggers"/></em></p>
+        ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings ClearLoggers(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LoggersInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotNetBuildSettings.Loggers"/></em></p>
+        ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings RemoveLoggers(this DotNetBuildSettings toolSettings, params string[] loggers)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(loggers);
+            toolSettings.LoggersInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotNetBuildSettings.Loggers"/></em></p>
+        ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings RemoveLoggers(this DotNetBuildSettings toolSettings, IEnumerable<string> loggers)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(loggers);
+            toolSettings.LoggersInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region NoConsoleLogger
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetBuildSettings.NoConsoleLogger"/></em></p>
+        ///   <p>Disable the default console logger, and don't log events to the console.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings SetNoConsoleLogger(this DotNetBuildSettings toolSettings, bool? noConsoleLogger)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoConsoleLogger = noConsoleLogger;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetBuildSettings.NoConsoleLogger"/></em></p>
+        ///   <p>Disable the default console logger, and don't log events to the console.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings ResetNoConsoleLogger(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoConsoleLogger = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetBuildSettings.NoConsoleLogger"/></em></p>
+        ///   <p>Disable the default console logger, and don't log events to the console.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings EnableNoConsoleLogger(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoConsoleLogger = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetBuildSettings.NoConsoleLogger"/></em></p>
+        ///   <p>Disable the default console logger, and don't log events to the console.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings DisableNoConsoleLogger(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoConsoleLogger = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetBuildSettings.NoConsoleLogger"/></em></p>
+        ///   <p>Disable the default console logger, and don't log events to the console.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings ToggleNoConsoleLogger(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoConsoleLogger = !toolSettings.NoConsoleLogger;
             return toolSettings;
         }
         #endregion
