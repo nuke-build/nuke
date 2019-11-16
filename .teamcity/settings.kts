@@ -64,8 +64,8 @@ project {
     }
 }
 object VcsRoot : GitVcsRoot({
-    name = "https://github.com/nuke-build/common.git#refs/heads/develop"
-    url = "https://github.com/nuke-build/common.git"
+    name = "https://github.com/nuke-build/nuke.git#refs/heads/develop"
+    url = "https://github.com/nuke-build/nuke.git"
     branch = "refs/heads/develop"
     pollInterval = 60
     branchSpec = """
