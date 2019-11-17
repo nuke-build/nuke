@@ -73,9 +73,11 @@ partial class Build
 
             CopyFile(
                 source: RootDirectory / "nuke-common.sln.DotSettings",
-                target: RootDirectory / $"{global.FileName}.DotSettings");
+                target: RootDirectory / $"{global.FileName}.DotSettings",
+                FileExistsPolicy.Overwrite);
             CopyFile(
                 source: RootDirectory / "nuke-common.sln.DotSettings.user",
-                target: RootDirectory / $"{global.FileName}.DotSettings.user");
+                target: RootDirectory / $"{global.FileName}.DotSettings.user",
+                FileExistsPolicy.Overwrite);
         });
 }
