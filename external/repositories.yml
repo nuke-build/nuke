@@ -1,9 +1,3 @@
-- https://github.com/nuke-build/azure-keyvault.git
-- https://github.com/nuke-build/docfx.git
-- https://github.com/nuke-build/docker.git
-- https://github.com/nuke-build/helm.git
-- https://github.com/nuke-build/kubernetes.git
-- https://github.com/nuke-build/nswag.git
 - https://github.com/nuke-build/presentation.git
 - https://github.com/nuke-build/resharper.git
 - https://github.com/nuke-build/template.git

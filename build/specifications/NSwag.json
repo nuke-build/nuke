@@ -1,0 +1,1735 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/common/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/Tooling/VersionCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/Generation/ListTypesCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/Generation/ListWebApiControllersCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/Generation/TypesToOpenApiCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/Generation/TypesToSwaggerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/Generation/WebApi/WebApiToOpenApiCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/Generation/WebApi/WebApiToSwaggerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/Generation/AspNetCore/AspNetCoreToOpenApiCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/Generation/AspNetCore/AspNetCoreToSwaggerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/Document/CreateDocumentCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/Document/ExecuteDocumentCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/CodeGeneration/JsonSchemaToCSharpCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/CodeGeneration/JsonSchemaToTypeScriptCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/CodeGeneration/OpenApiToCSharpClientCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/CodeGeneration/SwaggerToCSharpClientCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/CodeGeneration/OpenApiToCSharpControllerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/CodeGeneration/SwaggerToCSharpControllerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/CodeGeneration/OpenApiToTypeScriptClientCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/CodeGeneration/SwaggerToTypeScriptClientCommand.cs"
+  ],
+  "name": "NSwag",
+  "officialUrl": "https://github.com/RSuter/NSwag",
+  "help": "The project combines the functionality of Swashbuckle (Swagger generation) and AutoRest (client generation) in one toolchain. This way a lot of incompatibilites can be avoided and features which are not well described by the Swagger specification or JSON Schema are better supported (e.g. <a href=\"https://github.com/NJsonSchema/NJsonSchema/wiki/Inheritance\">inheritance</a>, <a href=\"https://github.com/NJsonSchema/NJsonSchema/wiki/Enums\">enum</a> and reference handling). The NSwag project heavily uses <a href=\"http://njsonschema.org/\">NJsonSchema for .NET</a> for JSON Schema handling and C#/TypeScript class/interface generation.",
+  "customExecutable": true,
+  "tasks": [
+    {
+      "help": "Prints the toolchain version.",
+      "postfix": "Version",
+      "definiteArgument": "version",
+      "settingsClass": {
+        "baseClass": "NSwagSettings"
+      }
+    },
+    {
+      "help": "List all types for the given assembly and settings.",
+      "postfix": "ListTypes",
+      "commonPropertySets": [
+        "isolatedCommand"
+      ],
+      "definiteArgument": "list-types",
+      "settingsClass": {
+        "baseClass": "NSwagSettings",
+        "properties": [
+          {
+            "name": "File",
+            "type": "string",
+            "format": "/File:{value}",
+            "help": "The nswag.json configuration file path."
+          },
+          {
+            "name": "Variables",
+            "type": "Dictionary<string,object>",
+            "format": "/Variables:{value}",
+            "itemFormat": "{key}={value}"
+          }
+        ]
+      }
+    },
+    {
+      "help": "List all controllers classes for the given assembly and settings.",
+      "postfix": "ListWebApiControllers",
+      "commonPropertySets": [
+        "isolatedCommand"
+      ],
+      "definiteArgument": "list-controllers",
+      "settingsClass": {
+        "baseClass": "NSwagSettings",
+        "properties": [
+          {
+            "name": "File",
+            "type": "string",
+            "format": "/File:{value}",
+            "help": "The nswag.json configuration file path."
+          },
+          {
+            "name": "Variables",
+            "type": "Dictionary<string,object>",
+            "format": "/Variables:{value}",
+            "itemFormat": "{key}={value}"
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "TypesToOpenApi",
+      "commonPropertySets": [
+        "isolatedSwaggerOutputCommand",
+        "isolatedCommand"
+      ],
+      "definiteArgument": "types2openapi",
+      "settingsClass": {
+        "baseClass": "NSwagSettings"
+      }
+    },
+    {
+      "postfix": "TypesToSwagger",
+      "commonPropertySets": [
+        "isolatedSwaggerOutputCommand",
+        "isolatedCommand"
+      ],
+      "definiteArgument": "types2swagger",
+      "settingsClass": {
+        "baseClass": "NSwagSettings",
+        "properties": [
+          {
+            "name": "AllowReferencesWithProperties",
+            "type": "bool?",
+            "format": "/AllowReferencesWithProperties:{value}",
+            "help": "Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false)."
+          },
+          {
+            "name": "ClassNames",
+            "type": "List<string>",
+            "format": "/ClassNames:{value}",
+            "help": "The class names."
+          },
+          {
+            "name": "DefaultDictionaryValueReferenceTypeNullHandling",
+            "type": "ReferenceTypeNullHandling",
+            "format": "/DefaultDictionaryValueReferenceTypeNullHandling:{value}",
+            "help": "The default reference type null handling of dictionary value types (NotNull (default) or Null)."
+          },
+          {
+            "name": "DefaultEnumHandling",
+            "type": "EnumHandling",
+            "format": "/DefaultEnumHandling:{value}",
+            "help": "The default enum handling ('String' or 'Integer'), default: Integer."
+          },
+          {
+            "name": "DefaultPropertyNameHandling",
+            "type": "PropertyNameHandling",
+            "format": "/DefaultPropertyNameHandling:{value}",
+            "help": "The default property name handling ('Default' or 'CamelCase')."
+          },
+          {
+            "name": "DefaultReferenceTypeNullHandling",
+            "type": "ReferenceTypeNullHandling",
+            "format": "/DefaultReferenceTypeNullHandling:{value}",
+            "help": "The default reference type null handling (Null (default) or NotNull)."
+          },
+          {
+            "name": "FlattenInheritanceHierarchy",
+            "type": "bool?",
+            "format": "/FlattenInheritanceHierarchy:{value}",
+            "help": "Flatten the inheritance hierarchy instead of using allOf to describe inheritance (default: false)."
+          },
+          {
+            "name": "GenerateKnownTypes",
+            "type": "bool?",
+            "format": "/GenerateKnownTypes:{value}",
+            "help": "Generate schemas for types in KnownTypeAttribute attributes (default: true)."
+          },
+          {
+            "name": "GenerateXmlObjects",
+            "type": "bool?",
+            "format": "/GenerateXmlObjects:{value}",
+            "help": "Generate xmlObject representation for definitions (default: false)."
+          },
+          {
+            "name": "IgnoreObsoleteProperties",
+            "type": "bool?",
+            "format": "/IgnoreObsoleteProperties:{value}",
+            "help": "Ignore properties with the ObsoleteAttribute (default: false)."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Generates a Swagger/OpenAPI specification for a controller or controlles contained in a .NET Web API assembly.",
+      "postfix": "WebApiToOpenApi",
+      "commonPropertySets": [
+        "openApiGeneratorCommand",
+        "isolatedSwaggerOutputCommand",
+        "isolatedCommand"
+      ],
+      "definiteArgument": "webapi2openapi",
+      "settingsClass": {
+        "baseClass": "NSwagSettings"
+      }
+    },
+    {
+      "help": "Generates a Swagger/OpenAPI specification for a controller or controlles contained in a .NET Web API assembly (obsolete: use webapi2openapi instead).",
+      "postfix": "WebApiToSwagger",
+      "commonPropertySets": [
+        "openApiGeneratorCommand",
+        "isolatedSwaggerOutputCommand",
+        "isolatedCommand"
+      ],
+      "definiteArgument": "webapi2swagger",
+      "settingsClass": {
+        "baseClass": "NSwagSettings",
+        "properties": [
+          {
+            "name": "AddMissingPathParameters",
+            "type": "bool?",
+            "format": "/AddMissingPathParameters:{value}",
+            "help": "Specifies whether to add path parameters which are missing in the action method (default: true)."
+          },
+          {
+            "name": "AspNetCore",
+            "type": "bool?",
+            "format": "/AspNetCore:{value}",
+            "help": "Specifies whether the controllers are hosted by ASP.NET Core."
+          },
+          {
+            "name": "Controller",
+            "type": "string",
+            "format": "/Controller:{value}",
+            "help": "The Web API controller full class name or empty to load all controllers from the assembly."
+          },
+          {
+            "name": "Controllers",
+            "type": "List<string>",
+            "format": "/Controllers:{value}",
+            "help": "The Web API controller full class names or empty to load all controllers from the assembly (comma separated)."
+          },
+          {
+            "name": "DefaultUrlTemplate",
+            "type": "string",
+            "format": "/DefaultUrlTemplate:{value}",
+            "help": "The Web API default URL template (default for Web API: 'api/{controller}/{id}'; for MVC projects: '{controller}/{action}/{id?}')."
+          },
+          {
+            "name": "IncludedVersions",
+            "type": "List<string>",
+            "format": "/IncludedVersions:{value}",
+            "help": "The included API versions used by the ApiVersionProcessor (comma separated, default: empty = all)."
+          },
+          {
+            "name": "ResolveJsonOptions",
+            "type": "bool?",
+            "format": "/ResolveJsonOptions:{value}",
+            "help": "Specifies whether to resolve MvcJsonOptions to infer serializer settings (recommended, default: false, only available when IsAspNetCore is set)."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Generates a Swagger specification ASP.NET Core Mvc application using ApiExplorer.",
+      "postfix": "AspNetCoreToOpenApi",
+      "commonPropertySets": [
+        "openApiGeneratorCommand",
+        "isolatedSwaggerOutputCommand",
+        "isolatedCommand"
+      ],
+      "definiteArgument": "aspnetcore2openapi",
+      "settingsClass": {
+        "baseClass": "NSwagSettings"
+      }
+    },
+    {
+      "help": "Generates a Swagger specification ASP.NET Core Mvc application using ApiExplorer (obsolete: use aspnetcore2openapi instead).",
+      "postfix": "AspNetCoreToSwagger",
+      "commonPropertySets": [
+        "openApiGeneratorCommand",
+        "isolatedSwaggerOutputCommand",
+        "isolatedCommand"
+      ],
+      "definiteArgument": "aspnetcore2swagger",
+      "settingsClass": {
+        "baseClass": "NSwagSettings",
+        "properties": [
+          {
+            "name": "ApiGroupNames",
+            "type": "List<string>",
+            "format": "/ApiGroupNames:{value}",
+            "help": "The ASP.NET Core API Explorer group names to include (comma separated, default: empty = all)."
+          },
+          {
+            "name": "Configuration",
+            "type": "string",
+            "format": "/Configuration:{value}",
+            "help": "The configuration to use."
+          },
+          {
+            "name": "MSBuildProjectExtensionsPath",
+            "type": "string",
+            "format": "/MSBuildProjectExtensionsPath:{value}",
+            "help": "The MSBuild project extensions path. Defaults to \"obj\"."
+          },
+          {
+            "name": "NoBuild",
+            "type": "bool?",
+            "format": "/NoBuild:{value}",
+            "help": "Don't build the project. Only use this when the build is up-to-date."
+          },
+          {
+            "name": "NSwagWorkingDirectory",
+            "type": "string",
+            "format": "/WorkingDirectory:{value}",
+            "help": "The working directory to use."
+          },
+          {
+            "name": "Project",
+            "type": "string",
+            "format": "/Project:{value}",
+            "help": "The project to use."
+          },
+          {
+            "name": "RequireParametersWithoutDefault",
+            "type": "bool?",
+            "format": "/RequireParametersWithoutDefault:{value}",
+            "help": "Parameters without default value are always required(i.e. api explorer info and only optional when default is set, legacy, default: false)."
+          },
+          {
+            "name": "Runtime",
+            "type": "string",
+            "format": "/Runtime:{value}",
+            "help": "The runtime to use."
+          },
+          {
+            "name": "TargetFramework",
+            "type": "string",
+            "format": "/TargetFramework:{value}",
+            "help": "The target framework to use."
+          },
+          {
+            "name": "Verbose",
+            "type": "bool?",
+            "format": "/Verbose:{value}",
+            "help": "Print verbose output."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Creates a new nswag.json file in the current directory.",
+      "postfix": "CreateDocument",
+      "definiteArgument": "new",
+      "settingsClass": {
+        "baseClass": "NSwagSettings"
+      }
+    },
+    {
+      "help": "Executes an .nswag file. If 'input' is not specified then all *.nswag files and the nswag.json file is executed.",
+      "postfix": "ExecuteDocument",
+      "definiteArgument": "run",
+      "settingsClass": {
+        "baseClass": "NSwagSettings",
+        "properties": [
+          {
+            "name": "Input",
+            "type": "string",
+            "format": "/Input:{value}"
+          },
+          {
+            "name": "Variables",
+            "type": "Dictionary<string,object>",
+            "format": "/Variables:{value}",
+            "itemFormat": "{key}={value}"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Generates CSharp classes from a JSON Schema.",
+      "postfix": "JsonSchemaToCSharp",
+      "commonPropertySets": [
+        "inputOutputCommand",
+        "outputCommand"
+      ],
+      "definiteArgument": "jsonschema2csclient",
+      "settingsClass": {
+        "baseClass": "NSwagSettings",
+        "properties": [
+          {
+            "name": "AnyType",
+            "type": "string",
+            "format": "/AnyType:{value}",
+            "help": "The any .NET type (default: 'object')."
+          },
+          {
+            "name": "ArrayInstanceType",
+            "type": "string",
+            "format": "/ArrayInstanceType:{value}",
+            "help": "The generic array .NET instance type (default: empty = ArrayType)."
+          },
+          {
+            "name": "ArrayType",
+            "type": "string",
+            "format": "/ArrayType:{value}",
+            "help": "The generic array .NET type (default: 'ObservableCollection')."
+          },
+          {
+            "name": "DateTimeType",
+            "type": "string",
+            "format": "/DateTimeType:{value}",
+            "help": "The date time .NET type (default: 'DateTime')."
+          },
+          {
+            "name": "DictionaryInstanceType",
+            "type": "string",
+            "format": "/DictionaryInstanceType:{value}",
+            "help": "The generic dictionary .NET instance type (default: empty = DictionaryType)."
+          },
+          {
+            "name": "DictionaryType",
+            "type": "string",
+            "format": "/DictionaryType:{value}",
+            "help": "The generic dictionary .NET type (default: 'Dictionary')."
+          },
+          {
+            "name": "GenerateOptionalPropertiesAsNullable",
+            "type": "bool?",
+            "format": "/GenerateOptionalPropertiesAsNullable:{value}",
+            "help": "Specifies whether optional schema properties (not required) are generated as nullable properties (default: false)."
+          },
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "/Name:{value}",
+            "help": "The class name of the root schema."
+          },
+          {
+            "name": "Namespace",
+            "type": "string",
+            "format": "/Namespace:{value}",
+            "help": "The namespace of the generated classes."
+          },
+          {
+            "name": "RequiredPropertiesMustBeDefined",
+            "type": "bool?",
+            "format": "/RequiredPropertiesMustBeDefined:{value}",
+            "help": "Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required)."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Generates TypeScript interfaces from a JSON Schema.",
+      "postfix": "JsonSchemaToTypeScript",
+      "commonPropertySets": [
+        "inputOutputCommand",
+        "outputCommand"
+      ],
+      "definiteArgument": "jsonschema2tsclient",
+      "settingsClass": {
+        "baseClass": "NSwagSettings",
+        "properties": [
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "/Name:{value}",
+            "help": "The type name of the root schema."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Generates CSharp client code from a Swagger/OpenAPI specification.",
+      "postfix": "OpenApiToCSharpClient",
+      "commonPropertySets": [
+        "openApiToCSharpCommand",
+        "codeGeneratorCommand",
+        "inputOutputCommand",
+        "outputCommand"
+      ],
+      "definiteArgument": "openapi2csclient",
+      "settingsClass": {
+        "baseClass": "NSwagSettings"
+      }
+    },
+    {
+      "help": "Generates CSharp client code from a Swagger/OpenAPI specification (obsolete: use openapi2csclient instead).",
+      "postfix": "SwaggerToCSharpClient",
+      "commonPropertySets": [
+        "openApiToCSharpCommand",
+        "codeGeneratorCommand",
+        "inputOutputCommand",
+        "outputCommand"
+      ],
+      "definiteArgument": "swagger2csclient",
+      "settingsClass": {
+        "baseClass": "NSwagSettings",
+        "properties": [
+          {
+            "name": "ClientBaseClass",
+            "type": "string",
+            "format": "/ClientBaseClass:{value}",
+            "help": "The client base class (empty for no base class)."
+          },
+          {
+            "name": "ClientClassAccessModifier",
+            "type": "string",
+            "format": "/ClientClassAccessModifier:{value}",
+            "help": "The client class access modifier (default: public)."
+          },
+          {
+            "name": "ConfigurationClass",
+            "type": "string",
+            "format": "/ConfigurationClass:{value}",
+            "help": "The configuration class. The setting ClientBaseClass must be set. (empty for no configuration class)."
+          },
+          {
+            "name": "ContractsNamespace",
+            "type": "string",
+            "format": "/ContractsNamespace:{value}",
+            "help": "The contracts .NET namespace."
+          },
+          {
+            "name": "ContractsOutput",
+            "type": "string",
+            "format": "/ContractsOutput:{value}",
+            "help": "The contracts output file path (optional, if no path is set then a single file with the implementation and contracts is generated)."
+          },
+          {
+            "name": "DisposeHttpClient",
+            "type": "bool?",
+            "format": "/DisposeHttpClient:{value}",
+            "help": "Specifies whether to dispose the HttpClient (injected HttpClient is never disposed)."
+          },
+          {
+            "name": "ExceptionClass",
+            "type": "string",
+            "format": "/ExceptionClass:{value}",
+            "help": "The exception class (default 'SwaggerException', may use '{controller}' placeholder)."
+          },
+          {
+            "name": "ExposeJsonSerializerSettings",
+            "type": "bool?",
+            "format": "/ExposeJsonSerializerSettings:{value}",
+            "help": "Specifies whether to expose the JsonSerializerSettings property (default: false)."
+          },
+          {
+            "name": "GenerateBaseUrlProperty",
+            "type": "bool?",
+            "format": "/GenerateBaseUrlProperty:{value}",
+            "help": "Specifies whether to generate the BaseUrl property, must be defined on the base class otherwise (default: true)."
+          },
+          {
+            "name": "GenerateClientClasses",
+            "type": "bool?",
+            "format": "/GenerateClientClasses:{value}",
+            "help": "Specifies whether generate client classes."
+          },
+          {
+            "name": "GenerateClientInterfaces",
+            "type": "bool?",
+            "format": "/GenerateClientInterfaces:{value}",
+            "help": "Specifies whether generate interfaces for the client classes."
+          },
+          {
+            "name": "GenerateContractsOutput",
+            "type": "bool?",
+            "format": "/GenerateContractsOutput:{value}",
+            "help": "Specifies whether to generate contracts output (interface and models in a separate file set with the ContractsOutput parameter)."
+          },
+          {
+            "name": "GenerateExceptionClasses",
+            "type": "bool?",
+            "format": "/GenerateExceptionClasses:{value}",
+            "help": "Specifies whether to generate exception classes (default: true)."
+          },
+          {
+            "name": "GenerateSyncMethods",
+            "type": "bool?",
+            "format": "/GenerateSyncMethods:{value}",
+            "help": "Specifies whether to generate synchronous methods (not recommended, default: false)."
+          },
+          {
+            "name": "GenerateUpdateJsonSerializerSettingsMethod",
+            "type": "bool?",
+            "format": "/GenerateUpdateJsonSerializerSettingsMethod:{value}",
+            "help": "Generate the UpdateJsonSerializerSettings method (must be implemented in the base class otherwise, default: true)."
+          },
+          {
+            "name": "HttpClientType",
+            "type": "string",
+            "format": "/HttpClientType:{value}",
+            "help": "Specifies the HttpClient type. By default the 'System.Net.Http.HttpClient' is used."
+          },
+          {
+            "name": "InjectHttpClient",
+            "type": "bool?",
+            "format": "/InjectHttpClient:{value}",
+            "help": "Specifies whether an HttpClient instance is injected (default: true)."
+          },
+          {
+            "name": "ParameterDateFormat",
+            "type": "string",
+            "format": "/ParameterDateFormat:{value}",
+            "help": "Specifies the format for Date type method parameters (default: yyyy-MM-dd)."
+          },
+          {
+            "name": "ParameterDateTimeFormat",
+            "type": "string",
+            "format": "/ParameterDateTimeFormat:{value}",
+            "help": "Specifies the format for DateTime type method parameters (default: s)."
+          },
+          {
+            "name": "ProtectedMethods",
+            "type": "List<string>",
+            "format": "/ProtectedMethods:{value}",
+            "help": "List of methods with a protected access modifier ('classname.methodname')."
+          },
+          {
+            "name": "QueryNullValue",
+            "type": "string",
+            "format": "/QueryNullValue:{value}",
+            "help": "The null value used for query parameters which are null (default: '')."
+          },
+          {
+            "name": "SerializeTypeInformation",
+            "type": "bool?",
+            "format": "/SerializeTypeInformation:{value}",
+            "help": "Serialize the type information in a $type property (not recommended, also sets TypeNameHandling = Auto, default: true)."
+          },
+          {
+            "name": "TypeAccessModifier",
+            "type": "string",
+            "format": "/TypeAccessModifier:{value}",
+            "help": "The DTO class/enum access modifier (default: public)."
+          },
+          {
+            "name": "UseBaseUrl",
+            "type": "bool?",
+            "format": "/UseBaseUrl:{value}",
+            "help": "Specifies whether to use and expose the base URL (default: true)."
+          },
+          {
+            "name": "UseHttpClientCreationMethod",
+            "type": "bool?",
+            "format": "/UseHttpClientCreationMethod:{value}",
+            "help": "Specifies whether to call CreateHttpClientAsync on the base class to create a new HttpClient."
+          },
+          {
+            "name": "UseHttpRequestMessageCreationMethod",
+            "type": "bool?",
+            "format": "/UseHttpRequestMessageCreationMethod:{value}",
+            "help": "Specifies whether to call CreateHttpRequestMessageAsync on the base class to create a new HttpRequestMethod."
+          },
+          {
+            "name": "WrapDtoExceptions",
+            "type": "bool?",
+            "format": "/WrapDtoExceptions:{value}",
+            "help": "Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: true)."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Generates CSharp Web API controller code from a Swagger/OpenAPI specification.",
+      "postfix": "OpenApiToCSharpController",
+      "commonPropertySets": [
+        "openApiToCSharpCommand",
+        "codeGeneratorCommand",
+        "inputOutputCommand",
+        "outputCommand"
+      ],
+      "definiteArgument": "openapi2cscontroller",
+      "settingsClass": {
+        "baseClass": "NSwagSettings"
+      }
+    },
+    {
+      "help": "Generates CSharp Web API controller code from a Swagger/OpenAPI specification (obsolete: use openapi2cscontroller instead).",
+      "postfix": "SwaggerToCSharpController",
+      "commonPropertySets": [
+        "openApiToCSharpCommand",
+        "codeGeneratorCommand",
+        "inputOutputCommand",
+        "outputCommand"
+      ],
+      "definiteArgument": "swagger2cscontroller",
+      "settingsClass": {
+        "baseClass": "NSwagSettings",
+        "properties": [
+          {
+            "name": "BasePath",
+            "type": "string",
+            "format": "/BasePath:{value}",
+            "help": "The Base path on which the API is served, which is relative to the Host"
+          },
+          {
+            "name": "ControllerBaseClass",
+            "type": "string",
+            "format": "/ControllerBaseClass:{value}",
+            "help": "The controller base class (empty for 'ApiController')."
+          },
+          {
+            "name": "ControllerStyle",
+            "type": "CSharpControllerStyle",
+            "format": "/ControllerStyle:{value}",
+            "help": "The controller generation style (partial, abstract; default: partial)."
+          },
+          {
+            "name": "ControllerTarget",
+            "type": "CSharpControllerTarget",
+            "format": "/ControllerTarget:{value}",
+            "help": "controller target framework (default: AspNetCore)."
+          },
+          {
+            "name": "GenerateModelValidationAttributes",
+            "type": "bool?",
+            "format": "/GenerateModelValidationAttributes:{value}",
+            "help": "Add model validation attributes (default: false)."
+          },
+          {
+            "name": "RouteNamingStrategy",
+            "type": "CSharpControllerRouteNamingStrategy",
+            "format": "/RouteNamingStrategy:{value}",
+            "help": "The strategy for naming controller routes (none, operationid; default: none)."
+          },
+          {
+            "name": "UseActionResultType",
+            "type": "bool?",
+            "format": "/UseActionResultType:{value}",
+            "help": "Use ASP.Net Core (2.1) ActionResult type as return type (default: false)"
+          },
+          {
+            "name": "UseCancellationToken",
+            "type": "bool?",
+            "format": "/UseCancellationToken:{value}",
+            "help": "Add a cancellation token parameter (default: false)."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Generates TypeScript client code from a Swagger/OpenAPI specification.",
+      "postfix": "OpenApiToTypeScriptClient",
+      "commonPropertySets": [
+        "codeGeneratorCommand",
+        "inputOutputCommand",
+        "outputCommand"
+      ],
+      "definiteArgument": "openapi2tsclient",
+      "settingsClass": {
+        "baseClass": "NSwagSettings"
+      }
+    },
+    {
+      "help": "Generates TypeScript client code from a Swagger/OpenAPI specification (obsolete: use openapi2tsclient instead).",
+      "postfix": "SwaggerToTypeScriptClient",
+      "commonPropertySets": [
+        "codeGeneratorCommand",
+        "inputOutputCommand",
+        "outputCommand"
+      ],
+      "definiteArgument": "swagger2tsclient",
+      "settingsClass": {
+        "baseClass": "NSwagSettings",
+        "properties": [
+          {
+            "name": "BaseUrlTokenName",
+            "type": "string",
+            "format": "/BaseUrlTokenName:{value}",
+            "help": "The token name for injecting the API base URL string (used in the Angular template, default: 'API_BASE_URL')."
+          },
+          {
+            "name": "ClassName",
+            "type": "string",
+            "format": "/ClassName:{value}",
+            "help": "The class name of the generated client."
+          },
+          {
+            "name": "ClassTypes",
+            "type": "List<string>",
+            "format": "/ClassTypes:{value}",
+            "help": "The type names which always generate plain TypeScript classes."
+          },
+          {
+            "name": "ClientBaseClass",
+            "type": "string",
+            "format": "/ClientBaseClass:{value}",
+            "help": "The base class of the generated client classes (optional, must be imported or implemented in the extension code)."
+          },
+          {
+            "name": "ConfigurationClass",
+            "type": "string",
+            "format": "/ConfigurationClass:{value}",
+            "help": "The configuration class. The setting ClientBaseClass must be set. (empty for no configuration class)."
+          },
+          {
+            "name": "ConvertConstructorInterfaceData",
+            "type": "bool?",
+            "format": "/ConvertConstructorInterfaceData:{value}",
+            "help": "Convert POJO objects in the constructor data to DTO instances (GenerateConstructorInterface must be enabled, default: false)."
+          },
+          {
+            "name": "DateTimeType",
+            "type": "TypeScriptDateTimeType",
+            "format": "/DateTimeType:{value}",
+            "help": "The date time type ('Date', 'MomentJS', 'OffsetMomentJS', 'string')."
+          },
+          {
+            "name": "ExceptionClass",
+            "type": "string",
+            "format": "/ExceptionClass:{value}",
+            "help": "The exception class (default 'ApiException')."
+          },
+          {
+            "name": "ExcludedParameterNames",
+            "type": "List<string>",
+            "format": "/ExcludedParameterNames:{value}",
+            "help": "The globally excluded parameter names."
+          },
+          {
+            "name": "ExcludedTypeNames",
+            "type": "List<string>",
+            "format": "/ExcludedTypeNames:{value}",
+            "help": "The excluded DTO type names (must be defined in an import or other namespace)."
+          },
+          {
+            "name": "ExportTypes",
+            "type": "bool?",
+            "format": "/ExportTypes:{value}",
+            "help": "Specifies whether the export keyword should be added to all classes, interfaces and enums (default: true)."
+          },
+          {
+            "name": "ExtendedClasses",
+            "type": "List<string>",
+            "format": "/ExtendedClasses:{value}",
+            "help": "The list of extended classes."
+          },
+          {
+            "name": "ExtensionCode",
+            "type": "string",
+            "format": "/ExtensionCode:{value}",
+            "help": "The extension code (string or file path)."
+          },
+          {
+            "name": "GenerateClientClasses",
+            "type": "bool?",
+            "format": "/GenerateClientClasses:{value}",
+            "help": "Specifies whether generate client classes."
+          },
+          {
+            "name": "GenerateClientInterfaces",
+            "type": "bool?",
+            "format": "/GenerateClientInterfaces:{value}",
+            "help": "Specifies whether generate interfaces for the client classes (default: false)."
+          },
+          {
+            "name": "GenerateCloneMethod",
+            "type": "bool?",
+            "format": "/GenerateCloneMethod:{value}",
+            "help": "Specifies whether a clone() method should be generated in the DTO classes (default: false)."
+          },
+          {
+            "name": "GenerateConstructorInterface",
+            "type": "bool?",
+            "format": "/GenerateConstructorInterface:{value}",
+            "help": "Generate an class interface which is used in the constructor to initialize the class (only available when TypeStyle is Class, default: true)."
+          },
+          {
+            "name": "GenerateDefaultValues",
+            "type": "bool?",
+            "format": "/GenerateDefaultValues:{value}",
+            "help": "Specifies whether to generate default values for properties (default: true)."
+          },
+          {
+            "name": "GenerateDtoTypes",
+            "type": "bool?",
+            "format": "/GenerateDtoTypes:{value}",
+            "help": "Specifies whether to generate DTO classes."
+          },
+          {
+            "name": "GenerateOptionalParameters",
+            "type": "bool?",
+            "format": "/GenerateOptionalParameters:{value}",
+            "help": "Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false)."
+          },
+          {
+            "name": "GenerateResponseClasses",
+            "type": "bool?",
+            "format": "/GenerateResponseClasses:{value}",
+            "help": "Specifies whether to generate response classes (default: true)."
+          },
+          {
+            "name": "HandleReferences",
+            "type": "bool?",
+            "format": "/HandleReferences:{value}",
+            "help": "Handle JSON references (default: false)."
+          },
+          {
+            "name": "HttpClass",
+            "type": "HttpClass",
+            "format": "/HttpClass:{value}",
+            "help": "The Angular HTTP service class (default 'Http', 'HttpClient')."
+          },
+          {
+            "name": "ImportRequiredTypes",
+            "type": "bool?",
+            "format": "/ImportRequiredTypes:{value}",
+            "help": "Specifies whether required types should be imported (default: true)."
+          },
+          {
+            "name": "InjectionTokenType",
+            "type": "InjectionTokenType",
+            "format": "/InjectionTokenType:{value}",
+            "help": "The Angular injection token type (default 'InjectionToken', 'OpaqueToken')."
+          },
+          {
+            "name": "InlineNamedAny",
+            "type": "bool?",
+            "format": "/InlineNamedAny:{value}",
+            "help": "Inline named any types (default: false)."
+          },
+          {
+            "name": "InlineNamedDictionaries",
+            "type": "bool?",
+            "format": "/InlineNamedDictionaries:{value}",
+            "help": "Inline named dictionaries (default: false)."
+          },
+          {
+            "name": "MarkOptionalProperties",
+            "type": "bool?",
+            "format": "/MarkOptionalProperties:{value}",
+            "help": "Specifies whether to mark optional properties with ? (default: false)."
+          },
+          {
+            "name": "ModuleName",
+            "type": "string",
+            "format": "/ModuleName:{value}",
+            "help": "The TypeScript module name (default: '', no module)."
+          },
+          {
+            "name": "Namespace",
+            "type": "string",
+            "format": "/Namespace:{value}",
+            "help": "The TypeScript namespace (default: '', no namespace)."
+          },
+          {
+            "name": "NullValue",
+            "type": "TypeScriptNullValue",
+            "format": "/NullValue:{value}",
+            "help": "The null value used in object initializers (default 'Undefined', 'Null')."
+          },
+          {
+            "name": "OperationGenerationMode",
+            "type": "OperationGenerationMode",
+            "format": "/OperationGenerationMode:{value}",
+            "help": "The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments')."
+          },
+          {
+            "name": "PromiseType",
+            "type": "PromiseType",
+            "format": "/PromiseType:{value}",
+            "help": "The promise type ('Promise' or 'QPromise')."
+          },
+          {
+            "name": "ProtectedMethods",
+            "type": "List<string>",
+            "format": "/ProtectedMethods:{value}",
+            "help": "List of methods with a protected access modifier ('classname.methodname')."
+          },
+          {
+            "name": "QueryNullValue",
+            "type": "string",
+            "format": "/QueryNullValue:{value}",
+            "help": "The null value used for query parameters which are null (default: '')."
+          },
+          {
+            "name": "ResponseClass",
+            "type": "string",
+            "format": "/ResponseClass:{value}",
+            "help": "The response class (default 'SwaggerResponse', may use '{controller}' placeholder)."
+          },
+          {
+            "name": "RxJsVersion",
+            "type": "decimal?",
+            "format": "/RxJsVersion:{value}",
+            "help": "The target RxJs version (default: 6.0)."
+          },
+          {
+            "name": "Template",
+            "type": "TypeScriptTemplate",
+            "format": "/Template:{value}",
+            "help": "The type of the asynchronism handling ('JQueryCallbacks', 'JQueryPromises', 'AngularJS', 'Angular', 'Fetch', 'Aurelia')."
+          },
+          {
+            "name": "TypeScriptVersion",
+            "type": "decimal?",
+            "format": "/TypeScriptVersion:{value}",
+            "help": "The target TypeScript version (default: 2.7)."
+          },
+          {
+            "name": "TypeStyle",
+            "type": "TypeScriptTypeStyle",
+            "format": "/TypeStyle:{value}",
+            "help": "The type style (default: Class)."
+          },
+          {
+            "name": "UseGetBaseUrlMethod",
+            "type": "bool?",
+            "format": "/UseGetBaseUrlMethod:{value}",
+            "help": "Specifies whether to use the 'getBaseUrl(defaultUrl: string)' method from the base class (default: false)."
+          },
+          {
+            "name": "UseSingletonProvider",
+            "type": "bool?",
+            "format": "/UseSingletonProvider:{value}",
+            "help": "Specifies whether to use the Angular 6 Singleton Provider (Angular template only, default: false)."
+          },
+          {
+            "name": "UseTransformOptionsMethod",
+            "type": "bool?",
+            "format": "/UseTransformOptionsMethod:{value}",
+            "help": "Call 'transformOptions' on the base class or extension class (default: false)."
+          },
+          {
+            "name": "UseTransformResultMethod",
+            "type": "bool?",
+            "format": "/UseTransformResultMethod:{value}",
+            "help": "Call 'transformResult' on the base class or extension class (default: false)."
+          },
+          {
+            "name": "WrapDtoExceptions",
+            "type": "bool?",
+            "format": "/WrapDtoExceptions:{value}",
+            "help": "Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: false)."
+          },
+          {
+            "name": "WrapResponseMethods",
+            "type": "List<string>",
+            "format": "/WrapResponseMethods:{value}",
+            "help": "List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true)."
+          },
+          {
+            "name": "WrapResponses",
+            "type": "bool?",
+            "format": "/WrapResponses:{value}",
+            "help": "Specifies whether to wrap success responses to allow full response access (experimental)."
+          }
+        ]
+      }
+    }
+  ],
+  "commonTaskProperties": [
+    {
+      "name": "NSwagRuntime",
+      "type": "string",
+      "format": "{value}",
+      "customImpl": true,
+      "customValue": true
+    }
+  ],
+  "commonTaskPropertySets": {
+    "inputOutputCommand": [
+      {
+        "name": "Input",
+        "type": "string",
+        "format": "/Input:{value}",
+        "help": "A file path or URL to the data or the JSON data itself."
+      },
+      {
+        "name": "ServiceHost",
+        "type": "string",
+        "format": "/ServiceHost:{value}",
+        "help": "Overrides the service host of the web document (optional, use '.' to remove the hostname)."
+      },
+      {
+        "name": "ServiceSchemes",
+        "type": "List<string>",
+        "format": "/ServiceSchemes:{value}",
+        "help": "Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss')."
+      }
+    ],
+    "isolatedCommand": [
+      {
+        "name": "Assembly",
+        "type": "List<string>",
+        "format": "/Assembly:{value}",
+        "help": "The path or paths to the .NET assemblies (comma separated)."
+      },
+      {
+        "name": "AssemblyConfig",
+        "type": "string",
+        "format": "/AssemblyConfig:{value}",
+        "help": "The path to the assembly App.config or Web.config (optional)."
+      },
+      {
+        "name": "ReferencePaths",
+        "type": "List<string>",
+        "format": "/ReferencePaths:{value}",
+        "help": "The paths to search for referenced assembly files (comma separated)."
+      },
+      {
+        "name": "UseNuGetCache",
+        "type": "bool?",
+        "format": "/UseNuGetCache:{value}",
+        "help": "Determines if local Nuget's cache folder should be put in the ReferencePaths by default"
+      }
+    ],
+    "isolatedSwaggerOutputCommand": [
+      {
+        "name": "Output",
+        "type": "string",
+        "format": "/Output:{value}",
+        "help": "The output file path (optional)."
+      },
+      {
+        "name": "OutputType",
+        "type": "SchemaType",
+        "format": "/OutputType:{value}",
+        "help": "Specifies the output schema type, ignored when UseDocumentProvider is enabled (Swagger2|OpenApi3, default: Swagger2)."
+      }
+    ],
+    "outputCommand": [
+      {
+        "name": "Output",
+        "type": "string",
+        "format": "/Output:{value}",
+        "help": "The output file path (optional)."
+      }
+    ],
+    "openApiGeneratorCommand": [
+      {
+        "name": "AllowNullableBodyParameters",
+        "type": "bool?",
+        "format": "/AllowNullableBodyParameters:{value}",
+        "help": "Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available (ASP.NET Core 2.0+), default: true)."
+      },
+      {
+        "name": "AllowReferencesWithProperties",
+        "type": "bool?",
+        "format": "/AllowReferencesWithProperties:{value}",
+        "help": "Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false)."
+      },
+      {
+        "name": "AspNetCoreEnvironment",
+        "type": "string",
+        "format": "/AspNetCoreEnvironment:{value}",
+        "help": "Sets the ASPNETCORE_ENVIRONMENT if provided (default: empty)."
+      },
+      {
+        "name": "ContractResolver",
+        "type": "string",
+        "format": "/ContractResolver:{value}",
+        "help": "DEPRECATED: The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName')."
+      },
+      {
+        "name": "CreateWebHostBuilderMethod",
+        "type": "string",
+        "format": "/CreateWebHostBuilderMethod:{value}",
+        "help": "The CreateWebHostBuilder method in the form 'assemblyName:fullTypeName.methodName' or 'fullTypeName.methodName'."
+      },
+      {
+        "name": "DefaultDictionaryValueReferenceTypeNullHandling",
+        "type": "ReferenceTypeNullHandling",
+        "format": "/DefaultDictionaryValueReferenceTypeNullHandling:{value}",
+        "help": "The default reference type null handling of dictionary value types (NotNull (default) or Null)."
+      },
+      {
+        "name": "DefaultEnumHandling",
+        "type": "EnumHandling",
+        "format": "/DefaultEnumHandling:{value}",
+        "help": "The default enum handling ('String' or 'Integer'), default: Integer."
+      },
+      {
+        "name": "DefaultPropertyNameHandling",
+        "type": "PropertyNameHandling",
+        "format": "/DefaultPropertyNameHandling:{value}",
+        "help": "The default property name handling ('Default' or 'CamelCase')."
+      },
+      {
+        "name": "DefaultReferenceTypeNullHandling",
+        "type": "ReferenceTypeNullHandling",
+        "format": "/DefaultReferenceTypeNullHandling:{value}",
+        "help": "The default reference type null handling (Null (default) or NotNull)."
+      },
+      {
+        "name": "DefaultResponseReferenceTypeNullHandling",
+        "type": "ReferenceTypeNullHandling",
+        "format": "/DefaultResponseReferenceTypeNullHandling:{value}",
+        "help": "The default response reference type null handling (default: NotNull (default) or Null)."
+      },
+      {
+        "name": "DocumentName",
+        "type": "string",
+        "format": "/DocumentName:{value}",
+        "help": "The document name to use in SwaggerDocumentProvider (default: v1)."
+      },
+      {
+        "name": "DocumentProcessors",
+        "type": "List<string>",
+        "format": "/DocumentProcessors:{value}",
+        "help": "The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName')."
+      },
+      {
+        "name": "DocumentTemplate",
+        "type": "string",
+        "format": "/DocumentTemplate:{value}",
+        "help": "Specifies the Swagger document template (may be a path or JSON, default: none)."
+      },
+      {
+        "name": "ExcludedTypeNames",
+        "type": "List<string>",
+        "format": "/ExcludedTypeNames:{value}",
+        "help": "The excluded type names (same as JsonSchemaIgnoreAttribute)."
+      },
+      {
+        "name": "FlattenInheritanceHierarchy",
+        "type": "bool?",
+        "format": "/FlattenInheritanceHierarchy:{value}",
+        "help": "Flatten the inheritance hierarchy instead of using allOf to describe inheritance (default: false)."
+      },
+      {
+        "name": "GenerateAbstractProperties",
+        "type": "bool?",
+        "format": "/GenerateAbstractProperties:{value}",
+        "help": "Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false)."
+      },
+      {
+        "name": "GenerateAbstractSchemas",
+        "type": "bool?",
+        "format": "/GenerateAbstractSchemas:{value}",
+        "help": "Generate the x-abstract flag on schemas (default: true)."
+      },
+      {
+        "name": "GenerateEnumMappingDescription",
+        "type": "bool?",
+        "format": "/GenerateEnumMappingDescription:{value}",
+        "help": "Generate a description with number to enum name mappings (for integer enums only, default: false)."
+      },
+      {
+        "name": "GenerateKnownTypes",
+        "type": "bool?",
+        "format": "/GenerateKnownTypes:{value}",
+        "help": "Generate schemas for types in KnownTypeAttribute attributes (default: true)."
+      },
+      {
+        "name": "GenerateXmlObjects",
+        "type": "bool?",
+        "format": "/GenerateXmlObjects:{value}",
+        "help": "Generate xmlObject representation for definitions (default: false)."
+      },
+      {
+        "name": "IgnoreObsoleteProperties",
+        "type": "bool?",
+        "format": "/IgnoreObsoleteProperties:{value}",
+        "help": "Ignore properties with the ObsoleteAttribute (default: false)."
+      },
+      {
+        "name": "InfoDescription",
+        "type": "string",
+        "format": "/InfoDescription:{value}",
+        "help": "Specify the description of the Swagger specification (ignored when DocumentTemplate is set)."
+      },
+      {
+        "name": "InfoTitle",
+        "type": "string",
+        "format": "/InfoTitle:{value}",
+        "help": "Specify the title of the Swagger specification (ignored when DocumentTemplate is set)."
+      },
+      {
+        "name": "InfoVersion",
+        "type": "string",
+        "format": "/InfoVersion:{value}",
+        "help": "Specify the version of the Swagger specification (default: 1.0.0, ignored when DocumentTemplate is set)."
+      },
+      {
+        "name": "OperationProcessors",
+        "type": "List<string>",
+        "format": "/OperationProcessors:{value}",
+        "help": "The operation processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName')."
+      },
+      {
+        "name": "SchemaNameGenerator",
+        "type": "string",
+        "format": "/SchemaNameGenerator:{value}",
+        "help": "The custom ISchemaNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName')."
+      },
+      {
+        "name": "SerializerSettings",
+        "type": "string",
+        "format": "/SerializerSettings:{value}",
+        "help": "The custom JsonSerializerSettings implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName')."
+      },
+      {
+        "name": "ServiceBasePath",
+        "type": "string",
+        "format": "/ServiceBasePath:{value}",
+        "help": "The basePath of the Swagger specification (optional)."
+      },
+      {
+        "name": "ServiceHost",
+        "type": "string",
+        "format": "/ServiceHost:{value}",
+        "help": "Overrides the service host of the web service (optional, use '.' to remove the hostname)."
+      },
+      {
+        "name": "ServiceSchemes",
+        "type": "List<string>",
+        "format": "/ServiceSchemes:{value}",
+        "help": "Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss')."
+      },
+      {
+        "name": "Startup",
+        "type": "string",
+        "format": "/Startup:{value}",
+        "help": "The Startup class type in the form 'assemblyName:fullTypeName' or 'fullTypeName'."
+      },
+      {
+        "name": "TypeNameGenerator",
+        "type": "string",
+        "format": "/TypeNameGenerator:{value}",
+        "help": "The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName')."
+      },
+      {
+        "name": "UseDocumentProvider",
+        "type": "bool?",
+        "format": "/UseDocumentProvider:{value}",
+        "help": "Generate document using SwaggerDocumentProvider (configuration from AddOpenApiDocument()/AddSwaggerDocument(), most CLI settings will be ignored)."
+      }
+    ],
+    "codeGeneratorCommand": [
+      {
+        "name": "EnumNameGeneratorType",
+        "type": "string",
+        "format": "/EnumNameGeneratorType:{value}",
+        "help": "The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName')."
+      },
+      {
+        "name": "PropertyNameGeneratorType",
+        "type": "string",
+        "format": "/PropertyNameGeneratorType:{value}",
+        "help": "The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName')."
+      },
+      {
+        "name": "TemplateDirectory",
+        "type": "string",
+        "format": "/TemplateDirectory:{value}",
+        "help": "The Liquid template directory (experimental)."
+      },
+      {
+        "name": "TypeNameGenerator",
+        "type": "string",
+        "format": "/TypeNameGenerator:{value}",
+        "help": "The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName')."
+      }
+    ],
+    "openApiToCSharpCommand": [
+      {
+        "name": "AdditionalContractNamespaceUsages",
+        "type": "List<string>",
+        "format": "/AdditionalContractNamespaceUsages:{value}",
+        "help": "The additional contract namespace usages."
+      },
+      {
+        "name": "AdditionalNamespaceUsages",
+        "type": "List<string>",
+        "format": "/AdditionalNamespaceUsages:{value}",
+        "help": "The additional namespace usages."
+      },
+      {
+        "name": "AnyType",
+        "type": "string",
+        "format": "/AnyType:{value}",
+        "help": "The any .NET type (default: 'object')."
+      },
+      {
+        "name": "ArrayBaseType",
+        "type": "string",
+        "format": "/ArrayBaseType:{value}",
+        "help": "The generic array .NET type (default: 'Collection')."
+      },
+      {
+        "name": "ArrayInstanceType",
+        "type": "string",
+        "format": "/ArrayInstanceType:{value}",
+        "help": "The generic array .NET instance type (default: empty = ArrayType)."
+      },
+      {
+        "name": "ArrayType",
+        "type": "string",
+        "format": "/ArrayType:{value}",
+        "help": "The generic array .NET type (default: 'ICollection')."
+      },
+      {
+        "name": "ClassName",
+        "type": "string",
+        "format": "/ClassName:{value}",
+        "help": "The class name of the generated client."
+      },
+      {
+        "name": "ClassStyle",
+        "type": "CSharpClassStyle",
+        "format": "/ClassStyle:{value}",
+        "help": "The CSharp class style, 'Poco' or 'Inpc' (default: 'Poco')."
+      },
+      {
+        "name": "DateTimeType",
+        "type": "string",
+        "format": "/DateTimeType:{value}",
+        "help": "The date time .NET type (default: 'DateTimeOffset')."
+      },
+      {
+        "name": "DateType",
+        "type": "string",
+        "format": "/DateType:{value}",
+        "help": "The date .NET type (default: 'DateTimeOffset')."
+      },
+      {
+        "name": "DictionaryBaseType",
+        "type": "string",
+        "format": "/DictionaryBaseType:{value}",
+        "help": "The generic dictionary .NET type (default: 'Dictionary')."
+      },
+      {
+        "name": "DictionaryInstanceType",
+        "type": "string",
+        "format": "/DictionaryInstanceType:{value}",
+        "help": "The generic dictionary .NET instance type (default: empty = DictionaryType)."
+      },
+      {
+        "name": "DictionaryType",
+        "type": "string",
+        "format": "/DictionaryType:{value}",
+        "help": "The generic dictionary .NET type (default: 'IDictionary')."
+      },
+      {
+        "name": "EnforceFlagEnums",
+        "type": "bool?",
+        "format": "/EnforceFlagEnums:{value}",
+        "help": "Specifies whether enums should be always generated as bit flags (default: false)."
+      },
+      {
+        "name": "ExcludedParameterNames",
+        "type": "List<string>",
+        "format": "/ExcludedParameterNames:{value}",
+        "help": "The globally excluded parameter names."
+      },
+      {
+        "name": "ExcludedTypeNames",
+        "type": "List<string>",
+        "format": "/ExcludedTypeNames:{value}",
+        "help": "The excluded DTO type names (must be defined in an import or other namespace)."
+      },
+      {
+        "name": "GenerateDataAnnotations",
+        "type": "bool?",
+        "format": "/GenerateDataAnnotations:{value}",
+        "help": "Specifies whether to generate data annotation attributes on DTO classes (default: true)."
+      },
+      {
+        "name": "GenerateDefaultValues",
+        "type": "bool?",
+        "format": "/GenerateDefaultValues:{value}",
+        "help": "Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true)."
+      },
+      {
+        "name": "GenerateDtoTypes",
+        "type": "bool?",
+        "format": "/GenerateDtoTypes:{value}",
+        "help": "Specifies whether to generate DTO classes."
+      },
+      {
+        "name": "GenerateImmutableArrayProperties",
+        "type": "bool?",
+        "format": "/GenerateImmutableArrayProperties:{value}",
+        "help": "Specifies whether to remove the setter for non-nullable array properties (default: false)."
+      },
+      {
+        "name": "GenerateImmutableDictionaryProperties",
+        "type": "bool?",
+        "format": "/GenerateImmutableDictionaryProperties:{value}",
+        "help": "Specifies whether to remove the setter for non-nullable dictionary properties (default: false)."
+      },
+      {
+        "name": "GenerateJsonMethods",
+        "type": "bool?",
+        "format": "/GenerateJsonMethods:{value}",
+        "help": "Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true)."
+      },
+      {
+        "name": "GenerateOptionalParameters",
+        "type": "bool?",
+        "format": "/GenerateOptionalParameters:{value}",
+        "help": "Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false)."
+      },
+      {
+        "name": "GenerateOptionalPropertiesAsNullable",
+        "type": "bool?",
+        "format": "/GenerateOptionalPropertiesAsNullable:{value}",
+        "help": "Specifies whether optional schema properties (not required) are generated as nullable properties (default: false)."
+      },
+      {
+        "name": "GenerateResponseClasses",
+        "type": "bool?",
+        "format": "/GenerateResponseClasses:{value}",
+        "help": "Specifies whether to generate response classes (default: true)."
+      },
+      {
+        "name": "HandleReferences",
+        "type": "bool?",
+        "format": "/HandleReferences:{value}",
+        "help": "Use preserve references handling (All) in the JSON serializer (default: false)."
+      },
+      {
+        "name": "InlineNamedAny",
+        "type": "bool?",
+        "format": "/InlineNamedAny:{value}",
+        "help": "Inline named any types (default: false)."
+      },
+      {
+        "name": "InlineNamedArrays",
+        "type": "bool?",
+        "format": "/InlineNamedArrays:{value}",
+        "help": "Inline named arrays (default: false)."
+      },
+      {
+        "name": "InlineNamedDictionaries",
+        "type": "bool?",
+        "format": "/InlineNamedDictionaries:{value}",
+        "help": "Inline named dictionaries (default: false)."
+      },
+      {
+        "name": "InlineNamedTuples",
+        "type": "bool?",
+        "format": "/InlineNamedTuples:{value}",
+        "help": "Inline named tuples (default: true)."
+      },
+      {
+        "name": "JsonConverters",
+        "type": "List<string>",
+        "format": "/JsonConverters:{value}",
+        "help": "Specifies the custom Json.NET converter types (optional, comma separated)."
+      },
+      {
+        "name": "JsonSerializerSettingsTransformationMethod",
+        "type": "string",
+        "format": "/JsonSerializerSettingsTransformationMethod:{value}",
+        "help": "The name of a static method which is called to transform the JsonSerializerSettings used in the generated ToJson()/FromJson() methods (default: none)."
+      },
+      {
+        "name": "Namespace",
+        "type": "string",
+        "format": "/Namespace:{value}",
+        "help": "The namespace of the generated classes."
+      },
+      {
+        "name": "OperationGenerationMode",
+        "type": "OperationGenerationMode",
+        "format": "/OperationGenerationMode:{value}",
+        "help": "The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments')."
+      },
+      {
+        "name": "ParameterArrayType",
+        "type": "string",
+        "format": "/ParameterArrayType:{value}",
+        "help": "The generic array .NET type of operation parameters (default: 'IEnumerable')."
+      },
+      {
+        "name": "ParameterDictionaryType",
+        "type": "string",
+        "format": "/ParameterDictionaryType:{value}",
+        "help": "The generic dictionary .NET type of operation parameters (default: 'IDictionary')."
+      },
+      {
+        "name": "RequiredPropertiesMustBeDefined",
+        "type": "bool?",
+        "format": "/RequiredPropertiesMustBeDefined:{value}",
+        "help": "Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required)."
+      },
+      {
+        "name": "ResponseArrayType",
+        "type": "string",
+        "format": "/ResponseArrayType:{value}",
+        "help": "The generic array .NET type of operation responses (default: 'ICollection')."
+      },
+      {
+        "name": "ResponseClass",
+        "type": "string",
+        "format": "/ResponseClass:{value}",
+        "help": "The response class (default 'SwaggerResponse', may use '{controller}' placeholder)."
+      },
+      {
+        "name": "ResponseDictionaryType",
+        "type": "string",
+        "format": "/ResponseDictionaryType:{value}",
+        "help": "The generic dictionary .NET type of operation responses (default: 'IDictionary')."
+      },
+      {
+        "name": "TimeSpanType",
+        "type": "string",
+        "format": "/TimeSpanType:{value}",
+        "help": "The time span .NET type (default: 'TimeSpan')."
+      },
+      {
+        "name": "TimeType",
+        "type": "string",
+        "format": "/TimeType:{value}",
+        "help": "The time .NET type (default: 'TimeSpan')."
+      },
+      {
+        "name": "WrapResponseMethods",
+        "type": "List<string>",
+        "format": "/WrapResponseMethods:{value}",
+        "help": "List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true)."
+      },
+      {
+        "name": "WrapResponses",
+        "type": "bool?",
+        "format": "/WrapResponses:{value}",
+        "help": "Specifies whether to wrap success responses to allow full response access."
+      }
+    ]
+  },
+  "enumerations": [
+    {
+      "name": "SchemaType",
+      "values": [
+        "JsonSchema",
+        "Swagger2",
+        "OpenApi3"
+      ]
+    },
+    {
+      "name": "PropertyNameHandling",
+      "values": [
+        "Default",
+        "CamelCase",
+        "SnakeCase"
+      ]
+    },
+    {
+      "name": "ReferenceTypeNullHandling",
+      "values": [
+        "Null",
+        "NotNull"
+      ]
+    },
+    {
+      "name": "EnumHandling",
+      "values": [
+        "Integer",
+        "String",
+        "CamelCaseString"
+      ]
+    },
+    {
+      "name": "OperationGenerationMode",
+      "values": [
+        "MultipleClientsFromOperationId",
+        "MultipleClientsFromPathSegments",
+        "MultipleClientsFromFirstTagAndPathSegments",
+        "MultipleClientsFromFirstTagAndOperationId",
+        "SingleClientFromOperationId",
+        "SingleClientFromPathSegments"
+      ]
+    },
+    {
+      "name": "CSharpClassStyle",
+      "values": [
+        "Poco",
+        "Inpc",
+        "Prism",
+        "Record"
+      ]
+    },
+    {
+      "name": "CSharpControllerStyle",
+      "values": [
+        "Partial",
+        "Abstract"
+      ]
+    },
+    {
+      "name": "CSharpControllerTarget",
+      "values": [
+        "AspNet",
+        "AspNetCore"
+      ]
+    },
+    {
+      "name": "CSharpControllerRouteNamingStrategy",
+      "values": [
+        "None",
+        "OperationId"
+      ]
+    },
+    {
+      "name": "TypeScriptTemplate",
+      "values": [
+        "JQueryCallbacks",
+        "JQueryPromises",
+        "AngularJS",
+        "Angular",
+        "Fetch",
+        "Aurelia",
+        "Axios"
+      ]
+    },
+    {
+      "name": "PromiseType",
+      "values": [
+        "Promise",
+        "QPromise"
+      ]
+    },
+    {
+      "name": "HttpClass",
+      "values": [
+        "Http",
+        "HttpClient"
+      ]
+    },
+    {
+      "name": "InjectionTokenType",
+      "values": [
+        "OpaqueToken",
+        "InjectionToken"
+      ]
+    },
+    {
+      "name": "TypeScriptDateTimeType",
+      "values": [
+        "Date",
+        "MomentJS",
+        "String",
+        "OffsetMomentJS"
+      ]
+    },
+    {
+      "name": "TypeScriptNullValue",
+      "values": [
+        "Null",
+        "Undefined"
+      ]
+    },
+    {
+      "name": "TypeScriptTypeStyle",
+      "values": [
+        "Interface",
+        "Class",
+        "KnockoutClass"
+      ]
+    }
+  ]
+}

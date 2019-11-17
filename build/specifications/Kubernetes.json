@@ -1,0 +1,3203 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/alpha.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/annotate.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/api-resources.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/api-versions.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/apply.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/attach.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/auth.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/autoscale.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/certificate.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/cluster-info.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/completion.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/config.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/convert.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/cordon.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/cp.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/create.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/delete.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/describe.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/drain.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/edit.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/exec.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/explain.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/expose.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/get.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/help.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/label.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/logs.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/options.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/patch.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/plugin.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/port-forward.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/proxy.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/replace.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/rolling-update.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/rollout.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/run-container.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/run.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/scale.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/set.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/taint.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/top.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/uncordon.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/version.go",
+    "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.11.3/pkg/kubectl/cmd/wait.go"
+  ],
+  "name": "Kubernetes",
+  "officialUrl": "https://kubernetes.io/",
+  "pathExecutable": "kubectl",
+  "tasks": [
+    {
+      "help": "Print the supported API resources on the server.",
+      "postfix": "ApiResources",
+      "definiteArgument": "api-resources",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "ApiGroup",
+            "type": "string",
+            "format": "--api-group={value}",
+            "help": "Limit to resources in the specified API group."
+          },
+          {
+            "name": "Cached",
+            "type": "bool",
+            "format": "--cached={value}",
+            "help": "Use the cached list of resources if available."
+          },
+          {
+            "name": "Namespaced",
+            "type": "bool",
+            "format": "--namespaced={value}",
+            "help": "If false, non-namespaced resources will be returned, otherwise returning namespaced resources by default."
+          },
+          {
+            "name": "NoHeaders",
+            "type": "bool",
+            "format": "--no-headers={value}",
+            "help": "When using the default or custom-column output format, don't print headers (default print headers)."
+          },
+          {
+            "name": "Output",
+            "type": "KubernetesApiResourcesOutput",
+            "format": "--output={value}",
+            "help": "Output format. One of: wide|name."
+          },
+          {
+            "name": "Verbs",
+            "type": "List<string>",
+            "format": "--verbs={value}",
+            "separator": ",",
+            "help": "Limit to resources that support the specified verbs."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Drain node in preparation for maintenance. The given node will be marked unschedulable to prevent new pods from arriving. 'drain' evicts the pods if the APIServer supports eviction (http://kubernetes.io/docs/admin/disruptions/). Otherwise, it will use normal DELETE to delete the pods. The 'drain' evicts or deletes all pods except mirror pods (which cannot be deleted through the API server).  If there are DaemonSet-managed pods, drain will not proceed without --ignore-daemonsets, and regardless it will not delete any DaemonSet-managed pods, because those pods would be immediately replaced by the DaemonSet controller, which ignores unschedulable markings.  If there are any pods that are neither mirror pods nor managed by ReplicationController, ReplicaSet, DaemonSet, StatefulSet or Job, then drain will not delete any pods unless you use --force.  --force will also allow deletion to proceed if the managing resource of one or more pods is missing. 'drain' waits for graceful termination. You should not operate on the machine until the command completes. When you are ready to put the node back into service, use kubectl uncordon, which will make the node schedulable again. ! http://kubernetes.io/images/docs/kubectl_drain.svg.",
+      "postfix": "Drain",
+      "definiteArgument": "drain",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "DeleteLocalData",
+            "type": "bool",
+            "format": "--delete-local-data={value}",
+            "help": "Continue even if there are pods using emptyDir (local data that will be deleted when the node is drained)."
+          },
+          {
+            "name": "DryRun",
+            "type": "bool",
+            "format": "--dry-run={value}",
+            "help": "If true, only print the object that would be sent, without sending it."
+          },
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "--force={value}",
+            "help": "Continue even if there are pods not managed by a ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet."
+          },
+          {
+            "name": "GracePeriod",
+            "type": "int",
+            "format": "--grace-period={value}",
+            "help": "Period of time in seconds given to each pod to terminate gracefully. If negative, the default value specified in the pod will be used."
+          },
+          {
+            "name": "IgnoreDaemonsets",
+            "type": "bool",
+            "format": "--ignore-daemonsets={value}",
+            "help": "Ignore DaemonSet-managed pods."
+          },
+          {
+            "name": "PodSelector",
+            "type": "string",
+            "format": "--pod-selector={value}",
+            "help": "Label selector to filter pods on the node."
+          },
+          {
+            "name": "Selector",
+            "type": "string",
+            "format": "--selector={value}",
+            "help": "Selector (label query) to filter on."
+          },
+          {
+            "name": "Timeout",
+            "type": "TimeSpan?",
+            "format": "--timeout={value}",
+            "help": "The length of time to wait before giving up, zero means infinite."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Create and run a particular image, possibly replicated. Creates a deployment or job to manage the created container(s).",
+      "postfix": "Run",
+      "definiteArgument": "run",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "{value}",
+            "help": "The name of the container."
+          },
+          {
+            "name": "AllowMissingTemplateKeys",
+            "type": "bool",
+            "format": "--allow-missing-template-keys={value}",
+            "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
+          },
+          {
+            "name": "Attach",
+            "type": "bool",
+            "format": "--attach={value}",
+            "help": "If true, wait for the Pod to start running, and then attach to the Pod as if 'kubectl attach ...' were called.  Default false, unless '-i/--stdin' is set, in which case the default is true. With '--restart=Never' the exit code of the container process is returned."
+          },
+          {
+            "name": "Cascade",
+            "type": "bool",
+            "format": "--cascade={value}",
+            "help": "If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true."
+          },
+          {
+            "name": "Command",
+            "type": "bool",
+            "format": "--command={value}",
+            "help": "If true and extra arguments are present, use them as the 'command' field in the container, rather than the 'args' field which is the default."
+          },
+          {
+            "name": "DryRun",
+            "type": "bool",
+            "format": "--dry-run={value}",
+            "help": "If true, only print the object that would be sent, without sending it."
+          },
+          {
+            "name": "Env",
+            "type": "List<string>",
+            "format": "--env={value}",
+            "help": "Environment variables to set in the container."
+          },
+          {
+            "name": "Expose",
+            "type": "bool",
+            "format": "--expose={value}",
+            "help": "If true, a public, external service is created for the container(s) which are run."
+          },
+          {
+            "name": "Filename",
+            "type": "List<string>",
+            "format": "--filename={value}",
+            "separator": ",",
+            "help": "to use to replace the resource."
+          },
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "--force={value}",
+            "help": "Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation."
+          },
+          {
+            "name": "Generator",
+            "type": "string",
+            "format": "--generator={value}",
+            "help": "The name of the API generator to use, see http://kubernetes.io/docs/user-guide/kubectl-conventions/#generators for a list."
+          },
+          {
+            "name": "GracePeriod",
+            "type": "int",
+            "format": "--grace-period={value}",
+            "help": "Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion)."
+          },
+          {
+            "name": "Hostport",
+            "type": "int",
+            "format": "--hostport={value}",
+            "help": "The host port mapping for the container port. To demonstrate a single-machine container."
+          },
+          {
+            "name": "Image",
+            "type": "string",
+            "format": "--image={value}",
+            "help": "The image for the container to run."
+          },
+          {
+            "name": "ImagePullPolicy",
+            "type": "string",
+            "format": "--image-pull-policy={value}",
+            "help": "The image pull policy for the container. If left empty, this value will not be specified by the client and defaulted by the server."
+          },
+          {
+            "name": "Labels",
+            "type": "string",
+            "format": "--labels={value}",
+            "help": "Comma separated labels to apply to the pod(s). Will override previous values."
+          },
+          {
+            "name": "LeaveStdinOpen",
+            "type": "bool",
+            "format": "--leave-stdin-open={value}",
+            "help": "If the pod is started in interactive mode or with stdin, leave stdin open after the first attach completes. By default, stdin will be closed after the first attach completes."
+          },
+          {
+            "name": "Limits",
+            "type": "string",
+            "format": "--limits={value}",
+            "help": "The resource requirement limits for this container.  For example, 'cpu=200m,memory=512Mi'.  Note that server side components may assign limits depending on the server configuration, such as limit ranges."
+          },
+          {
+            "name": "Output",
+            "type": "KubernetesRunOutput",
+            "format": "--output={value}",
+            "help": "Output format. One of: json|yaml|name|templatefile|template|go-template|go-template-file|jsonpath|jsonpath-file."
+          },
+          {
+            "name": "Overrides",
+            "type": "string",
+            "format": "--overrides={value}",
+            "help": "An inline JSON override for the generated object. If this is non-empty, it is used to override the generated object. Requires that the object supply a valid apiVersion field."
+          },
+          {
+            "name": "PodRunningTimeout",
+            "type": "TimeSpan?",
+            "format": "--pod-running-timeout={value}",
+            "help": "The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running."
+          },
+          {
+            "name": "Port",
+            "type": "string",
+            "format": "--port={value}",
+            "help": "The port that this container exposes.  If --expose is true, this is also the port used by the service that is created."
+          },
+          {
+            "name": "Quiet",
+            "type": "bool",
+            "format": "--quiet={value}",
+            "help": "If true, suppress prompt messages."
+          },
+          {
+            "name": "Record",
+            "type": "bool",
+            "format": "--record={value}",
+            "help": "Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists."
+          },
+          {
+            "name": "Recursive",
+            "type": "bool",
+            "format": "--recursive={value}",
+            "help": "Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory."
+          },
+          {
+            "name": "Replicas",
+            "type": "int",
+            "format": "--replicas={value}",
+            "help": "Number of replicas to create for this container. Default is 1."
+          },
+          {
+            "name": "Requests",
+            "type": "string",
+            "format": "--requests={value}",
+            "help": "The resource requirement requests for this container.  For example, 'cpu=100m,memory=256Mi'.  Note that server side components may assign requests depending on the server configuration, such as limit ranges."
+          },
+          {
+            "name": "Restart",
+            "type": "string",
+            "format": "--restart={value}",
+            "help": "The restart policy for this Pod.  Legal values [Always, OnFailure, Never].  If set to 'Always' a deployment is created, if set to 'OnFailure' a job is created, if set to 'Never', a regular pod is created. For the latter two --replicas must be 1.  Default 'Always', for CronJobs `Never`."
+          },
+          {
+            "name": "Rm",
+            "type": "bool",
+            "format": "--rm={value}",
+            "help": "If true, delete resources created in this command for attached containers."
+          },
+          {
+            "name": "SaveConfig",
+            "type": "bool",
+            "format": "--save-config={value}",
+            "help": "If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future."
+          },
+          {
+            "name": "Schedule",
+            "type": "string",
+            "format": "--schedule={value}",
+            "help": "A schedule in the Cron format the job should be run with."
+          },
+          {
+            "name": "ServiceGenerator",
+            "type": "string",
+            "format": "--service-generator={value}",
+            "help": "The name of the generator to use for creating a service.  Only used if --expose is true."
+          },
+          {
+            "name": "ServiceOverrides",
+            "type": "string",
+            "format": "--service-overrides={value}",
+            "help": "An inline JSON override for the generated service object. If this is non-empty, it is used to override the generated object. Requires that the object supply a valid apiVersion field.  Only used if --expose is true."
+          },
+          {
+            "name": "Serviceaccount",
+            "type": "string",
+            "format": "--serviceaccount={value}",
+            "help": "Service account to set in the pod spec."
+          },
+          {
+            "name": "Stdin",
+            "type": "bool",
+            "format": "--stdin={value}",
+            "help": "Keep stdin open on the container(s) in the pod, even if nothing is attached."
+          },
+          {
+            "name": "Template",
+            "type": "string",
+            "format": "--template={value}",
+            "help": "Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview]."
+          },
+          {
+            "name": "Timeout",
+            "type": "TimeSpan?",
+            "format": "--timeout={value}",
+            "help": "The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object."
+          },
+          {
+            "name": "Tty",
+            "type": "bool",
+            "format": "--tty={value}",
+            "help": "Allocated a TTY for each container in the pod."
+          },
+          {
+            "name": "Wait",
+            "type": "bool",
+            "format": "--wait={value}",
+            "help": "If true, wait for resources to be gone before returning. This waits for finalizers."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Display one or many resources Prints a table of the most important information about the specified resources. You can filter the list using a label selector and the --selector flag. If the desired resource type is namespaced you will only see results in your current namespace unless you pass --all-namespaces. Uninitialized objects are not shown unless --include-uninitialized is passed. By specifying the output as 'template' and providing a Go template as the value of the --template flag, you can filter the attributes of the fetched resources.Use \"kubectl api-resources\" for a complete list of supported resources.",
+      "postfix": "Get",
+      "definiteArgument": "get",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "TypeName",
+            "type": "List<string>",
+            "format": "{value}",
+            "separator": " ",
+            "help": "The type or/and name of the ressource."
+          },
+          {
+            "name": "AllNamespaces",
+            "type": "bool",
+            "format": "--all-namespaces={value}",
+            "help": "If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace."
+          },
+          {
+            "name": "AllowMissingTemplateKeys",
+            "type": "bool",
+            "format": "--allow-missing-template-keys={value}",
+            "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
+          },
+          {
+            "name": "ChunkSize",
+            "type": "long?",
+            "format": "--chunk-size={value}",
+            "help": "Return large lists in chunks rather than all at once. Pass 0 to disable. This flag is beta and may change in the future."
+          },
+          {
+            "name": "Export",
+            "type": "bool",
+            "format": "--export={value}",
+            "help": "If true, use 'export' for the resources.  Exported resources are stripped of cluster-specific information."
+          },
+          {
+            "name": "FieldSelector",
+            "type": "string",
+            "format": "--field-selector={value}",
+            "help": "Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type."
+          },
+          {
+            "name": "Filename",
+            "type": "List<string>",
+            "format": "--filename={value}",
+            "separator": ",",
+            "help": "Filename, directory, or URL to files identifying the resource to get from a server."
+          },
+          {
+            "name": "IgnoreNotFound",
+            "type": "bool",
+            "format": "--ignore-not-found={value}",
+            "help": "If the requested object does not exist the command will return exit code 0."
+          },
+          {
+            "name": "IncludeUninitialized",
+            "type": "bool",
+            "format": "--include-uninitialized={value}",
+            "help": "If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., \"--all\". Objects with empty metadata.initializers are regarded as initialized."
+          },
+          {
+            "name": "LabelColumns",
+            "type": "List<string>",
+            "format": "--label-columns={value}",
+            "separator": ",",
+            "help": "Accepts a comma separated list of labels that are going to be presented as columns. Names are case-sensitive. You can also use multiple flag options like -L label1 -L label2..."
+          },
+          {
+            "name": "NoHeaders",
+            "type": "bool",
+            "format": "--no-headers={value}",
+            "help": "When using the default or custom-column output format, don't print headers (default print headers)."
+          },
+          {
+            "name": "Output",
+            "type": "KubernetesGetOutput",
+            "format": "--output={value}",
+            "help": "Output format. One of: json|yaml|wide|name|custom-columns=...|custom-columns-file=...|go-template=...|go-template-file=...|jsonpath=...|jsonpath-file=... See custom columns [http://kubernetes.io/docs/user-guide/kubectl-overview/#custom-columns], golang template [http://golang.org/pkg/text/template/#pkg-overview] and jsonpath template [http://kubernetes.io/docs/user-guide/jsonpath]."
+          },
+          {
+            "name": "Raw",
+            "type": "string",
+            "format": "--raw={value}",
+            "help": "Raw URI to request from the server.  Uses the transport specified by the kubeconfig file."
+          },
+          {
+            "name": "Recursive",
+            "type": "bool",
+            "format": "--recursive={value}",
+            "help": "Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory."
+          },
+          {
+            "name": "Selector",
+            "type": "string",
+            "format": "--selector={value}",
+            "help": "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)."
+          },
+          {
+            "name": "ServerPrint",
+            "type": "bool",
+            "format": "--server-print={value}",
+            "help": "If true, have the server return the appropriate table output. Supports extension APIs and CRDs."
+          },
+          {
+            "name": "ShowAll",
+            "type": "bool",
+            "format": "--show-all={value}",
+            "help": "When printing, show all resources (default show all pods including terminated one.)."
+          },
+          {
+            "name": "ShowKind",
+            "type": "bool",
+            "format": "--show-kind={value}",
+            "help": "If present, list the resource type for the requested object(s)."
+          },
+          {
+            "name": "ShowLabels",
+            "type": "bool",
+            "format": "--show-labels={value}",
+            "help": "When printing, show all labels as the last column (default hide labels column)."
+          },
+          {
+            "name": "SortBy",
+            "type": "string",
+            "format": "--sort-by={value}",
+            "help": "If non-empty, sort list types using this field specification.  The field specification is expressed as a JSONPath expression (e.g. '{.metadata.name}'). The field in the API resource specified by this JSONPath expression must be an integer or a string."
+          },
+          {
+            "name": "Template",
+            "type": "string",
+            "format": "--template={value}",
+            "help": "Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview]."
+          },
+          {
+            "name": "UseOpenapiPrintColumns",
+            "type": "bool",
+            "format": "--use-openapi-print-columns={value}",
+            "help": "If true, use x-kubernetes-print-column metadata (if present) from the OpenAPI schema for displaying a resource."
+          },
+          {
+            "name": "Watch",
+            "type": "bool",
+            "format": "--watch={value}",
+            "help": "After listing/getting the requested object, watch for changes. Uninitialized objects are excluded if no object name is provided."
+          },
+          {
+            "name": "WatchOnly",
+            "type": "bool",
+            "format": "--watch-only={value}",
+            "help": "Watch for changes to the requested object(s), without listing/getting first."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Print the client and server version information for the current context.",
+      "postfix": "Version",
+      "definiteArgument": "version",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "Client",
+            "type": "bool",
+            "format": "--client={value}",
+            "help": "Client version only (no server required)."
+          },
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "--output={value}",
+            "help": "One of 'yaml' or 'json'."
+          },
+          {
+            "name": "Short",
+            "type": "bool",
+            "format": "--short={value}",
+            "help": "Print just the version number."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Display Resource (CPU/Memory/Storage) usage. The top command allows you to see the resource consumption for nodes or pods. This command requires Heapster to be correctly configured and working on the server.",
+      "postfix": "Top",
+      "definiteArgument": "top",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings"
+      }
+    },
+    {
+      "help": "Modify kubeconfig files using subcommands like \"kubectl config set current-context my-context\" The loading order follows these rules:   1. If the --kubeconfig flag is set, then only that file is loaded.  The flag may only be set once and no merging takes place.    2. If $KUBECONFIG environment variable is set, then it is used a list of paths (normal path delimitting rules for your system).  These paths are merged.  When a value is modified, it is modified in the file that defines the stanza.  When a value is created, it is created in the first file that exists.  If no files in the chain exist, then it creates the last file in the list.    3. Otherwise, ${HOME}/.kube/config is used and no merging takes place.",
+      "postfix": "Config",
+      "definiteArgument": "config",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings"
+      }
+    },
+    {
+      "help": "Execute a command in a container.",
+      "postfix": "Exec",
+      "definiteArgument": "exec",
+      "settingsClass": {
+        "baseClass": "KubernetesExecBaseSettings",
+        "properties": [
+          {
+            "name": "PodName",
+            "type": "string",
+            "format": "{value}",
+            "help": "The name of the pod."
+          },
+          {
+            "name": "Container",
+            "type": "string",
+            "format": "--container={value}",
+            "help": "Container name. If omitted, the first container in the pod will be chosen."
+          },
+          {
+            "name": "Pod",
+            "type": "string",
+            "format": "--pod={value}",
+            "help": "Pod name."
+          },
+          {
+            "name": "Stdin",
+            "type": "bool",
+            "format": "--stdin={value}",
+            "help": "Pass stdin to the container."
+          },
+          {
+            "name": "Tty",
+            "type": "bool",
+            "format": "--tty={value}",
+            "help": "Stdin is a TTY."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Perform a rolling update of the given ReplicationController. Replaces the specified replication controller with a new replication controller by updating one pod at a time to use the new PodTemplate. The new-controller.json must specify the same namespace as the existing replication controller and overwrite at least one (common) label in its replicaSelector. ! http://kubernetes.io/images/docs/kubectl_rollingupdate.svg.",
+      "postfix": "RollingUpdate",
+      "definiteArgument": "rolling-update",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "AllowMissingTemplateKeys",
+            "type": "bool",
+            "format": "--allow-missing-template-keys={value}",
+            "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
+          },
+          {
+            "name": "Container",
+            "type": "string",
+            "format": "--container={value}",
+            "help": "Container name which will have its image upgraded. Only relevant when --image is specified, ignored otherwise. Required when using --image on a multi-container pod."
+          },
+          {
+            "name": "DeploymentLabelKey",
+            "type": "string",
+            "format": "--deployment-label-key={value}",
+            "help": "The key to use to differentiate between two different controllers, default 'deployment'.  Only relevant when --image is specified, ignored otherwise."
+          },
+          {
+            "name": "DryRun",
+            "type": "bool",
+            "format": "--dry-run={value}",
+            "help": "If true, only print the object that would be sent, without sending it."
+          },
+          {
+            "name": "Filename",
+            "type": "List<string>",
+            "format": "--filename={value}",
+            "separator": ",",
+            "help": "Filename or URL to file to use to create the new replication controller."
+          },
+          {
+            "name": "Image",
+            "type": "string",
+            "format": "--image={value}",
+            "help": "Image to use for upgrading the replication controller. Must be distinct from the existing image (either new image or new image tag).  Can not be used with --filename/-f."
+          },
+          {
+            "name": "ImagePullPolicy",
+            "type": "string",
+            "format": "--image-pull-policy={value}",
+            "help": "Explicit policy for when to pull container images. Required when --image is same as existing image, ignored otherwise."
+          },
+          {
+            "name": "Output",
+            "type": "KubernetesRollingUpdateOutput",
+            "format": "--output={value}",
+            "help": "Output format. One of: json|yaml|name|go-template-file|templatefile|template|go-template|jsonpath|jsonpath-file."
+          },
+          {
+            "name": "PollInterval",
+            "type": "TimeSpan?",
+            "format": "--poll-interval={value}",
+            "help": "Time delay between polling for replication controller status after the update. Valid time units are \"ns\", \"us\" (or \"µs\"), \"ms\", \"s\", \"m\", \"h\"."
+          },
+          {
+            "name": "Rollback",
+            "type": "bool",
+            "format": "--rollback={value}",
+            "help": "If true, this is a request to abort an existing rollout that is partially rolled out. It effectively reverses current and next and runs a rollout."
+          },
+          {
+            "name": "Template",
+            "type": "string",
+            "format": "--template={value}",
+            "help": "Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview]."
+          },
+          {
+            "name": "Timeout",
+            "type": "TimeSpan?",
+            "format": "--timeout={value}",
+            "help": "Max time to wait for a replication controller to update before giving up. Valid time units are \"ns\", \"us\" (or \"µs\"), \"ms\", \"s\", \"m\", \"h\"."
+          },
+          {
+            "name": "UpdatePeriod",
+            "type": "TimeSpan?",
+            "format": "--update-period={value}",
+            "help": "Time to wait between updating pods. Valid time units are \"ns\", \"us\" (or \"µs\"), \"ms\", \"s\", \"m\", \"h\"."
+          },
+          {
+            "name": "Validate",
+            "type": "bool",
+            "format": "--validate={value}",
+            "help": "If true, use a schema to validate the input before sending it."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Update the labels on a resource.   * A label key and value must begin with a letter or number, and may contain letters, numbers, hyphens, dots, and underscores, up to  63 characters each.    * Optionally, the key can begin with a DNS subdomain prefix and a single '/', like example.com/my-app    * If --overwrite is true, then existing labels can be overwritten, otherwise attempting to overwrite a label will result in an error.    * If --resource-version is specified, then updates will use this resource version, otherwise the existing resource-version will be used.",
+      "postfix": "Label",
+      "definiteArgument": "label",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "TypeName",
+            "type": "List<string>",
+            "format": "{value}",
+            "separator": " ",
+            "help": "The type or/and name of the ressource."
+          },
+          {
+            "name": "Labels",
+            "type": "Dictionary<string,string>",
+            "format": "{value}",
+            "itemFormat": "{key}={value}",
+            "separator": " ",
+            "help": "The Labels to set."
+          },
+          {
+            "name": "All",
+            "type": "bool",
+            "format": "--all={value}",
+            "help": "Select all resources, including uninitialized ones, in the namespace of the specified resource types."
+          },
+          {
+            "name": "AllowMissingTemplateKeys",
+            "type": "bool",
+            "format": "--allow-missing-template-keys={value}",
+            "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
+          },
+          {
+            "name": "DryRun",
+            "type": "bool",
+            "format": "--dry-run={value}",
+            "help": "If true, only print the object that would be sent, without sending it."
+          },
+          {
+            "name": "FieldSelector",
+            "type": "string",
+            "format": "--field-selector={value}",
+            "help": "Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type."
+          },
+          {
+            "name": "Filename",
+            "type": "List<string>",
+            "format": "--filename={value}",
+            "separator": ",",
+            "help": "Filename, directory, or URL to files identifying the resource to update the labels."
+          },
+          {
+            "name": "IncludeUninitialized",
+            "type": "bool",
+            "format": "--include-uninitialized={value}",
+            "help": "If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., \"--all\". Objects with empty metadata.initializers are regarded as initialized."
+          },
+          {
+            "name": "List",
+            "type": "bool",
+            "format": "--list={value}",
+            "help": "If true, display the labels for a given resource."
+          },
+          {
+            "name": "Local",
+            "type": "bool",
+            "format": "--local={value}",
+            "help": "If true, label will NOT contact api-server but run locally."
+          },
+          {
+            "name": "Output",
+            "type": "KubernetesLabelOutput",
+            "format": "--output={value}",
+            "help": "Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file."
+          },
+          {
+            "name": "Overwrite",
+            "type": "bool",
+            "format": "--overwrite={value}",
+            "help": "If true, allow labels to be overwritten, otherwise reject label updates that overwrite existing labels."
+          },
+          {
+            "name": "Record",
+            "type": "bool",
+            "format": "--record={value}",
+            "help": "Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists."
+          },
+          {
+            "name": "Recursive",
+            "type": "bool",
+            "format": "--recursive={value}",
+            "help": "Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory."
+          },
+          {
+            "name": "ResourceVersion",
+            "type": "string",
+            "format": "--resource-version={value}",
+            "help": "If non-empty, the labels update will only succeed if this is the current resource-version for the object. Only valid when specifying a single resource."
+          },
+          {
+            "name": "Selector",
+            "type": "string",
+            "format": "--selector={value}",
+            "help": "Selector (label query) to filter on, not including uninitialized ones, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)."
+          },
+          {
+            "name": "Template",
+            "type": "string",
+            "format": "--template={value}",
+            "help": "Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview]."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Update the annotations on one or more resources All Kubernetes objects support the ability to store additional data with the object as annotations. Annotations are key/value pairs that can be larger than labels and include arbitrary string values such as structured JSON. Tools and system extensions may use annotations to store their own data. Attempting to set an annotation that already exists will fail unless --overwrite is set. If --resource-version is specified and does not match the current resource version on the server the command will fail.Use \"kubectl api-resources\" for a complete list of supported resources.",
+      "postfix": "Annotate",
+      "definiteArgument": "annotate",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "TypeName",
+            "type": "List<string>",
+            "format": "{value}",
+            "separator": " ",
+            "help": "The type or/and name of the ressource."
+          },
+          {
+            "name": "Annotations",
+            "type": "Dictionary<string,string>",
+            "format": "{value}",
+            "itemFormat": "{key}={value}",
+            "separator": " ",
+            "help": "The annotations to set on the ressource"
+          },
+          {
+            "name": "All",
+            "type": "bool",
+            "format": "--all={value}",
+            "help": "Select all resources, including uninitialized ones, in the namespace of the specified resource types."
+          },
+          {
+            "name": "AllowMissingTemplateKeys",
+            "type": "bool",
+            "format": "--allow-missing-template-keys={value}",
+            "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
+          },
+          {
+            "name": "DryRun",
+            "type": "bool",
+            "format": "--dry-run={value}",
+            "help": "If true, only print the object that would be sent, without sending it."
+          },
+          {
+            "name": "FieldSelector",
+            "type": "string",
+            "format": "--field-selector={value}",
+            "help": "Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type."
+          },
+          {
+            "name": "Filename",
+            "type": "List<string>",
+            "format": "--filename={value}",
+            "separator": ",",
+            "help": "Filename, directory, or URL to files identifying the resource to update the annotation."
+          },
+          {
+            "name": "IncludeUninitialized",
+            "type": "bool",
+            "format": "--include-uninitialized={value}",
+            "help": "If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., \"--all\". Objects with empty metadata.initializers are regarded as initialized."
+          },
+          {
+            "name": "Local",
+            "type": "bool",
+            "format": "--local={value}",
+            "help": "If true, annotation will NOT contact api-server but run locally."
+          },
+          {
+            "name": "Output",
+            "type": "KubernetesAnnotateOutput",
+            "format": "--output={value}",
+            "help": "Output format. One of: json|yaml|name|templatefile|template|go-template|go-template-file|jsonpath|jsonpath-file."
+          },
+          {
+            "name": "Overwrite",
+            "type": "bool",
+            "format": "--overwrite={value}",
+            "help": "If true, allow annotations to be overwritten, otherwise reject annotation updates that overwrite existing annotations."
+          },
+          {
+            "name": "Record",
+            "type": "bool",
+            "format": "--record={value}",
+            "help": "Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists."
+          },
+          {
+            "name": "Recursive",
+            "type": "bool",
+            "format": "--recursive={value}",
+            "help": "Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory."
+          },
+          {
+            "name": "ResourceVersion",
+            "type": "string",
+            "format": "--resource-version={value}",
+            "help": "If non-empty, the annotation update will only succeed if this is the current resource-version for the object. Only valid when specifying a single resource."
+          },
+          {
+            "name": "Selector",
+            "type": "string",
+            "format": "--selector={value}",
+            "help": "Selector (label query) to filter on, not including uninitialized ones, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)."
+          },
+          {
+            "name": "Template",
+            "type": "string",
+            "format": "--template={value}",
+            "help": "Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview]."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Delete resources by filenames, stdin, resources and names, or by resources and label selector. JSON and YAML formats are accepted. Only one type of the arguments may be specified: filenames, resources and names, or resources and label selector. Some resources, such as pods, support graceful deletion. These resources define a default period before they are forcibly terminated (the grace period) but you may override that value with the --grace-period flag, or pass --now to set a grace-period of 1. Because these resources often represent entities in the cluster, deletion may not be acknowledged immediately. If the node hosting a pod is down or cannot reach the API server, termination may take significantly longer than the grace period. To force delete a resource, you must pass a grace period of 0 and specify the --force flag. IMPORTANT: Force deleting pods does not wait for confirmation that the pod's processes have been terminated, which can leave those processes running until the node detects the deletion and completes graceful deletion. If your processes use shared storage or talk to a remote API and depend on the name of the pod to identify themselves, force deleting those pods may result in multiple processes running on different machines using the same identification which may lead to data corruption or inconsistency. Only force delete pods when you are sure the pod is terminated, or if your application can tolerate multiple copies of the same pod running at once. Also, if you force delete pods the scheduler may place new pods on those nodes before the node has released those resources and causing those pods to be evicted immediately. Note that the delete command does NOT do resource version checks, so if someone submits an update to a resource right when you submit a delete, their update will be lost along with the rest of the resource.",
+      "postfix": "Delete",
+      "definiteArgument": "delete",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "All",
+            "type": "bool",
+            "format": "--all={value}",
+            "help": "Delete all resources, including uninitialized ones, in the namespace of the specified resource types."
+          },
+          {
+            "name": "Cascade",
+            "type": "bool",
+            "format": "--cascade={value}",
+            "help": "If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true."
+          },
+          {
+            "name": "FieldSelector",
+            "type": "string",
+            "format": "--field-selector={value}",
+            "help": "Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type."
+          },
+          {
+            "name": "Filename",
+            "type": "List<string>",
+            "format": "--filename={value}",
+            "separator": ",",
+            "help": "containing the resource to delete."
+          },
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "--force={value}",
+            "help": "Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation."
+          },
+          {
+            "name": "GracePeriod",
+            "type": "int",
+            "format": "--grace-period={value}",
+            "help": "Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion)."
+          },
+          {
+            "name": "IgnoreNotFound",
+            "type": "bool",
+            "format": "--ignore-not-found={value}",
+            "help": "Treat \"resource not found\" as a successful delete. Defaults to \"true\" when --all is specified."
+          },
+          {
+            "name": "IncludeUninitialized",
+            "type": "bool",
+            "format": "--include-uninitialized={value}",
+            "help": "If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., \"--all\". Objects with empty metadata.initializers are regarded as initialized."
+          },
+          {
+            "name": "Now",
+            "type": "bool",
+            "format": "--now={value}",
+            "help": "If true, resources are signaled for immediate shutdown (same as --grace-period=1)."
+          },
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "--output={value}",
+            "help": "Output mode. Use \"-o name\" for shorter output (resource/name)."
+          },
+          {
+            "name": "Recursive",
+            "type": "bool",
+            "format": "--recursive={value}",
+            "help": "Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory."
+          },
+          {
+            "name": "Selector",
+            "type": "string",
+            "format": "--selector={value}",
+            "help": "Selector (label query) to filter on, not including uninitialized ones."
+          },
+          {
+            "name": "Timeout",
+            "type": "TimeSpan?",
+            "format": "--timeout={value}",
+            "help": "The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object."
+          },
+          {
+            "name": "Wait",
+            "type": "bool",
+            "format": "--wait={value}",
+            "help": "If true, wait for resources to be gone before returning. This waits for finalizers."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Expose a resource as a new Kubernetes service. Looks up a deployment, service, replica set, replication controller or pod by name and uses the selector for that resource as the selector for a new service on the specified port. A deployment or replica set will be exposed as a service only if its selector is convertible to a selector that service supports, i.e. when the selector contains only the matchLabels component. Note that if no port is specified via --port and the exposed resource has multiple ports, all will be re-used by the new service. Also if no labels are specified, the new service will re-use the labels from the resource it exposes. Possible resources include (case insensitive): pod (po), service (svc), replicationcontroller (rc), deployment (deploy), replicaset (rs).",
+      "postfix": "Expose",
+      "definiteArgument": "expose",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "AllowMissingTemplateKeys",
+            "type": "bool",
+            "format": "--allow-missing-template-keys={value}",
+            "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
+          },
+          {
+            "name": "ClusterIp",
+            "type": "string",
+            "format": "--cluster-ip={value}",
+            "help": "ClusterIP to be assigned to the service. Leave empty to auto-allocate, or set to 'None' to create a headless service."
+          },
+          {
+            "name": "ContainerPort",
+            "type": "string",
+            "format": "--container-port={value}",
+            "help": "Synonym for --target-port."
+          },
+          {
+            "name": "DryRun",
+            "type": "bool",
+            "format": "--dry-run={value}",
+            "help": "If true, only print the object that would be sent, without sending it."
+          },
+          {
+            "name": "ExternalIp",
+            "type": "string",
+            "format": "--external-ip={value}",
+            "help": "Additional external IP address (not managed by Kubernetes) to accept for the service. If this IP is routed to a node, the service can be accessed by this IP in addition to its generated service IP."
+          },
+          {
+            "name": "Filename",
+            "type": "List<string>",
+            "format": "--filename={value}",
+            "separator": ",",
+            "help": "Filename, directory, or URL to files identifying the resource to expose a service."
+          },
+          {
+            "name": "Generator",
+            "type": "string",
+            "format": "--generator={value}",
+            "help": "The name of the API generator to use. There are 2 generators: 'service/v1' and 'service/v2'. The only difference between them is that service port in v1 is named 'default', while it is left unnamed in v2. Default is 'service/v2'."
+          },
+          {
+            "name": "Labels",
+            "type": "string",
+            "format": "--labels={value}",
+            "help": "Labels to apply to the service created by this call."
+          },
+          {
+            "name": "LoadBalancerIp",
+            "type": "string",
+            "format": "--load-balancer-ip={value}",
+            "help": "IP to assign to the LoadBalancer. If empty, an ephemeral IP will be created and used (cloud-provider specific)."
+          },
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "--name={value}",
+            "help": "The name for the newly created object."
+          },
+          {
+            "name": "Output",
+            "type": "KubernetesExposeOutput",
+            "format": "--output={value}",
+            "help": "Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file."
+          },
+          {
+            "name": "Overrides",
+            "type": "string",
+            "format": "--overrides={value}",
+            "help": "An inline JSON override for the generated object. If this is non-empty, it is used to override the generated object. Requires that the object supply a valid apiVersion field."
+          },
+          {
+            "name": "Port",
+            "type": "string",
+            "format": "--port={value}",
+            "help": "The port that the service should serve on. Copied from the resource being exposed, if unspecified."
+          },
+          {
+            "name": "Protocol",
+            "type": "string",
+            "format": "--protocol={value}",
+            "help": "The network protocol for the service to be created. Default is 'TCP'."
+          },
+          {
+            "name": "Record",
+            "type": "bool",
+            "format": "--record={value}",
+            "help": "Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists."
+          },
+          {
+            "name": "Recursive",
+            "type": "bool",
+            "format": "--recursive={value}",
+            "help": "Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory."
+          },
+          {
+            "name": "SaveConfig",
+            "type": "bool",
+            "format": "--save-config={value}",
+            "help": "If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future."
+          },
+          {
+            "name": "Selector",
+            "type": "string",
+            "format": "--selector={value}",
+            "help": "A label selector to use for this service. Only equality-based selector requirements are supported. If empty (the default) infer the selector from the replication controller or replica set.)."
+          },
+          {
+            "name": "SessionAffinity",
+            "type": "string",
+            "format": "--session-affinity={value}",
+            "help": "If non-empty, set the session affinity for the service to this; legal values: 'None', 'ClientIP'."
+          },
+          {
+            "name": "TargetPort",
+            "type": "string",
+            "format": "--target-port={value}",
+            "help": "Name or number for the port on the container that the service should direct traffic to. Optional."
+          },
+          {
+            "name": "Template",
+            "type": "string",
+            "format": "--template={value}",
+            "help": "Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview]."
+          },
+          {
+            "name": "Type",
+            "type": "string",
+            "format": "--type={value}",
+            "help": "Type for this service: ClusterIP, NodePort, LoadBalancer, or ExternalName. Default is 'ClusterIP'."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Print the list of flags inherited by all commands.",
+      "postfix": "Options",
+      "definiteArgument": "options",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings"
+      }
+    },
+    {
+      "help": "Attach to a process that is already running inside an existing container.",
+      "postfix": "Attach",
+      "definiteArgument": "attach",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "Pod",
+            "type": "List<string>",
+            "format": "{value}",
+            "separator": " ",
+            "help": "The type or/and name of the pod."
+          },
+          {
+            "name": "Container",
+            "type": "string",
+            "format": "--container={value}",
+            "help": "Container name. If omitted, the first container in the pod will be chosen."
+          },
+          {
+            "name": "PodRunningTimeout",
+            "type": "TimeSpan?",
+            "format": "--pod-running-timeout={value}",
+            "help": "The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running."
+          },
+          {
+            "name": "Stdin",
+            "type": "bool",
+            "format": "--stdin={value}",
+            "help": "Pass stdin to the container."
+          },
+          {
+            "name": "Tty",
+            "type": "bool",
+            "format": "--tty={value}",
+            "help": "Stdin is a TTY."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Creates a proxy server or application-level gateway between localhost and the Kubernetes API Server. It also allows serving static content over specified HTTP path. All incoming data enters through one port and gets forwarded to the remote kubernetes API Server port, except for the path matching the static content path.",
+      "postfix": "Proxy",
+      "definiteArgument": "proxy",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "AcceptHosts",
+            "type": "string",
+            "format": "--accept-hosts={value}",
+            "help": "Regular expression for hosts that the proxy should accept."
+          },
+          {
+            "name": "AcceptPaths",
+            "type": "string",
+            "format": "--accept-paths={value}",
+            "help": "Regular expression for paths that the proxy should accept."
+          },
+          {
+            "name": "Address",
+            "type": "string",
+            "format": "--address={value}",
+            "help": "The IP address on which to serve on."
+          },
+          {
+            "name": "ApiPrefix",
+            "type": "string",
+            "format": "--api-prefix={value}",
+            "help": "Prefix to serve the proxied API under."
+          },
+          {
+            "name": "DisableFilter",
+            "type": "bool",
+            "format": "--disable-filter={value}",
+            "help": "If true, disable request filtering in the proxy. This is dangerous, and can leave you vulnerable to XSRF attacks, when used with an accessible port."
+          },
+          {
+            "name": "Port",
+            "type": "int",
+            "format": "--port={value}",
+            "help": "The port on which to run the proxy. Set to 0 to pick a random port."
+          },
+          {
+            "name": "RejectMethods",
+            "type": "string",
+            "format": "--reject-methods={value}",
+            "help": "Regular expression for HTTP methods that the proxy should reject (example --reject-methods='POST,PUT,PATCH'). ."
+          },
+          {
+            "name": "RejectPaths",
+            "type": "string",
+            "format": "--reject-paths={value}",
+            "help": "Regular expression for paths that the proxy should reject. Paths specified here will be rejected even accepted by --accept-paths."
+          },
+          {
+            "name": "UnixSocket",
+            "type": "string",
+            "format": "--unix-socket={value}",
+            "help": "Unix socket on which to run the proxy."
+          },
+          {
+            "name": "Www",
+            "type": "string",
+            "format": "--www={value}",
+            "help": "Also serve static files from the given directory under the specified prefix."
+          },
+          {
+            "name": "WwwPrefix",
+            "type": "string",
+            "format": "--www-prefix={value}",
+            "help": "Prefix to serve static files under, if static file directory is specified."
+          }
+        ]
+      }
+    },
+    {
+      "help": "These commands correspond to alpha features that are not enabled in Kubernetes clusters by default.",
+      "postfix": "Alpha",
+      "definiteArgument": "alpha",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings"
+      }
+    },
+    {
+      "help": "kubectl controls the Kubernetes cluster manager. Find more information at: https://kubernetes.io/docs/reference/kubectl/overview/.",
+      "definiteArgument": "kubectl",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings"
+      }
+    },
+    {
+      "help": "Output shell completion code for the specified shell (bash or zsh). The shell code must be evaluated to provide interactive completion of kubectl commands.  This can be done by sourcing it from the .bash _profile. Detailed instructions on how to do this are available here: https://kubernetes.io/docs/tasks/tools/install-kubectl/#enabling-shell-autocompletion Note for zsh users: [1] zsh completions are only supported in versions of zsh &gt;= 5.2.",
+      "postfix": "Completion",
+      "definiteArgument": "completion",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings"
+      }
+    },
+    {
+      "help": "Update field(s) of a resource using strategic merge patch, a JSON merge patch, or a JSON patch. JSON and YAML formats are accepted. Please refer to the models in https://htmlpreview.github.io/?https://github.com/kubernetes/kubernetes/blob/HEAD/docs/api-reference/v1/definitions.html to find if a field is mutable.",
+      "postfix": "Patch",
+      "definiteArgument": "patch",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "TypeName",
+            "type": "List<string>",
+            "format": "{value}",
+            "separator": " ",
+            "help": "The type or/and name of the ressource."
+          },
+          {
+            "name": "AllowMissingTemplateKeys",
+            "type": "bool",
+            "format": "--allow-missing-template-keys={value}",
+            "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
+          },
+          {
+            "name": "DryRun",
+            "type": "bool",
+            "format": "--dry-run={value}",
+            "help": "If true, only print the object that would be sent, without sending it."
+          },
+          {
+            "name": "Filename",
+            "type": "List<string>",
+            "format": "--filename={value}",
+            "separator": ",",
+            "help": "Filename, directory, or URL to files identifying the resource to update."
+          },
+          {
+            "name": "Local",
+            "type": "bool",
+            "format": "--local={value}",
+            "help": "If true, patch will operate on the content of the file, not the server-side resource."
+          },
+          {
+            "name": "Output",
+            "type": "KubernetesPatchOutput",
+            "format": "--output={value}",
+            "help": "Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file."
+          },
+          {
+            "name": "Patch",
+            "type": "string",
+            "format": "--patch={value}",
+            "help": "The patch to be applied to the resource JSON file."
+          },
+          {
+            "name": "Record",
+            "type": "bool",
+            "format": "--record={value}",
+            "help": "Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists."
+          },
+          {
+            "name": "Recursive",
+            "type": "bool",
+            "format": "--recursive={value}",
+            "help": "Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory."
+          },
+          {
+            "name": "Template",
+            "type": "string",
+            "format": "--template={value}",
+            "help": "Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview]."
+          },
+          {
+            "name": "Type",
+            "type": "KubernetesPatchType",
+            "format": "--type={value}",
+            "help": "The type of patch being provided; one of [json merge strategic]."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Replace a resource by filename or stdin. JSON and YAML formats are accepted. If replacing an existing resource, the complete resource spec must be provided. This can be obtained by   $ kubectl get TYPE NAME -o yaml  Please refer to the models in https://htmlpreview.github.io/?https://github.com/kubernetes/kubernetes/blob/HEAD/docs/api-reference/v1/definitions.html to find if a field is mutable.",
+      "postfix": "Replace",
+      "definiteArgument": "replace",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "AllowMissingTemplateKeys",
+            "type": "bool",
+            "format": "--allow-missing-template-keys={value}",
+            "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
+          },
+          {
+            "name": "Cascade",
+            "type": "bool",
+            "format": "--cascade={value}",
+            "help": "If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true."
+          },
+          {
+            "name": "Filename",
+            "type": "List<string>",
+            "format": "--filename={value}",
+            "separator": ",",
+            "help": "to use to replace the resource."
+          },
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "--force={value}",
+            "help": "Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation."
+          },
+          {
+            "name": "GracePeriod",
+            "type": "int",
+            "format": "--grace-period={value}",
+            "help": "Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion)."
+          },
+          {
+            "name": "Output",
+            "type": "KubernetesReplaceOutput",
+            "format": "--output={value}",
+            "help": "Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file."
+          },
+          {
+            "name": "Recursive",
+            "type": "bool",
+            "format": "--recursive={value}",
+            "help": "Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory."
+          },
+          {
+            "name": "SaveConfig",
+            "type": "bool",
+            "format": "--save-config={value}",
+            "help": "If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future."
+          },
+          {
+            "name": "Template",
+            "type": "string",
+            "format": "--template={value}",
+            "help": "Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview]."
+          },
+          {
+            "name": "Timeout",
+            "type": "TimeSpan?",
+            "format": "--timeout={value}",
+            "help": "The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object."
+          },
+          {
+            "name": "Validate",
+            "type": "bool",
+            "format": "--validate={value}",
+            "help": "If true, use a schema to validate the input before sending it."
+          },
+          {
+            "name": "Wait",
+            "type": "bool",
+            "format": "--wait={value}",
+            "help": "If true, wait for resources to be gone before returning. This waits for finalizers."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Update the taints on one or more nodes.   * A taint consists of a key, value, and effect. As an argument here, it is expressed as key=value:effect.    * The key must begin with a letter or number, and may contain letters, numbers, hyphens, dots, and underscores, up to  253 characters.    * Optionally, the key can begin with a DNS subdomain prefix and a single '/', like example.com/my-app    * The value must begin with a letter or number, and may contain letters, numbers, hyphens, dots, and underscores, up to  63 characters.    * The effect must be NoSchedule, PreferNoSchedule or NoExecute.    * Currently taint can only apply to node.",
+      "postfix": "Taint",
+      "definiteArgument": "taint",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "TypeName",
+            "type": "List<string>",
+            "format": "{value}",
+            "separator": " ",
+            "help": "The type or/and name of the ressource."
+          },
+          {
+            "name": "TaintEffects",
+            "type": "Dictionary<string,string>",
+            "format": "{value}",
+            "itemFormat": "{key}={value}",
+            "separator": " ",
+            "help": "The taint effects to set."
+          },
+          {
+            "name": "All",
+            "type": "bool",
+            "format": "--all={value}",
+            "help": "Select all nodes in the cluster."
+          },
+          {
+            "name": "AllowMissingTemplateKeys",
+            "type": "bool",
+            "format": "--allow-missing-template-keys={value}",
+            "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
+          },
+          {
+            "name": "Output",
+            "type": "KubernetesTaintOutput",
+            "format": "--output={value}",
+            "help": "Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file."
+          },
+          {
+            "name": "Overwrite",
+            "type": "bool",
+            "format": "--overwrite={value}",
+            "help": "If true, allow taints to be overwritten, otherwise reject taint updates that overwrite existing taints."
+          },
+          {
+            "name": "Selector",
+            "type": "string",
+            "format": "--selector={value}",
+            "help": "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)."
+          },
+          {
+            "name": "Template",
+            "type": "string",
+            "format": "--template={value}",
+            "help": "Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview]."
+          },
+          {
+            "name": "Validate",
+            "type": "bool",
+            "format": "--validate={value}",
+            "help": "If true, use a schema to validate the input before sending it."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Show details of a specific resource or group of resources Print a detailed description of the selected resources, including related resources such as events or controllers. You may select a single object by name, all objects of that type, provide a name prefix, or label selector. For example:   $ kubectl describe TYPE NAME_PREFIX  will first check for an exact match on TYPE and NAME PREFIX. If no such resource exists, it will output details for every resource that has a name prefixed with NAME PREFIX.Use \"kubectl api-resources\" for a complete list of supported resources.",
+      "postfix": "Describe",
+      "definiteArgument": "describe",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "TypeName",
+            "type": "List<string>",
+            "format": "{value}",
+            "separator": " ",
+            "help": "The type or/and name of the ressource."
+          },
+          {
+            "name": "AllNamespaces",
+            "type": "bool",
+            "format": "--all-namespaces={value}",
+            "help": "If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace."
+          },
+          {
+            "name": "Filename",
+            "type": "List<string>",
+            "format": "--filename={value}",
+            "separator": ",",
+            "help": "Filename, directory, or URL to files containing the resource to describe."
+          },
+          {
+            "name": "IncludeUninitialized",
+            "type": "bool",
+            "format": "--include-uninitialized={value}",
+            "help": "If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., \"--all\". Objects with empty metadata.initializers are regarded as initialized."
+          },
+          {
+            "name": "Recursive",
+            "type": "bool",
+            "format": "--recursive={value}",
+            "help": "Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory."
+          },
+          {
+            "name": "Selector",
+            "type": "string",
+            "format": "--selector={value}",
+            "help": "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)."
+          },
+          {
+            "name": "ShowEvents",
+            "type": "bool",
+            "format": "--show-events={value}",
+            "help": "If true, display events related to the described object."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Configure application resources These commands help you make changes to existing application resources.",
+      "postfix": "Set",
+      "definiteArgument": "set",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "Subcommand",
+            "type": "List<string>",
+            "format": "{value}",
+            "separator": " ",
+            "help": "The subcommand to run."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Inspect authorization.",
+      "postfix": "Auth",
+      "definiteArgument": "auth",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "Subcommand",
+            "type": "string",
+            "format": "{value}",
+            "help": "The subcommand to run."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Modify certificate resources.",
+      "postfix": "Certificate",
+      "definiteArgument": "certificate",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "Subcommand",
+            "type": "List<string>",
+            "format": "{value}",
+            "separator": " ",
+            "help": "The subcommand to run."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Manage the rollout of a resource.  Valid resource types include:   * deployments    * daemonsets    * statefulsets.",
+      "postfix": "Rollout",
+      "definiteArgument": "rollout",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "Subcommand",
+            "type": "List<string>",
+            "format": "{value}",
+            "separator": " ",
+            "help": "The subcommand to run."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Apply a configuration to a resource by filename or stdin. The resource name must be specified. This resource will be created if it doesn't exist yet. To use 'apply', always create the resource initially with either 'apply' or 'create --save-config'. JSON and YAML formats are accepted. Alpha Disclaimer: the --prune functionality is not yet complete. Do not use unless you are aware of what the current state is. See https://issues.k8s.io/34274.",
+      "postfix": "Apply",
+      "definiteArgument": "apply",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "All",
+            "type": "bool",
+            "format": "--all={value}",
+            "help": "Select all resources in the namespace of the specified resource types."
+          },
+          {
+            "name": "AllowMissingTemplateKeys",
+            "type": "bool",
+            "format": "--allow-missing-template-keys={value}",
+            "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
+          },
+          {
+            "name": "Cascade",
+            "type": "bool",
+            "format": "--cascade={value}",
+            "help": "If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true."
+          },
+          {
+            "name": "DryRun",
+            "type": "bool",
+            "format": "--dry-run={value}",
+            "help": "If true, only print the object that would be sent, without sending it."
+          },
+          {
+            "name": "Filename",
+            "type": "List<string>",
+            "format": "--filename={value}",
+            "separator": ",",
+            "help": "that contains the configuration to apply."
+          },
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "--force={value}",
+            "help": "Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation."
+          },
+          {
+            "name": "GracePeriod",
+            "type": "int",
+            "format": "--grace-period={value}",
+            "help": "Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion)."
+          },
+          {
+            "name": "IncludeUninitialized",
+            "type": "bool",
+            "format": "--include-uninitialized={value}",
+            "help": "If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., \"--all\". Objects with empty metadata.initializers are regarded as initialized."
+          },
+          {
+            "name": "OpenapiPatch",
+            "type": "bool",
+            "format": "--openapi-patch={value}",
+            "help": "If true, use openapi to calculate diff when the openapi presents and the resource can be found in the openapi spec. Otherwise, fall back to use baked-in types."
+          },
+          {
+            "name": "Output",
+            "type": "KubernetesApplyOutput",
+            "format": "--output={value}",
+            "help": "Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file."
+          },
+          {
+            "name": "Overwrite",
+            "type": "bool",
+            "format": "--overwrite={value}",
+            "help": "Automatically resolve conflicts between the modified and live configuration by using values from the modified configuration."
+          },
+          {
+            "name": "Prune",
+            "type": "bool",
+            "format": "--prune={value}",
+            "help": "Automatically delete resource objects, including the uninitialized ones, that do not appear in the configs and are created by either apply or create --save-config. Should be used with either -l or --all."
+          },
+          {
+            "name": "PruneWhitelist",
+            "type": "List<string>",
+            "format": "--prune-whitelist={value}",
+            "help": "Overwrite the default whitelist with &lt;group/version/kind&gt; for --prune."
+          },
+          {
+            "name": "Record",
+            "type": "bool",
+            "format": "--record={value}",
+            "help": "Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists."
+          },
+          {
+            "name": "Recursive",
+            "type": "bool",
+            "format": "--recursive={value}",
+            "help": "Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory."
+          },
+          {
+            "name": "Selector",
+            "type": "string",
+            "format": "--selector={value}",
+            "help": "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)."
+          },
+          {
+            "name": "Template",
+            "type": "string",
+            "format": "--template={value}",
+            "help": "Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview]."
+          },
+          {
+            "name": "Timeout",
+            "type": "TimeSpan?",
+            "format": "--timeout={value}",
+            "help": "The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object."
+          },
+          {
+            "name": "Validate",
+            "type": "bool",
+            "format": "--validate={value}",
+            "help": "If true, use a schema to validate the input before sending it."
+          },
+          {
+            "name": "Wait",
+            "type": "bool",
+            "format": "--wait={value}",
+            "help": "If true, wait for resources to be gone before returning. This waits for finalizers."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Mark node as unschedulable.",
+      "postfix": "Cordon",
+      "definiteArgument": "cordon",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "Node",
+            "type": "string",
+            "format": "{value}",
+            "help": "The namne of the Node."
+          },
+          {
+            "name": "DryRun",
+            "type": "bool",
+            "format": "--dry-run={value}",
+            "help": "If true, only print the object that would be sent, without sending it."
+          },
+          {
+            "name": "Selector",
+            "type": "string",
+            "format": "--selector={value}",
+            "help": "Selector (label query) to filter on."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Copy files and directories to and from containers.",
+      "postfix": "Cp",
+      "definiteArgument": "cp",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "SrcFileSpec",
+            "type": "string",
+            "format": "{value}",
+            "help": "The file specification of the source. '[namespace/]pod-name:/file/path'. for a remote file '/file/path' for a local file."
+          },
+          {
+            "name": "DestFileSpec",
+            "type": "string",
+            "format": "{value}",
+            "help": "The file specification of the destination. '[namespace/]pod-name:/file/path'. for a remote file '/file/path' for a local file."
+          },
+          {
+            "name": "Container",
+            "type": "string",
+            "format": "--container={value}",
+            "help": "Container name. If omitted, the first container in the pod will be chosen."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Print the supported API versions on the server, in the form of \"group/version\".",
+      "postfix": "ApiVersions",
+      "definiteArgument": "api-versions",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings"
+      }
+    },
+    {
+      "help": "Mark node as schedulable.",
+      "postfix": "Uncordon",
+      "definiteArgument": "uncordon",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "Node",
+            "type": "string",
+            "format": "{value}",
+            "help": "The name of the node."
+          },
+          {
+            "name": "DryRun",
+            "type": "bool",
+            "format": "--dry-run={value}",
+            "help": "If true, only print the object that would be sent, without sending it."
+          },
+          {
+            "name": "Selector",
+            "type": "string",
+            "format": "--selector={value}",
+            "help": "Selector (label query) to filter on."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Creates an autoscaler that automatically chooses and sets the number of pods that run in a kubernetes cluster. Looks up a Deployment, ReplicaSet, or ReplicationController by name and creates an autoscaler that uses the given resource as a reference. An autoscaler can automatically increase or decrease number of pods deployed within the system as needed.",
+      "postfix": "Autoscale",
+      "definiteArgument": "autoscale",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "AllowMissingTemplateKeys",
+            "type": "bool",
+            "format": "--allow-missing-template-keys={value}",
+            "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
+          },
+          {
+            "name": "CpuPercent",
+            "type": "int",
+            "format": "--cpu-percent={value}",
+            "help": "The target average CPU utilization (represented as a percent of requested CPU) over all the pods. If it's not specified or negative, a default autoscaling policy will be used."
+          },
+          {
+            "name": "DryRun",
+            "type": "bool",
+            "format": "--dry-run={value}",
+            "help": "If true, only print the object that would be sent, without sending it."
+          },
+          {
+            "name": "Filename",
+            "type": "List<string>",
+            "format": "--filename={value}",
+            "separator": ",",
+            "help": "Filename, directory, or URL to files identifying the resource to autoscale."
+          },
+          {
+            "name": "Generator",
+            "type": "string",
+            "format": "--generator={value}",
+            "help": "The name of the API generator to use. Currently there is only 1 generator."
+          },
+          {
+            "name": "Max",
+            "type": "int",
+            "format": "--max={value}",
+            "help": "The upper limit for the number of pods that can be set by the autoscaler. Required."
+          },
+          {
+            "name": "Min",
+            "type": "int",
+            "format": "--min={value}",
+            "help": "The lower limit for the number of pods that can be set by the autoscaler. If it's not specified or negative, the server will apply a default value."
+          },
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "--name={value}",
+            "help": "The name for the newly created object. If not specified, the name of the input resource will be used."
+          },
+          {
+            "name": "Output",
+            "type": "KubernetesAutoscaleOutput",
+            "format": "--output={value}",
+            "help": "Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file."
+          },
+          {
+            "name": "Record",
+            "type": "bool",
+            "format": "--record={value}",
+            "help": "Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists."
+          },
+          {
+            "name": "Recursive",
+            "type": "bool",
+            "format": "--recursive={value}",
+            "help": "Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory."
+          },
+          {
+            "name": "SaveConfig",
+            "type": "bool",
+            "format": "--save-config={value}",
+            "help": "If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future."
+          },
+          {
+            "name": "Template",
+            "type": "string",
+            "format": "--template={value}",
+            "help": "Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview]."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Runs a command-line plugin. Plugins are subcommands that are not part of the major command-line distribution and can even be provided by third-parties. Please refer to the documentation and examples for more information about how to install and write your own plugins.",
+      "postfix": "Plugin",
+      "definiteArgument": "plugin",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "{value}",
+            "help": "The name of the plugin."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Display addresses of the master and services with label kubernetes.io/cluster-service=true To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.",
+      "postfix": "ClusterInfo",
+      "definiteArgument": "cluster-info",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings"
+      }
+    },
+    {
+      "postfix": "Wait",
+      "definiteArgument": "wait",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "AllNamespaces",
+            "type": "bool",
+            "format": "--all-namespaces={value}",
+            "help": "If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace."
+          },
+          {
+            "name": "AllowMissingTemplateKeys",
+            "type": "bool",
+            "format": "--allow-missing-template-keys={value}",
+            "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
+          },
+          {
+            "name": "Filename",
+            "type": "List<string>",
+            "format": "--filename={value}",
+            "separator": ",",
+            "help": "identifying the resource."
+          },
+          {
+            "name": "For",
+            "type": "string",
+            "format": "--for={value}",
+            "help": "The condition to wait on: [delete|condition=condition-name]."
+          },
+          {
+            "name": "Output",
+            "type": "KubernetesWaitOutput",
+            "format": "--output={value}",
+            "help": "Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file."
+          },
+          {
+            "name": "Recursive",
+            "type": "bool",
+            "format": "--recursive={value}",
+            "help": "Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory."
+          },
+          {
+            "name": "Selector",
+            "type": "string",
+            "format": "--selector={value}",
+            "help": "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)."
+          },
+          {
+            "name": "Template",
+            "type": "string",
+            "format": "--template={value}",
+            "help": "Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview]."
+          },
+          {
+            "name": "Timeout",
+            "type": "TimeSpan?",
+            "format": "--timeout={value}",
+            "help": "The length of time to wait before giving up.  Zero means check once and don't wait, negative means wait for a week."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Convert config files between different API versions. Both YAML and JSON formats are accepted. The command takes filename, directory, or URL as input, and convert it into format of version specified by --output-version flag. If target version is not specified or not supported, convert to latest version. The default output will be printed to stdout in YAML format. One can use -o option to change to output destination.",
+      "postfix": "Convert",
+      "definiteArgument": "convert",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "AllowMissingTemplateKeys",
+            "type": "bool",
+            "format": "--allow-missing-template-keys={value}",
+            "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
+          },
+          {
+            "name": "Filename",
+            "type": "List<string>",
+            "format": "--filename={value}",
+            "separator": ",",
+            "help": "Filename, directory, or URL to files to need to get converted."
+          },
+          {
+            "name": "Local",
+            "type": "bool",
+            "format": "--local={value}",
+            "help": "If true, convert will NOT try to contact api-server but run locally."
+          },
+          {
+            "name": "Output",
+            "type": "KubernetesConvertOutput",
+            "format": "--output={value}",
+            "help": "Output format. One of: json|yaml|name|go-template|go-template-file|templatefile|template|jsonpath|jsonpath-file."
+          },
+          {
+            "name": "OutputVersion",
+            "type": "string",
+            "format": "--output-version={value}",
+            "help": "Output the formatted object with the given group version (for ex: 'extensions/v1beta1').)."
+          },
+          {
+            "name": "Recursive",
+            "type": "bool",
+            "format": "--recursive={value}",
+            "help": "Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory."
+          },
+          {
+            "name": "Template",
+            "type": "string",
+            "format": "--template={value}",
+            "help": "Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview]."
+          },
+          {
+            "name": "Validate",
+            "type": "bool",
+            "format": "--validate={value}",
+            "help": "If true, use a schema to validate the input before sending it."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Create a resource from a file or from stdin. JSON and YAML formats are accepted.",
+      "postfix": "Create",
+      "definiteArgument": "create",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "AllowMissingTemplateKeys",
+            "type": "bool",
+            "format": "--allow-missing-template-keys={value}",
+            "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
+          },
+          {
+            "name": "DryRun",
+            "type": "bool",
+            "format": "--dry-run={value}",
+            "help": "If true, only print the object that would be sent, without sending it."
+          },
+          {
+            "name": "Edit",
+            "type": "bool",
+            "format": "--edit={value}",
+            "help": "Edit the API resource before creating."
+          },
+          {
+            "name": "Filename",
+            "type": "List<string>",
+            "format": "--filename={value}",
+            "separator": ",",
+            "help": "Filename, directory, or URL to files to use to create the resource."
+          },
+          {
+            "name": "Output",
+            "type": "KubernetesCreateOutput",
+            "format": "--output={value}",
+            "help": "Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file."
+          },
+          {
+            "name": "Raw",
+            "type": "string",
+            "format": "--raw={value}",
+            "help": "Raw URI to POST to the server.  Uses the transport specified by the kubeconfig file."
+          },
+          {
+            "name": "Record",
+            "type": "bool",
+            "format": "--record={value}",
+            "help": "Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists."
+          },
+          {
+            "name": "Recursive",
+            "type": "bool",
+            "format": "--recursive={value}",
+            "help": "Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory."
+          },
+          {
+            "name": "SaveConfig",
+            "type": "bool",
+            "format": "--save-config={value}",
+            "help": "If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future."
+          },
+          {
+            "name": "Selector",
+            "type": "string",
+            "format": "--selector={value}",
+            "help": "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)."
+          },
+          {
+            "name": "Template",
+            "type": "string",
+            "format": "--template={value}",
+            "help": "Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview]."
+          },
+          {
+            "name": "Validate",
+            "type": "bool",
+            "format": "--validate={value}",
+            "help": "If true, use a schema to validate the input before sending it."
+          },
+          {
+            "name": "WindowsLineEndings",
+            "type": "bool",
+            "format": "--windows-line-endings={value}",
+            "help": "Only relevant if --edit=true. Defaults to the line ending native to your platform."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Forward one or more local ports to a pod. Use resource type/name such as deployment/mydeployment to select a pod. Resource type defaults to 'pod' if omitted. If there are multiple pods matching the criteria, a pod will be selected automatically. The forwarding session ends when the selected pod terminates, and rerun of the command is needed to resume forwarding.",
+      "postfix": "PortForward",
+      "definiteArgument": "port-forward",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "TypeName",
+            "type": "List<string>",
+            "format": "{value}",
+            "separator": " ",
+            "help": "The type or/and name of the ressource."
+          },
+          {
+            "name": "Ports",
+            "type": "Dictionary<int,int>",
+            "format": "{value}",
+            "itemFormat": "{key}={value}",
+            "separator": " ",
+            "help": "The port combinations to forward. In the Format 'srcPort:destPort'."
+          },
+          {
+            "name": "PodRunningTimeout",
+            "type": "TimeSpan?",
+            "format": "--pod-running-timeout={value}",
+            "help": "The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Create and run a particular image, possibly replicated. Creates a deployment or job to manage the created container(s).",
+      "postfix": "RunContainer",
+      "definiteArgument": "run-container",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "AllowMissingTemplateKeys",
+            "type": "bool",
+            "format": "--allow-missing-template-keys={value}",
+            "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
+          },
+          {
+            "name": "Attach",
+            "type": "bool",
+            "format": "--attach={value}",
+            "help": "If true, wait for the Pod to start running, and then attach to the Pod as if 'kubectl attach ...' were called.  Default false, unless '-i/--stdin' is set, in which case the default is true. With '--restart=Never' the exit code of the container process is returned."
+          },
+          {
+            "name": "Cascade",
+            "type": "bool",
+            "format": "--cascade={value}",
+            "help": "If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true."
+          },
+          {
+            "name": "Command",
+            "type": "bool",
+            "format": "--command={value}",
+            "help": "If true and extra arguments are present, use them as the 'command' field in the container, rather than the 'args' field which is the default."
+          },
+          {
+            "name": "DryRun",
+            "type": "bool",
+            "format": "--dry-run={value}",
+            "help": "If true, only print the object that would be sent, without sending it."
+          },
+          {
+            "name": "Env",
+            "type": "List<string>",
+            "format": "--env={value}",
+            "help": "Environment variables to set in the container."
+          },
+          {
+            "name": "Expose",
+            "type": "bool",
+            "format": "--expose={value}",
+            "help": "If true, a public, external service is created for the container(s) which are run."
+          },
+          {
+            "name": "Filename",
+            "type": "List<string>",
+            "format": "--filename={value}",
+            "separator": ",",
+            "help": "to use to replace the resource."
+          },
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "--force={value}",
+            "help": "Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation."
+          },
+          {
+            "name": "Generator",
+            "type": "string",
+            "format": "--generator={value}",
+            "help": "The name of the API generator to use, see http://kubernetes.io/docs/user-guide/kubectl-conventions/#generators for a list."
+          },
+          {
+            "name": "GracePeriod",
+            "type": "int",
+            "format": "--grace-period={value}",
+            "help": "Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion)."
+          },
+          {
+            "name": "Hostport",
+            "type": "int",
+            "format": "--hostport={value}",
+            "help": "The host port mapping for the container port. To demonstrate a single-machine container."
+          },
+          {
+            "name": "Image",
+            "type": "string",
+            "format": "--image={value}",
+            "help": "The image for the container to run."
+          },
+          {
+            "name": "ImagePullPolicy",
+            "type": "string",
+            "format": "--image-pull-policy={value}",
+            "help": "The image pull policy for the container. If left empty, this value will not be specified by the client and defaulted by the server."
+          },
+          {
+            "name": "Labels",
+            "type": "string",
+            "format": "--labels={value}",
+            "help": "Comma separated labels to apply to the pod(s). Will override previous values."
+          },
+          {
+            "name": "LeaveStdinOpen",
+            "type": "bool",
+            "format": "--leave-stdin-open={value}",
+            "help": "If the pod is started in interactive mode or with stdin, leave stdin open after the first attach completes. By default, stdin will be closed after the first attach completes."
+          },
+          {
+            "name": "Limits",
+            "type": "string",
+            "format": "--limits={value}",
+            "help": "The resource requirement limits for this container.  For example, 'cpu=200m,memory=512Mi'.  Note that server side components may assign limits depending on the server configuration, such as limit ranges."
+          },
+          {
+            "name": "Output",
+            "type": "KubernetesRunContainerOutput",
+            "format": "--output={value}",
+            "help": "Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file."
+          },
+          {
+            "name": "Overrides",
+            "type": "string",
+            "format": "--overrides={value}",
+            "help": "An inline JSON override for the generated object. If this is non-empty, it is used to override the generated object. Requires that the object supply a valid apiVersion field."
+          },
+          {
+            "name": "PodRunningTimeout",
+            "type": "TimeSpan?",
+            "format": "--pod-running-timeout={value}",
+            "help": "The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running."
+          },
+          {
+            "name": "Port",
+            "type": "string",
+            "format": "--port={value}",
+            "help": "The port that this container exposes.  If --expose is true, this is also the port used by the service that is created."
+          },
+          {
+            "name": "Quiet",
+            "type": "bool",
+            "format": "--quiet={value}",
+            "help": "If true, suppress prompt messages."
+          },
+          {
+            "name": "Record",
+            "type": "bool",
+            "format": "--record={value}",
+            "help": "Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists."
+          },
+          {
+            "name": "Recursive",
+            "type": "bool",
+            "format": "--recursive={value}",
+            "help": "Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory."
+          },
+          {
+            "name": "Replicas",
+            "type": "int",
+            "format": "--replicas={value}",
+            "help": "Number of replicas to create for this container. Default is 1."
+          },
+          {
+            "name": "Requests",
+            "type": "string",
+            "format": "--requests={value}",
+            "help": "The resource requirement requests for this container.  For example, 'cpu=100m,memory=256Mi'.  Note that server side components may assign requests depending on the server configuration, such as limit ranges."
+          },
+          {
+            "name": "Restart",
+            "type": "string",
+            "format": "--restart={value}",
+            "help": "The restart policy for this Pod.  Legal values [Always, OnFailure, Never].  If set to 'Always' a deployment is created, if set to 'OnFailure' a job is created, if set to 'Never', a regular pod is created. For the latter two --replicas must be 1.  Default 'Always', for CronJobs `Never`."
+          },
+          {
+            "name": "Rm",
+            "type": "bool",
+            "format": "--rm={value}",
+            "help": "If true, delete resources created in this command for attached containers."
+          },
+          {
+            "name": "SaveConfig",
+            "type": "bool",
+            "format": "--save-config={value}",
+            "help": "If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future."
+          },
+          {
+            "name": "Schedule",
+            "type": "string",
+            "format": "--schedule={value}",
+            "help": "A schedule in the Cron format the job should be run with."
+          },
+          {
+            "name": "ServiceGenerator",
+            "type": "string",
+            "format": "--service-generator={value}",
+            "help": "The name of the generator to use for creating a service.  Only used if --expose is true."
+          },
+          {
+            "name": "ServiceOverrides",
+            "type": "string",
+            "format": "--service-overrides={value}",
+            "help": "An inline JSON override for the generated service object. If this is non-empty, it is used to override the generated object. Requires that the object supply a valid apiVersion field.  Only used if --expose is true."
+          },
+          {
+            "name": "Serviceaccount",
+            "type": "string",
+            "format": "--serviceaccount={value}",
+            "help": "Service account to set in the pod spec."
+          },
+          {
+            "name": "Stdin",
+            "type": "bool",
+            "format": "--stdin={value}",
+            "help": "Keep stdin open on the container(s) in the pod, even if nothing is attached."
+          },
+          {
+            "name": "Template",
+            "type": "string",
+            "format": "--template={value}",
+            "help": "Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview]."
+          },
+          {
+            "name": "Timeout",
+            "type": "TimeSpan?",
+            "format": "--timeout={value}",
+            "help": "The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object."
+          },
+          {
+            "name": "Tty",
+            "type": "bool",
+            "format": "--tty={value}",
+            "help": "Allocated a TTY for each container in the pod."
+          },
+          {
+            "name": "Wait",
+            "type": "bool",
+            "format": "--wait={value}",
+            "help": "If true, wait for resources to be gone before returning. This waits for finalizers."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Edit a resource from the default editor. The edit command allows you to directly edit any API resource you can retrieve via the command line tools. It will open the editor defined by your KUBE _EDITOR, or EDITOR environment variables, or fall back to 'vi' for Linux or 'notepad' for Windows. You can edit multiple objects, although changes are applied one at a time. The command accepts filenames as well as command line arguments, although the files you point to must be previously saved versions of resources. Editing is done with the API version used to fetch the resource. To edit using a specific API version, fully-qualify the resource, version, and group. The default format is YAML. To edit in JSON, specify \"-o json\". The flag --windows-line-endings can be used to force Windows line endings, otherwise the default for your operating system will be used. In the event an error occurs while updating, a temporary file will be created on disk that contains your unapplied changes. The most common error when updating a resource is another editor changing the resource on the server. When this occurs, you will have to apply your changes to the newer version of the resource, or update your temporary saved copy to include the latest resource version.",
+      "postfix": "Edit",
+      "definiteArgument": "edit",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "TypeName",
+            "type": "List<string>",
+            "format": "{value}",
+            "separator": " ",
+            "help": "The type or/and name of the ressource."
+          },
+          {
+            "name": "AllowMissingTemplateKeys",
+            "type": "bool",
+            "format": "--allow-missing-template-keys={value}",
+            "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
+          },
+          {
+            "name": "Filename",
+            "type": "List<string>",
+            "format": "--filename={value}",
+            "separator": ",",
+            "help": "Filename, directory, or URL to files to use to edit the resource."
+          },
+          {
+            "name": "IncludeUninitialized",
+            "type": "bool",
+            "format": "--include-uninitialized={value}",
+            "help": "If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., \"--all\". Objects with empty metadata.initializers are regarded as initialized."
+          },
+          {
+            "name": "Output",
+            "type": "KubernetesEditOutput",
+            "format": "--output={value}",
+            "help": "Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file."
+          },
+          {
+            "name": "OutputPatch",
+            "type": "bool",
+            "format": "--output-patch={value}",
+            "help": "Output the patch if the resource is edited."
+          },
+          {
+            "name": "Record",
+            "type": "bool",
+            "format": "--record={value}",
+            "help": "Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists."
+          },
+          {
+            "name": "Recursive",
+            "type": "bool",
+            "format": "--recursive={value}",
+            "help": "Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory."
+          },
+          {
+            "name": "SaveConfig",
+            "type": "bool",
+            "format": "--save-config={value}",
+            "help": "If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future."
+          },
+          {
+            "name": "Template",
+            "type": "string",
+            "format": "--template={value}",
+            "help": "Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview]."
+          },
+          {
+            "name": "Validate",
+            "type": "bool",
+            "format": "--validate={value}",
+            "help": "If true, use a schema to validate the input before sending it."
+          },
+          {
+            "name": "WindowsLineEndings",
+            "type": "bool",
+            "format": "--windows-line-endings={value}",
+            "help": "Defaults to the line ending native to your platform."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Set a new size for a Deployment, ReplicaSet, Replication Controller, or StatefulSet. Scale also allows users to specify one or more preconditions for the scale action. If --current-replicas or --resource-version is specified, it is validated before the scale is attempted, and it is guaranteed that the precondition holds true when the scale is sent to the server.",
+      "postfix": "Scale",
+      "definiteArgument": "scale",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "All",
+            "type": "bool",
+            "format": "--all={value}",
+            "help": "Select all resources in the namespace of the specified resource types."
+          },
+          {
+            "name": "AllowMissingTemplateKeys",
+            "type": "bool",
+            "format": "--allow-missing-template-keys={value}",
+            "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
+          },
+          {
+            "name": "CurrentReplicas",
+            "type": "int",
+            "format": "--current-replicas={value}",
+            "help": "Precondition for current size. Requires that the current size of the resource match this value in order to scale."
+          },
+          {
+            "name": "Filename",
+            "type": "List<string>",
+            "format": "--filename={value}",
+            "separator": ",",
+            "help": "Filename, directory, or URL to files identifying the resource to set a new size."
+          },
+          {
+            "name": "Output",
+            "type": "KubernetesScaleOutput",
+            "format": "--output={value}",
+            "help": "Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file."
+          },
+          {
+            "name": "Record",
+            "type": "bool",
+            "format": "--record={value}",
+            "help": "Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists."
+          },
+          {
+            "name": "Recursive",
+            "type": "bool",
+            "format": "--recursive={value}",
+            "help": "Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory."
+          },
+          {
+            "name": "Replicas",
+            "type": "int",
+            "format": "--replicas={value}",
+            "help": "The new desired number of replicas. Required."
+          },
+          {
+            "name": "ResourceVersion",
+            "type": "string",
+            "format": "--resource-version={value}",
+            "help": "Precondition for resource version. Requires that the current resource version match this value in order to scale."
+          },
+          {
+            "name": "Selector",
+            "type": "string",
+            "format": "--selector={value}",
+            "help": "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)."
+          },
+          {
+            "name": "Template",
+            "type": "string",
+            "format": "--template={value}",
+            "help": "Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview]."
+          },
+          {
+            "name": "Timeout",
+            "type": "TimeSpan?",
+            "format": "--timeout={value}",
+            "help": "The length of time to wait before giving up on a scale operation, zero means don't wait. Any other values should contain a corresponding time unit (e.g. 1s, 2m, 3h)."
+          }
+        ]
+      }
+    },
+    {
+      "help": "List the fields for supported resources This command describes the fields associated with each supported API resource. Fields are identified via a simple JSONPath identifier:   &lt;type&gt;.&lt;fieldName&gt;[.&lt;fieldName&gt;]  Add the --recursive flag to display all of the fields at once without descriptions. Information about each field is retrieved from the server in OpenAPI format.Use \"kubectl api-resources\" for a complete list of supported resources.",
+      "postfix": "Explain",
+      "definiteArgument": "explain",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "ApiVersion",
+            "type": "string",
+            "format": "--api-version={value}",
+            "help": "Get different explanations for particular API version."
+          },
+          {
+            "name": "Recursive",
+            "type": "bool",
+            "format": "--recursive={value}",
+            "help": "Print the fields of fields (Currently only 1 level deep)."
+          },
+          {
+            "name": "Resource",
+            "type": "List<string>",
+            "format": "{value}",
+            "separator": " ",
+            "help": "The type or/and name of the ressource."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Print the logs for a container in a pod or specified resource. If the pod has only one container, the container name is optional.",
+      "postfix": "Logs",
+      "definiteArgument": "logs",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "TypeName",
+            "type": "List<string>",
+            "format": "{value}",
+            "separator": " ",
+            "help": "The type or/and name of the ressource."
+          },
+          {
+            "name": "AllContainers",
+            "type": "bool",
+            "format": "--all-containers={value}",
+            "help": "Get all containers's logs in the pod(s)."
+          },
+          {
+            "name": "Container",
+            "type": "string",
+            "format": "--container={value}",
+            "help": "Print the logs of this container."
+          },
+          {
+            "name": "Follow",
+            "type": "bool",
+            "format": "--follow={value}",
+            "help": "Specify if the logs should be streamed."
+          },
+          {
+            "name": "Interactive",
+            "type": "bool",
+            "format": "--interactive={value}",
+            "help": "If true, prompt the user for input when required."
+          },
+          {
+            "name": "LimitBytes",
+            "type": "long?",
+            "format": "--limit-bytes={value}",
+            "help": "Maximum bytes of logs to return. Defaults to no limit."
+          },
+          {
+            "name": "PodRunningTimeout",
+            "type": "TimeSpan?",
+            "format": "--pod-running-timeout={value}",
+            "help": "The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running."
+          },
+          {
+            "name": "Previous",
+            "type": "bool",
+            "format": "--previous={value}",
+            "help": "If true, print the logs for the previous instance of the container in a pod if it exists."
+          },
+          {
+            "name": "Selector",
+            "type": "string",
+            "format": "--selector={value}",
+            "help": "Selector (label query) to filter on."
+          },
+          {
+            "name": "Since",
+            "type": "TimeSpan?",
+            "format": "--since={value}",
+            "help": "Only return logs newer than a relative duration like 5s, 2m, or 3h. Defaults to all logs. Only one of since-time / since may be used."
+          },
+          {
+            "name": "SinceTime",
+            "type": "string",
+            "format": "--since-time={value}",
+            "help": "Only return logs after a specific date (RFC3339). Defaults to all logs. Only one of since-time / since may be used."
+          },
+          {
+            "name": "Tail",
+            "type": "long?",
+            "format": "--tail={value}",
+            "help": "Lines of recent log file to display. Defaults to -1 with no selector, showing all log lines otherwise 10, if a selector is provided."
+          },
+          {
+            "name": "Timestamps",
+            "type": "bool",
+            "format": "--timestamps={value}",
+            "help": "Include timestamps on each line in the log output."
+          }
+        ]
+      }
+    }
+  ],
+  "dataClasses": [
+    {
+      "name": "KubernetesCommonSettings",
+      "extensionMethods": true,
+      "properties": [
+        {
+          "name": "Alsologtostderr",
+          "type": "bool",
+          "format": "--alsologtostderr={value}",
+          "help": "log to standard error as well as files."
+        },
+        {
+          "name": "As",
+          "type": "string",
+          "format": "--as={value}",
+          "help": "Username to impersonate for the operation."
+        },
+        {
+          "name": "AsGroup",
+          "type": "List<string>",
+          "format": "--as-group={value}",
+          "help": "Group to impersonate for the operation, this flag can be repeated to specify multiple groups."
+        },
+        {
+          "name": "CacheDir",
+          "type": "string",
+          "format": "--cache-dir={value}",
+          "help": "Default HTTP cache directory."
+        },
+        {
+          "name": "CertificateAuthority",
+          "type": "string",
+          "format": "--certificate-authority={value}",
+          "help": "Path to a cert file for the certificate authority."
+        },
+        {
+          "name": "ClientCertificate",
+          "type": "string",
+          "format": "--client-certificate={value}",
+          "help": "Path to a client certificate file for TLS."
+        },
+        {
+          "name": "ClientKey",
+          "type": "string",
+          "format": "--client-key={value}",
+          "help": "Path to a client key file for TLS."
+        },
+        {
+          "name": "Cluster",
+          "type": "string",
+          "format": "--cluster={value}",
+          "help": "The name of the kubeconfig cluster to use."
+        },
+        {
+          "name": "Context",
+          "type": "string",
+          "format": "--context={value}",
+          "help": "The name of the kubeconfig context to use."
+        },
+        {
+          "name": "InsecureSkipTlsVerify",
+          "type": "bool",
+          "format": "--insecure-skip-tls-verify={value}",
+          "help": "If true, the server's certificate will not be checked for validity. This will make your HTTPS connections insecure."
+        },
+        {
+          "name": "Kubeconfig",
+          "type": "string",
+          "format": "--kubeconfig={value}",
+          "help": "Path to the kubeconfig file to use for CLI requests."
+        },
+        {
+          "name": "LogBacktraceAt",
+          "type": "string",
+          "format": "--log-backtrace-at={value}",
+          "help": "when logging hits line file:N, emit a stack trace."
+        },
+        {
+          "name": "LogDir",
+          "type": "string",
+          "format": "--log-dir={value}",
+          "help": "If non-empty, write log files in this directory."
+        },
+        {
+          "name": "Logtostderr",
+          "type": "bool",
+          "format": "--logtostderr={value}",
+          "help": "log to standard error instead of files."
+        },
+        {
+          "name": "MatchServerVersion",
+          "type": "bool",
+          "format": "--match-server-version={value}",
+          "help": "Require server version to match client version."
+        },
+        {
+          "name": "Namespace",
+          "type": "string",
+          "format": "--namespace={value}",
+          "help": "If present, the namespace scope for this CLI request."
+        },
+        {
+          "name": "RequestTimeout",
+          "type": "string",
+          "format": "--request-timeout={value}",
+          "help": "The length of time to wait before giving up on a single server request. Non-zero values should contain a corresponding time unit (e.g. 1s, 2m, 3h). A value of zero means don't timeout requests."
+        },
+        {
+          "name": "Server",
+          "type": "string",
+          "format": "--server={value}",
+          "help": "The address and port of the Kubernetes API server."
+        },
+        {
+          "name": "Stderrthreshold",
+          "type": "int",
+          "format": "--stderrthreshold={value}",
+          "help": "logs at or above this threshold go to stderr."
+        },
+        {
+          "name": "Token",
+          "type": "string",
+          "format": "--token={value}",
+          "help": "Bearer token for authentication to the API server."
+        },
+        {
+          "name": "User",
+          "type": "string",
+          "format": "--user={value}",
+          "help": "The name of the kubeconfig user to use."
+        },
+        {
+          "name": "V",
+          "type": "int",
+          "format": "--v={value}",
+          "help": "log level for V logs."
+        },
+        {
+          "name": "Vmodule",
+          "type": "Dictionary<string,string>",
+          "format": "--vmodule={value}",
+          "itemFormat": "{key}={value}",
+          "separator": ",",
+          "help": "comma-separated list of pattern=N settings for file-filtered logging."
+        }
+      ]
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "KubernetesApiResourcesOutput",
+      "values": [
+        "wide",
+        "name"
+      ]
+    },
+    {
+      "name": "KubernetesRunOutput",
+      "values": [
+        "json",
+        "yaml",
+        "name",
+        "templatefile",
+        "template",
+        "go-template",
+        "go-template-file",
+        "jsonpath",
+        "jsonpath-file"
+      ]
+    },
+    {
+      "name": "KubernetesGetOutput",
+      "values": [
+        "json",
+        "yaml",
+        "wide",
+        "name",
+        "custom-columns"
+      ]
+    },
+    {
+      "name": "KubernetesRollingUpdateOutput",
+      "values": [
+        "json",
+        "yaml",
+        "name",
+        "go-template-file",
+        "templatefile",
+        "template",
+        "go-template",
+        "jsonpath",
+        "jsonpath-file"
+      ]
+    },
+    {
+      "name": "KubernetesLabelOutput",
+      "values": [
+        "json",
+        "yaml",
+        "name",
+        "template",
+        "go-template",
+        "go-template-file",
+        "templatefile",
+        "jsonpath",
+        "jsonpath-file"
+      ]
+    },
+    {
+      "name": "KubernetesAnnotateOutput",
+      "values": [
+        "json",
+        "yaml",
+        "name",
+        "templatefile",
+        "template",
+        "go-template",
+        "go-template-file",
+        "jsonpath",
+        "jsonpath-file"
+      ]
+    },
+    {
+      "name": "KubernetesExposeOutput",
+      "values": [
+        "json",
+        "yaml",
+        "name",
+        "template",
+        "go-template",
+        "go-template-file",
+        "templatefile",
+        "jsonpath",
+        "jsonpath-file"
+      ]
+    },
+    {
+      "name": "KubernetesPatchOutput",
+      "values": [
+        "json",
+        "yaml",
+        "name",
+        "template",
+        "go-template",
+        "go-template-file",
+        "templatefile",
+        "jsonpath",
+        "jsonpath-file"
+      ]
+    },
+    {
+      "name": "KubernetesPatchType",
+      "values": [
+        "json",
+        "merge",
+        "strategic"
+      ]
+    },
+    {
+      "name": "KubernetesReplaceOutput",
+      "values": [
+        "json",
+        "yaml",
+        "name",
+        "template",
+        "go-template",
+        "go-template-file",
+        "templatefile",
+        "jsonpath",
+        "jsonpath-file"
+      ]
+    },
+    {
+      "name": "KubernetesTaintOutput",
+      "values": [
+        "json",
+        "yaml",
+        "name",
+        "template",
+        "go-template",
+        "go-template-file",
+        "templatefile",
+        "jsonpath",
+        "jsonpath-file"
+      ]
+    },
+    {
+      "name": "KubernetesApplyOutput",
+      "values": [
+        "json",
+        "yaml",
+        "name",
+        "template",
+        "go-template",
+        "go-template-file",
+        "templatefile",
+        "jsonpath",
+        "jsonpath-file"
+      ]
+    },
+    {
+      "name": "KubernetesAutoscaleOutput",
+      "values": [
+        "json",
+        "yaml",
+        "name",
+        "template",
+        "go-template",
+        "go-template-file",
+        "templatefile",
+        "jsonpath",
+        "jsonpath-file"
+      ]
+    },
+    {
+      "name": "KubernetesWaitOutput",
+      "values": [
+        "json",
+        "yaml",
+        "name",
+        "template",
+        "go-template",
+        "go-template-file",
+        "templatefile",
+        "jsonpath",
+        "jsonpath-file"
+      ]
+    },
+    {
+      "name": "KubernetesConvertOutput",
+      "values": [
+        "json",
+        "yaml",
+        "name",
+        "go-template",
+        "go-template-file",
+        "templatefile",
+        "template",
+        "jsonpath",
+        "jsonpath-file"
+      ]
+    },
+    {
+      "name": "KubernetesCreateOutput",
+      "values": [
+        "json",
+        "yaml",
+        "name",
+        "template",
+        "go-template",
+        "go-template-file",
+        "templatefile",
+        "jsonpath",
+        "jsonpath-file"
+      ]
+    },
+    {
+      "name": "KubernetesRunContainerOutput",
+      "values": [
+        "json",
+        "yaml",
+        "name",
+        "template",
+        "go-template",
+        "go-template-file",
+        "templatefile",
+        "jsonpath",
+        "jsonpath-file"
+      ]
+    },
+    {
+      "name": "KubernetesEditOutput",
+      "values": [
+        "json",
+        "yaml",
+        "name",
+        "template",
+        "go-template",
+        "go-template-file",
+        "templatefile",
+        "jsonpath",
+        "jsonpath-file"
+      ]
+    },
+    {
+      "name": "KubernetesScaleOutput",
+      "values": [
+        "json",
+        "yaml",
+        "name",
+        "template",
+        "go-template",
+        "go-template-file",
+        "templatefile",
+        "jsonpath",
+        "jsonpath-file"
+      ]
+    }
+  ]
+}

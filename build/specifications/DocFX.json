@@ -1,0 +1,972 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/common/master/source/Nuke.CodeGeneration/schema.json",
+  "name": "DocFX",
+  "officialUrl": "https://dotnet.github.io/docfx/",
+  "help": "DocFX is an API documentation generator for .NET, and currently it supports C# and VB. It generates API reference documentation from triple-slash comments in your source code. It also allows you to use Markdown files to create additional topics such as tutorials and how-tos, and to customize the generated reference documentation. DocFX builds a static HTML website from your source code and Markdown files, which can be easily hosted on any web servers (for example, <em>github.io</em>). Also, DocFX provides you the flexibility to customize the layout and style of your website through templates. If you are interested in creating your own website with your own styles, you can follow <a href=\"http://dotnet.github.io/docfx/tutorial/howto_create_custom_template.html\">how to create custom template</a> to create custom templates.",
+  "packageId": "docfx.console",
+  "packageExecutable": "docfx.exe",
+  "tasks": [
+    {
+      "help": "Generate client-only website combining API in YAML files and conceptual files.",
+      "postfix": "Build",
+      "commonPropertySets": [
+        "logoptions"
+      ],
+      "definiteArgument": "build",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
+            "name": "ChangesFile",
+            "type": "string",
+            "format": "--changesFile={value}",
+            "help": "Set changes file."
+          },
+          {
+            "name": "CleanupCacheHistory",
+            "type": "bool",
+            "format": "--cleanupCacheHistory",
+            "help": "If set to true, docfx create a new intermediate folder for cache files, historical cache data will be cleaned up."
+          },
+          {
+            "name": "Content",
+            "type": "List<string>",
+            "format": "--content={value}",
+            "separator": ",",
+            "help": "Specify content files for generating documentation."
+          },
+          {
+            "name": "DisableGitFeatures",
+            "type": "bool",
+            "format": "--disableGitFeatures",
+            "help": "Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large."
+          },
+          {
+            "name": "DryRun",
+            "type": "bool",
+            "format": "--dryRun",
+            "help": "If set to true, template will not be actually applied to the documents. This option is always used with --exportRawModel or --exportViewModel is set so that only raw model files or view model files are generated."
+          },
+          {
+            "name": "EnableDebugMode",
+            "type": "bool",
+            "format": "--debug",
+            "help": "Run in debug mode. With debug mode, raw model and view model will be exported automatically when it encounters error when applying templates. If not specified, it is false."
+          },
+          {
+            "name": "ExportRawModel",
+            "type": "bool",
+            "format": "--exportRawModel",
+            "help": "If set to true, data model to run template script will be extracted in .raw.model.json extension."
+          },
+          {
+            "name": "ExportViewModel",
+            "type": "bool",
+            "format": "--exportViewModel",
+            "help": "If set to true, data model to apply template will be extracted in .view.model.json extension."
+          },
+          {
+            "name": "FALName",
+            "type": "string",
+            "format": "--falName={value}",
+            "help": "Set the name of input file abstract layer builder."
+          },
+          {
+            "name": "FileMetadataFilePath",
+            "type": "string",
+            "format": "--fileMetadataFile={value}",
+            "help": "Specify a JSON file path containing fileMetadata settings, as similar to {\"fileMetadata\":{\"key\":\"value\"}}. It overrides the fileMetadata settings from the config file."
+          },
+          {
+            "name": "FileMetadataFilePaths",
+            "type": "List<string>",
+            "format": "--fileMetadataFiles={value}",
+            "separator": ",",
+            "help": "Specify a list of JSON file path containing fileMetadata settings, as similar to {\"key\":\"value\"}. It overrides the fileMetadata settings from the config file."
+          },
+          {
+            "name": "ForcePostProcess",
+            "type": "bool",
+            "format": "--forcePostProcess",
+            "help": "Force to re-process the documentation in post processors. It will be cascaded from force option."
+          },
+          {
+            "name": "ForceRebuild",
+            "type": "bool",
+            "format": "--force",
+            "help": "Force re-build all the documentation."
+          },
+          {
+            "name": "GlobalMetadata",
+            "type": "string",
+            "format": "--globalMetadata={value}",
+            "help": "Specify global metadata key-value pair in json format. It overrides the globalMetadata settings from the config file."
+          },
+          {
+            "name": "GlobalMetadataFilePath",
+            "type": "string",
+            "format": "--globalMetadataFile={value}",
+            "help": "Specify a JSON file path containing globalMetadata settings, as similar to {\"globalMetadata\":{\"key\":\"value\"}}. It overrides the globalMetadata settings from the config file."
+          },
+          {
+            "name": "GlobalMetadataFilePaths",
+            "type": "List<string>",
+            "format": "--globalMetadataFiles={value}",
+            "separator": ",",
+            "help": "Specify a list of JSON file path containing globalMetadata settings, as similar to {\"key\":\"value\"}. It overrides the globalMetadata settings from the config file."
+          },
+          {
+            "name": "Host",
+            "type": "string",
+            "format": "--hostname={value}",
+            "help": "Specify the hostname of the hosted website (e.g., 'localhost' or '*')."
+          },
+          {
+            "name": "IntermediateFolder",
+            "type": "string",
+            "format": "--intermediateFolder={value}",
+            "help": "Set folder for intermediate build results."
+          },
+          {
+            "name": "KeepFileLink",
+            "type": "bool",
+            "format": "--keepFileLink",
+            "help": "If set to true, docfx does not dereference (aka. copy) file to the output folder, instead, it saves a link_to_path property inside mainfiest.json to indicate the physical location of that file."
+          },
+          {
+            "name": "LruSize",
+            "type": "int",
+            "format": "--lruSize={value}",
+            "help": "Set the LRU cached model count (approximately the same as the count of input files). By default, it is 8192 for 64bit and 3072 for 32bit process. With LRU cache enabled, memory usage decreases and time consumed increases. If set to 0, Lru cache is disabled."
+          },
+          {
+            "name": "MarkdownEngineName",
+            "type": "string",
+            "format": "--markdownEngineName={value}",
+            "help": "Set the name of markdown engine, default is 'dfm'."
+          },
+          {
+            "name": "MarkdownEngineProperties",
+            "type": "string",
+            "format": "--markdownEngineProperties={value}",
+            "help": "Set the parameters for markdown engine, value should be a JSON string."
+          },
+          {
+            "name": "MaxParallelism",
+            "type": "int",
+            "format": "--maxParallelism={value}",
+            "help": "Set the max parallelism, 0 is auto."
+          },
+          {
+            "name": "NoLangKeyword",
+            "type": "bool",
+            "format": "--noLangKeyword",
+            "help": "Disable default lang keyword."
+          },
+          {
+            "name": "OutputFolder",
+            "type": "string",
+            "format": "--output={value}",
+            "help": "Specify the output base directory."
+          },
+          {
+            "name": "OutputFolderForDebugFiles",
+            "type": "string",
+            "format": "--debugOutput={value}",
+            "help": "The output folder for files generated for debugging purpose when in debug mode. If not specified, it is ${TempPath}/docfx."
+          },
+          {
+            "name": "Overwrite",
+            "type": "List<string>",
+            "format": "--overwrite={value}",
+            "separator": ",",
+            "help": "Specify overwrite files used by content files."
+          },
+          {
+            "name": "Port",
+            "type": "int",
+            "format": "--port={value}",
+            "help": "Specify the port of the hosted website."
+          },
+          {
+            "name": "PostProcessors",
+            "type": "List<string>",
+            "format": "--postProcessors={value}",
+            "separator": ",",
+            "help": "Set the order of post processors in plugins."
+          },
+          {
+            "name": "PrintHelpMessage",
+            "type": "bool",
+            "format": "--help",
+            "help": "Print help message for this sub-command."
+          },
+          {
+            "name": "RawModelOutputFolder",
+            "type": "string",
+            "format": "--rawModelOutputFolder={value}",
+            "help": "Specify the output folder for the raw model. If not set, the raw model will be generated to the same folder as the output documentation."
+          },
+          {
+            "name": "Resource",
+            "type": "List<string>",
+            "format": "--resource={value}",
+            "separator": ",",
+            "help": "Specify resources used by content files."
+          },
+          {
+            "name": "SchemaLicense",
+            "type": "string",
+            "format": "--schemaLicense={value}",
+            "help": "Please provide the license key for validating schema using NewtonsoftJson.Schema here."
+          },
+          {
+            "name": "Serve",
+            "type": "bool",
+            "format": "--serve",
+            "help": "Host the generated documentation to a website."
+          },
+          {
+            "name": "Templates",
+            "type": "List<string>",
+            "format": "--template={value}",
+            "separator": ",",
+            "help": "Specify the template name to apply to. If not specified, output YAML file will not be transformed."
+          },
+          {
+            "name": "Themes",
+            "type": "List<string>",
+            "format": "--theme={value}",
+            "separator": ",",
+            "help": "Specify which theme to use. By default 'default' theme is offered."
+          },
+          {
+            "name": "ViewModelOutputFolder",
+            "type": "string",
+            "format": "--viewModelOutputFolder={value}",
+            "help": "Specify the output folder for the view model. If not set, the view model will be generated to the same folder as the output documentation."
+          },
+          {
+            "name": "XRefMaps",
+            "type": "List<string>",
+            "format": "--xref={value}",
+            "separator": ",",
+            "help": "Specify the urls of xrefmap used by content files."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Export dependency file.",
+      "postfix": "Dependency",
+      "definiteArgument": "dependency",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "DependencyFile",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
+            "name": "IntermediateFolder",
+            "type": "string",
+            "format": "--intermediateFolder={value}",
+            "help": "The intermediate folder that store cache files."
+          },
+          {
+            "name": "PrintHelpMessage",
+            "type": "bool",
+            "format": "--help",
+            "help": "Print help message for this sub-command."
+          },
+          {
+            "name": "VersionName",
+            "type": "string",
+            "format": "--version={value}",
+            "help": "The version name of the content."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Download remote xref map file and create an xref archive in local.",
+      "postfix": "Download",
+      "definiteArgument": "download",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ArchiveFile",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
+            "name": "PrintHelpMessage",
+            "type": "bool",
+            "format": "--help",
+            "help": "Print help message for this sub-command."
+          },
+          {
+            "name": "Uri",
+            "type": "string",
+            "format": "--xref={value}",
+            "help": "Specify the url of xrefmap."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Get an overall guide for the command and sub-commands.",
+      "postfix": "Help",
+      "definiteArgument": "help",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Command",
+            "type": "string",
+            "format": "{value}"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Generate an initial docfx.json following the instructions.",
+      "postfix": "Init",
+      "definiteArgument": "init",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ApiSourceFolder",
+            "type": "string",
+            "format": "--apiSourceFolder={value}",
+            "help": "Specify the source working folder for source project files to start glob search."
+          },
+          {
+            "name": "ApiSourceGlobPattern",
+            "type": "string",
+            "format": "--apiGlobPattern={value}",
+            "help": "Specify the source project files' glob pattern to generate metadata."
+          },
+          {
+            "name": "OnlyConfigFile",
+            "type": "bool",
+            "format": "--file",
+            "help": "Generate config file docfx.json only, no project folder will be generated."
+          },
+          {
+            "name": "OutputFolder",
+            "type": "string",
+            "format": "--output={value}",
+            "help": "Specify the output folder of the config file. If not specified, the config file will be saved to a new folder docfx_project."
+          },
+          {
+            "name": "Overwrite",
+            "type": "bool",
+            "format": "--overwrite",
+            "help": "Specify if the current file will be overwritten if it exists."
+          },
+          {
+            "name": "PrintHelpMessage",
+            "type": "bool",
+            "format": "--help",
+            "help": "Print help message for this sub-command."
+          },
+          {
+            "name": "Quiet",
+            "type": "bool",
+            "format": "--quiet",
+            "help": "Quietly generate the default docfx.json."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Merge .net base API in YAML files and toc files.",
+      "postfix": "Merge",
+      "commonPropertySets": [
+        "logoptions"
+      ],
+      "definiteArgument": "merge",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
+            "name": "Content",
+            "type": "List<string>",
+            "format": "--content={value}",
+            "separator": ",",
+            "help": "Specifies content files for generating documentation."
+          },
+          {
+            "name": "FileMetadataFilePath",
+            "type": "string",
+            "format": "--fileMetadataFile={value}",
+            "help": "Specify a JSON file path containing fileMetadata settings, as similar to {\"fileMetadata\":{\"key\":\"value\"}}. It overrides the fileMetadata settings from the config file."
+          },
+          {
+            "name": "GlobalMetadata",
+            "type": "string",
+            "format": "--globalMetadata={value}",
+            "help": "Specify global metadata key-value pair in json format. It overrides the globalMetadata settings from the config file."
+          },
+          {
+            "name": "GlobalMetadataFilePath",
+            "type": "string",
+            "format": "--globalMetadataFile={value}",
+            "help": "Specify a JSON file path containing globalMetadata settings, as similar to {\"globalMetadata\":{\"key\":\"value\"}}. It overrides the globalMetadata settings from the config file."
+          },
+          {
+            "name": "PrintHelpMessage",
+            "type": "bool",
+            "format": "--help",
+            "help": "Print help message for this sub-command."
+          },
+          {
+            "name": "TocMetadata",
+            "type": "List<string>",
+            "format": "--tocMetadata={value}",
+            "separator": ",",
+            "help": "Specify metadata names that need to be merged into toc file."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Generate YAML files from source code.",
+      "postfix": "Metadata",
+      "commonPropertySets": [
+        "logoptions"
+      ],
+      "definiteArgument": "metadata",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Projects",
+            "type": "List<string>",
+            "format": "{value}",
+            "separator": " ",
+            "help": "The projects for which the metadata should be built."
+          },
+          {
+            "name": "DisableDefaultFilter",
+            "type": "bool",
+            "format": "--disableDefaultFilter",
+            "help": "Disable the default API filter (default filter only generate public or protected APIs)."
+          },
+          {
+            "name": "DisableGitFeatures",
+            "type": "bool",
+            "format": "--disableGitFeatures",
+            "help": "Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large."
+          },
+          {
+            "name": "FilterConfigFile",
+            "type": "string",
+            "format": "--filter={value}",
+            "help": "Specify the filter config file."
+          },
+          {
+            "name": "ForceRebuild",
+            "type": "bool",
+            "format": "--force",
+            "help": "Force re-generate all the metadata."
+          },
+          {
+            "name": "GlobalNamespaceId",
+            "type": "string",
+            "format": "--globalNamespaceId={value}",
+            "help": "Specify the name to use for the global namespace."
+          },
+          {
+            "name": "MSBuildProperties",
+            "type": "Dictionary<string, string>",
+            "format": "--property={value}",
+            "itemFormat": "{key}={value}",
+            "separator": ";",
+            "help": "--property &lt;n1&gt;=&lt;v1&gt;;&lt;n2&gt;=&lt;v2&gt; An optional set of MSBuild properties used when interpreting project files. These are the same properties that are passed to msbuild via the /property:&lt;n1&gt;=&lt;v1&gt;;&lt;n2&gt;=&lt;v2&gt; command line argument."
+          },
+          {
+            "name": "OutputFolder",
+            "type": "string",
+            "format": "--output={value}",
+            "help": "Specify the output base directory."
+          },
+          {
+            "name": "PreserveRawInlineComments",
+            "type": "bool",
+            "format": "--raw",
+            "help": "Preserve the existing xml comment tags inside 'summary' triple slash comments."
+          },
+          {
+            "name": "PrintHelpMessage",
+            "type": "bool",
+            "format": "--help",
+            "help": "Print help message for this sub-command."
+          },
+          {
+            "name": "ShouldSkipMarkup",
+            "type": "bool",
+            "format": "--shouldSkipMarkup",
+            "help": "Skip to markup the triple slash comments."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Generate pdf file.",
+      "postfix": "Pdf",
+      "commonPropertySets": [
+        "buildcommandoptions",
+        "logoptions"
+      ],
+      "definiteArgument": "pdf",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "BasePath",
+            "type": "string",
+            "format": "--basePath={value}",
+            "help": "Specify the base path to generate external link, {host}/{locale}/{basePath}."
+          },
+          {
+            "name": "CssFilePath",
+            "type": "string",
+            "format": "--css={value}",
+            "help": "Specify the path for the css to generate pdf, default value is styles/default.css."
+          },
+          {
+            "name": "ExcludedTocs",
+            "type": "List<string>",
+            "format": "--excludedTocs={value}",
+            "help": "Specify the toc files to be excluded."
+          },
+          {
+            "name": "GeneratesAppendices",
+            "type": "bool",
+            "format": "--generatesAppendices",
+            "help": "Specify whether or not to generate appendices for not-in-TOC articles."
+          },
+          {
+            "name": "GeneratesExternalLink",
+            "type": "bool",
+            "format": "--generatesExternalLink",
+            "help": "Specify whether or not to generate external links for PDF."
+          },
+          {
+            "name": "PdfHost",
+            "type": "string",
+            "format": "--host={value}",
+            "help": "Specify the hostname to link not-in-TOC articles."
+          },
+          {
+            "name": "KeepRawFiles",
+            "type": "bool",
+            "format": "--keepRawFiles",
+            "help": "Specify whether or not to keep the intermediate html files that used to generate the PDF file. It it usually used in debug purpose. By default the value is false."
+          },
+          {
+            "name": "LoadErrorHandling",
+            "type": "string",
+            "format": "--errorHandling={value}",
+            "help": "Specify how to handle pdf pages that fail to load: abort, ignore or skip(default abort), it is the same input as wkhtmltopdf --load-error-handling options."
+          },
+          {
+            "name": "Locale",
+            "type": "string",
+            "format": "--locale={value}",
+            "help": "Specify the locale of the pdf file."
+          },
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "--name={value}",
+            "help": "Specify the name of the generated pdf."
+          },
+          {
+            "name": "NoInputStreamArgs",
+            "type": "bool",
+            "format": "--noStdin",
+            "help": "Do not use stdin when wkhtmltopdf is executed."
+          },
+          {
+            "name": "RawOutputFolder",
+            "type": "string",
+            "format": "--rawOutputFolder={value}",
+            "help": "Specify the output folder for the raw files, if not specified, raw files will by default be saved to _raw subfolder under output folder if keepRawFiles is set to true."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Host a local static website.",
+      "postfix": "Serve",
+      "definiteArgument": "serve",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Folder",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
+            "name": "Host",
+            "type": "string",
+            "format": "--hostname={value}",
+            "help": "Specify the hostname of the hosted website [localhost]."
+          },
+          {
+            "name": "Port",
+            "type": "int",
+            "format": "--port={value}",
+            "help": "Specify the port of the hosted website [8080]."
+          },
+          {
+            "name": "PrintHelpMessage",
+            "type": "bool",
+            "format": "--help",
+            "help": "Print help message for this sub-command."
+          }
+        ]
+      }
+    },
+    {
+      "help": "List or export existing template.",
+      "postfix": "Template",
+      "definiteArgument": "template",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Command",
+            "type": "string",
+            "format": "{value}",
+            "separator": " ",
+            "help": "The command to execute."
+          },
+          {
+            "name": "All",
+            "type": "bool",
+            "format": "--all",
+            "help": "If specified, all the available templates will be exported."
+          },
+          {
+            "name": "OutputFolder",
+            "type": "string",
+            "format": "--output={value}",
+            "help": "Specify the output folder path for the exported templates."
+          },
+          {
+            "name": "PrintHelpMessage",
+            "type": "bool",
+            "format": "--help",
+            "help": "Print help message for this sub-command."
+          }
+        ]
+      }
+    }
+  ],
+  "commonTaskPropertySets": {
+    "logoptions": [
+      {
+        "name": "CorrelationId",
+        "type": "string",
+        "format": "--correlationId={value}",
+        "help": "Specify the correlation id used for logging."
+      },
+      {
+        "name": "LogFilePath",
+        "type": "string",
+        "format": "--log={value}",
+        "help": "Specify the file name to save processing log."
+      },
+      {
+        "name": "LogLevel",
+        "type": "DocFXLogLevel",
+        "format": "--logLevel={value}",
+        "help": "Specify to which log level will be logged. By default log level &gt;= Info will be logged. The acceptable value could be Verbose, Info, Warning, Error."
+      },
+      {
+        "name": "RepoRoot",
+        "type": "string",
+        "format": "--repositoryRoot={value}",
+        "help": "Specify the GIT repository root folder."
+      },
+      {
+        "name": "WarningsAsErrors",
+        "type": "bool",
+        "format": "--warningsAsErrors",
+        "help": "Specify if warnings should be treated as errors."
+      }
+    ],
+    "buildcommandoptions": [
+      {
+        "name": "ConfigFile",
+        "type": "string",
+        "format": "{value}"
+      },
+      {
+        "name": "ChangesFile",
+        "type": "string",
+        "format": "--changesFile={value}",
+        "help": "Set changes file."
+      },
+      {
+        "name": "CleanupCacheHistory",
+        "type": "bool",
+        "format": "--cleanupCacheHistory",
+        "help": "If set to true, docfx create a new intermediate folder for cache files, historical cache data will be cleaned up."
+      },
+      {
+        "name": "Content",
+        "type": "List<string>",
+        "format": "--content={value}",
+        "separator": ",",
+        "help": "Specify content files for generating documentation."
+      },
+      {
+        "name": "DisableGitFeatures",
+        "type": "bool",
+        "format": "--disableGitFeatures",
+        "help": "Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large."
+      },
+      {
+        "name": "DryRun",
+        "type": "bool",
+        "format": "--dryRun",
+        "help": "If set to true, template will not be actually applied to the documents. This option is always used with --exportRawModel or --exportViewModel is set so that only raw model files or view model files are generated."
+      },
+      {
+        "name": "EnableDebugMode",
+        "type": "bool",
+        "format": "--debug",
+        "help": "Run in debug mode. With debug mode, raw model and view model will be exported automatically when it encounters error when applying templates. If not specified, it is false."
+      },
+      {
+        "name": "ExportRawModel",
+        "type": "bool",
+        "format": "--exportRawModel",
+        "help": "If set to true, data model to run template script will be extracted in .raw.model.json extension."
+      },
+      {
+        "name": "ExportViewModel",
+        "type": "bool",
+        "format": "--exportViewModel",
+        "help": "If set to true, data model to apply template will be extracted in .view.model.json extension."
+      },
+      {
+        "name": "FALName",
+        "type": "string",
+        "format": "--falName={value}",
+        "help": "Set the name of input file abstract layer builder."
+      },
+      {
+        "name": "FileMetadataFilePath",
+        "type": "string",
+        "format": "--fileMetadataFile={value}",
+        "help": "Specify a JSON file path containing fileMetadata settings, as similar to {\"fileMetadata\":{\"key\":\"value\"}}. It overrides the fileMetadata settings from the config file."
+      },
+      {
+        "name": "FileMetadataFilePaths",
+        "type": "List<string>",
+        "format": "--fileMetadataFiles={value}",
+        "separator": ",",
+        "help": "Specify a list of JSON file path containing fileMetadata settings, as similar to {\"key\":\"value\"}. It overrides the fileMetadata settings from the config file."
+      },
+      {
+        "name": "ForcePostProcess",
+        "type": "bool",
+        "format": "--forcePostProcess",
+        "help": "Force to re-process the documentation in post processors. It will be cascaded from force option."
+      },
+      {
+        "name": "ForceRebuild",
+        "type": "bool",
+        "format": "--force",
+        "help": "Force re-build all the documentation."
+      },
+      {
+        "name": "GlobalMetadata",
+        "type": "string",
+        "format": "--globalMetadata={value}",
+        "help": "Specify global metadata key-value pair in json format. It overrides the globalMetadata settings from the config file."
+      },
+      {
+        "name": "GlobalMetadataFilePath",
+        "type": "string",
+        "format": "--globalMetadataFile={value}",
+        "help": "Specify a JSON file path containing globalMetadata settings, as similar to {\"globalMetadata\":{\"key\":\"value\"}}. It overrides the globalMetadata settings from the config file."
+      },
+      {
+        "name": "GlobalMetadataFilePaths",
+        "type": "List<string>",
+        "format": "--globalMetadataFiles={value}",
+        "separator": ",",
+        "help": "Specify a list of JSON file path containing globalMetadata settings, as similar to {\"key\":\"value\"}. It overrides the globalMetadata settings from the config file."
+      },
+      {
+        "name": "Host",
+        "type": "string",
+        "format": "--hostname={value}",
+        "help": "Specify the hostname of the hosted website (e.g., 'localhost' or '*')."
+      },
+      {
+        "name": "IntermediateFolder",
+        "type": "string",
+        "format": "--intermediateFolder={value}",
+        "help": "Set folder for intermediate build results."
+      },
+      {
+        "name": "KeepFileLink",
+        "type": "bool",
+        "format": "--keepFileLink",
+        "help": "If set to true, docfx does not dereference (aka. copy) file to the output folder, instead, it saves a link_to_path property inside mainfiest.json to indicate the physical location of that file."
+      },
+      {
+        "name": "LruSize",
+        "type": "int",
+        "format": "--lruSize={value}",
+        "help": "Set the LRU cached model count (approximately the same as the count of input files). By default, it is 8192 for 64bit and 3072 for 32bit process. With LRU cache enabled, memory usage decreases and time consumed increases. If set to 0, Lru cache is disabled."
+      },
+      {
+        "name": "MarkdownEngineName",
+        "type": "string",
+        "format": "--markdownEngineName={value}",
+        "help": "Set the name of markdown engine, default is 'dfm'."
+      },
+      {
+        "name": "MarkdownEngineProperties",
+        "type": "string",
+        "format": "--markdownEngineProperties={value}",
+        "help": "Set the parameters for markdown engine, value should be a JSON string."
+      },
+      {
+        "name": "MaxParallelism",
+        "type": "int",
+        "format": "--maxParallelism={value}",
+        "help": "Set the max parallelism, 0 is auto."
+      },
+      {
+        "name": "NoLangKeyword",
+        "type": "bool",
+        "format": "--noLangKeyword",
+        "help": "Disable default lang keyword."
+      },
+      {
+        "name": "OutputFolder",
+        "type": "string",
+        "format": "--output={value}",
+        "help": "Specify the output base directory."
+      },
+      {
+        "name": "OutputFolderForDebugFiles",
+        "type": "string",
+        "format": "--debugOutput={value}",
+        "help": "The output folder for files generated for debugging purpose when in debug mode. If not specified, it is ${TempPath}/docfx."
+      },
+      {
+        "name": "Overwrite",
+        "type": "List<string>",
+        "format": "--overwrite={value}",
+        "separator": ",",
+        "help": "Specify overwrite files used by content files."
+      },
+      {
+        "name": "Port",
+        "type": "int",
+        "format": "--port={value}",
+        "help": "Specify the port of the hosted website."
+      },
+      {
+        "name": "PostProcessors",
+        "type": "List<string>",
+        "format": "--postProcessors={value}",
+        "separator": ",",
+        "help": "Set the order of post processors in plugins."
+      },
+      {
+        "name": "PrintHelpMessage",
+        "type": "bool",
+        "format": "--help",
+        "help": "Print help message for this sub-command."
+      },
+      {
+        "name": "RawModelOutputFolder",
+        "type": "string",
+        "format": "--rawModelOutputFolder={value}",
+        "help": "Specify the output folder for the raw model. If not set, the raw model will be generated to the same folder as the output documentation."
+      },
+      {
+        "name": "Resource",
+        "type": "List<string>",
+        "format": "--resource={value}",
+        "separator": ",",
+        "help": "Specify resources used by content files."
+      },
+      {
+        "name": "SchemaLicense",
+        "type": "string",
+        "format": "--schemaLicense={value}",
+        "help": "Please provide the license key for validating schema using NewtonsoftJson.Schema here."
+      },
+      {
+        "name": "Serve",
+        "type": "bool",
+        "format": "--serve",
+        "help": "Host the generated documentation to a website."
+      },
+      {
+        "name": "Templates",
+        "type": "List<string>",
+        "format": "--template={value}",
+        "separator": ",",
+        "help": "Specify the template name to apply to. If not specified, output YAML file will not be transformed."
+      },
+      {
+        "name": "Themes",
+        "type": "List<string>",
+        "format": "--theme={value}",
+        "separator": ",",
+        "help": "Specify which theme to use. By default 'default' theme is offered."
+      },
+      {
+        "name": "ViewModelOutputFolder",
+        "type": "string",
+        "format": "--viewModelOutputFolder={value}",
+        "help": "Specify the output folder for the view model. If not set, the view model will be generated to the same folder as the output documentation."
+      },
+      {
+        "name": "XRefMaps",
+        "type": "List<string>",
+        "format": "--xref={value}",
+        "separator": ",",
+        "help": "Specify the urls of xrefmap used by content files."
+      }
+    ]
+  },
+  "enumerations": [
+    {
+      "name": "DocFXLogLevel",
+      "values": [
+        "Diagnostic",
+        "Verbose",
+        "Info",
+        "Suggestion",
+        "Warning",
+        "Error"
+      ]
+    },
+    {
+      "name": "DocFXTemplateCommand",
+      "values": [
+        "Export",
+        "List"
+      ]
+    }
+  ]
+}
