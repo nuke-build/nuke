@@ -32,7 +32,7 @@ namespace Nuke.Common.Tools.CloudFoundry
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue(nameof(_credentials),GetCredentials());
+            info.AddValue(nameof(_credentials), GetCredentials());
 
             var otherProperties = GetType().GetProperties().Where(x => x.Name != nameof(Credentials));
             foreach (var property in otherProperties)

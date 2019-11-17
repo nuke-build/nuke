@@ -39,7 +39,7 @@ namespace Nuke.Common.Tools.MSBuild
             var instances = new List<Instance>();
 
             instances.AddRange(
-                from version in new[]{MSBuildVersion.VS2019, MSBuildVersion.VS2017}
+                from version in new[] { MSBuildVersion.VS2019, MSBuildVersion.VS2017 }
                 from platform in s_platforms
                 from edition in new[] { "Enterprise", "Professional", "Community", "BuildTools", "Preview" }
                 select GetFromVs2017Instance(version, platform, edition));
