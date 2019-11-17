@@ -39,7 +39,11 @@
     <None Include="..\build.ps1" LinkBase="boot" />
     <None Include="..\build.sh" LinkBase="boot" />
 
+    <None Include="..\external\repositories.yml" LinkBase="external" />
+    <None Include="..\Directory.Build.targets" LinkBase="external" />
+
     <None Include="..\.nuke" LinkBase="config" />
+    <None Include="..\source\Directory.Build.props" LinkBase="config" />
     <None Include="..\global.json" LinkBase="config" Condition="Exists('..\global.json')" />
     <None Include="..\nuget.config" LinkBase="config" Condition="Exists('..\nuget.config')" />
     <None Include="..\GitVersion.yml" LinkBase="config" Condition="Exists('..\GitVersion.yml')" />
