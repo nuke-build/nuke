@@ -129,14 +129,14 @@ partial class Build : NukeBuild
         {
             DotNetBuild(_ => _
                 .SetProjectFile(Solution)
-                .SetNoRestore(ExecutingTargets.Contains(Restore))
+                .SetNoRestore(InvokedTargets.Contains(Restore))
                 .SetConfiguration(Configuration)
                 .SetAssemblyVersion(GitVersion.AssemblySemVer)
                 .SetFileVersion(GitVersion.AssemblySemFileVer)
                 .SetInformationalVersion(GitVersion.InformationalVersion));
 
             DotNetPublish(_ => _
-                    .SetNoRestore(ExecutingTargets.Contains(Restore))
+                    .SetNoRestore(InvokedTargets.Contains(Restore))
                     .SetConfiguration(Configuration)
                     .SetAssemblyVersion(GitVersion.AssemblySemVer)
                     .SetFileVersion(GitVersion.AssemblySemFileVer)
@@ -161,7 +161,7 @@ partial class Build : NukeBuild
         {
             DotNetPack(_ => _
                 .SetProject(Solution)
-                .SetNoBuild(ExecutingTargets.Contains(Compile))
+                .SetNoBuild(InvokedTargets.Contains(Compile))
                 .SetConfiguration(Configuration)
                 .SetOutputDirectory(OutputDirectory)
                 .SetVersion(GitVersion.NuGetVersionV2)
@@ -179,7 +179,7 @@ partial class Build : NukeBuild
         {
             DotNetTest(_ => _
                 .SetConfiguration(Configuration)
-                .SetNoBuild(ExecutingTargets.Contains(Compile))
+                .SetNoBuild(InvokedTargets.Contains(Compile))
                 .ResetVerbosity()
                 .SetResultsDirectory(OutputDirectory)
                 .When(InvokedTargets.Contains(Coverage) || IsServerBuild, _ => _
