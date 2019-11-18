@@ -148,10 +148,10 @@ namespace Nuke.Common.CI.AzurePipelines
             WriteCommand(
                 "codecoverage.publish",
                 dictionaryConfigurator: x => x
-                    .AddKeyValue("coverageTool", coverageTool)
+                    .AddKeyValue("codeCoverageTool", coverageTool)
                     .AddKeyValue("summaryFile", summaryFile)
                     .AddKeyValue("reportDirectory", reportDirectory)
-                    .AddKeyValue("additionalCodeCoverageFiles", additionalCodeCoverageFiles.JoinComma()));
+                    .AddKeyValue("additionalCodeCoverageFiles", additionalCodeCoverageFiles.Join(",")));
         }
 
         public void PublishTestResults(
@@ -167,7 +167,7 @@ namespace Nuke.Common.CI.AzurePipelines
                 "results.publish",
                 dictionaryConfigurator: x => x
                     .AddKeyValue("type", type)
-                    .AddKeyValue("resultFiles", files.JoinComma())
+                    .AddKeyValue("resultFiles", files.Join(","))
                     .AddKeyValue("mergeResults", mergeResults)
                     .AddKeyValue("platform", platform)
                     .AddKeyValue("config", configuration)
