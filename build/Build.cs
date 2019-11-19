@@ -135,18 +135,20 @@ partial class Build : NukeBuild
                 .SetFileVersion(GitVersion.AssemblySemFileVer)
                 .SetInformationalVersion(GitVersion.InformationalVersion));
 
+            var publishConfigurations =
+                from project in new[] { GlobalToolProject, MSBuildTaskRunnerProject }
+                from framework in project.GetTargetFrameworks()
+                select new { project, framework };
+
             DotNetPublish(_ => _
                     .SetNoRestore(InvokedTargets.Contains(Restore))
                     .SetConfiguration(Configuration)
                     .SetAssemblyVersion(GitVersion.AssemblySemVer)
                     .SetFileVersion(GitVersion.AssemblySemFileVer)
                     .SetInformationalVersion(GitVersion.InformationalVersion)
-                    .CombineWith(
-                        from project in new[] { GlobalToolProject, MSBuildTaskRunnerProject }
-                        from framework in project.GetTargetFrameworks()
-                        select new { project, framework }, (_, v) => _
-                            .SetProject(v.project)
-                            .SetFramework(v.framework)),
+                    .CombineWith(publishConfigurations, (_, v) => _
+                        .SetProject(v.project)
+                        .SetFramework(v.framework)),
                 degreeOfParallelism: 10);
         });
 
@@ -169,6 +171,7 @@ partial class Build : NukeBuild
         });
 
     [Partition(2)] readonly Partition TestPartition;
+    IEnumerable<Project> TestProjects => TestPartition.GetCurrent(Solution.GetProjects("*.Tests"));
 
     Target Test => _ => _
         .DependsOn(Compile)
@@ -188,12 +191,11 @@ partial class Build : NukeBuild
                     .SetExcludeByFile("*.Generated.cs")
                     .When(IsServerBuild, _ => _
                         .EnableUseSourceLink()))
-                .CombineWith(
-                    TestPartition.GetCurrent(Solution.GetProjects("*.Tests")), (_, v) => _
-                        .SetProjectFile(v)
-                        .SetLogger($"trx;LogFileName={v.Name}.trx")
-                        .When(InvokedTargets.Contains(Coverage) || IsServerBuild, _ => _
-                            .SetCoverletOutput(OutputDirectory / $"{v.Name}.xml"))));
+                .CombineWith(TestProjects, (_, v) => _
+                    .SetProjectFile(v)
+                    .SetLogger($"trx;LogFileName={v.Name}.trx")
+                    .When(InvokedTargets.Contains(Coverage) || IsServerBuild, _ => _
+                        .SetCoverletOutput(OutputDirectory / $"{v.Name}.xml"))));
 
             OutputDirectory.GlobFiles("*.trx").ForEach(x =>
                 AzurePipelines?.PublishTestResults(
@@ -272,9 +274,8 @@ partial class Build : NukeBuild
             DotNetNuGetPush(_ => _
                     .SetSource(Source)
                     .SetApiKey(ApiKey)
-                    .CombineWith(
-                        packages, (_, v) => _
-                            .SetTargetPath(v)),
+                    .CombineWith(packages, (_, v) => _
+                        .SetTargetPath(v)),
                 degreeOfParallelism: 5,
                 completeOnFailure: true);
         });
