@@ -35,6 +35,7 @@ Skip:
 - Hotfix
 - Install
 - Pack
+- PublicApi
 - Publish
 - References
 - Release
@@ -56,6 +57,7 @@ Target:
 - Hotfix
 - Install
 - Pack
+- PublicApi
 - Publish
 - References
 - Release

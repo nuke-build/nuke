@@ -296,14 +296,14 @@ namespace Nuke.Common.Execution
             if (!destinationType.IsArray)
             {
                 ControlFlow.Assert(convertedValues.Count == 1,
-                    $"Value [ {values.JoinComma()} ] cannot be assigned to '{GetPresentableName(destinationType)}'.");
+                    $"Value [ {values.JoinComma()} ] cannot be assigned to '{destinationType.GetDisplayShortName()}'.");
                 return convertedValues.Single();
             }
 
             var array = Array.CreateInstance(elementType, convertedValues.Count);
             convertedValues.ForEach((x, i) => array.SetValue(x, i));
             ControlFlow.Assert(destinationType.IsInstanceOfType(array),
-                $"Type '{GetPresentableName(array.GetType())}' is not an instance of '{GetPresentableName(destinationType)}'.");
+                $"Type '{array.GetType().GetDisplayShortName()}' is not an instance of '{destinationType.GetDisplayShortName()}'.");
 
             return array;
         }
