@@ -31,12 +31,12 @@ namespace Nuke.Common.Execution
         internal bool ProceedAfterFailure { get; set; }
         internal ICollection<LambdaExpression> Requirements { get; set; } = new List<LambdaExpression>();
         internal ICollection<Action> Actions { get; set; } = new List<Action>();
-        internal ICollection<ExecutableTarget> ExecutionDependencies { get; } = new List<ExecutableTarget>();
-        internal ICollection<ExecutableTarget> OrderDependencies { get; } = new List<ExecutableTarget>();
-        internal ICollection<ExecutableTarget> TriggerDependencies { get; } = new List<ExecutableTarget>();
-        internal ICollection<ExecutableTarget> Triggers { get; } = new List<ExecutableTarget>();
+        public ICollection<ExecutableTarget> ExecutionDependencies { get; } = new List<ExecutableTarget>();
+        public ICollection<ExecutableTarget> OrderDependencies { get; } = new List<ExecutableTarget>();
+        public ICollection<ExecutableTarget> TriggerDependencies { get; } = new List<ExecutableTarget>();
+        public ICollection<ExecutableTarget> Triggers { get; } = new List<ExecutableTarget>();
 
-        internal IReadOnlyCollection<ExecutableTarget> AllDependencies
+        public IReadOnlyCollection<ExecutableTarget> AllDependencies
             => ExecutionDependencies.Concat(OrderDependencies).Concat(TriggerDependencies).ToList();
 
         public bool IsDefault { get; internal set; }
