@@ -159,10 +159,10 @@ namespace Nuke.Common.CI.TeamCity
                 x => x
                     .AddKeyValue("type", type)
                     .AddKeyValue("path", path)
-                    .AddKeyValue("tool", tool)
-                    .AddKeyValue("verbose", verbose)
-                    .AddKeyValue("parseOutOfDate", parseOutOfDate)
-                    .AddKeyValue("whenNoDataPublished", action));
+                    .AddKeyValueWhenNotNull("tool", tool)
+                    .AddKeyValueWhenNotNull("verbose", verbose)
+                    .AddKeyValueWhenNotNull("parseOutOfDate", parseOutOfDate)
+                    .AddKeyValueWhenNotNull("whenNoDataPublished", action));
         }
 
         public void AddBuildProblem(string description)
@@ -232,7 +232,7 @@ namespace Nuke.Common.CI.TeamCity
             Write("blockOpened",
                 x => x
                     .AddKeyValue("name", name)
-                    .AddKeyValue("description", description));
+                    .AddKeyValueWhenNotNull("description", description));
         }
 
         public void CloseBlock(string name)
@@ -280,13 +280,12 @@ namespace Nuke.Common.CI.TeamCity
                 x => x
                     .AddKeyValue("text", text)
                     .AddKeyValue("status", TeamCityStatus.ERROR)
-                    .AddKeyValue("errorDetails", errorDetails));
+                    .AddKeyValueWhenNotNull("errorDetails", errorDetails));
         }
 
         public void Write(string command, Func<IDictionary<string, object>, IDictionary<string, object>> dictionaryConfigurator)
         {
             Write(new[] { command }.Concat(dictionaryConfigurator(new Dictionary<string, object>())
-                .Where(x => x.Value != null)
                 .Select(x => $"{x.Key}='{Escape(x.Value.ToString())}'")
                 .ToArray()));
         }

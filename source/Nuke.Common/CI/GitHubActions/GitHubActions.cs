@@ -101,7 +101,6 @@ namespace Nuke.Common.CI.GitHubActions
             {
                 escapedTokens = escapedTokens.Concat(dictionaryConfigurator
                     .Invoke(new Dictionary<string, object>())
-                    .Where(x => x.Value != null)
                     .Select(x => $"{x.Key}={Escape(x.Value.ToString())}")).ToArray();
             }
 

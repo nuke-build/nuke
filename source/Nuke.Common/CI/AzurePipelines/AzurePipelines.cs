@@ -168,11 +168,11 @@ namespace Nuke.Common.CI.AzurePipelines
                 dictionaryConfigurator: x => x
                     .AddKeyValue("type", type)
                     .AddKeyValue("resultFiles", files.Join(","))
-                    .AddKeyValue("mergeResults", mergeResults)
-                    .AddKeyValue("platform", platform)
-                    .AddKeyValue("config", configuration)
-                    .AddKeyValue("runTitle", title.SingleQuote())
-                    .AddKeyValue("publishRunAttachments", publishRunAttachments));
+                    .AddKeyValueWhenNotNull("mergeResults", mergeResults)
+                    .AddKeyValueWhenNotNull("platform", platform)
+                    .AddKeyValueWhenNotNull("config", configuration)
+                    .AddKeyValueWhenNotNull("runTitle", title.SingleQuote())
+                    .AddKeyValueWhenNotNull("publishRunAttachments", publishRunAttachments));
         }
 
         public void LogIssue(
@@ -188,10 +188,10 @@ namespace Nuke.Common.CI.AzurePipelines
                 message,
                 dictionaryConfigurator: x => x
                     .AddKeyValue("type", GetText(type))
-                    .AddKeyValue("sourcepath", sourcePath)
-                    .AddKeyValue("linenumber", lineNumber)
-                    .AddKeyValue("columnnumber", columnNumber)
-                    .AddKeyValue("code", code));
+                    .AddKeyValueWhenNotNull("sourcepath", sourcePath)
+                    .AddKeyValueWhenNotNull("linenumber", lineNumber)
+                    .AddKeyValueWhenNotNull("columnnumber", columnNumber)
+                    .AddKeyValueWhenNotNull("code", code));
         }
 
         private string GetText(AzurePipelinesIssueType type)
@@ -213,7 +213,6 @@ namespace Nuke.Common.CI.AzurePipelines
             var escapedTokens =
                 dictionaryConfigurator?
                     .Invoke(new Dictionary<string, object>())
-                    .Where(x => x.Value != null)
                     .Select(x => $"{x.Key}={EscapeValue(x.Value.ToString())}").ToArray()
                 ?? new string[0];
 
