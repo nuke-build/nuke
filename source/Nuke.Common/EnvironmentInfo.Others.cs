@@ -45,11 +45,9 @@ namespace Nuke.Common
         public static string ExpandVariables(string value)
         {
             string ExpandUnixEnvironmentVariables()
-            {
-                return value
+                => value
                     .ReplaceRegex("^~", x => Environment.GetEnvironmentVariable("HOME"))
                     .ReplaceRegex(@"\$([a-z_][a-z0-9_]*)", x => Environment.GetEnvironmentVariable(x.Groups[1].Value), RegexOptions.IgnoreCase);
-            }
 
             return IsWin
                 ? Environment.ExpandEnvironmentVariables(value)
