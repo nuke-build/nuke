@@ -26,4 +26,5 @@ build_script:
 artifacts:
   - path: output/*.trx
   - path: output/*.xml
+  - path: output/coverage-report.zip
   - path: output/*.nupkg

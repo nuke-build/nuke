@@ -4,6 +4,7 @@
 
 using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
@@ -17,6 +18,7 @@ partial class Build
     string ContributorsFile => RootDirectory / "CONTRIBUTORS.md";
     string ContributorsCacheFile => TemporaryDirectory / "contributors.dat";
 
+    [UsedImplicitly]
     Target UpdateContributors => _ => _
         .Executes(() =>
         {

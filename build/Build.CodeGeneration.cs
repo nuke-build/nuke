@@ -2,6 +2,7 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+using JetBrains.Annotations;
 using Nuke.CodeGeneration.Model;
 using Nuke.Common;
 using Nuke.Common.Tools.GitHub;
@@ -28,7 +29,8 @@ partial class Build
             UpdateReferences(SpecificationsDirectory, ReferencesDirectory);
         });
 
-    Target Generate => _ => _
+    [UsedImplicitly]
+    Target GenerateTools => _ => _
         .Executes(() =>
         {
             GenerateSchema<Tool>(

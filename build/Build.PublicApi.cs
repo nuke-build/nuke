@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
@@ -15,7 +16,8 @@ partial class Build
 {
     static string PublicApiFile => RootDirectory / "PUBLIC_API.md";
 
-    Target PublicApi => _ => _
+    [UsedImplicitly]
+    Target GeneratePublicApi => _ => _
         .Executes(() =>
         {
             var types = typeof(NukeBuild).Assembly

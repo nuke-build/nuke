@@ -5,6 +5,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
@@ -46,7 +47,8 @@ partial class Build
             }
         });
 
-    Target CreateGlobalSolution => _ => _
+    [UsedImplicitly]
+    Target GenerateGlobalSolution => _ => _
         .DependsOn(CheckoutExternalRepositories)
         .Executes(() =>
         {

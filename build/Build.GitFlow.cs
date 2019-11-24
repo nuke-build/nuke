@@ -4,6 +4,7 @@
 
 using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.Git;
 using Nuke.Common.Tooling;
@@ -25,6 +26,7 @@ partial class Build
             Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.MajorMinorPatch}\"");
         });
 
+    [UsedImplicitly]
     Target Release => _ => _
         .DependsOn(Changelog)
         .Requires(() => !GitRepository.IsOnReleaseBranch() || GitHasCleanWorkingCopy())
@@ -36,6 +38,7 @@ partial class Build
                 FinishReleaseOrHotfix();
         });
 
+    [UsedImplicitly]
     Target Hotfix => _ => _
         .DependsOn(Changelog)
         .Requires(() => !GitRepository.IsOnHotfixBranch() || GitHasCleanWorkingCopy())
