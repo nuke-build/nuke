@@ -35,9 +35,10 @@
   <ItemGroup Condition="'$(TargetFramework)' == ''">
     <None Include="$(MSBuildProjectName).props" PackagePath="build" Pack="true" />
     <None Include="$(MSBuildProjectName).targets" PackagePath="build" Pack="true" />
-    <None Include="..\Nuke.MSBuildTaskRunner\Nuke.MSBuildTaskRunner.targets" PackagePath="build" Pack="true" />
-    <None Include="..\Nuke.MSBuildTaskRunner\bin\$(Configuration)\netcoreapp3.0\publish\**\*.*" PackagePath="build" Pack="true" />
-    <!--<None Include="..\Nuke.MSBuildTaskRunner\bin\$(Configuration)\net461\publish\**\*.*" PackagePath="build\netfx" Pack="true" />-->
+    <None Include="..\Nuke.MSBuildTasks\Nuke.MSBuildTasks.targets" PackagePath="build\netcore" Pack="true" />
+    <None Include="..\Nuke.MSBuildTasks\Nuke.MSBuildTasks.targets" PackagePath="build\netfx" Pack="true" />
+    <None Include="..\Nuke.MSBuildTasks\bin\$(Configuration)\netcoreapp3.0\publish\**\*.*" PackagePath="build\netcore" Pack="true" />
+    <None Include="..\Nuke.MSBuildTasks\bin\$(Configuration)\net472\publish\**\*.*" PackagePath="build\netfx" Pack="true" />
   </ItemGroup>
 
 </Project>
