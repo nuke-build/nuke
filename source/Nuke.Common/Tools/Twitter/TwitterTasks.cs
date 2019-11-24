@@ -57,7 +57,7 @@ namespace Nuke.Common.Tools.Twitter
                     { "oauth_token", accessToken },
                     { "oauth_version", "1.0" }
                 };
-            data.AddKeyValue("oauth_signature", GetOAuthSignature(data, c_url, consumerSecret, accessTokenSecret));
+            data.AddPair("oauth_signature", GetOAuthSignature(data, c_url, consumerSecret, accessTokenSecret));
 
             var authorization = GetOAuthHeader(data);
             var formData = new FormUrlEncodedContent(data.Where(kvp => !kvp.Key.StartsWith("oauth_")));

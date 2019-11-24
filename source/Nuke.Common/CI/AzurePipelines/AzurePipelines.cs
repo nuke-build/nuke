@@ -114,8 +114,8 @@ namespace Nuke.Common.CI.AzurePipelines
             WriteCommand("artifact.upload",
                 packageDirectory,
                 dictionaryConfigurator: x => x
-                    .AddKeyValue("containerfolder", containerDirectory)
-                    .AddKeyValue("artifactname", artifactName));
+                    .AddPair("containerfolder", containerDirectory)
+                    .AddPair("artifactname", artifactName));
         }
 
         public void LogError(
@@ -148,10 +148,10 @@ namespace Nuke.Common.CI.AzurePipelines
             WriteCommand(
                 "codecoverage.publish",
                 dictionaryConfigurator: x => x
-                    .AddKeyValue("codeCoverageTool", coverageTool)
-                    .AddKeyValue("summaryFile", summaryFile)
-                    .AddKeyValue("reportDirectory", reportDirectory)
-                    .AddKeyValue("additionalCodeCoverageFiles", additionalCodeCoverageFiles.Join(",")));
+                    .AddPair("codeCoverageTool", coverageTool)
+                    .AddPair("summaryFile", summaryFile)
+                    .AddPair("reportDirectory", reportDirectory)
+                    .AddPair("additionalCodeCoverageFiles", additionalCodeCoverageFiles.Join(",")));
         }
 
         public void PublishTestResults(
@@ -166,13 +166,13 @@ namespace Nuke.Common.CI.AzurePipelines
             WriteCommand(
                 "results.publish",
                 dictionaryConfigurator: x => x
-                    .AddKeyValue("type", type)
-                    .AddKeyValue("resultFiles", files.Join(","))
-                    .AddKeyValue("mergeResults", mergeResults)
-                    .AddKeyValue("platform", platform)
-                    .AddKeyValue("config", configuration)
-                    .AddKeyValue("runTitle", title.SingleQuote())
-                    .AddKeyValue("publishRunAttachments", publishRunAttachments));
+                    .AddPair("type", type)
+                    .AddPair("resultFiles", files.Join(","))
+                    .AddPairWhenValueNotNull("mergeResults", mergeResults)
+                    .AddPairWhenValueNotNull("platform", platform)
+                    .AddPairWhenValueNotNull("config", configuration)
+                    .AddPairWhenValueNotNull("runTitle", title.SingleQuote())
+                    .AddPairWhenValueNotNull("publishRunAttachments", publishRunAttachments));
         }
 
         public void LogIssue(
@@ -187,11 +187,11 @@ namespace Nuke.Common.CI.AzurePipelines
                 "task.logissue",
                 message,
                 dictionaryConfigurator: x => x
-                    .AddKeyValue("type", GetText(type))
-                    .AddKeyValue("sourcepath", sourcePath)
-                    .AddKeyValue("linenumber", lineNumber)
-                    .AddKeyValue("columnnumber", columnNumber)
-                    .AddKeyValue("code", code));
+                    .AddPair("type", GetText(type))
+                    .AddPairWhenValueNotNull("sourcepath", sourcePath)
+                    .AddPairWhenValueNotNull("linenumber", lineNumber)
+                    .AddPairWhenValueNotNull("columnnumber", columnNumber)
+                    .AddPairWhenValueNotNull("code", code));
         }
 
         private string GetText(AzurePipelinesIssueType type)
@@ -213,7 +213,6 @@ namespace Nuke.Common.CI.AzurePipelines
             var escapedTokens =
                 dictionaryConfigurator?
                     .Invoke(new Dictionary<string, object>())
-                    .Where(x => x.Value != null)
                     .Select(x => $"{x.Key}={EscapeValue(x.Value.ToString())}").ToArray()
                 ?? new string[0];
 
