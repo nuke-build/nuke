@@ -284,5 +284,30 @@ namespace Nuke.Common.Execution
 
             return $"{member.Name}{parameterList}{memberType}";
         }
+
+        public static object InvokeMember(
+            this Type type,
+            string memberName,
+            object target,
+            BindingFlags? bindingFlags = null,
+            params object[] args)
+        {
+            return type.InvokeMember(
+                memberName,
+                (bindingFlags ?? (target != null ? Instance : Static)) | BindingFlags.InvokeMethod,
+                binder: null,
+                target,
+                args);
+        }
+
+        public static T InvokeMember<T>(
+            this Type type,
+            string memberName,
+            object target,
+            BindingFlags? bindingFlags = null,
+            params object[] args)
+        {
+            return (T) type.InvokeMember(memberName, target, bindingFlags, args);
+        }
     }
 }
