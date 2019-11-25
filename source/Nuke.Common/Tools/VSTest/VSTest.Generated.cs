@@ -199,8 +199,8 @@ namespace Nuke.Common.Tools.VSTest
         /// <summary>
         ///   Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.
         /// </summary>
-        public virtual IReadOnlyDictionary<string, string> TestCaseFilters => TestCaseFiltersInternal.AsReadOnly();
-        internal Dictionary<string, string> TestCaseFiltersInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        public virtual IReadOnlyList<string> TestCaseFilters => TestCaseFiltersInternal.AsReadOnly();
+        internal List<string> TestCaseFiltersInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specify a logger for test results. Example: To log results into a Visual Studio Test Results File (TRX) use <c>/Logger:trx</c>.
         /// </summary>
@@ -242,7 +242,7 @@ namespace Nuke.Common.Tools.VSTest
               .Add("/TestAdapterPath:{value}", TestAdapterPath)
               .Add("/Platform:{value}", Platform)
               .Add("/Framework:{value}", Framework)
-              .Add("/TestCaseFilter:{value}", TestCaseFilters, "{key}={value}", separator: '|')
+              .Add("/TestCaseFilter:{value}", TestCaseFilters, separator: '|')
               .Add("/Logger:{value}", Logger)
               .Add("/ListTests:{value}", ListTests)
               .Add("/ListDiscoverers", ListDiscoverers)
@@ -750,14 +750,47 @@ namespace Nuke.Common.Tools.VSTest
         #endregion
         #region TestCaseFilters
         /// <summary>
-        ///   <p><em>Sets <see cref="VSTestSettings.TestCaseFilters"/> to a new dictionary</em></p>
+        ///   <p><em>Sets <see cref="VSTestSettings.TestCaseFilters"/> to a new list</em></p>
         ///   <p>Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings SetTestCaseFilters(this VSTestSettings toolSettings, IDictionary<string, string> testCaseFilters)
+        public static VSTestSettings SetTestCaseFilters(this VSTestSettings toolSettings, params string[] testCaseFilters)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TestCaseFiltersInternal = testCaseFilters.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+            toolSettings.TestCaseFiltersInternal = testCaseFilters.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="VSTestSettings.TestCaseFilters"/> to a new list</em></p>
+        ///   <p>Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.</p>
+        /// </summary>
+        [Pure]
+        public static VSTestSettings SetTestCaseFilters(this VSTestSettings toolSettings, IEnumerable<string> testCaseFilters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TestCaseFiltersInternal = testCaseFilters.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="VSTestSettings.TestCaseFilters"/></em></p>
+        ///   <p>Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.</p>
+        /// </summary>
+        [Pure]
+        public static VSTestSettings AddTestCaseFilters(this VSTestSettings toolSettings, params string[] testCaseFilters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TestCaseFiltersInternal.AddRange(testCaseFilters);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="VSTestSettings.TestCaseFilters"/></em></p>
+        ///   <p>Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.</p>
+        /// </summary>
+        [Pure]
+        public static VSTestSettings AddTestCaseFilters(this VSTestSettings toolSettings, IEnumerable<string> testCaseFilters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TestCaseFiltersInternal.AddRange(testCaseFilters);
             return toolSettings;
         }
         /// <summary>
@@ -772,36 +805,27 @@ namespace Nuke.Common.Tools.VSTest
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Adds a new key-value-pair <see cref="VSTestSettings.TestCaseFilters"/></em></p>
+        ///   <p><em>Removes values from <see cref="VSTestSettings.TestCaseFilters"/></em></p>
         ///   <p>Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings AddTestCaseFilter(this VSTestSettings toolSettings, string testCaseFilterKey, string testCaseFilterValue)
+        public static VSTestSettings RemoveTestCaseFilters(this VSTestSettings toolSettings, params string[] testCaseFilters)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TestCaseFiltersInternal.Add(testCaseFilterKey, testCaseFilterValue);
+            var hashSet = new HashSet<string>(testCaseFilters);
+            toolSettings.TestCaseFiltersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Removes a key-value-pair from <see cref="VSTestSettings.TestCaseFilters"/></em></p>
+        ///   <p><em>Removes values from <see cref="VSTestSettings.TestCaseFilters"/></em></p>
         ///   <p>Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings RemoveTestCaseFilter(this VSTestSettings toolSettings, string testCaseFilterKey)
+        public static VSTestSettings RemoveTestCaseFilters(this VSTestSettings toolSettings, IEnumerable<string> testCaseFilters)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TestCaseFiltersInternal.Remove(testCaseFilterKey);
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Sets a key-value-pair in <see cref="VSTestSettings.TestCaseFilters"/></em></p>
-        ///   <p>Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.</p>
-        /// </summary>
-        [Pure]
-        public static VSTestSettings SetTestCaseFilter(this VSTestSettings toolSettings, string testCaseFilterKey, string testCaseFilterValue)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TestCaseFiltersInternal[testCaseFilterKey] = testCaseFilterValue;
+            var hashSet = new HashSet<string>(testCaseFilters);
+            toolSettings.TestCaseFiltersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion
