@@ -223,6 +223,12 @@ namespace Nuke.Common.Tools.Npm
         /// </summary>
         public override string ToolPath => base.ToolPath ?? NpmTasks.NpmPath;
         public override Action<OutputType, string> CustomLogger => NpmTasks.NpmLogger;
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("ci");
+            return base.ConfigureArguments(arguments);
+        }
     }
     #endregion
     #region NpmInstallSettings
