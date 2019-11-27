@@ -24,7 +24,12 @@ namespace Nuke.Common.Tools.Unity
         [ThreadStatic]
         private static bool s_minimalOutput;
 
-        public static string GetToolPath()
+        public static string GetToolPath(string unityVersionFromHub = null)
+        {
+            return unityVersionFromHub == null ? GetToolPathForInstalledVersion() : GetToolPathForHubVersion(unityVersionFromHub);
+        }
+
+        private static string GetToolPathForInstalledVersion()
         {
             return EnvironmentInfo.Platform switch
             {
@@ -33,6 +38,21 @@ namespace Nuke.Common.Tools.Unity
                         ? SpecialFolders.ProgramFilesX86
                         : SpecialFolders.ProgramFiles)}\Unity\Editor\Unity.exe",
                 PlatformFamily.OSX => "/Applications/Unity/Unity.app/Contents/MacOS/Unity",
+                PlatformFamily.Linux => null,
+                PlatformFamily.Unknown => null,
+                _ => null
+            };
+        }
+
+        private static string GetToolPathForHubVersion(string unityVersion)
+        {
+            return EnvironmentInfo.Platform switch
+            {
+                PlatformFamily.Windows => $@"{EnvironmentInfo.SpecialFolder(
+                    EnvironmentInfo.Is32Bit
+                        ? SpecialFolders.ProgramFilesX86
+                        : SpecialFolders.ProgramFiles)}\Unity\Hub\Editor\{unityVersion}\Editor\Unity.exe",
+                PlatformFamily.OSX => $"/Applications/Unity/Hub/Editor/{unityVersion}/Unity.app/Contents/MacOS/Unity",
                 PlatformFamily.Linux => null,
                 PlatformFamily.Unknown => null,
                 _ => null
