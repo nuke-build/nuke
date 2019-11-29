@@ -23,8 +23,10 @@ partial class Build
 {
     [Parameter] readonly bool UseSSH;
 
+    AbsolutePath GlobalSolution => RootDirectory / "nuke-global.sln";
     AbsolutePath ExternalRepositoriesDirectory => RootDirectory / "external";
     AbsolutePath ExternalRepositoriesFile => ExternalRepositoriesDirectory / "repositories.yml";
+    IEnumerable<Solution> ExternalSolutions => ExternalRepositoriesDirectory.GlobFiles("*/*.sln").Select(x => ParseSolution(x));
 
     IEnumerable<GitRepository> ExternalRepositories =>
         YamlDeserializeFromFile<string[]>(ExternalRepositoriesFile).Select(x => GitRepository.FromUrl(x));
@@ -52,34 +54,50 @@ partial class Build
         .DependsOn(CheckoutExternalRepositories)
         .Executes(() =>
         {
-            var global = CreateSolution();
-            global.Configurations = Solution.Configurations;
+            var global = CreateSolution(GlobalSolution);
+            global.Configurations =
+                Solution?.Configurations ??
+                new Dictionary<string, string>
+                {
+                    { "Debug|Any CPU", "Debug|Any CPU" },
+                    { "Release|Any CPU", "Release|Any CPU" }
+                };
 
             SolutionFolder GetParentFolder(PrimitiveProject solutionFolder) =>
                 global.AllSolutionFolders.FirstOrDefault(x => x.ProjectId == solutionFolder.SolutionFolder?.ProjectId);
 
             void AddSolution(Solution solution, SolutionFolder folder = null)
             {
+                IDictionary<string, string> GetItems(SolutionFolder solutionFolder)
+                    => solutionFolder.Items.Keys
+                        .Select(x => (string) (WinRelativePath) GetRelativePath(global.Directory, solution.Directory / x))
+                        .ToDictionary(x => x, x => x);
+
                 solution.AllSolutionFolders.ForEach(x => global.AddSolutionFolder(x.Name, x.ProjectId, GetParentFolder(x) ?? folder));
-                solution.AllSolutionFolders.ForEach(x => global.GetSolutionFolder(x.ProjectId).Items = x.Items);
-                solution.AllProjects.ForEach(x => global.AddProject(x.Name, x.TypeId, x.Path, x.ProjectId, x.Configurations, GetParentFolder(x) ?? folder));
+                solution.AllSolutionFolders.ForEach(x => global.GetSolutionFolder(x.ProjectId).Items = GetItems(x));
+                solution.AllProjects.ForEach(x =>
+                    global.AddProject(x.Name, x.TypeId, x.Path, x.ProjectId, x.Configurations, GetParentFolder(x) ?? folder));
             }
 
             AddSolution(Solution);
+            ExternalSolutions.ForEach(x => AddSolution(x, global.AddSolutionFolder(x.Name)));
 
-            ExternalRepositoriesDirectory.GlobFiles("*/*.sln")
-                .Select(x => ParseSolution(x))
-                .ForEach(x => AddSolution(x, global.AddSolutionFolder(x.Name)));
+            global.Save();
 
-            global.SaveAs(RootDirectory / "nuke-global.sln");
+            if (File.Exists(RootDirectory / $"{Solution.FileName}.DotSettings"))
+            {
+                CopyFile(
+                    source: RootDirectory / $"{Solution.FileName}.DotSettings",
+                    target: RootDirectory / $"{global.FileName}.DotSettings",
+                    FileExistsPolicy.Overwrite);
+            }
 
-            CopyFile(
-                source: RootDirectory / "nuke-common.sln.DotSettings",
-                target: RootDirectory / $"{global.FileName}.DotSettings",
-                FileExistsPolicy.Overwrite);
-            CopyFile(
-                source: RootDirectory / "nuke-common.sln.DotSettings.user",
-                target: RootDirectory / $"{global.FileName}.DotSettings.user",
-                FileExistsPolicy.Overwrite);
+            if (File.Exists(RootDirectory / $"{Solution.FileName}.DotSettings.user"))
+            {
+                CopyFile(
+                    source: RootDirectory / $"{Solution.FileName}.DotSettings.user",
+                    target: RootDirectory / $"{global.FileName}.DotSettings.user",
+                    FileExistsPolicy.Overwrite);
+            }
         });
 }
