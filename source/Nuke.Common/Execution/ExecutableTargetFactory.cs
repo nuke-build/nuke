@@ -48,7 +48,7 @@ namespace Nuke.Common.Execution
                                  AssuredAfterFailure = definition.IsAssuredAfterFailure,
                                  Requirements = definition.Requirements,
                                  Actions = definition.Actions,
-                                 Listed = !definition.IsInternal,
+                                 Listed = !definition.IsInternal
                              };
 
                 executables.Add(target);
