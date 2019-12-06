@@ -310,7 +310,7 @@ namespace Nuke.Common.CI.TeamCity
             if (!IsDescendantPath(NukeBuild.RootDirectory, source))
                 return source;
 
-            var relativeSource = (string) (UnixRelativePath) GetRelativePath(NukeBuild.RootDirectory, source);
+            var relativeSource = (string) GetUnixRelativePath(NukeBuild.RootDirectory, source);
             var target = relativeSource.TakeWhile(x => x != '*').Reverse().SkipWhile(x => x != '/').Reverse();
             return $"{relativeSource} => {new string(target.ToArray()).TrimEnd('/')}";
         }

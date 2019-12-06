@@ -79,6 +79,18 @@ namespace Nuke.Common.IO
                 _ => (EnvironmentInfo.IsWin ? GlobOptions.CaseInsensitive : GlobOptions.None)
             };
 
+        [Pure]
+        public static WinRelativePath GetWinRelativePath(string basePath, string destinationPath)
+        {
+            return (WinRelativePath) GetRelativePath(basePath, destinationPath);
+        }
+
+        [Pure]
+        public static UnixRelativePath GetUnixRelativePath(string basePath, string destinationPath)
+        {
+            return (UnixRelativePath) GetRelativePath(basePath, destinationPath);
+        }
+
         // TODO: check usages
         [Pure]
         public static string GetRelativePath(string basePath, string destinationPath, bool normalize = true)
@@ -311,6 +323,7 @@ namespace Nuke.Common.IO
                 : path.TrimEnd(s_allSeparators);
         }
 
+        [PublicAPI]
         [Serializable]
         [DebuggerDisplay("{" + nameof(_path) + "}")]
         public class RelativePath
@@ -343,12 +356,23 @@ namespace Nuke.Common.IO
                 return new RelativePath(NormalizePath(Combine(left, (RelativePath) right, separator), separator), separator);
             }
 
+            public WinRelativePath GetWinRelativePathTo()
+            {
+                return (WinRelativePath) this;
+            }
+
+            public UnixRelativePath GetUnixRelativePathTo()
+            {
+                return (UnixRelativePath) this;
+            }
+
             public override string ToString()
             {
                 return _path;
             }
         }
 
+        [PublicAPI]
         [Serializable]
         public class UnixRelativePath : RelativePath
         {
@@ -361,8 +385,19 @@ namespace Nuke.Common.IO
             {
                 return new UnixRelativePath(NormalizePath(path, UnixSeparator), UnixSeparator);
             }
+
+            public WinRelativePath GetWinRelativePathTo(string path)
+            {
+                return GetWinRelativePath(this, path);
+            }
+
+            public UnixRelativePath GetUnixRelativePathTo(string path)
+            {
+                return GetUnixRelativePath(this, path);
+            }
         }
 
+        [PublicAPI]
         [Serializable]
         public class WinRelativePath : RelativePath
         {
@@ -375,8 +410,19 @@ namespace Nuke.Common.IO
             {
                 return new WinRelativePath(NormalizePath(path, WinSeparator), WinSeparator);
             }
+
+            public WinRelativePath GetWinRelativePathTo(string path)
+            {
+                return GetWinRelativePath(this, path);
+            }
+
+            public UnixRelativePath GetUnixRelativePathTo(string path)
+            {
+                return GetUnixRelativePath(this, path);
+            }
         }
 
+        [PublicAPI]
         [Serializable]
         [TypeConverter(typeof(TypeConverter))]
         [DebuggerDisplay("{" + nameof(_path) + "}")]

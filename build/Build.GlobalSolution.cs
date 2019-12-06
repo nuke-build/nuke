@@ -71,7 +71,7 @@ partial class Build
             {
                 IDictionary<string, string> GetItems(SolutionFolder solutionFolder)
                     => solutionFolder.Items.Keys
-                        .Select(x => (string) (WinRelativePath) GetRelativePath(global.Directory, solution.Directory / x))
+                        .Select(x => (string) GetWinRelativePath(global.Directory, solution.Directory / x))
                         .ToDictionary(x => x, x => x);
 
                 solution.AllSolutionFolders.ForEach(x => global.AddSolutionFolder(x.Name, x.ProjectId, GetParentFolder(x) ?? folder));
