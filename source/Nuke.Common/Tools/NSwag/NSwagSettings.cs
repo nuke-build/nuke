@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tools.NSwag
 {
@@ -18,25 +19,25 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>The runtime of the nswag tool to use.</summary>
         public string NSwagRuntime { get; set; } = NSwagTasks.Runtime.Win.ToString();
 
-        private bool _isNetCore => NSwagRuntime != null && NSwagRuntime.StartsWith("NetCore", StringComparison.OrdinalIgnoreCase);
+        private bool IsNetCore => NSwagRuntime != null && NSwagRuntime.StartsWith("NetCore", StringComparison.OrdinalIgnoreCase);
 
         public override Action<OutputType, string> CustomLogger { get; }
 
         [NotNull]
         protected override Arguments ConfigureArguments([NotNull] Arguments arguments)
         {
-            if (!_isNetCore)
+            if (!IsNetCore)
                 return base.ConfigureArguments(arguments);
 
             var args = new Arguments();
-            args.Add($"{GetNetCoreDllPath(NSwagRuntime)}");
+            args.Add($"{GetNetCoreDllPath(NSwagRuntime).DoubleQuoteIfNeeded()}");
             args.Concatenate(arguments);
             return base.ConfigureArguments(args);
         }
 
         protected string GetToolPath()
         {
-            if (_isNetCore)
+            if (IsNetCore)
                 return DotNetTasks.DotNetPath;
             return GetPackageFrameworkDir() / "Win" / "NSwag.exe";
         }
