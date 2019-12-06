@@ -23,7 +23,7 @@ namespace Nuke.Common.ProjectModel
 
         public static Solution Deserialize(string[] content, string solutionFile = null)
         {
-            var trimmedContent = content.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+            var trimmedContent = content.Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
 
             var solution = new Solution
                            {
@@ -133,8 +133,8 @@ namespace Nuke.Common.ProjectModel
                 {
                     var items = content
                         .Skip(i)
-                        .TakeWhile(x => !x.StartsWith("EndProject"))
-                        .Where(x => x.StartsWith("\t\t"))
+                        .TakeWhile(x => !x.StartsWith("EndProjectSection") && !x.StartsWith("EndProject"))
+                        .Skip(2)
                         .Select(x => x.Split('='))
                         .ToDictionary(x => x[0].Trim(), x => x[1].Trim());
 
