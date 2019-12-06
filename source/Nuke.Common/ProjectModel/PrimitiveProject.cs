@@ -22,9 +22,9 @@ namespace Nuke.Common.ProjectModel
         }
 
         public Solution Solution { get; }
-        public Guid ProjectId { get; }
-        public string Name { get; }
-        public Guid TypeId { get; }
+        public Guid ProjectId { get; set; }
+        public string Name { get; set; }
+        public Guid TypeId { get; set; }
 
         public SolutionFolder SolutionFolder
         {

@@ -2,6 +2,7 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -75,8 +76,10 @@ partial class Build
 
                 solution.AllSolutionFolders.ForEach(x => global.AddSolutionFolder(x.Name, x.ProjectId, GetParentFolder(x) ?? folder));
                 solution.AllSolutionFolders.ForEach(x => global.GetSolutionFolder(x.ProjectId).Items = GetItems(x));
-                solution.AllProjects.ForEach(x =>
-                    global.AddProject(x.Name, x.TypeId, x.Path, x.ProjectId, x.Configurations, GetParentFolder(x) ?? folder));
+                solution.AllProjects.ForEach(x => global.AddProject(x.Name, x.TypeId, x.Path, x.ProjectId, x.Configurations, GetParentFolder(x) ?? folder));
+
+                global.AllSolutionFolders.ForEach(x => x.ProjectId = Guid.NewGuid());
+                global.AllProjects.ForEach(x => x.ProjectId = Guid.NewGuid());
             }
 
             AddSolution(Solution);
