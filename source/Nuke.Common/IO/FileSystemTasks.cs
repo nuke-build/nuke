@@ -34,12 +34,12 @@ namespace Nuke.Common.IO
             return directory.Name.StartsWith(".");
         }
 
-        public static bool FileExists(PathConstruction.AbsolutePath path)
+        public static bool FileExists(AbsolutePath path)
         {
             return File.Exists(path);
         }
 
-        public static bool DirectoryExists(PathConstruction.AbsolutePath path)
+        public static bool DirectoryExists(AbsolutePath path)
         {
             return Directory.Exists(path);
         }
@@ -72,7 +72,7 @@ namespace Nuke.Common.IO
             }
         }
 
-        public static void DeleteDirectory(PathConstruction.AbsolutePath directory)
+        public static void DeleteDirectory(AbsolutePath directory)
         {
             DeleteDirectory((string) directory);
         }
@@ -105,7 +105,7 @@ namespace Nuke.Common.IO
             File.Delete(file);
         }
 
-        public static void DeleteFile(PathConstruction.AbsolutePath file)
+        public static void DeleteFile(AbsolutePath file)
         {
             DeleteFile((string) file);
         }

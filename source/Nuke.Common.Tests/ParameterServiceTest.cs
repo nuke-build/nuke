@@ -33,7 +33,7 @@ namespace Nuke.Common.Tests
         [InlineData("AMOUNT", typeof(int), 5)]
         [InlineData("noLogo", typeof(bool), true)]
         [InlineData("NoDeps", typeof(bool), false)]
-        [InlineData("root", typeof(PathConstruction.AbsolutePath), null)]
+        [InlineData("root", typeof(AbsolutePath), null)]
         public void TestConversion(string argument, Type destinationType, object expectedValue)
         {
             GetService(
@@ -78,7 +78,7 @@ namespace Nuke.Common.Tests
         [InlineData(typeof(int?), null)]
         [InlineData(typeof(string), null)]
         [InlineData(typeof(string[]), null)]
-        [InlineData(typeof(PathConstruction.AbsolutePath), null)]
+        [InlineData(typeof(AbsolutePath), null)]
         public void TestNotSupplied(Type destinationType, object expectedValue)
         {
             GetService().GetCommandLineArgument("notsupplied", destinationType, separator: null).Should().Be(expectedValue);
@@ -132,8 +132,8 @@ namespace Nuke.Common.Tests
             service.GetParameter("guid", destinationType: typeof(Guid), separator: null)
                 .Should().BeOfType<Guid>().Subject.Should().Be(guid);
 
-            service.GetParameter("root", destinationType: typeof(PathConstruction.AbsolutePath), separator: null)
-                .Should().BeOfType<PathConstruction.AbsolutePath>().Subject.ToString().Should().Be("/bin/etc");
+            service.GetParameter("root", destinationType: typeof(AbsolutePath), separator: null)
+                .Should().BeOfType<AbsolutePath>().Subject.ToString().Should().Be("/bin/etc");
         }
 
         [Fact]
@@ -189,7 +189,7 @@ namespace Nuke.Common.Tests
                     "3"
                 });
 
-            service.GetFromMemberInfo(GetMemberInfo(() => RootDirectory), typeof(PathConstruction.AbsolutePath), service.GetParameter)
+            service.GetFromMemberInfo(GetMemberInfo(() => RootDirectory), typeof(AbsolutePath), service.GetParameter)
                 .Should().BeNull();
 
             service.GetFromMemberInfo(GetMemberInfo(() => RootDirectory), typeof(bool), service.GetParameter)

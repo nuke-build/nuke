@@ -45,24 +45,24 @@ namespace Nuke.Common
         /// Gets the full path to the root directory.
         /// </summary>
         [Parameter("Root directory during build execution.", Name = "Root")]
-        public static PathConstruction.AbsolutePath RootDirectory { get; }
+        public static AbsolutePath RootDirectory { get; }
 
         /// <summary>
         /// Gets the full path to the temporary directory <c>/.tmp</c>.
         /// </summary>
-        public static PathConstruction.AbsolutePath TemporaryDirectory { get; }
+        public static AbsolutePath TemporaryDirectory { get; }
 
         /// <summary>
         /// Gets the full path to the build assembly directory, or <c>null</c>.
         /// </summary>
         [CanBeNull]
-        public static PathConstruction.AbsolutePath BuildAssemblyDirectory { get; }
+        public static AbsolutePath BuildAssemblyDirectory { get; }
 
         /// <summary>
         /// Gets the full path to the build project directory, or <c>null</c>
         /// </summary>
         [CanBeNull]
-        public static PathConstruction.AbsolutePath BuildProjectDirectory { get; }
+        public static AbsolutePath BuildProjectDirectory { get; }
 
         /// <summary>
         /// Gets the logging verbosity during build execution. Default is <see cref="Nuke.Common.Verbosity.Normal"/>.
@@ -102,14 +102,14 @@ namespace Nuke.Common
         [Parameter("Indicates to continue a previously failed build attempt.")]
         public static bool Continue { get; internal set; }
 
-        private static PathConstruction.AbsolutePath GetRootDirectory()
+        private static AbsolutePath GetRootDirectory()
         {
             var parameterValue = EnvironmentInfo.GetParameter(() => RootDirectory);
             if (parameterValue != null)
                 return parameterValue;
 
             if (EnvironmentInfo.GetParameter<bool>(() => RootDirectory))
-                return (PathConstruction.AbsolutePath) EnvironmentInfo.WorkingDirectory;
+                return (AbsolutePath) EnvironmentInfo.WorkingDirectory;
 
             return TryGetRootDirectoryFrom(EnvironmentInfo.WorkingDirectory)
                 .NotNull(new[]
@@ -120,22 +120,22 @@ namespace Nuke.Common
         }
 
         [CanBeNull]
-        private static PathConstruction.AbsolutePath GetBuildAssemblyDirectory()
+        private static AbsolutePath GetBuildAssemblyDirectory()
         {
             var entryAssembly = Assembly.GetEntryAssembly();
             if (entryAssembly == null || entryAssembly.GetTypes().All(x => !x.IsSubclassOf(typeof(NukeBuild))))
                 return null;
 
-            return (PathConstruction.AbsolutePath) Path.GetDirectoryName(entryAssembly.Location).NotNull();
+            return (AbsolutePath) Path.GetDirectoryName(entryAssembly.Location).NotNull();
         }
 
         [CanBeNull]
-        private static PathConstruction.AbsolutePath GetBuildProjectDirectory(PathConstruction.AbsolutePath buildAssemblyDirectory)
+        private static AbsolutePath GetBuildProjectDirectory(AbsolutePath buildAssemblyDirectory)
         {
             if (buildAssemblyDirectory == null)
                 return null;
 
-            return (PathConstruction.AbsolutePath) new DirectoryInfo(buildAssemblyDirectory)
+            return (AbsolutePath) new DirectoryInfo(buildAssemblyDirectory)
                 .DescendantsAndSelf(x => x.Parent)
                 .Select(x => x.GetFiles("*.csproj", SearchOption.TopDirectoryOnly)
                     .SingleOrDefaultOrError($"Found multiple project files in '{x}'."))

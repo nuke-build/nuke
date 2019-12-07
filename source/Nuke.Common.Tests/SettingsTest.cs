@@ -17,7 +17,7 @@ namespace Nuke.Common.Tests
 {
     public class SettingsTest
     {
-        private static PathConstruction.AbsolutePath RootDirectory => Constants.TryGetRootDirectoryFrom(Directory.GetCurrentDirectory()).NotNull();
+        private static AbsolutePath RootDirectory => Constants.TryGetRootDirectoryFrom(Directory.GetCurrentDirectory()).NotNull();
 
         private static void Assert<T>(Configure<T> configurator, string arguments)
             where T : ToolSettings, new()

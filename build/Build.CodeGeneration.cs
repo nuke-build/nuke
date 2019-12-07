@@ -5,6 +5,7 @@
 using JetBrains.Annotations;
 using Nuke.CodeGeneration.Model;
 using Nuke.Common;
+using Nuke.Common.IO;
 using Nuke.Common.Tools.GitHub;
 using static Nuke.CodeGeneration.CodeGenerator;
 using static Nuke.CodeGeneration.ReferenceUpdater;

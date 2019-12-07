@@ -21,7 +21,7 @@ namespace Nuke.Common.Execution
     /// </summary>
     internal static class BuildExecutor
     {
-        private static PathConstruction.AbsolutePath BuildAttemptFile => Constants.GetBuildAttemptFile(NukeBuild.RootDirectory);
+        private static AbsolutePath BuildAttemptFile => Constants.GetBuildAttemptFile(NukeBuild.RootDirectory);
 
         public static void Execute(NukeBuild build, [CanBeNull] IReadOnlyCollection<string> skippedTargets)
         {

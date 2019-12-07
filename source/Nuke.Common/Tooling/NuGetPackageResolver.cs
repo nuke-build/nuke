@@ -363,7 +363,7 @@ namespace Nuke.Common.Tooling
             }
 
             public string FileName { get; }
-            public PathConstruction.AbsolutePath Directory => (PathConstruction.AbsolutePath) Path.GetDirectoryName(FileName).NotNull();
+            public AbsolutePath Directory => (AbsolutePath) Path.GetDirectoryName(FileName).NotNull();
             public NuspecReader Metadata { get; }
             public string Id => Metadata.GetIdentity().Id;
             public NuGetVersion Version => Metadata.GetIdentity().Version;

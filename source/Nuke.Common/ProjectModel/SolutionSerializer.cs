@@ -27,7 +27,7 @@ namespace Nuke.Common.ProjectModel
 
             var solution = new Solution
                            {
-                               Path = (PathConstruction.AbsolutePath) solutionFile,
+                               Path = (AbsolutePath) solutionFile,
                                Header = content.TakeWhile(x => !x.StartsWith("Project")).ToArray(),
                                Properties = trimmedContent.GetGlobalSection("SolutionProperties"),
                                ExtensibilityGlobals = trimmedContent.GetGlobalSection("ExtensibilityGlobals"),
@@ -177,7 +177,7 @@ namespace Nuke.Common.ProjectModel
 
             foreach (var project in solution.PrimitiveProjects)
             {
-                var path = (PathConstruction.WinRelativePath) project.RelativePath;
+                var path = (WinRelativePath) project.RelativePath;
                 Write($@"Project(""{Format(project.TypeId)}"") = ""{project.Name}"", ""{path}"", ""{Format(project.ProjectId)}""");
                 WriteSection(
                     "ProjectSection(SolutionItems) = preProject",
