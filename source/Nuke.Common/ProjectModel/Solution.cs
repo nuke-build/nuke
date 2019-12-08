@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.ProjectModel
 {
@@ -160,6 +161,27 @@ namespace Nuke.Common.ProjectModel
         public void Save()
         {
             SolutionSerializer.Serialize(this);
+        }
+
+        public void AddSolution(Solution solution, SolutionFolder folder = null)
+        {
+            SolutionFolder GetParentFolder(PrimitiveProject solutionFolder) =>
+                AllSolutionFolders.FirstOrDefault(x => x.ProjectId == solutionFolder.SolutionFolder?.ProjectId);
+
+            IDictionary<string, string> GetItems(SolutionFolder solutionFolder)
+                => solutionFolder.Items.Keys
+                    .Select(x => (string) PathConstruction.GetWinRelativePath(Directory, solution.Directory / x))
+                    .ToDictionary(x => x, x => x);
+
+            solution.AllSolutionFolders.ForEach(x => AddSolutionFolder(x.Name, x.ProjectId, GetParentFolder(x) ?? folder));
+            solution.AllSolutionFolders.ForEach(x => GetSolutionFolder(x.ProjectId).Items = GetItems(x));
+            solution.AllProjects.ForEach(x => AddProject(x.Name, x.TypeId, x.Path, x.ProjectId, x.Configurations, GetParentFolder(x) ?? folder));
+        }
+
+        public void RandomizeProjectIds()
+        {
+            AllSolutionFolders.ForEach(x => x.ProjectId = Guid.NewGuid());
+            AllProjects.ForEach(x => x.ProjectId = Guid.NewGuid());
         }
     }
 }

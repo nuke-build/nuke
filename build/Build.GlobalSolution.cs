@@ -55,37 +55,10 @@ partial class Build
         .DependsOn(CheckoutExternalRepositories)
         .Executes(() =>
         {
-            var global = CreateSolution(GlobalSolution);
-            global.Configurations =
-                Solution?.Configurations ??
-                new Dictionary<string, string>
-                {
-                    { "Debug|Any CPU", "Debug|Any CPU" },
-                    { "Release|Any CPU", "Release|Any CPU" }
-                };
-
-            SolutionFolder GetParentFolder(PrimitiveProject solutionFolder) =>
-                global.AllSolutionFolders.FirstOrDefault(x => x.ProjectId == solutionFolder.SolutionFolder?.ProjectId);
-
-            void AddSolution(Solution solution, SolutionFolder folder = null)
-            {
-                IDictionary<string, string> GetItems(SolutionFolder solutionFolder)
-                    => solutionFolder.Items.Keys
-                        .Select(x => (string) GetWinRelativePath(global.Directory, solution.Directory / x))
-                        .ToDictionary(x => x, x => x);
-
-                solution.AllSolutionFolders.ForEach(x => global.AddSolutionFolder(x.Name, x.ProjectId, GetParentFolder(x) ?? folder));
-                solution.AllSolutionFolders.ForEach(x => global.GetSolutionFolder(x.ProjectId).Items = GetItems(x));
-                solution.AllProjects.ForEach(x => global.AddProject(x.Name, x.TypeId, x.Path, x.ProjectId, x.Configurations, GetParentFolder(x) ?? folder));
-
-                global.AllSolutionFolders.ForEach(x => x.ProjectId = Guid.NewGuid());
-                global.AllProjects.ForEach(x => x.ProjectId = Guid.NewGuid());
-            }
-
-            AddSolution(Solution);
-            ExternalSolutions.ForEach(x => AddSolution(x, global.AddSolutionFolder(x.Name)));
-
-            global.Save();
+            var global = CreateSolution(
+                solutions: new[] { Solution }.Concat(ExternalSolutions),
+                folderNameProvider: x => x == Solution ? null : x.Name);
+            global.SaveAs(GlobalSolution);
 
             if (File.Exists(RootDirectory / $"{Solution.FileName}.DotSettings"))
             {

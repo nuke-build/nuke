@@ -10,15 +10,27 @@ using Microsoft.Build.Evaluation;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.ProjectModel
 {
     [PublicAPI]
     public static class ProjectModelTasks
     {
-        public static Solution CreateSolution(string fileName = null)
+        public static Solution CreateSolution(string fileName = null, params Solution[] solutions)
         {
-            return SolutionSerializer.Deserialize(
+            return CreateSolution(fileName, solutions, folderNameProvider: null);
+        }
+
+        public static Solution CreateSolution(
+            string fileName = null,
+            IEnumerable<Solution> solutions = null,
+            Func<Solution, string> folderNameProvider = null,
+            bool randomizeProjectIds = true)
+        {
+            ControlFlow.Assert(folderNameProvider != null || solutions != null, "folderNameProvider != null || solutions!= null");
+
+            var solution = SolutionSerializer.Deserialize(
                 new[]
                 {
                     "Microsoft Visual Studio Solution File, Format Version 12.00",
@@ -27,6 +39,26 @@ namespace Nuke.Common.ProjectModel
                     "MinimumVisualStudioVersion = 15.0.26124.0"
                 },
                 fileName);
+
+            solution.Configurations = new Dictionary<string, string>
+                                      {
+                                          { "Debug|Any CPU", "Debug|Any CPU" },
+                                          { "Release|Any CPU", "Release|Any CPU" }
+                                      };
+
+            solutions?.ForEach(x =>
+            {
+                var folder = folderNameProvider != null && folderNameProvider(x) is { } folderName
+                    ? solution.AddSolutionFolder(folderName)
+                    : null;
+
+                solution.AddSolution(x, folder);
+
+                if (randomizeProjectIds)
+                    solution.RandomizeProjectIds();
+            });
+
+            return solution;
         }
 
         public static Solution ParseSolution(string solutionFile)
