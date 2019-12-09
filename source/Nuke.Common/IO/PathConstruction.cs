@@ -90,6 +90,11 @@ namespace Nuke.Common.IO
             return (UnixRelativePath) (string) path;
         }
 
+        public static bool Contains(this AbsolutePath basePath, string destinationPath)
+        {
+            return IsDescendantPath(basePath, destinationPath);
+        }
+
         // TODO: check usages
         [Pure]
         public static string GetRelativePath(string basePath, string destinationPath, bool normalize = true)

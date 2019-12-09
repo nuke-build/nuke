@@ -307,7 +307,7 @@ namespace Nuke.Common.CI.TeamCity
 
         protected virtual string GetArtifactRule(string source)
         {
-            if (!IsDescendantPath(NukeBuild.RootDirectory, source))
+            if (!NukeBuild.RootDirectory.Contains(source))
                 return source;
 
             var relativeSource = (string) GetUnixRelativePath(NukeBuild.RootDirectory, source);

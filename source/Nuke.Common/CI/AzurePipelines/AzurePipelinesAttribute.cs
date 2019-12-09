@@ -122,7 +122,7 @@ namespace Nuke.Common.CI.AzurePipelines
 
         protected virtual string GetArtifact(string artifact)
         {
-            if (IsDescendantPath(NukeBuild.RootDirectory, artifact))
+            if (NukeBuild.RootDirectory.Contains(artifact))
                 artifact = GetRelativePath(NukeBuild.RootDirectory, artifact);
 
             return HasPathRoot(artifact)
