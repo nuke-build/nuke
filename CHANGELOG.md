@@ -5,6 +5,41 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Removed NuGetPackage tasks and AutoMapper package reference
+- Removed timezone specification for TeamCity scheduled triggers to use server timezone
+- Changed `AbsolutePath`, `RelativePath`, `WinRelativePath` and `UnixRelativePath` to outer scope
+- Changed default package for `DotCoverTasks` to `JetBrains.dotCover.DotNetCliTool`
+- Changed default includes to be provided via `Nuke.Common.targets`
+- Changed `ConfigurationGenerationAttributeBase` to `ConfigurationAttributeBase`
+- Changed manually invoked targets to be TeamCity deployment configurations
+- Changed `AzurePipelines` interface to use enumerations for test result type and code coverage tool type
+- Changed package version for `Glob`, `Microsoft.IdentityModel.Clients.ActiveDirectory`, `Newtonsoft.Json`, `NuGet.Packaging`, `Refit`, `YamlDotNet`
+- Added `AzureKeyVault` – previously available as addon
+- Added `DocFXTasks`, `DockerTasks`, `HelmTasks`, `KubernetesTasks`, and `NSwagTasks` – previously available as addons
+- Added TeamCity logger extension method for `DotNetBuildSettings`
+- Added support for checkboxes in TeamCity configuration
+- Added `GitHubTasks`
+- Added `ProjectModelTasks.CreateSolution`
+- Added `Solution.GetProject` and `GetSolutionFolder` overloads via `Guid`
+- Added `TeamCity.NightlyBuildAlways` property
+- Added detailed null-check for `teamcity.build.branch` configuration property
+- Added Coverlet extension methods for `DotNetTest` task
+- Added `AzurePipelines.PublishCodeCoverage`
+- Added setters for `Project` properties
+- Added `Solution.AddSolution` and `ProjectModelTask.CreateSolution` overload for creating global solutions
+- Added path extension methods for `Get(Win|Unix)RelativePathTo`, `Contains`, and `To(Win|Unix)RelativePath`
+- Fixed path separators for AppVeyor and GitHubActions configurations
+- Fixed `NSwag` to quote tool path
+- Fixed `SolutionSerializer` to handle inconsistent whitespaces
+- Fixed `NpmCi` task to include definite argument
+- Fixed `VSTestSettings.TestCaseFilters` to be list of strings
+- Fixed `EnvironmentInfo.FrameworkName`
+- Fixed `cleanCheckoutDirectory` to be set for all TeamCity build types
+- Fixed `AddTeamCityLogger` extension method
+- Fixed `buildType` reference in TeamCity build-finished triggers
+- Fixed `artifactRules` in TeamCity for single files
+- Fixed `ReportGenerator` task to resolve `ReportGenerator.dll`
+- Fixed sharing of artifacts between agents
 
 ## [0.23.4] / 2019-11-16
 - Fixed assignment for `NuGetAssetsConfigFile` when `BuildProjectDirectory` is null
