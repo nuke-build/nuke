@@ -22,15 +22,5 @@ namespace Nuke.Common.IO
         {
             return new WinRelativePath(NormalizePath(path, WinSeparator), WinSeparator);
         }
-
-        public WinRelativePath GetWinRelativePathTo(string path)
-        {
-            return GetWinRelativePath(this, path);
-        }
-
-        public UnixRelativePath GetUnixRelativePathTo(string path)
-        {
-            return GetUnixRelativePath(this, path);
-        }
     }
 }

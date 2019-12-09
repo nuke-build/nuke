@@ -39,16 +39,6 @@ namespace Nuke.Common.IO
             return new RelativePath(NormalizePath(Combine(left, (RelativePath) right, separator), separator), separator);
         }
 
-        public WinRelativePath GetWinRelativePathTo()
-        {
-            return (WinRelativePath) this;
-        }
-
-        public UnixRelativePath GetUnixRelativePathTo()
-        {
-            return (UnixRelativePath) this;
-        }
-
         public override string ToString()
         {
             return _path;

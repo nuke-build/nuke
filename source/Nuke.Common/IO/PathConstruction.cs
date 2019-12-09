@@ -65,6 +65,31 @@ namespace Nuke.Common.IO
             return (UnixRelativePath) GetRelativePath(basePath, destinationPath);
         }
 
+        public static RelativePath GetRelativePathTo(this AbsolutePath basePath, string destinationPath)
+        {
+            return (RelativePath) GetRelativePath(basePath, destinationPath);
+        }
+
+        public static WinRelativePath GetWinRelativePathTo(this AbsolutePath basePath, string destinationPath)
+        {
+            return GetWinRelativePath(basePath, destinationPath);
+        }
+
+        public static UnixRelativePath GetUnixRelativePathTo(this AbsolutePath basePath, string destinationPath)
+        {
+            return GetUnixRelativePath(basePath, destinationPath);
+        }
+
+        public static WinRelativePath ToWinRelativePath(this RelativePath path)
+        {
+            return (WinRelativePath) (string) path;
+        }
+
+        public static UnixRelativePath ToUnixRelativePath(this RelativePath path)
+        {
+            return (UnixRelativePath) (string) path;
+        }
+
         // TODO: check usages
         [Pure]
         public static string GetRelativePath(string basePath, string destinationPath, bool normalize = true)
