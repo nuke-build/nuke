@@ -81,7 +81,7 @@ namespace Nuke.Common.CI.AppVeyor
             return relevantTargets
                 .Select(x => ArtifactExtensions.ArtifactProducts[x.Definition])
                 .SelectMany(x => x)
-                .Select(x => GetRelativePath(NukeBuild.RootDirectory, x));
+                .Select(x => NukeBuild.RootDirectory.GetUnixRelativePathTo(x).ToString());
         }
 
         protected AppVeyorBranches GetBranches()

@@ -117,7 +117,7 @@ namespace Nuke.Common.CI.GitHubActions
                 yield return new GitHubActionsArtifactStep
                              {
                                  Name = artifact.ToString().TrimStart(artifact.Parent.ToString()).TrimStart('/', '\\'),
-                                 Path = GetRelativePath(NukeBuild.RootDirectory, artifact)
+                                 Path = NukeBuild.RootDirectory.GetUnixRelativePathTo(artifact)
                              };
             }
         }
