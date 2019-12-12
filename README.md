@@ -64,7 +64,7 @@ If you want to contribute, check out the [contribution guidelines](CONTRIBUTING.
 
 Thanks to all the great people who have already contributed to the project! 
 
-[![Contributors](https://opencollective.com/nuke/contributors.svg?button=false&avatarHeight=80&width=900)](CONTRIBUTORS.md)
+[![Contributors](https://opencollective.com/nuke/contributors.svg?button=false&avatarHeight=80&width=900)](graphs/contributors)
 
 ## Backers & Sponsors
 
