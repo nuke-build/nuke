@@ -96,6 +96,7 @@ This project is driven by contributors investing their private free time. If it 
 - [joaomatossilva/DateTimeExtensions](https://github.com/joaomatossilva/DateTimeExtensions)
 - [ViGEm/HidGuardian](https://github.com/ViGEm/HidGuardian/tree/master/build)
 - [VirtoCommerce/vc-platform](https://github.com/VirtoCommerce/vc-platform/tree/release/3.0.0/build)
+- [GeorgDangl/LightQuery](https://github.com/GeorgDangl/LightQuery/tree/dev/build)
 
 ## Acknowledgements
 
