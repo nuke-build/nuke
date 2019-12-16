@@ -1,5 +1,7 @@
 // Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Docker.json
 
+#pragma warning disable CS1574
+
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Nuke.Common;
