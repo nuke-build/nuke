@@ -24,10 +24,10 @@ NUGET_URL="https://dist.nuget.org/win-x86-commandline/$NUGET_VERSION/nuget.exe"
 echo $(mono --version 2>&1 | head -n 1)
 
 export NUGET_EXE="$TEMP_DIRECTORY/nuget.exe"
-if [ ! -f "$NUGET_EXE" ]; then
+if [[ ! -f "$NUGET_EXE" ]]; then
     mkdir -p "$TEMP_DIRECTORY"
     curl -Lsfo "$NUGET_EXE" "$NUGET_URL"
-elif [ "$NUGET_VERSION" == "latest" ]; then
+elif [[ "$NUGET_VERSION" == "latest" ]]; then
     mono "$NUGET_EXE" update -Self
 fi
 echo $(mono "$NUGET_EXE" help 2>&1 | head -n 1)
