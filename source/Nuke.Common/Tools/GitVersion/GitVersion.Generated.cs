@@ -70,7 +70,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///     <li><c>/showvariable</c> via <see cref="GitVersionSettings.ShowVariable"/></li>
         ///     <li><c>/u</c> via <see cref="GitVersionSettings.Username"/></li>
         ///     <li><c>/updateassemblyinfo</c> via <see cref="GitVersionSettings.UpdateAssemblyInfo"/></li>
-        ///     <li><c>/updateassemblyinfofilename</c> via <see cref="GitVersionSettings.UpdateAssemblyInfoFileName"/></li>
+        ///     <li><c>/updateassemblyinfofilename</c> via <see cref="GitVersionSettings.UpdateAssemblyInfoFileNames"/></li>
         ///     <li><c>/url</c> via <see cref="GitVersionSettings.Url"/></li>
         ///     <li><c>/verbosity</c> via <see cref="GitVersionSettings.Verbosity"/></li>
         ///     <li><c>/version</c> via <see cref="GitVersionSettings.Version"/></li>
@@ -110,7 +110,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///     <li><c>/showvariable</c> via <see cref="GitVersionSettings.ShowVariable"/></li>
         ///     <li><c>/u</c> via <see cref="GitVersionSettings.Username"/></li>
         ///     <li><c>/updateassemblyinfo</c> via <see cref="GitVersionSettings.UpdateAssemblyInfo"/></li>
-        ///     <li><c>/updateassemblyinfofilename</c> via <see cref="GitVersionSettings.UpdateAssemblyInfoFileName"/></li>
+        ///     <li><c>/updateassemblyinfofilename</c> via <see cref="GitVersionSettings.UpdateAssemblyInfoFileNames"/></li>
         ///     <li><c>/url</c> via <see cref="GitVersionSettings.Url"/></li>
         ///     <li><c>/verbosity</c> via <see cref="GitVersionSettings.Verbosity"/></li>
         ///     <li><c>/version</c> via <see cref="GitVersionSettings.Version"/></li>
@@ -147,7 +147,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///     <li><c>/showvariable</c> via <see cref="GitVersionSettings.ShowVariable"/></li>
         ///     <li><c>/u</c> via <see cref="GitVersionSettings.Username"/></li>
         ///     <li><c>/updateassemblyinfo</c> via <see cref="GitVersionSettings.UpdateAssemblyInfo"/></li>
-        ///     <li><c>/updateassemblyinfofilename</c> via <see cref="GitVersionSettings.UpdateAssemblyInfoFileName"/></li>
+        ///     <li><c>/updateassemblyinfofilename</c> via <see cref="GitVersionSettings.UpdateAssemblyInfoFileNames"/></li>
         ///     <li><c>/url</c> via <see cref="GitVersionSettings.Url"/></li>
         ///     <li><c>/verbosity</c> via <see cref="GitVersionSettings.Verbosity"/></li>
         ///     <li><c>/version</c> via <see cref="GitVersionSettings.Version"/></li>
@@ -214,9 +214,10 @@ namespace Nuke.Common.Tools.GitVersion
         /// </summary>
         public virtual bool? UpdateAssemblyInfo { get; internal set; }
         /// <summary>
-        ///   Specify name of AssemblyInfo file.
+        ///   Specify name of AssemblyInfo files to update.
         /// </summary>
-        public virtual bool? UpdateAssemblyInfoFileName { get; internal set; }
+        public virtual IReadOnlyList<string> UpdateAssemblyInfoFileNames => UpdateAssemblyInfoFileNamesInternal.AsReadOnly();
+        internal List<string> UpdateAssemblyInfoFileNamesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   If the assembly info file specified with <c>/updateassemblyinfo</c> or <c>/updateassemblyinfofilename</c> is not found, it will be created with these attributes: AssemblyFileVersion, AssemblyVersion and AssemblyInformationalVersion.
         /// </summary>
@@ -283,7 +284,7 @@ namespace Nuke.Common.Tools.GitVersion
               .Add("/overrideconfig {value}", ConfigurationOverride, "{key}={value}")
               .Add("/nocache", NoCache)
               .Add("/updateassemblyinfo", UpdateAssemblyInfo)
-              .Add("/updateassemblyinfofilename {value}", UpdateAssemblyInfoFileName)
+              .Add("/updateassemblyinfofilename {value}", UpdateAssemblyInfoFileNames, separator: ' ')
               .Add("/ensureassemblyinfo", EnsureAssemblyInfo)
               .Add("/url {value}", Url)
               .Add("/b {value}", Branch)
@@ -786,60 +787,84 @@ namespace Nuke.Common.Tools.GitVersion
             return toolSettings;
         }
         #endregion
-        #region UpdateAssemblyInfoFileName
+        #region UpdateAssemblyInfoFileNames
         /// <summary>
-        ///   <p><em>Sets <see cref="GitVersionSettings.UpdateAssemblyInfoFileName"/></em></p>
-        ///   <p>Specify name of AssemblyInfo file.</p>
+        ///   <p><em>Sets <see cref="GitVersionSettings.UpdateAssemblyInfoFileNames"/> to a new list</em></p>
+        ///   <p>Specify name of AssemblyInfo files to update.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetUpdateAssemblyInfoFileName(this GitVersionSettings toolSettings, bool? updateAssemblyInfoFileName)
+        public static GitVersionSettings SetUpdateAssemblyInfoFileNames(this GitVersionSettings toolSettings, params string[] updateAssemblyInfoFileNames)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.UpdateAssemblyInfoFileName = updateAssemblyInfoFileName;
+            toolSettings.UpdateAssemblyInfoFileNamesInternal = updateAssemblyInfoFileNames.ToList();
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Resets <see cref="GitVersionSettings.UpdateAssemblyInfoFileName"/></em></p>
-        ///   <p>Specify name of AssemblyInfo file.</p>
+        ///   <p><em>Sets <see cref="GitVersionSettings.UpdateAssemblyInfoFileNames"/> to a new list</em></p>
+        ///   <p>Specify name of AssemblyInfo files to update.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetUpdateAssemblyInfoFileName(this GitVersionSettings toolSettings)
+        public static GitVersionSettings SetUpdateAssemblyInfoFileNames(this GitVersionSettings toolSettings, IEnumerable<string> updateAssemblyInfoFileNames)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.UpdateAssemblyInfoFileName = null;
+            toolSettings.UpdateAssemblyInfoFileNamesInternal = updateAssemblyInfoFileNames.ToList();
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Enables <see cref="GitVersionSettings.UpdateAssemblyInfoFileName"/></em></p>
-        ///   <p>Specify name of AssemblyInfo file.</p>
+        ///   <p><em>Adds values to <see cref="GitVersionSettings.UpdateAssemblyInfoFileNames"/></em></p>
+        ///   <p>Specify name of AssemblyInfo files to update.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings EnableUpdateAssemblyInfoFileName(this GitVersionSettings toolSettings)
+        public static GitVersionSettings AddUpdateAssemblyInfoFileNames(this GitVersionSettings toolSettings, params string[] updateAssemblyInfoFileNames)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.UpdateAssemblyInfoFileName = true;
+            toolSettings.UpdateAssemblyInfoFileNamesInternal.AddRange(updateAssemblyInfoFileNames);
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Disables <see cref="GitVersionSettings.UpdateAssemblyInfoFileName"/></em></p>
-        ///   <p>Specify name of AssemblyInfo file.</p>
+        ///   <p><em>Adds values to <see cref="GitVersionSettings.UpdateAssemblyInfoFileNames"/></em></p>
+        ///   <p>Specify name of AssemblyInfo files to update.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings DisableUpdateAssemblyInfoFileName(this GitVersionSettings toolSettings)
+        public static GitVersionSettings AddUpdateAssemblyInfoFileNames(this GitVersionSettings toolSettings, IEnumerable<string> updateAssemblyInfoFileNames)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.UpdateAssemblyInfoFileName = false;
+            toolSettings.UpdateAssemblyInfoFileNamesInternal.AddRange(updateAssemblyInfoFileNames);
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Toggles <see cref="GitVersionSettings.UpdateAssemblyInfoFileName"/></em></p>
-        ///   <p>Specify name of AssemblyInfo file.</p>
+        ///   <p><em>Clears <see cref="GitVersionSettings.UpdateAssemblyInfoFileNames"/></em></p>
+        ///   <p>Specify name of AssemblyInfo files to update.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ToggleUpdateAssemblyInfoFileName(this GitVersionSettings toolSettings)
+        public static GitVersionSettings ClearUpdateAssemblyInfoFileNames(this GitVersionSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.UpdateAssemblyInfoFileName = !toolSettings.UpdateAssemblyInfoFileName;
+            toolSettings.UpdateAssemblyInfoFileNamesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="GitVersionSettings.UpdateAssemblyInfoFileNames"/></em></p>
+        ///   <p>Specify name of AssemblyInfo files to update.</p>
+        /// </summary>
+        [Pure]
+        public static GitVersionSettings RemoveUpdateAssemblyInfoFileNames(this GitVersionSettings toolSettings, params string[] updateAssemblyInfoFileNames)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(updateAssemblyInfoFileNames);
+            toolSettings.UpdateAssemblyInfoFileNamesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="GitVersionSettings.UpdateAssemblyInfoFileNames"/></em></p>
+        ///   <p>Specify name of AssemblyInfo files to update.</p>
+        /// </summary>
+        [Pure]
+        public static GitVersionSettings RemoveUpdateAssemblyInfoFileNames(this GitVersionSettings toolSettings, IEnumerable<string> updateAssemblyInfoFileNames)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(updateAssemblyInfoFileNames);
+            toolSettings.UpdateAssemblyInfoFileNamesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion
