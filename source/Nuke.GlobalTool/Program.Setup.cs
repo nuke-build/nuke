@@ -311,16 +311,16 @@ namespace Nuke.GlobalTool
 
                 TextTasks.WriteAllText(
                     $"{solutionFile}.DotSettings.ext",
-                    "https://raw.githubusercontent.com/nuke-build/common/develop/nuke-common.sln.DotSettings");
+                    "https://raw.githubusercontent.com/nuke-build/nuke/develop/nuke-common.sln.DotSettings");
                 TextTasks.WriteAllText(
                     Path.Combine(solutionDirectory, "source", "Inspections.DotSettings.ext"),
-                    "https://raw.githubusercontent.com/nuke-build/common/develop/source/Inspections.DotSettings");
+                    "https://raw.githubusercontent.com/nuke-build/nuke/develop/source/Inspections.DotSettings");
                 TextTasks.WriteAllText(
                     Path.Combine(solutionDirectory, "source", "CodeStyle.DotSettings.ext"),
-                    "https://raw.githubusercontent.com/nuke-build/common/develop/source/CodeStyle.DotSettings");
+                    "https://raw.githubusercontent.com/nuke-build/nuke/develop/source/CodeStyle.DotSettings");
                 TextTasks.WriteAllText(
                     Path.Combine(solutionDirectory, "source", "Configuration.props.ext"),
-                    "https://raw.githubusercontent.com/nuke-build/common/develop/source/Configuration.props");
+                    "https://raw.githubusercontent.com/nuke-build/nuke/develop/source/Configuration.props");
             }
 
             #endregion
