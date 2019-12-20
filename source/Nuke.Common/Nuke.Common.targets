@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(NukeScriptDirectory) != ''">
+    <None Include="$(NukeScriptDirectory)\build.cmd" LinkBase="boot" />
     <None Include="$(NukeScriptDirectory)\build.ps1" LinkBase="boot" />
     <None Include="$(NukeScriptDirectory)\build.sh" LinkBase="boot" />
   </ItemGroup>
