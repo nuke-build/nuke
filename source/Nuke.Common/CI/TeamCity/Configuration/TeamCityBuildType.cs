@@ -17,8 +17,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
         public TeamCityBuildTypeVcsRoot VcsRoot { get; set; }
         public bool IsComposite { get; set; }
         public bool IsDeployment { get; set; }
-        public string PowerShellScript { get; set; }
-        public string BashScript { get; set; }
+        public string BuildScript { get; set; }
         public string[] InvokedTargets { get; set; }
         public Partition Partition { get; set; }
         public string PartitionName { get; set; }
@@ -117,29 +116,11 @@ namespace Nuke.Common.CI.TeamCity.Configuration
                 if (Partition != null)
                     arguments += $" --{ParameterService.GetParameterDashedName(PartitionName)} {Partition.Part}";
 
-                if (Platform == TeamCityAgentPlatform.Unix)
-                    WriteExecStep(writer, arguments);
-                else
-                    WritePowerShellStep(writer, arguments);
-            }
-        }
-
-        public virtual void WriteExecStep(CustomFileWriter writer, string arguments)
-        {
-            using (writer.WriteBlock("exec"))
-            {
-                writer.WriteLine($"path = {BashScript.DoubleQuote()}");
-                writer.WriteLine($"arguments = {arguments.DoubleQuote()}");
-            }
-        }
-
-        public virtual void WritePowerShellStep(CustomFileWriter writer, string arguments)
-        {
-            using (writer.WriteBlock("powerShell"))
-            {
-                writer.WriteLine($"scriptMode = file {{ path = {PowerShellScript.DoubleQuote()} }}");
-                writer.WriteLine($"param(\"jetbrains_powershell_scriptArguments\", {arguments.DoubleQuote()})");
-                writer.WriteLine("noProfile = true");
+                using (writer.WriteBlock("exec"))
+                {
+                    writer.WriteLine($"path = {BuildScript.DoubleQuote()}");
+                    writer.WriteLine($"arguments = {arguments.DoubleQuote()}");
+                }
             }
         }
     }

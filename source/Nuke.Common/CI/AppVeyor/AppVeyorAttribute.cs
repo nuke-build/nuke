@@ -60,7 +60,7 @@ namespace Nuke.Common.CI.AppVeyor
             return new AppVeyorConfiguration
                    {
                        Images = _images,
-                       BuildScript = PowerShellScript,
+                       BuildScript = BuildScript,
                        Services = Services,
                        Branches = GetBranches(),
                        SkipTags = SkipTags,

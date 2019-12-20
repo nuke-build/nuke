@@ -27,8 +27,8 @@ stages:
         steps:
           - task: PowerShell@2
             inputs:
-              filePath: 'build.ps1'
-              arguments: 'Restore Compile --skip'
+              targetType: 'inline'
+              script: '.\build.cmd Restore Compile --skip'
       - job: Test
         displayName: '🚦 Test 🧩'
         dependsOn: [ Compile ]
@@ -37,8 +37,8 @@ stages:
         steps:
           - task: PowerShell@2
             inputs:
-              filePath: 'build.ps1'
-              arguments: 'Test --skip --test-partition $(System.JobPositionInPhase)'
+              targetType: 'inline'
+              script: '.\build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: output
@@ -49,8 +49,8 @@ stages:
         steps:
           - task: PowerShell@2
             inputs:
-              filePath: 'build.ps1'
-              arguments: 'Pack --skip'
+              targetType: 'inline'
+              script: '.\build.cmd Pack --skip'
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: output
@@ -67,8 +67,8 @@ stages:
         steps:
           - task: PowerShell@2
             inputs:
-              filePath: 'build.ps1'
-              arguments: 'Restore Compile --skip'
+              targetType: 'inline'
+              script: '.\build.cmd Restore Compile --skip'
       - job: Test
         displayName: '🚦 Test 🧩'
         dependsOn: [ Compile ]
@@ -77,8 +77,8 @@ stages:
         steps:
           - task: PowerShell@2
             inputs:
-              filePath: 'build.ps1'
-              arguments: 'Test --skip --test-partition $(System.JobPositionInPhase)'
+              targetType: 'inline'
+              script: '.\build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: output
@@ -89,8 +89,8 @@ stages:
         steps:
           - task: PowerShell@2
             inputs:
-              filePath: 'build.ps1'
-              arguments: 'Pack --skip'
+              targetType: 'inline'
+              script: '.\build.cmd Pack --skip'
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: output
@@ -107,8 +107,8 @@ stages:
         steps:
           - task: PowerShell@2
             inputs:
-              filePath: 'build.ps1'
-              arguments: 'Restore Compile --skip'
+              targetType: 'inline'
+              script: '.\build.cmd Restore Compile --skip'
       - job: Test
         displayName: '🚦 Test 🧩'
         dependsOn: [ Compile ]
@@ -117,8 +117,8 @@ stages:
         steps:
           - task: PowerShell@2
             inputs:
-              filePath: 'build.ps1'
-              arguments: 'Test --skip --test-partition $(System.JobPositionInPhase)'
+              targetType: 'inline'
+              script: '.\build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: output
@@ -129,8 +129,8 @@ stages:
         steps:
           - task: PowerShell@2
             inputs:
-              filePath: 'build.ps1'
-              arguments: 'Pack --skip'
+              targetType: 'inline'
+              script: '.\build.cmd Pack --skip'
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: output

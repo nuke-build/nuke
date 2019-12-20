@@ -34,15 +34,10 @@ namespace Nuke.Common.CI
         protected abstract IEnumerable<string> RelevantTargetNames { get; }
         protected abstract IEnumerable<string> IrrelevantTargetNames { get; }
 
-        protected virtual string PowerShellScript =>
-            NukeBuild.RootDirectory.GlobFiles("build.ps1", "*/build.ps1")
-                .Select(x => GetWinRelativePath(NukeBuild.RootDirectory, x))
-                .FirstOrDefault().NotNull("PowerShellScript != null");
-
-        protected virtual string BashScript =>
-            NukeBuild.RootDirectory.GlobFiles("build.sh", "*/build.sh")
-                .Select(x => GetUnixRelativePath(NukeBuild.RootDirectory, x))
-                .FirstOrDefault().NotNull("BashScript != null");
+        protected virtual string BuildScript =>
+            NukeBuild.RootDirectory.GlobFiles("build.cmd", "*/build.cmd")
+                .Select(x => NukeBuild.RootDirectory.GetUnixRelativePathTo(x))
+                .FirstOrDefault().NotNull("BuildScript != null");
 
         public void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {

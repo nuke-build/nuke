@@ -158,8 +158,7 @@ namespace Nuke.Common.CI.TeamCity
                                      Name = $"{executableTarget.Name} {partition}",
                                      Description = executableTarget.Description,
                                      Platform = Platform,
-                                     BashScript = BashScript,
-                                     PowerShellScript = PowerShellScript,
+                                     BuildScript = BuildScript,
                                      ArtifactRules = artifactRules,
                                      Partition = partition,
                                      PartitionName = partitionName,
@@ -196,8 +195,7 @@ namespace Nuke.Common.CI.TeamCity
                              Name = executableTarget.Name,
                              Description = executableTarget.Description,
                              Platform = Platform,
-                             BashScript = BashScript,
-                             PowerShellScript = PowerShellScript,
+                             BuildScript = BuildScript,
                              VcsRoot = new TeamCityBuildTypeVcsRoot
                                        {
                                            Root = vcsRoot,

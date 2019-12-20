@@ -108,10 +108,9 @@ object Compile : BuildType({
         cleanCheckout = true
     }
     steps {
-        powerShell {
-            scriptMode = file { path = "build.ps1" }
-            param("jetbrains_powershell_scriptArguments", "Restore Compile --skip")
-            noProfile = true
+        exec {
+            path = "build.cmd"
+            arguments = "Restore Compile --skip"
         }
     }
 })
@@ -125,10 +124,9 @@ object Pack : BuildType({
         output/*.nupkg => output
     """.trimIndent()
     steps {
-        powerShell {
-            scriptMode = file { path = "build.ps1" }
-            param("jetbrains_powershell_scriptArguments", "Pack --skip")
-            noProfile = true
+        exec {
+            path = "build.cmd"
+            arguments = "Pack --skip"
         }
     }
     triggers {
@@ -166,10 +164,9 @@ object Test_P1T2 : BuildType({
         output/*.xml => output
     """.trimIndent()
     steps {
-        powerShell {
-            scriptMode = file { path = "build.ps1" }
-            param("jetbrains_powershell_scriptArguments", "Test --skip --test-partition 1")
-            noProfile = true
+        exec {
+            path = "build.cmd"
+            arguments = "Test --skip --test-partition 1"
         }
     }
     dependencies {
@@ -190,10 +187,9 @@ object Test_P2T2 : BuildType({
         output/*.xml => output
     """.trimIndent()
     steps {
-        powerShell {
-            scriptMode = file { path = "build.ps1" }
-            param("jetbrains_powershell_scriptArguments", "Test --skip --test-partition 2")
-            noProfile = true
+        exec {
+            path = "build.cmd"
+            arguments = "Test --skip --test-partition 2"
         }
     }
     dependencies {
@@ -262,10 +258,9 @@ object Coverage : BuildType({
         output/coverage-report.zip => output
     """.trimIndent()
     steps {
-        powerShell {
-            scriptMode = file { path = "build.ps1" }
-            param("jetbrains_powershell_scriptArguments", "Coverage --skip")
-            noProfile = true
+        exec {
+            path = "build.cmd"
+            arguments = "Coverage --skip"
         }
     }
     triggers {
@@ -294,10 +289,9 @@ object Publish : BuildType({
         cleanCheckout = true
     }
     steps {
-        powerShell {
-            scriptMode = file { path = "build.ps1" }
-            param("jetbrains_powershell_scriptArguments", "Publish --skip")
-            noProfile = true
+        exec {
+            path = "build.cmd"
+            arguments = "Publish --skip"
         }
     }
     params {
@@ -346,10 +340,9 @@ object Announce : BuildType({
         cleanCheckout = true
     }
     steps {
-        powerShell {
-            scriptMode = file { path = "build.ps1" }
-            param("jetbrains_powershell_scriptArguments", "Announce --skip")
-            noProfile = true
+        exec {
+            path = "build.cmd"
+            arguments = "Announce --skip"
         }
     }
     triggers {

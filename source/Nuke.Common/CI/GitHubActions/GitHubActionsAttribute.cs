@@ -97,12 +97,9 @@ namespace Nuke.Common.CI.GitHubActions
                              Using = "actions/checkout@v1"
                          };
 
-            var invocationCommand = image.ToString().StartsWithOrdinalIgnoreCase("Windows")
-                ? $"powershell .\\{PowerShellScript}"
-                : $"./{BashScript}";
             yield return new GitHubActionsRunStep
                          {
-                             Command = $"{invocationCommand} {InvokedTargets.JoinSpace()}",
+                             Command = $"./{BuildScript} {InvokedTargets.JoinSpace()}",
                              Imports = GetImports().ToDictionary(x => x.key, x => x.value)
                          };
 

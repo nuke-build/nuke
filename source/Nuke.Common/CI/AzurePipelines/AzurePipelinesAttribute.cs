@@ -111,7 +111,7 @@ namespace Nuke.Common.CI.AzurePipelines
                    {
                        Name = executableTarget.Name,
                        DisplayName = executableTarget.Name,
-                       ScriptPath = PowerShellScript,
+                       BuildScript = BuildScript,
                        Dependencies = dependencies,
                        Parallel = totalPartitions,
                        PartitionName = partitionName,

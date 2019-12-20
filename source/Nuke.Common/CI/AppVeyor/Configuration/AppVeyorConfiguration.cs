@@ -101,7 +101,7 @@ namespace Nuke.Common.CI.AppVeyor.Configuration
 
             using (writer.WriteBlock("build_script:"))
             {
-                writer.WriteLine($@"- ps: .\{BuildScript} {InvokedTargets.JoinSpace()}");
+                writer.WriteLine($@"- cmd: .\{BuildScript} {InvokedTargets.JoinSpace()}");
                 writer.WriteLine();
             }
 

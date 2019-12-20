@@ -24,8 +24,8 @@ jobs:
     runs-on: macOS-10.14
     steps:
       - uses: actions/checkout@v1
-      - name: Run './build.sh Test Pack'
-        run: ./build.sh Test Pack
+      - name: Run './build.cmd Test Pack'
+        run: ./build.cmd Test Pack
         env:
             GitHubToken: ${{ secrets.GITHUB_TOKEN }}
             SlackWebhook: ${{ secrets.SlackWebhook }}
@@ -43,8 +43,8 @@ jobs:
     runs-on: ubuntu-16.04
     steps:
       - uses: actions/checkout@v1
-      - name: Run './build.sh Test Pack'
-        run: ./build.sh Test Pack
+      - name: Run './build.cmd Test Pack'
+        run: ./build.cmd Test Pack
         env:
             GitHubToken: ${{ secrets.GITHUB_TOKEN }}
             SlackWebhook: ${{ secrets.SlackWebhook }}
@@ -62,8 +62,8 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
-      - name: Run './build.sh Test Pack'
-        run: ./build.sh Test Pack
+      - name: Run './build.cmd Test Pack'
+        run: ./build.cmd Test Pack
         env:
             GitHubToken: ${{ secrets.GITHUB_TOKEN }}
             SlackWebhook: ${{ secrets.SlackWebhook }}
@@ -81,8 +81,8 @@ jobs:
     runs-on: windows-2016
     steps:
       - uses: actions/checkout@v1
-      - name: Run 'powershell .\build.ps1 Test Pack'
-        run: powershell .\build.ps1 Test Pack
+      - name: Run './build.cmd Test Pack'
+        run: ./build.cmd Test Pack
         env:
             GitHubToken: ${{ secrets.GITHUB_TOKEN }}
             SlackWebhook: ${{ secrets.SlackWebhook }}
@@ -100,8 +100,8 @@ jobs:
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v1
-      - name: Run 'powershell .\build.ps1 Test Pack'
-        run: powershell .\build.ps1 Test Pack
+      - name: Run './build.cmd Test Pack'
+        run: ./build.cmd Test Pack
         env:
             GitHubToken: ${{ secrets.GITHUB_TOKEN }}
             SlackWebhook: ${{ secrets.SlackWebhook }}
