@@ -47,6 +47,10 @@ namespace Nuke.Common.CI.TeamCity
         public string DefaultBranch { get; set; } = "develop";
         public bool CleanCheckoutDirectory { get; set; } = true;
 
+        public bool VcsUseSsh { get; set; }
+        public string[] VcsBranchSpec { get; set; } = { "+:refs/heads/*" };
+        public int VcsPollInterval { get; set; } = 60;
+
         public string VcsTriggerBranchFilter { get; set; } = "";
         public string VcsTriggerRules { get; set; } = "+:**";
         public string[] VcsTriggeredTargets { get; set; } = new string[0];
@@ -249,13 +253,15 @@ namespace Nuke.Common.CI.TeamCity
         protected virtual TeamCityVcsRoot GetVcsRoot(NukeBuild build)
         {
             var repository = GitRepository.FromLocalDirectory(NukeBuild.RootDirectory);
+            var remoteUrl = VcsUseSsh ? repository.SshUrl : repository.HttpsUrl;
+
             return new TeamCityVcsRoot
                    {
-                       Name = $"{repository.HttpsUrl}#refs/heads/{DefaultBranch}",
-                       Url = repository.HttpsUrl,
+                       Name = $"{remoteUrl}#refs/heads/{DefaultBranch}",
+                       Url = remoteUrl,
                        Branch = $"refs/heads/{DefaultBranch}",
-                       PollInterval = 60,
-                       BranchSpec = new[] { "+:refs/heads/*" }
+                       PollInterval = VcsPollInterval,
+                       BranchSpec = VcsBranchSpec
                    };
         }
 
