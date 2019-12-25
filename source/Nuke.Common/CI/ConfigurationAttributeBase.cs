@@ -108,7 +108,7 @@ namespace Nuke.Common.CI
 
             var changedFiles = GeneratedFiles
                 .Where(x => GetFileHash(x) != previousHashes.GetValueOrDefault(x))
-                .Select(x => GetRelativePath(NukeBuild.RootDirectory, x)).ToList();
+                .Select(x => NukeBuild.RootDirectory.GetRelativePathTo(x)).ToList();
 
             if (changedFiles.Count > 0)
             {
