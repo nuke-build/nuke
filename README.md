@@ -74,7 +74,7 @@ NUKE builds and tests itself on several different CI servers, which helps ensuri
 
 NUKE is already a stable full-featured tool that allows implementing build automation on a professional level, and it continues to evolve! We add new features all the time, but we have too many new cool ideas so that any help is highly appreciated. You can develop new features, fix bugs, improve the documentation, or do some other cool stuff.
 
-If you want to contribute, check out the [contribution guidelines](CONTRIBUTING.md) and
+If you want to contribute, check out the [contribution guidelines](https://github.com/nuke-build/.github/blob/master/.github/CONTRIBUTING.md) and
   [first-timer](https://github.com/nuke-build/nuke/issues?q=is%3Aissue+is%3Aopen+label%3A%22first-timers+%3Ahugs%3A%22) issues. If you have new ideas or want to complain about bugs, feel free to [create an issue](https://github.com/nuke-build/nuke/issues/new). Let's create the best tool for build automation together!
 
 Thanks to all the great people who have already contributed to the project! 
