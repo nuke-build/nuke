@@ -25,7 +25,7 @@ namespace Nuke.Common.CI.AzurePipelines
 
         public static AzurePipelines Instance => NukeBuild.Host == HostType.AzurePipelines ? s_instance.Value : null;
 
-        internal static bool IsRunningAzurePipelines => Environment.GetEnvironmentVariable("TF_BUILD") != null;
+        internal static bool IsRunningAzurePipelines => !Environment.GetEnvironmentVariable("TF_BUILD").IsNullOrEmpty();
 
         private readonly Action<string> _messageSink;
 
