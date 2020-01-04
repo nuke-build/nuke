@@ -23,8 +23,6 @@ import jetbrains.buildServer.configs.kotlin.v2018_1.vcs.*
 version = "2019.1"
 
 project {
-    vcsRoot(VcsRoot)
-
     buildType(Compile)
     buildType(Pack)
     buildType(Test_P1T2)
@@ -92,19 +90,10 @@ project {
         )
     }
 }
-object VcsRoot : GitVcsRoot({
-    name = "https://github.com/nuke-build/nuke.git#refs/heads/develop"
-    url = "https://github.com/nuke-build/nuke.git"
-    branch = "refs/heads/develop"
-    pollInterval = 60
-    branchSpec = """
-        +:refs/heads/*
-    """.trimIndent()
-})
 object Compile : BuildType({
     name = "⚙️ Compile"
     vcs {
-        root(VcsRoot)
+        root(DslContext.settingsRoot)
         cleanCheckout = true
     }
     steps {
@@ -117,7 +106,7 @@ object Compile : BuildType({
 object Pack : BuildType({
     name = "📦 Pack"
     vcs {
-        root(VcsRoot)
+        root(DslContext.settingsRoot)
         cleanCheckout = true
     }
     artifactRules = """
@@ -156,7 +145,7 @@ object Pack : BuildType({
 object Test_P1T2 : BuildType({
     name = "🚦 Test 🧩 1/2"
     vcs {
-        root(VcsRoot)
+        root(DslContext.settingsRoot)
         cleanCheckout = true
     }
     artifactRules = """
@@ -179,7 +168,7 @@ object Test_P1T2 : BuildType({
 object Test_P2T2 : BuildType({
     name = "🚦 Test 🧩 2/2"
     vcs {
-        root(VcsRoot)
+        root(DslContext.settingsRoot)
         cleanCheckout = true
     }
     artifactRules = """
@@ -203,7 +192,7 @@ object Test : BuildType({
     name = "🚦 Test"
     type = Type.COMPOSITE
     vcs {
-        root(VcsRoot)
+        root(DslContext.settingsRoot)
         cleanCheckout = true
         showDependenciesChanges = true
     }
@@ -251,7 +240,7 @@ object Test : BuildType({
 object Coverage : BuildType({
     name = "📊 Coverage"
     vcs {
-        root(VcsRoot)
+        root(DslContext.settingsRoot)
         cleanCheckout = true
     }
     artifactRules = """
@@ -285,7 +274,7 @@ object Publish : BuildType({
     name = "🚚 Publish"
     type = Type.DEPLOYMENT
     vcs {
-        root(VcsRoot)
+        root(DslContext.settingsRoot)
         cleanCheckout = true
     }
     steps {
@@ -336,7 +325,7 @@ object Publish : BuildType({
 object Announce : BuildType({
     name = "🗣 Announce"
     vcs {
-        root(VcsRoot)
+        root(DslContext.settingsRoot)
         cleanCheckout = true
     }
     steps {

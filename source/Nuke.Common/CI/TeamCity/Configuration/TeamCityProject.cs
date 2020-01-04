@@ -22,9 +22,6 @@ namespace Nuke.Common.CI.TeamCity.Configuration
                 if (Description != null)
                     writer.WriteLine($"description = {Description}");
 
-                writer.WriteLine($"vcsRoot({VcsRoot.Id})");
-                writer.WriteLine();
-
                 foreach (var buildType in BuildTypes)
                     writer.WriteLine($"buildType({buildType.Id})");
                 writer.WriteLine();
