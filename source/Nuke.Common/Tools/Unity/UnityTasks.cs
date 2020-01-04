@@ -62,6 +62,12 @@ namespace Nuke.Common.Tools.Unity
             };
         }
 
+        private static void PreProcess(ref UnitySettings unitySettings)
+        {
+            ControlFlow.AssertWarn(unitySettings.ProjectPath != null, "unitySettings.ProjectPath != null");
+            PreProcess<UnitySettings>(ref unitySettings);
+        }
+
         private static void PreProcess<T>(ref T unitySettings)
             where T : UnityBaseSettings
         {
