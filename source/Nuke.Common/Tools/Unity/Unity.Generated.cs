@@ -841,6 +841,10 @@ namespace Nuke.Common.Tools.Unity
         /// </summary>
         public virtual IReadOnlyList<int> StableExitCodes => StableExitCodesInternal.AsReadOnly();
         internal List<int> StableExitCodesInternal { get; set; } = new List<int>();
+        /// <summary>
+        ///   Defines the Unity version to use. The version must be installed via Unity Hub.
+        /// </summary>
+        public virtual string HubVersion { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -3735,6 +3739,30 @@ namespace Nuke.Common.Tools.Unity
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<int>(stableExitCodes);
             toolSettings.StableExitCodesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region HubVersion
+        /// <summary>
+        ///   <p><em>Sets <see cref="UnityBaseSettings.HubVersion"/></em></p>
+        ///   <p>Defines the Unity version to use. The version must be installed via Unity Hub.</p>
+        /// </summary>
+        [Pure]
+        public static UnityBaseSettings SetHubVersion(this UnityBaseSettings toolSettings, string hubVersion)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HubVersion = hubVersion;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="UnityBaseSettings.HubVersion"/></em></p>
+        ///   <p>Defines the Unity version to use. The version must be installed via Unity Hub.</p>
+        /// </summary>
+        [Pure]
+        public static UnityBaseSettings ResetHubVersion(this UnityBaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HubVersion = null;
             return toolSettings;
         }
         #endregion

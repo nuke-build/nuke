@@ -14,7 +14,7 @@ namespace Nuke.Common.Tools.Unity
 
         public string GetToolPath()
         {
-            return UnityTasks.GetToolPath();
+            return UnityTasks.GetToolPath(HubVersion);
         }
 
         public string GetLogFile()
