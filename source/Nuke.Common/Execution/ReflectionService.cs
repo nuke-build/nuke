@@ -8,8 +8,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -91,6 +91,9 @@ namespace Nuke.Common.Execution
 
         public static MemberInfo GetMemberInfo(this LambdaExpression expression)
         {
+            if (expression.Body is MethodCallExpression methodCallExpression)
+                return methodCallExpression.Method;
+
             var memberExpression = !(expression.Body is UnaryExpression unaryExpression)
                 ? (MemberExpression) expression.Body
                 : (MemberExpression) unaryExpression.Operand;
@@ -308,6 +311,27 @@ namespace Nuke.Common.Execution
             params object[] args)
         {
             return (T) type.InvokeMember(memberName, target, bindingFlags, args);
+        }
+
+        public static TResult InvokeNonVirtual<TObject, TResult>(this TObject obj, Expression<Func<TObject, TResult>> func)
+        {
+            var method = (MethodInfo) func.GetMemberInfo();
+
+            var dynamicMethod = new DynamicMethod(
+                name: $"Own{method.Name}",
+                returnType: typeof(TResult),
+                parameterTypes: new[] { typeof(TObject) }.Concat(method.GetParameters().Select(x => x.ParameterType)).ToArray(),
+                owner: typeof(TObject));
+
+            var generator = dynamicMethod.GetILGenerator();
+            dynamicMethod.GetParameters().ForEach((x, i) => generator.Emit(OpCodes.Ldarg_S, i));
+            generator.Emit(OpCodes.Call, method);
+            generator.Emit(OpCodes.Ret);
+
+            var methodCallExpression = (MethodCallExpression) func.Body;
+            var arguments = obj.Concat(methodCallExpression.Arguments.Cast<ConstantExpression>().Select(x => x.Value)).ToArray();
+
+            return (TResult) dynamicMethod.Invoke(obj: null, arguments);
         }
     }
 }
