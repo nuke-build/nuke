@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.IO;
 using System.Linq;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
@@ -101,7 +102,7 @@ namespace Nuke.Common.CI.AppVeyor.Configuration
 
             using (writer.WriteBlock("build_script:"))
             {
-                writer.WriteLine($@"- cmd: .\{BuildScript} {InvokedTargets.JoinSpace()}");
+                writer.WriteLine($@"- ps: .\{Path.ChangeExtension(BuildScript, ".ps1")} {InvokedTargets.JoinSpace()}");
                 writer.WriteLine();
             }
 
