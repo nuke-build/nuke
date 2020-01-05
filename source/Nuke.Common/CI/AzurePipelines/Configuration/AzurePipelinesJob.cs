@@ -62,7 +62,7 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
             //     }
             // }
 
-            using (writer.WriteBlock("- task: PowerShell@2"))
+            using (writer.WriteBlock("- task: CmdLine@2"))
             {
                 var arguments = $"{InvokedTargets.JoinSpace()} --skip";
                 if (PartitionName != null)
@@ -70,8 +70,7 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
 
                 using (writer.WriteBlock("inputs:"))
                 {
-                    writer.WriteLine($"targetType: 'inline'");
-                    writer.WriteLine($"script: '.\\{BuildScript} {arguments}'");
+                    writer.WriteLine($"script: './{BuildScript} {arguments}'");
                 }
             }
 

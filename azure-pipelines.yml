@@ -25,20 +25,18 @@ stages:
         displayName: '⚙️ Compile'
         dependsOn: [  ]
         steps:
-          - task: PowerShell@2
+          - task: CmdLine@2
             inputs:
-              targetType: 'inline'
-              script: '.\build.cmd Restore Compile --skip'
+              script: './build.cmd Restore Compile --skip'
       - job: Test
         displayName: '🚦 Test 🧩'
         dependsOn: [ Compile ]
         strategy:
           parallel: 2
         steps:
-          - task: PowerShell@2
+          - task: CmdLine@2
             inputs:
-              targetType: 'inline'
-              script: '.\build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
+              script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: output
@@ -47,10 +45,9 @@ stages:
         displayName: '📦 Pack'
         dependsOn: [ Compile ]
         steps:
-          - task: PowerShell@2
+          - task: CmdLine@2
             inputs:
-              targetType: 'inline'
-              script: '.\build.cmd Pack --skip'
+              script: './build.cmd Pack --skip'
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: output
@@ -65,20 +62,18 @@ stages:
         displayName: '⚙️ Compile'
         dependsOn: [  ]
         steps:
-          - task: PowerShell@2
+          - task: CmdLine@2
             inputs:
-              targetType: 'inline'
-              script: '.\build.cmd Restore Compile --skip'
+              script: './build.cmd Restore Compile --skip'
       - job: Test
         displayName: '🚦 Test 🧩'
         dependsOn: [ Compile ]
         strategy:
           parallel: 2
         steps:
-          - task: PowerShell@2
+          - task: CmdLine@2
             inputs:
-              targetType: 'inline'
-              script: '.\build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
+              script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: output
@@ -87,10 +82,9 @@ stages:
         displayName: '📦 Pack'
         dependsOn: [ Compile ]
         steps:
-          - task: PowerShell@2
+          - task: CmdLine@2
             inputs:
-              targetType: 'inline'
-              script: '.\build.cmd Pack --skip'
+              script: './build.cmd Pack --skip'
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: output
@@ -105,20 +99,18 @@ stages:
         displayName: '⚙️ Compile'
         dependsOn: [  ]
         steps:
-          - task: PowerShell@2
+          - task: CmdLine@2
             inputs:
-              targetType: 'inline'
-              script: '.\build.cmd Restore Compile --skip'
+              script: './build.cmd Restore Compile --skip'
       - job: Test
         displayName: '🚦 Test 🧩'
         dependsOn: [ Compile ]
         strategy:
           parallel: 2
         steps:
-          - task: PowerShell@2
+          - task: CmdLine@2
             inputs:
-              targetType: 'inline'
-              script: '.\build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
+              script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: output
@@ -127,10 +119,9 @@ stages:
         displayName: '📦 Pack'
         dependsOn: [ Compile ]
         steps:
-          - task: PowerShell@2
+          - task: CmdLine@2
             inputs:
-              targetType: 'inline'
-              script: '.\build.cmd Pack --skip'
+              script: './build.cmd Pack --skip'
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: output
