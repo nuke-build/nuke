@@ -33,6 +33,11 @@ function ExecSafe([scriptblock] $cmd) {
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
 }
 
+# Check if any dotnet is installed
+if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue)) {
+    ExecSafe { & dotnet --info }
+}
+
 # If global.json exists, load expected version
 if (Test-Path $DotNetGlobalFile) {
     $DotNetGlobal = $(Get-Content $DotNetGlobalFile | Out-String | ConvertFrom-Json)

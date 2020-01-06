@@ -29,6 +29,11 @@ function FirstJsonValue {
     perl -nle 'print $1 if m{"'$1'": "([^"]+)",?}' <<< ${@:2}
 }
 
+# Check if any dotnet is installed
+if [[ -x "$(command -v dotnet)" ]]; then
+    dotnet --info
+fi
+
 # If global.json exists, load expected version
 if [[ -f "$DOTNET_GLOBAL_FILE" ]]; then
     DOTNET_VERSION=$(FirstJsonValue "version" $(cat "$DOTNET_GLOBAL_FILE"))
