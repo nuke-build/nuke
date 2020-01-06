@@ -92,18 +92,19 @@ This project is driven by contributors investing their private free time. If it 
 
 ## Users
 
-- [AvaloniaUI/Avalonia](https://github.com/AvaloniaUI/Avalonia/tree/master/nukebuild)
+- [AvaloniaUI/Avalonia](https://github.com/AvaloniaUI/Avalonia/tree/master/nukebuild) ⭐️
 - [avivasolutionsnl/sitecore-commerce-docker](https://github.com/avivasolutionsnl/sitecore-commerce-docker/tree/master/build)
 - [avivasolutionsnl/sitecore-docker](https://github.com/avivasolutionsnl/sitecore-docker/tree/master/build)
-- [JoshClose/CsvHelper](https://github.com/JoshClose/CsvHelper/tree/master/build)
-- [fluentassertions/fluentassertions](https://github.com/fluentassertions/fluentassertions/tree/master/Build)
-- [zarunbal/LogExpert](https://github.com/zarunbal/LogExpert/tree/master/build)
-- [nuke-build/nuke](https://github.com/nuke-build/nuke/tree/develop/build)
-- [nuke-build/web](https://github.com/nuke-build/web/tree/master/build)
+- [fluentassertions/fluentassertions](https://github.com/fluentassertions/fluentassertions/tree/master/Build) ⭐️
+- [GeorgDangl/LightQuery](https://github.com/GeorgDangl/LightQuery/tree/dev/build)
 - [JetBrains/YouTrackSharp](https://github.com/JetBrains/YouTrackSharp)
 - [joaomatossilva/DateTimeExtensions](https://github.com/joaomatossilva/DateTimeExtensions)
+- [JoshClose/CsvHelper](https://github.com/JoshClose/CsvHelper/tree/master/build) ⭐️
+- [nuke-build/nuke](https://github.com/nuke-build/nuke/tree/develop/build) ⭐️
+- [nuke-build/web](https://github.com/nuke-build/web/tree/master/build)
 - [ViGEm/HidGuardian](https://github.com/ViGEm/HidGuardian/tree/master/build)
 - [VirtoCommerce/vc-platform](https://github.com/VirtoCommerce/vc-platform/tree/release/3.0.0/build)
+- [zarunbal/LogExpert](https://github.com/zarunbal/LogExpert/tree/master/build) ⭐️
 
 ## Acknowledgements
 
