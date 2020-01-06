@@ -90,7 +90,7 @@ namespace Nuke.Common.CI.AzurePipelines
                 .Select(x => (AbsolutePath) x)
                 .Select(x => x.DescendantsAndSelf(y => y.Parent).FirstOrDefault(y => !y.ToString().ContainsOrdinalIgnoreCase("*")))
                 .Distinct()
-                .Select(x => x.ToString().TrimStart(x.Parent.ToString()).TrimStart('/', '\\')).ToArray();
+                .Select(x => x.ToString().TrimStart(NukeBuild.RootDirectory).TrimStart('/', '\\')).ToArray();
 
             // var artifactDependencies = (
             //     from artifactDependency in ArtifactExtensions.ArtifactDependencies[executableTarget.Definition]

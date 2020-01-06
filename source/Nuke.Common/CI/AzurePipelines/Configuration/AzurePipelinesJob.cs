@@ -80,8 +80,8 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
                 {
                     using (writer.WriteBlock("inputs:"))
                     {
-                        writer.WriteLine($"artifactName: {x}");
-                        writer.WriteLine($"pathtoPublish: {StringExtensions.SingleQuote(x)}");
+                        writer.WriteLine($"artifactName: {x.Split('/').Last()}");
+                        writer.WriteLine($"pathtoPublish: {x.SingleQuote()}");
                     }
                 }
             });
