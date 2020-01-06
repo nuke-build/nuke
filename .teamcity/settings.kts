@@ -110,7 +110,7 @@ object Pack : BuildType({
         cleanCheckout = true
     }
     artifactRules = """
-        output/*.nupkg => output
+        output/packages/*.nupkg => output/packages
     """.trimIndent()
     steps {
         exec {
@@ -149,8 +149,8 @@ object Test_P1T2 : BuildType({
         cleanCheckout = true
     }
     artifactRules = """
-        output/*.trx => output
-        output/*.xml => output
+        output/test-results/*.trx => output/test-results
+        output/test-results/*.xml => output/test-results
     """.trimIndent()
     steps {
         exec {
@@ -172,8 +172,8 @@ object Test_P2T2 : BuildType({
         cleanCheckout = true
     }
     artifactRules = """
-        output/*.trx => output
-        output/*.xml => output
+        output/test-results/*.trx => output/test-results
+        output/test-results/*.xml => output/test-results
     """.trimIndent()
     steps {
         exec {
@@ -264,8 +264,8 @@ object Coverage : BuildType({
         }
         artifacts(Test) {
             artifactRules = """
-                output/*.trx => output
-                output/*.xml => output
+                output/test-results/*.trx => output/test-results
+                output/test-results/*.xml => output/test-results
             """.trimIndent()
         }
     }
@@ -317,7 +317,7 @@ object Publish : BuildType({
         }
         artifacts(Pack) {
             artifactRules = """
-                output/*.nupkg => output
+                output/packages/*.nupkg => output/packages
             """.trimIndent()
         }
     }

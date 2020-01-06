@@ -32,12 +32,16 @@ jobs:
             GitterAuthToken: ${{ secrets.GitterAuthToken }}
       - uses: actions/upload-artifact@v1
         with:
-          name: output
-          path: output
+          name: test-results
+          path: output/test-results
       - uses: actions/upload-artifact@v1
         with:
           name: coverage-report.zip
           path: output/coverage-report.zip
+      - uses: actions/upload-artifact@v1
+        with:
+          name: packages
+          path: output/packages
   ubuntu-16_04:
     name: ubuntu-16_04
     runs-on: ubuntu-16.04
@@ -51,12 +55,16 @@ jobs:
             GitterAuthToken: ${{ secrets.GitterAuthToken }}
       - uses: actions/upload-artifact@v1
         with:
-          name: output
-          path: output
+          name: test-results
+          path: output/test-results
       - uses: actions/upload-artifact@v1
         with:
           name: coverage-report.zip
           path: output/coverage-report.zip
+      - uses: actions/upload-artifact@v1
+        with:
+          name: packages
+          path: output/packages
   ubuntu-18_04:
     name: ubuntu-18_04
     runs-on: ubuntu-18.04
@@ -70,12 +78,16 @@ jobs:
             GitterAuthToken: ${{ secrets.GitterAuthToken }}
       - uses: actions/upload-artifact@v1
         with:
-          name: output
-          path: output
+          name: test-results
+          path: output/test-results
       - uses: actions/upload-artifact@v1
         with:
           name: coverage-report.zip
           path: output/coverage-report.zip
+      - uses: actions/upload-artifact@v1
+        with:
+          name: packages
+          path: output/packages
   windows-2016:
     name: windows-2016
     runs-on: windows-2016
@@ -89,12 +101,16 @@ jobs:
             GitterAuthToken: ${{ secrets.GitterAuthToken }}
       - uses: actions/upload-artifact@v1
         with:
-          name: output
-          path: output
+          name: test-results
+          path: output/test-results
       - uses: actions/upload-artifact@v1
         with:
           name: coverage-report.zip
           path: output/coverage-report.zip
+      - uses: actions/upload-artifact@v1
+        with:
+          name: packages
+          path: output/packages
   windows-2019:
     name: windows-2019
     runs-on: windows-2019
@@ -108,9 +124,13 @@ jobs:
             GitterAuthToken: ${{ secrets.GitterAuthToken }}
       - uses: actions/upload-artifact@v1
         with:
-          name: output
-          path: output
+          name: test-results
+          path: output/test-results
       - uses: actions/upload-artifact@v1
         with:
           name: coverage-report.zip
           path: output/coverage-report.zip
+      - uses: actions/upload-artifact@v1
+        with:
+          name: packages
+          path: output/packages

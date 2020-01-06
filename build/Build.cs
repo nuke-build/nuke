@@ -151,30 +151,31 @@ partial class Build : NukeBuild
         });
 
     string ChangelogFile => RootDirectory / "CHANGELOG.md";
-
+    AbsolutePath PackageDirectory => OutputDirectory / "packages";
     IEnumerable<string> ChangelogSectionNotes => ExtractChangelogSectionNotes(ChangelogFile);
 
     Target Pack => _ => _
         .DependsOn(Compile)
-        .Produces(OutputDirectory / "*.nupkg")
+        .Produces(PackageDirectory / "*.nupkg")
         .Executes(() =>
         {
             DotNetPack(_ => _
                 .SetProject(Solution)
                 .SetNoBuild(InvokedTargets.Contains(Compile))
                 .SetConfiguration(Configuration)
-                .SetOutputDirectory(OutputDirectory)
+                .SetOutputDirectory(PackageDirectory)
                 .SetVersion(GitVersion.NuGetVersionV2)
                 .SetPackageReleaseNotes(GetNuGetReleaseNotes(ChangelogFile, GitRepository)));
         });
 
     [Partition(2)] readonly Partition TestPartition;
+    AbsolutePath TestResultDirectory => OutputDirectory / "test-results";
     IEnumerable<Project> TestProjects => TestPartition.GetCurrent(Solution.GetProjects("*.Tests"));
 
     Target Test => _ => _
         .DependsOn(Compile)
-        .Produces(OutputDirectory / "*.trx")
-        .Produces(OutputDirectory / "*.xml")
+        .Produces(TestResultDirectory / "*.trx")
+        .Produces(TestResultDirectory / "*.xml")
         .Partition(() => TestPartition)
         .Executes(() =>
         {
@@ -182,7 +183,7 @@ partial class Build : NukeBuild
                 .SetConfiguration(Configuration)
                 .SetNoBuild(InvokedTargets.Contains(Compile))
                 .ResetVerbosity()
-                .SetResultsDirectory(OutputDirectory)
+                .SetResultsDirectory(TestResultDirectory)
                 .When(InvokedTargets.Contains(Coverage) || IsServerBuild, _ => _
                     .EnableCollectCoverage()
                     .SetCoverletOutputFormat(CoverletOutputFormat.cobertura)
@@ -193,7 +194,7 @@ partial class Build : NukeBuild
                     .SetProjectFile(v)
                     .SetLogger($"trx;LogFileName={v.Name}.trx")
                     .When(InvokedTargets.Contains(Coverage) || IsServerBuild, _ => _
-                        .SetCoverletOutput(OutputDirectory / $"{v.Name}.xml"))));
+                        .SetCoverletOutput(TestResultDirectory / $"{v.Name}.xml"))));
 
             OutputDirectory.GlobFiles("*.trx").ForEach(x =>
                 AzurePipelines?.PublishTestResults(
@@ -213,12 +214,12 @@ partial class Build : NukeBuild
         .Executes(() =>
         {
             ReportGenerator(_ => _
-                .SetReports(OutputDirectory / "*.xml")
+                .SetReports(TestResultDirectory / "*.xml")
                 .SetReportTypes(ReportTypes.HtmlInline)
                 .SetTargetDirectory(CoverageReportDirectory)
                 .SetFramework("netcoreapp2.1"));
 
-            OutputDirectory.GlobFiles("*.xml").ForEach(x =>
+            TestResultDirectory.GlobFiles("*.xml").ForEach(x =>
                 AzurePipelines?.PublishCodeCoverage(
                     AzurePipelinesCodeCoverageToolType.Cobertura,
                     x,
@@ -266,7 +267,7 @@ partial class Build : NukeBuild
                         GitRepository.Branch.StartsWithOrdinalIgnoreCase(HotfixBranchPrefix))
         .Executes(() =>
         {
-            var packages = OutputDirectory.GlobFiles("*.nupkg");
+            var packages = PackageDirectory.GlobFiles("*.nupkg");
             Assert(packages.Count == 4, "packages.Count == 4");
 
             DotNetNuGetPush(_ => _

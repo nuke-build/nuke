@@ -24,7 +24,7 @@ build_script:
   - ps: .\build.ps1 Test Pack
 
 artifacts:
-  - path: output/*.trx
-  - path: output/*.xml
+  - path: output/test-results/*.trx
+  - path: output/test-results/*.xml
   - path: output/coverage-report.zip
-  - path: output/*.nupkg
+  - path: output/packages/*.nupkg

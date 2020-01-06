@@ -39,8 +39,8 @@ stages:
               script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
           - task: PublishBuildArtifacts@1
             inputs:
-              artifactName: output
-              pathtoPublish: 'output'
+              artifactName: test-results
+              pathtoPublish: 'output/test-results'
       - job: Pack
         displayName: '📦 Pack'
         dependsOn: [ Compile ]
@@ -50,8 +50,8 @@ stages:
               script: './build.cmd Pack --skip'
           - task: PublishBuildArtifacts@1
             inputs:
-              artifactName: output
-              pathtoPublish: 'output'
+              artifactName: packages
+              pathtoPublish: 'output/packages'
   - stage: windows_latest
     displayName: 'windows-latest'
     dependsOn: [  ]
@@ -76,8 +76,8 @@ stages:
               script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
           - task: PublishBuildArtifacts@1
             inputs:
-              artifactName: output
-              pathtoPublish: 'output'
+              artifactName: test-results
+              pathtoPublish: 'output/test-results'
       - job: Pack
         displayName: '📦 Pack'
         dependsOn: [ Compile ]
@@ -87,8 +87,8 @@ stages:
               script: './build.cmd Pack --skip'
           - task: PublishBuildArtifacts@1
             inputs:
-              artifactName: output
-              pathtoPublish: 'output'
+              artifactName: packages
+              pathtoPublish: 'output/packages'
   - stage: macOS_latest
     displayName: 'macOS-latest'
     dependsOn: [  ]
@@ -113,8 +113,8 @@ stages:
               script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
           - task: PublishBuildArtifacts@1
             inputs:
-              artifactName: output
-              pathtoPublish: 'output'
+              artifactName: test-results
+              pathtoPublish: 'output/test-results'
       - job: Pack
         displayName: '📦 Pack'
         dependsOn: [ Compile ]
@@ -124,5 +124,5 @@ stages:
               script: './build.cmd Pack --skip'
           - task: PublishBuildArtifacts@1
             inputs:
-              artifactName: output
-              pathtoPublish: 'output'
+              artifactName: packages
+              pathtoPublish: 'output/packages'
