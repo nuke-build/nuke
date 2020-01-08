@@ -59,7 +59,7 @@ project {
             display = ParameterDisplay.NORMAL)
         param(
             "teamcity.runner.commandline.stdstreams.encoding",
-            "IBM-437"
+            "UTF-8"
         )
     }
 }

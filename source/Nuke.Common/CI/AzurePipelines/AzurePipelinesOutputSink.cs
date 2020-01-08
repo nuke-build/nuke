@@ -18,35 +18,38 @@ namespace Nuke.Common.CI.AzurePipelines
         private readonly AzurePipelines _azurePipelines;
 
         internal AzurePipelinesOutputSink(AzurePipelines azurePipelines)
-            : base(
-                traceCode: "90",
-                informationCode: "36;1",
-                warningCode: "33;1",
-                errorCode: "31;1",
-                successCode: "32;1")
         {
             _azurePipelines = azurePipelines;
         }
 
-        public override IDisposable WriteBlock(string text)
+        protected override string TraceCode => "90";
+        protected override string InformationCode => "36;1";
+        protected override string WarningCode => "33;1";
+        protected override string ErrorCode => "31;1";
+        protected override string SuccessCode => "32;1";
+
+        internal override IDisposable WriteBlock(string text)
         {
             return DelegateDisposable.CreateBracket(
                 () => _azurePipelines.Group(text),
                 () => _azurePipelines.EndGroup(text));
         }
 
-        public override void WriteWarning(string text, string details = null)
+        protected override bool EnableWriteWarnings => false;
+        protected override bool EnableWriteErrors => false;
+
+        protected override void ReportWarning(string text, string details = null)
         {
             _azurePipelines.LogIssue(AzurePipelinesIssueType.Warning, text);
             if (details != null)
-                WriteNormal(details);
+                base.WriteWarning(details);
         }
 
-        public override void WriteError(string text, string details = null)
+        protected override void ReportError(string text, string details = null)
         {
             _azurePipelines.LogIssue(AzurePipelinesIssueType.Error, text);
             if (details != null)
-                WriteNormal(details);
+                base.WriteError(details);
         }
     }
 }

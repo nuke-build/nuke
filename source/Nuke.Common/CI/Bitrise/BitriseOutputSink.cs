@@ -15,17 +15,13 @@ namespace Nuke.Common.CI.Bitrise
     [ExcludeFromCodeCoverage]
     internal class BitriseOutputSink : AnsiColorOutputSink
     {
-        public BitriseOutputSink()
-            : base(
-                traceCode: "37",
-                informationCode: "36;1",
-                warningCode: "33;1",
-                errorCode: "31;1",
-                successCode: "32;1")
-        {
-        }
+        protected override string TraceCode => "37";
+        protected override string InformationCode => "36;1";
+        protected override string WarningCode => "33;1";
+        protected override string ErrorCode => "31;1";
+        protected override string SuccessCode => "32;1";
 
-        public override IDisposable WriteBlock(string text)
+        internal override IDisposable WriteBlock(string text)
         {
             return DelegateDisposable.CreateBracket(
                 () => WriteNormal(FigletTransform.GetText(text, "ansi-shadow")));

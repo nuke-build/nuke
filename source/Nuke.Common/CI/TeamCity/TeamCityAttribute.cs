@@ -102,7 +102,7 @@ namespace Nuke.Common.CI.TeamCity
                     .Concat(new TeamCityKeyValueParameter
                             {
                                 Key = "teamcity.runner.commandline.stdstreams.encoding",
-                                Value = "IBM-437"
+                                Value = "UTF-8"
                             });
             }
 

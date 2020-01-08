@@ -14,40 +14,38 @@ namespace Nuke.Common.CI.GitHubActions
         private readonly GitHubActions _githubActions;
 
         public GitHubActionsOutputSink(GitHubActions githubActions)
-            : base(
-                traceCode: "90",
-                informationCode: "36;1",
-                warningCode: "33;1",
-                errorCode: "31;1",
-                successCode: "32;1")
         {
             _githubActions = githubActions;
         }
 
-        public override IDisposable WriteBlock(string text)
+        protected override string TraceCode => "90";
+        protected override string InformationCode => "36;1";
+        protected override string WarningCode => "33;1";
+        protected override string ErrorCode => "31;1";
+        protected override string SuccessCode => "32;1";
+
+        internal override IDisposable WriteBlock(string text)
         {
             return DelegateDisposable.CreateBracket(
                 () => _githubActions.Group(text),
                 () => _githubActions.EndGroup(text));
         }
 
-        public override void WriteError(string text, string details = null)
-        {
-            _githubActions.WriteError(text);
-            if (details != null)
-                _githubActions.WriteError(details);
-        }
+        protected override bool EnableWriteWarnings => false;
+        protected override bool EnableWriteErrors => false;
 
-        public override void WriteWarning(string text, string details = null)
+        protected override void ReportWarning(string text, string details = null)
         {
             _githubActions.WriteWarning(text);
             if (details != null)
-                _githubActions.WriteWarning(details);
+                base.WriteWarning(details);
         }
 
-        public override void WriteTrace(string text)
+        protected override void ReportError(string text, string details = null)
         {
-            _githubActions.WriteDebug(text);
+            _githubActions.WriteError(text);
+            if (details != null)
+                base.WriteError(details);
         }
     }
 }

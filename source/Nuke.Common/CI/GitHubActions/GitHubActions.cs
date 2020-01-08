@@ -11,6 +11,9 @@ using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.GitHubActions
 {
+    /// <summary>
+    /// Interface according to the <a href="https://github.com/actions/toolkit/blob/master/packages/core/src/core.ts">official website</a>.
+    /// </summary>
     [PublicAPI]
     [CI]
     [ExcludeFromCodeCoverage]

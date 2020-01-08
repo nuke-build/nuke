@@ -17,8 +17,38 @@ namespace Nuke.Common
     [DebuggerStepThrough]
     public static class Logger
     {
-        public static IOutputSink OutputSink = ConsoleOutputSink.Default;
-        public static LogLevel LogLevel = LogLevel.Normal;
+        public static void WriteTest()
+        {
+            Console.WriteLine("╔═╗");
+            Console.WriteLine("║ ║");
+            Console.WriteLine("╚═╝");
+
+            Warn("Warn");
+            Error("Error");
+            Normal("Normal");
+            Info("Info");
+            Trace("Trace");
+            Success("Success");
+
+            const string ESC = "\u001b[";
+            const string RESET = "\u001b[0m";
+
+            for (var i = 0; i < 200; i++)
+            {
+                Console.Write($"{ESC}{i}m{i}{RESET}  ");
+                Console.Write($"{ESC}{i};1m{i};1{RESET}  ");
+                Console.Write($"{ESC}{i};2m{i};1{RESET}  ");
+                Console.Write($"{ESC}{i};3m{i};1{RESET}  ");
+                Console.Write($"{ESC}{i};4m{i};1{RESET}  ");
+                Console.Write($"{ESC}{i};5m{i};1{RESET}  ");
+                if (i % 10 == 0)
+                    Console.WriteLine();
+            }
+        }
+
+        internal static OutputSink OutputSink = OutputSink.Default;
+
+        public static LogLevel LogLevel;
 
         public static IDisposable Block(string text)
         {
@@ -214,7 +244,7 @@ namespace Nuke.Common
         public static void Warn(string text = null)
         {
             if (LogLevel <= LogLevel.Warning)
-                OutputSink.WriteWarning(text ?? string.Empty);
+                OutputSink.WriteAndReportWarning(text ?? string.Empty);
         }
 
         /// <summary>
@@ -223,7 +253,7 @@ namespace Nuke.Common
         public static void Warn(Exception exception)
         {
             if (LogLevel <= LogLevel.Warning)
-                HandleException(exception, OutputSink.WriteWarning);
+                HandleException(exception, OutputSink.WriteAndReportWarning);
         }
 
         #endregion
@@ -253,7 +283,7 @@ namespace Nuke.Common
         public static void Error(string text = null)
         {
             if (LogLevel <= LogLevel.Error)
-                OutputSink.WriteError(text ?? string.Empty);
+                OutputSink.WriteAndReportError(text ?? string.Empty);
         }
 
         /// <summary>
@@ -262,7 +292,7 @@ namespace Nuke.Common
         public static void Error(Exception exception)
         {
             if (LogLevel <= LogLevel.Error)
-                HandleException(exception, OutputSink.WriteError);
+                HandleException(exception, OutputSink.WriteAndReportError);
         }
 
         #endregion
