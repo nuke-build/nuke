@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.23.5] / 2020-01-10
+- Fixed CI integrations to use correct warning/error reporting infrastructure
+- Fixed TeamCity configuration to use `UTF-8` encoding 
+- Fixed process encoding by setting `StandardOutputEncoding` and `StandardErrorEncoding` to `UTF-8`
+- Fixed solution deserialization for missing configuration section
+- Fixed logo spacing
+
 ## [0.23.4] / 2019-11-16
 - Fixed assignment for `NuGetAssetsConfigFile` when `BuildProjectDirectory` is null
 - Fixed `ToolPathResolver` to not require framework when only one file matches
@@ -456,7 +463,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.23.4...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.23.5...HEAD
+[0.23.5]: https://github.com/nuke-build/nuke/compare/0.23.4...0.23.5
 [0.23.4]: https://github.com/nuke-build/nuke/compare/0.23.3...0.23.4
 [0.23.3]: https://github.com/nuke-build/nuke/compare/0.23.2...0.23.3
 [0.23.2]: https://github.com/nuke-build/nuke/compare/0.23.1...0.23.2

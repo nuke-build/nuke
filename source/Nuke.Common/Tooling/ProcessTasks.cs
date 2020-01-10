@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -120,7 +121,9 @@ namespace Nuke.Common.Tooling
                                 WorkingDirectory = workingDirectory ?? EnvironmentInfo.WorkingDirectory,
                                 RedirectStandardOutput = true,
                                 RedirectStandardError = true,
-                                UseShellExecute = false
+                                UseShellExecute = false,
+                                StandardErrorEncoding = Encoding.UTF8,
+                                StandardOutputEncoding = Encoding.UTF8
                             };
 
             ApplyEnvironmentVariables(environmentVariables, startInfo);

@@ -17,22 +17,22 @@ namespace Nuke.Common.CI.AppVeyor
         private readonly AppVeyor _appVeyor;
 
         internal AppVeyorOutputSink(AppVeyor appVeyor)
-            : base(
-                traceCode: "90",
-                informationCode: "36;1",
-                warningCode: "33;1",
-                errorCode: "31;1",
-                successCode: "32;1")
         {
             _appVeyor = appVeyor;
         }
 
-        public override void WriteWarning(string text, string details = null)
+        protected override string TraceCode => "90";
+        protected override string InformationCode => "36;1";
+        protected override string WarningCode => "33;1";
+        protected override string ErrorCode => "31;1";
+        protected override string SuccessCode => "32;1";
+
+        protected override void ReportWarning(string text, string details = null)
         {
             _appVeyor.WriteWarning(text, details);
         }
 
-        public override void WriteError(string text, string details = null)
+        protected override void ReportError(string text, string details = null)
         {
             _appVeyor.WriteError(text, details);
         }

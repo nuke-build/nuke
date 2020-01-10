@@ -111,12 +111,13 @@ namespace Nuke.Common.Execution
                     build.OnTargetExecuted(target.Name);
                     AppendToBuildAttemptFile(target.Name);
                 }
-                catch
+                catch (Exception exception)
                 {
+                    Logger.Error(exception);
                     target.Status = ExecutionStatus.Failed;
                     build.OnTargetFailed(target.Name);
                     if (!target.ProceedAfterFailure && !failureMode)
-                        throw;
+                        throw new TargetExecutionException(target.Name, exception);
                 }
                 finally
                 {

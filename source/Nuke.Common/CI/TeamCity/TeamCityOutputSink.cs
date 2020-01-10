@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text;
 using JetBrains.Annotations;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities;
@@ -19,17 +20,19 @@ namespace Nuke.Common.CI.TeamCity
         private readonly TeamCity _teamCity;
 
         public TeamCityOutputSink(TeamCity teamCity)
-            : base(
-                traceCode: "37",
-                informationCode: "36",
-                warningCode: "33",
-                errorCode: "31",
-                successCode: "32")
         {
             _teamCity = teamCity;
+
+            Console.OutputEncoding = Encoding.UTF8;
         }
 
-        public override IDisposable WriteBlock(string text)
+        protected override string TraceCode => "37";
+        protected override string InformationCode => "36";
+        protected override string WarningCode => "33";
+        protected override string ErrorCode => "31";
+        protected override string SuccessCode => "32";
+
+        internal override IDisposable WriteBlock(string text)
         {
             var stopWatch = new Stopwatch();
 
@@ -47,6 +50,22 @@ namespace Nuke.Common.CI.TeamCity
                         stopWatch.ElapsedMilliseconds.ToString());
                     stopWatch.Stop();
                 });
+        }
+
+        protected override bool EnableWriteErrors => false;
+
+        protected override void WriteWarning(string text, string details = null)
+        {
+            _teamCity.WriteWarning(text);
+            if (details != null)
+                _teamCity.WriteWarning(details);
+        }
+
+        protected override void ReportError(string text, string details = null)
+        {
+            _teamCity.AddBuildProblem(text);
+            if (details != null)
+                base.WriteError(details);
         }
     }
 }

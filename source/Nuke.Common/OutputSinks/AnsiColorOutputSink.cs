@@ -11,28 +11,20 @@ namespace Nuke.Common.OutputSinks
 {
     [UsedImplicitly]
     [ExcludeFromCodeCoverage]
-    internal class AnsiColorOutputSink : ConsoleOutputSink
+    internal class AnsiColorOutputSink : OutputSink
     {
         public string ResetSequence { get; } = "\u001b[0m";
-        public string TraceSequence { get; }
-        public string InformationSequence { get; }
-        public string WarningSequence { get; }
-        public string ErrorSequence { get; }
-        public string SuccessSequence { get; }
+        public string TraceSequence => $"\u001b[{TraceCode}m";
+        public string InformationSequence => $"\u001b[{InformationCode}m";
+        public string WarningSequence => $"\u001b[{WarningCode}m";
+        public string ErrorSequence => $"\u001b[{ErrorCode}m";
+        public string SuccessSequence => $"\u001b[{SuccessCode}m";
 
-        public AnsiColorOutputSink(
-            string traceCode = "37",
-            string informationCode = "96;1",
-            string warningCode = "93;1",
-            string errorCode = "91;1",
-            string successCode = "92;1")
-        {
-            TraceSequence = $"\u001b[{traceCode}m";
-            InformationSequence = $"\u001b[{informationCode}m";
-            WarningSequence = $"\u001b[{warningCode}m";
-            ErrorSequence = $"\u001b[{errorCode}m";
-            SuccessSequence = $"\u001b[{successCode}m";
-        }
+        protected virtual string TraceCode => "37";
+        protected virtual string InformationCode => "96;1";
+        protected virtual string WarningCode => "93;1";
+        protected virtual string ErrorCode => "91;1";
+        protected virtual string SuccessCode => "92;1";
 
         protected override string FormatBlockText(string text)
         {
@@ -64,36 +56,36 @@ namespace Nuke.Common.OutputSinks
             return $"{ErrorSequence}{text}{ResetSequence}";
         }
 
-        public override void WriteNormal(string text)
+        internal override void WriteNormal(string text)
         {
             Console.WriteLine(text);
         }
 
-        public override void WriteTrace(string text)
+        internal override void WriteTrace(string text)
         {
             Console.WriteLine(FormatTrace(text));
         }
 
-        public override void WriteInformation(string text)
+        internal override void WriteInformation(string text)
         {
             Console.WriteLine(FormatInformation(text));
         }
 
-        public override void WriteWarning(string text, string details = null)
+        protected override void WriteWarning(string text, string details = null)
         {
             Console.WriteLine(FormatWarning(text));
             if (details != null)
                 Console.WriteLine(FormatWarning(details));
         }
 
-        public override void WriteError(string text, string details = null)
+        protected override void WriteError(string text, string details = null)
         {
             Console.WriteLine(FormatError(text));
             if (details != null)
                 Console.WriteLine(FormatError(details));
         }
 
-        public override void WriteSuccess(string text)
+        internal override void WriteSuccess(string text)
         {
             Console.WriteLine(FormatSuccess(text));
         }

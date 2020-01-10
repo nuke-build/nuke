@@ -92,7 +92,8 @@ namespace Nuke.Common.ProjectModel
                 $@"^Project\(""{GuidPattern("typeId")}""\)\s*=\s*{TextPattern("name")},\s*{TextPattern("path")},\s*""{GuidPattern("projectId")}""$");
 
             var configurations = (content.GetGlobalSection("ProjectConfigurationPlatforms") ??
-                                  content.GetGlobalSection("ProjectConfiguration")).NotNull()
+                                  content.GetGlobalSection("ProjectConfiguration") ??
+                                  new Dictionary<string, string>())
                 .Select(x => new
                              {
                                  ProjectId = Guid.Parse(x.Key.Substring(startIndex: 1, length: 36)),
