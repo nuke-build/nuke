@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [0.23.5] / 2020-01-10
 - Fixed CI integrations to use correct warning/error reporting infrastructure
 - Fixed TeamCity configuration to use `UTF-8` encoding 
 - Fixed process encoding by setting `StandardOutputEncoding` and `StandardErrorEncoding` to `UTF-8`
@@ -461,7 +463,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.23.4...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.23.5...HEAD
+[0.23.5]: https://github.com/nuke-build/nuke/compare/0.23.4...0.23.5
 [0.23.4]: https://github.com/nuke-build/nuke/compare/0.23.3...0.23.4
 [0.23.3]: https://github.com/nuke-build/nuke/compare/0.23.2...0.23.3
 [0.23.2]: https://github.com/nuke-build/nuke/compare/0.23.1...0.23.2
