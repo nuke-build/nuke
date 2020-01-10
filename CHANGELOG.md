@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed CI integrations to use correct warning/error reporting infrastructure
+- Fixed TeamCity configuration to use `UTF-8` encoding 
+- Fixed process encoding by setting `StandardOutputEncoding` and `StandardErrorEncoding` to `UTF-8`
+- Fixed solution deserialization for missing configuration section
+- Fixed logo spacing
 
 ## [0.23.4] / 2019-11-16
 - Fixed assignment for `NuGetAssetsConfigFile` when `BuildProjectDirectory` is null
