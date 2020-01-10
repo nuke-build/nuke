@@ -47,14 +47,12 @@ namespace Nuke.Common.OutputSinks
 
         protected internal void WriteLogo()
         {
-            WriteNormal();
-            WriteNormal("███╗   ██╗██╗   ██╗██╗  ██╗███████╗");
-            WriteNormal("████╗  ██║██║   ██║██║ ██╔╝██╔════╝");
-            WriteNormal("██╔██╗ ██║██║   ██║█████╔╝ █████╗  ");
-            WriteNormal("██║╚██╗██║██║   ██║██╔═██╗ ██╔══╝  ");
-            WriteNormal("██║ ╚████║╚██████╔╝██║  ██╗███████╗");
-            WriteNormal("╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝");
-            WriteNormal();
+            Logger.Normal("███╗   ██╗██╗   ██╗██╗  ██╗███████╗");
+            Logger.Normal("████╗  ██║██║   ██║██║ ██╔╝██╔════╝");
+            Logger.Normal("██╔██╗ ██║██║   ██║█████╔╝ █████╗  ");
+            Logger.Normal("██║╚██╗██║██║   ██║██╔═██╗ ██╔══╝  ");
+            Logger.Normal("██║ ╚████║╚██████╔╝██║  ██╗███████╗");
+            Logger.Normal("╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝");
         }
 
         internal virtual void WriteSummary(NukeBuild build)
