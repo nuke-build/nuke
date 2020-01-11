@@ -87,24 +87,16 @@ namespace Nuke.Common
         /// </summary>
         public IReadOnlyCollection<ExecutableTarget> ExecutingTargets => ExecutionPlan.Where(x => x.Status != ExecutionStatus.Skipped).ToList();
 
-        protected internal virtual IOutputSink OutputSink
-        {
-            get
+        protected internal virtual OutputSink OutputSink => Host switch
             {
-                var innerOutputSink = Host switch
-                {
-                    HostType.Bitrise => new BitriseOutputSink(),
-                    HostType.Travis => new TravisCIOutputSink(),
-                    HostType.TeamCity => new TeamCityOutputSink(new TeamCity()),
-                    HostType.AzurePipelines => new AzurePipelinesOutputSink(new AzurePipelines()),
-                    HostType.GitHubActions => new GitHubActionsOutputSink(new GitHubActions()),
-                    HostType.AppVeyor => new AppVeyorOutputSink(new AppVeyor()),
-                    _ => ConsoleOutputSink.Default
-                };
-
-                return new SevereMessagesOutputSink(innerOutputSink);
-            }
-        }
+                HostType.Bitrise => new BitriseOutputSink(),
+                HostType.Travis => new TravisCIOutputSink(),
+                HostType.TeamCity => new TeamCityOutputSink(new TeamCity()),
+                HostType.AzurePipelines => new AzurePipelinesOutputSink(new AzurePipelines()),
+                HostType.GitHubActions => new GitHubActionsOutputSink(new GitHubActions()),
+                HostType.AppVeyor => new AppVeyorOutputSink(new AppVeyor()),
+                _ => OutputSink.Default
+            };
 
         [CanBeNull]
         protected internal virtual string NuGetPackagesConfigFile =>

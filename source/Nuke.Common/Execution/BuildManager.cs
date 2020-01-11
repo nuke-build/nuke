@@ -58,16 +58,7 @@ namespace Nuke.Common.Execution
                 ToolPathResolver.NuGetAssetsConfigFile = build.NuGetAssetsConfigFile;
 
                 if (!NukeBuild.NoLogo)
-                {
-                    Logger.Normal();
-                    Logger.Normal("███╗   ██╗██╗   ██╗██╗  ██╗███████╗");
-                    Logger.Normal("████╗  ██║██║   ██║██║ ██╔╝██╔════╝");
-                    Logger.Normal("██╔██╗ ██║██║   ██║█████╔╝ █████╗  ");
-                    Logger.Normal("██║╚██╗██║██║   ██║██╔═██╗ ██╔══╝  ");
-                    Logger.Normal("██║ ╚████║╚██████╔╝██║  ██╗███████╗");
-                    Logger.Normal("╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝");
-                    Logger.Normal();
-                }
+                    Logger.OutputSink.WriteLogo();
 
                 Logger.Info($"NUKE Execution Engine {typeof(BuildManager).Assembly.GetInformationalText()}");
                 Logger.Normal();
@@ -91,7 +82,9 @@ namespace Nuke.Common.Execution
             }
             catch (Exception exception)
             {
-                Logger.Error(exception);
+                if (!(exception is TargetExecutionException))
+                    Logger.Error(exception);
+
                 return c_errorExitCode;
             }
             finally
@@ -106,17 +99,7 @@ namespace Nuke.Common.Execution
                     .Where(x => x.Status == ExecutionStatus.Executing)
                     .ForEach(x => x.Status = ExecutionStatus.Aborted);
 
-                if (Logger.OutputSink is SevereMessagesOutputSink outputSink)
-                {
-                    Logger.Normal();
-                    WriteWarningsAndErrors(outputSink);
-                }
-
-                if (build.ExecutionPlan != null) // TODO: can be removed?
-                {
-                    Logger.Normal();
-                    WriteSummary(build);
-                }
+                Logger.OutputSink.WriteSummary(build);
 
                 build.OnBuildFinished();
                 ExecuteExtension<IOnBuildFinished>(x => x.OnBuildFinished(build));
@@ -131,84 +114,6 @@ namespace Nuke.Common.Execution
                 $"Type '{typeof(T).Name}' must declare a single parameterless constructor.");
 
             return Activator.CreateInstance<T>();
-        }
-
-        private static void WriteSummary(NukeBuild build)
-        {
-            Logger.LogLevel = LogLevel.Trace;
-            var firstColumn = Math.Max(build.ExecutionPlan.Max(x => x.Name.Length) + 4, val2: 19);
-            var secondColumn = 10;
-            var thirdColumn = 10;
-            var allColumns = firstColumn + secondColumn + thirdColumn;
-            var totalDuration = build.ExecutionPlan.Aggregate(TimeSpan.Zero, (t, x) => t.Add(x.Duration));
-
-            string CreateLine(string target, string executionStatus, string duration, string appendix = null)
-                => target.PadRight(firstColumn, paddingChar: ' ')
-                   + executionStatus.PadRight(secondColumn, paddingChar: ' ')
-                   + duration.PadLeft(thirdColumn, paddingChar: ' ')
-                   + (appendix != null ? $"   // {appendix}" : string.Empty);
-
-            string ToMinutesAndSeconds(TimeSpan duration)
-                => $"{(int) duration.TotalMinutes}:{duration:ss}";
-
-            Logger.Normal(new string(c: '═', count: allColumns));
-            Logger.Info(CreateLine("Target", "Status", "Duration"));
-            //Logger.Info($"{{0,-{firstColumn}}}{{1,-{secondColumn}}}{{2,{thirdColumn}}}{{3,1}}", "Target", "Status", "Duration", "Test");
-            Logger.Normal(new string(c: '─', count: allColumns));
-            foreach (var target in build.ExecutionPlan)
-            {
-                var line = CreateLine(target.Name, target.Status.ToString(), ToMinutesAndSeconds(target.Duration), target.SkipReason);
-                switch (target.Status)
-                {
-                    case ExecutionStatus.Skipped:
-                        Logger.Normal(line);
-                        break;
-                    case ExecutionStatus.Executed:
-                        Logger.Success(line);
-                        break;
-                    case ExecutionStatus.Aborted:
-                    case ExecutionStatus.NotRun:
-                        Logger.Warn(line);
-                        break;
-                    case ExecutionStatus.Failed:
-                        Logger.Error(line);
-                        break;
-                }
-            }
-
-            Logger.Normal(new string(c: '─', count: allColumns));
-            Logger.Info(CreateLine("Total", "", ToMinutesAndSeconds(totalDuration)));
-            Logger.Normal(new string(c: '═', count: allColumns));
-            Logger.Normal();
-
-            if (build.IsSuccessful)
-                Logger.Success($"Build succeeded on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}. ＼（＾ᴗ＾）／");
-            else
-                Logger.Error($"Build failed on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}. (╯°□°）╯︵ ┻━┻");
-            Logger.Normal();
-        }
-
-        public static void WriteWarningsAndErrors(SevereMessagesOutputSink outputSink)
-        {
-            if (outputSink.SevereMessages.Count <= 0)
-                return;
-
-            Logger.Normal("Repeating warnings and errors:");
-
-            foreach (var severeMessage in outputSink.SevereMessages.ToList())
-            {
-                switch (severeMessage.Item1)
-                {
-                    case LogLevel.Warning:
-                        Logger.Warn(severeMessage.Item2);
-                        break;
-                    case LogLevel.Error:
-                        Logger.Error(severeMessage.Item2);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
         }
     }
 }
