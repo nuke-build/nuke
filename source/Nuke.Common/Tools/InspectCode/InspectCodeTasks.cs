@@ -17,6 +17,8 @@ namespace Nuke.Common.Tools.InspectCode
 {
     public static partial class InspectCodeTasks
     {
+        public const string InspectCodePluginLatest = null;
+
         private static string GetPackageExecutable()
         {
             return EnvironmentInfo.Is64Bit ? "inspectcode.exe" : "inspectcode.x86.exe";
@@ -25,7 +27,7 @@ namespace Nuke.Common.Tools.InspectCode
         private static void PreProcess(ref InspectCodeSettings toolSettings)
         {
             var installedPlugins = GetInstalledPlugins();
-            if (installedPlugins.Count == 0 && toolSettings.Extensions.Count == 0)
+            if (installedPlugins.Count == 0 && toolSettings.Plugins.Count == 0)
                 return;
 
             var shadowDirectory = GetShadowDirectory(toolSettings, installedPlugins);
@@ -39,16 +41,16 @@ namespace Nuke.Common.Tools.InspectCode
             installedPlugins.Select(x => x.FileName)
                 .ForEach(x => File.Copy(x, Path.Combine(shadowDirectory, Path.GetFileName(x).NotNull()), overwrite: true));
 
-            toolSettings.Extensions.ForEach(x => HttpTasks.HttpDownloadFile(
-                $"https://resharper-plugins.jetbrains.com/api/v2/package/{x}",
-                Path.Combine(shadowDirectory, $"{x}.nupkg")));
+            toolSettings.Plugins.ForEach(x => HttpTasks.HttpDownloadFile(
+                $"http://resharper-plugins.jetbrains.com/dotnet/api/v2/Packages(Id='{x.Key}',Version='{x.Value}')/Download",
+                Path.Combine(shadowDirectory, $"{x.Key}.nupkg")));
         }
 
         [CanBeNull]
         private static IProcess StartProcess(InspectCodeSettings toolSettings)
         {
             var installedPackages = GetInstalledPlugins();
-            if (toolSettings.Extensions.Count > 0 || installedPackages.Count > 0)
+            if (toolSettings.Plugins.Count > 0 || installedPackages.Count > 0)
             {
                 toolSettings = toolSettings.SetToolPath(
                     Path.Combine(
