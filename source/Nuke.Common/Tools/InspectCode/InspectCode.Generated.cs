@@ -169,10 +169,10 @@ namespace Nuke.Common.Tools.InspectCode
         /// </summary>
         public virtual string CachesHome { get; internal set; }
         /// <summary>
-        ///   Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.
+        ///   Allows adding ReSharper plugins that will get included during code analysis. To add a plugin, specify its ID and version. Available plugins are listed in the <a href="https://resharper-plugins.jetbrains.com/">Plugin Repository</a>. The ID can be grabbed from the download URL. Using <c>InspectCodePluginLatest</c> or <c>null</c> will download the latest version.
         /// </summary>
-        public virtual IReadOnlyList<string> Extensions => ExtensionsInternal.AsReadOnly();
-        internal List<string> ExtensionsInternal { get; set; } = new List<string>();
+        public virtual IReadOnlyDictionary<string, string> Plugins => PluginsInternal.AsReadOnly();
+        internal Dictionary<string, string> PluginsInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.
         /// </summary>
@@ -527,84 +527,60 @@ namespace Nuke.Common.Tools.InspectCode
             return toolSettings;
         }
         #endregion
-        #region Extensions
+        #region Plugins
         /// <summary>
-        ///   <p><em>Sets <see cref="InspectCodeSettings.Extensions"/> to a new list</em></p>
-        ///   <p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p>
+        ///   <p><em>Sets <see cref="InspectCodeSettings.Plugins"/> to a new dictionary</em></p>
+        ///   <p>Allows adding ReSharper plugins that will get included during code analysis. To add a plugin, specify its ID and version. Available plugins are listed in the <a href="https://resharper-plugins.jetbrains.com/">Plugin Repository</a>. The ID can be grabbed from the download URL. Using <c>InspectCodePluginLatest</c> or <c>null</c> will download the latest version.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings SetExtensions(this InspectCodeSettings toolSettings, params string[] extensions)
+        public static InspectCodeSettings SetPlugins(this InspectCodeSettings toolSettings, IDictionary<string, string> plugins)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExtensionsInternal = extensions.ToList();
+            toolSettings.PluginsInternal = plugins.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Sets <see cref="InspectCodeSettings.Extensions"/> to a new list</em></p>
-        ///   <p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p>
+        ///   <p><em>Clears <see cref="InspectCodeSettings.Plugins"/></em></p>
+        ///   <p>Allows adding ReSharper plugins that will get included during code analysis. To add a plugin, specify its ID and version. Available plugins are listed in the <a href="https://resharper-plugins.jetbrains.com/">Plugin Repository</a>. The ID can be grabbed from the download URL. Using <c>InspectCodePluginLatest</c> or <c>null</c> will download the latest version.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings SetExtensions(this InspectCodeSettings toolSettings, IEnumerable<string> extensions)
+        public static InspectCodeSettings ClearPlugins(this InspectCodeSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExtensionsInternal = extensions.ToList();
+            toolSettings.PluginsInternal.Clear();
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Adds values to <see cref="InspectCodeSettings.Extensions"/></em></p>
-        ///   <p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p>
+        ///   <p><em>Adds a new key-value-pair <see cref="InspectCodeSettings.Plugins"/></em></p>
+        ///   <p>Allows adding ReSharper plugins that will get included during code analysis. To add a plugin, specify its ID and version. Available plugins are listed in the <a href="https://resharper-plugins.jetbrains.com/">Plugin Repository</a>. The ID can be grabbed from the download URL. Using <c>InspectCodePluginLatest</c> or <c>null</c> will download the latest version.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings AddExtensions(this InspectCodeSettings toolSettings, params string[] extensions)
+        public static InspectCodeSettings AddPlugin(this InspectCodeSettings toolSettings, string pluginKey, string pluginValue)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExtensionsInternal.AddRange(extensions);
+            toolSettings.PluginsInternal.Add(pluginKey, pluginValue);
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Adds values to <see cref="InspectCodeSettings.Extensions"/></em></p>
-        ///   <p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p>
+        ///   <p><em>Removes a key-value-pair from <see cref="InspectCodeSettings.Plugins"/></em></p>
+        ///   <p>Allows adding ReSharper plugins that will get included during code analysis. To add a plugin, specify its ID and version. Available plugins are listed in the <a href="https://resharper-plugins.jetbrains.com/">Plugin Repository</a>. The ID can be grabbed from the download URL. Using <c>InspectCodePluginLatest</c> or <c>null</c> will download the latest version.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings AddExtensions(this InspectCodeSettings toolSettings, IEnumerable<string> extensions)
+        public static InspectCodeSettings RemovePlugin(this InspectCodeSettings toolSettings, string pluginKey)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExtensionsInternal.AddRange(extensions);
+            toolSettings.PluginsInternal.Remove(pluginKey);
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Clears <see cref="InspectCodeSettings.Extensions"/></em></p>
-        ///   <p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p>
+        ///   <p><em>Sets a key-value-pair in <see cref="InspectCodeSettings.Plugins"/></em></p>
+        ///   <p>Allows adding ReSharper plugins that will get included during code analysis. To add a plugin, specify its ID and version. Available plugins are listed in the <a href="https://resharper-plugins.jetbrains.com/">Plugin Repository</a>. The ID can be grabbed from the download URL. Using <c>InspectCodePluginLatest</c> or <c>null</c> will download the latest version.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings ClearExtensions(this InspectCodeSettings toolSettings)
+        public static InspectCodeSettings SetPlugin(this InspectCodeSettings toolSettings, string pluginKey, string pluginValue)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExtensionsInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Removes values from <see cref="InspectCodeSettings.Extensions"/></em></p>
-        ///   <p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p>
-        /// </summary>
-        [Pure]
-        public static InspectCodeSettings RemoveExtensions(this InspectCodeSettings toolSettings, params string[] extensions)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(extensions);
-            toolSettings.ExtensionsInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Removes values from <see cref="InspectCodeSettings.Extensions"/></em></p>
-        ///   <p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p>
-        /// </summary>
-        [Pure]
-        public static InspectCodeSettings RemoveExtensions(this InspectCodeSettings toolSettings, IEnumerable<string> extensions)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(extensions);
-            toolSettings.ExtensionsInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.PluginsInternal[pluginKey] = pluginValue;
             return toolSettings;
         }
         #endregion

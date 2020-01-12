@@ -238,12 +238,11 @@ partial class Build : NukeBuild
             InspectCode(_ => _
                 .SetTargetPath(Solution)
                 .SetOutput(OutputDirectory / "inspectCode.xml")
-                .AddExtensions(
-                    "EtherealCode.ReSpeller",
-                    "PowerToys.CyclomaticComplexity",
-                    "ReSharper.ImplicitNullability",
-                    "ReSharper.SerializationInspections",
-                    "ReSharper.XmlDocInspections"));
+                .AddPlugin("EtherealCode.ReSpeller", InspectCodePluginLatest)
+                .AddPlugin("PowerToys.CyclomaticComplexity", InspectCodePluginLatest)
+                .AddPlugin("ReSharper.ImplicitNullability", InspectCodePluginLatest)
+                .AddPlugin("ReSharper.SerializationInspections", InspectCodePluginLatest)
+                .AddPlugin("ReSharper.XmlDocInspections", InspectCodePluginLatest));
         });
 
     [Parameter("NuGet Api Key")] readonly string ApiKey;
