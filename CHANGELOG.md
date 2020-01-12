@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [0.23.6] / 2020-01-12
 - Fixed `InspectCodeTasks` to use new plugin endpoint for downloading
 - Fixed `AppVeyorOutputSink` to issue a warning when exceeding the default limit of 500 messages
 
@@ -465,7 +467,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.23.5...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.23.6...HEAD
+[0.23.6]: https://github.com/nuke-build/nuke/compare/0.23.5...0.23.6
 [0.23.5]: https://github.com/nuke-build/nuke/compare/0.23.4...0.23.5
 [0.23.4]: https://github.com/nuke-build/nuke/compare/0.23.3...0.23.4
 [0.23.3]: https://github.com/nuke-build/nuke/compare/0.23.2...0.23.3
