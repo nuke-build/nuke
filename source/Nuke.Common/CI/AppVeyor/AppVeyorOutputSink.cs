@@ -15,6 +15,7 @@ namespace Nuke.Common.CI.AppVeyor
     internal class AppVeyorOutputSink : AnsiColorOutputSink
     {
         private readonly AppVeyor _appVeyor;
+        private int _messageCount;
 
         internal AppVeyorOutputSink(AppVeyor appVeyor)
         {
@@ -29,12 +30,26 @@ namespace Nuke.Common.CI.AppVeyor
 
         protected override void ReportWarning(string text, string details = null)
         {
+            IncreaseAndCheckMessageCount();
             _appVeyor.WriteWarning(text, details);
         }
 
         protected override void ReportError(string text, string details = null)
         {
+            IncreaseAndCheckMessageCount();
             _appVeyor.WriteError(text, details);
+        }
+
+        private void IncreaseAndCheckMessageCount()
+        {
+            _messageCount++;
+
+            if (_messageCount == 501)
+            {
+                base.WriteWarning("AppVeyor has a default limit of 500 messages. " +
+                                  "If you're getting an exception from 'appveyor.exe' after this message, " +
+                                  "contact https://appveyor.com/support to resolve this issue for your account.");
+            }
         }
     }
 }

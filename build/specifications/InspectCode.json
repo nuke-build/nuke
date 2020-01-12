@@ -66,10 +66,10 @@
             "help": "Lets you specify a custom location for the data that InspectCode caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place."
           },
           {
-            "name": "Extensions",
-            "type": "List<string>",
+            "name": "Plugins",
+            "type": "Dictionary<string, string>",
             "noArgument": true,
-            "help": "Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href=\"http://resharper-plugins.jetbrains.com/\">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon."
+            "help": "Allows adding ReSharper plugins that will get included during code analysis. To add a plugin, specify its ID and version. Available plugins are listed in the <a href=\"https://resharper-plugins.jetbrains.com/\">Plugin Repository</a>. The ID can be grabbed from the download URL. Using <c>InspectCodePluginLatest</c> or <c>null</c> will download the latest version."
           },
           {
             "name": "Properties",
