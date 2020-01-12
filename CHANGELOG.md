@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed `InspectCodeTasks` to use new plugin endpoint for downloading
+- Fixed `AppVeyorOutputSink` to issue a warning when exceeding the default limit of 500 messages
 
 ## [0.23.5] / 2020-01-10
 - Fixed CI integrations to use correct warning/error reporting infrastructure
