@@ -32,6 +32,8 @@
     <None Include="$(NukeRootDirectory)\Jenkinsfile" LinkBase="ci" Condition="Exists('$(NukeRootDirectory)\Jenkinsfile')" />
     <None Include="$(NukeRootDirectory)\appveyor.yml" LinkBase="ci" Condition="Exists('$(NukeRootDirectory)\appveyor.yml')" />
     <None Include="$(NukeRootDirectory)\.travis.yml" LinkBase="ci" Condition="Exists('$(NukeRootDirectory)\.travis.yml')" />
+    <None Include="$(NukeRootDirectory)\bamboo-specs\bamboo.yml" LinkBase="ci" Condition="Exists('$(NukeRootDirectory)\bamboo-specs\bamboo.yml')" />
+    <None Include="$(NukeRootDirectory)\bamboo-specs\bamboo.yaml" LinkBase="ci" Condition="Exists('$(NukeRootDirectory)\bamboo-specs\bamboo.yaml')" />
   </ItemGroup>
 
 </Project>
