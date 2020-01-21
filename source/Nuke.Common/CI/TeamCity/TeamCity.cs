@@ -56,6 +56,7 @@ namespace Nuke.Common.CI.TeamCity
 
             var lines = File.ReadAllLines(file);
             var dictionary = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            var commandLineMatcherUtility = new WindowsCommandLineVariablesUtility();
 
             for (var i = 0; i < lines.Length; i++)
             {
@@ -64,6 +65,8 @@ namespace Nuke.Common.CI.TeamCity
                     .Replace("\\=", "=")
                     .Replace("\\\\", "\\");
                 if (line[index: 0] == '#' || string.IsNullOrWhiteSpace(line))
+                    continue;
+                if (commandLineMatcherUtility.TeamCity_IsWinCmdInternalVariable(line))
                     continue;
 
                 var index = line.IndexOf(value: '=');
