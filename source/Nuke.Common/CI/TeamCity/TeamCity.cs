@@ -151,7 +151,7 @@ namespace Nuke.Common.CI.TeamCity
                 {
                     "Configuration parameter 'teamcity.dotCover.home' is set to the bundled version.",
                     $"Adding the '{nameof(TeamCitySetDotCoverHomePathAttribute)}' will automatically set " +
-                    $"it to '{nameof(DotCoverTasks)}.{DotCoverTasks.DotCoverPath}'."
+                    $"it to '{nameof(DotCoverTasks)}.{nameof(DotCoverTasks.DotCoverPath)}'."
                 }.JoinNewLine());
 
             Write("importData",
