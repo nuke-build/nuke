@@ -50,10 +50,9 @@ namespace Nuke.Common.Execution
             var cycles = scc.DetectCycle(graphAsList).Cycles().ToList();
             if (cycles.Count > 0)
             {
-                Logger.Error(
-                    new[] { "Circular dependencies between targets:" }
-                        .Concat(cycles.Select(x => $" - {x.Select(y => y.Value.Name).JoinComma()}"))
-                        .JoinNewLine());
+                Logger.Error("Circular dependencies between targets:"
+                    .Concat(cycles.Select(x => $" - {x.Select(y => y.Value.Name).JoinComma()}"))
+                    .JoinNewLine());
                 Environment.Exit(exitCode: -1);
             }
 
@@ -62,10 +61,9 @@ namespace Nuke.Common.Execution
                 var independents = graphAsList.Where(x => !graphAsList.Any(y => y.Dependencies.Contains(x))).ToList();
                 if (EnvironmentInfo.GetNamedArgument<bool>("strict") && independents.Count > 1)
                 {
-                    Logger.Error(
-                        new[] { "Incomplete target definition order." }
-                            .Concat(independents.Select(x => $"  - {x.Value.Name}"))
-                            .JoinNewLine());
+                    Logger.Error("Incomplete target definition order."
+                        .Concat(independents.Select(x => $"  - {x.Value.Name}"))
+                        .JoinNewLine());
                     Environment.Exit(exitCode: -1);
                 }
 
@@ -103,10 +101,9 @@ namespace Nuke.Common.Execution
             var executableTarget = executableTargets.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(targetName));
             if (executableTarget == null)
             {
-                Logger.Error(
-                    new[] { $"Target with name '{targetName}' does not exist. Available targets are:" }
-                        .Concat(executableTargets.Select(x => $"  - {x.Name}").OrderBy(x => x))
-                        .JoinNewLine());
+                Logger.Error($"Target with name '{targetName}' does not exist. Available targets are:"
+                    .Concat(executableTargets.Select(x => $"  - {x.Name}").OrderBy(x => x))
+                    .JoinNewLine());
                 Environment.Exit(exitCode: -1);
             }
 

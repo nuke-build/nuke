@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Tools.GitVersion
 {
@@ -42,8 +43,7 @@ namespace Nuke.Common.Tools.GitVersion
             }
             catch (Exception exception)
             {
-                throw new Exception(
-                    new[] { $"{nameof(GitVersion)} exited with code {process.ExitCode}, but cannot parse output as JSON:" }
+                throw new Exception($"{nameof(GitVersion)} exited with code {process.ExitCode}, but cannot parse output as JSON:"
                         .Concat(process.Output.Select(x => x.Text)).JoinNewLine(),
                     exception);
             }

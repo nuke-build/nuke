@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Utilities
 {
@@ -42,7 +43,7 @@ namespace Nuke.Common.Utilities
             var fullResourceName = $"{typeForNamespace.Namespace}.{postfix}";
             var assembly = typeForNamespace.GetTypeInfo().Assembly;
             return assembly.GetManifestResourceStream(fullResourceName)
-                .NotNull(new[] { $"Resource '{fullResourceName}' not found. Available resources are:" }
+                .NotNull($"Resource '{fullResourceName}' not found. Available resources are:"
                     .Concat(assembly.GetManifestResourceNames().Select(x => $"  - {x}"))
                     .JoinNewLine());
         }

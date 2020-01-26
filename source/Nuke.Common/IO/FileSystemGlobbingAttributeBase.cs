@@ -59,7 +59,7 @@ namespace Nuke.Common.IO
                         globbedElements.Contains(x),
                         $"Value '{x}' for member '{member.Name}' is not contained any pattern '{_patterns.JoinComma()}'."));
                 ControlFlow.Assert(parameterValue.Length == 1 || memberType == typeof(AbsolutePath[]),
-                    new[] { $"Member '{member.Name}' can only accept a single value but got:" }
+                    $"Member '{member.Name}' can only accept a single value but got:"
                         .Concat(parameterValue.Select(x => x.ToString()))
                         .JoinNewLine());
 
