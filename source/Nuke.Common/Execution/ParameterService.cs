@@ -238,8 +238,23 @@ namespace Nuke.Common.Execution
         [CanBeNull]
         public object GetEnvironmentVariable(string variableName, Type destinationType, char? separator)
         {
+            static string GetTrimmedName(string name)
+                => new string(name.Where(char.IsLetterOrDigit).ToArray());
+
             if (!Variables.TryGetValue(variableName, out var value))
-                return GetDefaultValue(destinationType);
+            {
+                var trimmedVariableName = GetTrimmedName(variableName);
+                var alternativeValues = Variables
+                    .Where(x => GetTrimmedName(x.Key).EqualsOrdinalIgnoreCase(trimmedVariableName) ||
+                                GetTrimmedName(x.Key).EqualsOrdinalIgnoreCase($"NUKE{trimmedVariableName}")).ToList();
+                ControlFlow.AssertWarn(alternativeValues.Count <= 1,
+                    $"Could not resolve '{variableName}' since multiple possible sources exist:"
+                        .Concat(alternativeValues.Select(x => $" - {x.Key} = {x.Value}")).JoinNewLine());
+                if (alternativeValues.Count == 1)
+                    value = alternativeValues.Single().Value;
+                else
+                    return GetDefaultValue(destinationType);
+            }
 
             try
             {

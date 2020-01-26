@@ -54,21 +54,8 @@ namespace Nuke.Common
                 : ExpandUnixEnvironmentVariables();
         }
 
-        internal static Dictionary<string, string> GetVariables()
-        {
-            var environmentVariables = Environment.GetEnvironmentVariables()
-                .ToGeneric<string, string>(StringComparer.CurrentCulture);
-
-            var groups = environmentVariables.GroupBy(x => x.Key, StringComparer.OrdinalIgnoreCase).ToList();
-            foreach (var group in groups.Where(x => x.Count() > 1))
-                Logger.Warn($"Environment variable '{group.Key}' exists multiple times with different casing. Falling back to case-sensitive.");
-
-            return groups.Any(x => x.Count() > 1)
-                ? environmentVariables
-                : new Dictionary<string, string>(environmentVariables, StringComparer.OrdinalIgnoreCase);
-        }
-
-        public static IReadOnlyDictionary<string, string> Variables => GetVariables();
+        public static IReadOnlyDictionary<string, string> Variables
+            => Environment.GetEnvironmentVariables().ToGeneric<string, string>(StringComparer.CurrentCulture);
 
         public static string[] CommandLineArguments { get; } = GetSurrogateArguments() ?? Environment.GetCommandLineArgs();
 
