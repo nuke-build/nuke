@@ -92,10 +92,10 @@ namespace Nuke.Common.OutputSinks
             var totalDuration = build.ExecutionPlan.Aggregate(TimeSpan.Zero, (t, x) => t.Add(x.Duration));
 
             string CreateLine(string target, string executionStatus, string duration, string appendix = null)
-                => target.PadRight(firstColumn, paddingChar: ' ')
-                   + executionStatus.PadRight(secondColumn, paddingChar: ' ')
-                   + duration.PadLeft(thirdColumn, paddingChar: ' ')
-                   + (appendix != null ? $"   // {appendix}" : string.Empty);
+                => target.PadRight(firstColumn, paddingChar: ' ')
+                   + executionStatus.PadRight(secondColumn, paddingChar: ' ')
+                   + duration.PadLeft(thirdColumn, paddingChar: ' ')
+                   + (appendix != null ? $"   // {appendix}" : string.Empty);
 
             string ToMinutesAndSeconds(TimeSpan duration)
                 => $"{(int) duration.TotalMinutes}:{duration:ss}";
