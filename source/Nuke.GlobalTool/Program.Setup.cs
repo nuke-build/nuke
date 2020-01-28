@@ -231,6 +231,11 @@ namespace Nuke.GlobalTool
                     definitions));
 
             TextTasks.WriteAllLines(
+                Path.Combine(EnvironmentInfo.WorkingDirectory, "build.cmd"),
+                FillTemplate(
+                    GetTemplate("build.cmd")));
+
+            TextTasks.WriteAllLines(
                 Path.Combine(EnvironmentInfo.WorkingDirectory, "build.ps1"),
                 FillTemplate(
                     GetTemplate($"build.{targetPlatform}.ps1"),
