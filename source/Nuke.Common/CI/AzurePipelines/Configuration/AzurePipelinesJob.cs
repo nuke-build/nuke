@@ -15,7 +15,7 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
         public AzurePipelinesJob[] Dependencies { get; set; }
         public int Parallel { get; set; }
         public string PartitionName { get; set; }
-        public string BuildScript { get; set; }
+        public string BuildCmdPath { get; set; }
         public string[] InvokedTargets { get; set; }
         public string[] DownloadArtifacts { get; set; }
         public string[] PublishArtifacts { get; set; }
@@ -70,7 +70,7 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
 
                 using (writer.WriteBlock("inputs:"))
                 {
-                    writer.WriteLine($"script: './{BuildScript} {arguments}'");
+                    writer.WriteLine($"script: './{BuildCmdPath} {arguments}'");
                 }
             }
 

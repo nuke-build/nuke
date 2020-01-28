@@ -99,7 +99,7 @@ namespace Nuke.Common.CI.GitHubActions
 
             yield return new GitHubActionsRunStep
                          {
-                             Command = $"./{BuildScript} {InvokedTargets.JoinSpace()}",
+                             Command = $"./{BuildCmdPath} {InvokedTargets.JoinSpace()}",
                              Imports = GetImports().ToDictionary(x => x.key, x => x.value)
                          };
 

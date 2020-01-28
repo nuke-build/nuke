@@ -34,10 +34,10 @@ namespace Nuke.Common.CI
         protected abstract IEnumerable<string> RelevantTargetNames { get; }
         protected abstract IEnumerable<string> IrrelevantTargetNames { get; }
 
-        protected virtual string BuildScript =>
+        protected virtual string BuildCmdPath =>
             NukeBuild.RootDirectory.GlobFiles("build.cmd", "*/build.cmd")
                 .Select(x => NukeBuild.RootDirectory.GetUnixRelativePathTo(x))
-                .FirstOrDefault().NotNull("BuildScript != null");
+                .FirstOrDefault().NotNull("BuildCmdPath != null");
 
         public void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {

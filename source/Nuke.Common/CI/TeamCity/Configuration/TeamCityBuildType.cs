@@ -17,7 +17,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
         public TeamCityBuildTypeVcsRoot VcsRoot { get; set; }
         public bool IsComposite { get; set; }
         public bool IsDeployment { get; set; }
-        public string BuildScript { get; set; }
+        public string BuildCmdPath { get; set; }
         public string[] InvokedTargets { get; set; }
         public Partition Partition { get; set; }
         public string PartitionName { get; set; }
@@ -118,7 +118,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
 
                 using (writer.WriteBlock("exec"))
                 {
-                    writer.WriteLine($"path = {BuildScript.DoubleQuote()}");
+                    writer.WriteLine($"path = {BuildCmdPath.DoubleQuote()}");
                     writer.WriteLine($"arguments = {arguments.DoubleQuote()}");
                 }
             }
