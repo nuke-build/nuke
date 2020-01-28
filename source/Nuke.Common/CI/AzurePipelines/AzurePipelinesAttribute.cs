@@ -86,11 +86,17 @@ namespace Nuke.Common.CI.AzurePipelines
             LookupTable<ExecutableTarget, AzurePipelinesJob> jobs)
         {
             var (partitionName, totalPartitions) = ArtifactExtensions.Partitions.GetValueOrDefault(executableTarget.Definition);
+
+            static string GetArtifactPath(AbsolutePath path)
+                => NukeBuild.RootDirectory.Contains(path)
+                    ? NukeBuild.RootDirectory.GetUnixRelativePathTo(path)
+                    : (string) path;
+
             var publishedArtifacts = ArtifactExtensions.ArtifactProducts[executableTarget.Definition]
                 .Select(x => (AbsolutePath) x)
                 .Select(x => x.DescendantsAndSelf(y => y.Parent).FirstOrDefault(y => !y.ToString().ContainsOrdinalIgnoreCase("*")))
                 .Distinct()
-                .Select(x => x.ToString().TrimStart(NukeBuild.RootDirectory).TrimStart('/', '\\')).ToArray();
+                .Select(GetArtifactPath).ToArray();
 
             // var artifactDependencies = (
             //     from artifactDependency in ArtifactExtensions.ArtifactDependencies[executableTarget.Definition]
