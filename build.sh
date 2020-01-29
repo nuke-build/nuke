@@ -29,6 +29,9 @@ function FirstJsonValue {
     perl -nle 'print $1 if m{"'$1'": "([^"]+)",?}' <<< ${@:2}
 }
 
+# Print environment variables
+set
+
 # Check if any dotnet is installed
 if [[ -x "$(command -v dotnet)" ]]; then
     dotnet --info

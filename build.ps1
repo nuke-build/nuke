@@ -33,6 +33,9 @@ function ExecSafe([scriptblock] $cmd) {
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
 }
 
+# Print environment variables
+Get-Item -Path Env:*
+
 # Check if any dotnet is installed
 if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue)) {
     ExecSafe { & dotnet --info }
