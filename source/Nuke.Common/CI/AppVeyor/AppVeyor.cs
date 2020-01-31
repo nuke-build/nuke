@@ -82,6 +82,11 @@ namespace Nuke.Common.CI.AppVeyor
         [CanBeNull] public string Platform => EnvironmentInfo.GetVariable<string>("PLATFORM");
         [CanBeNull] public string Configuration => EnvironmentInfo.GetVariable<string>("CONFIGURATION");
 
+        public void UpdateBuildNumber(string version)
+        {
+            _cli.Invoke($"UpdateBuild -Version {version.DoubleQuote()}");
+        }
+
         public void WriteInformation(string message, string details = null)
         {
             WriteMessage(AppVeyorMessageCategory.Information, message, details);

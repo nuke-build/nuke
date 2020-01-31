@@ -6,6 +6,10 @@ using System;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
+using Nuke.Common.CI.AppVeyor;
+using Nuke.Common.CI.AzurePipelines;
+using Nuke.Common.CI.GitHubActions;
+using Nuke.Common.CI.TeamCity;
 using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
 
@@ -20,6 +24,7 @@ namespace Nuke.Common.Tools.GitVersion
     {
         public bool DisableOnUnix { get; set; }
         public bool UpdateAssemblyInfo { get; set; }
+        public bool UpdateBuildNumber { get; set; } = true;
 
         public override object GetValue(MemberInfo member, object instance)
         {
@@ -30,11 +35,20 @@ namespace Nuke.Common.Tools.GitVersion
                 return null;
             }
 
-            return GitVersionTasks.GitVersion(s => s
+            var gitVersion = GitVersionTasks.GitVersion(s => s
                     .SetFramework("netcoreapp3.0")
                     .DisableLogOutput()
                     .SetUpdateAssemblyInfo(UpdateAssemblyInfo))
                 .Result;
+
+            if (UpdateBuildNumber)
+            {
+                AzurePipelines.Instance?.UpdateBuildNumber(gitVersion.FullSemVer);
+                TeamCity.Instance?.SetBuildNumber(gitVersion.FullSemVer);
+                AppVeyor.Instance?.UpdateBuildNumber(gitVersion.FullSemVer);
+            }
+
+            return gitVersion;
         }
     }
 }
