@@ -61,7 +61,10 @@ namespace Nuke.Common.Tools.Unity
 
         private static void PreProcess(ref UnitySettings unitySettings)
         {
-            ControlFlow.AssertWarn(unitySettings.ProjectPath != null, "unitySettings.ProjectPath != null");
+            ControlFlow.AssertWarn(
+                unitySettings.ProjectPath != null,
+                "ProjectPath is not set in UnitySettings. This will cause Unity to build the last " +
+                "opened/built project. Use .SetProjectPath() to override this behavior.");
             PreProcess<UnitySettings>(ref unitySettings);
         }
 
