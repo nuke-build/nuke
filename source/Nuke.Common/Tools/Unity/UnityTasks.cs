@@ -35,31 +35,28 @@ namespace Nuke.Common.Tools.Unity
         {
             return EnvironmentInfo.Platform switch
             {
-                PlatformFamily.Windows => $@"{EnvironmentInfo.SpecialFolder(
-                    EnvironmentInfo.Is32Bit
-                        ? SpecialFolders.ProgramFilesX86
-                        : SpecialFolders.ProgramFiles)}\Unity\Editor\Unity.exe",
+                PlatformFamily.Windows => $@"{GetProgramFiles()}\Unity\Editor\Unity.exe",
                 PlatformFamily.OSX => "/Applications/Unity/Unity.app/Contents/MacOS/Unity",
-                PlatformFamily.Linux => null,
-                PlatformFamily.Unknown => null,
                 _ => null
             };
         }
 
         private static string GetToolPathViaHubVersion(string version)
         {
-            static string GetProgramFiles()
-                => EnvironmentInfo.SpecialFolder(
-                    EnvironmentInfo.Is32Bit
-                        ? SpecialFolders.ProgramFilesX86
-                        : SpecialFolders.ProgramFiles);
-
             return EnvironmentInfo.Platform switch
             {
                 PlatformFamily.Windows => $@"{GetProgramFiles()}\Unity\Hub\Editor\{version}\Editor\Unity.exe",
                 PlatformFamily.OSX => $"/Applications/Unity/Hub/Editor/{version}/Unity.app/Contents/MacOS/Unity",
                 _ => throw new Exception($"Cannot determine Unity Hub installation path for '{version}'.")
             };
+        }
+
+        private static string GetProgramFiles()
+        {
+            return EnvironmentInfo.SpecialFolder(
+                    EnvironmentInfo.Is32Bit
+                        ? SpecialFolders.ProgramFilesX86
+                        : SpecialFolders.ProgramFiles);
         }
 
         private static void PreProcess(ref UnitySettings unitySettings)
