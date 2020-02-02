@@ -83,17 +83,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
 
         public virtual void WriteArtifacts(CustomFileWriter writer)
         {
-            if (!ArtifactRules?.Any() ?? true)
-                return;
-
-            writer.WriteLine("artifactRules = \"\"\"");
-            using (writer.Indent())
-            {
-                foreach (var artifactRule in ArtifactRules)
-                    writer.WriteLine(artifactRule);
-            }
-
-            writer.WriteLine("\"\"\".trimIndent()");
+            writer.WriteArray("artifactRules", ArtifactRules);
         }
 
         private void WriteTriggers(CustomFileWriter writer)

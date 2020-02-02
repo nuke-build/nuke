@@ -109,9 +109,7 @@ object Pack : BuildType({
         root(DslContext.settingsRoot)
         cleanCheckout = true
     }
-    artifactRules = """
-        output/packages/*.nupkg => output/packages
-    """.trimIndent()
+    artifactRules = "output/packages/*.nupkg => output/packages"
     steps {
         exec {
             path = "build.cmd"
@@ -120,14 +118,12 @@ object Pack : BuildType({
     }
     triggers {
         vcs {
-            branchFilter = ""
             triggerRules = "+:**"
         }
         schedule {
             schedulingPolicy = daily {
                 hour = 3
             }
-            branchFilter = ""
             triggerRules = "+:**"
             triggerBuild = always()
             withPendingChangesOnly = false
@@ -196,19 +192,15 @@ object Test : BuildType({
         cleanCheckout = true
         showDependenciesChanges = true
     }
-    artifactRules = """
-        **/*
-    """.trimIndent()
+    artifactRules = "**/*"
     triggers {
         vcs {
-            branchFilter = ""
             triggerRules = "+:**"
         }
         schedule {
             schedulingPolicy = daily {
                 hour = 3
             }
-            branchFilter = ""
             triggerRules = "+:**"
             triggerBuild = always()
             withPendingChangesOnly = false
@@ -226,14 +218,10 @@ object Test : BuildType({
             onDependencyCancel = FailureAction.CANCEL
         }
         artifacts(Test_P1T2) {
-            artifactRules = """
-                **/*
-            """.trimIndent()
+            artifactRules = "**/*"
         }
         artifacts(Test_P2T2) {
-            artifactRules = """
-                **/*
-            """.trimIndent()
+            artifactRules = "**/*"
         }
     }
 })
@@ -243,9 +231,7 @@ object Coverage : BuildType({
         root(DslContext.settingsRoot)
         cleanCheckout = true
     }
-    artifactRules = """
-        output/coverage-report.zip => output
-    """.trimIndent()
+    artifactRules = "output/coverage-report.zip => output"
     steps {
         exec {
             path = "build.cmd"
@@ -316,9 +302,7 @@ object Publish : BuildType({
             onDependencyCancel = FailureAction.CANCEL
         }
         artifacts(Pack) {
-            artifactRules = """
-                output/packages/*.nupkg => output/packages
-            """.trimIndent()
+            artifactRules = "output/packages/*.nupkg => output/packages"
         }
     }
 })

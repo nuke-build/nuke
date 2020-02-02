@@ -4,21 +4,22 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.KeyVault.Models;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.TeamCity.Configuration
 {
     public class TeamCityVcsTrigger : TeamCityTrigger
     {
-        public string BranchFilter { get; set; }
-        public string TriggerRules { get; set; }
+        public string[] BranchFilters { get; set; }
+        public string[] TriggerRules { get; set; }
 
         public override void Write(CustomFileWriter writer)
         {
             using (writer.WriteBlock("vcs"))
             {
-                writer.WriteLine($"branchFilter = {BranchFilter.DoubleQuote()}");
-                writer.WriteLine($"triggerRules = {TriggerRules.DoubleQuote()}");
+                writer.WriteArray("branchFilter", BranchFilters);
+                writer.WriteArray("triggerRules", TriggerRules);
             }
         }
     }

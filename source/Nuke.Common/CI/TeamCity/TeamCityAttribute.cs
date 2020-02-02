@@ -46,13 +46,13 @@ namespace Nuke.Common.CI.TeamCity
         public string Description { get; set; }
         public bool CleanCheckoutDirectory { get; set; } = true;
 
-        public string VcsTriggerBranchFilter { get; set; } = "";
-        public string VcsTriggerRules { get; set; } = "+:**";
+        public string[] VcsTriggerBranchFilters { get; set; } = new string[0];
+        public string[] VcsTriggerRules { get; set; } = { "+:**" };
         public string[] VcsTriggeredTargets { get; set; } = new string[0];
 
         public bool NightlyBuildAlways { get; set; } = true;
-        public string NightlyTriggerBranchFilter { get; set; } = "";
-        public string NightlyTriggerRules { get; set; } = "+:**";
+        public string[] NightlyTriggerBranchFilters { get; set; } = new string[0];
+        public string[] NightlyTriggerRules { get; set; } = { "+:**" };
         public string[] NightlyTriggeredTargets { get; set; } = new string[0];
 
         public string[] ManuallyTriggeredTargets { get; set; } = new string[0];
@@ -219,7 +219,7 @@ namespace Nuke.Common.CI.TeamCity
             {
                 yield return new TeamCityVcsTrigger
                              {
-                                 BranchFilter = VcsTriggerBranchFilter,
+                                 BranchFilters = VcsTriggerBranchFilters,
                                  TriggerRules = VcsTriggerRules
                              };
             }
@@ -228,7 +228,7 @@ namespace Nuke.Common.CI.TeamCity
             {
                 yield return new TeamCityScheduledTrigger
                              {
-                                 BranchFilter = NightlyTriggerBranchFilter,
+                                 BranchFilters = NightlyTriggerBranchFilters,
                                  TriggerRules = NightlyTriggerRules,
                                  EnableQueueOptimization = true,
                                  WithPendingChangesOnly = false,

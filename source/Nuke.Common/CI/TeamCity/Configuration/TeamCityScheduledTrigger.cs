@@ -10,8 +10,8 @@ namespace Nuke.Common.CI.TeamCity.Configuration
 {
     public class TeamCityScheduledTrigger : TeamCityTrigger
     {
-        public string BranchFilter { get; set; }
-        public string TriggerRules { get; set; }
+        public string[] BranchFilters { get; set; }
+        public string[] TriggerRules { get; set; }
         public bool TriggerBuildAlways { get; set; }
         public bool WithPendingChangesOnly { get; set; }
         public bool EnableQueueOptimization { get; set; }
@@ -25,8 +25,8 @@ namespace Nuke.Common.CI.TeamCity.Configuration
                     writer.WriteLine("hour = 3");
                 }
 
-                writer.WriteLine($"branchFilter = {BranchFilter.DoubleQuote()}");
-                writer.WriteLine($"triggerRules = {TriggerRules.DoubleQuote()}");
+                writer.WriteArray("branchFilter", BranchFilters);
+                writer.WriteArray("triggerRules", TriggerRules);
 
                 if (TriggerBuildAlways)
                     writer.WriteLine("triggerBuild = always()");
