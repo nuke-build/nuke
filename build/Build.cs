@@ -44,7 +44,7 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
 [TeamCitySetDotCoverHomePath]
 [TeamCity(
     TeamCityAgentPlatform.Windows,
-    Version = "2019.1",
+    Version = "2019.2",
     VcsTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
     NightlyTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
     ManuallyTriggeredTargets = new[] { nameof(Publish) },
