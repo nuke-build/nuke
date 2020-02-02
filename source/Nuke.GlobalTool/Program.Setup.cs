@@ -230,10 +230,24 @@ namespace Nuke.GlobalTool
                     GetTemplate("Build.cs"),
                     definitions));
 
+            void MakeExecutable(string scriptPath)
+            {
+                if (Directory.Exists(Path.Combine(rootDirectory, ".git")))
+                    ProcessTasks.StartProcess("git", $"update-index --add --chmod=+x {scriptPath}", logInvocation: false, logOutput: false);
+
+                if (Directory.Exists(Path.Combine(rootDirectory, ".svn")))
+                    ProcessTasks.StartProcess("svn", $"propset svn:executable on {scriptPath}", logInvocation: false, logOutput: false);
+
+                if (EnvironmentInfo.IsUnix)
+                    ProcessTasks.StartProcess("chmod", $"+x {scriptPath}", logInvocation: false, logOutput: false);
+            }
+
+            var cmdScript = Path.Combine(EnvironmentInfo.WorkingDirectory, "build.cmd");
             TextTasks.WriteAllLines(
-                Path.Combine(EnvironmentInfo.WorkingDirectory, "build.cmd"),
+                cmdScript,
                 FillTemplate(
                     GetTemplate("build.cmd")));
+            MakeExecutable(cmdScript);
 
             TextTasks.WriteAllLines(
                 Path.Combine(EnvironmentInfo.WorkingDirectory, "build.ps1"),
@@ -250,8 +264,9 @@ namespace Nuke.GlobalTool
                             nugetVersion = "latest"
                         })));
 
+            var bashScript = Path.Combine(EnvironmentInfo.WorkingDirectory, "build.sh");
             TextTasks.WriteAllLines(
-                Path.Combine(EnvironmentInfo.WorkingDirectory, "build.sh"),
+                bashScript,
                 FillTemplate(
                     GetTemplate($"build.{targetPlatform}.sh"),
                     replacements: GetDictionary(
@@ -264,6 +279,7 @@ namespace Nuke.GlobalTool
                             buildProjectName,
                             nugetVersion = "latest"
                         })));
+            MakeExecutable(bashScript);
 
             if (definitions.Contains("SRC_DIR"))
                 FileSystemTasks.EnsureExistingDirectory(Path.Combine(rootDirectory, "src"));
