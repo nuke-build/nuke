@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 - Removed NuGetPackage tasks and AutoMapper package reference
-- Removed timezone specification for TeamCity scheduled triggers to use server timezone
+- Removed TeamCity definitions for `VcsRoot` and trigger timezones
 - Changed `AbsolutePath`, `RelativePath`, `WinRelativePath` and `UnixRelativePath` to outer scope
 - Changed default package for `DotCoverTasks` to `JetBrains.dotCover.DotNetCliTool`
 - Changed default includes to be provided via `Nuke.Common.targets`
@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Changed manually invoked targets to be TeamCity deployment configurations
 - Changed `AzurePipelines` interface to use enumerations for test result type and code coverage tool type
 - Changed package version for `Glob`, `Microsoft.IdentityModel.Clients.ActiveDirectory`, `Newtonsoft.Json`, `NuGet.Packaging`, `Refit`, `YamlDotNet`
+- Added cross-platform `build.cmd` bootstrapping script
+- Added build emotions
+- Added update of build number for TeamCity, AppVeyor, and Azure Pipelines from `GitVersionAttribute`
 - Added `AzureKeyVault` – previously available as addon
 - Added `DocFXTasks`, `DockerTasks`, `HelmTasks`, `KubernetesTasks`, and `NSwagTasks` – previously available as addons
 - Added TeamCity logger extension method for `DotNetBuildSettings`
@@ -28,6 +31,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added setters for `Project` properties
 - Added `Solution.AddSolution` and `ProjectModelTask.CreateSolution` overload for creating global solutions
 - Added path extension methods for `Get(Win|Unix)RelativePathTo`, `Contains`, and `To(Win|Unix)RelativePath`
+- Added `NoFetch`, `Framework`, and `UpdateBuildNumber` properties to `GitVersionAttribute`
+- Fixed directory creation in bootstrapping scripts
+- Fixed artifact paths for TeamCity and Azure Pipelines
 - Fixed path separators for AppVeyor and GitHubActions configurations
 - Fixed `NSwag` to quote tool path
 - Fixed `SolutionSerializer` to handle inconsistent whitespaces
@@ -37,9 +43,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Fixed `cleanCheckoutDirectory` to be set for all TeamCity build types
 - Fixed `AddTeamCityLogger` extension method
 - Fixed `buildType` reference in TeamCity build-finished triggers
-- Fixed `artifactRules` in TeamCity for single files
 - Fixed `ReportGenerator` task to resolve `ReportGenerator.dll`
 - Fixed sharing of artifacts between agents
+- Fixed `GitVersionSettings.UpdateAssemblyInfoFileNames` to be an array
 
 ## [0.23.7] / 2020-01-28
 - Fixed summary alignment for hosts that trim whitespaces
