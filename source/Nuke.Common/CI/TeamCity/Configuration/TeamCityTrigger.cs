@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Nuke.Common.CI.TeamCity.Configuration
 {
-    public abstract class TeamCityTrigger : TeamCityConfigurationEntity
+    public abstract class TeamCityTrigger : ConfigurationEntity
     {
     }
 }

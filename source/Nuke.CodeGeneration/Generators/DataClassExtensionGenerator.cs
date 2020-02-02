@@ -133,39 +133,42 @@ namespace Nuke.CodeGeneration.Generators
 
         private static void WriteDictionaryExtensions(DataClassWriter writer, Property property)
         {
-            var propertyInstance = property.Name.ToInstance().EscapeParameter();
-            var (keyType, valueType) = property.GetDictionaryKeyValueTypes();
-            var propertySingular = property.Name.ToSingular();
-            var propertySingularInstance = property.Name.ToSingular().ToInstance();
-            var keyInstance = $"{propertySingularInstance}Key";
-            var valueInstance = $"{propertySingularInstance}Value";
-            var propertyAccess = $"toolSettings.{property.Name}Internal";
+            if (!property.OnlyDelegates)
+            {
+                var propertyInstance = property.Name.ToInstance().EscapeParameter();
+                var (keyType, valueType) = property.GetDictionaryKeyValueTypes();
+                var propertySingular = property.Name.ToSingular();
+                var propertySingularInstance = property.Name.ToSingular().ToInstance();
+                var keyInstance = $"{propertySingularInstance}Key";
+                var valueInstance = $"{propertySingularInstance}Value";
+                var propertyAccess = $"toolSettings.{property.Name}Internal";
 
-            writer
-                .WriteSummaryExtension($"Sets {property.GetCrefTag()} to a new dictionary", property)
-                .WriteObsoleteAttributeWhenObsolete(property)
-                .WriteMethod($"Set{property.Name}",
-                    $"IDictionary<{keyType}, {valueType}> {propertyInstance}",
-                    $"{propertyAccess} = {propertyInstance}.ToDictionary(x => x.Key, x => x.Value, {property.GetKeyComparer()});")
-                .WriteSummaryExtension($"Clears {property.GetCrefTag()}", property)
-                .WriteObsoleteAttributeWhenObsolete(property)
-                .WriteMethod($"Clear{property.Name}",
-                    $"{propertyAccess}.Clear();")
-                .WriteSummaryExtension($"Adds a new key-value-pair {property.GetCrefTag()}", property)
-                .WriteObsoleteAttributeWhenObsolete(property)
-                .WriteMethod($"Add{propertySingular}",
-                    new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
-                    $"{propertyAccess}.Add({keyInstance}, {valueInstance});")
-                .WriteSummaryExtension($"Removes a key-value-pair from {property.GetCrefTag()}", property)
-                .WriteObsoleteAttributeWhenObsolete(property)
-                .WriteMethod($"Remove{propertySingular}",
-                    $"{keyType} {keyInstance}",
-                    $"{propertyAccess}.Remove({keyInstance});")
-                .WriteSummaryExtension($"Sets a key-value-pair in {property.GetCrefTag()}", property)
-                .WriteObsoleteAttributeWhenObsolete(property)
-                .WriteMethod($"Set{propertySingular}",
-                    new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
-                    $"{propertyAccess}[{keyInstance}] = {valueInstance};");
+                writer
+                    .WriteSummaryExtension($"Sets {property.GetCrefTag()} to a new dictionary", property)
+                    .WriteObsoleteAttributeWhenObsolete(property)
+                    .WriteMethod($"Set{property.Name}",
+                        $"IDictionary<{keyType}, {valueType}> {propertyInstance}",
+                        $"{propertyAccess} = {propertyInstance}.ToDictionary(x => x.Key, x => x.Value, {property.GetKeyComparer()});")
+                    .WriteSummaryExtension($"Clears {property.GetCrefTag()}", property)
+                    .WriteObsoleteAttributeWhenObsolete(property)
+                    .WriteMethod($"Clear{property.Name}",
+                        $"{propertyAccess}.Clear();")
+                    .WriteSummaryExtension($"Adds a new key-value-pair {property.GetCrefTag()}", property)
+                    .WriteObsoleteAttributeWhenObsolete(property)
+                    .WriteMethod($"Add{propertySingular}",
+                        new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
+                        $"{propertyAccess}.Add({keyInstance}, {valueInstance});")
+                    .WriteSummaryExtension($"Removes a key-value-pair from {property.GetCrefTag()}", property)
+                    .WriteObsoleteAttributeWhenObsolete(property)
+                    .WriteMethod($"Remove{propertySingular}",
+                        $"{keyType} {keyInstance}",
+                        $"{propertyAccess}.Remove({keyInstance});")
+                    .WriteSummaryExtension($"Sets a key-value-pair in {property.GetCrefTag()}", property)
+                    .WriteObsoleteAttributeWhenObsolete(property)
+                    .WriteMethod($"Set{propertySingular}",
+                        new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
+                        $"{propertyAccess}[{keyInstance}] = {valueInstance};");
+            }
 
             writer.ForEach(property.Delegates, x => WriteDictionaryDelegateExtensions(writer, property, x));
         }

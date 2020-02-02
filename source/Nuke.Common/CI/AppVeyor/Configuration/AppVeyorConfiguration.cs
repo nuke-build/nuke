@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.IO;
 using System.Linq;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
@@ -10,10 +11,10 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.AppVeyor.Configuration
 {
-    public class AppVeyorConfiguration : AppVeyorConfigurationEntity
+    public class AppVeyorConfiguration : ConfigurationEntity
     {
         public AppVeyorImage[] Images { get; set; }
-        public string BuildScript { get; set; }
+        public string BuildCmdPath { get; set; }
         public AppVeyorService[] Services { get; set; }
         public AppVeyorBranches Branches { get; set; }
         public string[] Init { get; set; }
@@ -101,7 +102,7 @@ namespace Nuke.Common.CI.AppVeyor.Configuration
 
             using (writer.WriteBlock("build_script:"))
             {
-                writer.WriteLine($@"- ps: .\{BuildScript} {InvokedTargets.JoinSpace()}");
+                writer.WriteLine($@"- ps: .\{Path.ChangeExtension(BuildCmdPath, ".ps1")} {InvokedTargets.JoinSpace()}");
                 writer.WriteLine();
             }
 

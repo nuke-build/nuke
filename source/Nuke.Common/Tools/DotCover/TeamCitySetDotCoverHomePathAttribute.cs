@@ -15,7 +15,10 @@ namespace Nuke.Common.Tools.DotCover
     [AttributeUsage(AttributeTargets.Class)]
     public class TeamCitySetDotCoverHomePathAttribute : Attribute, IOnAfterLogo
     {
-        public void OnAfterLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets, IReadOnlyCollection<ExecutableTarget> executionPlan)
+        public void OnAfterLogo(
+            NukeBuild build,
+            IReadOnlyCollection<ExecutableTarget> executableTargets,
+            IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
             TeamCity.Instance?.SetConfigurationParameter("teamcity.dotCover.home", DotCoverTasks.DotCoverPath);
         }

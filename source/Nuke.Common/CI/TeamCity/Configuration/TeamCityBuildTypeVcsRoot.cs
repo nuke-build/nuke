@@ -8,7 +8,7 @@ using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.TeamCity.Configuration
 {
-    public class TeamCityBuildTypeVcsRoot : TeamCityConfigurationEntity
+    public class TeamCityBuildTypeVcsRoot : ConfigurationEntity
     {
         public TeamCityVcsRoot Root { get; set; }
         public bool ShowDependenciesChanges { get; set; }

@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.ProjectModel
 {
@@ -19,7 +20,7 @@ namespace Nuke.Common.ProjectModel
         internal Dictionary<PrimitiveProject, SolutionFolder> PrimitiveProjectParents { get; } = new Dictionary<PrimitiveProject, SolutionFolder>();
 
         [CanBeNull]
-        public PathConstruction.AbsolutePath Path { get; set; }
+        public AbsolutePath Path { get; internal set; }
 
         [CanBeNull]
         public string Name => System.IO.Path.GetFileNameWithoutExtension(Path);
@@ -28,7 +29,7 @@ namespace Nuke.Common.ProjectModel
         public string FileName => System.IO.Path.GetFileName(Path);
 
         [CanBeNull]
-        public PathConstruction.AbsolutePath Directory => Path?.Parent;
+        public AbsolutePath Directory => Path?.Parent;
 
         public string[] Header { get; set; }
         public IDictionary<string, string> Properties { get; set; }
@@ -49,6 +50,16 @@ namespace Nuke.Common.ProjectModel
         public override string ToString()
         {
             return Path ?? "<in-memory solution>";
+        }
+
+        public SolutionFolder GetSolutionFolder(Guid projectId)
+        {
+            return AllSolutionFolders.Single(x => x.ProjectId == projectId);
+        }
+
+        public Project GetProject(Guid projectId)
+        {
+            return AllProjects.Single(x => x.ProjectId == projectId);
         }
 
         [CanBeNull]
@@ -143,13 +154,34 @@ namespace Nuke.Common.ProjectModel
 
         public void SaveAs(string fileName)
         {
-            Path = (PathConstruction.AbsolutePath) fileName;
+            Path = (AbsolutePath) fileName;
             Save();
         }
 
         public void Save()
         {
             SolutionSerializer.Serialize(this);
+        }
+
+        public void AddSolution(Solution solution, SolutionFolder folder = null)
+        {
+            SolutionFolder GetParentFolder(PrimitiveProject solutionFolder) =>
+                AllSolutionFolders.FirstOrDefault(x => x.ProjectId == solutionFolder.SolutionFolder?.ProjectId);
+
+            IDictionary<string, string> GetItems(SolutionFolder solutionFolder)
+                => solutionFolder.Items.Keys
+                    .Select(x => (string) PathConstruction.GetWinRelativePath(Directory, solution.Directory / x))
+                    .ToDictionary(x => x, x => x);
+
+            solution.AllSolutionFolders.ForEach(x => AddSolutionFolder(x.Name, x.ProjectId, GetParentFolder(x) ?? folder));
+            solution.AllSolutionFolders.ForEach(x => GetSolutionFolder(x.ProjectId).Items = GetItems(x));
+            solution.AllProjects.ForEach(x => AddProject(x.Name, x.TypeId, x.Path, x.ProjectId, x.Configurations, GetParentFolder(x) ?? folder));
+        }
+
+        public void RandomizeProjectIds()
+        {
+            AllSolutionFolders.ForEach(x => x.ProjectId = Guid.NewGuid());
+            AllProjects.ForEach(x => x.ProjectId = Guid.NewGuid());
         }
     }
 }

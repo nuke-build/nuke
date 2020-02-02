@@ -5,6 +5,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using Nuke.Common.Utilities;
@@ -61,16 +62,18 @@ namespace Nuke.Common
         /// </summary>
         public static bool IsWsl { get; } = GetIsWsl();
 
-        private static bool GetIsWsl() {
-
+        private static bool GetIsWsl()
+        {
             if (!IsLinux)
                 return false;
 
-            try {
+            try
+            {
                 var version = File.ReadAllText("/proc/version");
                 return version.ContainsOrdinalIgnoreCase("Microsoft");
             }
-            catch (IOException) {
+            catch (IOException)
+            {
                 return false;
             }
         }
@@ -79,11 +82,7 @@ namespace Nuke.Common
         /// Returns the framework the build is running on.
         /// </summary>
         public static FrameworkName Framework
-#if NETCORE
-            => new FrameworkName(".NETStandard,Version=v2.0");
-#else
-            => new FrameworkName(".NETFramework,Version=v4.6.1");
-#endif
+            => new FrameworkName(typeof(NukeBuild).Assembly.GetCustomAttribute<TargetFrameworkAttribute>().FrameworkName);
 
         /// <summary>
         /// Returns the platform the build is running on.

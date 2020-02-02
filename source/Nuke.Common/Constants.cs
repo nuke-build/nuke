@@ -12,7 +12,7 @@ namespace Nuke.Common
 {
     internal static class Constants
     {
-        internal static string[] KnownWords = { "GitHub", "NuGet", "MSBuild" };
+        internal static readonly string[] KnownWords = { "GitHub", "NuGet", "MSBuild", "GitVersion" };
 
         internal const string ConfigurationFileName = ".nuke";
 
@@ -24,19 +24,19 @@ namespace Nuke.Common
         internal const string CompletionParameterName = "shell-completion";
 
         [CanBeNull]
-        internal static PathConstruction.AbsolutePath TryGetRootDirectoryFrom(string startDirectory)
+        internal static AbsolutePath TryGetRootDirectoryFrom(string startDirectory)
         {
-            return (PathConstruction.AbsolutePath) FileSystemTasks.FindParentDirectory(
+            return (AbsolutePath) FileSystemTasks.FindParentDirectory(
                 startDirectory,
                 predicate: x => x.GetFiles(ConfigurationFileName).Any());
         }
 
-        internal static PathConstruction.AbsolutePath GetTemporaryDirectory(PathConstruction.AbsolutePath rootDirectory)
+        internal static AbsolutePath GetTemporaryDirectory(AbsolutePath rootDirectory)
         {
             return rootDirectory / ".tmp";
         }
 
-        internal static PathConstruction.AbsolutePath GetCompletionFile(PathConstruction.AbsolutePath rootDirectory)
+        internal static AbsolutePath GetCompletionFile(AbsolutePath rootDirectory)
         {
             var completionFileName = CompletionParameterName + ".yml";
             return File.Exists(rootDirectory / completionFileName)
@@ -44,12 +44,12 @@ namespace Nuke.Common
                 : GetTemporaryDirectory(rootDirectory) / completionFileName;
         }
 
-        internal static PathConstruction.AbsolutePath GetBuildAttemptFile(PathConstruction.AbsolutePath rootDirectory)
+        internal static AbsolutePath GetBuildAttemptFile(AbsolutePath rootDirectory)
         {
             return GetTemporaryDirectory(rootDirectory) / "build-attempt.log";
         }
 
-        public static PathConstruction.AbsolutePath GetVisualStudioDebugFile(PathConstruction.AbsolutePath rootDirectory)
+        public static AbsolutePath GetVisualStudioDebugFile(AbsolutePath rootDirectory)
         {
             return GetTemporaryDirectory(rootDirectory) / $"{VisualStudioDebugParameterName}.log";
         }

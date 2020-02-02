@@ -8,6 +8,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.CI.AzurePipelines.Configuration;
 using Nuke.Common.Execution;
+using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -16,7 +17,7 @@ using static Nuke.Common.IO.PathConstruction;
 namespace Nuke.Common.CI.AzurePipelines
 {
     [PublicAPI]
-    public class AzurePipelinesAttribute : ConfigurationGenerationAttributeBase
+    public class AzurePipelinesAttribute : ChainedConfigurationAttributeBase
     {
         private readonly AzurePipelinesImage[] _images;
 
@@ -25,9 +26,13 @@ namespace Nuke.Common.CI.AzurePipelines
             _images = new[] { image }.Concat(images).ToArray();
         }
 
+        private string ConfigurationFile => NukeBuild.RootDirectory / "azure-pipelines.yml";
+
+        protected override HostType HostType => HostType.AzurePipelines;
+        protected override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
+        protected override IEnumerable<string> RelevantTargetNames => InvokedTargets;
+
         public string[] InvokedTargets { get; set; } = new string[0];
-        public string[] NonEntryTargets { get; set; } = new string[0];
-        public string[] ExcludedTargets { get; set; } = new string[0];
 
         public bool TriggerBatch { get; set; }
         public string[] TriggerBranchesInclude { get; set; } = new string[0];
@@ -43,26 +48,12 @@ namespace Nuke.Common.CI.AzurePipelines
         public string[] PullRequestsPathsInclude { get; set; } = new string[0];
         public string[] PullRequestsPathsExclude { get; set; } = new string[0];
 
-        protected virtual string ConfigurationFile => NukeBuild.RootDirectory / "azure-pipelines.yml";
-
-        protected override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
-
-        protected override HostType HostType => HostType.AzurePipelines;
-
-        protected override void Generate(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        protected override CustomFileWriter CreateWriter()
         {
-            var relevantTargets = InvokedTargets
-                .SelectMany(x => ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { x }))
-                .Distinct()
-                .Where(x => !ExcludedTargets.Contains(x.Name) && !NonEntryTargets.Contains(x.Name)).ToList();
-
-            var configuration = GetConfiguration(relevantTargets);
-
-            using var writer = new CustomFileWriter(ConfigurationFile, indentationFactor: 2);
-            configuration.Write(writer);
+            return new CustomFileWriter(ConfigurationFile, indentationFactor: 2, commentPrefix: "#");
         }
 
-        protected virtual AzurePipelinesConfiguration GetConfiguration(IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        protected override ConfigurationEntity GetConfiguration(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             return new AzurePipelinesConfiguration
                    {
@@ -95,11 +86,17 @@ namespace Nuke.Common.CI.AzurePipelines
             LookupTable<ExecutableTarget, AzurePipelinesJob> jobs)
         {
             var (partitionName, totalPartitions) = ArtifactExtensions.Partitions.GetValueOrDefault(executableTarget.Definition);
+
+            static string GetArtifactPath(AbsolutePath path)
+                => NukeBuild.RootDirectory.Contains(path)
+                    ? NukeBuild.RootDirectory.GetUnixRelativePathTo(path)
+                    : (string) path;
+
             var publishedArtifacts = ArtifactExtensions.ArtifactProducts[executableTarget.Definition]
                 .Select(x => (AbsolutePath) x)
                 .Select(x => x.DescendantsAndSelf(y => y.Parent).FirstOrDefault(y => !y.ToString().ContainsOrdinalIgnoreCase("*")))
                 .Distinct()
-                .Select(x => x.ToString().TrimStart(x.Parent.ToString()).TrimStart('/', '\\')).ToArray();
+                .Select(GetArtifactPath).ToArray();
 
             // var artifactDependencies = (
             //     from artifactDependency in ArtifactExtensions.ArtifactDependencies[executableTarget.Definition]
@@ -114,31 +111,24 @@ namespace Nuke.Common.CI.AzurePipelines
             //                ArtifactRules = rules
             //            }).ToArray<TeamCityDependency>();
 
-            var invokedTargets = executableTarget
-                .DescendantsAndSelf(x => x.ExecutionDependencies, x => NonEntryTargets.Contains(x.Name))
-                .Where(x => x == executableTarget || NonEntryTargets.Contains(x.Name))
-                .Reverse()
-                .Select(x => x.Name).ToArray();
-
-            var dependencies = executableTarget.ExecutionDependencies
-                .Where(x => !ExcludedTargets.Contains(x.Name) && !NonEntryTargets.Contains(x.Name))
-                .SelectMany(x => jobs[x]).ToArray();
+            var chainLinkNames = GetInvokedTargets(executableTarget).ToArray();
+            var dependencies = GetTargetDependencies(executableTarget).SelectMany(x => jobs[x]).ToArray();
             return new AzurePipelinesJob
                    {
                        Name = executableTarget.Name,
                        DisplayName = executableTarget.Name,
-                       ScriptPath = PowerShellScript,
+                       BuildCmdPath = BuildCmdPath,
                        Dependencies = dependencies,
                        Parallel = totalPartitions,
                        PartitionName = partitionName,
-                       InvokedTargets = invokedTargets,
+                       InvokedTargets = chainLinkNames,
                        PublishArtifacts = publishedArtifacts
                    };
         }
 
         protected virtual string GetArtifact(string artifact)
         {
-            if (IsDescendantPath(NukeBuild.RootDirectory, artifact))
+            if (NukeBuild.RootDirectory.Contains(artifact))
                 artifact = GetRelativePath(NukeBuild.RootDirectory, artifact);
 
             return HasPathRoot(artifact)

@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/Npm.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Npm.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -223,6 +223,12 @@ namespace Nuke.Common.Tools.Npm
         /// </summary>
         public override string ToolPath => base.ToolPath ?? NpmTasks.NpmPath;
         public override Action<OutputType, string> CustomLogger => NpmTasks.NpmLogger;
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("ci");
+            return base.ConfigureArguments(arguments);
+        }
     }
     #endregion
     #region NpmInstallSettings

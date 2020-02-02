@@ -1,6 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <Import Project="Nuke.MSBuildTaskRunner.targets" />
+  <PropertyGroup>
+    <NukeScriptDirectory Condition="$(NukeScriptDirectory) == ''">$(NukeRootDirectory)</NukeScriptDirectory>
+  </PropertyGroup>
+
+  <ItemGroup Condition="$(NukeDefaultIncludes) != 'False'">
+    <NukeSpecificationFiles Include="**\*.json" Exclude="bin\**;obj\**" />
+    <NukeExternalFiles Include="**\*.*.ext" Exclude="bin\**;obj\**" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(NukeDefaultExcludes) != 'False'">
+    <None Remove="*.csproj.DotSettings;.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(NukeScriptDirectory) != ''">
+    <None Include="$(NukeScriptDirectory)\build.cmd" LinkBase="boot" />
+    <None Include="$(NukeScriptDirectory)\build.ps1" LinkBase="boot" />
+    <None Include="$(NukeScriptDirectory)\build.sh" LinkBase="boot" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(NukeRootDirectory) != ''">
+    <None Include="$(NukeRootDirectory)\.nuke" LinkBase="config" />
+    <None Include="$(NukeRootDirectory)\global.json" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\global.json')" />
+    <None Include="$(NukeRootDirectory)\nuget.config" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\nuget.config')" />
+    <None Include="$(NukeRootDirectory)\GitVersion.yml" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\GitVersion.yml')" />
+
+    <None Include="$(NukeRootDirectory)\.teamcity\settings.kts" LinkBase="ci" Condition="Exists('$(NukeRootDirectory)\.teamcity\settings.kts')" />
+    <None Include="$(NukeRootDirectory)\.github\workflows\*.yml" LinkBase="ci" />
+    <None Include="$(NukeRootDirectory)\azure-pipelines.yml" LinkBase="ci" Condition="Exists('$(NukeRootDirectory)\azure-pipelines.yml')" />
+    <None Include="$(NukeRootDirectory)\Jenkinsfile" LinkBase="ci" Condition="Exists('$(NukeRootDirectory)\Jenkinsfile')" />
+    <None Include="$(NukeRootDirectory)\appveyor.yml" LinkBase="ci" Condition="Exists('$(NukeRootDirectory)\appveyor.yml')" />
+    <None Include="$(NukeRootDirectory)\.travis.yml" LinkBase="ci" Condition="Exists('$(NukeRootDirectory)\.travis.yml')" />
+    <None Include="$(NukeRootDirectory)\bamboo-specs\bamboo.yml" LinkBase="ci" Condition="Exists('$(NukeRootDirectory)\bamboo-specs\bamboo.yml')" />
+    <None Include="$(NukeRootDirectory)\bamboo-specs\bamboo.yaml" LinkBase="ci" Condition="Exists('$(NukeRootDirectory)\bamboo-specs\bamboo.yaml')" />
+    <None Include="$(NukeRootDirectory)\.gitlab-ci.yml" LinkBase="ci" Condition="Exists('$(NukeRootDirectory)\.gitlab-ci.yml')" />
+  </ItemGroup>
 
 </Project>

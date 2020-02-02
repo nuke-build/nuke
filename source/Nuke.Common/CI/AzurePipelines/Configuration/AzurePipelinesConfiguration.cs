@@ -3,7 +3,7 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.AzurePipelines.Configuration
 {
-    public class AzurePipelinesConfiguration : AzurePipelinesConfigurationEntity
+    public class AzurePipelinesConfiguration : ConfigurationEntity
     {
         public AzurePipelinesStage[] Stages { get; set; }
 

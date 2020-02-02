@@ -22,12 +22,12 @@ namespace Nuke.Common.ProjectModel
             IDictionary<string, string> configurations)
             : base(solution, projectId, name, typeId)
         {
-            Path = (PathConstruction.AbsolutePath) path;
+            Path = (AbsolutePath) path;
             Configurations = configurations;
         }
 
-        public PathConstruction.AbsolutePath Path { get; }
-        public PathConstruction.AbsolutePath Directory => Path.Parent;
+        public AbsolutePath Path { get; }
+        public AbsolutePath Directory => Path.Parent;
 
         public IDictionary<string, string> Configurations { get; }
 

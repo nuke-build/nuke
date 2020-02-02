@@ -12,6 +12,7 @@
     {
       "help": "Install a project with a clean slate. This command is similar to <a href=\"https://docs.npmjs.com/cli/install.html\">npm install</a>, except it's meant to be used in automated environments such as test platforms, continuous integration, and deployment or any situation where you want to make sure you're doing a clean install of your dependencies. It can be significantly faster than a regular npm install by skipping certain user-oriented features. It is also more strict than a regular install, which can help catch errors or inconsistencies caused by the incrementally-installed local environments of most npm users.<p>In short, the main differences between using <b>npm install</b> and <b>npm ci</b> are:</p><ul><li>The project <b>must</b> have an existing <b>package-lock.json</b> or <b>npm-shrinkwrap.json</b>.</li><li>If dependencies in the package lock do not match those in <b>package.json</b>, <b>npm ci</b> will exit with an error, instead of updating the package lock.</li><li><b>npm ci</b> can only install entire projects at a time: individual dependencies cannot be added with this command.</li><li>If a <b>node_modules</b> is already present, it will be automatically removed before <b>npm ci</b> begins its install.</li><li>It will never write to <b>package.json</b> or any of the package-locks: installs are essentially frozen.</li></ul>",
       "postfix": "Ci",
+      "definiteArgument": "ci",
       "settingsClass": {}
     },
     {

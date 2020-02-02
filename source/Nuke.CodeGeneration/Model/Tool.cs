@@ -19,7 +19,7 @@ namespace Nuke.CodeGeneration.Model
     public class Tool : IDeprecatable
     {
         [JsonProperty("$schema")]
-        public string Schema { get; set; } = "https://raw.githubusercontent.com/nuke-build/common/master/source/Nuke.CodeGeneration/schema.json";
+        public string Schema { get; set; } = "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json";
 
         [JsonIgnore] public string SpecificationFile { get; set; }
         [JsonIgnore] public string DefaultOutputFile => Path.ChangeExtension(SpecificationFile, "Generated.cs");
@@ -33,6 +33,7 @@ namespace Nuke.CodeGeneration.Model
 
         [Description("Contains all references on which this definition is based on. Allows checking for updates.")]
         public List<string> References { get; set; } = new List<string>();
+        public List<string> Imports { get; set; } = new List<string>();
 
         [JsonProperty(Required = Required.Always)]
         [RegularExpression(RegexPatterns.Name)]

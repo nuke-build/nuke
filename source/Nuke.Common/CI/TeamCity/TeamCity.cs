@@ -120,8 +120,9 @@ namespace Nuke.Common.CI.TeamCity
         [NoConvert] public string BuildNumber => SystemProperties["build.number"];
         public string Version => SystemProperties["teamcity.version"];
         public string ProjectName => SystemProperties["teamcity.projectName"];
-        public string ServerUrl => ConfigurationProperties?["teamcity.serverUrl"];
-        [NoConvert] public string BranchName => ConfigurationProperties?["teamcity.build.branch"];
+        public string ServerUrl => ConfigurationProperties["teamcity.serverUrl"];
+        [NoConvert] public string BranchName => ConfigurationProperties.GetValueOrDefault("teamcity.build.branch")
+            .NotNull("Configuration property 'teamcity.build.branch' is null. See https://youtrack.jetbrains.com/issue/TW-62888.");
 
         public void DisableServiceMessages()
         {
@@ -151,22 +152,22 @@ namespace Nuke.Common.CI.TeamCity
                 {
                     "Configuration parameter 'teamcity.dotCover.home' is set to the bundled version.",
                     $"Adding the '{nameof(TeamCitySetDotCoverHomePathAttribute)}' will automatically set " +
-                    $"it to '{nameof(DotCoverTasks)}.{DotCoverTasks.DotCoverPath}'."
+                    $"it to '{nameof(DotCoverTasks)}.{nameof(DotCoverTasks.DotCoverPath)}'."
                 }.JoinNewLine());
 
             Write("importData",
                 x => x
-                    .AddKeyValue("type", type)
-                    .AddKeyValue("path", path)
-                    .AddKeyValue("tool", tool)
-                    .AddKeyValue("verbose", verbose)
-                    .AddKeyValue("parseOutOfDate", parseOutOfDate)
-                    .AddKeyValue("whenNoDataPublished", action));
+                    .AddPair("type", type)
+                    .AddPair("path", path)
+                    .AddPairWhenValueNotNull("tool", tool)
+                    .AddPairWhenValueNotNull("verbose", verbose)
+                    .AddPairWhenValueNotNull("parseOutOfDate", parseOutOfDate)
+                    .AddPairWhenValueNotNull("whenNoDataPublished", action));
         }
 
         public void AddBuildProblem(string description)
         {
-            Write("buildProblem", x => x.AddKeyValue("description", description));
+            Write("buildProblem", x => x.AddPair("description", description));
         }
 
         public void SetBuildStatus(string text, bool prepend = false, bool append = false)
@@ -175,7 +176,7 @@ namespace Nuke.Common.CI.TeamCity
                 text = $"{text} {{build.status.text}}";
             if (append)
                 text = $"{{build.status.text}} {text}";
-            Write("buildStatus", x => x.AddKeyValue("text", text));
+            Write("buildStatus", x => x.AddPair("text", text));
         }
 
         public void SetBuildNumber(string number)
@@ -185,25 +186,25 @@ namespace Nuke.Common.CI.TeamCity
 
         public void SetConfigurationParameter(string name, string value)
         {
-            Write("setParameter", x => x.AddKeyValue("name", name.Replace("_", ".")).AddKeyValue("value", value));
+            Write("setParameter", x => x.AddPair("name", name.Replace("_", ".")).AddPair("value", value));
         }
 
         public void SetEnvironmentVariable(string name, string value)
         {
-            Write("setParameter", x => x.AddKeyValue("name", $"env.{name}").AddKeyValue("value", value));
+            Write("setParameter", x => x.AddPair("name", $"env.{name}").AddPair("value", value));
         }
 
         public void SetSystemProperty(string name, string value)
         {
-            Write("setParameter", x => x.AddKeyValue("name", $"system.{name}").AddKeyValue("value", value));
+            Write("setParameter", x => x.AddPair("name", $"system.{name}").AddPair("value", value));
         }
 
         public void AddStatisticValue(string key, string value)
         {
             Write("buildStatisticValue",
                 x => x
-                    .AddKeyValue("key", key)
-                    .AddKeyValue("value", value));
+                    .AddPair("key", key)
+                    .AddPair("value", value));
         }
 
         public void SetProgress(string text)
@@ -230,62 +231,61 @@ namespace Nuke.Common.CI.TeamCity
         {
             Write("blockOpened",
                 x => x
-                    .AddKeyValue("name", name)
-                    .AddKeyValue("description", description));
+                    .AddPair("name", name)
+                    .AddPairWhenValueNotNull("description", description));
         }
 
         public void CloseBlock(string name)
         {
-            Write("blockClosed", x => x.AddKeyValue("name", name));
+            Write("blockClosed", x => x.AddPair("name", name));
         }
 
         public void StartCompilation(string compiler)
         {
-            Write("compilationStarted", x => x.AddKeyValue("compiler", compiler));
+            Write("compilationStarted", x => x.AddPair("compiler", compiler));
         }
 
         public void FinishCompilation(string compiler)
         {
-            Write("compilationFinished", x => x.AddKeyValue("compiler", compiler));
+            Write("compilationFinished", x => x.AddPair("compiler", compiler));
         }
 
         public void WriteMessage(string text)
         {
             Write("message",
                 x => x
-                    .AddKeyValue("text", text)
-                    .AddKeyValue("status", TeamCityStatus.NORMAL));
+                    .AddPair("text", text)
+                    .AddPair("status", TeamCityStatus.NORMAL));
         }
 
         public void WriteWarning(string text)
         {
             Write("message",
                 x => x
-                    .AddKeyValue("text", text)
-                    .AddKeyValue("status", TeamCityStatus.WARNING));
+                    .AddPair("text", text)
+                    .AddPair("status", TeamCityStatus.WARNING));
         }
 
         public void WriteFailure(string text)
         {
             Write("message",
                 x => x
-                    .AddKeyValue("text", text)
-                    .AddKeyValue("status", TeamCityStatus.FAILURE));
+                    .AddPair("text", text)
+                    .AddPair("status", TeamCityStatus.FAILURE));
         }
 
         public void WriteError(string text, string errorDetails = null)
         {
             Write("message",
                 x => x
-                    .AddKeyValue("text", text)
-                    .AddKeyValue("status", TeamCityStatus.ERROR)
-                    .AddKeyValue("errorDetails", errorDetails));
+                    .AddPair("text", text)
+                    .AddPair("status", TeamCityStatus.ERROR)
+                    .AddPairWhenValueNotNull("errorDetails", errorDetails));
         }
 
         public void Write(string command, Func<IDictionary<string, object>, IDictionary<string, object>> dictionaryConfigurator)
         {
             Write(new[] { command }.Concat(dictionaryConfigurator(new Dictionary<string, object>())
-                .Where(x => x.Value != null)
                 .Select(x => $"{x.Key}='{Escape(x.Value.ToString())}'")
                 .ToArray()));
         }

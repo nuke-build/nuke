@@ -4,6 +4,7 @@
 
 using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.Git;
 using Nuke.Common.Tooling;
@@ -14,10 +15,10 @@ using static Nuke.Common.Tools.GitVersion.GitVersionTasks;
 
 partial class Build
 {
+    [Parameter] readonly bool AutoStash = true;
+
     Target Changelog => _ => _
-        .OnlyWhenStatic(
-            () => GitRepository.IsOnReleaseBranch() ||
-                  GitRepository.IsOnHotfixBranch())
+        .OnlyWhenStatic(() => GitRepository.IsOnReleaseBranch() || GitRepository.IsOnHotfixBranch())
         .Executes(() =>
         {
             FinalizeChangelog(ChangelogFile, GitVersion.MajorMinorPatch, GitRepository);
@@ -25,17 +26,19 @@ partial class Build
             Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.MajorMinorPatch}\"");
         });
 
+    [UsedImplicitly]
     Target Release => _ => _
         .DependsOn(Changelog)
         .Requires(() => !GitRepository.IsOnReleaseBranch() || GitHasCleanWorkingCopy())
         .Executes(() =>
         {
             if (!GitRepository.IsOnReleaseBranch())
-                Git($"checkout -b {ReleaseBranchPrefix}/{GitVersion.MajorMinorPatch} {DevelopBranch}");
+                Checkout($"{ReleaseBranchPrefix}/{GitVersion.MajorMinorPatch}", start: DevelopBranch);
             else
                 FinishReleaseOrHotfix();
         });
 
+    [UsedImplicitly]
     Target Hotfix => _ => _
         .DependsOn(Changelog)
         .Requires(() => !GitRepository.IsOnHotfixBranch() || GitHasCleanWorkingCopy())
@@ -48,7 +51,7 @@ partial class Build
                 .DisableLogOutput()).Result;
 
             if (!GitRepository.IsOnHotfixBranch())
-                Git($"checkout -b {HotfixBranchPrefix}/{masterVersion.Major}.{masterVersion.Minor}.{masterVersion.Patch + 1} {MasterBranch}");
+                Checkout($"{HotfixBranchPrefix}/{masterVersion.Major}.{masterVersion.Minor}.{masterVersion.Patch + 1}", start: MasterBranch);
             else
                 FinishReleaseOrHotfix();
         });
@@ -65,5 +68,16 @@ partial class Build
         Git($"branch -D {GitRepository.Branch}");
 
         Git($"push origin {MasterBranch} {DevelopBranch} {GitVersion.MajorMinorPatch}");
+    }
+
+    void Checkout(string branch, string start)
+    {
+        if (AutoStash)
+            Git("stash");
+
+        Git($"checkout -b {branch} {start}");
+
+        if (AutoStash)
+            Git("stash apply");
     }
 }

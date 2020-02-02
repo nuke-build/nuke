@@ -16,7 +16,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
         {
             using (writer.WriteBlock("finishBuildTrigger"))
             {
-                writer.WriteLine($"buildType = {BuildType.Id.DoubleQuote()}");
+                writer.WriteLine($"buildType = {$"${{{BuildType.Id}.id}}".DoubleQuote()}");
             }
         }
     }

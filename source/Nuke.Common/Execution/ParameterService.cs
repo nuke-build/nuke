@@ -238,8 +238,23 @@ namespace Nuke.Common.Execution
         [CanBeNull]
         public object GetEnvironmentVariable(string variableName, Type destinationType, char? separator)
         {
+            static string GetTrimmedName(string name)
+                => new string(name.Where(char.IsLetterOrDigit).ToArray());
+
             if (!Variables.TryGetValue(variableName, out var value))
-                return GetDefaultValue(destinationType);
+            {
+                var trimmedVariableName = GetTrimmedName(variableName);
+                var alternativeValues = Variables
+                    .Where(x => GetTrimmedName(x.Key).EqualsOrdinalIgnoreCase(trimmedVariableName) ||
+                                GetTrimmedName(x.Key).EqualsOrdinalIgnoreCase($"NUKE{trimmedVariableName}")).ToList();
+                ControlFlow.AssertWarn(alternativeValues.Count <= 1,
+                    $"Could not resolve '{variableName}' since multiple possible sources exist:"
+                        .Concat(alternativeValues.Select(x => $" - {x.Key} = {x.Value}")).JoinNewLine());
+                if (alternativeValues.Count == 1)
+                    value = alternativeValues.Single().Value;
+                else
+                    return GetDefaultValue(destinationType);
+            }
 
             try
             {
@@ -296,14 +311,14 @@ namespace Nuke.Common.Execution
             if (!destinationType.IsArray)
             {
                 ControlFlow.Assert(convertedValues.Count == 1,
-                    $"Value [ {values.JoinComma()} ] cannot be assigned to '{GetPresentableName(destinationType)}'.");
+                    $"Value [ {values.JoinComma()} ] cannot be assigned to '{destinationType.GetDisplayShortName()}'.");
                 return convertedValues.Single();
             }
 
             var array = Array.CreateInstance(elementType, convertedValues.Count);
             convertedValues.ForEach((x, i) => array.SetValue(x, i));
             ControlFlow.Assert(destinationType.IsInstanceOfType(array),
-                $"Type '{GetPresentableName(array.GetType())}' is not an instance of '{GetPresentableName(destinationType)}'.");
+                $"Type '{array.GetType().GetDisplayShortName()}' is not an instance of '{destinationType.GetDisplayShortName()}'.");
 
             return array;
         }

@@ -344,6 +344,12 @@
           "type": "List<int>",
           "noArgument": true,
           "help": "Define exit codes which will not fail the build."
+        },
+        {
+          "name": "HubVersion",
+          "type": "string",
+          "noArgument": true,
+          "help": "Defines the Unity version to use. The version must be installed via Unity Hub."
         }
       ]
     }

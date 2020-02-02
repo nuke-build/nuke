@@ -21,7 +21,7 @@ using static Nuke.Common.IO.PathConstruction;
 namespace Nuke.Common.CI.TeamCity
 {
     [PublicAPI]
-    public class TeamCityAttribute : ConfigurationGenerationAttributeBase
+    public class TeamCityAttribute : ChainedConfigurationAttributeBase
     {
         public TeamCityAttribute(TeamCityAgentPlatform platform)
         {
@@ -32,24 +32,30 @@ namespace Nuke.Common.CI.TeamCity
         private string SettingsFile => TeamcityDirectory / "settings.kts";
         private string PomFile => TeamcityDirectory / "pom.xml";
 
+        protected override HostType HostType => HostType.TeamCity;
         protected override IEnumerable<string> GeneratedFiles => new[] { PomFile, SettingsFile };
+
+        protected override IEnumerable<string> RelevantTargetNames => new string[0]
+            .Concat(VcsTriggeredTargets)
+            .Concat(NightlyTriggeredTargets)
+            .Concat(ManuallyTriggeredTargets);
+
+        public string Version { get; set; } = "2018.2";
 
         public TeamCityAgentPlatform Platform { get; }
         public string Description { get; set; }
-        public string DefaultBranch { get; set; } = "develop";
         public bool CleanCheckoutDirectory { get; set; } = true;
 
-        public string VcsTriggerBranchFilter { get; set; } = "";
-        public string VcsTriggerRules { get; set; } = "+:**";
+        public string[] VcsTriggerBranchFilters { get; set; } = new string[0];
+        public string[] VcsTriggerRules { get; set; } = { "+:**" };
         public string[] VcsTriggeredTargets { get; set; } = new string[0];
 
-        public string NightlyTriggerBranchFilter { get; set; } = "";
-        public string NightlyTriggerRules { get; set; } = "+:**";
+        public bool NightlyBuildAlways { get; set; } = true;
+        public string[] NightlyTriggerBranchFilters { get; set; } = new string[0];
+        public string[] NightlyTriggerRules { get; set; } = { "+:**" };
         public string[] NightlyTriggeredTargets { get; set; } = new string[0];
 
         public string[] ManuallyTriggeredTargets { get; set; } = new string[0];
-        public string[] NonEntryTargets { get; set; } = new string[0];
-        public string[] ExcludedTargets { get; set; } = new string[0];
 
         protected override void OnBuildFinishedInternal(NukeBuild build)
         {
@@ -61,29 +67,22 @@ namespace Nuke.Common.CI.TeamCity
             // TeamCity.Instance.PublishArtifacts($"+:{stateFile} => .teamcity/states");
         }
 
-        protected override HostType HostType => HostType.TeamCity;
-
-        protected override void Generate(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        protected override CustomFileWriter CreateWriter()
         {
-            var relevantTargets = VcsTriggeredTargets.Concat(ManuallyTriggeredTargets)
-                .SelectMany(x => ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { x }))
-                .Distinct()
-                .Where(x => !ExcludedTargets.Contains(x.Name) && !NonEntryTargets.Contains(x.Name)).ToList();
-            var configuration = GetConfiguration(build, relevantTargets);
-
-            ControlFlow.Assert(NukeBuild.RootDirectory != null, "NukeBuild.RootDirectory != null");
-
-            TextTasks.WriteAllLines(
-                PomFile,
-                ResourceUtility.GetResourceAllLines<TeamCityConfigurationEntity>("pom.xml"));
-
-            using var writer = new CustomFileWriter(SettingsFile, indentationFactor: 4);
-            configuration.Write(writer);
+            return new CustomFileWriter(SettingsFile, indentationFactor: 4, commentPrefix: "//");
         }
 
-        protected virtual TeamCityConfiguration GetConfiguration(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        protected override ConfigurationEntity GetConfiguration(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
-            return new TeamCityConfiguration { Project = GetProject(build, relevantTargets) };
+            TextTasks.WriteAllLines(
+                PomFile,
+                ResourceUtility.GetResourceAllLines<TeamCityConfiguration>("pom.xml"));
+
+            return new TeamCityConfiguration
+                   {
+                       Version = Version,
+                       Project = GetProject(build, relevantTargets)
+                   };
         }
 
         protected virtual TeamCityProject GetProject(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
@@ -135,13 +134,8 @@ namespace Nuke.Common.CI.TeamCity
                            ArtifactRules = rules
                        }).ToArray<TeamCityDependency>();
 
-            var invokedTargets = executableTarget
-                .DescendantsAndSelf(x => x.ExecutionDependencies, x => NonEntryTargets.Contains(x.Name))
-                .Where(x => x == executableTarget || NonEntryTargets.Contains(x.Name))
-                .Reverse()
-                .Select(x => x.Name).ToArray();
-            var snapshotDependencies = executableTarget.ExecutionDependencies
-                .Where(x => !ExcludedTargets.Contains(x.Name) && !NonEntryTargets.Contains(x.Name))
+            var chainLinkNames = GetInvokedTargets(executableTarget).ToArray();
+            var snapshotDependencies = GetTargetDependencies(executableTarget)
                 .SelectMany(x => buildTypes[x])
                 .Where(x => x.Partition == null)
                 .Select(x => new TeamCitySnapshotDependency
@@ -163,17 +157,17 @@ namespace Nuke.Common.CI.TeamCity
                                      Name = $"{executableTarget.Name} {partition}",
                                      Description = executableTarget.Description,
                                      Platform = Platform,
-                                     BashScript = BashScript,
-                                     PowerShellScript = PowerShellScript,
+                                     BuildCmdPath = BuildCmdPath,
                                      ArtifactRules = artifactRules,
                                      Partition = partition,
                                      PartitionName = partitionName,
-                                     InvokedTargets = invokedTargets,
+                                     InvokedTargets = chainLinkNames,
                                      VcsRoot = new TeamCityBuildTypeVcsRoot { Root = vcsRoot, CleanCheckoutDirectory = CleanCheckoutDirectory },
                                      Dependencies = snapshotDependencies.Concat(artifactDependencies).ToArray()
                                  };
                 }
 
+                artifactRules = new[] { "**/*" };
                 snapshotDependencies = buildTypes[executableTarget]
                     .Select(x => new TeamCitySnapshotDependency
                                  {
@@ -181,7 +175,12 @@ namespace Nuke.Common.CI.TeamCity
                                      FailureAction = TeamCityDependencyFailureAction.FailToStart,
                                      CancelAction = TeamCityDependencyFailureAction.Cancel
                                  }).ToArray<TeamCityDependency>();
-                artifactDependencies = new TeamCityDependency[0];
+                artifactDependencies = buildTypes[executableTarget]
+                    .Select(x => new TeamCityArtifactDependency
+                                 {
+                                     BuildType = x,
+                                     ArtifactRules = new[] { "**/*" }
+                                 }).ToArray<TeamCityDependency>();
             }
 
             var parameters = executableTarget.Requirements
@@ -195,15 +194,16 @@ namespace Nuke.Common.CI.TeamCity
                              Name = executableTarget.Name,
                              Description = executableTarget.Description,
                              Platform = Platform,
-                             BashScript = BashScript,
-                             PowerShellScript = PowerShellScript,
+                             BuildCmdPath = BuildCmdPath,
                              VcsRoot = new TeamCityBuildTypeVcsRoot
                                        {
                                            Root = vcsRoot,
-                                           ShowDependenciesChanges = isPartitioned
+                                           ShowDependenciesChanges = isPartitioned,
+                                           CleanCheckoutDirectory = CleanCheckoutDirectory
                                        },
                              IsComposite = isPartitioned,
-                             InvokedTargets = invokedTargets,
+                             IsDeployment = ManuallyTriggeredTargets.Contains(executableTarget.Name),
+                             InvokedTargets = chainLinkNames,
                              ArtifactRules = artifactRules,
                              Dependencies = snapshotDependencies.Concat(artifactDependencies).ToArray(),
                              Parameters = parameters,
@@ -219,7 +219,7 @@ namespace Nuke.Common.CI.TeamCity
             {
                 yield return new TeamCityVcsTrigger
                              {
-                                 BranchFilter = VcsTriggerBranchFilter,
+                                 BranchFilters = VcsTriggerBranchFilters,
                                  TriggerRules = VcsTriggerRules
                              };
             }
@@ -228,10 +228,11 @@ namespace Nuke.Common.CI.TeamCity
             {
                 yield return new TeamCityScheduledTrigger
                              {
-                                 BranchFilter = NightlyTriggerBranchFilter,
+                                 BranchFilters = NightlyTriggerBranchFilters,
                                  TriggerRules = NightlyTriggerRules,
                                  EnableQueueOptimization = true,
-                                 WithPendingChangesOnly = false
+                                 WithPendingChangesOnly = false,
+                                 TriggerBuildAlways = NightlyBuildAlways
                              };
             }
 
@@ -246,15 +247,7 @@ namespace Nuke.Common.CI.TeamCity
 
         protected virtual TeamCityVcsRoot GetVcsRoot(NukeBuild build)
         {
-            var repository = GitRepository.FromLocalDirectory(NukeBuild.RootDirectory);
-            return new TeamCityVcsRoot
-                   {
-                       Name = $"{repository.HttpsUrl}#refs/heads/{DefaultBranch}",
-                       Url = repository.HttpsUrl,
-                       Branch = $"refs/heads/{DefaultBranch}",
-                       PollInterval = 60,
-                       BranchSpec = new[] { "+:refs/heads/*" }
-                   };
+            return new TeamCityVcsRoot();
         }
 
         protected virtual IEnumerable<TeamCityParameter> GetGlobalParameters(NukeBuild build)
@@ -279,12 +272,21 @@ namespace Nuke.Common.CI.TeamCity
                  member.GetMemberType() == typeof(Project)))
                 defaultValue = (UnixRelativePath) GetRelativePath(NukeBuild.RootDirectory, defaultValue.ToString());
 
+            TeamCityParameterType GetParameterType()
+            {
+                if (member.GetMemberType() == typeof(bool))
+                    return TeamCityParameterType.Checkbox;
+                if (valueSet != null)
+                    return TeamCityParameterType.Select;
+                return TeamCityParameterType.Text;
+            }
+
             return new TeamCityConfigurationParameter
                    {
                        Name = member.Name,
                        Description = attribute.Description,
                        Options = valueSet?.ToDictionary(x => x.Item1, x => x.Item2),
-                       Type = valueSet != null ? TeamCityParameterType.Select : TeamCityParameterType.Text,
+                       Type = GetParameterType(),
                        DefaultValue = defaultValue?.ToString(),
                        Display = required ? TeamCityParameterDisplay.Prompt : TeamCityParameterDisplay.Normal,
                        AllowMultiple = member.GetMemberType().IsArray,
@@ -292,14 +294,14 @@ namespace Nuke.Common.CI.TeamCity
                    };
         }
 
-        protected virtual string GetArtifactRule(string rule)
+        protected virtual string GetArtifactRule(string source)
         {
-            if (IsDescendantPath(NukeBuild.RootDirectory, rule))
-                rule = GetRelativePath(NukeBuild.RootDirectory, rule);
+            if (!NukeBuild.RootDirectory.Contains(source))
+                return source;
 
-            return HasPathRoot(rule)
-                ? rule
-                : (UnixRelativePath) rule;
+            var relativeSource = (string) GetUnixRelativePath(NukeBuild.RootDirectory, source);
+            var target = relativeSource.TakeWhile(x => x != '*').Reverse().SkipWhile(x => x != '/').Reverse();
+            return $"{relativeSource} => {new string(target.ToArray()).TrimEnd('/')}";
         }
     }
 }

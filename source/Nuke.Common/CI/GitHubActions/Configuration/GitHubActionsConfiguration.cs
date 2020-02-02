@@ -9,7 +9,7 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.GitHubActions.Configuration
 {
-    public class GitHubActionsConfiguration : GitHubActionsConfigurationEntity
+    public class GitHubActionsConfiguration : ConfigurationEntity
     {
         public string Name { get; set; }
 

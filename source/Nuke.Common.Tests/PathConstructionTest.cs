@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using FluentAssertions;
+using Nuke.Common.IO;
 using Xunit;
 using static Nuke.Common.IO.PathConstruction;
 

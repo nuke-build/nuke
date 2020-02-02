@@ -18,6 +18,7 @@ using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
+using Nuke.Common.Tools.Coverlet;
 using Nuke.Common.Tools.DotCover;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
@@ -34,7 +35,6 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
 using static Nuke.Common.Tools.InspectCode.InspectCodeTasks;
 using static Nuke.Common.IO.FileSystemTasks;
-using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
 using static Nuke.Common.Tools.Slack.SlackTasks;
 
@@ -44,7 +44,7 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
 [TeamCitySetDotCoverHomePath]
 [TeamCity(
     TeamCityAgentPlatform.Windows,
-    DefaultBranch = DevelopBranch,
+    Version = "2019.2",
     VcsTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
     NightlyTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
     ManuallyTriggeredTargets = new[] { nameof(Publish) },
@@ -86,7 +86,7 @@ partial class Build : NukeBuild
     [CI] readonly AzurePipelines AzurePipelines;
 
     [GitRepository] readonly GitRepository GitRepository;
-    [GitVersion] readonly GitVersion GitVersion;
+    [GitVersion(NoFetch = true)] readonly GitVersion GitVersion;
     [Solution] readonly Solution Solution;
 
     AbsolutePath OutputDirectory => RootDirectory / "output";
@@ -127,77 +127,80 @@ partial class Build : NukeBuild
         {
             DotNetBuild(_ => _
                 .SetProjectFile(Solution)
-                .SetNoRestore(ExecutingTargets.Contains(Restore))
+                .SetNoRestore(InvokedTargets.Contains(Restore))
                 .SetConfiguration(Configuration)
                 .SetAssemblyVersion(GitVersion.AssemblySemVer)
                 .SetFileVersion(GitVersion.AssemblySemFileVer)
                 .SetInformationalVersion(GitVersion.InformationalVersion));
 
+            var publishConfigurations =
+                from project in new[] { GlobalToolProject, MSBuildTaskRunnerProject }
+                from framework in project.GetTargetFrameworks()
+                select new { project, framework };
+
             DotNetPublish(_ => _
-                    .SetNoRestore(ExecutingTargets.Contains(Restore))
+                    .SetNoRestore(InvokedTargets.Contains(Restore))
                     .SetConfiguration(Configuration)
                     .SetAssemblyVersion(GitVersion.AssemblySemVer)
                     .SetFileVersion(GitVersion.AssemblySemFileVer)
                     .SetInformationalVersion(GitVersion.InformationalVersion)
-                    .CombineWith(
-                        from project in new[] { GlobalToolProject, MSBuildTaskRunnerProject }
-                        from framework in project.GetTargetFrameworks()
-                        select new { project, framework }, (_, v) => _
-                            .SetProject(v.project)
-                            .SetFramework(v.framework)),
+                    .CombineWith(publishConfigurations, (_, v) => _
+                        .SetProject(v.project)
+                        .SetFramework(v.framework)),
                 degreeOfParallelism: 10);
         });
 
     string ChangelogFile => RootDirectory / "CHANGELOG.md";
-
+    AbsolutePath PackageDirectory => OutputDirectory / "packages";
     IEnumerable<string> ChangelogSectionNotes => ExtractChangelogSectionNotes(ChangelogFile);
 
     Target Pack => _ => _
         .DependsOn(Compile)
-        .Produces(OutputDirectory / "*.nupkg")
+        .Produces(PackageDirectory / "*.nupkg")
         .Executes(() =>
         {
             DotNetPack(_ => _
                 .SetProject(Solution)
-                .SetNoBuild(ExecutingTargets.Contains(Compile))
+                .SetNoBuild(InvokedTargets.Contains(Compile))
                 .SetConfiguration(Configuration)
-                .SetOutputDirectory(OutputDirectory)
+                .SetOutputDirectory(PackageDirectory)
                 .SetVersion(GitVersion.NuGetVersionV2)
                 .SetPackageReleaseNotes(GetNuGetReleaseNotes(ChangelogFile, GitRepository)));
         });
 
     [Partition(2)] readonly Partition TestPartition;
+    AbsolutePath TestResultDirectory => OutputDirectory / "test-results";
+    IEnumerable<Project> TestProjects => TestPartition.GetCurrent(Solution.GetProjects("*.Tests"));
 
     Target Test => _ => _
         .DependsOn(Compile)
-        .Produces(OutputDirectory / "*.trx")
-        .Produces(OutputDirectory / "*.xml")
+        .Produces(TestResultDirectory / "*.trx")
+        .Produces(TestResultDirectory / "*.xml")
         .Partition(() => TestPartition)
         .Executes(() =>
         {
             DotNetTest(_ => _
                 .SetConfiguration(Configuration)
-                .SetNoBuild(ExecutingTargets.Contains(Compile))
+                .SetNoBuild(InvokedTargets.Contains(Compile))
                 .ResetVerbosity()
-                .SetResultsDirectory(OutputDirectory)
-                .When(InvokedTargets.Contains(Coverage), _ => _
-                    .SetProperty("CollectCoverage", propertyValue: true)
-                    .SetProperty("CoverletOutputFormat", "teamcity%2ccobertura")
-                    .SetProperty("ExcludeByFile", "*.Generated.cs")
+                .SetResultsDirectory(TestResultDirectory)
+                .When(InvokedTargets.Contains(Coverage) || IsServerBuild, _ => _
+                    .EnableCollectCoverage()
+                    .SetCoverletOutputFormat(CoverletOutputFormat.cobertura)
+                    .SetExcludeByFile("*.Generated.cs")
                     .When(IsServerBuild, _ => _
-                        .SetProperty("UseSourceLink", propertyValue: true)))
-                .CombineWith(
-                    TestPartition.GetCurrent(Solution.GetProjects("*.Tests")), (_, v) => _
-                        .SetProjectFile(v)
-                        .SetLogger($"trx;LogFileName={v.Name}.trx")
-                        .When(InvokedTargets.Contains(Coverage), _ => _
-                            .SetProperty("CoverletOutput", OutputDirectory / $"{v.Name}.xml"))));
+                        .EnableUseSourceLink()))
+                .CombineWith(TestProjects, (_, v) => _
+                    .SetProjectFile(v)
+                    .SetLogger($"trx;LogFileName={v.Name}.trx")
+                    .When(InvokedTargets.Contains(Coverage) || IsServerBuild, _ => _
+                        .SetCoverletOutput(TestResultDirectory / $"{v.Name}.xml"))));
 
-            OutputDirectory.GlobFiles("*.trx")
-                .ForEach(x => AzurePipelines?.PublishTestResults(
-                    type: "VSTest",
+            OutputDirectory.GlobFiles("*.trx").ForEach(x =>
+                AzurePipelines?.PublishTestResults(
+                    type: AzurePipelinesTestResultsType.VSTest,
                     title: $"{Path.GetFileNameWithoutExtension(x)} ({AzurePipelines.StageDisplayName})",
-                    files: new[] { x.ToString() }));
+                    files: new string[] { x }));
         });
 
     string CoverageReportDirectory => OutputDirectory / "coverage-report";
@@ -205,12 +208,22 @@ partial class Build : NukeBuild
 
     Target Coverage => _ => _
         .DependsOn(Test)
+        .TriggeredBy(Test)
+        .Consumes(Test)
+        .Produces(CoverageReportArchive)
         .Executes(() =>
         {
             ReportGenerator(_ => _
-                .SetReports(OutputDirectory / "*.xml")
+                .SetReports(TestResultDirectory / "*.xml")
                 .SetReportTypes(ReportTypes.HtmlInline)
-                .SetTargetDirectory(CoverageReportDirectory));
+                .SetTargetDirectory(CoverageReportDirectory)
+                .SetFramework("netcoreapp2.1"));
+
+            TestResultDirectory.GlobFiles("*.xml").ForEach(x =>
+                AzurePipelines?.PublishCodeCoverage(
+                    AzurePipelinesCodeCoverageToolType.Cobertura,
+                    x,
+                    CoverageReportDirectory));
 
             CompressZip(
                 directory: CoverageReportDirectory,
@@ -253,15 +266,14 @@ partial class Build : NukeBuild
                         GitRepository.Branch.StartsWithOrdinalIgnoreCase(HotfixBranchPrefix))
         .Executes(() =>
         {
-            var packages = OutputDirectory.GlobFiles("*.nupkg");
+            var packages = PackageDirectory.GlobFiles("*.nupkg");
             Assert(packages.Count == 4, "packages.Count == 4");
 
             DotNetNuGetPush(_ => _
                     .SetSource(Source)
                     .SetApiKey(ApiKey)
-                    .CombineWith(
-                        packages, (_, v) => _
-                            .SetTargetPath(v)),
+                    .CombineWith(packages, (_, v) => _
+                        .SetTargetPath(v)),
                 degreeOfParallelism: 5,
                 completeOnFailure: true);
         });

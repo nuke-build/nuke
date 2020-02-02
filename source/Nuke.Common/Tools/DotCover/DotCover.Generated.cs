@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/DotCover.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/DotCover.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -31,7 +31,7 @@ namespace Nuke.Common.Tools.DotCover
         /// </summary>
         public static string DotCoverPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("DOTCOVER_EXE") ??
-            ToolPathResolver.GetPackageExecutable("JetBrains.dotCover.CommandLineTools", "dotCover.exe");
+            GetToolPath();
         public static Action<OutputType, string> DotCoverLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>

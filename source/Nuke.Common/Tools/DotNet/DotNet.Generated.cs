@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/DotNet.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/DotNet.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -500,6 +500,8 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetBuildSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetBuildSettings.Verbosity"/></li>
         ///     <li><c>--version-suffix</c> via <see cref="DotNetBuildSettings.VersionSuffix"/></li>
+        ///     <li><c>/logger</c> via <see cref="DotNetBuildSettings.Loggers"/></li>
+        ///     <li><c>/noconsolelogger</c> via <see cref="DotNetBuildSettings.NoConsoleLogger"/></li>
         ///     <li><c>/property</c> via <see cref="DotNetBuildSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
@@ -537,6 +539,8 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetBuildSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetBuildSettings.Verbosity"/></li>
         ///     <li><c>--version-suffix</c> via <see cref="DotNetBuildSettings.VersionSuffix"/></li>
+        ///     <li><c>/logger</c> via <see cref="DotNetBuildSettings.Loggers"/></li>
+        ///     <li><c>/noconsolelogger</c> via <see cref="DotNetBuildSettings.NoConsoleLogger"/></li>
         ///     <li><c>/property</c> via <see cref="DotNetBuildSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
@@ -571,6 +575,8 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetBuildSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetBuildSettings.Verbosity"/></li>
         ///     <li><c>--version-suffix</c> via <see cref="DotNetBuildSettings.VersionSuffix"/></li>
+        ///     <li><c>/logger</c> via <see cref="DotNetBuildSettings.Loggers"/></li>
+        ///     <li><c>/noconsolelogger</c> via <see cref="DotNetBuildSettings.NoConsoleLogger"/></li>
         ///     <li><c>/property</c> via <see cref="DotNetBuildSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
@@ -1080,6 +1086,11 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual DotNetVerbosity Verbosity { get; internal set; }
         /// <summary>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
+        internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+        /// <summary>
         ///   Disables restoring multiple projects in parallel.
         /// </summary>
         public virtual bool? DisableParallel { get; internal set; }
@@ -1128,11 +1139,6 @@ namespace Nuke.Common.Tools.DotNet
         ///   Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.
         /// </summary>
         public virtual string Runtime { get; internal set; }
-        /// <summary>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
-        internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -1152,6 +1158,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--settings {value}", SettingsFile)
               .Add("--list-tests", ListTests)
               .Add("--verbosity {value}", Verbosity)
+              .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';')
               .Add("--disable-parallel", DisableParallel)
               .Add("--force", Force)
               .Add("--ignore-failed-sources", IgnoreFailedSources)
@@ -1163,8 +1170,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--locked-mode", LockedMode)
               .Add("--lock-file-path {value}", LockFilePath)
               .Add("--force-evaluate", ForceEvaluate)
-              .Add("--runtime {value}", Runtime)
-              .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
+              .Add("--runtime {value}", Runtime);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -1592,6 +1598,15 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual string VersionSuffix { get; internal set; }
         /// <summary>
+        ///   Specifies the loggers to use to log events from MSBuild.
+        /// </summary>
+        public virtual IReadOnlyList<string> Loggers => LoggersInternal.AsReadOnly();
+        internal List<string> LoggersInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Disable the default console logger, and don't log events to the console.
+        /// </summary>
+        public virtual bool? NoConsoleLogger { get; internal set; }
+        /// <summary>
         ///   Disables restoring multiple projects in parallel.
         /// </summary>
         public virtual bool? DisableParallel { get; internal set; }
@@ -1654,6 +1669,8 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--runtime {value}", Runtime)
               .Add("--verbosity {value}", Verbosity)
               .Add("--version-suffix {value}", VersionSuffix)
+              .Add("/logger:{value}", Loggers)
+              .Add("/noconsolelogger", NoConsoleLogger)
               .Add("--disable-parallel", DisableParallel)
               .Add("--force", Force)
               .Add("--ignore-failed-sources", IgnoreFailedSources)
@@ -2564,6 +2581,63 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region Properties
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetTestSettings.Properties"/> to a new dictionary</em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static DotNetTestSettings SetProperties(this DotNetTestSettings toolSettings, IDictionary<string, object> properties)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DotNetTestSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static DotNetTestSettings ClearProperties(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds a new key-value-pair <see cref="DotNetTestSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static DotNetTestSettings AddProperty(this DotNetTestSettings toolSettings, string propertyKey, object propertyValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes a key-value-pair from <see cref="DotNetTestSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static DotNetTestSettings RemoveProperty(this DotNetTestSettings toolSettings, string propertyKey)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove(propertyKey);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets a key-value-pair in <see cref="DotNetTestSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static DotNetTestSettings SetProperty(this DotNetTestSettings toolSettings, string propertyKey, object propertyValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal[propertyKey] = propertyValue;
+            return toolSettings;
+        }
+        #endregion
         #region DisableParallel
         /// <summary>
         ///   <p><em>Sets <see cref="DotNetTestSettings.DisableParallel"/></em></p>
@@ -3172,958 +3246,6 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.Runtime = null;
             return toolSettings;
         }
-        #endregion
-        #region Properties
-        /// <summary>
-        ///   <p><em>Sets <see cref="DotNetTestSettings.Properties"/> to a new dictionary</em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetProperties(this DotNetTestSettings toolSettings, IDictionary<string, object> properties)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Clears <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ClearProperties(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Adds a new key-value-pair <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings AddProperty(this DotNetTestSettings toolSettings, string propertyKey, object propertyValue)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Removes a key-value-pair from <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings RemoveProperty(this DotNetTestSettings toolSettings, string propertyKey)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove(propertyKey);
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Sets a key-value-pair in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetProperty(this DotNetTestSettings toolSettings, string propertyKey, object propertyValue)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal[propertyKey] = propertyValue;
-            return toolSettings;
-        }
-        #region RunCodeAnalysis
-        /// <summary>
-        ///   <p><em>Sets <c>RunCodeAnalysis</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetRunCodeAnalysis(this DotNetTestSettings toolSettings, bool? runCodeAnalysis)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["RunCodeAnalysis"] = runCodeAnalysis;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <c>RunCodeAnalysis</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ResetRunCodeAnalysis(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("RunCodeAnalysis");
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Enables <c>RunCodeAnalysis</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings EnableRunCodeAnalysis(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["RunCodeAnalysis"] = true;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Disables <c>RunCodeAnalysis</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings DisableRunCodeAnalysis(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["RunCodeAnalysis"] = false;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Toggles <c>RunCodeAnalysis</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ToggleRunCodeAnalysis(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "RunCodeAnalysis");
-            return toolSettings;
-        }
-        #endregion
-        #region NoWarn
-        /// <summary>
-        ///   <p><em>Sets <c>NoWarn</c> in <see cref="DotNetTestSettings.Properties"/> to a new collection</em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetNoWarns(this DotNetTestSettings toolSettings, params int[] noWarn)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Sets <c>NoWarn</c> in <see cref="DotNetTestSettings.Properties"/> to a new collection</em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetNoWarns(this DotNetTestSettings toolSettings, IEnumerable<int> noWarn)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Adds values to <c>NoWarn</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings AddNoWarns(this DotNetTestSettings toolSettings, params int[] noWarn)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Adds values to <c>NoWarn</c> in existing <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings AddNoWarns(this DotNetTestSettings toolSettings, IEnumerable<int> noWarn)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Clears <c>NoWarn</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ClearNoWarns(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("NoWarn");
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Removes values from <c>NoWarn</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings RemoveNoWarns(this DotNetTestSettings toolSettings, params int[] noWarn)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Removes values from <c>NoWarn</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings RemoveNoWarns(this DotNetTestSettings toolSettings, IEnumerable<int> noWarn)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
-            return toolSettings;
-        }
-        #endregion
-        #region WarningsAsErrors
-        /// <summary>
-        ///   <p><em>Sets <c>WarningsAsErrors</c> in <see cref="DotNetTestSettings.Properties"/> to a new collection</em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetWarningsAsErrors(this DotNetTestSettings toolSettings, params int[] warningsAsErrors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Sets <c>WarningsAsErrors</c> in <see cref="DotNetTestSettings.Properties"/> to a new collection</em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetWarningsAsErrors(this DotNetTestSettings toolSettings, IEnumerable<int> warningsAsErrors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Adds values to <c>WarningsAsErrors</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings AddWarningsAsErrors(this DotNetTestSettings toolSettings, params int[] warningsAsErrors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Adds values to <c>WarningsAsErrors</c> in existing <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings AddWarningsAsErrors(this DotNetTestSettings toolSettings, IEnumerable<int> warningsAsErrors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Clears <c>WarningsAsErrors</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ClearWarningsAsErrors(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("WarningsAsErrors");
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings RemoveWarningsAsErrors(this DotNetTestSettings toolSettings, params int[] warningsAsErrors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings RemoveWarningsAsErrors(this DotNetTestSettings toolSettings, IEnumerable<int> warningsAsErrors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
-            return toolSettings;
-        }
-        #endregion
-        #region WarningLevel
-        /// <summary>
-        ///   <p><em>Sets <c>WarningLevel</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetWarningLevel(this DotNetTestSettings toolSettings, int? warningLevel)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["WarningLevel"] = warningLevel;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <c>WarningLevel</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ResetWarningLevel(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("WarningLevel");
-            return toolSettings;
-        }
-        #endregion
-        #region TreatWarningsAsErrors
-        /// <summary>
-        ///   <p><em>Sets <c>TreatWarningsAsErrors</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetTreatWarningsAsErrors(this DotNetTestSettings toolSettings, bool? treatWarningsAsErrors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = treatWarningsAsErrors;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <c>TreatWarningsAsErrors</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ResetTreatWarningsAsErrors(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("TreatWarningsAsErrors");
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Enables <c>TreatWarningsAsErrors</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings EnableTreatWarningsAsErrors(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = true;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Disables <c>TreatWarningsAsErrors</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings DisableTreatWarningsAsErrors(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = false;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Toggles <c>TreatWarningsAsErrors</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ToggleTreatWarningsAsErrors(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "TreatWarningsAsErrors");
-            return toolSettings;
-        }
-        #endregion
-        #region AssemblyVersion
-        /// <summary>
-        ///   <p><em>Sets <c>AssemblyVersion</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetAssemblyVersion(this DotNetTestSettings toolSettings, string assemblyVersion)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["AssemblyVersion"] = assemblyVersion;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <c>AssemblyVersion</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ResetAssemblyVersion(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("AssemblyVersion");
-            return toolSettings;
-        }
-        #endregion
-        #region FileVersion
-        /// <summary>
-        ///   <p><em>Sets <c>FileVersion</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetFileVersion(this DotNetTestSettings toolSettings, string fileVersion)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["FileVersion"] = fileVersion;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <c>FileVersion</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ResetFileVersion(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("FileVersion");
-            return toolSettings;
-        }
-        #endregion
-        #region InformationalVersion
-        /// <summary>
-        ///   <p><em>Sets <c>InformationalVersion</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetInformationalVersion(this DotNetTestSettings toolSettings, string informationalVersion)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["InformationalVersion"] = informationalVersion;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <c>InformationalVersion</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ResetInformationalVersion(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("InformationalVersion");
-            return toolSettings;
-        }
-        #endregion
-        #region PackageId
-        /// <summary>
-        ///   <p><em>Sets <c>PackageId</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetPackageId(this DotNetTestSettings toolSettings, string packageId)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["PackageId"] = packageId;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <c>PackageId</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ResetPackageId(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("PackageId");
-            return toolSettings;
-        }
-        #endregion
-        #region Version
-        /// <summary>
-        ///   <p><em>Sets <c>Version</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetVersion(this DotNetTestSettings toolSettings, string version)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["Version"] = version;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <c>Version</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ResetVersion(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("Version");
-            return toolSettings;
-        }
-        #endregion
-        #region VersionPrefix
-        /// <summary>
-        ///   <p><em>Sets <c>VersionPrefix</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetVersionPrefix(this DotNetTestSettings toolSettings, string versionPrefix)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["VersionPrefix"] = versionPrefix;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <c>VersionPrefix</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ResetVersionPrefix(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("VersionPrefix");
-            return toolSettings;
-        }
-        #endregion
-        #region Authors
-        /// <summary>
-        ///   <p><em>Sets <c>Authors</c> in <see cref="DotNetTestSettings.Properties"/> to a new collection</em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetAuthors(this DotNetTestSettings toolSettings, params string[] authors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "Authors", authors, ',');
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Sets <c>Authors</c> in <see cref="DotNetTestSettings.Properties"/> to a new collection</em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetAuthors(this DotNetTestSettings toolSettings, IEnumerable<string> authors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "Authors", authors, ',');
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Adds values to <c>Authors</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings AddAuthors(this DotNetTestSettings toolSettings, params string[] authors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Adds values to <c>Authors</c> in existing <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings AddAuthors(this DotNetTestSettings toolSettings, IEnumerable<string> authors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Clears <c>Authors</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ClearAuthors(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("Authors");
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Removes values from <c>Authors</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings RemoveAuthors(this DotNetTestSettings toolSettings, params string[] authors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Removes values from <c>Authors</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings RemoveAuthors(this DotNetTestSettings toolSettings, IEnumerable<string> authors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
-            return toolSettings;
-        }
-        #endregion
-        #region Title
-        /// <summary>
-        ///   <p><em>Sets <c>Title</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetTitle(this DotNetTestSettings toolSettings, string title)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["Title"] = title;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <c>Title</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ResetTitle(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("Title");
-            return toolSettings;
-        }
-        #endregion
-        #region Description
-        /// <summary>
-        ///   <p><em>Sets <c>Description</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetDescription(this DotNetTestSettings toolSettings, string description)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["Description"] = description;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <c>Description</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ResetDescription(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("Description");
-            return toolSettings;
-        }
-        #endregion
-        #region Copyright
-        /// <summary>
-        ///   <p><em>Sets <c>Copyright</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetCopyright(this DotNetTestSettings toolSettings, string copyright)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["Copyright"] = copyright;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <c>Copyright</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ResetCopyright(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("Copyright");
-            return toolSettings;
-        }
-        #endregion
-        #region PackageRequireLicenseAcceptance
-        /// <summary>
-        ///   <p><em>Sets <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetPackageRequireLicenseAcceptance(this DotNetTestSettings toolSettings, bool? packageRequireLicenseAcceptance)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = packageRequireLicenseAcceptance;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ResetPackageRequireLicenseAcceptance(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("PackageRequireLicenseAcceptance");
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Enables <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings EnablePackageRequireLicenseAcceptance(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = true;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Disables <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings DisablePackageRequireLicenseAcceptance(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = false;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Toggles <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings TogglePackageRequireLicenseAcceptance(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PackageRequireLicenseAcceptance");
-            return toolSettings;
-        }
-        #endregion
-        #region PackageLicenseUrl
-        /// <summary>
-        ///   <p><em>Sets <c>PackageLicenseUrl</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetPackageLicenseUrl(this DotNetTestSettings toolSettings, string packageLicenseUrl)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["PackageLicenseUrl"] = packageLicenseUrl;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <c>PackageLicenseUrl</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ResetPackageLicenseUrl(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("PackageLicenseUrl");
-            return toolSettings;
-        }
-        #endregion
-        #region PackageProjectUrl
-        /// <summary>
-        ///   <p><em>Sets <c>PackageProjectUrl</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetPackageProjectUrl(this DotNetTestSettings toolSettings, string packageProjectUrl)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["PackageProjectUrl"] = packageProjectUrl;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <c>PackageProjectUrl</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ResetPackageProjectUrl(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("PackageProjectUrl");
-            return toolSettings;
-        }
-        #endregion
-        #region PackageIconUrl
-        /// <summary>
-        ///   <p><em>Sets <c>PackageIconUrl</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetPackageIconUrl(this DotNetTestSettings toolSettings, string packageIconUrl)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["PackageIconUrl"] = packageIconUrl;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <c>PackageIconUrl</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ResetPackageIconUrl(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("PackageIconUrl");
-            return toolSettings;
-        }
-        #endregion
-        #region PackageTags
-        /// <summary>
-        ///   <p><em>Sets <c>PackageTags</c> in <see cref="DotNetTestSettings.Properties"/> to a new collection</em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetPackageTags(this DotNetTestSettings toolSettings, params string[] packageTags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Sets <c>PackageTags</c> in <see cref="DotNetTestSettings.Properties"/> to a new collection</em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetPackageTags(this DotNetTestSettings toolSettings, IEnumerable<string> packageTags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Adds values to <c>PackageTags</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings AddPackageTags(this DotNetTestSettings toolSettings, params string[] packageTags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Adds values to <c>PackageTags</c> in existing <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings AddPackageTags(this DotNetTestSettings toolSettings, IEnumerable<string> packageTags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Clears <c>PackageTags</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ClearPackageTags(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("PackageTags");
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Removes values from <c>PackageTags</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings RemovePackageTags(this DotNetTestSettings toolSettings, params string[] packageTags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Removes values from <c>PackageTags</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings RemovePackageTags(this DotNetTestSettings toolSettings, IEnumerable<string> packageTags)
-        {
-            toolSettings = toolSettings.NewInstance();
-            ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
-            return toolSettings;
-        }
-        #endregion
-        #region PackageReleaseNotes
-        /// <summary>
-        ///   <p><em>Sets <c>PackageReleaseNotes</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetPackageReleaseNotes(this DotNetTestSettings toolSettings, string packageReleaseNotes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["PackageReleaseNotes"] = packageReleaseNotes;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <c>PackageReleaseNotes</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ResetPackageReleaseNotes(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("PackageReleaseNotes");
-            return toolSettings;
-        }
-        #endregion
-        #region RepositoryUrl
-        /// <summary>
-        ///   <p><em>Sets <c>RepositoryUrl</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetRepositoryUrl(this DotNetTestSettings toolSettings, string repositoryUrl)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["RepositoryUrl"] = repositoryUrl;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <c>RepositoryUrl</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ResetRepositoryUrl(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("RepositoryUrl");
-            return toolSettings;
-        }
-        #endregion
-        #region RepositoryType
-        /// <summary>
-        ///   <p><em>Sets <c>RepositoryType</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetRepositoryType(this DotNetTestSettings toolSettings, string repositoryType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["RepositoryType"] = repositoryType;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <c>RepositoryType</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ResetRepositoryType(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("RepositoryType");
-            return toolSettings;
-        }
-        #endregion
-        #region SymbolPackageFormat
-        /// <summary>
-        ///   <p><em>Sets <c>SymbolPackageFormat</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Format for packaging symbols.</p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings SetSymbolPackageFormat(this DotNetTestSettings toolSettings, DotNetSymbolPackageFormat symbolPackageFormat)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <c>SymbolPackageFormat</c> in <see cref="DotNetTestSettings.Properties"/></em></p>
-        ///   <p>Format for packaging symbols.</p>
-        /// </summary>
-        [Pure]
-        public static DotNetTestSettings ResetSymbolPackageFormat(this DotNetTestSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
-            return toolSettings;
-        }
-        #endregion
         #endregion
     }
     #endregion
@@ -9895,6 +9017,144 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VersionSuffix = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Loggers
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetBuildSettings.Loggers"/> to a new list</em></p>
+        ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings SetLoggers(this DotNetBuildSettings toolSettings, params string[] loggers)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LoggersInternal = loggers.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetBuildSettings.Loggers"/> to a new list</em></p>
+        ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings SetLoggers(this DotNetBuildSettings toolSettings, IEnumerable<string> loggers)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LoggersInternal = loggers.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotNetBuildSettings.Loggers"/></em></p>
+        ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings AddLoggers(this DotNetBuildSettings toolSettings, params string[] loggers)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LoggersInternal.AddRange(loggers);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotNetBuildSettings.Loggers"/></em></p>
+        ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings AddLoggers(this DotNetBuildSettings toolSettings, IEnumerable<string> loggers)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LoggersInternal.AddRange(loggers);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DotNetBuildSettings.Loggers"/></em></p>
+        ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings ClearLoggers(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LoggersInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotNetBuildSettings.Loggers"/></em></p>
+        ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings RemoveLoggers(this DotNetBuildSettings toolSettings, params string[] loggers)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(loggers);
+            toolSettings.LoggersInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotNetBuildSettings.Loggers"/></em></p>
+        ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings RemoveLoggers(this DotNetBuildSettings toolSettings, IEnumerable<string> loggers)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(loggers);
+            toolSettings.LoggersInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region NoConsoleLogger
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetBuildSettings.NoConsoleLogger"/></em></p>
+        ///   <p>Disable the default console logger, and don't log events to the console.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings SetNoConsoleLogger(this DotNetBuildSettings toolSettings, bool? noConsoleLogger)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoConsoleLogger = noConsoleLogger;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetBuildSettings.NoConsoleLogger"/></em></p>
+        ///   <p>Disable the default console logger, and don't log events to the console.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings ResetNoConsoleLogger(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoConsoleLogger = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetBuildSettings.NoConsoleLogger"/></em></p>
+        ///   <p>Disable the default console logger, and don't log events to the console.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings EnableNoConsoleLogger(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoConsoleLogger = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetBuildSettings.NoConsoleLogger"/></em></p>
+        ///   <p>Disable the default console logger, and don't log events to the console.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings DisableNoConsoleLogger(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoConsoleLogger = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetBuildSettings.NoConsoleLogger"/></em></p>
+        ///   <p>Disable the default console logger, and don't log events to the console.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetBuildSettings ToggleNoConsoleLogger(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoConsoleLogger = !toolSettings.NoConsoleLogger;
             return toolSettings;
         }
         #endregion

@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/SpecFlow.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/SpecFlow.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;

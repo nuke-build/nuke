@@ -20,7 +20,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         {
             return ToolPathResolver.GetPackageExecutable(
                 packageId: "ReportGenerator",
-                packageExecutable: "ReportGenerator.exe",
+                packageExecutable: "ReportGenerator.dll|ReportGenerator.exe",
                 framework: framework);
         }
     }

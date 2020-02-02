@@ -82,5 +82,7 @@ namespace Nuke.CodeGeneration.Model
 
         [Description("Obsolete message. Property is marked as obsolete when specified.")]
         public string DeprecationMessage { get; set; }
+
+        public bool OnlyDelegates { get; set; }
     }
 }

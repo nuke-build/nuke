@@ -75,10 +75,11 @@
             "help": "Will recursively search for all 'AssemblyInfo.cs' files in the git repo and update them."
           },
           {
-            "name": "UpdateAssemblyInfoFileName",
-            "type": "bool",
+            "name": "UpdateAssemblyInfoFileNames",
+            "type": "List<string>",
             "format": "/updateassemblyinfofilename {value}",
-            "help": "Specify name of AssemblyInfo file."
+            "separator": " ",
+            "help": "Specify name of AssemblyInfo files to update."
           },
           {
             "name": "EnsureAssemblyInfo",

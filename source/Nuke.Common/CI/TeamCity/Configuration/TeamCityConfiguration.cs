@@ -9,24 +9,22 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.TeamCity.Configuration
 {
-    public class TeamCityConfiguration : TeamCityConfigurationEntity
+    public class TeamCityConfiguration : ConfigurationEntity
     {
         public virtual string[] Header =>
             new[]
             {
-                "// THIS FILE IS AUTO-GENERATED",
-                "// ITS CONTENT IS OVERWRITTEN WITH EXCEPTION OF MARKED USER BLOCKS",
-                "",
                 "import jetbrains.buildServer.configs.kotlin.v2018_1.*",
                 "import jetbrains.buildServer.configs.kotlin.v2018_1.buildFeatures.*",
                 "import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.*",
                 "import jetbrains.buildServer.configs.kotlin.v2018_1.triggers.*",
                 "import jetbrains.buildServer.configs.kotlin.v2018_1.vcs.*",
                 "",
-                "version = \"2019.1\"",
+                $"version = {Version.DoubleQuote()}",
                 ""
             };
 
+        public string Version { get; set; }
         public TeamCityProject Project { get; set; }
 
         public override void Write(CustomFileWriter writer)

@@ -29,10 +29,18 @@ function FirstJsonValue {
     perl -nle 'print $1 if m{"'$1'": "([^"]+)",?}' <<< ${@:2}
 }
 
+# Print environment variables
+set
+
+# Check if any dotnet is installed
+if [[ -x "$(command -v dotnet)" ]]; then
+    dotnet --info
+fi
+
 # If global.json exists, load expected version
-if [ -f "$DOTNET_GLOBAL_FILE" ]; then
+if [[ -f "$DOTNET_GLOBAL_FILE" ]]; then
     DOTNET_VERSION=$(FirstJsonValue "version" $(cat "$DOTNET_GLOBAL_FILE"))
-    if [ "$DOTNET_VERSION" == ""  ]; then
+    if [[ "$DOTNET_VERSION" == ""  ]]; then
         unset DOTNET_VERSION
     fi
 fi
@@ -43,15 +51,15 @@ if [[ -x "$(command -v dotnet)" && (-z ${DOTNET_VERSION+x} || $(dotnet --version
 else
     DOTNET_DIRECTORY="$TEMP_DIRECTORY/dotnet-unix"
     export DOTNET_EXE="$DOTNET_DIRECTORY/dotnet"
-    
+
     # Download install script
     DOTNET_INSTALL_FILE="$TEMP_DIRECTORY/dotnet-install.sh"
     mkdir -p "$TEMP_DIRECTORY"
     curl -Lsfo "$DOTNET_INSTALL_FILE" "$DOTNET_INSTALL_URL"
     chmod +x "$DOTNET_INSTALL_FILE"
-    
+
     # Install by channel or version
-    if [ -z ${DOTNET_VERSION+x} ]; then
+    if [[ -z ${DOTNET_VERSION+x} ]]; then
         "$DOTNET_INSTALL_FILE" --install-dir "$DOTNET_DIRECTORY" --channel "$DOTNET_CHANNEL" --no-path
     else
         "$DOTNET_INSTALL_FILE" --install-dir "$DOTNET_DIRECTORY" --version "$DOTNET_VERSION" --no-path

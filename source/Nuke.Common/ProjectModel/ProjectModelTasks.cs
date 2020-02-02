@@ -10,12 +10,57 @@ using Microsoft.Build.Evaluation;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.ProjectModel
 {
     [PublicAPI]
     public static class ProjectModelTasks
     {
+        public static Solution CreateSolution(string fileName = null, params Solution[] solutions)
+        {
+            return CreateSolution(fileName, solutions, folderNameProvider: null);
+        }
+
+        public static Solution CreateSolution(
+            string fileName = null,
+            IEnumerable<Solution> solutions = null,
+            Func<Solution, string> folderNameProvider = null,
+            bool randomizeProjectIds = true)
+        {
+            ControlFlow.Assert(folderNameProvider != null || solutions != null, "folderNameProvider != null || solutions!= null");
+
+            var solution = SolutionSerializer.Deserialize(
+                new[]
+                {
+                    "Microsoft Visual Studio Solution File, Format Version 12.00",
+                    "# Visual Studio 15",
+                    "VisualStudioVersion = 15.0.26124.0",
+                    "MinimumVisualStudioVersion = 15.0.26124.0"
+                },
+                fileName);
+
+            solution.Configurations = new Dictionary<string, string>
+                                      {
+                                          { "Debug|Any CPU", "Debug|Any CPU" },
+                                          { "Release|Any CPU", "Release|Any CPU" }
+                                      };
+
+            solutions?.ForEach(x =>
+            {
+                var folder = folderNameProvider != null && folderNameProvider(x) is { } folderName
+                    ? solution.AddSolutionFolder(folderName)
+                    : null;
+
+                solution.AddSolution(x, folder);
+
+                if (randomizeProjectIds)
+                    solution.RandomizeProjectIds();
+            });
+
+            return solution;
+        }
+
         public static Solution ParseSolution(string solutionFile)
         {
             return SolutionSerializer.Deserialize(solutionFile);
@@ -26,7 +71,7 @@ namespace Nuke.Common.ProjectModel
             var dotnet = ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
                          ToolPathResolver.GetPathExecutable("dotnet");
             var output = ProcessTasks.StartProcess(dotnet, "--info", logOutput: false).AssertZeroExitCode().Output;
-            var basePath = (PathConstruction.AbsolutePath) output
+            var basePath = (AbsolutePath) output
                 .Select(x => x.Text.Trim())
                 .Single(x => x.StartsWith("Base Path:"))
                 .TrimStart("Base Path:").Trim();

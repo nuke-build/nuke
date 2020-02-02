@@ -18,16 +18,16 @@ namespace Nuke.Common.ProjectModel
     {
         public static Solution Deserialize(string solutionFile)
         {
-            return Deserialize(solutionFile, TextTasks.ReadAllLines(solutionFile));
+            return Deserialize(TextTasks.ReadAllLines(solutionFile), solutionFile);
         }
 
-        public static Solution Deserialize(string solutionFile, string[] content)
+        public static Solution Deserialize(string[] content, string solutionFile = null)
         {
-            var trimmedContent = content.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+            var trimmedContent = content.Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
 
             var solution = new Solution
                            {
-                               Path = (PathConstruction.AbsolutePath) solutionFile,
+                               Path = (AbsolutePath) solutionFile,
                                Header = content.TakeWhile(x => !x.StartsWith("Project")).ToArray(),
                                Properties = trimmedContent.GetGlobalSection("SolutionProperties"),
                                ExtensibilityGlobals = trimmedContent.GetGlobalSection("ExtensibilityGlobals"),
@@ -127,16 +127,14 @@ namespace Nuke.Common.ProjectModel
                         name,
                         path,
                         typeId,
-                        configurations.TryGetValue(projectId, out var projectConfigurations)
-                            ? projectConfigurations
-                            : new Dictionary<string, string>());
+                        configurations.GetValueOrDefault(projectId) ?? new Dictionary<string, string>());
                 }
                 else
                 {
                     var items = content
                         .Skip(i)
-                        .TakeWhile(x => !x.StartsWith("EndProject"))
-                        .Where(x => x.StartsWith("\t\t"))
+                        .TakeWhile(x => !x.StartsWith("EndProjectSection") && !x.StartsWith("EndProject"))
+                        .Skip(2)
                         .Select(x => x.Split('='))
                         .ToDictionary(x => x[0].Trim(), x => x[1].Trim());
 
@@ -179,7 +177,7 @@ namespace Nuke.Common.ProjectModel
 
             foreach (var project in solution.PrimitiveProjects)
             {
-                var path = (PathConstruction.WinRelativePath) project.RelativePath;
+                var path = (WinRelativePath) project.RelativePath;
                 Write($@"Project(""{Format(project.TypeId)}"") = ""{project.Name}"", ""{path}"", ""{Format(project.ProjectId)}""");
                 WriteSection(
                     "ProjectSection(SolutionItems) = preProject",

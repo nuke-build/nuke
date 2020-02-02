@@ -20,5 +20,26 @@ namespace Nuke.Common.CI.TeamCity.Configuration
                     () => writer.WriteLine("}"))
                 .CombineWith(writer.Indent());
         }
+
+        public static void WriteArray(this CustomFileWriter writer, string property, string[] values)
+        {
+            if (!values?.Any() ?? true)
+                return;
+
+            if (values.Length <= 1)
+            {
+                writer.WriteLine($"{property} = {values.Single().DoubleQuote()}");
+                return;
+            }
+
+            writer.WriteLine($"{property} = \"\"\"");
+            using (writer.Indent())
+            {
+                foreach (var value in values)
+                    writer.WriteLine(value);
+            }
+
+            writer.WriteLine("\"\"\".trimIndent()");
+        }
     }
 }

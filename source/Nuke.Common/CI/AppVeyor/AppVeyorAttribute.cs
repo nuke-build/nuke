@@ -19,7 +19,7 @@ namespace Nuke.Common.CI.AppVeyor
     /// </summary>
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class AppVeyorAttribute : ConfigurationGenerationAttributeBase
+    public class AppVeyorAttribute : ConfigurationAttributeBase
     {
         private readonly AppVeyorImage[] _images;
 
@@ -27,6 +27,13 @@ namespace Nuke.Common.CI.AppVeyor
         {
             _images = new[] { image }.Concat(images).ToArray();
         }
+
+        private string ConfigurationFile => NukeBuild.RootDirectory / "appveyor.yml";
+
+        protected override HostType HostType => HostType.AppVeyor;
+        protected override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
+        protected override IEnumerable<string> RelevantTargetNames => InvokedTargets;
+        protected override IEnumerable<string> IrrelevantTargetNames => new string[0];
 
         public AppVeyorService[] Services { get; set; } = new AppVeyorService[0];
         public string[] InvokedTargets { get; set; } = new string[0];
@@ -41,31 +48,19 @@ namespace Nuke.Common.CI.AppVeyor
         public string[] Init { get; set; } = new string[0];
         public string[] Cache { get; set; } = new string[0];
 
-        protected virtual string ConfigurationFile => NukeBuild.RootDirectory / "appveyor.yml";
-
-        protected override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
-
-        protected override HostType HostType => HostType.AppVeyor;
-
-        protected override void Generate(
-            NukeBuild build,
-            IReadOnlyCollection<ExecutableTarget> executableTargets)
+        protected override CustomFileWriter CreateWriter()
         {
-            var relevantTargets = InvokedTargets
-                .SelectMany(x => ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { x }))
-                .Distinct().ToList();
-            var configuration = GetConfiguration(build, relevantTargets);
-
-            using var writer = new CustomFileWriter(ConfigurationFile, indentationFactor: 2);
-            configuration.Write(writer);
+            return new CustomFileWriter(ConfigurationFile, indentationFactor: 2, "#");
         }
 
-        protected virtual AppVeyorConfiguration GetConfiguration(NukeBuild build, List<ExecutableTarget> relevantTargets)
+        protected override ConfigurationEntity GetConfiguration(
+            NukeBuild build,
+            IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             return new AppVeyorConfiguration
                    {
                        Images = _images,
-                       BuildScript = PowerShellScript,
+                       BuildCmdPath = BuildCmdPath,
                        Services = Services,
                        Branches = GetBranches(),
                        SkipTags = SkipTags,
@@ -81,12 +76,12 @@ namespace Nuke.Common.CI.AppVeyor
                    };
         }
 
-        private IEnumerable<string> GetArtifacts(List<ExecutableTarget> relevantTargets)
+        private IEnumerable<string> GetArtifacts(IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             return relevantTargets
                 .Select(x => ArtifactExtensions.ArtifactProducts[x.Definition])
                 .SelectMany(x => x)
-                .Select(x => GetRelativePath(NukeBuild.RootDirectory, x));
+                .Select(x => NukeBuild.RootDirectory.GetUnixRelativePathTo(x).ToString());
         }
 
         protected AppVeyorBranches GetBranches()

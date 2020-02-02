@@ -19,8 +19,7 @@ namespace Nuke.Common.Tooling
     {
         protected ToolSettings()
         {
-            var variables = EnvironmentInfo.GetVariables();
-            EnvironmentVariablesInternal = new Dictionary<string, string>(variables, variables.Comparer);
+            EnvironmentVariablesInternal = EnvironmentInfo.Variables.ToDictionary(x => x.Key, x => x.Value);
             VerbosityMapping.Apply(this);
         }
 

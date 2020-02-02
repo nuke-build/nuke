@@ -17,10 +17,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
         {
             using (writer.WriteBlock($"artifacts({BuildType.Id})"))
             {
-                writer.WriteLine("artifactRules = \"\"\"");
-                foreach (var artifactRule in ArtifactRules)
-                    writer.WriteLine(artifactRule);
-                writer.WriteLine("\"\"\".trimIndent()");
+                writer.WriteArray("artifactRules", ArtifactRules);
             }
         }
     }

@@ -8,6 +8,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.CI.GitHubActions.Configuration;
 using Nuke.Common.Execution;
+using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -20,7 +21,7 @@ namespace Nuke.Common.CI.GitHubActions
     /// </summary>
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class GitHubActionsAttribute : ConfigurationGenerationAttributeBase
+    public class GitHubActionsAttribute : ConfigurationAttributeBase
     {
         private readonly string _name;
         private readonly GitHubActionsImage[] _images;
@@ -34,14 +35,12 @@ namespace Nuke.Common.CI.GitHubActions
             _images = new[] { image }.Concat(images).ToArray();
         }
 
-        private AbsolutePath GitHubDirectory => NukeBuild.RootDirectory / ".github";
-        private AbsolutePath WorkflowsDirectory => GitHubDirectory / "workflows";
-        private string ConfigurationFile => WorkflowsDirectory / $"{_name}.yml";
-
-        protected override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
+        private string ConfigurationFile => NukeBuild.RootDirectory / ".github" / "workflows" / $"{_name}.yml";
 
         protected override HostType HostType => HostType.GitHubActions;
-
+        protected override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
+        protected override IEnumerable<string> RelevantTargetNames => InvokedTargets;
+        protected override IEnumerable<string> IrrelevantTargetNames => new string[0];
 
         public GitHubActionsTrigger[] On { get; set; } = new GitHubActionsTrigger[0];
         public string[] OnPushBranches { get; set; } = new string[0];
@@ -59,20 +58,14 @@ namespace Nuke.Common.CI.GitHubActions
 
         public string[] InvokedTargets { get; set; } = new string[0];
 
-        protected override void Generate(
-            NukeBuild build,
-            IReadOnlyCollection<ExecutableTarget> executableTargets)
+        protected override CustomFileWriter CreateWriter()
         {
-            var relevantTargets = InvokedTargets
-                .SelectMany(x => ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { x }))
-                .Distinct().ToList();
-            var configuration = GetConfiguration(build, relevantTargets);
-
-            using var writer = new CustomFileWriter(ConfigurationFile, indentationFactor: 2);
-            configuration.Write(writer);
+            return new CustomFileWriter(ConfigurationFile, indentationFactor: 2, commentPrefix: "#");
         }
 
-        protected virtual GitHubActionsConfiguration GetConfiguration(NukeBuild targets, IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        protected override ConfigurationEntity GetConfiguration(
+            NukeBuild build,
+            IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             var configuration = new GitHubActionsConfiguration
                                 {
@@ -104,12 +97,9 @@ namespace Nuke.Common.CI.GitHubActions
                              Using = "actions/checkout@v1"
                          };
 
-            var invocationCommand = image.ToString().StartsWithOrdinalIgnoreCase("Windows")
-                ? $"powershell .\\{PowerShellScript}"
-                : $"./{BashScript}";
             yield return new GitHubActionsRunStep
                          {
-                             Command = $"{invocationCommand} {InvokedTargets.JoinSpace()}",
+                             Command = $"./{BuildCmdPath} {InvokedTargets.JoinSpace()}",
                              Imports = GetImports().ToDictionary(x => x.key, x => x.value)
                          };
 
@@ -124,7 +114,7 @@ namespace Nuke.Common.CI.GitHubActions
                 yield return new GitHubActionsArtifactStep
                              {
                                  Name = artifact.ToString().TrimStart(artifact.Parent.ToString()).TrimStart('/', '\\'),
-                                 Path = GetRelativePath(NukeBuild.RootDirectory, artifact)
+                                 Path = NukeBuild.RootDirectory.GetUnixRelativePathTo(artifact)
                              };
             }
         }

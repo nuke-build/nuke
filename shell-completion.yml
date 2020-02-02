@@ -1,4 +1,5 @@
 ApiKey: 
+AutoStash: 
 Configuration:
 - Debug
 - Release
@@ -25,10 +26,13 @@ Skip:
 - Analysis
 - Announce
 - Changelog
+- CheckoutExternalRepositories
 - Clean
 - Compile
 - Coverage
-- Generate
+- GenerateGlobalSolution
+- GeneratePublicApi
+- GenerateTools
 - Hotfix
 - Install
 - Pack
@@ -37,16 +41,20 @@ Skip:
 - Release
 - Restore
 - Test
+- UpdateContributors
 SlackWebhook: 
 Source: 
 Target:
 - Analysis
 - Announce
 - Changelog
+- CheckoutExternalRepositories
 - Clean
 - Compile
 - Coverage
-- Generate
+- GenerateGlobalSolution
+- GeneratePublicApi
+- GenerateTools
 - Hotfix
 - Install
 - Pack
@@ -55,6 +63,8 @@ Target:
 - Release
 - Restore
 - Test
+- UpdateContributors
+UseSSH: 
 Verbosity:
 - Minimal
 - Normal

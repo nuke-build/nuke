@@ -57,7 +57,7 @@ namespace Nuke.Common.ProjectModel
             if (_relativePath != null)
                 return PathConstruction.Combine(NukeBuild.RootDirectory, _relativePath);
 
-            var parameterValue = EnvironmentInfo.GetParameter<PathConstruction.AbsolutePath>(member);
+            var parameterValue = EnvironmentInfo.GetParameter<AbsolutePath>(member);
             if (parameterValue != null)
                 return parameterValue;
 
@@ -77,7 +77,7 @@ namespace Nuke.Common.ProjectModel
             ControlFlow.Assert(File.Exists(solutionFile),
                 $"Solution file '{solutionFile}' provided via {Constants.ConfigurationFileName} does not exist.");
 
-            return (PathConstruction.AbsolutePath) solutionFile;
+            return (AbsolutePath) solutionFile;
         }
     }
 }

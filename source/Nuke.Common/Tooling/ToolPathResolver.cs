@@ -60,7 +60,7 @@ namespace Nuke.Common.Tooling
                 return frameworks.Values.Single();
 
             ControlFlow.Assert(framework != null && frameworks.ContainsKey(framework),
-                new[] { $"Package executable {packageExecutables.JoinCommaOr()} [{packageId}] requires a framework:" }
+                $"Package executable {packageExecutables.JoinCommaOr()} [{packageId}] requires a framework:"
                     .Concat(frameworks.Keys.Select(x => $" - {x}")).JoinNewLine());
             return frameworks[framework];
         }

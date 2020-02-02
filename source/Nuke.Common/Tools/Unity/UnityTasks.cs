@@ -24,7 +24,14 @@ namespace Nuke.Common.Tools.Unity
         [ThreadStatic]
         private static bool s_minimalOutput;
 
-        public static string GetToolPath()
+        public static string GetToolPath(string hubVersion = null)
+        {
+            return hubVersion != null
+                ? GetToolPathViaHubVersion(hubVersion)
+                : GetToolPathViaManualInstallation();
+        }
+
+        private static string GetToolPathViaManualInstallation()
         {
             return EnvironmentInfo.Platform switch
             {
@@ -37,6 +44,28 @@ namespace Nuke.Common.Tools.Unity
                 PlatformFamily.Unknown => null,
                 _ => null
             };
+        }
+
+        private static string GetToolPathViaHubVersion(string version)
+        {
+            static string GetProgramFiles()
+                => EnvironmentInfo.SpecialFolder(
+                    EnvironmentInfo.Is32Bit
+                        ? SpecialFolders.ProgramFilesX86
+                        : SpecialFolders.ProgramFiles);
+
+            return EnvironmentInfo.Platform switch
+            {
+                PlatformFamily.Windows => $@"{GetProgramFiles()}\Unity\Hub\Editor\{version}\Editor\Unity.exe",
+                PlatformFamily.OSX => $"/Applications/Unity/Hub/Editor/{version}/Unity.app/Contents/MacOS/Unity",
+                _ => throw new Exception($"Cannot determine Unity Hub installation path for '{version}'.")
+            };
+        }
+
+        private static void PreProcess(ref UnitySettings unitySettings)
+        {
+            ControlFlow.AssertWarn(unitySettings.ProjectPath != null, "unitySettings.ProjectPath != null");
+            PreProcess<UnitySettings>(ref unitySettings);
         }
 
         private static void PreProcess<T>(ref T unitySettings)

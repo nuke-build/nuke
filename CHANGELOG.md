@@ -6,6 +6,49 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.24.0] / 2020-02-02
+- Removed NuGetPackage tasks and AutoMapper package reference
+- Removed TeamCity definitions for `VcsRoot` and trigger timezones
+- Changed `AbsolutePath`, `RelativePath`, `WinRelativePath` and `UnixRelativePath` to outer scope
+- Changed default package for `DotCoverTasks` to `JetBrains.dotCover.DotNetCliTool`
+- Changed default includes to be provided via `Nuke.Common.targets`
+- Changed `ConfigurationGenerationAttributeBase` to `ConfigurationAttributeBase`
+- Changed manually invoked targets to be TeamCity deployment configurations
+- Changed `AzurePipelines` interface to use enumerations for test result type and code coverage tool type
+- Changed package version for `Glob`, `Microsoft.IdentityModel.Clients.ActiveDirectory`, `Newtonsoft.Json`, `NuGet.Packaging`, `Refit`, `YamlDotNet`
+- Added cross-platform `build.cmd` bootstrapping script
+- Added build emotions
+- Added update of build number for TeamCity, AppVeyor, and Azure Pipelines from `GitVersionAttribute`
+- Added `AzureKeyVault` – previously available as addon
+- Added `DocFXTasks`, `DockerTasks`, `HelmTasks`, `KubernetesTasks`, and `NSwagTasks` – previously available as addons
+- Added TeamCity logger extension method for `DotNetBuildSettings`
+- Added support for checkboxes in TeamCity configuration
+- Added `GitHubTasks`
+- Added `ProjectModelTasks.CreateSolution`
+- Added `Solution.GetProject` and `GetSolutionFolder` overloads via `Guid`
+- Added `TeamCity.NightlyBuildAlways` property
+- Added detailed null-check for `teamcity.build.branch` configuration property
+- Added Coverlet extension methods for `DotNetTest` task
+- Added `AzurePipelines.PublishCodeCoverage`
+- Added setters for `Project` properties
+- Added `Solution.AddSolution` and `ProjectModelTask.CreateSolution` overload for creating global solutions
+- Added path extension methods for `Get(Win|Unix)RelativePathTo`, `Contains`, and `To(Win|Unix)RelativePath`
+- Added `NoFetch`, `Framework`, and `UpdateBuildNumber` properties to `GitVersionAttribute`
+- Fixed directory creation in bootstrapping scripts
+- Fixed artifact paths for TeamCity and Azure Pipelines
+- Fixed path separators for AppVeyor and GitHubActions configurations
+- Fixed `NSwag` to quote tool path
+- Fixed `SolutionSerializer` to handle inconsistent whitespaces
+- Fixed `NpmCi` task to include definite argument
+- Fixed `VSTestSettings.TestCaseFilters` to be list of strings
+- Fixed `EnvironmentInfo.FrameworkName`
+- Fixed `cleanCheckoutDirectory` to be set for all TeamCity build types
+- Fixed `AddTeamCityLogger` extension method
+- Fixed `buildType` reference in TeamCity build-finished triggers
+- Fixed `ReportGenerator` task to resolve `ReportGenerator.dll`
+- Fixed sharing of artifacts between agents
+- Fixed `GitVersionSettings.UpdateAssemblyInfoFileNames` to be an array
+
 ## [0.23.7] / 2020-01-28
 - Fixed summary alignment for hosts that trim whitespaces
 
@@ -470,7 +513,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.23.7...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.24.0...HEAD
+[0.24.0]: https://github.com/nuke-build/nuke/compare/0.23.7...0.24.0
 [0.23.7]: https://github.com/nuke-build/nuke/compare/0.23.6...0.23.7
 [0.23.6]: https://github.com/nuke-build/nuke/compare/0.23.5...0.23.6
 [0.23.5]: https://github.com/nuke-build/nuke/compare/0.23.4...0.23.5

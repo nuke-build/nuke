@@ -7,7 +7,7 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.AzurePipelines.Configuration
 {
-    public class AzurePipelinesJob : AzurePipelinesConfigurationEntity
+    public class AzurePipelinesJob : ConfigurationEntity
     {
         public string Name { get; set; }
         public string DisplayName { get; set; }
@@ -15,7 +15,7 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
         public AzurePipelinesJob[] Dependencies { get; set; }
         public int Parallel { get; set; }
         public string PartitionName { get; set; }
-        public string ScriptPath { get; set; }
+        public string BuildCmdPath { get; set; }
         public string[] InvokedTargets { get; set; }
         public string[] DownloadArtifacts { get; set; }
         public string[] PublishArtifacts { get; set; }
@@ -62,7 +62,7 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
             //     }
             // }
 
-            using (writer.WriteBlock("- task: PowerShell@2"))
+            using (writer.WriteBlock("- task: CmdLine@2"))
             {
                 var arguments = $"{InvokedTargets.JoinSpace()} --skip";
                 if (PartitionName != null)
@@ -70,8 +70,7 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
 
                 using (writer.WriteBlock("inputs:"))
                 {
-                    writer.WriteLine($"filePath: {ScriptPath.SingleQuote()}");
-                    writer.WriteLine($"arguments: {arguments.SingleQuote()}");
+                    writer.WriteLine($"script: './{BuildCmdPath} {arguments}'");
                 }
             }
 
@@ -81,8 +80,8 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
                 {
                     using (writer.WriteBlock("inputs:"))
                     {
-                        writer.WriteLine($"artifactName: {x}");
-                        writer.WriteLine($"pathtoPublish: {StringExtensions.SingleQuote(x)}");
+                        writer.WriteLine($"artifactName: {x.Split('/').Last()}");
+                        writer.WriteLine($"pathtoPublish: {x.SingleQuote()}");
                     }
                 }
             });

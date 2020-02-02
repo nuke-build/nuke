@@ -33,6 +33,14 @@ function ExecSafe([scriptblock] $cmd) {
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
 }
 
+# Print environment variables
+Get-Item -Path Env:*
+
+# Check if any dotnet is installed
+if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue)) {
+    ExecSafe { & dotnet --info }
+}
+
 # If global.json exists, load expected version
 if (Test-Path $DotNetGlobalFile) {
     $DotNetGlobal = $(Get-Content $DotNetGlobalFile | Out-String | ConvertFrom-Json)
@@ -52,7 +60,7 @@ else {
 
     # Download install script
     $DotNetInstallFile = "$TempDirectory\dotnet-install.ps1"
-    New-Item -ItemType Directory -Path $TempDirectory | Out-Null
+    New-Item -ItemType Directory -Path $TempDirectory -Force | Out-Null
     (New-Object System.Net.WebClient).DownloadFile($DotNetInstallUrl, $DotNetInstallFile)
 
     # Install by channel or version

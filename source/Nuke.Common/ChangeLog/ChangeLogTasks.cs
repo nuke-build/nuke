@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using NuGet.Versioning;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
+using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Utilities;
 
 // ReSharper disable ArgumentsStyleLiteral

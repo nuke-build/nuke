@@ -33,11 +33,11 @@ namespace Nuke.Common.IO
     public abstract class FileSystemGlobbingAttributeBase : ParameterAttribute
     {
         private readonly string[] _patterns;
-        private readonly Func<PathConstruction.AbsolutePath, string[], IEnumerable<PathConstruction.AbsolutePath>> _globber;
+        private readonly Func<AbsolutePath, string[], IEnumerable<AbsolutePath>> _globber;
 
         protected FileSystemGlobbingAttributeBase(
             string[] patterns,
-            Func<PathConstruction.AbsolutePath, string[], IEnumerable<PathConstruction.AbsolutePath>> globber)
+            Func<AbsolutePath, string[], IEnumerable<AbsolutePath>> globber)
         {
             _patterns = patterns;
             _globber = globber;
@@ -46,29 +46,29 @@ namespace Nuke.Common.IO
         public override object GetValue(MemberInfo member, object instance)
         {
             var memberType = member.GetMemberType();
-            ControlFlow.Assert(memberType == typeof(PathConstruction.AbsolutePath) || memberType == typeof(PathConstruction.AbsolutePath[]),
+            ControlFlow.Assert(memberType == typeof(AbsolutePath) || memberType == typeof(AbsolutePath[]),
                 $"Member '{member.Name}' attributed with {GetType().Name} must be of type AbsolutePath or AbsolutePath[].");
 
             var globbedElements = GetGlobbedElements(member);
 
-            var parameterValue = EnvironmentInfo.GetParameter<PathConstruction.AbsolutePath[]>(member);
+            var parameterValue = EnvironmentInfo.GetParameter<AbsolutePath[]>(member);
             if (parameterValue != null)
             {
                 parameterValue.ForEach(x =>
                     ControlFlow.Assert(
                         globbedElements.Contains(x),
                         $"Value '{x}' for member '{member.Name}' is not contained any pattern '{_patterns.JoinComma()}'."));
-                ControlFlow.Assert(parameterValue.Length == 1 || memberType == typeof(PathConstruction.AbsolutePath[]),
-                    new[] { $"Member '{member.Name}' can only accept a single value but got:" }
+                ControlFlow.Assert(parameterValue.Length == 1 || memberType == typeof(AbsolutePath[]),
+                    $"Member '{member.Name}' can only accept a single value but got:"
                         .Concat(parameterValue.Select(x => x.ToString()))
                         .JoinNewLine());
 
-                return memberType == typeof(PathConstruction.AbsolutePath)
+                return memberType == typeof(AbsolutePath)
                     ? parameterValue.Single()
                     : (object) parameterValue;
             }
 
-            return memberType == typeof(PathConstruction.AbsolutePath[])
+            return memberType == typeof(AbsolutePath[])
                 ? (object) globbedElements
                 : globbedElements.Length == 1
                     ? globbedElements.Single()
@@ -80,7 +80,7 @@ namespace Nuke.Common.IO
             return GetGlobbedElements(member).Select(x => (PathConstruction.GetRelativePath(NukeBuild.RootDirectory, x), (object) x));
         }
 
-        private PathConstruction.AbsolutePath[] GetGlobbedElements(MemberInfo member)
+        private AbsolutePath[] GetGlobbedElements(MemberInfo member)
         {
             ControlFlow.Assert(_patterns.Length > 0, $"Member '{member.Name}' has no globbing patterns defined.");
             return _globber(NukeBuild.RootDirectory, _patterns).ToArray();

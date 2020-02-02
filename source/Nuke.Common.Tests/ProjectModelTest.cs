@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Linq;
 using FluentAssertions;
+using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Xunit;
 using static Nuke.Common.IO.PathConstruction;

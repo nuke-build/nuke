@@ -177,12 +177,12 @@ namespace Nuke.GlobalTool
             {
                 TextTasks.WriteAllText(
                     Path.Combine(rootDirectory, Constants.ConfigurationFileName),
-                    GetRelativePath(rootDirectory, solutionFile).Replace(oldChar: '\\', newChar: '/'));
+                    GetUnixRelativePath(rootDirectory, solutionFile));
 
                 definitions.Add("SOLUTION_FILE");
 
                 var solutionFileContent = TextTasks.ReadAllLines(solutionFile).ToList();
-                var buildProjectFileRelative = (WinRelativePath) GetRelativePath(solutionDirectory, buildProjectFile);
+                var buildProjectFileRelative = GetWinRelativePath(solutionDirectory, buildProjectFile);
                 UpdateSolutionFileContent(solutionFileContent, buildProjectFileRelative, buildProjectGuid, buildProjectKind, buildProjectName);
                 TextTasks.WriteAllLines(solutionFile, solutionFileContent, Encoding.UTF8);
             }
@@ -195,9 +195,9 @@ namespace Nuke.GlobalTool
                     replacements: GetDictionary(
                         new
                         {
-                            solutionDirectory = (WinRelativePath) GetRelativePath(buildDirectory, solutionDirectory ?? rootDirectory),
-                            rootDirectory = (WinRelativePath) GetRelativePath(buildDirectory, rootDirectory),
-                            scriptDirectory = (WinRelativePath) GetRelativePath(buildDirectory, EnvironmentInfo.WorkingDirectory),
+                            solutionDirectory = GetWinRelativePath(buildDirectory, solutionDirectory ?? rootDirectory),
+                            rootDirectory = GetWinRelativePath(buildDirectory, rootDirectory),
+                            scriptDirectory = GetWinRelativePath(buildDirectory, EnvironmentInfo.WorkingDirectory),
                             buildProjectName,
                             buildProjectGuid,
                             targetFramework,
@@ -231,17 +231,21 @@ namespace Nuke.GlobalTool
                     definitions));
 
             TextTasks.WriteAllLines(
+                Path.Combine(EnvironmentInfo.WorkingDirectory, "build.cmd"),
+                FillTemplate(
+                    GetTemplate("build.cmd")));
+
+            TextTasks.WriteAllLines(
                 Path.Combine(EnvironmentInfo.WorkingDirectory, "build.ps1"),
                 FillTemplate(
                     GetTemplate($"build.{targetPlatform}.ps1"),
                     replacements: GetDictionary(
                         new
                         {
-                            rootDirectory = (WinRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, rootDirectory),
-                            solutionDirectory =
-                                (WinRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, solutionDirectory ?? rootDirectory),
-                            scriptDirectory = (WinRelativePath) GetRelativePath(buildDirectory, EnvironmentInfo.WorkingDirectory),
-                            buildDirectory = (WinRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, buildDirectory),
+                            rootDirectory = GetWinRelativePath(EnvironmentInfo.WorkingDirectory, rootDirectory),
+                            solutionDirectory = GetWinRelativePath(EnvironmentInfo.WorkingDirectory, solutionDirectory ?? rootDirectory),
+                            scriptDirectory = GetWinRelativePath(buildDirectory, EnvironmentInfo.WorkingDirectory),
+                            buildDirectory = GetWinRelativePath(EnvironmentInfo.WorkingDirectory, buildDirectory),
                             buildProjectName,
                             nugetVersion = "latest"
                         })));
@@ -253,11 +257,10 @@ namespace Nuke.GlobalTool
                     replacements: GetDictionary(
                         new
                         {
-                            rootDirectory = (UnixRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, rootDirectory),
-                            solutionDirectory =
-                                (UnixRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, solutionDirectory ?? rootDirectory),
-                            scriptDirectory = (UnixRelativePath) GetRelativePath(buildDirectory, EnvironmentInfo.WorkingDirectory),
-                            buildDirectory = (UnixRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, buildDirectory),
+                            rootDirectory = GetUnixRelativePath(EnvironmentInfo.WorkingDirectory, rootDirectory),
+                            solutionDirectory = GetUnixRelativePath(EnvironmentInfo.WorkingDirectory, solutionDirectory ?? rootDirectory),
+                            scriptDirectory = GetUnixRelativePath(buildDirectory, EnvironmentInfo.WorkingDirectory),
+                            buildDirectory = GetUnixRelativePath(EnvironmentInfo.WorkingDirectory, buildDirectory),
                             buildProjectName,
                             nugetVersion = "latest"
                         })));
@@ -313,16 +316,16 @@ namespace Nuke.GlobalTool
 
                 TextTasks.WriteAllText(
                     $"{solutionFile}.DotSettings.ext",
-                    "https://raw.githubusercontent.com/nuke-build/common/develop/nuke-common.sln.DotSettings");
+                    "https://raw.githubusercontent.com/nuke-build/nuke/develop/nuke-common.sln.DotSettings");
                 TextTasks.WriteAllText(
                     Path.Combine(solutionDirectory, "source", "Inspections.DotSettings.ext"),
-                    "https://raw.githubusercontent.com/nuke-build/common/develop/source/Inspections.DotSettings");
+                    "https://raw.githubusercontent.com/nuke-build/nuke/develop/source/Inspections.DotSettings");
                 TextTasks.WriteAllText(
                     Path.Combine(solutionDirectory, "source", "CodeStyle.DotSettings.ext"),
-                    "https://raw.githubusercontent.com/nuke-build/common/develop/source/CodeStyle.DotSettings");
+                    "https://raw.githubusercontent.com/nuke-build/nuke/develop/source/CodeStyle.DotSettings");
                 TextTasks.WriteAllText(
                     Path.Combine(solutionDirectory, "source", "Configuration.props.ext"),
-                    "https://raw.githubusercontent.com/nuke-build/common/develop/source/Configuration.props");
+                    "https://raw.githubusercontent.com/nuke-build/nuke/develop/source/Configuration.props");
             }
 
             #endregion

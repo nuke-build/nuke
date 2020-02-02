@@ -14,15 +14,16 @@ namespace Nuke.Common.Utilities
         private readonly FileStream _fileStream;
         private readonly StreamWriter _streamWriter;
         private readonly int _indentationFactor;
+        private readonly string _commentPrefix;
         private int _indentation;
 
-        public CustomFileWriter(string filename, int indentationFactor, FileMode fileMode = FileMode.Create)
+        public CustomFileWriter(string filename, int indentationFactor, string commentPrefix, FileMode fileMode = FileMode.Create)
         {
-            FileSystemTasks.EnsureExistingParentDirectory(filename);
             _fileStream = File.Open(filename, fileMode);
             _streamWriter = new StreamWriter(_fileStream);
 
             _indentationFactor = indentationFactor;
+            _commentPrefix = commentPrefix;
         }
 
         public void Dispose()
@@ -37,6 +38,11 @@ namespace Nuke.Common.Utilities
                 text != null
                     ? $"{new string(c: ' ', _indentation * _indentationFactor)}{text}"
                     : string.Empty);
+        }
+
+        public void WriteComment(string text = null)
+        {
+            WriteLine($"{_commentPrefix} {text}".TrimEnd());
         }
 
         public IDisposable Indent()

@@ -75,9 +75,8 @@
           },
           {
             "name": "TestCaseFilters",
-            "type": "Dictionary<string, string>",
+            "type": "List<string>",
             "format": "/TestCaseFilter:{value}",
-            "itemFormat": "{key}={value}",
             "separator": "|",
             "help": "Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href=\"https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md\">TestCase filter</a>."
           },

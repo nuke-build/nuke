@@ -117,6 +117,14 @@
             "type": "DotNetVerbosity",
             "format": "--verbosity {value}",
             "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          },
+          {
+            "name": "Properties",
+            "type": "Dictionary<string, object>",
+            "format": "/property:{value}",
+            "itemFormat": "{key}={value}",
+            "disallowedCharacter": ";",
+            "help": "<p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\\Debug</c></p>"
           }
         ]
       }
@@ -352,6 +360,18 @@
             "type": "string",
             "format": "--version-suffix {value}",
             "help": "Defines the version suffix for an asterisk (<c>*</c>) in the version field of the project file. The format follows NuGet's version guidelines."
+          },
+          {
+            "name": "Loggers",
+            "type": "List<string>",
+            "format": "/logger:{value}",
+            "help": "Specifies the loggers to use to log events from MSBuild."
+          },
+          {
+            "name": "NoConsoleLogger",
+            "type": "bool",
+            "format": "/noconsolelogger",
+            "help": "Disable the default console logger, and don't log events to the console."
           }
         ]
       }

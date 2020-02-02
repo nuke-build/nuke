@@ -4,14 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using GlobExpressions;
 using JetBrains.Annotations;
-using Nuke.Common.Execution;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -19,28 +15,6 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.IO
 {
-    /// <summary>
-    /// Indicates the case sensitivity used for globbing.
-    /// </summary>
-    public enum GlobbingCaseSensitivity
-    {
-        /// <summary>
-        /// Automatically determines whether to use case-sensitive or case-insensitive matching when globbing. This
-        /// means using case-insensitive matching when running on Windows, and case-sensitive otherwise.
-        /// </summary>
-        Auto,
-
-        /// <summary>
-        /// Globbing patterns will be case-sensitive.
-        /// </summary>
-        CaseSensitive,
-
-        /// <summary>
-        /// Globbing patterns will be case-insensitive.
-        /// </summary>
-        CaseInsensitive
-    }
-
     /// <summary>
     /// <p>Provides an abstraction for generating Windows/Unix/UNC-compliant
     /// file-system paths independently of the underlying operating system. Usages should be restricted to the moment
@@ -78,6 +52,48 @@ namespace Nuke.Common.IO
                 GlobbingCaseSensitivity.CaseInsensitive => GlobOptions.CaseInsensitive,
                 _ => (EnvironmentInfo.IsWin ? GlobOptions.CaseInsensitive : GlobOptions.None)
             };
+
+        [Pure]
+        public static WinRelativePath GetWinRelativePath(string basePath, string destinationPath)
+        {
+            return (WinRelativePath) GetRelativePath(basePath, destinationPath);
+        }
+
+        [Pure]
+        public static UnixRelativePath GetUnixRelativePath(string basePath, string destinationPath)
+        {
+            return (UnixRelativePath) GetRelativePath(basePath, destinationPath);
+        }
+
+        public static RelativePath GetRelativePathTo(this AbsolutePath basePath, string destinationPath)
+        {
+            return (RelativePath) GetRelativePath(basePath, destinationPath);
+        }
+
+        public static WinRelativePath GetWinRelativePathTo(this AbsolutePath basePath, string destinationPath)
+        {
+            return GetWinRelativePath(basePath, destinationPath);
+        }
+
+        public static UnixRelativePath GetUnixRelativePathTo(this AbsolutePath basePath, string destinationPath)
+        {
+            return GetUnixRelativePath(basePath, destinationPath);
+        }
+
+        public static WinRelativePath ToWinRelativePath(this RelativePath path)
+        {
+            return (WinRelativePath) (string) path;
+        }
+
+        public static UnixRelativePath ToUnixRelativePath(this RelativePath path)
+        {
+            return (UnixRelativePath) (string) path;
+        }
+
+        public static bool Contains(this AbsolutePath basePath, string destinationPath)
+        {
+            return IsDescendantPath(basePath, destinationPath);
+        }
 
         // TODO: check usages
         [Pure]
@@ -142,9 +158,9 @@ namespace Nuke.Common.IO
             return (directory, new[] { pattern });
         }
 
-        private const char WinSeparator = '\\';
-        private const char UncSeparator = '\\';
-        private const char UnixSeparator = '/';
+        internal const char WinSeparator = '\\';
+        internal const char UncSeparator = '\\';
+        internal const char UnixSeparator = '/';
 
         private static readonly char[] s_allSeparators = { WinSeparator, UncSeparator, UnixSeparator };
 
@@ -157,16 +173,16 @@ namespace Nuke.Common.IO
                pathPart[index: 0] == '.' &&
                pathPart[index: 1] == '.';
 
-        private static bool IsWinRoot([CanBeNull] string root)
+        internal static bool IsWinRoot([CanBeNull] string root)
             => root?.Length == 2 &&
                char.IsLetter(root[index: 0]) &&
                root[index: 1] == ':';
 
-        private static bool IsUnixRoot([CanBeNull] string root)
+        internal static bool IsUnixRoot([CanBeNull] string root)
             => root?.Length == 1 &&
                root[index: 0] == UnixSeparator;
 
-        private static bool IsUncRoot([CanBeNull] string root)
+        internal static bool IsUncRoot([CanBeNull] string root)
             => root?.Length >= 3 &&
                root[index: 0] == UncSeparator &&
                root[index: 1] == UncSeparator &&
@@ -174,9 +190,9 @@ namespace Nuke.Common.IO
 
         private static string GetHeadPart([CanBeNull] string str, int count) => new string((str ?? string.Empty).Take(count).ToArray());
 
-        private static bool HasUnixRoot([CanBeNull] string path) => IsUnixRoot(GetHeadPart(path, count: 1));
-        private static bool HasUncRoot([CanBeNull] string path) => IsUncRoot(GetHeadPart(path, count: 3));
-        private static bool HasWinRoot([CanBeNull] string path) => IsWinRoot(GetHeadPart(path, count: 2));
+        internal static bool HasUnixRoot([CanBeNull] string path) => IsUnixRoot(GetHeadPart(path, count: 1));
+        internal static bool HasUncRoot([CanBeNull] string path) => IsUncRoot(GetHeadPart(path, count: 3));
+        internal static bool HasWinRoot([CanBeNull] string path) => IsWinRoot(GetHeadPart(path, count: 2));
 
         public static bool HasPathRoot([CanBeNull] string path) => GetPathRoot(path) != null;
 
@@ -309,179 +325,6 @@ namespace Nuke.Common.IO
             return IsUnixRoot(path) // TODO: "//" ?
                 ? path
                 : path.TrimEnd(s_allSeparators);
-        }
-
-        [Serializable]
-        [DebuggerDisplay("{" + nameof(_path) + "}")]
-        public class RelativePath
-        {
-            private readonly string _path;
-            private readonly char? _separator;
-
-            protected RelativePath(string path, char? separator = null)
-            {
-                _path = path;
-                _separator = separator;
-            }
-
-            public static explicit operator RelativePath([CanBeNull] string path)
-            {
-                if (path is null)
-                    return null;
-
-                return new RelativePath(NormalizePath(path));
-            }
-
-            public static implicit operator string([CanBeNull] RelativePath path)
-            {
-                return path?._path;
-            }
-
-            public static RelativePath operator /(RelativePath left, [CanBeNull] string right)
-            {
-                var separator = left.NotNull("left != null")._separator;
-                return new RelativePath(NormalizePath(Combine(left, (RelativePath) right, separator), separator), separator);
-            }
-
-            public override string ToString()
-            {
-                return _path;
-            }
-        }
-
-        [Serializable]
-        public class UnixRelativePath : RelativePath
-        {
-            protected UnixRelativePath(string path, char? separator)
-                : base(path, separator)
-            {
-            }
-
-            public static explicit operator UnixRelativePath([CanBeNull] string path)
-            {
-                return new UnixRelativePath(NormalizePath(path, UnixSeparator), UnixSeparator);
-            }
-        }
-
-        [Serializable]
-        public class WinRelativePath : RelativePath
-        {
-            protected WinRelativePath(string path, char? separator)
-                : base(path, separator)
-            {
-            }
-
-            public static explicit operator WinRelativePath([CanBeNull] string path)
-            {
-                return new WinRelativePath(NormalizePath(path, WinSeparator), WinSeparator);
-            }
-        }
-
-        [Serializable]
-        [TypeConverter(typeof(TypeConverter))]
-        [DebuggerDisplay("{" + nameof(_path) + "}")]
-        public class AbsolutePath
-        {
-            public class TypeConverter : System.ComponentModel.TypeConverter
-            {
-                public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
-                {
-                    return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
-                }
-
-                public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
-                {
-                    if (value is string stringValue)
-                    {
-                        return (AbsolutePath) (HasPathRoot(stringValue)
-                            ? stringValue
-                            : Combine(EnvironmentInfo.WorkingDirectory, stringValue));
-                    }
-
-                    if (value is null)
-                        return null;
-
-                    return base.ConvertFrom(context, culture, value);
-                }
-            }
-
-            private readonly string _path;
-
-            private AbsolutePath(string path)
-            {
-                _path = NormalizePath(path);
-            }
-
-            public static explicit operator AbsolutePath([CanBeNull] string path)
-            {
-                if (path is null)
-                    return null;
-
-                ControlFlow.Assert(HasPathRoot(path), $"Path '{path}' must be rooted.");
-                return new AbsolutePath(path);
-            }
-
-            public static implicit operator string([CanBeNull] AbsolutePath path)
-            {
-                return path?.ToString();
-            }
-
-            public AbsolutePath Parent =>
-                !IsWinRoot(_path.TrimEnd(WinSeparator)) && !IsUncRoot(_path) && !IsUnixRoot(_path)
-                    ? this / ".."
-                    : null;
-
-            public static AbsolutePath operator /(AbsolutePath left, [CanBeNull] string right)
-            {
-                return new AbsolutePath(Combine(left.NotNull("left != null"), right));
-            }
-
-            protected bool Equals(AbsolutePath other)
-            {
-                var stringComparison = HasWinRoot(_path) ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
-                return string.Equals(_path, other._path, stringComparison);
-            }
-
-            public override bool Equals(object obj)
-            {
-                if (ReferenceEquals(null, obj))
-                    return false;
-                if (ReferenceEquals(this, obj))
-                    return true;
-                if (obj.GetType() != GetType())
-                    return false;
-                return Equals((AbsolutePath) obj);
-            }
-
-            public override int GetHashCode()
-            {
-                return _path?.GetHashCode() ?? 0;
-            }
-
-            public override string ToString()
-            {
-                return _path;
-            }
-        }
-    }
-
-    /// <summary>
-    /// Allows to configure the case-sensitivity used for globbing operations in <see cref="PathConstruction"/>.
-    /// </summary>
-    [PublicAPI]
-    [AttributeUsage(AttributeTargets.Class)]
-    public sealed class GlobbingOptionsAttribute : Attribute, IOnBeforeLogo
-    {
-        private readonly GlobbingCaseSensitivity _caseSensitivity;
-
-        public GlobbingOptionsAttribute(GlobbingCaseSensitivity caseSensitivity)
-        {
-            _caseSensitivity = caseSensitivity;
-        }
-
-        public void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
-        {
-            PathConstruction.GlobbingCaseSensitivity = _caseSensitivity;
         }
     }
 }

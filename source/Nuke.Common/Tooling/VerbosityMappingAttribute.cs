@@ -11,6 +11,7 @@ using Nuke.Common.Execution;
 namespace Nuke.Common.Tooling
 {
     [PublicAPI]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class VerbosityMappingAttribute : Attribute, IOnAfterLogo
     {
         private readonly Type _targetType;

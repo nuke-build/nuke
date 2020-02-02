@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="..\source\Nuke.Common\Nuke.Common.props" />
+
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <RootNamespace></RootNamespace>
-    <IsPackable>false</IsPackable>
     <NoWarn>CS0649;CS0169</NoWarn>
+    <NukeRootDirectory>.\..</NukeRootDirectory>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -14,10 +14,6 @@
     <DefineConstants Condition="'$(OS)' == 'Windows_NT'">$(DefineConstants);WIN</DefineConstants>
     <DefineConstants Condition="'$(OS)' != 'Windows_NT'">$(DefineConstants);UNIX</DefineConstants>
   </PropertyGroup>
-
-  <ItemDefinitionGroup>
-    <PackageDownload Visible="false" />
-  </ItemDefinitionGroup>
 
   <ItemGroup>
     <PackageDownload Include="GitVersion.Tool" Version="[5.1.1]" />
@@ -33,23 +29,6 @@
     <ProjectReference Include="..\source\Nuke.CodeGeneration\Nuke.CodeGeneration.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="*.csproj.DotSettings" />
-
-    <None Include="..\build.ps1" />
-    <None Include="..\build.sh" />
-
-    <None Include="..\.nuke" LinkBase="config" />
-    <None Include="..\global.json" LinkBase="config" Condition="Exists('..\global.json')" />
-    <None Include="..\nuget.config" LinkBase="config" Condition="Exists('..\nuget.config')" />
-    <None Include="..\GitVersion.yml" LinkBase="config" Condition="Exists('..\GitVersion.yml')" />
-
-    <None Include="..\.github\workflows\*.yml" LinkBase="ci" />
-    <None Include="..\.teamcity\settings.kts" LinkBase="ci" Condition="Exists('..\.teamcity\settings.kts')" />
-    <None Include="..\azure-pipelines.yml" LinkBase="ci" Condition="Exists('..\azure-pipelines.yml')" />
-    <None Include="..\Jenkinsfile" LinkBase="ci" Condition="Exists('..\Jenkinsfile')" />
-    <None Include="..\appveyor.yml" LinkBase="ci" Condition="Exists('..\appveyor.yml')" />
-    <None Include="..\.travis.yml" LinkBase="ci" Condition="Exists('..\.travis.yml')" />
-  </ItemGroup>
+  <Import Project="..\source\Nuke.Common\Nuke.Common.targets" />
 
 </Project>

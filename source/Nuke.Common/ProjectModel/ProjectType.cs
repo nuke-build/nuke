@@ -17,7 +17,7 @@ namespace Nuke.Common.ProjectModel
     {
         public static ProjectType SolutionFolder = new ProjectType(Nuke.Common.ProjectModel.SolutionFolder.Guid);
 
-        public static ProjectType CSharpProject = new ProjectType("FAE04EC0-301F-11D3-BF4B-00C04F79EFBC", "9A19103F-16F7-4668-BE54-9A1E7A4F7556");
+        public static ProjectType CSharpProject = new ProjectType("9A19103F-16F7-4668-BE54-9A1E7A4F7556", "FAE04EC0-301F-11D3-BF4B-00C04F79EFBC");
         public static ProjectType VBNetProject = new ProjectType("F184B08F-C81C-45F6-A57F-5ABD9991F28F");
         public static ProjectType FSharpProject = new ProjectType("F2A71F9B-5D33-465A-A702-920D77279786");
         public static ProjectType VisualCppProject = new ProjectType("8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942");
@@ -61,6 +61,8 @@ namespace Nuke.Common.ProjectModel
         {
             Guids = guids;
         }
+
+        public Guid FirstGuid => Guids.First();
 
         public IReadOnlyCollection<Guid> Guids { get; }
     }
