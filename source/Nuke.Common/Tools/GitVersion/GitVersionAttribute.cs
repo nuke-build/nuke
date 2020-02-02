@@ -22,9 +22,11 @@ namespace Nuke.Common.Tools.GitVersion
     [UsedImplicitly(ImplicitUseKindFlags.Default)]
     public class GitVersionAttribute : InjectionAttributeBase
     {
+        public string Framework { get; set; } = "netcoreapp3.0";
         public bool DisableOnUnix { get; set; }
         public bool UpdateAssemblyInfo { get; set; }
         public bool UpdateBuildNumber { get; set; } = true;
+        public bool NoFetch { get; set; }
 
         public override object GetValue(MemberInfo member, object instance)
         {
@@ -36,7 +38,8 @@ namespace Nuke.Common.Tools.GitVersion
             }
 
             var gitVersion = GitVersionTasks.GitVersion(s => s
-                    .SetFramework("netcoreapp3.0")
+                    .SetFramework(Framework)
+                    .SetNoFetch(NoFetch)
                     .DisableLogOutput()
                     .SetUpdateAssemblyInfo(UpdateAssemblyInfo))
                 .Result;
