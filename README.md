@@ -12,7 +12,7 @@
 - [Description](#description)
 - [Features](#features)
 - [Example](#example)
-- [Continuous Integration](#continues-integration)
+- [Continuous Integration](#continuous-integration)
 - [Contributing](#contributing)
 - [Backers & Sponsors](#backers--sponsors)
 - [Users](#users)
@@ -51,7 +51,7 @@ Here is a short list of some most-loved features:
 
 <p align="center"><img width="800px" src="https://github.com/nuke-build/nuke/raw/develop/images/example-1.png" /></p>
 
-## Continues Integration
+## Continuous Integration
 
 NUKE builds and tests itself on several different CI servers, which helps ensuring a working integration with those systems. At the same time, the individual configuration files serve as example for the [generation experience](https://www.nuke.build/docs/authoring-builds/ci-integration.html#configuration-generation):
 
