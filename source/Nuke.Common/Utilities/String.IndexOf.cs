@@ -13,7 +13,7 @@ namespace Nuke.Common.Utilities
         public static int IndexOfRegex(this string text, string expression)
         {
             var regex = new Regex(expression, RegexOptions.Compiled);
-            return regex.Match(text).Index + 1;
+            return regex.Match(text).Index;
         }
     }
 }

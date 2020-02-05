@@ -56,14 +56,12 @@ namespace Nuke.Common.Tests
         }
 
         [Theory]
-        [InlineData("dep.test.env.=ExitCode=000000", @"[^\.]=", 22, "dep.test.env.=ExitCode", "000000")]
-        public void TestIndexOfRegex(string input, string expression, int expectedIndex, string expectedKey, string expectedValue)
+        [InlineData("key_value", @"_", 3)]
+        [InlineData("dep.test.env.=ExitCode=000000", @"[^\.]=", 21)]
+        public void TestIndexOfRegex(string input, string expression, int expectedIndex)
         {
             var index = input.IndexOfRegex(expression);
             index.Should().Be(expectedIndex);
-
-            input.Substring(0, index).Should().Be(expectedKey);
-            input.Substring(index + 1).Should().Be(expectedValue);
         }
     }
 }
