@@ -5,9 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed `NuGetPackageResolver` to include dependencies during tool path resolution
+- Fixed parsing of TeamCity environment variables
+- Fixed execution flags for `build.sh` and `build.cmd` scripts during setup
+- Fixed assertion message in `UnityTasks`
+- Fixed `build.cmd` to have newline at end-of-file
+- Fixed logo spacing
 
 ## [0.24.0] / 2020-02-02
-- Removed NuGetPackage tasks and AutoMapper package reference
+- Removed `NuGetPackage` tasks and AutoMapper package reference
 - Removed TeamCity definitions for `VcsRoot` and trigger timezones
 - Changed `AbsolutePath`, `RelativePath`, `WinRelativePath` and `UnixRelativePath` to outer scope
 - Changed default package for `DotCoverTasks` to `JetBrains.dotCover.DotNetCliTool`
