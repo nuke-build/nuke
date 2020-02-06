@@ -44,7 +44,7 @@ namespace Nuke.Common.Tooling
             string packageId,
             string packagesConfigFile,
             string version = null,
-            bool resolveDependencies = false)
+            bool resolveDependencies = true)
         {
             return GetLocalInstalledPackages(packagesConfigFile, resolveDependencies)
                 .SingleOrDefaultOrError(
