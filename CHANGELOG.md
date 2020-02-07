@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [0.24.1] / 2020-02-07
 - Fixed `NuGetPackageResolver` to include dependencies during tool path resolution
 - Fixed parsing of TeamCity environment variables
 - Fixed execution flags for `build.sh` and `build.cmd` scripts during setup
@@ -519,7 +521,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.24.0...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.24.1...HEAD
+[0.24.1]: https://github.com/nuke-build/nuke/compare/0.24.0...0.24.1
 [0.24.0]: https://github.com/nuke-build/nuke/compare/0.23.7...0.24.0
 [0.23.7]: https://github.com/nuke-build/nuke/compare/0.23.6...0.23.7
 [0.23.6]: https://github.com/nuke-build/nuke/compare/0.23.5...0.23.6
