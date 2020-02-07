@@ -58,7 +58,11 @@ namespace Nuke.Common.Execution
                 ToolPathResolver.NuGetAssetsConfigFile = build.NuGetAssetsConfigFile;
 
                 if (!NukeBuild.NoLogo)
+                {
+                    Logger.Normal();
                     Logger.OutputSink.WriteLogo();
+                    Logger.Normal();
+                }
 
                 Logger.Info($"NUKE Execution Engine {typeof(BuildManager).Assembly.GetInformationalText()}");
                 Logger.Normal();

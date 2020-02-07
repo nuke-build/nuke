@@ -6,8 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.24.1] / 2020-02-07
+- Fixed `NuGetPackageResolver` to include dependencies during tool path resolution
+- Fixed parsing of TeamCity environment variables
+- Fixed execution flags for `build.sh` and `build.cmd` scripts during setup
+- Fixed assertion message in `UnityTasks`
+- Fixed `build.cmd` to have newline at end-of-file
+- Fixed logo spacing
+
 ## [0.24.0] / 2020-02-02
-- Removed NuGetPackage tasks and AutoMapper package reference
+- Removed `NuGetPackage` tasks and AutoMapper package reference
 - Removed TeamCity definitions for `VcsRoot` and trigger timezones
 - Changed `AbsolutePath`, `RelativePath`, `WinRelativePath` and `UnixRelativePath` to outer scope
 - Changed default package for `DotCoverTasks` to `JetBrains.dotCover.DotNetCliTool`
@@ -513,7 +521,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.24.0...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.24.1...HEAD
+[0.24.1]: https://github.com/nuke-build/nuke/compare/0.24.0...0.24.1
 [0.24.0]: https://github.com/nuke-build/nuke/compare/0.23.7...0.24.0
 [0.23.7]: https://github.com/nuke-build/nuke/compare/0.23.6...0.23.7
 [0.23.6]: https://github.com/nuke-build/nuke/compare/0.23.5...0.23.6
