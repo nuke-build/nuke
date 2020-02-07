@@ -54,5 +54,14 @@ namespace Nuke.Common.Tests
             "NuGetKeyGitHubKey".SplitCamelHumps("NuGet", "GitHub")
                 .Should().Equal("NuGet", "Key", "GitHub", "Key");
         }
+
+        [Theory]
+        [InlineData("key_value", @"_", 3)]
+        [InlineData("dep.test.env.=ExitCode=000000", @"[^\.]=", 21)]
+        public void TestIndexOfRegex(string input, string expression, int expectedIndex)
+        {
+            var index = input.IndexOfRegex(expression);
+            index.Should().Be(expectedIndex);
+        }
     }
 }

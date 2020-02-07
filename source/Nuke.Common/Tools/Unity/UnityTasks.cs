@@ -35,25 +35,14 @@ namespace Nuke.Common.Tools.Unity
         {
             return EnvironmentInfo.Platform switch
             {
-                PlatformFamily.Windows => $@"{EnvironmentInfo.SpecialFolder(
-                    EnvironmentInfo.Is32Bit
-                        ? SpecialFolders.ProgramFilesX86
-                        : SpecialFolders.ProgramFiles)}\Unity\Editor\Unity.exe",
+                PlatformFamily.Windows => $@"{GetProgramFiles()}\Unity\Editor\Unity.exe",
                 PlatformFamily.OSX => "/Applications/Unity/Unity.app/Contents/MacOS/Unity",
-                PlatformFamily.Linux => null,
-                PlatformFamily.Unknown => null,
                 _ => null
             };
         }
 
         private static string GetToolPathViaHubVersion(string version)
         {
-            static string GetProgramFiles()
-                => EnvironmentInfo.SpecialFolder(
-                    EnvironmentInfo.Is32Bit
-                        ? SpecialFolders.ProgramFilesX86
-                        : SpecialFolders.ProgramFiles);
-
             return EnvironmentInfo.Platform switch
             {
                 PlatformFamily.Windows => $@"{GetProgramFiles()}\Unity\Hub\Editor\{version}\Editor\Unity.exe",
@@ -62,9 +51,20 @@ namespace Nuke.Common.Tools.Unity
             };
         }
 
+        private static string GetProgramFiles()
+        {
+            return EnvironmentInfo.SpecialFolder(
+                    EnvironmentInfo.Is32Bit
+                        ? SpecialFolders.ProgramFilesX86
+                        : SpecialFolders.ProgramFiles);
+        }
+
         private static void PreProcess(ref UnitySettings unitySettings)
         {
-            ControlFlow.AssertWarn(unitySettings.ProjectPath != null, "unitySettings.ProjectPath != null");
+            ControlFlow.AssertWarn(
+                unitySettings.ProjectPath != null,
+                "ProjectPath is not set in UnitySettings. This will cause Unity to build the last " +
+                "opened/built project. Use .SetProjectPath() to override this behavior.");
             PreProcess<UnitySettings>(ref unitySettings);
         }
 

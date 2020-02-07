@@ -66,7 +66,7 @@ namespace Nuke.Common.CI.TeamCity
                 if (line[index: 0] == '#' || string.IsNullOrWhiteSpace(line))
                     continue;
 
-                var index = line.IndexOf(value: '=');
+                var index = line.IndexOfRegex(@"[^\.]=") + 1;
                 var key = line.Substring(startIndex: 0, length: index)
                     .Replace("secure:", string.Empty);
                 var value = line.Substring(index + 1);

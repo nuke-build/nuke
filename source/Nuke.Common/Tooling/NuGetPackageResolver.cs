@@ -44,7 +44,7 @@ namespace Nuke.Common.Tooling
             string packageId,
             string packagesConfigFile,
             string version = null,
-            bool resolveDependencies = false)
+            bool resolveDependencies = true)
         {
             return GetLocalInstalledPackages(packagesConfigFile, resolveDependencies)
                 .SingleOrDefaultOrError(
@@ -62,6 +62,7 @@ namespace Nuke.Common.Tooling
                 : GetLocalInstalledPackagesFromConfigFile(packagesConfigFile, resolveDependencies);
         }
 
+        [ItemNotNull]
         private static IEnumerable<InstalledPackage> GetLocalInstalledPackagesFromAssetsFile(
             string packagesConfigFile,
             bool resolveDependencies = true)
@@ -89,10 +90,15 @@ namespace Nuke.Common.Tooling
                 if (!resolveDependencies && !directReferences.Contains(name))
                     continue;
 
-                yield return GetGlobalInstalledPackage(name, version, packagesConfigFile);
+                var package = GetGlobalInstalledPackage(name, version, packagesConfigFile);
+                if (package == null)
+                    continue;
+
+                yield return package;
             }
         }
 
+        [ItemNotNull]
         private static IEnumerable<InstalledPackage> GetLocalInstalledPackagesFromConfigFile(
             string packagesConfigFile,
             bool resolveDependencies = true)
@@ -118,12 +124,12 @@ namespace Nuke.Common.Tooling
 
                 foreach (var version in versions)
                 {
-                    var packageData = GetGlobalInstalledPackage(packageId, version, packagesConfigFile);
-                    if (packageData == null)
+                    var package = GetGlobalInstalledPackage(packageId, version, packagesConfigFile);
+                    if (package == null)
                         continue;
 
-                    installedPackages.Add(packageData);
-                    yield return packageData;
+                    installedPackages.Add(package);
+                    yield return package;
                 }
             }
 
