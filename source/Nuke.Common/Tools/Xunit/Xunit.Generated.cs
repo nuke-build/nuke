@@ -305,7 +305,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetTargetAssemblyWithConfigs(this Xunit2Settings toolSettings, ILookup<string, string> targetAssemblyWithConfigs)
+        public static T SetTargetAssemblyWithConfigs<T>(this T toolSettings, ILookup<string, string> targetAssemblyWithConfigs) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetAssemblyWithConfigsInternal = targetAssemblyWithConfigs.ToLookupTable(StringComparer.OrdinalIgnoreCase);
@@ -316,7 +316,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ClearTargetAssemblyWithConfigs(this Xunit2Settings toolSettings)
+        public static T ClearTargetAssemblyWithConfigs<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetAssemblyWithConfigsInternal.Clear();
@@ -327,7 +327,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings AddTargetAssemblyWithConfigs(this Xunit2Settings toolSettings, string targetAssemblyWithConfigsKey, params string[] targetAssemblyWithConfigsValues)
+        public static T AddTargetAssemblyWithConfigs<T>(this T toolSettings, string targetAssemblyWithConfigsKey, params string[] targetAssemblyWithConfigsValues) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetAssemblyWithConfigsInternal.AddRange(targetAssemblyWithConfigsKey, targetAssemblyWithConfigsValues);
@@ -338,7 +338,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings AddTargetAssemblyWithConfigs(this Xunit2Settings toolSettings, string targetAssemblyWithConfigsKey, IEnumerable<string> targetAssemblyWithConfigsValues)
+        public static T AddTargetAssemblyWithConfigs<T>(this T toolSettings, string targetAssemblyWithConfigsKey, IEnumerable<string> targetAssemblyWithConfigsValues) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetAssemblyWithConfigsInternal.AddRange(targetAssemblyWithConfigsKey, targetAssemblyWithConfigsValues);
@@ -349,7 +349,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings RemoveTargetAssemblyWithConfig(this Xunit2Settings toolSettings, string targetAssemblyWithConfigsKey, string targetAssemblyWithConfigsValue)
+        public static T RemoveTargetAssemblyWithConfig<T>(this T toolSettings, string targetAssemblyWithConfigsKey, string targetAssemblyWithConfigsValue) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetAssemblyWithConfigsInternal.Remove(targetAssemblyWithConfigsKey, targetAssemblyWithConfigsValue);
@@ -362,7 +362,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not show the copyright message.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetNoLogo(this Xunit2Settings toolSettings, bool? noLogo)
+        public static T SetNoLogo<T>(this T toolSettings, bool? noLogo) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLogo = noLogo;
@@ -373,7 +373,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not show the copyright message.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ResetNoLogo(this Xunit2Settings toolSettings)
+        public static T ResetNoLogo<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLogo = null;
@@ -384,7 +384,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not show the copyright message.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings EnableNoLogo(this Xunit2Settings toolSettings)
+        public static T EnableNoLogo<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLogo = true;
@@ -395,7 +395,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not show the copyright message.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings DisableNoLogo(this Xunit2Settings toolSettings)
+        public static T DisableNoLogo<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLogo = false;
@@ -406,7 +406,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not show the copyright message.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ToggleNoLogo(this Xunit2Settings toolSettings)
+        public static T ToggleNoLogo<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLogo = !toolSettings.NoLogo;
@@ -419,7 +419,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not output results with colors.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetNoColor(this Xunit2Settings toolSettings, bool? noColor)
+        public static T SetNoColor<T>(this T toolSettings, bool? noColor) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = noColor;
@@ -430,7 +430,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not output results with colors.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ResetNoColor(this Xunit2Settings toolSettings)
+        public static T ResetNoColor<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = null;
@@ -441,7 +441,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not output results with colors.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings EnableNoColor(this Xunit2Settings toolSettings)
+        public static T EnableNoColor<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = true;
@@ -452,7 +452,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not output results with colors.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings DisableNoColor(this Xunit2Settings toolSettings)
+        public static T DisableNoColor<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = false;
@@ -463,7 +463,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not output results with colors.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ToggleNoColor(this Xunit2Settings toolSettings)
+        public static T ToggleNoColor<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = !toolSettings.NoColor;
@@ -476,7 +476,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Convert skipped tests into failures.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetFailSkips(this Xunit2Settings toolSettings, bool? failSkips)
+        public static T SetFailSkips<T>(this T toolSettings, bool? failSkips) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FailSkips = failSkips;
@@ -487,7 +487,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Convert skipped tests into failures.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ResetFailSkips(this Xunit2Settings toolSettings)
+        public static T ResetFailSkips<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FailSkips = null;
@@ -498,7 +498,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Convert skipped tests into failures.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings EnableFailSkips(this Xunit2Settings toolSettings)
+        public static T EnableFailSkips<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FailSkips = true;
@@ -509,7 +509,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Convert skipped tests into failures.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings DisableFailSkips(this Xunit2Settings toolSettings)
+        public static T DisableFailSkips<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FailSkips = false;
@@ -520,7 +520,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Convert skipped tests into failures.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ToggleFailSkips(this Xunit2Settings toolSettings)
+        public static T ToggleFailSkips<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FailSkips = !toolSettings.FailSkips;
@@ -533,7 +533,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Stop on first test failure.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetStopOnFail(this Xunit2Settings toolSettings, bool? stopOnFail)
+        public static T SetStopOnFail<T>(this T toolSettings, bool? stopOnFail) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StopOnFail = stopOnFail;
@@ -544,7 +544,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Stop on first test failure.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ResetStopOnFail(this Xunit2Settings toolSettings)
+        public static T ResetStopOnFail<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StopOnFail = null;
@@ -555,7 +555,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Stop on first test failure.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings EnableStopOnFail(this Xunit2Settings toolSettings)
+        public static T EnableStopOnFail<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StopOnFail = true;
@@ -566,7 +566,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Stop on first test failure.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings DisableStopOnFail(this Xunit2Settings toolSettings)
+        public static T DisableStopOnFail<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StopOnFail = false;
@@ -577,7 +577,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Stop on first test failure.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ToggleStopOnFail(this Xunit2Settings toolSettings)
+        public static T ToggleStopOnFail<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StopOnFail = !toolSettings.StopOnFail;
@@ -590,7 +590,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Set parallelization based on option:<ul><li><b>none:</b> turn off all parallelization</li><li><b>collections:</b> only parallelize collections</li><li><b>assemblies:</b> only parallelize assemblies</li><li><b>all:</b> parallelize assemblies &amp; collections</li></ul></p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetParallel(this Xunit2Settings toolSettings, Xunit2ParallelOption parallel)
+        public static T SetParallel<T>(this T toolSettings, Xunit2ParallelOption parallel) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Parallel = parallel;
@@ -601,7 +601,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Set parallelization based on option:<ul><li><b>none:</b> turn off all parallelization</li><li><b>collections:</b> only parallelize collections</li><li><b>assemblies:</b> only parallelize assemblies</li><li><b>all:</b> parallelize assemblies &amp; collections</li></ul></p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ResetParallel(this Xunit2Settings toolSettings)
+        public static T ResetParallel<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Parallel = null;
@@ -614,7 +614,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Maximum thread count for collection parallelization:<br/><ul><li><b>default:</b> run with default (1 thread per CPU thread)</li><li><b>unlimited:</b> run with unbounded thread count</li><li><b>(number):</b> limit task thread pool size to 'count'</li></ul></p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetMaxThreads(this Xunit2Settings toolSettings, int? maxThreads)
+        public static T SetMaxThreads<T>(this T toolSettings, int? maxThreads) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MaxThreads = maxThreads;
@@ -625,7 +625,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Maximum thread count for collection parallelization:<br/><ul><li><b>default:</b> run with default (1 thread per CPU thread)</li><li><b>unlimited:</b> run with unbounded thread count</li><li><b>(number):</b> limit task thread pool size to 'count'</li></ul></p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ResetMaxThreads(this Xunit2Settings toolSettings)
+        public static T ResetMaxThreads<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MaxThreads = null;
@@ -638,7 +638,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>AppDomain modes:<ul><li><c>-ifavailable</c>: choose based on library type</li><li><c>-required</c>: force app domains on</li><li><c>-denied</c>: force app domains off</li></ul></p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetAppDomainMode(this Xunit2Settings toolSettings, Xunit2AppDomainMode appDomainMode)
+        public static T SetAppDomainMode<T>(this T toolSettings, Xunit2AppDomainMode appDomainMode) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppDomainMode = appDomainMode;
@@ -649,7 +649,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>AppDomain modes:<ul><li><c>-ifavailable</c>: choose based on library type</li><li><c>-required</c>: force app domains on</li><li><c>-denied</c>: force app domains off</li></ul></p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ResetAppDomainMode(this Xunit2Settings toolSettings)
+        public static T ResetAppDomainMode<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppDomainMode = null;
@@ -662,7 +662,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not shadow copy assemblies.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetNoShadowCopying(this Xunit2Settings toolSettings, bool? noShadowCopying)
+        public static T SetNoShadowCopying<T>(this T toolSettings, bool? noShadowCopying) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoShadowCopying = noShadowCopying;
@@ -673,7 +673,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not shadow copy assemblies.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ResetNoShadowCopying(this Xunit2Settings toolSettings)
+        public static T ResetNoShadowCopying<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoShadowCopying = null;
@@ -684,7 +684,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not shadow copy assemblies.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings EnableNoShadowCopying(this Xunit2Settings toolSettings)
+        public static T EnableNoShadowCopying<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoShadowCopying = true;
@@ -695,7 +695,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not shadow copy assemblies.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings DisableNoShadowCopying(this Xunit2Settings toolSettings)
+        public static T DisableNoShadowCopying<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoShadowCopying = false;
@@ -706,7 +706,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not shadow copy assemblies.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ToggleNoShadowCopying(this Xunit2Settings toolSettings)
+        public static T ToggleNoShadowCopying<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoShadowCopying = !toolSettings.NoShadowCopying;
@@ -719,7 +719,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Wait for input after completion.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetWait(this Xunit2Settings toolSettings, bool? wait)
+        public static T SetWait<T>(this T toolSettings, bool? wait) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = wait;
@@ -730,7 +730,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Wait for input after completion.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ResetWait(this Xunit2Settings toolSettings)
+        public static T ResetWait<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = null;
@@ -741,7 +741,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Wait for input after completion.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings EnableWait(this Xunit2Settings toolSettings)
+        public static T EnableWait<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = true;
@@ -752,7 +752,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Wait for input after completion.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings DisableWait(this Xunit2Settings toolSettings)
+        public static T DisableWait<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = false;
@@ -763,7 +763,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Wait for input after completion.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ToggleWait(this Xunit2Settings toolSettings)
+        public static T ToggleWait<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = !toolSettings.Wait;
@@ -776,7 +776,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Enable diagnostics messages for all test assemblies.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetDiagnostics(this Xunit2Settings toolSettings, bool? diagnostics)
+        public static T SetDiagnostics<T>(this T toolSettings, bool? diagnostics) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Diagnostics = diagnostics;
@@ -787,7 +787,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Enable diagnostics messages for all test assemblies.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ResetDiagnostics(this Xunit2Settings toolSettings)
+        public static T ResetDiagnostics<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Diagnostics = null;
@@ -798,7 +798,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Enable diagnostics messages for all test assemblies.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings EnableDiagnostics(this Xunit2Settings toolSettings)
+        public static T EnableDiagnostics<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Diagnostics = true;
@@ -809,7 +809,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Enable diagnostics messages for all test assemblies.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings DisableDiagnostics(this Xunit2Settings toolSettings)
+        public static T DisableDiagnostics<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Diagnostics = false;
@@ -820,7 +820,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Enable diagnostics messages for all test assemblies.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ToggleDiagnostics(this Xunit2Settings toolSettings)
+        public static T ToggleDiagnostics<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Diagnostics = !toolSettings.Diagnostics;
@@ -833,7 +833,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Pause before doing any work, to help attach a debugger.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetPause(this Xunit2Settings toolSettings, bool? pause)
+        public static T SetPause<T>(this T toolSettings, bool? pause) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Pause = pause;
@@ -844,7 +844,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Pause before doing any work, to help attach a debugger.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ResetPause(this Xunit2Settings toolSettings)
+        public static T ResetPause<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Pause = null;
@@ -855,7 +855,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Pause before doing any work, to help attach a debugger.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings EnablePause(this Xunit2Settings toolSettings)
+        public static T EnablePause<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Pause = true;
@@ -866,7 +866,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Pause before doing any work, to help attach a debugger.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings DisablePause(this Xunit2Settings toolSettings)
+        public static T DisablePause<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Pause = false;
@@ -877,7 +877,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Pause before doing any work, to help attach a debugger.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings TogglePause(this Xunit2Settings toolSettings)
+        public static T TogglePause<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Pause = !toolSettings.Pause;
@@ -890,7 +890,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Launch the debugger to debug the tests.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetDebug(this Xunit2Settings toolSettings, bool? debug)
+        public static T SetDebug<T>(this T toolSettings, bool? debug) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = debug;
@@ -901,7 +901,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Launch the debugger to debug the tests.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ResetDebug(this Xunit2Settings toolSettings)
+        public static T ResetDebug<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = null;
@@ -912,7 +912,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Launch the debugger to debug the tests.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings EnableDebug(this Xunit2Settings toolSettings)
+        public static T EnableDebug<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = true;
@@ -923,7 +923,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Launch the debugger to debug the tests.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings DisableDebug(this Xunit2Settings toolSettings)
+        public static T DisableDebug<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = false;
@@ -934,7 +934,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Launch the debugger to debug the tests.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ToggleDebug(this Xunit2Settings toolSettings)
+        public static T ToggleDebug<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = !toolSettings.Debug;
@@ -947,7 +947,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Serialize all test cases (for diagnostic purposes only).</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetSerialization(this Xunit2Settings toolSettings, bool? serialization)
+        public static T SetSerialization<T>(this T toolSettings, bool? serialization) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serialization = serialization;
@@ -958,7 +958,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Serialize all test cases (for diagnostic purposes only).</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ResetSerialization(this Xunit2Settings toolSettings)
+        public static T ResetSerialization<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serialization = null;
@@ -969,7 +969,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Serialize all test cases (for diagnostic purposes only).</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings EnableSerialization(this Xunit2Settings toolSettings)
+        public static T EnableSerialization<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serialization = true;
@@ -980,7 +980,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Serialize all test cases (for diagnostic purposes only).</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings DisableSerialization(this Xunit2Settings toolSettings)
+        public static T DisableSerialization<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serialization = false;
@@ -991,7 +991,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Serialize all test cases (for diagnostic purposes only).</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ToggleSerialization(this Xunit2Settings toolSettings)
+        public static T ToggleSerialization<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serialization = !toolSettings.Serialization;
@@ -1004,7 +1004,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Only run tests with matching name/value traits.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetTraits(this Xunit2Settings toolSettings, ILookup<string, string> traits)
+        public static T SetTraits<T>(this T toolSettings, ILookup<string, string> traits) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TraitsInternal = traits.ToLookupTable(StringComparer.OrdinalIgnoreCase);
@@ -1015,7 +1015,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Only run tests with matching name/value traits.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ClearTraits(this Xunit2Settings toolSettings)
+        public static T ClearTraits<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TraitsInternal.Clear();
@@ -1026,7 +1026,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Only run tests with matching name/value traits.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings AddTraits(this Xunit2Settings toolSettings, string traitsKey, params string[] traitsValues)
+        public static T AddTraits<T>(this T toolSettings, string traitsKey, params string[] traitsValues) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TraitsInternal.AddRange(traitsKey, traitsValues);
@@ -1037,7 +1037,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Only run tests with matching name/value traits.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings AddTraits(this Xunit2Settings toolSettings, string traitsKey, IEnumerable<string> traitsValues)
+        public static T AddTraits<T>(this T toolSettings, string traitsKey, IEnumerable<string> traitsValues) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TraitsInternal.AddRange(traitsKey, traitsValues);
@@ -1048,7 +1048,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Only run tests with matching name/value traits.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings RemoveTrait(this Xunit2Settings toolSettings, string traitsKey, string traitsValue)
+        public static T RemoveTrait<T>(this T toolSettings, string traitsKey, string traitsValue) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TraitsInternal.Remove(traitsKey, traitsValue);
@@ -1061,7 +1061,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not run tests with matching name/value traits.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetExcludedTraits(this Xunit2Settings toolSettings, ILookup<string, string> excludedTraits)
+        public static T SetExcludedTraits<T>(this T toolSettings, ILookup<string, string> excludedTraits) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludedTraitsInternal = excludedTraits.ToLookupTable(StringComparer.OrdinalIgnoreCase);
@@ -1072,7 +1072,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not run tests with matching name/value traits.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ClearExcludedTraits(this Xunit2Settings toolSettings)
+        public static T ClearExcludedTraits<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludedTraitsInternal.Clear();
@@ -1083,7 +1083,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not run tests with matching name/value traits.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings AddExcludedTraits(this Xunit2Settings toolSettings, string excludedTraitsKey, params string[] excludedTraitsValues)
+        public static T AddExcludedTraits<T>(this T toolSettings, string excludedTraitsKey, params string[] excludedTraitsValues) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludedTraitsInternal.AddRange(excludedTraitsKey, excludedTraitsValues);
@@ -1094,7 +1094,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not run tests with matching name/value traits.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings AddExcludedTraits(this Xunit2Settings toolSettings, string excludedTraitsKey, IEnumerable<string> excludedTraitsValues)
+        public static T AddExcludedTraits<T>(this T toolSettings, string excludedTraitsKey, IEnumerable<string> excludedTraitsValues) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludedTraitsInternal.AddRange(excludedTraitsKey, excludedTraitsValues);
@@ -1105,7 +1105,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not run tests with matching name/value traits.</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings RemoveExcludedTrait(this Xunit2Settings toolSettings, string excludedTraitsKey, string excludedTraitsValue)
+        public static T RemoveExcludedTrait<T>(this T toolSettings, string excludedTraitsKey, string excludedTraitsValue) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludedTraitsInternal.Remove(excludedTraitsKey, excludedTraitsValue);
@@ -1118,7 +1118,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetMethods(this Xunit2Settings toolSettings, params string[] methods)
+        public static T SetMethods<T>(this T toolSettings, params string[] methods) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MethodsInternal = methods.ToList();
@@ -1129,7 +1129,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetMethods(this Xunit2Settings toolSettings, IEnumerable<string> methods)
+        public static T SetMethods<T>(this T toolSettings, IEnumerable<string> methods) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MethodsInternal = methods.ToList();
@@ -1140,7 +1140,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings AddMethods(this Xunit2Settings toolSettings, params string[] methods)
+        public static T AddMethods<T>(this T toolSettings, params string[] methods) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MethodsInternal.AddRange(methods);
@@ -1151,7 +1151,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings AddMethods(this Xunit2Settings toolSettings, IEnumerable<string> methods)
+        public static T AddMethods<T>(this T toolSettings, IEnumerable<string> methods) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MethodsInternal.AddRange(methods);
@@ -1162,7 +1162,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ClearMethods(this Xunit2Settings toolSettings)
+        public static T ClearMethods<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MethodsInternal.Clear();
@@ -1173,7 +1173,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings RemoveMethods(this Xunit2Settings toolSettings, params string[] methods)
+        public static T RemoveMethods<T>(this T toolSettings, params string[] methods) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(methods);
@@ -1185,7 +1185,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings RemoveMethods(this Xunit2Settings toolSettings, IEnumerable<string> methods)
+        public static T RemoveMethods<T>(this T toolSettings, IEnumerable<string> methods) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(methods);
@@ -1199,7 +1199,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetClasses(this Xunit2Settings toolSettings, params string[] classes)
+        public static T SetClasses<T>(this T toolSettings, params string[] classes) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClassesInternal = classes.ToList();
@@ -1210,7 +1210,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetClasses(this Xunit2Settings toolSettings, IEnumerable<string> classes)
+        public static T SetClasses<T>(this T toolSettings, IEnumerable<string> classes) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClassesInternal = classes.ToList();
@@ -1221,7 +1221,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings AddClasses(this Xunit2Settings toolSettings, params string[] classes)
+        public static T AddClasses<T>(this T toolSettings, params string[] classes) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClassesInternal.AddRange(classes);
@@ -1232,7 +1232,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings AddClasses(this Xunit2Settings toolSettings, IEnumerable<string> classes)
+        public static T AddClasses<T>(this T toolSettings, IEnumerable<string> classes) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClassesInternal.AddRange(classes);
@@ -1243,7 +1243,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ClearClasses(this Xunit2Settings toolSettings)
+        public static T ClearClasses<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClassesInternal.Clear();
@@ -1254,7 +1254,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings RemoveClasses(this Xunit2Settings toolSettings, params string[] classes)
+        public static T RemoveClasses<T>(this T toolSettings, params string[] classes) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(classes);
@@ -1266,7 +1266,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings RemoveClasses(this Xunit2Settings toolSettings, IEnumerable<string> classes)
+        public static T RemoveClasses<T>(this T toolSettings, IEnumerable<string> classes) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(classes);
@@ -1280,7 +1280,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetNamespaces(this Xunit2Settings toolSettings, params string[] namespaces)
+        public static T SetNamespaces<T>(this T toolSettings, params string[] namespaces) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NamespacesInternal = namespaces.ToList();
@@ -1291,7 +1291,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetNamespaces(this Xunit2Settings toolSettings, IEnumerable<string> namespaces)
+        public static T SetNamespaces<T>(this T toolSettings, IEnumerable<string> namespaces) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NamespacesInternal = namespaces.ToList();
@@ -1302,7 +1302,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings AddNamespaces(this Xunit2Settings toolSettings, params string[] namespaces)
+        public static T AddNamespaces<T>(this T toolSettings, params string[] namespaces) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NamespacesInternal.AddRange(namespaces);
@@ -1313,7 +1313,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings AddNamespaces(this Xunit2Settings toolSettings, IEnumerable<string> namespaces)
+        public static T AddNamespaces<T>(this T toolSettings, IEnumerable<string> namespaces) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NamespacesInternal.AddRange(namespaces);
@@ -1324,7 +1324,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ClearNamespaces(this Xunit2Settings toolSettings)
+        public static T ClearNamespaces<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NamespacesInternal.Clear();
@@ -1335,7 +1335,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings RemoveNamespaces(this Xunit2Settings toolSettings, params string[] namespaces)
+        public static T RemoveNamespaces<T>(this T toolSettings, params string[] namespaces) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(namespaces);
@@ -1347,7 +1347,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings RemoveNamespaces(this Xunit2Settings toolSettings, IEnumerable<string> namespaces)
+        public static T RemoveNamespaces<T>(this T toolSettings, IEnumerable<string> namespaces) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(namespaces);
@@ -1361,7 +1361,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetNoAutoReporters(this Xunit2Settings toolSettings, bool? noAutoReporters)
+        public static T SetNoAutoReporters<T>(this T toolSettings, bool? noAutoReporters) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoAutoReporters = noAutoReporters;
@@ -1372,7 +1372,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ResetNoAutoReporters(this Xunit2Settings toolSettings)
+        public static T ResetNoAutoReporters<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoAutoReporters = null;
@@ -1383,7 +1383,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings EnableNoAutoReporters(this Xunit2Settings toolSettings)
+        public static T EnableNoAutoReporters<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoAutoReporters = true;
@@ -1394,7 +1394,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings DisableNoAutoReporters(this Xunit2Settings toolSettings)
+        public static T DisableNoAutoReporters<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoAutoReporters = false;
@@ -1405,7 +1405,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ToggleNoAutoReporters(this Xunit2Settings toolSettings)
+        public static T ToggleNoAutoReporters<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoAutoReporters = !toolSettings.NoAutoReporters;
@@ -1418,7 +1418,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Reporters:<ul><li><c>-appveyor</c>: forces AppVeyor CI mode (normally auto-detected)</li><li><c>-json</c>: show progress messages in JSON format</li><li><c>-quiet</c>: do not show progress messages</li><li><c>-teamcity</c>: forces TeamCity mode (normally auto-detected)</li><li><c>-verbose</c>: show verbose progress messages</li></ul></p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetReporter(this Xunit2Settings toolSettings, Xunit2ReporterType reporter)
+        public static T SetReporter<T>(this T toolSettings, Xunit2ReporterType reporter) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Reporter = reporter;
@@ -1429,7 +1429,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Reporters:<ul><li><c>-appveyor</c>: forces AppVeyor CI mode (normally auto-detected)</li><li><c>-json</c>: show progress messages in JSON format</li><li><c>-quiet</c>: do not show progress messages</li><li><c>-teamcity</c>: forces TeamCity mode (normally auto-detected)</li><li><c>-verbose</c>: show verbose progress messages</li></ul></p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ResetReporter(this Xunit2Settings toolSettings)
+        public static T ResetReporter<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Reporter = null;
@@ -1442,7 +1442,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetResultReports(this Xunit2Settings toolSettings, IDictionary<Xunit2ResultFormat, string> resultReports)
+        public static T SetResultReports<T>(this T toolSettings, IDictionary<Xunit2ResultFormat, string> resultReports) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResultReportsInternal = resultReports.ToDictionary(x => x.Key, x => x.Value, EqualityComparer<Xunit2ResultFormat>.Default);
@@ -1453,7 +1453,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ClearResultReports(this Xunit2Settings toolSettings)
+        public static T ClearResultReports<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResultReportsInternal.Clear();
@@ -1464,7 +1464,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings AddResultReport(this Xunit2Settings toolSettings, Xunit2ResultFormat resultReportKey, string resultReportValue)
+        public static T AddResultReport<T>(this T toolSettings, Xunit2ResultFormat resultReportKey, string resultReportValue) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResultReportsInternal.Add(resultReportKey, resultReportValue);
@@ -1475,7 +1475,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings RemoveResultReport(this Xunit2Settings toolSettings, Xunit2ResultFormat resultReportKey)
+        public static T RemoveResultReport<T>(this T toolSettings, Xunit2ResultFormat resultReportKey) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResultReportsInternal.Remove(resultReportKey);
@@ -1486,7 +1486,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetResultReport(this Xunit2Settings toolSettings, Xunit2ResultFormat resultReportKey, string resultReportValue)
+        public static T SetResultReport<T>(this T toolSettings, Xunit2ResultFormat resultReportKey, string resultReportValue) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResultReportsInternal[resultReportKey] = resultReportValue;
@@ -1498,7 +1498,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p><em>Sets <see cref="Xunit2Settings.Framework"/></em></p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings SetFramework(this Xunit2Settings toolSettings, string framework)
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = framework;
@@ -1508,7 +1508,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p><em>Resets <see cref="Xunit2Settings.Framework"/></em></p>
         /// </summary>
         [Pure]
-        public static Xunit2Settings ResetFramework(this Xunit2Settings toolSettings)
+        public static T ResetFramework<T>(this T toolSettings) where T : Xunit2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = null;

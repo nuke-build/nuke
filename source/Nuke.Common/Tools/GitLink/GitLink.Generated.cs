@@ -338,7 +338,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>The directory containing the solution with the pdb files.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings SetSolutionDirectory(this GitLink2Settings toolSettings, string solutionDirectory)
+        public static T SetSolutionDirectory<T>(this T toolSettings, string solutionDirectory) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SolutionDirectory = solutionDirectory;
@@ -349,7 +349,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>The directory containing the solution with the pdb files.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings ResetSolutionDirectory(this GitLink2Settings toolSettings)
+        public static T ResetSolutionDirectory<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SolutionDirectory = null;
@@ -362,7 +362,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Url to remote git repository.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings SetRepositoryUrl(this GitLink2Settings toolSettings, string repositoryUrl)
+        public static T SetRepositoryUrl<T>(this T toolSettings, string repositoryUrl) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryUrl = repositoryUrl;
@@ -373,7 +373,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Url to remote git repository.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings ResetRepositoryUrl(this GitLink2Settings toolSettings)
+        public static T ResetRepositoryUrl<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryUrl = null;
@@ -386,7 +386,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Solution file name.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings SetFile(this GitLink2Settings toolSettings, string file)
+        public static T SetFile<T>(this T toolSettings, string file) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.File = file;
@@ -397,7 +397,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Solution file name.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings ResetFile(this GitLink2Settings toolSettings)
+        public static T ResetFile<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.File = null;
@@ -410,7 +410,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Name of the configuration, default value is 'Release'.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings SetConfiguration(this GitLink2Settings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -421,7 +421,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Name of the configuration, default value is 'Release'.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings ResetConfiguration(this GitLink2Settings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -434,7 +434,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Name of the platform, default value is 'AnyCPU'.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings SetPlatform(this GitLink2Settings toolSettings, string platform)
+        public static T SetPlatform<T>(this T toolSettings, string platform) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Platform = platform;
@@ -445,7 +445,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Name of the platform, default value is 'AnyCPU'.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings ResetPlatform(this GitLink2Settings toolSettings)
+        public static T ResetPlatform<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Platform = null;
@@ -458,7 +458,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Name of the branch to use on the remote repository.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings SetBranchName(this GitLink2Settings toolSettings, string branchName)
+        public static T SetBranchName<T>(this T toolSettings, string branchName) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BranchName = branchName;
@@ -469,7 +469,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Name of the branch to use on the remote repository.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings ResetBranchName(this GitLink2Settings toolSettings)
+        public static T ResetBranchName<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BranchName = null;
@@ -482,7 +482,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>The log file to write to.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings SetLogFile(this GitLink2Settings toolSettings, string logFile)
+        public static T SetLogFile<T>(this T toolSettings, string logFile) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = logFile;
@@ -493,7 +493,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>The log file to write to.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings ResetLogFile(this GitLink2Settings toolSettings)
+        public static T ResetLogFile<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = null;
@@ -506,7 +506,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>The SHA-1 hash of the commit.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings SetCommitSha(this GitLink2Settings toolSettings, string commitSha)
+        public static T SetCommitSha<T>(this T toolSettings, string commitSha) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CommitSha = commitSha;
@@ -517,7 +517,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>The SHA-1 hash of the commit.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings ResetCommitSha(this GitLink2Settings toolSettings)
+        public static T ResetCommitSha<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CommitSha = null;
@@ -530,7 +530,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>The directory where pdb files exists, default value is the normal project output directory.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings SetPdbDirectory(this GitLink2Settings toolSettings, string pdbDirectory)
+        public static T SetPdbDirectory<T>(this T toolSettings, string pdbDirectory) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PdbDirectory = pdbDirectory;
@@ -541,7 +541,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>The directory where pdb files exists, default value is the normal project output directory.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings ResetPdbDirectory(this GitLink2Settings toolSettings)
+        public static T ResetPdbDirectory<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PdbDirectory = null;
@@ -554,7 +554,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Use an indexing strategy that won't rely on SRCSRV http support, but use a powershell command for URL download instead.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings SetUsePowershell(this GitLink2Settings toolSettings, bool? usePowershell)
+        public static T SetUsePowershell<T>(this T toolSettings, bool? usePowershell) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UsePowershell = usePowershell;
@@ -565,7 +565,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Use an indexing strategy that won't rely on SRCSRV http support, but use a powershell command for URL download instead.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings ResetUsePowershell(this GitLink2Settings toolSettings)
+        public static T ResetUsePowershell<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UsePowershell = null;
@@ -576,7 +576,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Use an indexing strategy that won't rely on SRCSRV http support, but use a powershell command for URL download instead.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings EnableUsePowershell(this GitLink2Settings toolSettings)
+        public static T EnableUsePowershell<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UsePowershell = true;
@@ -587,7 +587,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Use an indexing strategy that won't rely on SRCSRV http support, but use a powershell command for URL download instead.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings DisableUsePowershell(this GitLink2Settings toolSettings)
+        public static T DisableUsePowershell<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UsePowershell = false;
@@ -598,7 +598,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Use an indexing strategy that won't rely on SRCSRV http support, but use a powershell command for URL download instead.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings ToggleUsePowershell(this GitLink2Settings toolSettings)
+        public static T ToggleUsePowershell<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UsePowershell = !toolSettings.UsePowershell;
@@ -611,7 +611,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Don't fail on errors, but treat them as warnings instead.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings SetErrorsAsWarnings(this GitLink2Settings toolSettings, bool? errorsAsWarnings)
+        public static T SetErrorsAsWarnings<T>(this T toolSettings, bool? errorsAsWarnings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ErrorsAsWarnings = errorsAsWarnings;
@@ -622,7 +622,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Don't fail on errors, but treat them as warnings instead.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings ResetErrorsAsWarnings(this GitLink2Settings toolSettings)
+        public static T ResetErrorsAsWarnings<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ErrorsAsWarnings = null;
@@ -633,7 +633,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Don't fail on errors, but treat them as warnings instead.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings EnableErrorsAsWarnings(this GitLink2Settings toolSettings)
+        public static T EnableErrorsAsWarnings<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ErrorsAsWarnings = true;
@@ -644,7 +644,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Don't fail on errors, but treat them as warnings instead.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings DisableErrorsAsWarnings(this GitLink2Settings toolSettings)
+        public static T DisableErrorsAsWarnings<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ErrorsAsWarnings = false;
@@ -655,7 +655,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Don't fail on errors, but treat them as warnings instead.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings ToggleErrorsAsWarnings(this GitLink2Settings toolSettings)
+        public static T ToggleErrorsAsWarnings<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ErrorsAsWarnings = !toolSettings.ErrorsAsWarnings;
@@ -668,7 +668,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Skip pdb verification in case it causes issues (it's a formality anyway)</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings SetSkipVerification(this GitLink2Settings toolSettings, bool? skipVerification)
+        public static T SetSkipVerification<T>(this T toolSettings, bool? skipVerification) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipVerification = skipVerification;
@@ -679,7 +679,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Skip pdb verification in case it causes issues (it's a formality anyway)</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings ResetSkipVerification(this GitLink2Settings toolSettings)
+        public static T ResetSkipVerification<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipVerification = null;
@@ -690,7 +690,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Skip pdb verification in case it causes issues (it's a formality anyway)</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings EnableSkipVerification(this GitLink2Settings toolSettings)
+        public static T EnableSkipVerification<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipVerification = true;
@@ -701,7 +701,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Skip pdb verification in case it causes issues (it's a formality anyway)</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings DisableSkipVerification(this GitLink2Settings toolSettings)
+        public static T DisableSkipVerification<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipVerification = false;
@@ -712,7 +712,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Skip pdb verification in case it causes issues (it's a formality anyway)</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings ToggleSkipVerification(this GitLink2Settings toolSettings)
+        public static T ToggleSkipVerification<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipVerification = !toolSettings.SkipVerification;
@@ -725,7 +725,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Enables debug mode with special dumps of msbuild.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings SetDebug(this GitLink2Settings toolSettings, bool? debug)
+        public static T SetDebug<T>(this T toolSettings, bool? debug) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = debug;
@@ -736,7 +736,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Enables debug mode with special dumps of msbuild.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings ResetDebug(this GitLink2Settings toolSettings)
+        public static T ResetDebug<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = null;
@@ -747,7 +747,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Enables debug mode with special dumps of msbuild.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings EnableDebug(this GitLink2Settings toolSettings)
+        public static T EnableDebug<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = true;
@@ -758,7 +758,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Enables debug mode with special dumps of msbuild.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings DisableDebug(this GitLink2Settings toolSettings)
+        public static T DisableDebug<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = false;
@@ -769,7 +769,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Enables debug mode with special dumps of msbuild.</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings ToggleDebug(this GitLink2Settings toolSettings)
+        public static T ToggleDebug<T>(this T toolSettings) where T : GitLink2Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = !toolSettings.Debug;
@@ -792,7 +792,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>The PDB to add source indexing to.</p>
         /// </summary>
         [Pure]
-        public static GitLink3Settings SetPdbFile(this GitLink3Settings toolSettings, string pdbFile)
+        public static T SetPdbFile<T>(this T toolSettings, string pdbFile) where T : GitLink3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PdbFile = pdbFile;
@@ -803,7 +803,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>The PDB to add source indexing to.</p>
         /// </summary>
         [Pure]
-        public static GitLink3Settings ResetPdbFile(this GitLink3Settings toolSettings)
+        public static T ResetPdbFile<T>(this T toolSettings) where T : GitLink3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PdbFile = null;
@@ -816,7 +816,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>The method for SRCSRV to retrieve source code. One of &lt;Http|Powershell&gt;. Default is Http.</p>
         /// </summary>
         [Pure]
-        public static GitLink3Settings SetMethod(this GitLink3Settings toolSettings, GitLinkSourceCodeRetrieval method)
+        public static T SetMethod<T>(this T toolSettings, GitLinkSourceCodeRetrieval method) where T : GitLink3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Method = method;
@@ -827,7 +827,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>The method for SRCSRV to retrieve source code. One of &lt;Http|Powershell&gt;. Default is Http.</p>
         /// </summary>
         [Pure]
-        public static GitLink3Settings ResetMethod(this GitLink3Settings toolSettings)
+        public static T ResetMethod<T>(this T toolSettings) where T : GitLink3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Method = null;
@@ -840,7 +840,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Url to remote git repository.</p>
         /// </summary>
         [Pure]
-        public static GitLink3Settings SetRepositoryUrl(this GitLink3Settings toolSettings, string repositoryUrl)
+        public static T SetRepositoryUrl<T>(this T toolSettings, string repositoryUrl) where T : GitLink3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryUrl = repositoryUrl;
@@ -851,7 +851,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Url to remote git repository.</p>
         /// </summary>
         [Pure]
-        public static GitLink3Settings ResetRepositoryUrl(this GitLink3Settings toolSettings)
+        public static T ResetRepositoryUrl<T>(this T toolSettings) where T : GitLink3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryUrl = null;
@@ -864,7 +864,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>The git ref to assume all the source code belongs to.</p>
         /// </summary>
         [Pure]
-        public static GitLink3Settings SetCommitSha(this GitLink3Settings toolSettings, string commitSha)
+        public static T SetCommitSha<T>(this T toolSettings, string commitSha) where T : GitLink3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CommitSha = commitSha;
@@ -875,7 +875,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>The git ref to assume all the source code belongs to.</p>
         /// </summary>
         [Pure]
-        public static GitLink3Settings ResetCommitSha(this GitLink3Settings toolSettings)
+        public static T ResetCommitSha<T>(this T toolSettings) where T : GitLink3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CommitSha = null;
@@ -888,7 +888,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>The path to the root of the git repo.</p>
         /// </summary>
         [Pure]
-        public static GitLink3Settings SetBaseDirectory(this GitLink3Settings toolSettings, string baseDirectory)
+        public static T SetBaseDirectory<T>(this T toolSettings, string baseDirectory) where T : GitLink3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BaseDirectory = baseDirectory;
@@ -899,7 +899,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>The path to the root of the git repo.</p>
         /// </summary>
         [Pure]
-        public static GitLink3Settings ResetBaseDirectory(this GitLink3Settings toolSettings)
+        public static T ResetBaseDirectory<T>(this T toolSettings) where T : GitLink3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BaseDirectory = null;
@@ -912,7 +912,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Skip verification that all source files are available in source control.</p>
         /// </summary>
         [Pure]
-        public static GitLink3Settings SetSkipVerification(this GitLink3Settings toolSettings, bool? skipVerification)
+        public static T SetSkipVerification<T>(this T toolSettings, bool? skipVerification) where T : GitLink3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipVerification = skipVerification;
@@ -923,7 +923,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Skip verification that all source files are available in source control.</p>
         /// </summary>
         [Pure]
-        public static GitLink3Settings ResetSkipVerification(this GitLink3Settings toolSettings)
+        public static T ResetSkipVerification<T>(this T toolSettings) where T : GitLink3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipVerification = null;
@@ -934,7 +934,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Skip verification that all source files are available in source control.</p>
         /// </summary>
         [Pure]
-        public static GitLink3Settings EnableSkipVerification(this GitLink3Settings toolSettings)
+        public static T EnableSkipVerification<T>(this T toolSettings) where T : GitLink3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipVerification = true;
@@ -945,7 +945,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Skip verification that all source files are available in source control.</p>
         /// </summary>
         [Pure]
-        public static GitLink3Settings DisableSkipVerification(this GitLink3Settings toolSettings)
+        public static T DisableSkipVerification<T>(this T toolSettings) where T : GitLink3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipVerification = false;
@@ -956,7 +956,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>Skip verification that all source files are available in source control.</p>
         /// </summary>
         [Pure]
-        public static GitLink3Settings ToggleSkipVerification(this GitLink3Settings toolSettings)
+        public static T ToggleSkipVerification<T>(this T toolSettings) where T : GitLink3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipVerification = !toolSettings.SkipVerification;

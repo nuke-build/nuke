@@ -868,7 +868,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.Configuration"/></em></p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetConfiguration(this DotCoverAnalyseSettings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -878,7 +878,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p><em>Resets <see cref="DotCoverAnalyseSettings.Configuration"/></em></p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ResetConfiguration(this DotCoverAnalyseSettings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -891,7 +891,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>A type of the report. The default value is <c>XML</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetReportType(this DotCoverAnalyseSettings toolSettings, DotCoverReportType reportType)
+        public static T SetReportType<T>(this T toolSettings, DotCoverReportType reportType) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReportType = reportType;
@@ -902,7 +902,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>A type of the report. The default value is <c>XML</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ResetReportType(this DotCoverAnalyseSettings toolSettings)
+        public static T ResetReportType<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReportType = null;
@@ -915,7 +915,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Resulting report file name.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetOutputFile(this DotCoverAnalyseSettings toolSettings, string outputFile)
+        public static T SetOutputFile<T>(this T toolSettings, string outputFile) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFile = outputFile;
@@ -926,7 +926,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Resulting report file name.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ResetOutputFile(this DotCoverAnalyseSettings toolSettings)
+        public static T ResetOutputFile<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFile = null;
@@ -939,7 +939,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Remove auto-implemented properties from report.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetHideAutoProperties(this DotCoverAnalyseSettings toolSettings, bool? hideAutoProperties)
+        public static T SetHideAutoProperties<T>(this T toolSettings, bool? hideAutoProperties) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HideAutoProperties = hideAutoProperties;
@@ -950,7 +950,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Remove auto-implemented properties from report.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ResetHideAutoProperties(this DotCoverAnalyseSettings toolSettings)
+        public static T ResetHideAutoProperties<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HideAutoProperties = null;
@@ -961,7 +961,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Remove auto-implemented properties from report.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings EnableHideAutoProperties(this DotCoverAnalyseSettings toolSettings)
+        public static T EnableHideAutoProperties<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HideAutoProperties = true;
@@ -972,7 +972,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Remove auto-implemented properties from report.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings DisableHideAutoProperties(this DotCoverAnalyseSettings toolSettings)
+        public static T DisableHideAutoProperties<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HideAutoProperties = false;
@@ -983,7 +983,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Remove auto-implemented properties from report.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ToggleHideAutoProperties(this DotCoverAnalyseSettings toolSettings)
+        public static T ToggleHideAutoProperties<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HideAutoProperties = !toolSettings.HideAutoProperties;
@@ -996,7 +996,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>File name of the program to analyse.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetTargetExecutable(this DotCoverAnalyseSettings toolSettings, string targetExecutable)
+        public static T SetTargetExecutable<T>(this T toolSettings, string targetExecutable) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetExecutable = targetExecutable;
@@ -1007,7 +1007,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>File name of the program to analyse.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ResetTargetExecutable(this DotCoverAnalyseSettings toolSettings)
+        public static T ResetTargetExecutable<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetExecutable = null;
@@ -1020,7 +1020,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Program arguments.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetTargetArguments(this DotCoverAnalyseSettings toolSettings, string targetArguments)
+        public static T SetTargetArguments<T>(this T toolSettings, string targetArguments) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetArguments = targetArguments;
@@ -1031,7 +1031,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Program arguments.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ResetTargetArguments(this DotCoverAnalyseSettings toolSettings)
+        public static T ResetTargetArguments<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetArguments = null;
@@ -1044,7 +1044,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Program working directory.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetTargetWorkingDirectory(this DotCoverAnalyseSettings toolSettings, string targetWorkingDirectory)
+        public static T SetTargetWorkingDirectory<T>(this T toolSettings, string targetWorkingDirectory) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetWorkingDirectory = targetWorkingDirectory;
@@ -1055,7 +1055,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Program working directory.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ResetTargetWorkingDirectory(this DotCoverAnalyseSettings toolSettings)
+        public static T ResetTargetWorkingDirectory<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetWorkingDirectory = null;
@@ -1068,7 +1068,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Directory for auxiliary files. Set to the system temp by default.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetTempDirectory(this DotCoverAnalyseSettings toolSettings, string tempDirectory)
+        public static T SetTempDirectory<T>(this T toolSettings, string tempDirectory) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TempDirectory = tempDirectory;
@@ -1079,7 +1079,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Directory for auxiliary files. Set to the system temp by default.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ResetTempDirectory(this DotCoverAnalyseSettings toolSettings)
+        public static T ResetTempDirectory<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TempDirectory = null;
@@ -1092,7 +1092,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetInheritConsole(this DotCoverAnalyseSettings toolSettings, bool? inheritConsole)
+        public static T SetInheritConsole<T>(this T toolSettings, bool? inheritConsole) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InheritConsole = inheritConsole;
@@ -1103,7 +1103,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ResetInheritConsole(this DotCoverAnalyseSettings toolSettings)
+        public static T ResetInheritConsole<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InheritConsole = null;
@@ -1114,7 +1114,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings EnableInheritConsole(this DotCoverAnalyseSettings toolSettings)
+        public static T EnableInheritConsole<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InheritConsole = true;
@@ -1125,7 +1125,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings DisableInheritConsole(this DotCoverAnalyseSettings toolSettings)
+        public static T DisableInheritConsole<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InheritConsole = false;
@@ -1136,7 +1136,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ToggleInheritConsole(this DotCoverAnalyseSettings toolSettings)
+        public static T ToggleInheritConsole<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InheritConsole = !toolSettings.InheritConsole;
@@ -1149,7 +1149,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetAnalyseTargetArguments(this DotCoverAnalyseSettings toolSettings, bool? analyseTargetArguments)
+        public static T SetAnalyseTargetArguments<T>(this T toolSettings, bool? analyseTargetArguments) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AnalyseTargetArguments = analyseTargetArguments;
@@ -1160,7 +1160,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ResetAnalyseTargetArguments(this DotCoverAnalyseSettings toolSettings)
+        public static T ResetAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AnalyseTargetArguments = null;
@@ -1171,7 +1171,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings EnableAnalyseTargetArguments(this DotCoverAnalyseSettings toolSettings)
+        public static T EnableAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AnalyseTargetArguments = true;
@@ -1182,7 +1182,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings DisableAnalyseTargetArguments(this DotCoverAnalyseSettings toolSettings)
+        public static T DisableAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AnalyseTargetArguments = false;
@@ -1193,7 +1193,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ToggleAnalyseTargetArguments(this DotCoverAnalyseSettings toolSettings)
+        public static T ToggleAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AnalyseTargetArguments = !toolSettings.AnalyseTargetArguments;
@@ -1206,7 +1206,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetScope(this DotCoverAnalyseSettings toolSettings, params string[] scope)
+        public static T SetScope<T>(this T toolSettings, params string[] scope) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ScopeInternal = scope.ToList();
@@ -1217,7 +1217,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetScope(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> scope)
+        public static T SetScope<T>(this T toolSettings, IEnumerable<string> scope) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ScopeInternal = scope.ToList();
@@ -1228,7 +1228,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddScope(this DotCoverAnalyseSettings toolSettings, params string[] scope)
+        public static T AddScope<T>(this T toolSettings, params string[] scope) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ScopeInternal.AddRange(scope);
@@ -1239,7 +1239,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddScope(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> scope)
+        public static T AddScope<T>(this T toolSettings, IEnumerable<string> scope) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ScopeInternal.AddRange(scope);
@@ -1250,7 +1250,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ClearScope(this DotCoverAnalyseSettings toolSettings)
+        public static T ClearScope<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ScopeInternal.Clear();
@@ -1261,7 +1261,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings RemoveScope(this DotCoverAnalyseSettings toolSettings, params string[] scope)
+        public static T RemoveScope<T>(this T toolSettings, params string[] scope) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(scope);
@@ -1273,7 +1273,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings RemoveScope(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> scope)
+        public static T RemoveScope<T>(this T toolSettings, IEnumerable<string> scope) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(scope);
@@ -1287,7 +1287,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetFilters(this DotCoverAnalyseSettings toolSettings, params string[] filters)
+        public static T SetFilters<T>(this T toolSettings, params string[] filters) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FiltersInternal = filters.ToList();
@@ -1298,7 +1298,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetFilters(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> filters)
+        public static T SetFilters<T>(this T toolSettings, IEnumerable<string> filters) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FiltersInternal = filters.ToList();
@@ -1309,7 +1309,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddFilters(this DotCoverAnalyseSettings toolSettings, params string[] filters)
+        public static T AddFilters<T>(this T toolSettings, params string[] filters) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FiltersInternal.AddRange(filters);
@@ -1320,7 +1320,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddFilters(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> filters)
+        public static T AddFilters<T>(this T toolSettings, IEnumerable<string> filters) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FiltersInternal.AddRange(filters);
@@ -1331,7 +1331,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ClearFilters(this DotCoverAnalyseSettings toolSettings)
+        public static T ClearFilters<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FiltersInternal.Clear();
@@ -1342,7 +1342,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings RemoveFilters(this DotCoverAnalyseSettings toolSettings, params string[] filters)
+        public static T RemoveFilters<T>(this T toolSettings, params string[] filters) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filters);
@@ -1354,7 +1354,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings RemoveFilters(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> filters)
+        public static T RemoveFilters<T>(this T toolSettings, IEnumerable<string> filters) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filters);
@@ -1368,7 +1368,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetAttributeFilters(this DotCoverAnalyseSettings toolSettings, params string[] attributeFilters)
+        public static T SetAttributeFilters<T>(this T toolSettings, params string[] attributeFilters) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AttributeFiltersInternal = attributeFilters.ToList();
@@ -1379,7 +1379,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetAttributeFilters(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> attributeFilters)
+        public static T SetAttributeFilters<T>(this T toolSettings, IEnumerable<string> attributeFilters) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AttributeFiltersInternal = attributeFilters.ToList();
@@ -1390,7 +1390,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddAttributeFilters(this DotCoverAnalyseSettings toolSettings, params string[] attributeFilters)
+        public static T AddAttributeFilters<T>(this T toolSettings, params string[] attributeFilters) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AttributeFiltersInternal.AddRange(attributeFilters);
@@ -1401,7 +1401,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddAttributeFilters(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> attributeFilters)
+        public static T AddAttributeFilters<T>(this T toolSettings, IEnumerable<string> attributeFilters) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AttributeFiltersInternal.AddRange(attributeFilters);
@@ -1412,7 +1412,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ClearAttributeFilters(this DotCoverAnalyseSettings toolSettings)
+        public static T ClearAttributeFilters<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AttributeFiltersInternal.Clear();
@@ -1423,7 +1423,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings RemoveAttributeFilters(this DotCoverAnalyseSettings toolSettings, params string[] attributeFilters)
+        public static T RemoveAttributeFilters<T>(this T toolSettings, params string[] attributeFilters) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(attributeFilters);
@@ -1435,7 +1435,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings RemoveAttributeFilters(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> attributeFilters)
+        public static T RemoveAttributeFilters<T>(this T toolSettings, IEnumerable<string> attributeFilters) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(attributeFilters);
@@ -1449,7 +1449,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Disables default (automatically added) filters.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetDisableDefaultFilters(this DotCoverAnalyseSettings toolSettings, bool? disableDefaultFilters)
+        public static T SetDisableDefaultFilters<T>(this T toolSettings, bool? disableDefaultFilters) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableDefaultFilters = disableDefaultFilters;
@@ -1460,7 +1460,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Disables default (automatically added) filters.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ResetDisableDefaultFilters(this DotCoverAnalyseSettings toolSettings)
+        public static T ResetDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableDefaultFilters = null;
@@ -1471,7 +1471,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Disables default (automatically added) filters.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings EnableDisableDefaultFilters(this DotCoverAnalyseSettings toolSettings)
+        public static T EnableDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableDefaultFilters = true;
@@ -1482,7 +1482,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Disables default (automatically added) filters.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings DisableDisableDefaultFilters(this DotCoverAnalyseSettings toolSettings)
+        public static T DisableDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableDefaultFilters = false;
@@ -1493,7 +1493,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Disables default (automatically added) filters.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ToggleDisableDefaultFilters(this DotCoverAnalyseSettings toolSettings)
+        public static T ToggleDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableDefaultFilters = !toolSettings.DisableDefaultFilters;
@@ -1506,7 +1506,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetSymbolSearchPaths(this DotCoverAnalyseSettings toolSettings, params string[] symbolSearchPaths)
+        public static T SetSymbolSearchPaths<T>(this T toolSettings, params string[] symbolSearchPaths) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SymbolSearchPathsInternal = symbolSearchPaths.ToList();
@@ -1517,7 +1517,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetSymbolSearchPaths(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> symbolSearchPaths)
+        public static T SetSymbolSearchPaths<T>(this T toolSettings, IEnumerable<string> symbolSearchPaths) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SymbolSearchPathsInternal = symbolSearchPaths.ToList();
@@ -1528,7 +1528,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddSymbolSearchPaths(this DotCoverAnalyseSettings toolSettings, params string[] symbolSearchPaths)
+        public static T AddSymbolSearchPaths<T>(this T toolSettings, params string[] symbolSearchPaths) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SymbolSearchPathsInternal.AddRange(symbolSearchPaths);
@@ -1539,7 +1539,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddSymbolSearchPaths(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> symbolSearchPaths)
+        public static T AddSymbolSearchPaths<T>(this T toolSettings, IEnumerable<string> symbolSearchPaths) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SymbolSearchPathsInternal.AddRange(symbolSearchPaths);
@@ -1550,7 +1550,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ClearSymbolSearchPaths(this DotCoverAnalyseSettings toolSettings)
+        public static T ClearSymbolSearchPaths<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SymbolSearchPathsInternal.Clear();
@@ -1561,7 +1561,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings RemoveSymbolSearchPaths(this DotCoverAnalyseSettings toolSettings, params string[] symbolSearchPaths)
+        public static T RemoveSymbolSearchPaths<T>(this T toolSettings, params string[] symbolSearchPaths) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(symbolSearchPaths);
@@ -1573,7 +1573,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings RemoveSymbolSearchPaths(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> symbolSearchPaths)
+        public static T RemoveSymbolSearchPaths<T>(this T toolSettings, IEnumerable<string> symbolSearchPaths) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(symbolSearchPaths);
@@ -1587,7 +1587,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetAllowSymbolServerAccess(this DotCoverAnalyseSettings toolSettings, bool? allowSymbolServerAccess)
+        public static T SetAllowSymbolServerAccess<T>(this T toolSettings, bool? allowSymbolServerAccess) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowSymbolServerAccess = allowSymbolServerAccess;
@@ -1598,7 +1598,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ResetAllowSymbolServerAccess(this DotCoverAnalyseSettings toolSettings)
+        public static T ResetAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowSymbolServerAccess = null;
@@ -1609,7 +1609,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings EnableAllowSymbolServerAccess(this DotCoverAnalyseSettings toolSettings)
+        public static T EnableAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowSymbolServerAccess = true;
@@ -1620,7 +1620,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings DisableAllowSymbolServerAccess(this DotCoverAnalyseSettings toolSettings)
+        public static T DisableAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowSymbolServerAccess = false;
@@ -1631,7 +1631,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ToggleAllowSymbolServerAccess(this DotCoverAnalyseSettings toolSettings)
+        public static T ToggleAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowSymbolServerAccess = !toolSettings.AllowSymbolServerAccess;
@@ -1644,7 +1644,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetReturnTargetExitCode(this DotCoverAnalyseSettings toolSettings, bool? returnTargetExitCode)
+        public static T SetReturnTargetExitCode<T>(this T toolSettings, bool? returnTargetExitCode) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReturnTargetExitCode = returnTargetExitCode;
@@ -1655,7 +1655,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ResetReturnTargetExitCode(this DotCoverAnalyseSettings toolSettings)
+        public static T ResetReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReturnTargetExitCode = null;
@@ -1666,7 +1666,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings EnableReturnTargetExitCode(this DotCoverAnalyseSettings toolSettings)
+        public static T EnableReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReturnTargetExitCode = true;
@@ -1677,7 +1677,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings DisableReturnTargetExitCode(this DotCoverAnalyseSettings toolSettings)
+        public static T DisableReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReturnTargetExitCode = false;
@@ -1688,7 +1688,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ToggleReturnTargetExitCode(this DotCoverAnalyseSettings toolSettings)
+        public static T ToggleReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReturnTargetExitCode = !toolSettings.ReturnTargetExitCode;
@@ -1701,7 +1701,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetProcessFilters(this DotCoverAnalyseSettings toolSettings, params string[] processFilters)
+        public static T SetProcessFilters<T>(this T toolSettings, params string[] processFilters) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProcessFiltersInternal = processFilters.ToList();
@@ -1712,7 +1712,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetProcessFilters(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> processFilters)
+        public static T SetProcessFilters<T>(this T toolSettings, IEnumerable<string> processFilters) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProcessFiltersInternal = processFilters.ToList();
@@ -1723,7 +1723,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddProcessFilters(this DotCoverAnalyseSettings toolSettings, params string[] processFilters)
+        public static T AddProcessFilters<T>(this T toolSettings, params string[] processFilters) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProcessFiltersInternal.AddRange(processFilters);
@@ -1734,7 +1734,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddProcessFilters(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> processFilters)
+        public static T AddProcessFilters<T>(this T toolSettings, IEnumerable<string> processFilters) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProcessFiltersInternal.AddRange(processFilters);
@@ -1745,7 +1745,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ClearProcessFilters(this DotCoverAnalyseSettings toolSettings)
+        public static T ClearProcessFilters<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProcessFiltersInternal.Clear();
@@ -1756,7 +1756,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings RemoveProcessFilters(this DotCoverAnalyseSettings toolSettings, params string[] processFilters)
+        public static T RemoveProcessFilters<T>(this T toolSettings, params string[] processFilters) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(processFilters);
@@ -1768,7 +1768,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings RemoveProcessFilters(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> processFilters)
+        public static T RemoveProcessFilters<T>(this T toolSettings, IEnumerable<string> processFilters) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(processFilters);
@@ -1782,7 +1782,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Enables logging and specifies log file name.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetLogFile(this DotCoverAnalyseSettings toolSettings, string logFile)
+        public static T SetLogFile<T>(this T toolSettings, string logFile) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = logFile;
@@ -1793,7 +1793,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Enables logging and specifies log file name.</p>
         /// </summary>
         [Pure]
-        public static DotCoverAnalyseSettings ResetLogFile(this DotCoverAnalyseSettings toolSettings)
+        public static T ResetLogFile<T>(this T toolSettings) where T : DotCoverAnalyseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = null;
@@ -1815,7 +1815,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p><em>Sets <see cref="DotCoverCoverSettings.Configuration"/></em></p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings SetConfiguration(this DotCoverCoverSettings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -1825,7 +1825,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p><em>Resets <see cref="DotCoverCoverSettings.Configuration"/></em></p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings ResetConfiguration(this DotCoverCoverSettings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -1838,7 +1838,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Path to the resulting coverage snapshot.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings SetOutputFile(this DotCoverCoverSettings toolSettings, string outputFile)
+        public static T SetOutputFile<T>(this T toolSettings, string outputFile) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFile = outputFile;
@@ -1849,7 +1849,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Path to the resulting coverage snapshot.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings ResetOutputFile(this DotCoverCoverSettings toolSettings)
+        public static T ResetOutputFile<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFile = null;
@@ -1862,7 +1862,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>File name of the program to analyse.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings SetTargetExecutable(this DotCoverCoverSettings toolSettings, string targetExecutable)
+        public static T SetTargetExecutable<T>(this T toolSettings, string targetExecutable) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetExecutable = targetExecutable;
@@ -1873,7 +1873,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>File name of the program to analyse.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings ResetTargetExecutable(this DotCoverCoverSettings toolSettings)
+        public static T ResetTargetExecutable<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetExecutable = null;
@@ -1886,7 +1886,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Program arguments.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings SetTargetArguments(this DotCoverCoverSettings toolSettings, string targetArguments)
+        public static T SetTargetArguments<T>(this T toolSettings, string targetArguments) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetArguments = targetArguments;
@@ -1897,7 +1897,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Program arguments.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings ResetTargetArguments(this DotCoverCoverSettings toolSettings)
+        public static T ResetTargetArguments<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetArguments = null;
@@ -1910,7 +1910,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Program working directory.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings SetTargetWorkingDirectory(this DotCoverCoverSettings toolSettings, string targetWorkingDirectory)
+        public static T SetTargetWorkingDirectory<T>(this T toolSettings, string targetWorkingDirectory) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetWorkingDirectory = targetWorkingDirectory;
@@ -1921,7 +1921,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Program working directory.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings ResetTargetWorkingDirectory(this DotCoverCoverSettings toolSettings)
+        public static T ResetTargetWorkingDirectory<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetWorkingDirectory = null;
@@ -1934,7 +1934,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Directory for auxiliary files. Set to the system temp by default.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings SetTempDirectory(this DotCoverCoverSettings toolSettings, string tempDirectory)
+        public static T SetTempDirectory<T>(this T toolSettings, string tempDirectory) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TempDirectory = tempDirectory;
@@ -1945,7 +1945,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Directory for auxiliary files. Set to the system temp by default.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings ResetTempDirectory(this DotCoverCoverSettings toolSettings)
+        public static T ResetTempDirectory<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TempDirectory = null;
@@ -1958,7 +1958,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings SetInheritConsole(this DotCoverCoverSettings toolSettings, bool? inheritConsole)
+        public static T SetInheritConsole<T>(this T toolSettings, bool? inheritConsole) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InheritConsole = inheritConsole;
@@ -1969,7 +1969,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings ResetInheritConsole(this DotCoverCoverSettings toolSettings)
+        public static T ResetInheritConsole<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InheritConsole = null;
@@ -1980,7 +1980,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings EnableInheritConsole(this DotCoverCoverSettings toolSettings)
+        public static T EnableInheritConsole<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InheritConsole = true;
@@ -1991,7 +1991,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings DisableInheritConsole(this DotCoverCoverSettings toolSettings)
+        public static T DisableInheritConsole<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InheritConsole = false;
@@ -2002,7 +2002,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings ToggleInheritConsole(this DotCoverCoverSettings toolSettings)
+        public static T ToggleInheritConsole<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InheritConsole = !toolSettings.InheritConsole;
@@ -2015,7 +2015,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings SetAnalyseTargetArguments(this DotCoverCoverSettings toolSettings, bool? analyseTargetArguments)
+        public static T SetAnalyseTargetArguments<T>(this T toolSettings, bool? analyseTargetArguments) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AnalyseTargetArguments = analyseTargetArguments;
@@ -2026,7 +2026,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings ResetAnalyseTargetArguments(this DotCoverCoverSettings toolSettings)
+        public static T ResetAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AnalyseTargetArguments = null;
@@ -2037,7 +2037,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings EnableAnalyseTargetArguments(this DotCoverCoverSettings toolSettings)
+        public static T EnableAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AnalyseTargetArguments = true;
@@ -2048,7 +2048,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings DisableAnalyseTargetArguments(this DotCoverCoverSettings toolSettings)
+        public static T DisableAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AnalyseTargetArguments = false;
@@ -2059,7 +2059,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings ToggleAnalyseTargetArguments(this DotCoverCoverSettings toolSettings)
+        public static T ToggleAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AnalyseTargetArguments = !toolSettings.AnalyseTargetArguments;
@@ -2072,7 +2072,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings SetScope(this DotCoverCoverSettings toolSettings, params string[] scope)
+        public static T SetScope<T>(this T toolSettings, params string[] scope) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ScopeInternal = scope.ToList();
@@ -2083,7 +2083,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings SetScope(this DotCoverCoverSettings toolSettings, IEnumerable<string> scope)
+        public static T SetScope<T>(this T toolSettings, IEnumerable<string> scope) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ScopeInternal = scope.ToList();
@@ -2094,7 +2094,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings AddScope(this DotCoverCoverSettings toolSettings, params string[] scope)
+        public static T AddScope<T>(this T toolSettings, params string[] scope) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ScopeInternal.AddRange(scope);
@@ -2105,7 +2105,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings AddScope(this DotCoverCoverSettings toolSettings, IEnumerable<string> scope)
+        public static T AddScope<T>(this T toolSettings, IEnumerable<string> scope) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ScopeInternal.AddRange(scope);
@@ -2116,7 +2116,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings ClearScope(this DotCoverCoverSettings toolSettings)
+        public static T ClearScope<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ScopeInternal.Clear();
@@ -2127,7 +2127,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings RemoveScope(this DotCoverCoverSettings toolSettings, params string[] scope)
+        public static T RemoveScope<T>(this T toolSettings, params string[] scope) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(scope);
@@ -2139,7 +2139,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings RemoveScope(this DotCoverCoverSettings toolSettings, IEnumerable<string> scope)
+        public static T RemoveScope<T>(this T toolSettings, IEnumerable<string> scope) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(scope);
@@ -2153,7 +2153,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings SetFilters(this DotCoverCoverSettings toolSettings, params string[] filters)
+        public static T SetFilters<T>(this T toolSettings, params string[] filters) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FiltersInternal = filters.ToList();
@@ -2164,7 +2164,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings SetFilters(this DotCoverCoverSettings toolSettings, IEnumerable<string> filters)
+        public static T SetFilters<T>(this T toolSettings, IEnumerable<string> filters) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FiltersInternal = filters.ToList();
@@ -2175,7 +2175,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings AddFilters(this DotCoverCoverSettings toolSettings, params string[] filters)
+        public static T AddFilters<T>(this T toolSettings, params string[] filters) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FiltersInternal.AddRange(filters);
@@ -2186,7 +2186,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings AddFilters(this DotCoverCoverSettings toolSettings, IEnumerable<string> filters)
+        public static T AddFilters<T>(this T toolSettings, IEnumerable<string> filters) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FiltersInternal.AddRange(filters);
@@ -2197,7 +2197,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings ClearFilters(this DotCoverCoverSettings toolSettings)
+        public static T ClearFilters<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FiltersInternal.Clear();
@@ -2208,7 +2208,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings RemoveFilters(this DotCoverCoverSettings toolSettings, params string[] filters)
+        public static T RemoveFilters<T>(this T toolSettings, params string[] filters) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filters);
@@ -2220,7 +2220,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings RemoveFilters(this DotCoverCoverSettings toolSettings, IEnumerable<string> filters)
+        public static T RemoveFilters<T>(this T toolSettings, IEnumerable<string> filters) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filters);
@@ -2234,7 +2234,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings SetAttributeFilters(this DotCoverCoverSettings toolSettings, params string[] attributeFilters)
+        public static T SetAttributeFilters<T>(this T toolSettings, params string[] attributeFilters) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AttributeFiltersInternal = attributeFilters.ToList();
@@ -2245,7 +2245,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings SetAttributeFilters(this DotCoverCoverSettings toolSettings, IEnumerable<string> attributeFilters)
+        public static T SetAttributeFilters<T>(this T toolSettings, IEnumerable<string> attributeFilters) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AttributeFiltersInternal = attributeFilters.ToList();
@@ -2256,7 +2256,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings AddAttributeFilters(this DotCoverCoverSettings toolSettings, params string[] attributeFilters)
+        public static T AddAttributeFilters<T>(this T toolSettings, params string[] attributeFilters) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AttributeFiltersInternal.AddRange(attributeFilters);
@@ -2267,7 +2267,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings AddAttributeFilters(this DotCoverCoverSettings toolSettings, IEnumerable<string> attributeFilters)
+        public static T AddAttributeFilters<T>(this T toolSettings, IEnumerable<string> attributeFilters) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AttributeFiltersInternal.AddRange(attributeFilters);
@@ -2278,7 +2278,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings ClearAttributeFilters(this DotCoverCoverSettings toolSettings)
+        public static T ClearAttributeFilters<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AttributeFiltersInternal.Clear();
@@ -2289,7 +2289,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings RemoveAttributeFilters(this DotCoverCoverSettings toolSettings, params string[] attributeFilters)
+        public static T RemoveAttributeFilters<T>(this T toolSettings, params string[] attributeFilters) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(attributeFilters);
@@ -2301,7 +2301,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings RemoveAttributeFilters(this DotCoverCoverSettings toolSettings, IEnumerable<string> attributeFilters)
+        public static T RemoveAttributeFilters<T>(this T toolSettings, IEnumerable<string> attributeFilters) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(attributeFilters);
@@ -2315,7 +2315,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Disables default (automatically added) filters.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings SetDisableDefaultFilters(this DotCoverCoverSettings toolSettings, bool? disableDefaultFilters)
+        public static T SetDisableDefaultFilters<T>(this T toolSettings, bool? disableDefaultFilters) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableDefaultFilters = disableDefaultFilters;
@@ -2326,7 +2326,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Disables default (automatically added) filters.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings ResetDisableDefaultFilters(this DotCoverCoverSettings toolSettings)
+        public static T ResetDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableDefaultFilters = null;
@@ -2337,7 +2337,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Disables default (automatically added) filters.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings EnableDisableDefaultFilters(this DotCoverCoverSettings toolSettings)
+        public static T EnableDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableDefaultFilters = true;
@@ -2348,7 +2348,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Disables default (automatically added) filters.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings DisableDisableDefaultFilters(this DotCoverCoverSettings toolSettings)
+        public static T DisableDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableDefaultFilters = false;
@@ -2359,7 +2359,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Disables default (automatically added) filters.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings ToggleDisableDefaultFilters(this DotCoverCoverSettings toolSettings)
+        public static T ToggleDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableDefaultFilters = !toolSettings.DisableDefaultFilters;
@@ -2372,7 +2372,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings SetSymbolSearchPaths(this DotCoverCoverSettings toolSettings, params string[] symbolSearchPaths)
+        public static T SetSymbolSearchPaths<T>(this T toolSettings, params string[] symbolSearchPaths) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SymbolSearchPathsInternal = symbolSearchPaths.ToList();
@@ -2383,7 +2383,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings SetSymbolSearchPaths(this DotCoverCoverSettings toolSettings, IEnumerable<string> symbolSearchPaths)
+        public static T SetSymbolSearchPaths<T>(this T toolSettings, IEnumerable<string> symbolSearchPaths) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SymbolSearchPathsInternal = symbolSearchPaths.ToList();
@@ -2394,7 +2394,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings AddSymbolSearchPaths(this DotCoverCoverSettings toolSettings, params string[] symbolSearchPaths)
+        public static T AddSymbolSearchPaths<T>(this T toolSettings, params string[] symbolSearchPaths) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SymbolSearchPathsInternal.AddRange(symbolSearchPaths);
@@ -2405,7 +2405,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings AddSymbolSearchPaths(this DotCoverCoverSettings toolSettings, IEnumerable<string> symbolSearchPaths)
+        public static T AddSymbolSearchPaths<T>(this T toolSettings, IEnumerable<string> symbolSearchPaths) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SymbolSearchPathsInternal.AddRange(symbolSearchPaths);
@@ -2416,7 +2416,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings ClearSymbolSearchPaths(this DotCoverCoverSettings toolSettings)
+        public static T ClearSymbolSearchPaths<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SymbolSearchPathsInternal.Clear();
@@ -2427,7 +2427,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings RemoveSymbolSearchPaths(this DotCoverCoverSettings toolSettings, params string[] symbolSearchPaths)
+        public static T RemoveSymbolSearchPaths<T>(this T toolSettings, params string[] symbolSearchPaths) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(symbolSearchPaths);
@@ -2439,7 +2439,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings RemoveSymbolSearchPaths(this DotCoverCoverSettings toolSettings, IEnumerable<string> symbolSearchPaths)
+        public static T RemoveSymbolSearchPaths<T>(this T toolSettings, IEnumerable<string> symbolSearchPaths) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(symbolSearchPaths);
@@ -2453,7 +2453,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings SetAllowSymbolServerAccess(this DotCoverCoverSettings toolSettings, bool? allowSymbolServerAccess)
+        public static T SetAllowSymbolServerAccess<T>(this T toolSettings, bool? allowSymbolServerAccess) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowSymbolServerAccess = allowSymbolServerAccess;
@@ -2464,7 +2464,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings ResetAllowSymbolServerAccess(this DotCoverCoverSettings toolSettings)
+        public static T ResetAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowSymbolServerAccess = null;
@@ -2475,7 +2475,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings EnableAllowSymbolServerAccess(this DotCoverCoverSettings toolSettings)
+        public static T EnableAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowSymbolServerAccess = true;
@@ -2486,7 +2486,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings DisableAllowSymbolServerAccess(this DotCoverCoverSettings toolSettings)
+        public static T DisableAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowSymbolServerAccess = false;
@@ -2497,7 +2497,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings ToggleAllowSymbolServerAccess(this DotCoverCoverSettings toolSettings)
+        public static T ToggleAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowSymbolServerAccess = !toolSettings.AllowSymbolServerAccess;
@@ -2510,7 +2510,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings SetReturnTargetExitCode(this DotCoverCoverSettings toolSettings, bool? returnTargetExitCode)
+        public static T SetReturnTargetExitCode<T>(this T toolSettings, bool? returnTargetExitCode) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReturnTargetExitCode = returnTargetExitCode;
@@ -2521,7 +2521,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings ResetReturnTargetExitCode(this DotCoverCoverSettings toolSettings)
+        public static T ResetReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReturnTargetExitCode = null;
@@ -2532,7 +2532,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings EnableReturnTargetExitCode(this DotCoverCoverSettings toolSettings)
+        public static T EnableReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReturnTargetExitCode = true;
@@ -2543,7 +2543,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings DisableReturnTargetExitCode(this DotCoverCoverSettings toolSettings)
+        public static T DisableReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReturnTargetExitCode = false;
@@ -2554,7 +2554,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings ToggleReturnTargetExitCode(this DotCoverCoverSettings toolSettings)
+        public static T ToggleReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReturnTargetExitCode = !toolSettings.ReturnTargetExitCode;
@@ -2567,7 +2567,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings SetProcessFilters(this DotCoverCoverSettings toolSettings, params string[] processFilters)
+        public static T SetProcessFilters<T>(this T toolSettings, params string[] processFilters) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProcessFiltersInternal = processFilters.ToList();
@@ -2578,7 +2578,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings SetProcessFilters(this DotCoverCoverSettings toolSettings, IEnumerable<string> processFilters)
+        public static T SetProcessFilters<T>(this T toolSettings, IEnumerable<string> processFilters) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProcessFiltersInternal = processFilters.ToList();
@@ -2589,7 +2589,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings AddProcessFilters(this DotCoverCoverSettings toolSettings, params string[] processFilters)
+        public static T AddProcessFilters<T>(this T toolSettings, params string[] processFilters) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProcessFiltersInternal.AddRange(processFilters);
@@ -2600,7 +2600,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings AddProcessFilters(this DotCoverCoverSettings toolSettings, IEnumerable<string> processFilters)
+        public static T AddProcessFilters<T>(this T toolSettings, IEnumerable<string> processFilters) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProcessFiltersInternal.AddRange(processFilters);
@@ -2611,7 +2611,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings ClearProcessFilters(this DotCoverCoverSettings toolSettings)
+        public static T ClearProcessFilters<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProcessFiltersInternal.Clear();
@@ -2622,7 +2622,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings RemoveProcessFilters(this DotCoverCoverSettings toolSettings, params string[] processFilters)
+        public static T RemoveProcessFilters<T>(this T toolSettings, params string[] processFilters) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(processFilters);
@@ -2634,7 +2634,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings RemoveProcessFilters(this DotCoverCoverSettings toolSettings, IEnumerable<string> processFilters)
+        public static T RemoveProcessFilters<T>(this T toolSettings, IEnumerable<string> processFilters) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(processFilters);
@@ -2648,7 +2648,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Enables logging and specifies log file name.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings SetLogFile(this DotCoverCoverSettings toolSettings, string logFile)
+        public static T SetLogFile<T>(this T toolSettings, string logFile) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = logFile;
@@ -2659,7 +2659,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Enables logging and specifies log file name.</p>
         /// </summary>
         [Pure]
-        public static DotCoverCoverSettings ResetLogFile(this DotCoverCoverSettings toolSettings)
+        public static T ResetLogFile<T>(this T toolSettings) where T : DotCoverCoverSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = null;
@@ -2681,7 +2681,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p><em>Sets <see cref="DotCoverDeleteSettings.Configuration"/></em></p>
         /// </summary>
         [Pure]
-        public static DotCoverDeleteSettings SetConfiguration(this DotCoverDeleteSettings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : DotCoverDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -2691,7 +2691,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p><em>Resets <see cref="DotCoverDeleteSettings.Configuration"/></em></p>
         /// </summary>
         [Pure]
-        public static DotCoverDeleteSettings ResetConfiguration(this DotCoverDeleteSettings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : DotCoverDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -2704,7 +2704,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>List of snapshot files.</p>
         /// </summary>
         [Pure]
-        public static DotCoverDeleteSettings SetSource(this DotCoverDeleteSettings toolSettings, params string[] source)
+        public static T SetSource<T>(this T toolSettings, params string[] source) where T : DotCoverDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceInternal = source.ToList();
@@ -2715,7 +2715,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>List of snapshot files.</p>
         /// </summary>
         [Pure]
-        public static DotCoverDeleteSettings SetSource(this DotCoverDeleteSettings toolSettings, IEnumerable<string> source)
+        public static T SetSource<T>(this T toolSettings, IEnumerable<string> source) where T : DotCoverDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceInternal = source.ToList();
@@ -2726,7 +2726,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>List of snapshot files.</p>
         /// </summary>
         [Pure]
-        public static DotCoverDeleteSettings AddSource(this DotCoverDeleteSettings toolSettings, params string[] source)
+        public static T AddSource<T>(this T toolSettings, params string[] source) where T : DotCoverDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceInternal.AddRange(source);
@@ -2737,7 +2737,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>List of snapshot files.</p>
         /// </summary>
         [Pure]
-        public static DotCoverDeleteSettings AddSource(this DotCoverDeleteSettings toolSettings, IEnumerable<string> source)
+        public static T AddSource<T>(this T toolSettings, IEnumerable<string> source) where T : DotCoverDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceInternal.AddRange(source);
@@ -2748,7 +2748,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>List of snapshot files.</p>
         /// </summary>
         [Pure]
-        public static DotCoverDeleteSettings ClearSource(this DotCoverDeleteSettings toolSettings)
+        public static T ClearSource<T>(this T toolSettings) where T : DotCoverDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceInternal.Clear();
@@ -2759,7 +2759,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>List of snapshot files.</p>
         /// </summary>
         [Pure]
-        public static DotCoverDeleteSettings RemoveSource(this DotCoverDeleteSettings toolSettings, params string[] source)
+        public static T RemoveSource<T>(this T toolSettings, params string[] source) where T : DotCoverDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(source);
@@ -2771,7 +2771,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>List of snapshot files.</p>
         /// </summary>
         [Pure]
-        public static DotCoverDeleteSettings RemoveSource(this DotCoverDeleteSettings toolSettings, IEnumerable<string> source)
+        public static T RemoveSource<T>(this T toolSettings, IEnumerable<string> source) where T : DotCoverDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(source);
@@ -2785,7 +2785,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Enables logging and specifies log file name.</p>
         /// </summary>
         [Pure]
-        public static DotCoverDeleteSettings SetLogFile(this DotCoverDeleteSettings toolSettings, string logFile)
+        public static T SetLogFile<T>(this T toolSettings, string logFile) where T : DotCoverDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = logFile;
@@ -2796,7 +2796,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Enables logging and specifies log file name.</p>
         /// </summary>
         [Pure]
-        public static DotCoverDeleteSettings ResetLogFile(this DotCoverDeleteSettings toolSettings)
+        public static T ResetLogFile<T>(this T toolSettings) where T : DotCoverDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = null;
@@ -2818,7 +2818,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p><em>Sets <see cref="DotCoverMergeSettings.Configuration"/></em></p>
         /// </summary>
         [Pure]
-        public static DotCoverMergeSettings SetConfiguration(this DotCoverMergeSettings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : DotCoverMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -2828,7 +2828,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p><em>Resets <see cref="DotCoverMergeSettings.Configuration"/></em></p>
         /// </summary>
         [Pure]
-        public static DotCoverMergeSettings ResetConfiguration(this DotCoverMergeSettings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : DotCoverMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -2841,7 +2841,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>List of snapshot files.</p>
         /// </summary>
         [Pure]
-        public static DotCoverMergeSettings SetSource(this DotCoverMergeSettings toolSettings, params string[] source)
+        public static T SetSource<T>(this T toolSettings, params string[] source) where T : DotCoverMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceInternal = source.ToList();
@@ -2852,7 +2852,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>List of snapshot files.</p>
         /// </summary>
         [Pure]
-        public static DotCoverMergeSettings SetSource(this DotCoverMergeSettings toolSettings, IEnumerable<string> source)
+        public static T SetSource<T>(this T toolSettings, IEnumerable<string> source) where T : DotCoverMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceInternal = source.ToList();
@@ -2863,7 +2863,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>List of snapshot files.</p>
         /// </summary>
         [Pure]
-        public static DotCoverMergeSettings AddSource(this DotCoverMergeSettings toolSettings, params string[] source)
+        public static T AddSource<T>(this T toolSettings, params string[] source) where T : DotCoverMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceInternal.AddRange(source);
@@ -2874,7 +2874,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>List of snapshot files.</p>
         /// </summary>
         [Pure]
-        public static DotCoverMergeSettings AddSource(this DotCoverMergeSettings toolSettings, IEnumerable<string> source)
+        public static T AddSource<T>(this T toolSettings, IEnumerable<string> source) where T : DotCoverMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceInternal.AddRange(source);
@@ -2885,7 +2885,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>List of snapshot files.</p>
         /// </summary>
         [Pure]
-        public static DotCoverMergeSettings ClearSource(this DotCoverMergeSettings toolSettings)
+        public static T ClearSource<T>(this T toolSettings) where T : DotCoverMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceInternal.Clear();
@@ -2896,7 +2896,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>List of snapshot files.</p>
         /// </summary>
         [Pure]
-        public static DotCoverMergeSettings RemoveSource(this DotCoverMergeSettings toolSettings, params string[] source)
+        public static T RemoveSource<T>(this T toolSettings, params string[] source) where T : DotCoverMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(source);
@@ -2908,7 +2908,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>List of snapshot files.</p>
         /// </summary>
         [Pure]
-        public static DotCoverMergeSettings RemoveSource(this DotCoverMergeSettings toolSettings, IEnumerable<string> source)
+        public static T RemoveSource<T>(this T toolSettings, IEnumerable<string> source) where T : DotCoverMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(source);
@@ -2922,7 +2922,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>File name for the merged snapshot.</p>
         /// </summary>
         [Pure]
-        public static DotCoverMergeSettings SetOutputFile(this DotCoverMergeSettings toolSettings, string outputFile)
+        public static T SetOutputFile<T>(this T toolSettings, string outputFile) where T : DotCoverMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFile = outputFile;
@@ -2933,7 +2933,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>File name for the merged snapshot.</p>
         /// </summary>
         [Pure]
-        public static DotCoverMergeSettings ResetOutputFile(this DotCoverMergeSettings toolSettings)
+        public static T ResetOutputFile<T>(this T toolSettings) where T : DotCoverMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFile = null;
@@ -2946,7 +2946,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Directory for auxiliary files. Set to the system temp by default.</p>
         /// </summary>
         [Pure]
-        public static DotCoverMergeSettings SetTempDirectory(this DotCoverMergeSettings toolSettings, string tempDirectory)
+        public static T SetTempDirectory<T>(this T toolSettings, string tempDirectory) where T : DotCoverMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TempDirectory = tempDirectory;
@@ -2957,7 +2957,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Directory for auxiliary files. Set to the system temp by default.</p>
         /// </summary>
         [Pure]
-        public static DotCoverMergeSettings ResetTempDirectory(this DotCoverMergeSettings toolSettings)
+        public static T ResetTempDirectory<T>(this T toolSettings) where T : DotCoverMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TempDirectory = null;
@@ -2970,7 +2970,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Enables logging and specifies log file name.</p>
         /// </summary>
         [Pure]
-        public static DotCoverMergeSettings SetLogFile(this DotCoverMergeSettings toolSettings, string logFile)
+        public static T SetLogFile<T>(this T toolSettings, string logFile) where T : DotCoverMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = logFile;
@@ -2981,7 +2981,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Enables logging and specifies log file name.</p>
         /// </summary>
         [Pure]
-        public static DotCoverMergeSettings ResetLogFile(this DotCoverMergeSettings toolSettings)
+        public static T ResetLogFile<T>(this T toolSettings) where T : DotCoverMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = null;
@@ -3003,7 +3003,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p><em>Sets <see cref="DotCoverReportSettings.Configuration"/></em></p>
         /// </summary>
         [Pure]
-        public static DotCoverReportSettings SetConfiguration(this DotCoverReportSettings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : DotCoverReportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -3013,7 +3013,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p><em>Resets <see cref="DotCoverReportSettings.Configuration"/></em></p>
         /// </summary>
         [Pure]
-        public static DotCoverReportSettings ResetConfiguration(this DotCoverReportSettings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : DotCoverReportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -3026,7 +3026,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>List of snapshot files.</p>
         /// </summary>
         [Pure]
-        public static DotCoverReportSettings SetSource(this DotCoverReportSettings toolSettings, params string[] source)
+        public static T SetSource<T>(this T toolSettings, params string[] source) where T : DotCoverReportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceInternal = source.ToList();
@@ -3037,7 +3037,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>List of snapshot files.</p>
         /// </summary>
         [Pure]
-        public static DotCoverReportSettings SetSource(this DotCoverReportSettings toolSettings, IEnumerable<string> source)
+        public static T SetSource<T>(this T toolSettings, IEnumerable<string> source) where T : DotCoverReportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceInternal = source.ToList();
@@ -3048,7 +3048,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>List of snapshot files.</p>
         /// </summary>
         [Pure]
-        public static DotCoverReportSettings AddSource(this DotCoverReportSettings toolSettings, params string[] source)
+        public static T AddSource<T>(this T toolSettings, params string[] source) where T : DotCoverReportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceInternal.AddRange(source);
@@ -3059,7 +3059,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>List of snapshot files.</p>
         /// </summary>
         [Pure]
-        public static DotCoverReportSettings AddSource(this DotCoverReportSettings toolSettings, IEnumerable<string> source)
+        public static T AddSource<T>(this T toolSettings, IEnumerable<string> source) where T : DotCoverReportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceInternal.AddRange(source);
@@ -3070,7 +3070,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>List of snapshot files.</p>
         /// </summary>
         [Pure]
-        public static DotCoverReportSettings ClearSource(this DotCoverReportSettings toolSettings)
+        public static T ClearSource<T>(this T toolSettings) where T : DotCoverReportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceInternal.Clear();
@@ -3081,7 +3081,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>List of snapshot files.</p>
         /// </summary>
         [Pure]
-        public static DotCoverReportSettings RemoveSource(this DotCoverReportSettings toolSettings, params string[] source)
+        public static T RemoveSource<T>(this T toolSettings, params string[] source) where T : DotCoverReportSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(source);
@@ -3093,7 +3093,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>List of snapshot files.</p>
         /// </summary>
         [Pure]
-        public static DotCoverReportSettings RemoveSource(this DotCoverReportSettings toolSettings, IEnumerable<string> source)
+        public static T RemoveSource<T>(this T toolSettings, IEnumerable<string> source) where T : DotCoverReportSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(source);
@@ -3107,7 +3107,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Resulting report file name.</p>
         /// </summary>
         [Pure]
-        public static DotCoverReportSettings SetOutputFile(this DotCoverReportSettings toolSettings, string outputFile)
+        public static T SetOutputFile<T>(this T toolSettings, string outputFile) where T : DotCoverReportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFile = outputFile;
@@ -3118,7 +3118,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Resulting report file name.</p>
         /// </summary>
         [Pure]
-        public static DotCoverReportSettings ResetOutputFile(this DotCoverReportSettings toolSettings)
+        public static T ResetOutputFile<T>(this T toolSettings) where T : DotCoverReportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFile = null;
@@ -3131,7 +3131,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>A type of the report. The default value is <c>XML</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverReportSettings SetReportType(this DotCoverReportSettings toolSettings, DotCoverReportType reportType)
+        public static T SetReportType<T>(this T toolSettings, DotCoverReportType reportType) where T : DotCoverReportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReportType = reportType;
@@ -3142,7 +3142,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>A type of the report. The default value is <c>XML</c>.</p>
         /// </summary>
         [Pure]
-        public static DotCoverReportSettings ResetReportType(this DotCoverReportSettings toolSettings)
+        public static T ResetReportType<T>(this T toolSettings) where T : DotCoverReportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReportType = null;
@@ -3155,7 +3155,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Remove auto-implemented properties from report.</p>
         /// </summary>
         [Pure]
-        public static DotCoverReportSettings SetHideAutoProperties(this DotCoverReportSettings toolSettings, bool? hideAutoProperties)
+        public static T SetHideAutoProperties<T>(this T toolSettings, bool? hideAutoProperties) where T : DotCoverReportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HideAutoProperties = hideAutoProperties;
@@ -3166,7 +3166,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Remove auto-implemented properties from report.</p>
         /// </summary>
         [Pure]
-        public static DotCoverReportSettings ResetHideAutoProperties(this DotCoverReportSettings toolSettings)
+        public static T ResetHideAutoProperties<T>(this T toolSettings) where T : DotCoverReportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HideAutoProperties = null;
@@ -3177,7 +3177,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Remove auto-implemented properties from report.</p>
         /// </summary>
         [Pure]
-        public static DotCoverReportSettings EnableHideAutoProperties(this DotCoverReportSettings toolSettings)
+        public static T EnableHideAutoProperties<T>(this T toolSettings) where T : DotCoverReportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HideAutoProperties = true;
@@ -3188,7 +3188,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Remove auto-implemented properties from report.</p>
         /// </summary>
         [Pure]
-        public static DotCoverReportSettings DisableHideAutoProperties(this DotCoverReportSettings toolSettings)
+        public static T DisableHideAutoProperties<T>(this T toolSettings) where T : DotCoverReportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HideAutoProperties = false;
@@ -3199,7 +3199,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Remove auto-implemented properties from report.</p>
         /// </summary>
         [Pure]
-        public static DotCoverReportSettings ToggleHideAutoProperties(this DotCoverReportSettings toolSettings)
+        public static T ToggleHideAutoProperties<T>(this T toolSettings) where T : DotCoverReportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HideAutoProperties = !toolSettings.HideAutoProperties;
@@ -3212,7 +3212,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Enables logging and specifies log file name.</p>
         /// </summary>
         [Pure]
-        public static DotCoverReportSettings SetLogFile(this DotCoverReportSettings toolSettings, string logFile)
+        public static T SetLogFile<T>(this T toolSettings, string logFile) where T : DotCoverReportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = logFile;
@@ -3223,7 +3223,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Enables logging and specifies log file name.</p>
         /// </summary>
         [Pure]
-        public static DotCoverReportSettings ResetLogFile(this DotCoverReportSettings toolSettings)
+        public static T ResetLogFile<T>(this T toolSettings) where T : DotCoverReportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = null;
@@ -3245,7 +3245,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p><em>Sets <see cref="DotCoverZipSettings.Configuration"/></em></p>
         /// </summary>
         [Pure]
-        public static DotCoverZipSettings SetConfiguration(this DotCoverZipSettings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : DotCoverZipSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -3255,7 +3255,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p><em>Resets <see cref="DotCoverZipSettings.Configuration"/></em></p>
         /// </summary>
         [Pure]
-        public static DotCoverZipSettings ResetConfiguration(this DotCoverZipSettings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : DotCoverZipSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -3268,7 +3268,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Coverage snapshot file name.</p>
         /// </summary>
         [Pure]
-        public static DotCoverZipSettings SetSource(this DotCoverZipSettings toolSettings, string source)
+        public static T SetSource<T>(this T toolSettings, string source) where T : DotCoverZipSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Source = source;
@@ -3279,7 +3279,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Coverage snapshot file name.</p>
         /// </summary>
         [Pure]
-        public static DotCoverZipSettings ResetSource(this DotCoverZipSettings toolSettings)
+        public static T ResetSource<T>(this T toolSettings) where T : DotCoverZipSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Source = null;
@@ -3292,7 +3292,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Zipped snapshot file name.</p>
         /// </summary>
         [Pure]
-        public static DotCoverZipSettings SetOutputFile(this DotCoverZipSettings toolSettings, string outputFile)
+        public static T SetOutputFile<T>(this T toolSettings, string outputFile) where T : DotCoverZipSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFile = outputFile;
@@ -3303,7 +3303,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Zipped snapshot file name.</p>
         /// </summary>
         [Pure]
-        public static DotCoverZipSettings ResetOutputFile(this DotCoverZipSettings toolSettings)
+        public static T ResetOutputFile<T>(this T toolSettings) where T : DotCoverZipSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFile = null;
@@ -3316,7 +3316,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Enables logging and specifies log file name.</p>
         /// </summary>
         [Pure]
-        public static DotCoverZipSettings SetLogFile(this DotCoverZipSettings toolSettings, string logFile)
+        public static T SetLogFile<T>(this T toolSettings, string logFile) where T : DotCoverZipSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = logFile;
@@ -3327,7 +3327,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>Enables logging and specifies log file name.</p>
         /// </summary>
         [Pure]
-        public static DotCoverZipSettings ResetLogFile(this DotCoverZipSettings toolSettings)
+        public static T ResetLogFile<T>(this T toolSettings) where T : DotCoverZipSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = null;

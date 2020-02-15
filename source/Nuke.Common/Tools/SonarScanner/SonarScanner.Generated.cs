@@ -31,7 +31,7 @@ namespace Nuke.Common.Tools.SonarScanner
         /// </summary>
         public static string SonarScannerPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("SONARSCANNER_EXE") ??
-            ToolPathResolver.GetPackageExecutable("dotnet-sonarscanner|MSBuild.SonarQube.Runner.Tool", "SonarScanner.MSBuild.dll|SonarScanner.MSBuild.exe");
+            GetToolPath();
         public static Action<OutputType, string> SonarScannerLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.</p>
@@ -224,7 +224,7 @@ namespace Nuke.Common.Tools.SonarScanner
         /// <summary>
         ///   Path to the SonarScanner executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? SonarScannerTasks.SonarScannerPath;
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         public override Action<OutputType, string> CustomLogger => SonarScannerTasks.SonarScannerLogger;
         /// <summary>
         ///   Specifies the key of the analyzed project in SonarQube.
@@ -342,6 +342,7 @@ namespace Nuke.Common.Tools.SonarScanner
         /// </summary>
         public virtual IReadOnlyList<string> DuplicationExclusions => DuplicationExclusionsInternal.AsReadOnly();
         internal List<string> DuplicationExclusionsInternal { get; set; } = new List<string>();
+        public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -388,7 +389,7 @@ namespace Nuke.Common.Tools.SonarScanner
         /// <summary>
         ///   Path to the SonarScanner executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? SonarScannerTasks.SonarScannerPath;
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         public override Action<OutputType, string> CustomLogger => SonarScannerTasks.SonarScannerLogger;
         /// <summary>
         ///   Specifies the username or access token to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added on the end step.
@@ -398,6 +399,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   Specifies the password for the SonarQube username in the `sonar.login` argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.
         /// </summary>
         public virtual string Password { get; internal set; }
+        public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -422,7 +424,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Specifies the key of the analyzed project in SonarQube.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetProjectKey(this SonarScannerBeginSettings toolSettings, string projectKey)
+        public static T SetProjectKey<T>(this T toolSettings, string projectKey) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProjectKey = projectKey;
@@ -433,7 +435,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Specifies the key of the analyzed project in SonarQube.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ResetProjectKey(this SonarScannerBeginSettings toolSettings)
+        public static T ResetProjectKey<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProjectKey = null;
@@ -446,7 +448,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Specifies the name of the analyzed project in SonarQube. Adding this argument will overwrite the project name in SonarQube if it already exists.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetName(this SonarScannerBeginSettings toolSettings, string name)
+        public static T SetName<T>(this T toolSettings, string name) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = name;
@@ -457,7 +459,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Specifies the name of the analyzed project in SonarQube. Adding this argument will overwrite the project name in SonarQube if it already exists.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ResetName(this SonarScannerBeginSettings toolSettings)
+        public static T ResetName<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = null;
@@ -470,7 +472,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Specifies the version of your project.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetVersion(this SonarScannerBeginSettings toolSettings, string version)
+        public static T SetVersion<T>(this T toolSettings, string version) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = version;
@@ -481,7 +483,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Specifies the version of your project.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ResetVersion(this SonarScannerBeginSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = null;
@@ -494,7 +496,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>The project description.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetDescription(this SonarScannerBeginSettings toolSettings, string description)
+        public static T SetDescription<T>(this T toolSettings, string description) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Description = description;
@@ -505,7 +507,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>The project description.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ResetDescription(this SonarScannerBeginSettings toolSettings)
+        public static T ResetDescription<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Description = null;
@@ -518,7 +520,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>The server URL. Default is http://localhost:9000</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetServer(this SonarScannerBeginSettings toolSettings, string server)
+        public static T SetServer<T>(this T toolSettings, string server) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Server = server;
@@ -529,7 +531,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>The server URL. Default is http://localhost:9000</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ResetServer(this SonarScannerBeginSettings toolSettings)
+        public static T ResetServer<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Server = null;
@@ -542,7 +544,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Specifies the username or access token to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added on the end step.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetLogin(this SonarScannerBeginSettings toolSettings, string login)
+        public static T SetLogin<T>(this T toolSettings, string login) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Login = login;
@@ -553,7 +555,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Specifies the username or access token to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added on the end step.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ResetLogin(this SonarScannerBeginSettings toolSettings)
+        public static T ResetLogin<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Login = null;
@@ -566,7 +568,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Specifies the password for the SonarQube username in the `sonar.login` argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetPassword(this SonarScannerBeginSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -577,7 +579,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Specifies the password for the SonarQube username in the `sonar.login` argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ResetPassword(this SonarScannerBeginSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -590,7 +592,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Sets the logging verbosity to detailed. Add this argument before sending logs for troubleshooting.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetVerbose(this SonarScannerBeginSettings toolSettings, bool? verbose)
+        public static T SetVerbose<T>(this T toolSettings, bool? verbose) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = verbose;
@@ -601,7 +603,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Sets the logging verbosity to detailed. Add this argument before sending logs for troubleshooting.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ResetVerbose(this SonarScannerBeginSettings toolSettings)
+        public static T ResetVerbose<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = null;
@@ -612,7 +614,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Sets the logging verbosity to detailed. Add this argument before sending logs for troubleshooting.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings EnableVerbose(this SonarScannerBeginSettings toolSettings)
+        public static T EnableVerbose<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = true;
@@ -623,7 +625,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Sets the logging verbosity to detailed. Add this argument before sending logs for troubleshooting.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings DisableVerbose(this SonarScannerBeginSettings toolSettings)
+        public static T DisableVerbose<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = false;
@@ -634,7 +636,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Sets the logging verbosity to detailed. Add this argument before sending logs for troubleshooting.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ToggleVerbose(this SonarScannerBeginSettings toolSettings)
+        public static T ToggleVerbose<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = !toolSettings.Verbose;
@@ -647,7 +649,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of VSTest report files to include.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetVSTestReports(this SonarScannerBeginSettings toolSettings, params string[] vstestReports)
+        public static T SetVSTestReports<T>(this T toolSettings, params string[] vstestReports) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VSTestReportsInternal = vstestReports.ToList();
@@ -658,7 +660,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of VSTest report files to include.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetVSTestReports(this SonarScannerBeginSettings toolSettings, IEnumerable<string> vstestReports)
+        public static T SetVSTestReports<T>(this T toolSettings, IEnumerable<string> vstestReports) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VSTestReportsInternal = vstestReports.ToList();
@@ -669,7 +671,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of VSTest report files to include.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddVSTestReports(this SonarScannerBeginSettings toolSettings, params string[] vstestReports)
+        public static T AddVSTestReports<T>(this T toolSettings, params string[] vstestReports) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VSTestReportsInternal.AddRange(vstestReports);
@@ -680,7 +682,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of VSTest report files to include.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddVSTestReports(this SonarScannerBeginSettings toolSettings, IEnumerable<string> vstestReports)
+        public static T AddVSTestReports<T>(this T toolSettings, IEnumerable<string> vstestReports) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VSTestReportsInternal.AddRange(vstestReports);
@@ -691,7 +693,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of VSTest report files to include.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ClearVSTestReports(this SonarScannerBeginSettings toolSettings)
+        public static T ClearVSTestReports<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VSTestReportsInternal.Clear();
@@ -702,7 +704,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of VSTest report files to include.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveVSTestReports(this SonarScannerBeginSettings toolSettings, params string[] vstestReports)
+        public static T RemoveVSTestReports<T>(this T toolSettings, params string[] vstestReports) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(vstestReports);
@@ -714,7 +716,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of VSTest report files to include.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveVSTestReports(this SonarScannerBeginSettings toolSettings, IEnumerable<string> vstestReports)
+        public static T RemoveVSTestReports<T>(this T toolSettings, IEnumerable<string> vstestReports) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(vstestReports);
@@ -728,7 +730,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of NUnit report files to include.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetNUnitTestReports(this SonarScannerBeginSettings toolSettings, params string[] nunitTestReports)
+        public static T SetNUnitTestReports<T>(this T toolSettings, params string[] nunitTestReports) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NUnitTestReportsInternal = nunitTestReports.ToList();
@@ -739,7 +741,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of NUnit report files to include.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetNUnitTestReports(this SonarScannerBeginSettings toolSettings, IEnumerable<string> nunitTestReports)
+        public static T SetNUnitTestReports<T>(this T toolSettings, IEnumerable<string> nunitTestReports) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NUnitTestReportsInternal = nunitTestReports.ToList();
@@ -750,7 +752,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of NUnit report files to include.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddNUnitTestReports(this SonarScannerBeginSettings toolSettings, params string[] nunitTestReports)
+        public static T AddNUnitTestReports<T>(this T toolSettings, params string[] nunitTestReports) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NUnitTestReportsInternal.AddRange(nunitTestReports);
@@ -761,7 +763,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of NUnit report files to include.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddNUnitTestReports(this SonarScannerBeginSettings toolSettings, IEnumerable<string> nunitTestReports)
+        public static T AddNUnitTestReports<T>(this T toolSettings, IEnumerable<string> nunitTestReports) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NUnitTestReportsInternal.AddRange(nunitTestReports);
@@ -772,7 +774,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of NUnit report files to include.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ClearNUnitTestReports(this SonarScannerBeginSettings toolSettings)
+        public static T ClearNUnitTestReports<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NUnitTestReportsInternal.Clear();
@@ -783,7 +785,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of NUnit report files to include.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveNUnitTestReports(this SonarScannerBeginSettings toolSettings, params string[] nunitTestReports)
+        public static T RemoveNUnitTestReports<T>(this T toolSettings, params string[] nunitTestReports) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(nunitTestReports);
@@ -795,7 +797,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of NUnit report files to include.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveNUnitTestReports(this SonarScannerBeginSettings toolSettings, IEnumerable<string> nunitTestReports)
+        public static T RemoveNUnitTestReports<T>(this T toolSettings, IEnumerable<string> nunitTestReports) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(nunitTestReports);
@@ -809,7 +811,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of xUnit report files to include.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetXUnitTestReports(this SonarScannerBeginSettings toolSettings, params string[] xunitTestReports)
+        public static T SetXUnitTestReports<T>(this T toolSettings, params string[] xunitTestReports) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.XUnitTestReportsInternal = xunitTestReports.ToList();
@@ -820,7 +822,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of xUnit report files to include.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetXUnitTestReports(this SonarScannerBeginSettings toolSettings, IEnumerable<string> xunitTestReports)
+        public static T SetXUnitTestReports<T>(this T toolSettings, IEnumerable<string> xunitTestReports) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.XUnitTestReportsInternal = xunitTestReports.ToList();
@@ -831,7 +833,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of xUnit report files to include.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddXUnitTestReports(this SonarScannerBeginSettings toolSettings, params string[] xunitTestReports)
+        public static T AddXUnitTestReports<T>(this T toolSettings, params string[] xunitTestReports) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.XUnitTestReportsInternal.AddRange(xunitTestReports);
@@ -842,7 +844,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of xUnit report files to include.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddXUnitTestReports(this SonarScannerBeginSettings toolSettings, IEnumerable<string> xunitTestReports)
+        public static T AddXUnitTestReports<T>(this T toolSettings, IEnumerable<string> xunitTestReports) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.XUnitTestReportsInternal.AddRange(xunitTestReports);
@@ -853,7 +855,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of xUnit report files to include.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ClearXUnitTestReports(this SonarScannerBeginSettings toolSettings)
+        public static T ClearXUnitTestReports<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.XUnitTestReportsInternal.Clear();
@@ -864,7 +866,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of xUnit report files to include.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveXUnitTestReports(this SonarScannerBeginSettings toolSettings, params string[] xunitTestReports)
+        public static T RemoveXUnitTestReports<T>(this T toolSettings, params string[] xunitTestReports) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(xunitTestReports);
@@ -876,7 +878,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of xUnit report files to include.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveXUnitTestReports(this SonarScannerBeginSettings toolSettings, IEnumerable<string> xunitTestReports)
+        public static T RemoveXUnitTestReports<T>(this T toolSettings, IEnumerable<string> xunitTestReports) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(xunitTestReports);
@@ -890,7 +892,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetSourceExclusions(this SonarScannerBeginSettings toolSettings, params string[] sourceExclusions)
+        public static T SetSourceExclusions<T>(this T toolSettings, params string[] sourceExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceExclusionsInternal = sourceExclusions.ToList();
@@ -901,7 +903,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetSourceExclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> sourceExclusions)
+        public static T SetSourceExclusions<T>(this T toolSettings, IEnumerable<string> sourceExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceExclusionsInternal = sourceExclusions.ToList();
@@ -912,7 +914,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddSourceExclusions(this SonarScannerBeginSettings toolSettings, params string[] sourceExclusions)
+        public static T AddSourceExclusions<T>(this T toolSettings, params string[] sourceExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceExclusionsInternal.AddRange(sourceExclusions);
@@ -923,7 +925,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddSourceExclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> sourceExclusions)
+        public static T AddSourceExclusions<T>(this T toolSettings, IEnumerable<string> sourceExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceExclusionsInternal.AddRange(sourceExclusions);
@@ -934,7 +936,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ClearSourceExclusions(this SonarScannerBeginSettings toolSettings)
+        public static T ClearSourceExclusions<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceExclusionsInternal.Clear();
@@ -945,7 +947,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveSourceExclusions(this SonarScannerBeginSettings toolSettings, params string[] sourceExclusions)
+        public static T RemoveSourceExclusions<T>(this T toolSettings, params string[] sourceExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(sourceExclusions);
@@ -957,7 +959,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveSourceExclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> sourceExclusions)
+        public static T RemoveSourceExclusions<T>(this T toolSettings, IEnumerable<string> sourceExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(sourceExclusions);
@@ -971,7 +973,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetSourceInclusions(this SonarScannerBeginSettings toolSettings, params string[] sourceInclusions)
+        public static T SetSourceInclusions<T>(this T toolSettings, params string[] sourceInclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceInclusionsInternal = sourceInclusions.ToList();
@@ -982,7 +984,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetSourceInclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> sourceInclusions)
+        public static T SetSourceInclusions<T>(this T toolSettings, IEnumerable<string> sourceInclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceInclusionsInternal = sourceInclusions.ToList();
@@ -993,7 +995,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddSourceInclusions(this SonarScannerBeginSettings toolSettings, params string[] sourceInclusions)
+        public static T AddSourceInclusions<T>(this T toolSettings, params string[] sourceInclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceInclusionsInternal.AddRange(sourceInclusions);
@@ -1004,7 +1006,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddSourceInclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> sourceInclusions)
+        public static T AddSourceInclusions<T>(this T toolSettings, IEnumerable<string> sourceInclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceInclusionsInternal.AddRange(sourceInclusions);
@@ -1015,7 +1017,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ClearSourceInclusions(this SonarScannerBeginSettings toolSettings)
+        public static T ClearSourceInclusions<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceInclusionsInternal.Clear();
@@ -1026,7 +1028,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveSourceInclusions(this SonarScannerBeginSettings toolSettings, params string[] sourceInclusions)
+        public static T RemoveSourceInclusions<T>(this T toolSettings, params string[] sourceInclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(sourceInclusions);
@@ -1038,7 +1040,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveSourceInclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> sourceInclusions)
+        public static T RemoveSourceInclusions<T>(this T toolSettings, IEnumerable<string> sourceInclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(sourceInclusions);
@@ -1052,7 +1054,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetTestFileExclusions(this SonarScannerBeginSettings toolSettings, params string[] testFileExclusions)
+        public static T SetTestFileExclusions<T>(this T toolSettings, params string[] testFileExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestFileExclusionsInternal = testFileExclusions.ToList();
@@ -1063,7 +1065,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetTestFileExclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> testFileExclusions)
+        public static T SetTestFileExclusions<T>(this T toolSettings, IEnumerable<string> testFileExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestFileExclusionsInternal = testFileExclusions.ToList();
@@ -1074,7 +1076,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddTestFileExclusions(this SonarScannerBeginSettings toolSettings, params string[] testFileExclusions)
+        public static T AddTestFileExclusions<T>(this T toolSettings, params string[] testFileExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestFileExclusionsInternal.AddRange(testFileExclusions);
@@ -1085,7 +1087,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddTestFileExclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> testFileExclusions)
+        public static T AddTestFileExclusions<T>(this T toolSettings, IEnumerable<string> testFileExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestFileExclusionsInternal.AddRange(testFileExclusions);
@@ -1096,7 +1098,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ClearTestFileExclusions(this SonarScannerBeginSettings toolSettings)
+        public static T ClearTestFileExclusions<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestFileExclusionsInternal.Clear();
@@ -1107,7 +1109,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveTestFileExclusions(this SonarScannerBeginSettings toolSettings, params string[] testFileExclusions)
+        public static T RemoveTestFileExclusions<T>(this T toolSettings, params string[] testFileExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(testFileExclusions);
@@ -1119,7 +1121,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveTestFileExclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> testFileExclusions)
+        public static T RemoveTestFileExclusions<T>(this T toolSettings, IEnumerable<string> testFileExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(testFileExclusions);
@@ -1133,7 +1135,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetTestFileInclusions(this SonarScannerBeginSettings toolSettings, params string[] testFileInclusions)
+        public static T SetTestFileInclusions<T>(this T toolSettings, params string[] testFileInclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestFileInclusionsInternal = testFileInclusions.ToList();
@@ -1144,7 +1146,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetTestFileInclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> testFileInclusions)
+        public static T SetTestFileInclusions<T>(this T toolSettings, IEnumerable<string> testFileInclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestFileInclusionsInternal = testFileInclusions.ToList();
@@ -1155,7 +1157,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddTestFileInclusions(this SonarScannerBeginSettings toolSettings, params string[] testFileInclusions)
+        public static T AddTestFileInclusions<T>(this T toolSettings, params string[] testFileInclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestFileInclusionsInternal.AddRange(testFileInclusions);
@@ -1166,7 +1168,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddTestFileInclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> testFileInclusions)
+        public static T AddTestFileInclusions<T>(this T toolSettings, IEnumerable<string> testFileInclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestFileInclusionsInternal.AddRange(testFileInclusions);
@@ -1177,7 +1179,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ClearTestFileInclusions(this SonarScannerBeginSettings toolSettings)
+        public static T ClearTestFileInclusions<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestFileInclusionsInternal.Clear();
@@ -1188,7 +1190,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveTestFileInclusions(this SonarScannerBeginSettings toolSettings, params string[] testFileInclusions)
+        public static T RemoveTestFileInclusions<T>(this T toolSettings, params string[] testFileInclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(testFileInclusions);
@@ -1200,7 +1202,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveTestFileInclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> testFileInclusions)
+        public static T RemoveTestFileInclusions<T>(this T toolSettings, IEnumerable<string> testFileInclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(testFileInclusions);
@@ -1214,7 +1216,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of files to exclude from coverage calculations. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetCoverageExclusions(this SonarScannerBeginSettings toolSettings, params string[] coverageExclusions)
+        public static T SetCoverageExclusions<T>(this T toolSettings, params string[] coverageExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CoverageExclusionsInternal = coverageExclusions.ToList();
@@ -1225,7 +1227,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of files to exclude from coverage calculations. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetCoverageExclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> coverageExclusions)
+        public static T SetCoverageExclusions<T>(this T toolSettings, IEnumerable<string> coverageExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CoverageExclusionsInternal = coverageExclusions.ToList();
@@ -1236,7 +1238,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of files to exclude from coverage calculations. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddCoverageExclusions(this SonarScannerBeginSettings toolSettings, params string[] coverageExclusions)
+        public static T AddCoverageExclusions<T>(this T toolSettings, params string[] coverageExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CoverageExclusionsInternal.AddRange(coverageExclusions);
@@ -1247,7 +1249,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of files to exclude from coverage calculations. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddCoverageExclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> coverageExclusions)
+        public static T AddCoverageExclusions<T>(this T toolSettings, IEnumerable<string> coverageExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CoverageExclusionsInternal.AddRange(coverageExclusions);
@@ -1258,7 +1260,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of files to exclude from coverage calculations. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ClearCoverageExclusions(this SonarScannerBeginSettings toolSettings)
+        public static T ClearCoverageExclusions<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CoverageExclusionsInternal.Clear();
@@ -1269,7 +1271,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of files to exclude from coverage calculations. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveCoverageExclusions(this SonarScannerBeginSettings toolSettings, params string[] coverageExclusions)
+        public static T RemoveCoverageExclusions<T>(this T toolSettings, params string[] coverageExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(coverageExclusions);
@@ -1281,7 +1283,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of files to exclude from coverage calculations. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveCoverageExclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> coverageExclusions)
+        public static T RemoveCoverageExclusions<T>(this T toolSettings, IEnumerable<string> coverageExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(coverageExclusions);
@@ -1295,7 +1297,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetVisualStudioCoveragePaths(this SonarScannerBeginSettings toolSettings, params string[] visualStudioCoveragePaths)
+        public static T SetVisualStudioCoveragePaths<T>(this T toolSettings, params string[] visualStudioCoveragePaths) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VisualStudioCoveragePathsInternal = visualStudioCoveragePaths.ToList();
@@ -1306,7 +1308,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetVisualStudioCoveragePaths(this SonarScannerBeginSettings toolSettings, IEnumerable<string> visualStudioCoveragePaths)
+        public static T SetVisualStudioCoveragePaths<T>(this T toolSettings, IEnumerable<string> visualStudioCoveragePaths) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VisualStudioCoveragePathsInternal = visualStudioCoveragePaths.ToList();
@@ -1317,7 +1319,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddVisualStudioCoveragePaths(this SonarScannerBeginSettings toolSettings, params string[] visualStudioCoveragePaths)
+        public static T AddVisualStudioCoveragePaths<T>(this T toolSettings, params string[] visualStudioCoveragePaths) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VisualStudioCoveragePathsInternal.AddRange(visualStudioCoveragePaths);
@@ -1328,7 +1330,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddVisualStudioCoveragePaths(this SonarScannerBeginSettings toolSettings, IEnumerable<string> visualStudioCoveragePaths)
+        public static T AddVisualStudioCoveragePaths<T>(this T toolSettings, IEnumerable<string> visualStudioCoveragePaths) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VisualStudioCoveragePathsInternal.AddRange(visualStudioCoveragePaths);
@@ -1339,7 +1341,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ClearVisualStudioCoveragePaths(this SonarScannerBeginSettings toolSettings)
+        public static T ClearVisualStudioCoveragePaths<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VisualStudioCoveragePathsInternal.Clear();
@@ -1350,7 +1352,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveVisualStudioCoveragePaths(this SonarScannerBeginSettings toolSettings, params string[] visualStudioCoveragePaths)
+        public static T RemoveVisualStudioCoveragePaths<T>(this T toolSettings, params string[] visualStudioCoveragePaths) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(visualStudioCoveragePaths);
@@ -1362,7 +1364,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveVisualStudioCoveragePaths(this SonarScannerBeginSettings toolSettings, IEnumerable<string> visualStudioCoveragePaths)
+        public static T RemoveVisualStudioCoveragePaths<T>(this T toolSettings, IEnumerable<string> visualStudioCoveragePaths) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(visualStudioCoveragePaths);
@@ -1376,7 +1378,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of dotCover HTML-reports to include. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetDotCoverPaths(this SonarScannerBeginSettings toolSettings, params string[] dotCoverPaths)
+        public static T SetDotCoverPaths<T>(this T toolSettings, params string[] dotCoverPaths) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DotCoverPathsInternal = dotCoverPaths.ToList();
@@ -1387,7 +1389,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of dotCover HTML-reports to include. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetDotCoverPaths(this SonarScannerBeginSettings toolSettings, IEnumerable<string> dotCoverPaths)
+        public static T SetDotCoverPaths<T>(this T toolSettings, IEnumerable<string> dotCoverPaths) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DotCoverPathsInternal = dotCoverPaths.ToList();
@@ -1398,7 +1400,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of dotCover HTML-reports to include. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddDotCoverPaths(this SonarScannerBeginSettings toolSettings, params string[] dotCoverPaths)
+        public static T AddDotCoverPaths<T>(this T toolSettings, params string[] dotCoverPaths) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DotCoverPathsInternal.AddRange(dotCoverPaths);
@@ -1409,7 +1411,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of dotCover HTML-reports to include. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddDotCoverPaths(this SonarScannerBeginSettings toolSettings, IEnumerable<string> dotCoverPaths)
+        public static T AddDotCoverPaths<T>(this T toolSettings, IEnumerable<string> dotCoverPaths) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DotCoverPathsInternal.AddRange(dotCoverPaths);
@@ -1420,7 +1422,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of dotCover HTML-reports to include. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ClearDotCoverPaths(this SonarScannerBeginSettings toolSettings)
+        public static T ClearDotCoverPaths<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DotCoverPathsInternal.Clear();
@@ -1431,7 +1433,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of dotCover HTML-reports to include. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveDotCoverPaths(this SonarScannerBeginSettings toolSettings, params string[] dotCoverPaths)
+        public static T RemoveDotCoverPaths<T>(this T toolSettings, params string[] dotCoverPaths) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(dotCoverPaths);
@@ -1443,7 +1445,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of dotCover HTML-reports to include. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveDotCoverPaths(this SonarScannerBeginSettings toolSettings, IEnumerable<string> dotCoverPaths)
+        public static T RemoveDotCoverPaths<T>(this T toolSettings, IEnumerable<string> dotCoverPaths) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(dotCoverPaths);
@@ -1457,7 +1459,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of OpenCover reports to include. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetOpenCoverPaths(this SonarScannerBeginSettings toolSettings, params string[] openCoverPaths)
+        public static T SetOpenCoverPaths<T>(this T toolSettings, params string[] openCoverPaths) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OpenCoverPathsInternal = openCoverPaths.ToList();
@@ -1468,7 +1470,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of OpenCover reports to include. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetOpenCoverPaths(this SonarScannerBeginSettings toolSettings, IEnumerable<string> openCoverPaths)
+        public static T SetOpenCoverPaths<T>(this T toolSettings, IEnumerable<string> openCoverPaths) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OpenCoverPathsInternal = openCoverPaths.ToList();
@@ -1479,7 +1481,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of OpenCover reports to include. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddOpenCoverPaths(this SonarScannerBeginSettings toolSettings, params string[] openCoverPaths)
+        public static T AddOpenCoverPaths<T>(this T toolSettings, params string[] openCoverPaths) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OpenCoverPathsInternal.AddRange(openCoverPaths);
@@ -1490,7 +1492,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of OpenCover reports to include. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddOpenCoverPaths(this SonarScannerBeginSettings toolSettings, IEnumerable<string> openCoverPaths)
+        public static T AddOpenCoverPaths<T>(this T toolSettings, IEnumerable<string> openCoverPaths) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OpenCoverPathsInternal.AddRange(openCoverPaths);
@@ -1501,7 +1503,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of OpenCover reports to include. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ClearOpenCoverPaths(this SonarScannerBeginSettings toolSettings)
+        public static T ClearOpenCoverPaths<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OpenCoverPathsInternal.Clear();
@@ -1512,7 +1514,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of OpenCover reports to include. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveOpenCoverPaths(this SonarScannerBeginSettings toolSettings, params string[] openCoverPaths)
+        public static T RemoveOpenCoverPaths<T>(this T toolSettings, params string[] openCoverPaths) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(openCoverPaths);
@@ -1524,7 +1526,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma separated list of OpenCover reports to include. Supports wildcards (*, **, ?).</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveOpenCoverPaths(this SonarScannerBeginSettings toolSettings, IEnumerable<string> openCoverPaths)
+        public static T RemoveOpenCoverPaths<T>(this T toolSettings, IEnumerable<string> openCoverPaths) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(openCoverPaths);
@@ -1538,7 +1540,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Maximum time to wait for the response of a Web Service call (in seconds). Modifying this value from the default is useful only when you're experiencing timeouts during analysis while waiting for the server to respond to Web Service calls.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetWebServiceTimeout(this SonarScannerBeginSettings toolSettings, int? webServiceTimeout)
+        public static T SetWebServiceTimeout<T>(this T toolSettings, int? webServiceTimeout) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WebServiceTimeout = webServiceTimeout;
@@ -1549,7 +1551,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Maximum time to wait for the response of a Web Service call (in seconds). Modifying this value from the default is useful only when you're experiencing timeouts during analysis while waiting for the server to respond to Web Service calls.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ResetWebServiceTimeout(this SonarScannerBeginSettings toolSettings)
+        public static T ResetWebServiceTimeout<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WebServiceTimeout = null;
@@ -1562,7 +1564,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Project home page.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetHomepage(this SonarScannerBeginSettings toolSettings, string homepage)
+        public static T SetHomepage<T>(this T toolSettings, string homepage) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Homepage = homepage;
@@ -1573,7 +1575,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Project home page.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ResetHomepage(this SonarScannerBeginSettings toolSettings)
+        public static T ResetHomepage<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Homepage = null;
@@ -1586,7 +1588,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Link to Continuous integration</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetContinuousIntegrationUrl(this SonarScannerBeginSettings toolSettings, string continuousIntegrationUrl)
+        public static T SetContinuousIntegrationUrl<T>(this T toolSettings, string continuousIntegrationUrl) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContinuousIntegrationUrl = continuousIntegrationUrl;
@@ -1597,7 +1599,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Link to Continuous integration</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ResetContinuousIntegrationUrl(this SonarScannerBeginSettings toolSettings)
+        public static T ResetContinuousIntegrationUrl<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContinuousIntegrationUrl = null;
@@ -1610,7 +1612,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Link to Issue tracker.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetIssueTrackerUrl(this SonarScannerBeginSettings toolSettings, string issueTrackerUrl)
+        public static T SetIssueTrackerUrl<T>(this T toolSettings, string issueTrackerUrl) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IssueTrackerUrl = issueTrackerUrl;
@@ -1621,7 +1623,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Link to Issue tracker.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ResetIssueTrackerUrl(this SonarScannerBeginSettings toolSettings)
+        public static T ResetIssueTrackerUrl<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IssueTrackerUrl = null;
@@ -1634,7 +1636,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Link to project source repository</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetSCMUrl(this SonarScannerBeginSettings toolSettings, string scmurl)
+        public static T SetSCMUrl<T>(this T toolSettings, string scmurl) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SCMUrl = scmurl;
@@ -1645,7 +1647,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Link to project source repository</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ResetSCMUrl(this SonarScannerBeginSettings toolSettings)
+        public static T ResetSCMUrl<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SCMUrl = null;
@@ -1658,7 +1660,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Encoding of the source files. Ex: UTF-8 , MacRoman , Shift_JIS . This property can be replaced by the standard property project.build.sourceEncoding in Maven projects. The list of available encodings depends on your JVM.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetSourceEncoding(this SonarScannerBeginSettings toolSettings, string sourceEncoding)
+        public static T SetSourceEncoding<T>(this T toolSettings, string sourceEncoding) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceEncoding = sourceEncoding;
@@ -1669,7 +1671,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Encoding of the source files. Ex: UTF-8 , MacRoman , Shift_JIS . This property can be replaced by the standard property project.build.sourceEncoding in Maven projects. The list of available encodings depends on your JVM.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ResetSourceEncoding(this SonarScannerBeginSettings toolSettings)
+        public static T ResetSourceEncoding<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceEncoding = null;
@@ -1682,7 +1684,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma-delimited list of file path patterns to be excluded from duplication detection.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetDuplicationExclusions(this SonarScannerBeginSettings toolSettings, params string[] duplicationExclusions)
+        public static T SetDuplicationExclusions<T>(this T toolSettings, params string[] duplicationExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DuplicationExclusionsInternal = duplicationExclusions.ToList();
@@ -1693,7 +1695,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma-delimited list of file path patterns to be excluded from duplication detection.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings SetDuplicationExclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> duplicationExclusions)
+        public static T SetDuplicationExclusions<T>(this T toolSettings, IEnumerable<string> duplicationExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DuplicationExclusionsInternal = duplicationExclusions.ToList();
@@ -1704,7 +1706,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma-delimited list of file path patterns to be excluded from duplication detection.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddDuplicationExclusions(this SonarScannerBeginSettings toolSettings, params string[] duplicationExclusions)
+        public static T AddDuplicationExclusions<T>(this T toolSettings, params string[] duplicationExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DuplicationExclusionsInternal.AddRange(duplicationExclusions);
@@ -1715,7 +1717,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma-delimited list of file path patterns to be excluded from duplication detection.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings AddDuplicationExclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> duplicationExclusions)
+        public static T AddDuplicationExclusions<T>(this T toolSettings, IEnumerable<string> duplicationExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DuplicationExclusionsInternal.AddRange(duplicationExclusions);
@@ -1726,7 +1728,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma-delimited list of file path patterns to be excluded from duplication detection.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings ClearDuplicationExclusions(this SonarScannerBeginSettings toolSettings)
+        public static T ClearDuplicationExclusions<T>(this T toolSettings) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DuplicationExclusionsInternal.Clear();
@@ -1737,7 +1739,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma-delimited list of file path patterns to be excluded from duplication detection.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveDuplicationExclusions(this SonarScannerBeginSettings toolSettings, params string[] duplicationExclusions)
+        public static T RemoveDuplicationExclusions<T>(this T toolSettings, params string[] duplicationExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(duplicationExclusions);
@@ -1749,11 +1751,33 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Comma-delimited list of file path patterns to be excluded from duplication detection.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerBeginSettings RemoveDuplicationExclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> duplicationExclusions)
+        public static T RemoveDuplicationExclusions<T>(this T toolSettings, IEnumerable<string> duplicationExclusions) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(duplicationExclusions);
             toolSettings.DuplicationExclusionsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region Framework
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.Framework"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = framework;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SonarScannerBeginSettings.Framework"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T ResetFramework<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = null;
             return toolSettings;
         }
         #endregion
@@ -1773,7 +1797,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Specifies the username or access token to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added on the end step.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerEndSettings SetLogin(this SonarScannerEndSettings toolSettings, string login)
+        public static T SetLogin<T>(this T toolSettings, string login) where T : SonarScannerEndSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Login = login;
@@ -1784,7 +1808,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Specifies the username or access token to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added on the end step.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerEndSettings ResetLogin(this SonarScannerEndSettings toolSettings)
+        public static T ResetLogin<T>(this T toolSettings) where T : SonarScannerEndSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Login = null;
@@ -1797,7 +1821,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Specifies the password for the SonarQube username in the `sonar.login` argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerEndSettings SetPassword(this SonarScannerEndSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : SonarScannerEndSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -1808,10 +1832,32 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Specifies the password for the SonarQube username in the `sonar.login` argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.</p>
         /// </summary>
         [Pure]
-        public static SonarScannerEndSettings ResetPassword(this SonarScannerEndSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : SonarScannerEndSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Framework
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerEndSettings.Framework"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : SonarScannerEndSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = framework;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SonarScannerEndSettings.Framework"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T ResetFramework<T>(this T toolSettings) where T : SonarScannerEndSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = null;
             return toolSettings;
         }
         #endregion

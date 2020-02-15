@@ -355,7 +355,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>The directory containing .git. If not defined current directory is used. (Must be first argument).</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetTargetPath(this GitVersionSettings toolSettings, string targetPath)
+        public static T SetTargetPath<T>(this T toolSettings, string targetPath) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetPath = targetPath;
@@ -366,7 +366,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>The directory containing .git. If not defined current directory is used. (Must be first argument).</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetTargetPath(this GitVersionSettings toolSettings)
+        public static T ResetTargetPath<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetPath = null;
@@ -379,7 +379,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Displays the version of GitVersion.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetVersion(this GitVersionSettings toolSettings, bool? version)
+        public static T SetVersion<T>(this T toolSettings, bool? version) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = version;
@@ -390,7 +390,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Displays the version of GitVersion.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetVersion(this GitVersionSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = null;
@@ -401,7 +401,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Displays the version of GitVersion.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings EnableVersion(this GitVersionSettings toolSettings)
+        public static T EnableVersion<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = true;
@@ -412,7 +412,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Displays the version of GitVersion.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings DisableVersion(this GitVersionSettings toolSettings)
+        public static T DisableVersion<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = false;
@@ -423,7 +423,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Displays the version of GitVersion.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ToggleVersion(this GitVersionSettings toolSettings)
+        public static T ToggleVersion<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = !toolSettings.Version;
@@ -436,7 +436,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Runs GitVersion with additional diagnostic information (requires git.exe to be installed).</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetDiagnostics(this GitVersionSettings toolSettings, bool? diagnostics)
+        public static T SetDiagnostics<T>(this T toolSettings, bool? diagnostics) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Diagnostics = diagnostics;
@@ -447,7 +447,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Runs GitVersion with additional diagnostic information (requires git.exe to be installed).</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetDiagnostics(this GitVersionSettings toolSettings)
+        public static T ResetDiagnostics<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Diagnostics = null;
@@ -458,7 +458,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Runs GitVersion with additional diagnostic information (requires git.exe to be installed).</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings EnableDiagnostics(this GitVersionSettings toolSettings)
+        public static T EnableDiagnostics<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Diagnostics = true;
@@ -469,7 +469,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Runs GitVersion with additional diagnostic information (requires git.exe to be installed).</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings DisableDiagnostics(this GitVersionSettings toolSettings)
+        public static T DisableDiagnostics<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Diagnostics = false;
@@ -480,7 +480,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Runs GitVersion with additional diagnostic information (requires git.exe to be installed).</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ToggleDiagnostics(this GitVersionSettings toolSettings)
+        public static T ToggleDiagnostics<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Diagnostics = !toolSettings.Diagnostics;
@@ -493,7 +493,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Determines the output to the console. Can be either <em>json</em> or <em>buildserver</em>, will default to <em>json</em>.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetOutput(this GitVersionSettings toolSettings, GitVersionOutput output)
+        public static T SetOutput<T>(this T toolSettings, GitVersionOutput output) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -504,7 +504,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Determines the output to the console. Can be either <em>json</em> or <em>buildserver</em>, will default to <em>json</em>.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetOutput(this GitVersionSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -517,7 +517,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Used in conjuntion with <c>/output</c> json, will output just a particular variable. E.g., <c>/output json /showvariable SemVer</c> - will output <c>1.2.3+beta.4</c>.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetShowVariable(this GitVersionSettings toolSettings, string showVariable)
+        public static T SetShowVariable<T>(this T toolSettings, string showVariable) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowVariable = showVariable;
@@ -528,7 +528,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Used in conjuntion with <c>/output</c> json, will output just a particular variable. E.g., <c>/output json /showvariable SemVer</c> - will output <c>1.2.3+beta.4</c>.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetShowVariable(this GitVersionSettings toolSettings)
+        public static T ResetShowVariable<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowVariable = null;
@@ -541,7 +541,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Path to logfile.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetLogFile(this GitVersionSettings toolSettings, string logFile)
+        public static T SetLogFile<T>(this T toolSettings, string logFile) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = logFile;
@@ -552,7 +552,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Path to logfile.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetLogFile(this GitVersionSettings toolSettings)
+        public static T ResetLogFile<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = null;
@@ -565,7 +565,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Outputs the effective GitVersion config (defaults + custom from GitVersion.yml) in yaml format.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetShowConfig(this GitVersionSettings toolSettings, bool? showConfig)
+        public static T SetShowConfig<T>(this T toolSettings, bool? showConfig) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowConfig = showConfig;
@@ -576,7 +576,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Outputs the effective GitVersion config (defaults + custom from GitVersion.yml) in yaml format.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetShowConfig(this GitVersionSettings toolSettings)
+        public static T ResetShowConfig<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowConfig = null;
@@ -587,7 +587,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Outputs the effective GitVersion config (defaults + custom from GitVersion.yml) in yaml format.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings EnableShowConfig(this GitVersionSettings toolSettings)
+        public static T EnableShowConfig<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowConfig = true;
@@ -598,7 +598,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Outputs the effective GitVersion config (defaults + custom from GitVersion.yml) in yaml format.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings DisableShowConfig(this GitVersionSettings toolSettings)
+        public static T DisableShowConfig<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowConfig = false;
@@ -609,7 +609,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Outputs the effective GitVersion config (defaults + custom from GitVersion.yml) in yaml format.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ToggleShowConfig(this GitVersionSettings toolSettings)
+        public static T ToggleShowConfig<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowConfig = !toolSettings.ShowConfig;
@@ -622,7 +622,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Overrides GitVersion config values inline (semicolon-separated key value pairs e.g. <c>/overrideconfig tag-prefix=Foo</c>). Currently supported config overrides: <c>tag-prefix</c>.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetConfigurationOverride(this GitVersionSettings toolSettings, IDictionary<string, object> configurationOverride)
+        public static T SetConfigurationOverride<T>(this T toolSettings, IDictionary<string, object> configurationOverride) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigurationOverrideInternal = configurationOverride.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -633,7 +633,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Overrides GitVersion config values inline (semicolon-separated key value pairs e.g. <c>/overrideconfig tag-prefix=Foo</c>). Currently supported config overrides: <c>tag-prefix</c>.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ClearConfigurationOverride(this GitVersionSettings toolSettings)
+        public static T ClearConfigurationOverride<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigurationOverrideInternal.Clear();
@@ -644,7 +644,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Overrides GitVersion config values inline (semicolon-separated key value pairs e.g. <c>/overrideconfig tag-prefix=Foo</c>). Currently supported config overrides: <c>tag-prefix</c>.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings AddConfigurationOverride(this GitVersionSettings toolSettings, string configurationOverrideKey, object configurationOverrideValue)
+        public static T AddConfigurationOverride<T>(this T toolSettings, string configurationOverrideKey, object configurationOverrideValue) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigurationOverrideInternal.Add(configurationOverrideKey, configurationOverrideValue);
@@ -655,7 +655,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Overrides GitVersion config values inline (semicolon-separated key value pairs e.g. <c>/overrideconfig tag-prefix=Foo</c>). Currently supported config overrides: <c>tag-prefix</c>.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings RemoveConfigurationOverride(this GitVersionSettings toolSettings, string configurationOverrideKey)
+        public static T RemoveConfigurationOverride<T>(this T toolSettings, string configurationOverrideKey) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigurationOverrideInternal.Remove(configurationOverrideKey);
@@ -666,7 +666,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Overrides GitVersion config values inline (semicolon-separated key value pairs e.g. <c>/overrideconfig tag-prefix=Foo</c>). Currently supported config overrides: <c>tag-prefix</c>.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetConfigurationOverride(this GitVersionSettings toolSettings, string configurationOverrideKey, object configurationOverrideValue)
+        public static T SetConfigurationOverride<T>(this T toolSettings, string configurationOverrideKey, object configurationOverrideValue) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigurationOverrideInternal[configurationOverrideKey] = configurationOverrideValue;
@@ -679,7 +679,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Bypasses the cache, result will not be written to the cache.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetNoCache(this GitVersionSettings toolSettings, bool? noCache)
+        public static T SetNoCache<T>(this T toolSettings, bool? noCache) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = noCache;
@@ -690,7 +690,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Bypasses the cache, result will not be written to the cache.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetNoCache(this GitVersionSettings toolSettings)
+        public static T ResetNoCache<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = null;
@@ -701,7 +701,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Bypasses the cache, result will not be written to the cache.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings EnableNoCache(this GitVersionSettings toolSettings)
+        public static T EnableNoCache<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = true;
@@ -712,7 +712,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Bypasses the cache, result will not be written to the cache.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings DisableNoCache(this GitVersionSettings toolSettings)
+        public static T DisableNoCache<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = false;
@@ -723,7 +723,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Bypasses the cache, result will not be written to the cache.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ToggleNoCache(this GitVersionSettings toolSettings)
+        public static T ToggleNoCache<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = !toolSettings.NoCache;
@@ -736,7 +736,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Will recursively search for all 'AssemblyInfo.cs' files in the git repo and update them.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetUpdateAssemblyInfo(this GitVersionSettings toolSettings, bool? updateAssemblyInfo)
+        public static T SetUpdateAssemblyInfo<T>(this T toolSettings, bool? updateAssemblyInfo) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UpdateAssemblyInfo = updateAssemblyInfo;
@@ -747,7 +747,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Will recursively search for all 'AssemblyInfo.cs' files in the git repo and update them.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetUpdateAssemblyInfo(this GitVersionSettings toolSettings)
+        public static T ResetUpdateAssemblyInfo<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UpdateAssemblyInfo = null;
@@ -758,7 +758,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Will recursively search for all 'AssemblyInfo.cs' files in the git repo and update them.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings EnableUpdateAssemblyInfo(this GitVersionSettings toolSettings)
+        public static T EnableUpdateAssemblyInfo<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UpdateAssemblyInfo = true;
@@ -769,7 +769,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Will recursively search for all 'AssemblyInfo.cs' files in the git repo and update them.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings DisableUpdateAssemblyInfo(this GitVersionSettings toolSettings)
+        public static T DisableUpdateAssemblyInfo<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UpdateAssemblyInfo = false;
@@ -780,7 +780,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Will recursively search for all 'AssemblyInfo.cs' files in the git repo and update them.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ToggleUpdateAssemblyInfo(this GitVersionSettings toolSettings)
+        public static T ToggleUpdateAssemblyInfo<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UpdateAssemblyInfo = !toolSettings.UpdateAssemblyInfo;
@@ -793,7 +793,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Specify name of AssemblyInfo files to update.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetUpdateAssemblyInfoFileNames(this GitVersionSettings toolSettings, params string[] updateAssemblyInfoFileNames)
+        public static T SetUpdateAssemblyInfoFileNames<T>(this T toolSettings, params string[] updateAssemblyInfoFileNames) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UpdateAssemblyInfoFileNamesInternal = updateAssemblyInfoFileNames.ToList();
@@ -804,7 +804,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Specify name of AssemblyInfo files to update.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetUpdateAssemblyInfoFileNames(this GitVersionSettings toolSettings, IEnumerable<string> updateAssemblyInfoFileNames)
+        public static T SetUpdateAssemblyInfoFileNames<T>(this T toolSettings, IEnumerable<string> updateAssemblyInfoFileNames) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UpdateAssemblyInfoFileNamesInternal = updateAssemblyInfoFileNames.ToList();
@@ -815,7 +815,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Specify name of AssemblyInfo files to update.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings AddUpdateAssemblyInfoFileNames(this GitVersionSettings toolSettings, params string[] updateAssemblyInfoFileNames)
+        public static T AddUpdateAssemblyInfoFileNames<T>(this T toolSettings, params string[] updateAssemblyInfoFileNames) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UpdateAssemblyInfoFileNamesInternal.AddRange(updateAssemblyInfoFileNames);
@@ -826,7 +826,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Specify name of AssemblyInfo files to update.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings AddUpdateAssemblyInfoFileNames(this GitVersionSettings toolSettings, IEnumerable<string> updateAssemblyInfoFileNames)
+        public static T AddUpdateAssemblyInfoFileNames<T>(this T toolSettings, IEnumerable<string> updateAssemblyInfoFileNames) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UpdateAssemblyInfoFileNamesInternal.AddRange(updateAssemblyInfoFileNames);
@@ -837,7 +837,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Specify name of AssemblyInfo files to update.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ClearUpdateAssemblyInfoFileNames(this GitVersionSettings toolSettings)
+        public static T ClearUpdateAssemblyInfoFileNames<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UpdateAssemblyInfoFileNamesInternal.Clear();
@@ -848,7 +848,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Specify name of AssemblyInfo files to update.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings RemoveUpdateAssemblyInfoFileNames(this GitVersionSettings toolSettings, params string[] updateAssemblyInfoFileNames)
+        public static T RemoveUpdateAssemblyInfoFileNames<T>(this T toolSettings, params string[] updateAssemblyInfoFileNames) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(updateAssemblyInfoFileNames);
@@ -860,7 +860,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Specify name of AssemblyInfo files to update.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings RemoveUpdateAssemblyInfoFileNames(this GitVersionSettings toolSettings, IEnumerable<string> updateAssemblyInfoFileNames)
+        public static T RemoveUpdateAssemblyInfoFileNames<T>(this T toolSettings, IEnumerable<string> updateAssemblyInfoFileNames) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(updateAssemblyInfoFileNames);
@@ -874,7 +874,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>If the assembly info file specified with <c>/updateassemblyinfo</c> or <c>/updateassemblyinfofilename</c> is not found, it will be created with these attributes: AssemblyFileVersion, AssemblyVersion and AssemblyInformationalVersion.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetEnsureAssemblyInfo(this GitVersionSettings toolSettings, bool? ensureAssemblyInfo)
+        public static T SetEnsureAssemblyInfo<T>(this T toolSettings, bool? ensureAssemblyInfo) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnsureAssemblyInfo = ensureAssemblyInfo;
@@ -885,7 +885,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>If the assembly info file specified with <c>/updateassemblyinfo</c> or <c>/updateassemblyinfofilename</c> is not found, it will be created with these attributes: AssemblyFileVersion, AssemblyVersion and AssemblyInformationalVersion.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetEnsureAssemblyInfo(this GitVersionSettings toolSettings)
+        public static T ResetEnsureAssemblyInfo<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnsureAssemblyInfo = null;
@@ -896,7 +896,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>If the assembly info file specified with <c>/updateassemblyinfo</c> or <c>/updateassemblyinfofilename</c> is not found, it will be created with these attributes: AssemblyFileVersion, AssemblyVersion and AssemblyInformationalVersion.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings EnableEnsureAssemblyInfo(this GitVersionSettings toolSettings)
+        public static T EnableEnsureAssemblyInfo<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnsureAssemblyInfo = true;
@@ -907,7 +907,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>If the assembly info file specified with <c>/updateassemblyinfo</c> or <c>/updateassemblyinfofilename</c> is not found, it will be created with these attributes: AssemblyFileVersion, AssemblyVersion and AssemblyInformationalVersion.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings DisableEnsureAssemblyInfo(this GitVersionSettings toolSettings)
+        public static T DisableEnsureAssemblyInfo<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnsureAssemblyInfo = false;
@@ -918,7 +918,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>If the assembly info file specified with <c>/updateassemblyinfo</c> or <c>/updateassemblyinfofilename</c> is not found, it will be created with these attributes: AssemblyFileVersion, AssemblyVersion and AssemblyInformationalVersion.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ToggleEnsureAssemblyInfo(this GitVersionSettings toolSettings)
+        public static T ToggleEnsureAssemblyInfo<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnsureAssemblyInfo = !toolSettings.EnsureAssemblyInfo;
@@ -931,7 +931,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Url to remote git repository.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetUrl(this GitVersionSettings toolSettings, string url)
+        public static T SetUrl<T>(this T toolSettings, string url) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Url = url;
@@ -942,7 +942,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Url to remote git repository.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetUrl(this GitVersionSettings toolSettings)
+        public static T ResetUrl<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Url = null;
@@ -955,7 +955,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Name of the branch to use on the remote repository, must be used in combination with <c>/url</c>.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetBranch(this GitVersionSettings toolSettings, string branch)
+        public static T SetBranch<T>(this T toolSettings, string branch) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Branch = branch;
@@ -966,7 +966,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Name of the branch to use on the remote repository, must be used in combination with <c>/url</c>.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetBranch(this GitVersionSettings toolSettings)
+        public static T ResetBranch<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Branch = null;
@@ -979,7 +979,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Username in case authentication is required.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetUsername(this GitVersionSettings toolSettings, string username)
+        public static T SetUsername<T>(this T toolSettings, string username) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = username;
@@ -990,7 +990,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Username in case authentication is required.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetUsername(this GitVersionSettings toolSettings)
+        public static T ResetUsername<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = null;
@@ -1003,7 +1003,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Password in case authentication is required.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetPassword(this GitVersionSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -1014,7 +1014,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Password in case authentication is required.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetPassword(this GitVersionSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -1027,7 +1027,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>The commit id to check. If not specified, the latest available commit on the specified branch will be used.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetCommit(this GitVersionSettings toolSettings, string commit)
+        public static T SetCommit<T>(this T toolSettings, string commit) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Commit = commit;
@@ -1038,7 +1038,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>The commit id to check. If not specified, the latest available commit on the specified branch will be used.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetCommit(this GitVersionSettings toolSettings)
+        public static T ResetCommit<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Commit = null;
@@ -1051,7 +1051,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>By default dynamic repositories will be cloned to %tmp%. Use this switch to override.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetDynamicRepositoryLocation(this GitVersionSettings toolSettings, string dynamicRepositoryLocation)
+        public static T SetDynamicRepositoryLocation<T>(this T toolSettings, string dynamicRepositoryLocation) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DynamicRepositoryLocation = dynamicRepositoryLocation;
@@ -1062,7 +1062,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>By default dynamic repositories will be cloned to %tmp%. Use this switch to override.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetDynamicRepositoryLocation(this GitVersionSettings toolSettings)
+        public static T ResetDynamicRepositoryLocation<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DynamicRepositoryLocation = null;
@@ -1075,7 +1075,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Disables <c>git fetch</c> during version calculation. Might cause GitVersion to not calculate your version as expected.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetNoFetch(this GitVersionSettings toolSettings, bool? noFetch)
+        public static T SetNoFetch<T>(this T toolSettings, bool? noFetch) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoFetch = noFetch;
@@ -1086,7 +1086,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Disables <c>git fetch</c> during version calculation. Might cause GitVersion to not calculate your version as expected.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetNoFetch(this GitVersionSettings toolSettings)
+        public static T ResetNoFetch<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoFetch = null;
@@ -1097,7 +1097,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Disables <c>git fetch</c> during version calculation. Might cause GitVersion to not calculate your version as expected.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings EnableNoFetch(this GitVersionSettings toolSettings)
+        public static T EnableNoFetch<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoFetch = true;
@@ -1108,7 +1108,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Disables <c>git fetch</c> during version calculation. Might cause GitVersion to not calculate your version as expected.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings DisableNoFetch(this GitVersionSettings toolSettings)
+        public static T DisableNoFetch<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoFetch = false;
@@ -1119,7 +1119,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Disables <c>git fetch</c> during version calculation. Might cause GitVersion to not calculate your version as expected.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ToggleNoFetch(this GitVersionSettings toolSettings)
+        public static T ToggleNoFetch<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoFetch = !toolSettings.NoFetch;
@@ -1132,7 +1132,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Executes target executable making GitVersion variables available as environmental variables.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetExecutable(this GitVersionSettings toolSettings, string executable)
+        public static T SetExecutable<T>(this T toolSettings, string executable) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Executable = executable;
@@ -1143,7 +1143,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Executes target executable making GitVersion variables available as environmental variables.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetExecutable(this GitVersionSettings toolSettings)
+        public static T ResetExecutable<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Executable = null;
@@ -1156,7 +1156,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Arguments for the executable specified by <c>/exec</c>.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetExecutableArguments(this GitVersionSettings toolSettings, string executableArguments)
+        public static T SetExecutableArguments<T>(this T toolSettings, string executableArguments) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExecutableArguments = executableArguments;
@@ -1167,7 +1167,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Arguments for the executable specified by <c>/exec</c>.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetExecutableArguments(this GitVersionSettings toolSettings)
+        public static T ResetExecutableArguments<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExecutableArguments = null;
@@ -1180,7 +1180,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Build an MSBuild file, GitVersion variables will be passed as MSBuild properties.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetMSBuildProject(this GitVersionSettings toolSettings, string msbuildProject)
+        public static T SetMSBuildProject<T>(this T toolSettings, string msbuildProject) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MSBuildProject = msbuildProject;
@@ -1191,7 +1191,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Build an MSBuild file, GitVersion variables will be passed as MSBuild properties.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetMSBuildProject(this GitVersionSettings toolSettings)
+        public static T ResetMSBuildProject<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MSBuildProject = null;
@@ -1204,7 +1204,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Additional arguments to pass to MSBuild.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetMSBuildProjectArguments(this GitVersionSettings toolSettings, string msbuildProjectArguments)
+        public static T SetMSBuildProjectArguments<T>(this T toolSettings, string msbuildProjectArguments) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MSBuildProjectArguments = msbuildProjectArguments;
@@ -1215,7 +1215,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Additional arguments to pass to MSBuild.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetMSBuildProjectArguments(this GitVersionSettings toolSettings)
+        public static T ResetMSBuildProjectArguments<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MSBuildProjectArguments = null;
@@ -1228,7 +1228,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Set Verbosity level (<c>debug</c>, <c>info</c>, <c>warn</c>, <c>error</c>, <c>none</c>). Default is <c>info</c>.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetVerbosity(this GitVersionSettings toolSettings, GitVersionVerbosity verbosity)
+        public static T SetVerbosity<T>(this T toolSettings, GitVersionVerbosity verbosity) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = verbosity;
@@ -1239,7 +1239,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Set Verbosity level (<c>debug</c>, <c>info</c>, <c>warn</c>, <c>error</c>, <c>none</c>). Default is <c>info</c>.</p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetVerbosity(this GitVersionSettings toolSettings)
+        public static T ResetVerbosity<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = null;
@@ -1251,7 +1251,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p><em>Sets <see cref="GitVersionSettings.Framework"/></em></p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings SetFramework(this GitVersionSettings toolSettings, string framework)
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = framework;
@@ -1261,7 +1261,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p><em>Resets <see cref="GitVersionSettings.Framework"/></em></p>
         /// </summary>
         [Pure]
-        public static GitVersionSettings ResetFramework(this GitVersionSettings toolSettings)
+        public static T ResetFramework<T>(this T toolSettings) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = null;

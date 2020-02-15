@@ -314,7 +314,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Install the app whose package is in the specified directory.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetInstall(this SquirrelSettings toolSettings, string install)
+        public static T SetInstall<T>(this T toolSettings, string install) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Install = install;
@@ -325,7 +325,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Install the app whose package is in the specified directory.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetInstall(this SquirrelSettings toolSettings)
+        public static T ResetInstall<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Install = null;
@@ -338,7 +338,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Uninstall the app the same dir as Update.exe.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetUninstall(this SquirrelSettings toolSettings, bool? uninstall)
+        public static T SetUninstall<T>(this T toolSettings, bool? uninstall) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Uninstall = uninstall;
@@ -349,7 +349,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Uninstall the app the same dir as Update.exe.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetUninstall(this SquirrelSettings toolSettings)
+        public static T ResetUninstall<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Uninstall = null;
@@ -360,7 +360,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Uninstall the app the same dir as Update.exe.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings EnableUninstall(this SquirrelSettings toolSettings)
+        public static T EnableUninstall<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Uninstall = true;
@@ -371,7 +371,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Uninstall the app the same dir as Update.exe.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings DisableUninstall(this SquirrelSettings toolSettings)
+        public static T DisableUninstall<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Uninstall = false;
@@ -382,7 +382,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Uninstall the app the same dir as Update.exe.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ToggleUninstall(this SquirrelSettings toolSettings)
+        public static T ToggleUninstall<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Uninstall = !toolSettings.Uninstall;
@@ -395,7 +395,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Download the releases specified by the URL and write new results to stdout as JSON.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetDownload(this SquirrelSettings toolSettings, bool? download)
+        public static T SetDownload<T>(this T toolSettings, bool? download) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Download = download;
@@ -406,7 +406,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Download the releases specified by the URL and write new results to stdout as JSON.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetDownload(this SquirrelSettings toolSettings)
+        public static T ResetDownload<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Download = null;
@@ -417,7 +417,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Download the releases specified by the URL and write new results to stdout as JSON.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings EnableDownload(this SquirrelSettings toolSettings)
+        public static T EnableDownload<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Download = true;
@@ -428,7 +428,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Download the releases specified by the URL and write new results to stdout as JSON.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings DisableDownload(this SquirrelSettings toolSettings)
+        public static T DisableDownload<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Download = false;
@@ -439,7 +439,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Download the releases specified by the URL and write new results to stdout as JSON.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ToggleDownload(this SquirrelSettings toolSettings)
+        public static T ToggleDownload<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Download = !toolSettings.Download;
@@ -452,7 +452,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Check for one available update and writes new results to stdout as JSON.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetCheckForUpdate(this SquirrelSettings toolSettings, bool? checkForUpdate)
+        public static T SetCheckForUpdate<T>(this T toolSettings, bool? checkForUpdate) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CheckForUpdate = checkForUpdate;
@@ -463,7 +463,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Check for one available update and writes new results to stdout as JSON.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetCheckForUpdate(this SquirrelSettings toolSettings)
+        public static T ResetCheckForUpdate<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CheckForUpdate = null;
@@ -474,7 +474,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Check for one available update and writes new results to stdout as JSON.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings EnableCheckForUpdate(this SquirrelSettings toolSettings)
+        public static T EnableCheckForUpdate<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CheckForUpdate = true;
@@ -485,7 +485,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Check for one available update and writes new results to stdout as JSON.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings DisableCheckForUpdate(this SquirrelSettings toolSettings)
+        public static T DisableCheckForUpdate<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CheckForUpdate = false;
@@ -496,7 +496,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Check for one available update and writes new results to stdout as JSON.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ToggleCheckForUpdate(this SquirrelSettings toolSettings)
+        public static T ToggleCheckForUpdate<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CheckForUpdate = !toolSettings.CheckForUpdate;
@@ -509,7 +509,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Update the application to the latest remote version specified by URL.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetUpdate(this SquirrelSettings toolSettings, string update)
+        public static T SetUpdate<T>(this T toolSettings, string update) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Update = update;
@@ -520,7 +520,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Update the application to the latest remote version specified by URL.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetUpdate(this SquirrelSettings toolSettings)
+        public static T ResetUpdate<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Update = null;
@@ -533,7 +533,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Update or generate a releases directory with a given NuGet package.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetReleasify(this SquirrelSettings toolSettings, string releasify)
+        public static T SetReleasify<T>(this T toolSettings, string releasify) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Releasify = releasify;
@@ -544,7 +544,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Update or generate a releases directory with a given NuGet package.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetReleasify(this SquirrelSettings toolSettings)
+        public static T ResetReleasify<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Releasify = null;
@@ -557,7 +557,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Create a shortcut for the given executable name.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetCreateShortcut(this SquirrelSettings toolSettings, string createShortcut)
+        public static T SetCreateShortcut<T>(this T toolSettings, string createShortcut) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CreateShortcut = createShortcut;
@@ -568,7 +568,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Create a shortcut for the given executable name.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetCreateShortcut(this SquirrelSettings toolSettings)
+        public static T ResetCreateShortcut<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CreateShortcut = null;
@@ -581,7 +581,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Remove a shortcut for the given executable name.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetRemoveShortcut(this SquirrelSettings toolSettings, string removeShortcut)
+        public static T SetRemoveShortcut<T>(this T toolSettings, string removeShortcut) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RemoveShortcut = removeShortcut;
@@ -592,7 +592,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Remove a shortcut for the given executable name.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetRemoveShortcut(this SquirrelSettings toolSettings)
+        public static T ResetRemoveShortcut<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RemoveShortcut = null;
@@ -605,7 +605,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Copy the currently executing Update.exe into the default location.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetUpdateSelf(this SquirrelSettings toolSettings, string updateSelf)
+        public static T SetUpdateSelf<T>(this T toolSettings, string updateSelf) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UpdateSelf = updateSelf;
@@ -616,7 +616,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Copy the currently executing Update.exe into the default location.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetUpdateSelf(this SquirrelSettings toolSettings)
+        public static T ResetUpdateSelf<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UpdateSelf = null;
@@ -629,7 +629,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Start an executable in the latest version of the app package.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetProcessStart(this SquirrelSettings toolSettings, string processStart)
+        public static T SetProcessStart<T>(this T toolSettings, string processStart) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProcessStart = processStart;
@@ -640,7 +640,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Start an executable in the latest version of the app package.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetProcessStart(this SquirrelSettings toolSettings)
+        public static T ResetProcessStart<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProcessStart = null;
@@ -653,7 +653,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Start an executable in the latest version of the app package.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetProcessStartAndWait(this SquirrelSettings toolSettings, string processStartAndWait)
+        public static T SetProcessStartAndWait<T>(this T toolSettings, string processStartAndWait) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProcessStartAndWait = processStartAndWait;
@@ -664,7 +664,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Start an executable in the latest version of the app package.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetProcessStartAndWait(this SquirrelSettings toolSettings)
+        public static T ResetProcessStartAndWait<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProcessStartAndWait = null;
@@ -677,7 +677,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Path to a release directory to use with releasify.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetReleaseDirectory(this SquirrelSettings toolSettings, string releaseDirectory)
+        public static T SetReleaseDirectory<T>(this T toolSettings, string releaseDirectory) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseDirectory = releaseDirectory;
@@ -688,7 +688,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Path to a release directory to use with releasify.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetReleaseDirectory(this SquirrelSettings toolSettings)
+        public static T ResetReleaseDirectory<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseDirectory = null;
@@ -701,7 +701,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Path to the NuGet Packages directory for C# apps.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetPackagesDirectory(this SquirrelSettings toolSettings, string packagesDirectory)
+        public static T SetPackagesDirectory<T>(this T toolSettings, string packagesDirectory) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackagesDirectory = packagesDirectory;
@@ -712,7 +712,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Path to the NuGet Packages directory for C# apps.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetPackagesDirectory(this SquirrelSettings toolSettings)
+        public static T ResetPackagesDirectory<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackagesDirectory = null;
@@ -725,7 +725,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Path to the Setup.exe to use as a template.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetBootstrapperExecutable(this SquirrelSettings toolSettings, string bootstrapperExecutable)
+        public static T SetBootstrapperExecutable<T>(this T toolSettings, string bootstrapperExecutable) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BootstrapperExecutable = bootstrapperExecutable;
@@ -736,7 +736,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Path to the Setup.exe to use as a template.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetBootstrapperExecutable(this SquirrelSettings toolSettings)
+        public static T ResetBootstrapperExecutable<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BootstrapperExecutable = null;
@@ -749,7 +749,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Path to an animated GIF to be displayed during installation.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetLoadingGif(this SquirrelSettings toolSettings, string loadingGif)
+        public static T SetLoadingGif<T>(this T toolSettings, string loadingGif) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LoadingGif = loadingGif;
@@ -760,7 +760,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Path to an animated GIF to be displayed during installation.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetLoadingGif(this SquirrelSettings toolSettings)
+        public static T ResetLoadingGif<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LoadingGif = null;
@@ -773,7 +773,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Path to an ICO file that will be used for icon shortcuts.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetIcon(this SquirrelSettings toolSettings, string icon)
+        public static T SetIcon<T>(this T toolSettings, string icon) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Icon = icon;
@@ -784,7 +784,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Path to an ICO file that will be used for icon shortcuts.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetIcon(this SquirrelSettings toolSettings)
+        public static T ResetIcon<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Icon = null;
@@ -797,7 +797,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Path to an ICO file that will be used for the Setup executable's icon.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetSetupIcon(this SquirrelSettings toolSettings, string setupIcon)
+        public static T SetSetupIcon<T>(this T toolSettings, string setupIcon) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetupIcon = setupIcon;
@@ -808,7 +808,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Path to an ICO file that will be used for the Setup executable's icon.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetSetupIcon(this SquirrelSettings toolSettings)
+        public static T ResetSetupIcon<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetupIcon = null;
@@ -821,7 +821,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Sign the installer via SignTool.exe with the parameters given.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetSignWithParameters(this SquirrelSettings toolSettings, string signWithParameters)
+        public static T SetSignWithParameters<T>(this T toolSettings, string signWithParameters) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SignWithParameters = signWithParameters;
@@ -832,7 +832,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Sign the installer via SignTool.exe with the parameters given.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetSignWithParameters(this SquirrelSettings toolSettings)
+        public static T ResetSignWithParameters<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SignWithParameters = null;
@@ -845,7 +845,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Provides a base URL to prefix the RELEASES file packages with.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetBaseUrl(this SquirrelSettings toolSettings, string baseUrl)
+        public static T SetBaseUrl<T>(this T toolSettings, string baseUrl) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BaseUrl = baseUrl;
@@ -856,7 +856,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Provides a base URL to prefix the RELEASES file packages with.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetBaseUrl(this SquirrelSettings toolSettings)
+        public static T ResetBaseUrl<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BaseUrl = null;
@@ -869,7 +869,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Arguments that will be used when starting executable.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetProcessStartArguments(this SquirrelSettings toolSettings, string processStartArguments)
+        public static T SetProcessStartArguments<T>(this T toolSettings, string processStartArguments) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProcessStartArguments = processStartArguments;
@@ -880,7 +880,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Arguments that will be used when starting executable.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetProcessStartArguments(this SquirrelSettings toolSettings)
+        public static T ResetProcessStartArguments<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProcessStartArguments = null;
@@ -893,7 +893,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetShortcutLocations(this SquirrelSettings toolSettings, params string[] shortcutLocations)
+        public static T SetShortcutLocations<T>(this T toolSettings, params string[] shortcutLocations) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShortcutLocationsInternal = shortcutLocations.ToList();
@@ -904,7 +904,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetShortcutLocations(this SquirrelSettings toolSettings, IEnumerable<string> shortcutLocations)
+        public static T SetShortcutLocations<T>(this T toolSettings, IEnumerable<string> shortcutLocations) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShortcutLocationsInternal = shortcutLocations.ToList();
@@ -915,7 +915,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings AddShortcutLocations(this SquirrelSettings toolSettings, params string[] shortcutLocations)
+        public static T AddShortcutLocations<T>(this T toolSettings, params string[] shortcutLocations) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShortcutLocationsInternal.AddRange(shortcutLocations);
@@ -926,7 +926,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings AddShortcutLocations(this SquirrelSettings toolSettings, IEnumerable<string> shortcutLocations)
+        public static T AddShortcutLocations<T>(this T toolSettings, IEnumerable<string> shortcutLocations) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShortcutLocationsInternal.AddRange(shortcutLocations);
@@ -937,7 +937,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ClearShortcutLocations(this SquirrelSettings toolSettings)
+        public static T ClearShortcutLocations<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShortcutLocationsInternal.Clear();
@@ -948,7 +948,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings RemoveShortcutLocations(this SquirrelSettings toolSettings, params string[] shortcutLocations)
+        public static T RemoveShortcutLocations<T>(this T toolSettings, params string[] shortcutLocations) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(shortcutLocations);
@@ -960,7 +960,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings RemoveShortcutLocations(this SquirrelSettings toolSettings, IEnumerable<string> shortcutLocations)
+        public static T RemoveShortcutLocations<T>(this T toolSettings, IEnumerable<string> shortcutLocations) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(shortcutLocations);
@@ -974,7 +974,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Don't generate an MSI package.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetGenerateNoMsi(this SquirrelSettings toolSettings, bool? generateNoMsi)
+        public static T SetGenerateNoMsi<T>(this T toolSettings, bool? generateNoMsi) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GenerateNoMsi = generateNoMsi;
@@ -985,7 +985,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Don't generate an MSI package.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetGenerateNoMsi(this SquirrelSettings toolSettings)
+        public static T ResetGenerateNoMsi<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GenerateNoMsi = null;
@@ -996,7 +996,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Don't generate an MSI package.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings EnableGenerateNoMsi(this SquirrelSettings toolSettings)
+        public static T EnableGenerateNoMsi<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GenerateNoMsi = true;
@@ -1007,7 +1007,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Don't generate an MSI package.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings DisableGenerateNoMsi(this SquirrelSettings toolSettings)
+        public static T DisableGenerateNoMsi<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GenerateNoMsi = false;
@@ -1018,7 +1018,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Don't generate an MSI package.</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ToggleGenerateNoMsi(this SquirrelSettings toolSettings)
+        public static T ToggleGenerateNoMsi<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GenerateNoMsi = !toolSettings.GenerateNoMsi;
@@ -1031,7 +1031,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Don't generate delta packages to save time</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetGenerateNoDelta(this SquirrelSettings toolSettings, bool? generateNoDelta)
+        public static T SetGenerateNoDelta<T>(this T toolSettings, bool? generateNoDelta) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GenerateNoDelta = generateNoDelta;
@@ -1042,7 +1042,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Don't generate delta packages to save time</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetGenerateNoDelta(this SquirrelSettings toolSettings)
+        public static T ResetGenerateNoDelta<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GenerateNoDelta = null;
@@ -1053,7 +1053,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Don't generate delta packages to save time</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings EnableGenerateNoDelta(this SquirrelSettings toolSettings)
+        public static T EnableGenerateNoDelta<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GenerateNoDelta = true;
@@ -1064,7 +1064,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Don't generate delta packages to save time</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings DisableGenerateNoDelta(this SquirrelSettings toolSettings)
+        public static T DisableGenerateNoDelta<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GenerateNoDelta = false;
@@ -1075,7 +1075,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Don't generate delta packages to save time</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ToggleGenerateNoDelta(this SquirrelSettings toolSettings)
+        public static T ToggleGenerateNoDelta<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GenerateNoDelta = !toolSettings.GenerateNoDelta;
@@ -1088,7 +1088,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Set the required .NET framework version, e.g. net461</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings SetFrameworkVersion(this SquirrelSettings toolSettings, string frameworkVersion)
+        public static T SetFrameworkVersion<T>(this T toolSettings, string frameworkVersion) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FrameworkVersion = frameworkVersion;
@@ -1099,7 +1099,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Set the required .NET framework version, e.g. net461</p>
         /// </summary>
         [Pure]
-        public static SquirrelSettings ResetFrameworkVersion(this SquirrelSettings toolSettings)
+        public static T ResetFrameworkVersion<T>(this T toolSettings) where T : SquirrelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FrameworkVersion = null;

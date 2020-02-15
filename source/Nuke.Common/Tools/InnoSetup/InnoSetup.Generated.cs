@@ -204,7 +204,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>The .iss script file to compile</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings SetScriptFile(this InnoSetupSettings toolSettings, string scriptFile)
+        public static T SetScriptFile<T>(this T toolSettings, string scriptFile) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ScriptFile = scriptFile;
@@ -215,7 +215,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>The .iss script file to compile</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings ResetScriptFile(this InnoSetupSettings toolSettings)
+        public static T ResetScriptFile<T>(this T toolSettings) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ScriptFile = null;
@@ -228,7 +228,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Enable or disable output (overrides <c>Output</c>)</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings SetOutput(this InnoSetupSettings toolSettings, bool? output)
+        public static T SetOutput<T>(this T toolSettings, bool? output) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -239,7 +239,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Enable or disable output (overrides <c>Output</c>)</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings ResetOutput(this InnoSetupSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -250,7 +250,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Enable or disable output (overrides <c>Output</c>)</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings EnableOutput(this InnoSetupSettings toolSettings)
+        public static T EnableOutput<T>(this T toolSettings) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = true;
@@ -261,7 +261,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Enable or disable output (overrides <c>Output</c>)</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings DisableOutput(this InnoSetupSettings toolSettings)
+        public static T DisableOutput<T>(this T toolSettings) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = false;
@@ -272,7 +272,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Enable or disable output (overrides <c>Output</c>)</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings ToggleOutput(this InnoSetupSettings toolSettings)
+        public static T ToggleOutput<T>(this T toolSettings) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = !toolSettings.Output;
@@ -285,7 +285,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Output files to specified path (overrides <c>OutputDir</c>)</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings SetOutputDir(this InnoSetupSettings toolSettings, string outputDir)
+        public static T SetOutputDir<T>(this T toolSettings, string outputDir) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputDir = outputDir;
@@ -296,7 +296,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Output files to specified path (overrides <c>OutputDir</c>)</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings ResetOutputDir(this InnoSetupSettings toolSettings)
+        public static T ResetOutputDir<T>(this T toolSettings) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputDir = null;
@@ -309,7 +309,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Overrides OutputBaseFilename with the specified filename</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings SetOutputBaseFilename(this InnoSetupSettings toolSettings, string outputBaseFilename)
+        public static T SetOutputBaseFilename<T>(this T toolSettings, string outputBaseFilename) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputBaseFilename = outputBaseFilename;
@@ -320,7 +320,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Overrides OutputBaseFilename with the specified filename</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings ResetOutputBaseFilename(this InnoSetupSettings toolSettings)
+        public static T ResetOutputBaseFilename<T>(this T toolSettings) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputBaseFilename = null;
@@ -333,7 +333,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Sets a SignTool with the specified name and command</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings SetSignTools(this InnoSetupSettings toolSettings, IDictionary<string, string> signTools)
+        public static T SetSignTools<T>(this T toolSettings, IDictionary<string, string> signTools) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SignToolsInternal = signTools.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -344,7 +344,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Sets a SignTool with the specified name and command</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings ClearSignTools(this InnoSetupSettings toolSettings)
+        public static T ClearSignTools<T>(this T toolSettings) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SignToolsInternal.Clear();
@@ -355,7 +355,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Sets a SignTool with the specified name and command</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings AddSignTool(this InnoSetupSettings toolSettings, string signToolKey, string signToolValue)
+        public static T AddSignTool<T>(this T toolSettings, string signToolKey, string signToolValue) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SignToolsInternal.Add(signToolKey, signToolValue);
@@ -366,7 +366,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Sets a SignTool with the specified name and command</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings RemoveSignTool(this InnoSetupSettings toolSettings, string signToolKey)
+        public static T RemoveSignTool<T>(this T toolSettings, string signToolKey) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SignToolsInternal.Remove(signToolKey);
@@ -377,7 +377,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Sets a SignTool with the specified name and command</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings SetSignTool(this InnoSetupSettings toolSettings, string signToolKey, string signToolValue)
+        public static T SetSignTool<T>(this T toolSettings, string signToolKey, string signToolValue) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SignToolsInternal[signToolKey] = signToolValue;
@@ -390,7 +390,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Quiet compile (print error messages only)</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings SetQuiet(this InnoSetupSettings toolSettings, bool? quiet)
+        public static T SetQuiet<T>(this T toolSettings, bool? quiet) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = quiet;
@@ -401,7 +401,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Quiet compile (print error messages only)</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings ResetQuiet(this InnoSetupSettings toolSettings)
+        public static T ResetQuiet<T>(this T toolSettings) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = null;
@@ -412,7 +412,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Quiet compile (print error messages only)</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings EnableQuiet(this InnoSetupSettings toolSettings)
+        public static T EnableQuiet<T>(this T toolSettings) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = true;
@@ -423,7 +423,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Quiet compile (print error messages only)</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings DisableQuiet(this InnoSetupSettings toolSettings)
+        public static T DisableQuiet<T>(this T toolSettings) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = false;
@@ -434,7 +434,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Quiet compile (print error messages only)</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings ToggleQuiet(this InnoSetupSettings toolSettings)
+        public static T ToggleQuiet<T>(this T toolSettings) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = !toolSettings.Quiet;
@@ -447,7 +447,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Enable quiet compile while still displaying progress</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings SetQuietWithProgress(this InnoSetupSettings toolSettings, bool? quietWithProgress)
+        public static T SetQuietWithProgress<T>(this T toolSettings, bool? quietWithProgress) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.QuietWithProgress = quietWithProgress;
@@ -458,7 +458,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Enable quiet compile while still displaying progress</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings ResetQuietWithProgress(this InnoSetupSettings toolSettings)
+        public static T ResetQuietWithProgress<T>(this T toolSettings) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.QuietWithProgress = null;
@@ -469,7 +469,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Enable quiet compile while still displaying progress</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings EnableQuietWithProgress(this InnoSetupSettings toolSettings)
+        public static T EnableQuietWithProgress<T>(this T toolSettings) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.QuietWithProgress = true;
@@ -480,7 +480,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Enable quiet compile while still displaying progress</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings DisableQuietWithProgress(this InnoSetupSettings toolSettings)
+        public static T DisableQuietWithProgress<T>(this T toolSettings) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.QuietWithProgress = false;
@@ -491,7 +491,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Enable quiet compile while still displaying progress</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings ToggleQuietWithProgress(this InnoSetupSettings toolSettings)
+        public static T ToggleQuietWithProgress<T>(this T toolSettings) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.QuietWithProgress = !toolSettings.QuietWithProgress;
@@ -504,7 +504,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Emulate <c>#define public {name} {value}</c></p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings SetKeyValueDefinitions(this InnoSetupSettings toolSettings, IDictionary<string, string> keyValueDefinitions)
+        public static T SetKeyValueDefinitions<T>(this T toolSettings, IDictionary<string, string> keyValueDefinitions) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyValueDefinitionsInternal = keyValueDefinitions.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -515,7 +515,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Emulate <c>#define public {name} {value}</c></p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings ClearKeyValueDefinitions(this InnoSetupSettings toolSettings)
+        public static T ClearKeyValueDefinitions<T>(this T toolSettings) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyValueDefinitionsInternal.Clear();
@@ -526,7 +526,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Emulate <c>#define public {name} {value}</c></p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings AddKeyValueDefinition(this InnoSetupSettings toolSettings, string keyValueDefinitionKey, string keyValueDefinitionValue)
+        public static T AddKeyValueDefinition<T>(this T toolSettings, string keyValueDefinitionKey, string keyValueDefinitionValue) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyValueDefinitionsInternal.Add(keyValueDefinitionKey, keyValueDefinitionValue);
@@ -537,7 +537,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Emulate <c>#define public {name} {value}</c></p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings RemoveKeyValueDefinition(this InnoSetupSettings toolSettings, string keyValueDefinitionKey)
+        public static T RemoveKeyValueDefinition<T>(this T toolSettings, string keyValueDefinitionKey) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyValueDefinitionsInternal.Remove(keyValueDefinitionKey);
@@ -548,7 +548,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Emulate <c>#define public {name} {value}</c></p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings SetKeyValueDefinition(this InnoSetupSettings toolSettings, string keyValueDefinitionKey, string keyValueDefinitionValue)
+        public static T SetKeyValueDefinition<T>(this T toolSettings, string keyValueDefinitionKey, string keyValueDefinitionValue) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyValueDefinitionsInternal[keyValueDefinitionKey] = keyValueDefinitionValue;
@@ -561,7 +561,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Emulate <c>#define public {name}</c></p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings SetKeyDefinitions(this InnoSetupSettings toolSettings, params string[] keyDefinitions)
+        public static T SetKeyDefinitions<T>(this T toolSettings, params string[] keyDefinitions) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyDefinitionsInternal = keyDefinitions.ToList();
@@ -572,7 +572,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Emulate <c>#define public {name}</c></p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings SetKeyDefinitions(this InnoSetupSettings toolSettings, IEnumerable<string> keyDefinitions)
+        public static T SetKeyDefinitions<T>(this T toolSettings, IEnumerable<string> keyDefinitions) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyDefinitionsInternal = keyDefinitions.ToList();
@@ -583,7 +583,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Emulate <c>#define public {name}</c></p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings AddKeyDefinitions(this InnoSetupSettings toolSettings, params string[] keyDefinitions)
+        public static T AddKeyDefinitions<T>(this T toolSettings, params string[] keyDefinitions) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyDefinitionsInternal.AddRange(keyDefinitions);
@@ -594,7 +594,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Emulate <c>#define public {name}</c></p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings AddKeyDefinitions(this InnoSetupSettings toolSettings, IEnumerable<string> keyDefinitions)
+        public static T AddKeyDefinitions<T>(this T toolSettings, IEnumerable<string> keyDefinitions) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyDefinitionsInternal.AddRange(keyDefinitions);
@@ -605,7 +605,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Emulate <c>#define public {name}</c></p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings ClearKeyDefinitions(this InnoSetupSettings toolSettings)
+        public static T ClearKeyDefinitions<T>(this T toolSettings) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyDefinitionsInternal.Clear();
@@ -616,7 +616,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Emulate <c>#define public {name}</c></p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings RemoveKeyDefinitions(this InnoSetupSettings toolSettings, params string[] keyDefinitions)
+        public static T RemoveKeyDefinitions<T>(this T toolSettings, params string[] keyDefinitions) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(keyDefinitions);
@@ -628,7 +628,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Emulate <c>#define public {name}</c></p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings RemoveKeyDefinitions(this InnoSetupSettings toolSettings, IEnumerable<string> keyDefinitions)
+        public static T RemoveKeyDefinitions<T>(this T toolSettings, IEnumerable<string> keyDefinitions) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(keyDefinitions);
@@ -642,7 +642,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Emulate <c>#pragma verboselevel {number}</c> (highest level is 9)</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings SetVerbosity(this InnoSetupSettings toolSettings, int? verbosity)
+        public static T SetVerbosity<T>(this T toolSettings, int? verbosity) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = verbosity;
@@ -653,7 +653,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Emulate <c>#pragma verboselevel {number}</c> (highest level is 9)</p>
         /// </summary>
         [Pure]
-        public static InnoSetupSettings ResetVerbosity(this InnoSetupSettings toolSettings)
+        public static T ResetVerbosity<T>(this T toolSettings) where T : InnoSetupSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = null;

@@ -1907,7 +1907,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p><em>Sets <see cref="DocFXBuildSettings.ConfigFile"/></em></p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetConfigFile(this DocFXBuildSettings toolSettings, string configFile)
+        public static T SetConfigFile<T>(this T toolSettings, string configFile) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigFile = configFile;
@@ -1917,7 +1917,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p><em>Resets <see cref="DocFXBuildSettings.ConfigFile"/></em></p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetConfigFile(this DocFXBuildSettings toolSettings)
+        public static T ResetConfigFile<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigFile = null;
@@ -1930,7 +1930,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set changes file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetChangesFile(this DocFXBuildSettings toolSettings, string changesFile)
+        public static T SetChangesFile<T>(this T toolSettings, string changesFile) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ChangesFile = changesFile;
@@ -1941,7 +1941,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set changes file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetChangesFile(this DocFXBuildSettings toolSettings)
+        public static T ResetChangesFile<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ChangesFile = null;
@@ -1954,7 +1954,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, docfx create a new intermediate folder for cache files, historical cache data will be cleaned up.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetCleanupCacheHistory(this DocFXBuildSettings toolSettings, bool? cleanupCacheHistory)
+        public static T SetCleanupCacheHistory<T>(this T toolSettings, bool? cleanupCacheHistory) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CleanupCacheHistory = cleanupCacheHistory;
@@ -1965,7 +1965,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, docfx create a new intermediate folder for cache files, historical cache data will be cleaned up.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetCleanupCacheHistory(this DocFXBuildSettings toolSettings)
+        public static T ResetCleanupCacheHistory<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CleanupCacheHistory = null;
@@ -1976,7 +1976,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, docfx create a new intermediate folder for cache files, historical cache data will be cleaned up.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings EnableCleanupCacheHistory(this DocFXBuildSettings toolSettings)
+        public static T EnableCleanupCacheHistory<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CleanupCacheHistory = true;
@@ -1987,7 +1987,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, docfx create a new intermediate folder for cache files, historical cache data will be cleaned up.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings DisableCleanupCacheHistory(this DocFXBuildSettings toolSettings)
+        public static T DisableCleanupCacheHistory<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CleanupCacheHistory = false;
@@ -1998,7 +1998,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, docfx create a new intermediate folder for cache files, historical cache data will be cleaned up.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ToggleCleanupCacheHistory(this DocFXBuildSettings toolSettings)
+        public static T ToggleCleanupCacheHistory<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CleanupCacheHistory = !toolSettings.CleanupCacheHistory;
@@ -2011,7 +2011,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify content files for generating documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetContent(this DocFXBuildSettings toolSettings, params string[] content)
+        public static T SetContent<T>(this T toolSettings, params string[] content) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContentInternal = content.ToList();
@@ -2022,7 +2022,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify content files for generating documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetContent(this DocFXBuildSettings toolSettings, IEnumerable<string> content)
+        public static T SetContent<T>(this T toolSettings, IEnumerable<string> content) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContentInternal = content.ToList();
@@ -2033,7 +2033,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify content files for generating documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings AddContent(this DocFXBuildSettings toolSettings, params string[] content)
+        public static T AddContent<T>(this T toolSettings, params string[] content) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContentInternal.AddRange(content);
@@ -2044,7 +2044,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify content files for generating documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings AddContent(this DocFXBuildSettings toolSettings, IEnumerable<string> content)
+        public static T AddContent<T>(this T toolSettings, IEnumerable<string> content) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContentInternal.AddRange(content);
@@ -2055,7 +2055,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify content files for generating documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ClearContent(this DocFXBuildSettings toolSettings)
+        public static T ClearContent<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContentInternal.Clear();
@@ -2066,7 +2066,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify content files for generating documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings RemoveContent(this DocFXBuildSettings toolSettings, params string[] content)
+        public static T RemoveContent<T>(this T toolSettings, params string[] content) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(content);
@@ -2078,7 +2078,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify content files for generating documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings RemoveContent(this DocFXBuildSettings toolSettings, IEnumerable<string> content)
+        public static T RemoveContent<T>(this T toolSettings, IEnumerable<string> content) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(content);
@@ -2092,7 +2092,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetDisableGitFeatures(this DocFXBuildSettings toolSettings, bool? disableGitFeatures)
+        public static T SetDisableGitFeatures<T>(this T toolSettings, bool? disableGitFeatures) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableGitFeatures = disableGitFeatures;
@@ -2103,7 +2103,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetDisableGitFeatures(this DocFXBuildSettings toolSettings)
+        public static T ResetDisableGitFeatures<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableGitFeatures = null;
@@ -2114,7 +2114,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings EnableDisableGitFeatures(this DocFXBuildSettings toolSettings)
+        public static T EnableDisableGitFeatures<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableGitFeatures = true;
@@ -2125,7 +2125,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings DisableDisableGitFeatures(this DocFXBuildSettings toolSettings)
+        public static T DisableDisableGitFeatures<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableGitFeatures = false;
@@ -2136,7 +2136,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ToggleDisableGitFeatures(this DocFXBuildSettings toolSettings)
+        public static T ToggleDisableGitFeatures<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableGitFeatures = !toolSettings.DisableGitFeatures;
@@ -2149,7 +2149,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, template will not be actually applied to the documents. This option is always used with --exportRawModel or --exportViewModel is set so that only raw model files or view model files are generated.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetDryRun(this DocFXBuildSettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -2160,7 +2160,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, template will not be actually applied to the documents. This option is always used with --exportRawModel or --exportViewModel is set so that only raw model files or view model files are generated.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetDryRun(this DocFXBuildSettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -2171,7 +2171,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, template will not be actually applied to the documents. This option is always used with --exportRawModel or --exportViewModel is set so that only raw model files or view model files are generated.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings EnableDryRun(this DocFXBuildSettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -2182,7 +2182,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, template will not be actually applied to the documents. This option is always used with --exportRawModel or --exportViewModel is set so that only raw model files or view model files are generated.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings DisableDryRun(this DocFXBuildSettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -2193,7 +2193,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, template will not be actually applied to the documents. This option is always used with --exportRawModel or --exportViewModel is set so that only raw model files or view model files are generated.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ToggleDryRun(this DocFXBuildSettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -2206,7 +2206,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Run in debug mode. With debug mode, raw model and view model will be exported automatically when it encounters error when applying templates. If not specified, it is false.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetEnableDebugMode(this DocFXBuildSettings toolSettings, bool? enableDebugMode)
+        public static T SetEnableDebugMode<T>(this T toolSettings, bool? enableDebugMode) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableDebugMode = enableDebugMode;
@@ -2217,7 +2217,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Run in debug mode. With debug mode, raw model and view model will be exported automatically when it encounters error when applying templates. If not specified, it is false.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetEnableDebugMode(this DocFXBuildSettings toolSettings)
+        public static T ResetEnableDebugMode<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableDebugMode = null;
@@ -2228,7 +2228,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Run in debug mode. With debug mode, raw model and view model will be exported automatically when it encounters error when applying templates. If not specified, it is false.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings EnableEnableDebugMode(this DocFXBuildSettings toolSettings)
+        public static T EnableEnableDebugMode<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableDebugMode = true;
@@ -2239,7 +2239,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Run in debug mode. With debug mode, raw model and view model will be exported automatically when it encounters error when applying templates. If not specified, it is false.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings DisableEnableDebugMode(this DocFXBuildSettings toolSettings)
+        public static T DisableEnableDebugMode<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableDebugMode = false;
@@ -2250,7 +2250,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Run in debug mode. With debug mode, raw model and view model will be exported automatically when it encounters error when applying templates. If not specified, it is false.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ToggleEnableDebugMode(this DocFXBuildSettings toolSettings)
+        public static T ToggleEnableDebugMode<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableDebugMode = !toolSettings.EnableDebugMode;
@@ -2263,7 +2263,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, data model to run template script will be extracted in .raw.model.json extension.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetExportRawModel(this DocFXBuildSettings toolSettings, bool? exportRawModel)
+        public static T SetExportRawModel<T>(this T toolSettings, bool? exportRawModel) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportRawModel = exportRawModel;
@@ -2274,7 +2274,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, data model to run template script will be extracted in .raw.model.json extension.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetExportRawModel(this DocFXBuildSettings toolSettings)
+        public static T ResetExportRawModel<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportRawModel = null;
@@ -2285,7 +2285,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, data model to run template script will be extracted in .raw.model.json extension.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings EnableExportRawModel(this DocFXBuildSettings toolSettings)
+        public static T EnableExportRawModel<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportRawModel = true;
@@ -2296,7 +2296,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, data model to run template script will be extracted in .raw.model.json extension.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings DisableExportRawModel(this DocFXBuildSettings toolSettings)
+        public static T DisableExportRawModel<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportRawModel = false;
@@ -2307,7 +2307,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, data model to run template script will be extracted in .raw.model.json extension.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ToggleExportRawModel(this DocFXBuildSettings toolSettings)
+        public static T ToggleExportRawModel<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportRawModel = !toolSettings.ExportRawModel;
@@ -2320,7 +2320,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, data model to apply template will be extracted in .view.model.json extension.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetExportViewModel(this DocFXBuildSettings toolSettings, bool? exportViewModel)
+        public static T SetExportViewModel<T>(this T toolSettings, bool? exportViewModel) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportViewModel = exportViewModel;
@@ -2331,7 +2331,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, data model to apply template will be extracted in .view.model.json extension.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetExportViewModel(this DocFXBuildSettings toolSettings)
+        public static T ResetExportViewModel<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportViewModel = null;
@@ -2342,7 +2342,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, data model to apply template will be extracted in .view.model.json extension.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings EnableExportViewModel(this DocFXBuildSettings toolSettings)
+        public static T EnableExportViewModel<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportViewModel = true;
@@ -2353,7 +2353,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, data model to apply template will be extracted in .view.model.json extension.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings DisableExportViewModel(this DocFXBuildSettings toolSettings)
+        public static T DisableExportViewModel<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportViewModel = false;
@@ -2364,7 +2364,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, data model to apply template will be extracted in .view.model.json extension.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ToggleExportViewModel(this DocFXBuildSettings toolSettings)
+        public static T ToggleExportViewModel<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportViewModel = !toolSettings.ExportViewModel;
@@ -2377,7 +2377,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the name of input file abstract layer builder.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetFALName(this DocFXBuildSettings toolSettings, string falname)
+        public static T SetFALName<T>(this T toolSettings, string falname) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FALName = falname;
@@ -2388,7 +2388,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the name of input file abstract layer builder.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetFALName(this DocFXBuildSettings toolSettings)
+        public static T ResetFALName<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FALName = null;
@@ -2401,7 +2401,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a JSON file path containing fileMetadata settings, as similar to {"fileMetadata":{"key":"value"}}. It overrides the fileMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetFileMetadataFilePath(this DocFXBuildSettings toolSettings, string fileMetadataFilePath)
+        public static T SetFileMetadataFilePath<T>(this T toolSettings, string fileMetadataFilePath) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileMetadataFilePath = fileMetadataFilePath;
@@ -2412,7 +2412,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a JSON file path containing fileMetadata settings, as similar to {"fileMetadata":{"key":"value"}}. It overrides the fileMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetFileMetadataFilePath(this DocFXBuildSettings toolSettings)
+        public static T ResetFileMetadataFilePath<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileMetadataFilePath = null;
@@ -2425,7 +2425,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing fileMetadata settings, as similar to {"key":"value"}. It overrides the fileMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetFileMetadataFilePaths(this DocFXBuildSettings toolSettings, params string[] fileMetadataFilePaths)
+        public static T SetFileMetadataFilePaths<T>(this T toolSettings, params string[] fileMetadataFilePaths) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileMetadataFilePathsInternal = fileMetadataFilePaths.ToList();
@@ -2436,7 +2436,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing fileMetadata settings, as similar to {"key":"value"}. It overrides the fileMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetFileMetadataFilePaths(this DocFXBuildSettings toolSettings, IEnumerable<string> fileMetadataFilePaths)
+        public static T SetFileMetadataFilePaths<T>(this T toolSettings, IEnumerable<string> fileMetadataFilePaths) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileMetadataFilePathsInternal = fileMetadataFilePaths.ToList();
@@ -2447,7 +2447,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing fileMetadata settings, as similar to {"key":"value"}. It overrides the fileMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings AddFileMetadataFilePaths(this DocFXBuildSettings toolSettings, params string[] fileMetadataFilePaths)
+        public static T AddFileMetadataFilePaths<T>(this T toolSettings, params string[] fileMetadataFilePaths) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileMetadataFilePathsInternal.AddRange(fileMetadataFilePaths);
@@ -2458,7 +2458,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing fileMetadata settings, as similar to {"key":"value"}. It overrides the fileMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings AddFileMetadataFilePaths(this DocFXBuildSettings toolSettings, IEnumerable<string> fileMetadataFilePaths)
+        public static T AddFileMetadataFilePaths<T>(this T toolSettings, IEnumerable<string> fileMetadataFilePaths) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileMetadataFilePathsInternal.AddRange(fileMetadataFilePaths);
@@ -2469,7 +2469,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing fileMetadata settings, as similar to {"key":"value"}. It overrides the fileMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ClearFileMetadataFilePaths(this DocFXBuildSettings toolSettings)
+        public static T ClearFileMetadataFilePaths<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileMetadataFilePathsInternal.Clear();
@@ -2480,7 +2480,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing fileMetadata settings, as similar to {"key":"value"}. It overrides the fileMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings RemoveFileMetadataFilePaths(this DocFXBuildSettings toolSettings, params string[] fileMetadataFilePaths)
+        public static T RemoveFileMetadataFilePaths<T>(this T toolSettings, params string[] fileMetadataFilePaths) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(fileMetadataFilePaths);
@@ -2492,7 +2492,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing fileMetadata settings, as similar to {"key":"value"}. It overrides the fileMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings RemoveFileMetadataFilePaths(this DocFXBuildSettings toolSettings, IEnumerable<string> fileMetadataFilePaths)
+        public static T RemoveFileMetadataFilePaths<T>(this T toolSettings, IEnumerable<string> fileMetadataFilePaths) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(fileMetadataFilePaths);
@@ -2506,7 +2506,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force to re-process the documentation in post processors. It will be cascaded from force option.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetForcePostProcess(this DocFXBuildSettings toolSettings, bool? forcePostProcess)
+        public static T SetForcePostProcess<T>(this T toolSettings, bool? forcePostProcess) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForcePostProcess = forcePostProcess;
@@ -2517,7 +2517,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force to re-process the documentation in post processors. It will be cascaded from force option.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetForcePostProcess(this DocFXBuildSettings toolSettings)
+        public static T ResetForcePostProcess<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForcePostProcess = null;
@@ -2528,7 +2528,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force to re-process the documentation in post processors. It will be cascaded from force option.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings EnableForcePostProcess(this DocFXBuildSettings toolSettings)
+        public static T EnableForcePostProcess<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForcePostProcess = true;
@@ -2539,7 +2539,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force to re-process the documentation in post processors. It will be cascaded from force option.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings DisableForcePostProcess(this DocFXBuildSettings toolSettings)
+        public static T DisableForcePostProcess<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForcePostProcess = false;
@@ -2550,7 +2550,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force to re-process the documentation in post processors. It will be cascaded from force option.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ToggleForcePostProcess(this DocFXBuildSettings toolSettings)
+        public static T ToggleForcePostProcess<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForcePostProcess = !toolSettings.ForcePostProcess;
@@ -2563,7 +2563,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force re-build all the documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetForceRebuild(this DocFXBuildSettings toolSettings, bool? forceRebuild)
+        public static T SetForceRebuild<T>(this T toolSettings, bool? forceRebuild) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceRebuild = forceRebuild;
@@ -2574,7 +2574,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force re-build all the documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetForceRebuild(this DocFXBuildSettings toolSettings)
+        public static T ResetForceRebuild<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceRebuild = null;
@@ -2585,7 +2585,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force re-build all the documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings EnableForceRebuild(this DocFXBuildSettings toolSettings)
+        public static T EnableForceRebuild<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceRebuild = true;
@@ -2596,7 +2596,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force re-build all the documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings DisableForceRebuild(this DocFXBuildSettings toolSettings)
+        public static T DisableForceRebuild<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceRebuild = false;
@@ -2607,7 +2607,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force re-build all the documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ToggleForceRebuild(this DocFXBuildSettings toolSettings)
+        public static T ToggleForceRebuild<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceRebuild = !toolSettings.ForceRebuild;
@@ -2620,7 +2620,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify global metadata key-value pair in json format. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetGlobalMetadata(this DocFXBuildSettings toolSettings, string globalMetadata)
+        public static T SetGlobalMetadata<T>(this T toolSettings, string globalMetadata) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalMetadata = globalMetadata;
@@ -2631,7 +2631,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify global metadata key-value pair in json format. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetGlobalMetadata(this DocFXBuildSettings toolSettings)
+        public static T ResetGlobalMetadata<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalMetadata = null;
@@ -2644,7 +2644,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a JSON file path containing globalMetadata settings, as similar to {"globalMetadata":{"key":"value"}}. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetGlobalMetadataFilePath(this DocFXBuildSettings toolSettings, string globalMetadataFilePath)
+        public static T SetGlobalMetadataFilePath<T>(this T toolSettings, string globalMetadataFilePath) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalMetadataFilePath = globalMetadataFilePath;
@@ -2655,7 +2655,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a JSON file path containing globalMetadata settings, as similar to {"globalMetadata":{"key":"value"}}. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetGlobalMetadataFilePath(this DocFXBuildSettings toolSettings)
+        public static T ResetGlobalMetadataFilePath<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalMetadataFilePath = null;
@@ -2668,7 +2668,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing globalMetadata settings, as similar to {"key":"value"}. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetGlobalMetadataFilePaths(this DocFXBuildSettings toolSettings, params string[] globalMetadataFilePaths)
+        public static T SetGlobalMetadataFilePaths<T>(this T toolSettings, params string[] globalMetadataFilePaths) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalMetadataFilePathsInternal = globalMetadataFilePaths.ToList();
@@ -2679,7 +2679,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing globalMetadata settings, as similar to {"key":"value"}. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetGlobalMetadataFilePaths(this DocFXBuildSettings toolSettings, IEnumerable<string> globalMetadataFilePaths)
+        public static T SetGlobalMetadataFilePaths<T>(this T toolSettings, IEnumerable<string> globalMetadataFilePaths) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalMetadataFilePathsInternal = globalMetadataFilePaths.ToList();
@@ -2690,7 +2690,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing globalMetadata settings, as similar to {"key":"value"}. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings AddGlobalMetadataFilePaths(this DocFXBuildSettings toolSettings, params string[] globalMetadataFilePaths)
+        public static T AddGlobalMetadataFilePaths<T>(this T toolSettings, params string[] globalMetadataFilePaths) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalMetadataFilePathsInternal.AddRange(globalMetadataFilePaths);
@@ -2701,7 +2701,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing globalMetadata settings, as similar to {"key":"value"}. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings AddGlobalMetadataFilePaths(this DocFXBuildSettings toolSettings, IEnumerable<string> globalMetadataFilePaths)
+        public static T AddGlobalMetadataFilePaths<T>(this T toolSettings, IEnumerable<string> globalMetadataFilePaths) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalMetadataFilePathsInternal.AddRange(globalMetadataFilePaths);
@@ -2712,7 +2712,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing globalMetadata settings, as similar to {"key":"value"}. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ClearGlobalMetadataFilePaths(this DocFXBuildSettings toolSettings)
+        public static T ClearGlobalMetadataFilePaths<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalMetadataFilePathsInternal.Clear();
@@ -2723,7 +2723,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing globalMetadata settings, as similar to {"key":"value"}. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings RemoveGlobalMetadataFilePaths(this DocFXBuildSettings toolSettings, params string[] globalMetadataFilePaths)
+        public static T RemoveGlobalMetadataFilePaths<T>(this T toolSettings, params string[] globalMetadataFilePaths) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(globalMetadataFilePaths);
@@ -2735,7 +2735,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing globalMetadata settings, as similar to {"key":"value"}. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings RemoveGlobalMetadataFilePaths(this DocFXBuildSettings toolSettings, IEnumerable<string> globalMetadataFilePaths)
+        public static T RemoveGlobalMetadataFilePaths<T>(this T toolSettings, IEnumerable<string> globalMetadataFilePaths) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(globalMetadataFilePaths);
@@ -2749,7 +2749,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the hostname of the hosted website (e.g., 'localhost' or '*').</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetHost(this DocFXBuildSettings toolSettings, string host)
+        public static T SetHost<T>(this T toolSettings, string host) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Host = host;
@@ -2760,7 +2760,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the hostname of the hosted website (e.g., 'localhost' or '*').</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetHost(this DocFXBuildSettings toolSettings)
+        public static T ResetHost<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Host = null;
@@ -2773,7 +2773,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set folder for intermediate build results.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetIntermediateFolder(this DocFXBuildSettings toolSettings, string intermediateFolder)
+        public static T SetIntermediateFolder<T>(this T toolSettings, string intermediateFolder) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IntermediateFolder = intermediateFolder;
@@ -2784,7 +2784,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set folder for intermediate build results.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetIntermediateFolder(this DocFXBuildSettings toolSettings)
+        public static T ResetIntermediateFolder<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IntermediateFolder = null;
@@ -2797,7 +2797,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, docfx does not dereference (aka. copy) file to the output folder, instead, it saves a link_to_path property inside mainfiest.json to indicate the physical location of that file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetKeepFileLink(this DocFXBuildSettings toolSettings, bool? keepFileLink)
+        public static T SetKeepFileLink<T>(this T toolSettings, bool? keepFileLink) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepFileLink = keepFileLink;
@@ -2808,7 +2808,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, docfx does not dereference (aka. copy) file to the output folder, instead, it saves a link_to_path property inside mainfiest.json to indicate the physical location of that file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetKeepFileLink(this DocFXBuildSettings toolSettings)
+        public static T ResetKeepFileLink<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepFileLink = null;
@@ -2819,7 +2819,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, docfx does not dereference (aka. copy) file to the output folder, instead, it saves a link_to_path property inside mainfiest.json to indicate the physical location of that file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings EnableKeepFileLink(this DocFXBuildSettings toolSettings)
+        public static T EnableKeepFileLink<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepFileLink = true;
@@ -2830,7 +2830,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, docfx does not dereference (aka. copy) file to the output folder, instead, it saves a link_to_path property inside mainfiest.json to indicate the physical location of that file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings DisableKeepFileLink(this DocFXBuildSettings toolSettings)
+        public static T DisableKeepFileLink<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepFileLink = false;
@@ -2841,7 +2841,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, docfx does not dereference (aka. copy) file to the output folder, instead, it saves a link_to_path property inside mainfiest.json to indicate the physical location of that file.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ToggleKeepFileLink(this DocFXBuildSettings toolSettings)
+        public static T ToggleKeepFileLink<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepFileLink = !toolSettings.KeepFileLink;
@@ -2854,7 +2854,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the LRU cached model count (approximately the same as the count of input files). By default, it is 8192 for 64bit and 3072 for 32bit process. With LRU cache enabled, memory usage decreases and time consumed increases. If set to 0, Lru cache is disabled.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetLruSize(this DocFXBuildSettings toolSettings, int? lruSize)
+        public static T SetLruSize<T>(this T toolSettings, int? lruSize) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LruSize = lruSize;
@@ -2865,7 +2865,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the LRU cached model count (approximately the same as the count of input files). By default, it is 8192 for 64bit and 3072 for 32bit process. With LRU cache enabled, memory usage decreases and time consumed increases. If set to 0, Lru cache is disabled.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetLruSize(this DocFXBuildSettings toolSettings)
+        public static T ResetLruSize<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LruSize = null;
@@ -2878,7 +2878,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the name of markdown engine, default is 'dfm'.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetMarkdownEngineName(this DocFXBuildSettings toolSettings, string markdownEngineName)
+        public static T SetMarkdownEngineName<T>(this T toolSettings, string markdownEngineName) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MarkdownEngineName = markdownEngineName;
@@ -2889,7 +2889,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the name of markdown engine, default is 'dfm'.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetMarkdownEngineName(this DocFXBuildSettings toolSettings)
+        public static T ResetMarkdownEngineName<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MarkdownEngineName = null;
@@ -2902,7 +2902,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the parameters for markdown engine, value should be a JSON string.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetMarkdownEngineProperties(this DocFXBuildSettings toolSettings, string markdownEngineProperties)
+        public static T SetMarkdownEngineProperties<T>(this T toolSettings, string markdownEngineProperties) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MarkdownEngineProperties = markdownEngineProperties;
@@ -2913,7 +2913,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the parameters for markdown engine, value should be a JSON string.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetMarkdownEngineProperties(this DocFXBuildSettings toolSettings)
+        public static T ResetMarkdownEngineProperties<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MarkdownEngineProperties = null;
@@ -2926,7 +2926,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the max parallelism, 0 is auto.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetMaxParallelism(this DocFXBuildSettings toolSettings, int? maxParallelism)
+        public static T SetMaxParallelism<T>(this T toolSettings, int? maxParallelism) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MaxParallelism = maxParallelism;
@@ -2937,7 +2937,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the max parallelism, 0 is auto.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetMaxParallelism(this DocFXBuildSettings toolSettings)
+        public static T ResetMaxParallelism<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MaxParallelism = null;
@@ -2950,7 +2950,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable default lang keyword.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetNoLangKeyword(this DocFXBuildSettings toolSettings, bool? noLangKeyword)
+        public static T SetNoLangKeyword<T>(this T toolSettings, bool? noLangKeyword) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLangKeyword = noLangKeyword;
@@ -2961,7 +2961,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable default lang keyword.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetNoLangKeyword(this DocFXBuildSettings toolSettings)
+        public static T ResetNoLangKeyword<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLangKeyword = null;
@@ -2972,7 +2972,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable default lang keyword.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings EnableNoLangKeyword(this DocFXBuildSettings toolSettings)
+        public static T EnableNoLangKeyword<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLangKeyword = true;
@@ -2983,7 +2983,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable default lang keyword.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings DisableNoLangKeyword(this DocFXBuildSettings toolSettings)
+        public static T DisableNoLangKeyword<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLangKeyword = false;
@@ -2994,7 +2994,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable default lang keyword.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ToggleNoLangKeyword(this DocFXBuildSettings toolSettings)
+        public static T ToggleNoLangKeyword<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLangKeyword = !toolSettings.NoLangKeyword;
@@ -3007,7 +3007,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the output base directory.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetOutputFolder(this DocFXBuildSettings toolSettings, string outputFolder)
+        public static T SetOutputFolder<T>(this T toolSettings, string outputFolder) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFolder = outputFolder;
@@ -3018,7 +3018,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the output base directory.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetOutputFolder(this DocFXBuildSettings toolSettings)
+        public static T ResetOutputFolder<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFolder = null;
@@ -3031,7 +3031,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>The output folder for files generated for debugging purpose when in debug mode. If not specified, it is ${TempPath}/docfx.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetOutputFolderForDebugFiles(this DocFXBuildSettings toolSettings, string outputFolderForDebugFiles)
+        public static T SetOutputFolderForDebugFiles<T>(this T toolSettings, string outputFolderForDebugFiles) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFolderForDebugFiles = outputFolderForDebugFiles;
@@ -3042,7 +3042,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>The output folder for files generated for debugging purpose when in debug mode. If not specified, it is ${TempPath}/docfx.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetOutputFolderForDebugFiles(this DocFXBuildSettings toolSettings)
+        public static T ResetOutputFolderForDebugFiles<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFolderForDebugFiles = null;
@@ -3055,7 +3055,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify overwrite files used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetOverwrite(this DocFXBuildSettings toolSettings, params string[] overwrite)
+        public static T SetOverwrite<T>(this T toolSettings, params string[] overwrite) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OverwriteInternal = overwrite.ToList();
@@ -3066,7 +3066,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify overwrite files used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetOverwrite(this DocFXBuildSettings toolSettings, IEnumerable<string> overwrite)
+        public static T SetOverwrite<T>(this T toolSettings, IEnumerable<string> overwrite) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OverwriteInternal = overwrite.ToList();
@@ -3077,7 +3077,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify overwrite files used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings AddOverwrite(this DocFXBuildSettings toolSettings, params string[] overwrite)
+        public static T AddOverwrite<T>(this T toolSettings, params string[] overwrite) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OverwriteInternal.AddRange(overwrite);
@@ -3088,7 +3088,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify overwrite files used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings AddOverwrite(this DocFXBuildSettings toolSettings, IEnumerable<string> overwrite)
+        public static T AddOverwrite<T>(this T toolSettings, IEnumerable<string> overwrite) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OverwriteInternal.AddRange(overwrite);
@@ -3099,7 +3099,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify overwrite files used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ClearOverwrite(this DocFXBuildSettings toolSettings)
+        public static T ClearOverwrite<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OverwriteInternal.Clear();
@@ -3110,7 +3110,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify overwrite files used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings RemoveOverwrite(this DocFXBuildSettings toolSettings, params string[] overwrite)
+        public static T RemoveOverwrite<T>(this T toolSettings, params string[] overwrite) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(overwrite);
@@ -3122,7 +3122,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify overwrite files used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings RemoveOverwrite(this DocFXBuildSettings toolSettings, IEnumerable<string> overwrite)
+        public static T RemoveOverwrite<T>(this T toolSettings, IEnumerable<string> overwrite) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(overwrite);
@@ -3136,7 +3136,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the port of the hosted website.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetPort(this DocFXBuildSettings toolSettings, int? port)
+        public static T SetPort<T>(this T toolSettings, int? port) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Port = port;
@@ -3147,7 +3147,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the port of the hosted website.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetPort(this DocFXBuildSettings toolSettings)
+        public static T ResetPort<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Port = null;
@@ -3160,7 +3160,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the order of post processors in plugins.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetPostProcessors(this DocFXBuildSettings toolSettings, params string[] postProcessors)
+        public static T SetPostProcessors<T>(this T toolSettings, params string[] postProcessors) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PostProcessorsInternal = postProcessors.ToList();
@@ -3171,7 +3171,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the order of post processors in plugins.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetPostProcessors(this DocFXBuildSettings toolSettings, IEnumerable<string> postProcessors)
+        public static T SetPostProcessors<T>(this T toolSettings, IEnumerable<string> postProcessors) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PostProcessorsInternal = postProcessors.ToList();
@@ -3182,7 +3182,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the order of post processors in plugins.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings AddPostProcessors(this DocFXBuildSettings toolSettings, params string[] postProcessors)
+        public static T AddPostProcessors<T>(this T toolSettings, params string[] postProcessors) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PostProcessorsInternal.AddRange(postProcessors);
@@ -3193,7 +3193,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the order of post processors in plugins.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings AddPostProcessors(this DocFXBuildSettings toolSettings, IEnumerable<string> postProcessors)
+        public static T AddPostProcessors<T>(this T toolSettings, IEnumerable<string> postProcessors) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PostProcessorsInternal.AddRange(postProcessors);
@@ -3204,7 +3204,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the order of post processors in plugins.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ClearPostProcessors(this DocFXBuildSettings toolSettings)
+        public static T ClearPostProcessors<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PostProcessorsInternal.Clear();
@@ -3215,7 +3215,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the order of post processors in plugins.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings RemovePostProcessors(this DocFXBuildSettings toolSettings, params string[] postProcessors)
+        public static T RemovePostProcessors<T>(this T toolSettings, params string[] postProcessors) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(postProcessors);
@@ -3227,7 +3227,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the order of post processors in plugins.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings RemovePostProcessors(this DocFXBuildSettings toolSettings, IEnumerable<string> postProcessors)
+        public static T RemovePostProcessors<T>(this T toolSettings, IEnumerable<string> postProcessors) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(postProcessors);
@@ -3241,7 +3241,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetPrintHelpMessage(this DocFXBuildSettings toolSettings, bool? printHelpMessage)
+        public static T SetPrintHelpMessage<T>(this T toolSettings, bool? printHelpMessage) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = printHelpMessage;
@@ -3252,7 +3252,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetPrintHelpMessage(this DocFXBuildSettings toolSettings)
+        public static T ResetPrintHelpMessage<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = null;
@@ -3263,7 +3263,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings EnablePrintHelpMessage(this DocFXBuildSettings toolSettings)
+        public static T EnablePrintHelpMessage<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = true;
@@ -3274,7 +3274,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings DisablePrintHelpMessage(this DocFXBuildSettings toolSettings)
+        public static T DisablePrintHelpMessage<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = false;
@@ -3285,7 +3285,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings TogglePrintHelpMessage(this DocFXBuildSettings toolSettings)
+        public static T TogglePrintHelpMessage<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = !toolSettings.PrintHelpMessage;
@@ -3298,7 +3298,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the output folder for the raw model. If not set, the raw model will be generated to the same folder as the output documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetRawModelOutputFolder(this DocFXBuildSettings toolSettings, string rawModelOutputFolder)
+        public static T SetRawModelOutputFolder<T>(this T toolSettings, string rawModelOutputFolder) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RawModelOutputFolder = rawModelOutputFolder;
@@ -3309,7 +3309,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the output folder for the raw model. If not set, the raw model will be generated to the same folder as the output documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetRawModelOutputFolder(this DocFXBuildSettings toolSettings)
+        public static T ResetRawModelOutputFolder<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RawModelOutputFolder = null;
@@ -3322,7 +3322,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify resources used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetResource(this DocFXBuildSettings toolSettings, params string[] resource)
+        public static T SetResource<T>(this T toolSettings, params string[] resource) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResourceInternal = resource.ToList();
@@ -3333,7 +3333,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify resources used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetResource(this DocFXBuildSettings toolSettings, IEnumerable<string> resource)
+        public static T SetResource<T>(this T toolSettings, IEnumerable<string> resource) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResourceInternal = resource.ToList();
@@ -3344,7 +3344,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify resources used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings AddResource(this DocFXBuildSettings toolSettings, params string[] resource)
+        public static T AddResource<T>(this T toolSettings, params string[] resource) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResourceInternal.AddRange(resource);
@@ -3355,7 +3355,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify resources used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings AddResource(this DocFXBuildSettings toolSettings, IEnumerable<string> resource)
+        public static T AddResource<T>(this T toolSettings, IEnumerable<string> resource) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResourceInternal.AddRange(resource);
@@ -3366,7 +3366,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify resources used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ClearResource(this DocFXBuildSettings toolSettings)
+        public static T ClearResource<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResourceInternal.Clear();
@@ -3377,7 +3377,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify resources used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings RemoveResource(this DocFXBuildSettings toolSettings, params string[] resource)
+        public static T RemoveResource<T>(this T toolSettings, params string[] resource) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(resource);
@@ -3389,7 +3389,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify resources used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings RemoveResource(this DocFXBuildSettings toolSettings, IEnumerable<string> resource)
+        public static T RemoveResource<T>(this T toolSettings, IEnumerable<string> resource) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(resource);
@@ -3403,7 +3403,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Please provide the license key for validating schema using NewtonsoftJson.Schema here.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetSchemaLicense(this DocFXBuildSettings toolSettings, string schemaLicense)
+        public static T SetSchemaLicense<T>(this T toolSettings, string schemaLicense) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SchemaLicense = schemaLicense;
@@ -3414,7 +3414,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Please provide the license key for validating schema using NewtonsoftJson.Schema here.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetSchemaLicense(this DocFXBuildSettings toolSettings)
+        public static T ResetSchemaLicense<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SchemaLicense = null;
@@ -3427,7 +3427,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Host the generated documentation to a website.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetServe(this DocFXBuildSettings toolSettings, bool? serve)
+        public static T SetServe<T>(this T toolSettings, bool? serve) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serve = serve;
@@ -3438,7 +3438,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Host the generated documentation to a website.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetServe(this DocFXBuildSettings toolSettings)
+        public static T ResetServe<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serve = null;
@@ -3449,7 +3449,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Host the generated documentation to a website.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings EnableServe(this DocFXBuildSettings toolSettings)
+        public static T EnableServe<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serve = true;
@@ -3460,7 +3460,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Host the generated documentation to a website.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings DisableServe(this DocFXBuildSettings toolSettings)
+        public static T DisableServe<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serve = false;
@@ -3471,7 +3471,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Host the generated documentation to a website.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ToggleServe(this DocFXBuildSettings toolSettings)
+        public static T ToggleServe<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serve = !toolSettings.Serve;
@@ -3484,7 +3484,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the template name to apply to. If not specified, output YAML file will not be transformed.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetTemplates(this DocFXBuildSettings toolSettings, params string[] templates)
+        public static T SetTemplates<T>(this T toolSettings, params string[] templates) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TemplatesInternal = templates.ToList();
@@ -3495,7 +3495,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the template name to apply to. If not specified, output YAML file will not be transformed.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetTemplates(this DocFXBuildSettings toolSettings, IEnumerable<string> templates)
+        public static T SetTemplates<T>(this T toolSettings, IEnumerable<string> templates) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TemplatesInternal = templates.ToList();
@@ -3506,7 +3506,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the template name to apply to. If not specified, output YAML file will not be transformed.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings AddTemplates(this DocFXBuildSettings toolSettings, params string[] templates)
+        public static T AddTemplates<T>(this T toolSettings, params string[] templates) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TemplatesInternal.AddRange(templates);
@@ -3517,7 +3517,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the template name to apply to. If not specified, output YAML file will not be transformed.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings AddTemplates(this DocFXBuildSettings toolSettings, IEnumerable<string> templates)
+        public static T AddTemplates<T>(this T toolSettings, IEnumerable<string> templates) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TemplatesInternal.AddRange(templates);
@@ -3528,7 +3528,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the template name to apply to. If not specified, output YAML file will not be transformed.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ClearTemplates(this DocFXBuildSettings toolSettings)
+        public static T ClearTemplates<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TemplatesInternal.Clear();
@@ -3539,7 +3539,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the template name to apply to. If not specified, output YAML file will not be transformed.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings RemoveTemplates(this DocFXBuildSettings toolSettings, params string[] templates)
+        public static T RemoveTemplates<T>(this T toolSettings, params string[] templates) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(templates);
@@ -3551,7 +3551,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the template name to apply to. If not specified, output YAML file will not be transformed.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings RemoveTemplates(this DocFXBuildSettings toolSettings, IEnumerable<string> templates)
+        public static T RemoveTemplates<T>(this T toolSettings, IEnumerable<string> templates) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(templates);
@@ -3565,7 +3565,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify which theme to use. By default 'default' theme is offered.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetThemes(this DocFXBuildSettings toolSettings, params string[] themes)
+        public static T SetThemes<T>(this T toolSettings, params string[] themes) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ThemesInternal = themes.ToList();
@@ -3576,7 +3576,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify which theme to use. By default 'default' theme is offered.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetThemes(this DocFXBuildSettings toolSettings, IEnumerable<string> themes)
+        public static T SetThemes<T>(this T toolSettings, IEnumerable<string> themes) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ThemesInternal = themes.ToList();
@@ -3587,7 +3587,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify which theme to use. By default 'default' theme is offered.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings AddThemes(this DocFXBuildSettings toolSettings, params string[] themes)
+        public static T AddThemes<T>(this T toolSettings, params string[] themes) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ThemesInternal.AddRange(themes);
@@ -3598,7 +3598,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify which theme to use. By default 'default' theme is offered.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings AddThemes(this DocFXBuildSettings toolSettings, IEnumerable<string> themes)
+        public static T AddThemes<T>(this T toolSettings, IEnumerable<string> themes) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ThemesInternal.AddRange(themes);
@@ -3609,7 +3609,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify which theme to use. By default 'default' theme is offered.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ClearThemes(this DocFXBuildSettings toolSettings)
+        public static T ClearThemes<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ThemesInternal.Clear();
@@ -3620,7 +3620,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify which theme to use. By default 'default' theme is offered.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings RemoveThemes(this DocFXBuildSettings toolSettings, params string[] themes)
+        public static T RemoveThemes<T>(this T toolSettings, params string[] themes) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(themes);
@@ -3632,7 +3632,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify which theme to use. By default 'default' theme is offered.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings RemoveThemes(this DocFXBuildSettings toolSettings, IEnumerable<string> themes)
+        public static T RemoveThemes<T>(this T toolSettings, IEnumerable<string> themes) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(themes);
@@ -3646,7 +3646,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the output folder for the view model. If not set, the view model will be generated to the same folder as the output documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetViewModelOutputFolder(this DocFXBuildSettings toolSettings, string viewModelOutputFolder)
+        public static T SetViewModelOutputFolder<T>(this T toolSettings, string viewModelOutputFolder) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ViewModelOutputFolder = viewModelOutputFolder;
@@ -3657,7 +3657,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the output folder for the view model. If not set, the view model will be generated to the same folder as the output documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetViewModelOutputFolder(this DocFXBuildSettings toolSettings)
+        public static T ResetViewModelOutputFolder<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ViewModelOutputFolder = null;
@@ -3670,7 +3670,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the urls of xrefmap used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetXRefMaps(this DocFXBuildSettings toolSettings, params string[] xrefMaps)
+        public static T SetXRefMaps<T>(this T toolSettings, params string[] xrefMaps) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.XRefMapsInternal = xrefMaps.ToList();
@@ -3681,7 +3681,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the urls of xrefmap used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetXRefMaps(this DocFXBuildSettings toolSettings, IEnumerable<string> xrefMaps)
+        public static T SetXRefMaps<T>(this T toolSettings, IEnumerable<string> xrefMaps) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.XRefMapsInternal = xrefMaps.ToList();
@@ -3692,7 +3692,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the urls of xrefmap used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings AddXRefMaps(this DocFXBuildSettings toolSettings, params string[] xrefMaps)
+        public static T AddXRefMaps<T>(this T toolSettings, params string[] xrefMaps) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.XRefMapsInternal.AddRange(xrefMaps);
@@ -3703,7 +3703,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the urls of xrefmap used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings AddXRefMaps(this DocFXBuildSettings toolSettings, IEnumerable<string> xrefMaps)
+        public static T AddXRefMaps<T>(this T toolSettings, IEnumerable<string> xrefMaps) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.XRefMapsInternal.AddRange(xrefMaps);
@@ -3714,7 +3714,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the urls of xrefmap used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ClearXRefMaps(this DocFXBuildSettings toolSettings)
+        public static T ClearXRefMaps<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.XRefMapsInternal.Clear();
@@ -3725,7 +3725,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the urls of xrefmap used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings RemoveXRefMaps(this DocFXBuildSettings toolSettings, params string[] xrefMaps)
+        public static T RemoveXRefMaps<T>(this T toolSettings, params string[] xrefMaps) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(xrefMaps);
@@ -3737,7 +3737,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the urls of xrefmap used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings RemoveXRefMaps(this DocFXBuildSettings toolSettings, IEnumerable<string> xrefMaps)
+        public static T RemoveXRefMaps<T>(this T toolSettings, IEnumerable<string> xrefMaps) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(xrefMaps);
@@ -3751,7 +3751,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the correlation id used for logging.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetCorrelationId(this DocFXBuildSettings toolSettings, string correlationId)
+        public static T SetCorrelationId<T>(this T toolSettings, string correlationId) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CorrelationId = correlationId;
@@ -3762,7 +3762,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the correlation id used for logging.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetCorrelationId(this DocFXBuildSettings toolSettings)
+        public static T ResetCorrelationId<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CorrelationId = null;
@@ -3775,7 +3775,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the file name to save processing log.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetLogFilePath(this DocFXBuildSettings toolSettings, string logFilePath)
+        public static T SetLogFilePath<T>(this T toolSettings, string logFilePath) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFilePath = logFilePath;
@@ -3786,7 +3786,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the file name to save processing log.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetLogFilePath(this DocFXBuildSettings toolSettings)
+        public static T ResetLogFilePath<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFilePath = null;
@@ -3799,7 +3799,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify to which log level will be logged. By default log level &gt;= Info will be logged. The acceptable value could be Verbose, Info, Warning, Error.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetLogLevel(this DocFXBuildSettings toolSettings, DocFXLogLevel logLevel)
+        public static T SetLogLevel<T>(this T toolSettings, DocFXLogLevel logLevel) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogLevel = logLevel;
@@ -3810,7 +3810,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify to which log level will be logged. By default log level &gt;= Info will be logged. The acceptable value could be Verbose, Info, Warning, Error.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetLogLevel(this DocFXBuildSettings toolSettings)
+        public static T ResetLogLevel<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogLevel = null;
@@ -3823,7 +3823,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the GIT repository root folder.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetRepoRoot(this DocFXBuildSettings toolSettings, string repoRoot)
+        public static T SetRepoRoot<T>(this T toolSettings, string repoRoot) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepoRoot = repoRoot;
@@ -3834,7 +3834,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the GIT repository root folder.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetRepoRoot(this DocFXBuildSettings toolSettings)
+        public static T ResetRepoRoot<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepoRoot = null;
@@ -3847,7 +3847,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if warnings should be treated as errors.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings SetWarningsAsErrors(this DocFXBuildSettings toolSettings, bool? warningsAsErrors)
+        public static T SetWarningsAsErrors<T>(this T toolSettings, bool? warningsAsErrors) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WarningsAsErrors = warningsAsErrors;
@@ -3858,7 +3858,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if warnings should be treated as errors.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ResetWarningsAsErrors(this DocFXBuildSettings toolSettings)
+        public static T ResetWarningsAsErrors<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WarningsAsErrors = null;
@@ -3869,7 +3869,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if warnings should be treated as errors.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings EnableWarningsAsErrors(this DocFXBuildSettings toolSettings)
+        public static T EnableWarningsAsErrors<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WarningsAsErrors = true;
@@ -3880,7 +3880,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if warnings should be treated as errors.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings DisableWarningsAsErrors(this DocFXBuildSettings toolSettings)
+        public static T DisableWarningsAsErrors<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WarningsAsErrors = false;
@@ -3891,7 +3891,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if warnings should be treated as errors.</p>
         /// </summary>
         [Pure]
-        public static DocFXBuildSettings ToggleWarningsAsErrors(this DocFXBuildSettings toolSettings)
+        public static T ToggleWarningsAsErrors<T>(this T toolSettings) where T : DocFXBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WarningsAsErrors = !toolSettings.WarningsAsErrors;
@@ -3913,7 +3913,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p><em>Sets <see cref="DocFXDependencySettings.DependencyFile"/></em></p>
         /// </summary>
         [Pure]
-        public static DocFXDependencySettings SetDependencyFile(this DocFXDependencySettings toolSettings, string dependencyFile)
+        public static T SetDependencyFile<T>(this T toolSettings, string dependencyFile) where T : DocFXDependencySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DependencyFile = dependencyFile;
@@ -3923,7 +3923,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p><em>Resets <see cref="DocFXDependencySettings.DependencyFile"/></em></p>
         /// </summary>
         [Pure]
-        public static DocFXDependencySettings ResetDependencyFile(this DocFXDependencySettings toolSettings)
+        public static T ResetDependencyFile<T>(this T toolSettings) where T : DocFXDependencySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DependencyFile = null;
@@ -3936,7 +3936,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>The intermediate folder that store cache files.</p>
         /// </summary>
         [Pure]
-        public static DocFXDependencySettings SetIntermediateFolder(this DocFXDependencySettings toolSettings, string intermediateFolder)
+        public static T SetIntermediateFolder<T>(this T toolSettings, string intermediateFolder) where T : DocFXDependencySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IntermediateFolder = intermediateFolder;
@@ -3947,7 +3947,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>The intermediate folder that store cache files.</p>
         /// </summary>
         [Pure]
-        public static DocFXDependencySettings ResetIntermediateFolder(this DocFXDependencySettings toolSettings)
+        public static T ResetIntermediateFolder<T>(this T toolSettings) where T : DocFXDependencySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IntermediateFolder = null;
@@ -3960,7 +3960,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXDependencySettings SetPrintHelpMessage(this DocFXDependencySettings toolSettings, bool? printHelpMessage)
+        public static T SetPrintHelpMessage<T>(this T toolSettings, bool? printHelpMessage) where T : DocFXDependencySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = printHelpMessage;
@@ -3971,7 +3971,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXDependencySettings ResetPrintHelpMessage(this DocFXDependencySettings toolSettings)
+        public static T ResetPrintHelpMessage<T>(this T toolSettings) where T : DocFXDependencySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = null;
@@ -3982,7 +3982,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXDependencySettings EnablePrintHelpMessage(this DocFXDependencySettings toolSettings)
+        public static T EnablePrintHelpMessage<T>(this T toolSettings) where T : DocFXDependencySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = true;
@@ -3993,7 +3993,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXDependencySettings DisablePrintHelpMessage(this DocFXDependencySettings toolSettings)
+        public static T DisablePrintHelpMessage<T>(this T toolSettings) where T : DocFXDependencySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = false;
@@ -4004,7 +4004,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXDependencySettings TogglePrintHelpMessage(this DocFXDependencySettings toolSettings)
+        public static T TogglePrintHelpMessage<T>(this T toolSettings) where T : DocFXDependencySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = !toolSettings.PrintHelpMessage;
@@ -4017,7 +4017,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>The version name of the content.</p>
         /// </summary>
         [Pure]
-        public static DocFXDependencySettings SetVersionName(this DocFXDependencySettings toolSettings, string versionName)
+        public static T SetVersionName<T>(this T toolSettings, string versionName) where T : DocFXDependencySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VersionName = versionName;
@@ -4028,7 +4028,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>The version name of the content.</p>
         /// </summary>
         [Pure]
-        public static DocFXDependencySettings ResetVersionName(this DocFXDependencySettings toolSettings)
+        public static T ResetVersionName<T>(this T toolSettings) where T : DocFXDependencySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VersionName = null;
@@ -4050,7 +4050,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p><em>Sets <see cref="DocFXDownloadSettings.ArchiveFile"/></em></p>
         /// </summary>
         [Pure]
-        public static DocFXDownloadSettings SetArchiveFile(this DocFXDownloadSettings toolSettings, string archiveFile)
+        public static T SetArchiveFile<T>(this T toolSettings, string archiveFile) where T : DocFXDownloadSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ArchiveFile = archiveFile;
@@ -4060,7 +4060,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p><em>Resets <see cref="DocFXDownloadSettings.ArchiveFile"/></em></p>
         /// </summary>
         [Pure]
-        public static DocFXDownloadSettings ResetArchiveFile(this DocFXDownloadSettings toolSettings)
+        public static T ResetArchiveFile<T>(this T toolSettings) where T : DocFXDownloadSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ArchiveFile = null;
@@ -4073,7 +4073,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXDownloadSettings SetPrintHelpMessage(this DocFXDownloadSettings toolSettings, bool? printHelpMessage)
+        public static T SetPrintHelpMessage<T>(this T toolSettings, bool? printHelpMessage) where T : DocFXDownloadSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = printHelpMessage;
@@ -4084,7 +4084,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXDownloadSettings ResetPrintHelpMessage(this DocFXDownloadSettings toolSettings)
+        public static T ResetPrintHelpMessage<T>(this T toolSettings) where T : DocFXDownloadSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = null;
@@ -4095,7 +4095,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXDownloadSettings EnablePrintHelpMessage(this DocFXDownloadSettings toolSettings)
+        public static T EnablePrintHelpMessage<T>(this T toolSettings) where T : DocFXDownloadSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = true;
@@ -4106,7 +4106,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXDownloadSettings DisablePrintHelpMessage(this DocFXDownloadSettings toolSettings)
+        public static T DisablePrintHelpMessage<T>(this T toolSettings) where T : DocFXDownloadSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = false;
@@ -4117,7 +4117,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXDownloadSettings TogglePrintHelpMessage(this DocFXDownloadSettings toolSettings)
+        public static T TogglePrintHelpMessage<T>(this T toolSettings) where T : DocFXDownloadSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = !toolSettings.PrintHelpMessage;
@@ -4130,7 +4130,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the url of xrefmap.</p>
         /// </summary>
         [Pure]
-        public static DocFXDownloadSettings SetUri(this DocFXDownloadSettings toolSettings, string uri)
+        public static T SetUri<T>(this T toolSettings, string uri) where T : DocFXDownloadSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Uri = uri;
@@ -4141,7 +4141,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the url of xrefmap.</p>
         /// </summary>
         [Pure]
-        public static DocFXDownloadSettings ResetUri(this DocFXDownloadSettings toolSettings)
+        public static T ResetUri<T>(this T toolSettings) where T : DocFXDownloadSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Uri = null;
@@ -4163,7 +4163,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p><em>Sets <see cref="DocFXHelpSettings.Command"/></em></p>
         /// </summary>
         [Pure]
-        public static DocFXHelpSettings SetCommand(this DocFXHelpSettings toolSettings, string command)
+        public static T SetCommand<T>(this T toolSettings, string command) where T : DocFXHelpSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Command = command;
@@ -4173,7 +4173,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p><em>Resets <see cref="DocFXHelpSettings.Command"/></em></p>
         /// </summary>
         [Pure]
-        public static DocFXHelpSettings ResetCommand(this DocFXHelpSettings toolSettings)
+        public static T ResetCommand<T>(this T toolSettings) where T : DocFXHelpSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Command = null;
@@ -4196,7 +4196,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the source working folder for source project files to start glob search.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings SetApiSourceFolder(this DocFXInitSettings toolSettings, string apiSourceFolder)
+        public static T SetApiSourceFolder<T>(this T toolSettings, string apiSourceFolder) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiSourceFolder = apiSourceFolder;
@@ -4207,7 +4207,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the source working folder for source project files to start glob search.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings ResetApiSourceFolder(this DocFXInitSettings toolSettings)
+        public static T ResetApiSourceFolder<T>(this T toolSettings) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiSourceFolder = null;
@@ -4220,7 +4220,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the source project files' glob pattern to generate metadata.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings SetApiSourceGlobPattern(this DocFXInitSettings toolSettings, string apiSourceGlobPattern)
+        public static T SetApiSourceGlobPattern<T>(this T toolSettings, string apiSourceGlobPattern) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiSourceGlobPattern = apiSourceGlobPattern;
@@ -4231,7 +4231,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the source project files' glob pattern to generate metadata.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings ResetApiSourceGlobPattern(this DocFXInitSettings toolSettings)
+        public static T ResetApiSourceGlobPattern<T>(this T toolSettings) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiSourceGlobPattern = null;
@@ -4244,7 +4244,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Generate config file docfx.json only, no project folder will be generated.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings SetOnlyConfigFile(this DocFXInitSettings toolSettings, bool? onlyConfigFile)
+        public static T SetOnlyConfigFile<T>(this T toolSettings, bool? onlyConfigFile) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OnlyConfigFile = onlyConfigFile;
@@ -4255,7 +4255,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Generate config file docfx.json only, no project folder will be generated.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings ResetOnlyConfigFile(this DocFXInitSettings toolSettings)
+        public static T ResetOnlyConfigFile<T>(this T toolSettings) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OnlyConfigFile = null;
@@ -4266,7 +4266,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Generate config file docfx.json only, no project folder will be generated.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings EnableOnlyConfigFile(this DocFXInitSettings toolSettings)
+        public static T EnableOnlyConfigFile<T>(this T toolSettings) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OnlyConfigFile = true;
@@ -4277,7 +4277,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Generate config file docfx.json only, no project folder will be generated.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings DisableOnlyConfigFile(this DocFXInitSettings toolSettings)
+        public static T DisableOnlyConfigFile<T>(this T toolSettings) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OnlyConfigFile = false;
@@ -4288,7 +4288,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Generate config file docfx.json only, no project folder will be generated.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings ToggleOnlyConfigFile(this DocFXInitSettings toolSettings)
+        public static T ToggleOnlyConfigFile<T>(this T toolSettings) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OnlyConfigFile = !toolSettings.OnlyConfigFile;
@@ -4301,7 +4301,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the output folder of the config file. If not specified, the config file will be saved to a new folder docfx_project.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings SetOutputFolder(this DocFXInitSettings toolSettings, string outputFolder)
+        public static T SetOutputFolder<T>(this T toolSettings, string outputFolder) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFolder = outputFolder;
@@ -4312,7 +4312,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the output folder of the config file. If not specified, the config file will be saved to a new folder docfx_project.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings ResetOutputFolder(this DocFXInitSettings toolSettings)
+        public static T ResetOutputFolder<T>(this T toolSettings) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFolder = null;
@@ -4325,7 +4325,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if the current file will be overwritten if it exists.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings SetOverwrite(this DocFXInitSettings toolSettings, bool? overwrite)
+        public static T SetOverwrite<T>(this T toolSettings, bool? overwrite) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = overwrite;
@@ -4336,7 +4336,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if the current file will be overwritten if it exists.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings ResetOverwrite(this DocFXInitSettings toolSettings)
+        public static T ResetOverwrite<T>(this T toolSettings) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = null;
@@ -4347,7 +4347,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if the current file will be overwritten if it exists.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings EnableOverwrite(this DocFXInitSettings toolSettings)
+        public static T EnableOverwrite<T>(this T toolSettings) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = true;
@@ -4358,7 +4358,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if the current file will be overwritten if it exists.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings DisableOverwrite(this DocFXInitSettings toolSettings)
+        public static T DisableOverwrite<T>(this T toolSettings) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = false;
@@ -4369,7 +4369,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if the current file will be overwritten if it exists.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings ToggleOverwrite(this DocFXInitSettings toolSettings)
+        public static T ToggleOverwrite<T>(this T toolSettings) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = !toolSettings.Overwrite;
@@ -4382,7 +4382,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings SetPrintHelpMessage(this DocFXInitSettings toolSettings, bool? printHelpMessage)
+        public static T SetPrintHelpMessage<T>(this T toolSettings, bool? printHelpMessage) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = printHelpMessage;
@@ -4393,7 +4393,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings ResetPrintHelpMessage(this DocFXInitSettings toolSettings)
+        public static T ResetPrintHelpMessage<T>(this T toolSettings) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = null;
@@ -4404,7 +4404,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings EnablePrintHelpMessage(this DocFXInitSettings toolSettings)
+        public static T EnablePrintHelpMessage<T>(this T toolSettings) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = true;
@@ -4415,7 +4415,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings DisablePrintHelpMessage(this DocFXInitSettings toolSettings)
+        public static T DisablePrintHelpMessage<T>(this T toolSettings) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = false;
@@ -4426,7 +4426,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings TogglePrintHelpMessage(this DocFXInitSettings toolSettings)
+        public static T TogglePrintHelpMessage<T>(this T toolSettings) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = !toolSettings.PrintHelpMessage;
@@ -4439,7 +4439,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Quietly generate the default docfx.json.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings SetQuiet(this DocFXInitSettings toolSettings, bool? quiet)
+        public static T SetQuiet<T>(this T toolSettings, bool? quiet) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = quiet;
@@ -4450,7 +4450,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Quietly generate the default docfx.json.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings ResetQuiet(this DocFXInitSettings toolSettings)
+        public static T ResetQuiet<T>(this T toolSettings) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = null;
@@ -4461,7 +4461,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Quietly generate the default docfx.json.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings EnableQuiet(this DocFXInitSettings toolSettings)
+        public static T EnableQuiet<T>(this T toolSettings) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = true;
@@ -4472,7 +4472,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Quietly generate the default docfx.json.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings DisableQuiet(this DocFXInitSettings toolSettings)
+        public static T DisableQuiet<T>(this T toolSettings) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = false;
@@ -4483,7 +4483,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Quietly generate the default docfx.json.</p>
         /// </summary>
         [Pure]
-        public static DocFXInitSettings ToggleQuiet(this DocFXInitSettings toolSettings)
+        public static T ToggleQuiet<T>(this T toolSettings) where T : DocFXInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = !toolSettings.Quiet;
@@ -4505,7 +4505,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p><em>Sets <see cref="DocFXMergeSettings.ConfigFile"/></em></p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings SetConfigFile(this DocFXMergeSettings toolSettings, string configFile)
+        public static T SetConfigFile<T>(this T toolSettings, string configFile) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigFile = configFile;
@@ -4515,7 +4515,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p><em>Resets <see cref="DocFXMergeSettings.ConfigFile"/></em></p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings ResetConfigFile(this DocFXMergeSettings toolSettings)
+        public static T ResetConfigFile<T>(this T toolSettings) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigFile = null;
@@ -4528,7 +4528,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specifies content files for generating documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings SetContent(this DocFXMergeSettings toolSettings, params string[] content)
+        public static T SetContent<T>(this T toolSettings, params string[] content) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContentInternal = content.ToList();
@@ -4539,7 +4539,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specifies content files for generating documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings SetContent(this DocFXMergeSettings toolSettings, IEnumerable<string> content)
+        public static T SetContent<T>(this T toolSettings, IEnumerable<string> content) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContentInternal = content.ToList();
@@ -4550,7 +4550,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specifies content files for generating documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings AddContent(this DocFXMergeSettings toolSettings, params string[] content)
+        public static T AddContent<T>(this T toolSettings, params string[] content) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContentInternal.AddRange(content);
@@ -4561,7 +4561,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specifies content files for generating documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings AddContent(this DocFXMergeSettings toolSettings, IEnumerable<string> content)
+        public static T AddContent<T>(this T toolSettings, IEnumerable<string> content) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContentInternal.AddRange(content);
@@ -4572,7 +4572,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specifies content files for generating documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings ClearContent(this DocFXMergeSettings toolSettings)
+        public static T ClearContent<T>(this T toolSettings) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContentInternal.Clear();
@@ -4583,7 +4583,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specifies content files for generating documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings RemoveContent(this DocFXMergeSettings toolSettings, params string[] content)
+        public static T RemoveContent<T>(this T toolSettings, params string[] content) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(content);
@@ -4595,7 +4595,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specifies content files for generating documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings RemoveContent(this DocFXMergeSettings toolSettings, IEnumerable<string> content)
+        public static T RemoveContent<T>(this T toolSettings, IEnumerable<string> content) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(content);
@@ -4609,7 +4609,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a JSON file path containing fileMetadata settings, as similar to {"fileMetadata":{"key":"value"}}. It overrides the fileMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings SetFileMetadataFilePath(this DocFXMergeSettings toolSettings, string fileMetadataFilePath)
+        public static T SetFileMetadataFilePath<T>(this T toolSettings, string fileMetadataFilePath) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileMetadataFilePath = fileMetadataFilePath;
@@ -4620,7 +4620,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a JSON file path containing fileMetadata settings, as similar to {"fileMetadata":{"key":"value"}}. It overrides the fileMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings ResetFileMetadataFilePath(this DocFXMergeSettings toolSettings)
+        public static T ResetFileMetadataFilePath<T>(this T toolSettings) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileMetadataFilePath = null;
@@ -4633,7 +4633,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify global metadata key-value pair in json format. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings SetGlobalMetadata(this DocFXMergeSettings toolSettings, string globalMetadata)
+        public static T SetGlobalMetadata<T>(this T toolSettings, string globalMetadata) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalMetadata = globalMetadata;
@@ -4644,7 +4644,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify global metadata key-value pair in json format. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings ResetGlobalMetadata(this DocFXMergeSettings toolSettings)
+        public static T ResetGlobalMetadata<T>(this T toolSettings) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalMetadata = null;
@@ -4657,7 +4657,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a JSON file path containing globalMetadata settings, as similar to {"globalMetadata":{"key":"value"}}. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings SetGlobalMetadataFilePath(this DocFXMergeSettings toolSettings, string globalMetadataFilePath)
+        public static T SetGlobalMetadataFilePath<T>(this T toolSettings, string globalMetadataFilePath) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalMetadataFilePath = globalMetadataFilePath;
@@ -4668,7 +4668,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a JSON file path containing globalMetadata settings, as similar to {"globalMetadata":{"key":"value"}}. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings ResetGlobalMetadataFilePath(this DocFXMergeSettings toolSettings)
+        public static T ResetGlobalMetadataFilePath<T>(this T toolSettings) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalMetadataFilePath = null;
@@ -4681,7 +4681,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings SetPrintHelpMessage(this DocFXMergeSettings toolSettings, bool? printHelpMessage)
+        public static T SetPrintHelpMessage<T>(this T toolSettings, bool? printHelpMessage) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = printHelpMessage;
@@ -4692,7 +4692,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings ResetPrintHelpMessage(this DocFXMergeSettings toolSettings)
+        public static T ResetPrintHelpMessage<T>(this T toolSettings) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = null;
@@ -4703,7 +4703,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings EnablePrintHelpMessage(this DocFXMergeSettings toolSettings)
+        public static T EnablePrintHelpMessage<T>(this T toolSettings) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = true;
@@ -4714,7 +4714,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings DisablePrintHelpMessage(this DocFXMergeSettings toolSettings)
+        public static T DisablePrintHelpMessage<T>(this T toolSettings) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = false;
@@ -4725,7 +4725,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings TogglePrintHelpMessage(this DocFXMergeSettings toolSettings)
+        public static T TogglePrintHelpMessage<T>(this T toolSettings) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = !toolSettings.PrintHelpMessage;
@@ -4738,7 +4738,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify metadata names that need to be merged into toc file.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings SetTocMetadata(this DocFXMergeSettings toolSettings, params string[] tocMetadata)
+        public static T SetTocMetadata<T>(this T toolSettings, params string[] tocMetadata) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TocMetadataInternal = tocMetadata.ToList();
@@ -4749,7 +4749,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify metadata names that need to be merged into toc file.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings SetTocMetadata(this DocFXMergeSettings toolSettings, IEnumerable<string> tocMetadata)
+        public static T SetTocMetadata<T>(this T toolSettings, IEnumerable<string> tocMetadata) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TocMetadataInternal = tocMetadata.ToList();
@@ -4760,7 +4760,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify metadata names that need to be merged into toc file.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings AddTocMetadata(this DocFXMergeSettings toolSettings, params string[] tocMetadata)
+        public static T AddTocMetadata<T>(this T toolSettings, params string[] tocMetadata) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TocMetadataInternal.AddRange(tocMetadata);
@@ -4771,7 +4771,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify metadata names that need to be merged into toc file.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings AddTocMetadata(this DocFXMergeSettings toolSettings, IEnumerable<string> tocMetadata)
+        public static T AddTocMetadata<T>(this T toolSettings, IEnumerable<string> tocMetadata) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TocMetadataInternal.AddRange(tocMetadata);
@@ -4782,7 +4782,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify metadata names that need to be merged into toc file.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings ClearTocMetadata(this DocFXMergeSettings toolSettings)
+        public static T ClearTocMetadata<T>(this T toolSettings) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TocMetadataInternal.Clear();
@@ -4793,7 +4793,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify metadata names that need to be merged into toc file.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings RemoveTocMetadata(this DocFXMergeSettings toolSettings, params string[] tocMetadata)
+        public static T RemoveTocMetadata<T>(this T toolSettings, params string[] tocMetadata) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(tocMetadata);
@@ -4805,7 +4805,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify metadata names that need to be merged into toc file.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings RemoveTocMetadata(this DocFXMergeSettings toolSettings, IEnumerable<string> tocMetadata)
+        public static T RemoveTocMetadata<T>(this T toolSettings, IEnumerable<string> tocMetadata) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(tocMetadata);
@@ -4819,7 +4819,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the correlation id used for logging.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings SetCorrelationId(this DocFXMergeSettings toolSettings, string correlationId)
+        public static T SetCorrelationId<T>(this T toolSettings, string correlationId) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CorrelationId = correlationId;
@@ -4830,7 +4830,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the correlation id used for logging.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings ResetCorrelationId(this DocFXMergeSettings toolSettings)
+        public static T ResetCorrelationId<T>(this T toolSettings) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CorrelationId = null;
@@ -4843,7 +4843,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the file name to save processing log.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings SetLogFilePath(this DocFXMergeSettings toolSettings, string logFilePath)
+        public static T SetLogFilePath<T>(this T toolSettings, string logFilePath) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFilePath = logFilePath;
@@ -4854,7 +4854,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the file name to save processing log.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings ResetLogFilePath(this DocFXMergeSettings toolSettings)
+        public static T ResetLogFilePath<T>(this T toolSettings) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFilePath = null;
@@ -4867,7 +4867,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify to which log level will be logged. By default log level &gt;= Info will be logged. The acceptable value could be Verbose, Info, Warning, Error.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings SetLogLevel(this DocFXMergeSettings toolSettings, DocFXLogLevel logLevel)
+        public static T SetLogLevel<T>(this T toolSettings, DocFXLogLevel logLevel) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogLevel = logLevel;
@@ -4878,7 +4878,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify to which log level will be logged. By default log level &gt;= Info will be logged. The acceptable value could be Verbose, Info, Warning, Error.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings ResetLogLevel(this DocFXMergeSettings toolSettings)
+        public static T ResetLogLevel<T>(this T toolSettings) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogLevel = null;
@@ -4891,7 +4891,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the GIT repository root folder.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings SetRepoRoot(this DocFXMergeSettings toolSettings, string repoRoot)
+        public static T SetRepoRoot<T>(this T toolSettings, string repoRoot) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepoRoot = repoRoot;
@@ -4902,7 +4902,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the GIT repository root folder.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings ResetRepoRoot(this DocFXMergeSettings toolSettings)
+        public static T ResetRepoRoot<T>(this T toolSettings) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepoRoot = null;
@@ -4915,7 +4915,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if warnings should be treated as errors.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings SetWarningsAsErrors(this DocFXMergeSettings toolSettings, bool? warningsAsErrors)
+        public static T SetWarningsAsErrors<T>(this T toolSettings, bool? warningsAsErrors) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WarningsAsErrors = warningsAsErrors;
@@ -4926,7 +4926,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if warnings should be treated as errors.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings ResetWarningsAsErrors(this DocFXMergeSettings toolSettings)
+        public static T ResetWarningsAsErrors<T>(this T toolSettings) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WarningsAsErrors = null;
@@ -4937,7 +4937,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if warnings should be treated as errors.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings EnableWarningsAsErrors(this DocFXMergeSettings toolSettings)
+        public static T EnableWarningsAsErrors<T>(this T toolSettings) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WarningsAsErrors = true;
@@ -4948,7 +4948,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if warnings should be treated as errors.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings DisableWarningsAsErrors(this DocFXMergeSettings toolSettings)
+        public static T DisableWarningsAsErrors<T>(this T toolSettings) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WarningsAsErrors = false;
@@ -4959,7 +4959,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if warnings should be treated as errors.</p>
         /// </summary>
         [Pure]
-        public static DocFXMergeSettings ToggleWarningsAsErrors(this DocFXMergeSettings toolSettings)
+        public static T ToggleWarningsAsErrors<T>(this T toolSettings) where T : DocFXMergeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WarningsAsErrors = !toolSettings.WarningsAsErrors;
@@ -4982,7 +4982,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>The projects for which the metadata should be built.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings SetProjects(this DocFXMetadataSettings toolSettings, params string[] projects)
+        public static T SetProjects<T>(this T toolSettings, params string[] projects) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProjectsInternal = projects.ToList();
@@ -4993,7 +4993,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>The projects for which the metadata should be built.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings SetProjects(this DocFXMetadataSettings toolSettings, IEnumerable<string> projects)
+        public static T SetProjects<T>(this T toolSettings, IEnumerable<string> projects) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProjectsInternal = projects.ToList();
@@ -5004,7 +5004,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>The projects for which the metadata should be built.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings AddProjects(this DocFXMetadataSettings toolSettings, params string[] projects)
+        public static T AddProjects<T>(this T toolSettings, params string[] projects) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProjectsInternal.AddRange(projects);
@@ -5015,7 +5015,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>The projects for which the metadata should be built.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings AddProjects(this DocFXMetadataSettings toolSettings, IEnumerable<string> projects)
+        public static T AddProjects<T>(this T toolSettings, IEnumerable<string> projects) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProjectsInternal.AddRange(projects);
@@ -5026,7 +5026,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>The projects for which the metadata should be built.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings ClearProjects(this DocFXMetadataSettings toolSettings)
+        public static T ClearProjects<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProjectsInternal.Clear();
@@ -5037,7 +5037,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>The projects for which the metadata should be built.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings RemoveProjects(this DocFXMetadataSettings toolSettings, params string[] projects)
+        public static T RemoveProjects<T>(this T toolSettings, params string[] projects) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(projects);
@@ -5049,7 +5049,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>The projects for which the metadata should be built.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings RemoveProjects(this DocFXMetadataSettings toolSettings, IEnumerable<string> projects)
+        public static T RemoveProjects<T>(this T toolSettings, IEnumerable<string> projects) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(projects);
@@ -5063,7 +5063,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable the default API filter (default filter only generate public or protected APIs).</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings SetDisableDefaultFilter(this DocFXMetadataSettings toolSettings, bool? disableDefaultFilter)
+        public static T SetDisableDefaultFilter<T>(this T toolSettings, bool? disableDefaultFilter) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableDefaultFilter = disableDefaultFilter;
@@ -5074,7 +5074,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable the default API filter (default filter only generate public or protected APIs).</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings ResetDisableDefaultFilter(this DocFXMetadataSettings toolSettings)
+        public static T ResetDisableDefaultFilter<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableDefaultFilter = null;
@@ -5085,7 +5085,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable the default API filter (default filter only generate public or protected APIs).</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings EnableDisableDefaultFilter(this DocFXMetadataSettings toolSettings)
+        public static T EnableDisableDefaultFilter<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableDefaultFilter = true;
@@ -5096,7 +5096,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable the default API filter (default filter only generate public or protected APIs).</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings DisableDisableDefaultFilter(this DocFXMetadataSettings toolSettings)
+        public static T DisableDisableDefaultFilter<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableDefaultFilter = false;
@@ -5107,7 +5107,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable the default API filter (default filter only generate public or protected APIs).</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings ToggleDisableDefaultFilter(this DocFXMetadataSettings toolSettings)
+        public static T ToggleDisableDefaultFilter<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableDefaultFilter = !toolSettings.DisableDefaultFilter;
@@ -5120,7 +5120,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings SetDisableGitFeatures(this DocFXMetadataSettings toolSettings, bool? disableGitFeatures)
+        public static T SetDisableGitFeatures<T>(this T toolSettings, bool? disableGitFeatures) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableGitFeatures = disableGitFeatures;
@@ -5131,7 +5131,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings ResetDisableGitFeatures(this DocFXMetadataSettings toolSettings)
+        public static T ResetDisableGitFeatures<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableGitFeatures = null;
@@ -5142,7 +5142,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings EnableDisableGitFeatures(this DocFXMetadataSettings toolSettings)
+        public static T EnableDisableGitFeatures<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableGitFeatures = true;
@@ -5153,7 +5153,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings DisableDisableGitFeatures(this DocFXMetadataSettings toolSettings)
+        public static T DisableDisableGitFeatures<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableGitFeatures = false;
@@ -5164,7 +5164,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings ToggleDisableGitFeatures(this DocFXMetadataSettings toolSettings)
+        public static T ToggleDisableGitFeatures<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableGitFeatures = !toolSettings.DisableGitFeatures;
@@ -5177,7 +5177,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the filter config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings SetFilterConfigFile(this DocFXMetadataSettings toolSettings, string filterConfigFile)
+        public static T SetFilterConfigFile<T>(this T toolSettings, string filterConfigFile) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilterConfigFile = filterConfigFile;
@@ -5188,7 +5188,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the filter config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings ResetFilterConfigFile(this DocFXMetadataSettings toolSettings)
+        public static T ResetFilterConfigFile<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilterConfigFile = null;
@@ -5201,7 +5201,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force re-generate all the metadata.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings SetForceRebuild(this DocFXMetadataSettings toolSettings, bool? forceRebuild)
+        public static T SetForceRebuild<T>(this T toolSettings, bool? forceRebuild) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceRebuild = forceRebuild;
@@ -5212,7 +5212,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force re-generate all the metadata.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings ResetForceRebuild(this DocFXMetadataSettings toolSettings)
+        public static T ResetForceRebuild<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceRebuild = null;
@@ -5223,7 +5223,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force re-generate all the metadata.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings EnableForceRebuild(this DocFXMetadataSettings toolSettings)
+        public static T EnableForceRebuild<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceRebuild = true;
@@ -5234,7 +5234,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force re-generate all the metadata.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings DisableForceRebuild(this DocFXMetadataSettings toolSettings)
+        public static T DisableForceRebuild<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceRebuild = false;
@@ -5245,7 +5245,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force re-generate all the metadata.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings ToggleForceRebuild(this DocFXMetadataSettings toolSettings)
+        public static T ToggleForceRebuild<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceRebuild = !toolSettings.ForceRebuild;
@@ -5258,7 +5258,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the name to use for the global namespace.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings SetGlobalNamespaceId(this DocFXMetadataSettings toolSettings, string globalNamespaceId)
+        public static T SetGlobalNamespaceId<T>(this T toolSettings, string globalNamespaceId) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalNamespaceId = globalNamespaceId;
@@ -5269,7 +5269,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the name to use for the global namespace.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings ResetGlobalNamespaceId(this DocFXMetadataSettings toolSettings)
+        public static T ResetGlobalNamespaceId<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalNamespaceId = null;
@@ -5282,7 +5282,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>--property &lt;n1&gt;=&lt;v1&gt;;&lt;n2&gt;=&lt;v2&gt; An optional set of MSBuild properties used when interpreting project files. These are the same properties that are passed to msbuild via the /property:&lt;n1&gt;=&lt;v1&gt;;&lt;n2&gt;=&lt;v2&gt; command line argument.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings SetMSBuildProperties(this DocFXMetadataSettings toolSettings, IDictionary<string, string> msbuildProperties)
+        public static T SetMSBuildProperties<T>(this T toolSettings, IDictionary<string, string> msbuildProperties) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MSBuildPropertiesInternal = msbuildProperties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -5293,7 +5293,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>--property &lt;n1&gt;=&lt;v1&gt;;&lt;n2&gt;=&lt;v2&gt; An optional set of MSBuild properties used when interpreting project files. These are the same properties that are passed to msbuild via the /property:&lt;n1&gt;=&lt;v1&gt;;&lt;n2&gt;=&lt;v2&gt; command line argument.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings ClearMSBuildProperties(this DocFXMetadataSettings toolSettings)
+        public static T ClearMSBuildProperties<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MSBuildPropertiesInternal.Clear();
@@ -5304,7 +5304,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>--property &lt;n1&gt;=&lt;v1&gt;;&lt;n2&gt;=&lt;v2&gt; An optional set of MSBuild properties used when interpreting project files. These are the same properties that are passed to msbuild via the /property:&lt;n1&gt;=&lt;v1&gt;;&lt;n2&gt;=&lt;v2&gt; command line argument.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings AddMSBuildProperty(this DocFXMetadataSettings toolSettings, string msbuildPropertyKey, string msbuildPropertyValue)
+        public static T AddMSBuildProperty<T>(this T toolSettings, string msbuildPropertyKey, string msbuildPropertyValue) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MSBuildPropertiesInternal.Add(msbuildPropertyKey, msbuildPropertyValue);
@@ -5315,7 +5315,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>--property &lt;n1&gt;=&lt;v1&gt;;&lt;n2&gt;=&lt;v2&gt; An optional set of MSBuild properties used when interpreting project files. These are the same properties that are passed to msbuild via the /property:&lt;n1&gt;=&lt;v1&gt;;&lt;n2&gt;=&lt;v2&gt; command line argument.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings RemoveMSBuildProperty(this DocFXMetadataSettings toolSettings, string msbuildPropertyKey)
+        public static T RemoveMSBuildProperty<T>(this T toolSettings, string msbuildPropertyKey) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MSBuildPropertiesInternal.Remove(msbuildPropertyKey);
@@ -5326,7 +5326,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>--property &lt;n1&gt;=&lt;v1&gt;;&lt;n2&gt;=&lt;v2&gt; An optional set of MSBuild properties used when interpreting project files. These are the same properties that are passed to msbuild via the /property:&lt;n1&gt;=&lt;v1&gt;;&lt;n2&gt;=&lt;v2&gt; command line argument.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings SetMSBuildProperty(this DocFXMetadataSettings toolSettings, string msbuildPropertyKey, string msbuildPropertyValue)
+        public static T SetMSBuildProperty<T>(this T toolSettings, string msbuildPropertyKey, string msbuildPropertyValue) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MSBuildPropertiesInternal[msbuildPropertyKey] = msbuildPropertyValue;
@@ -5339,7 +5339,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the output base directory.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings SetOutputFolder(this DocFXMetadataSettings toolSettings, string outputFolder)
+        public static T SetOutputFolder<T>(this T toolSettings, string outputFolder) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFolder = outputFolder;
@@ -5350,7 +5350,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the output base directory.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings ResetOutputFolder(this DocFXMetadataSettings toolSettings)
+        public static T ResetOutputFolder<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFolder = null;
@@ -5363,7 +5363,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Preserve the existing xml comment tags inside 'summary' triple slash comments.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings SetPreserveRawInlineComments(this DocFXMetadataSettings toolSettings, bool? preserveRawInlineComments)
+        public static T SetPreserveRawInlineComments<T>(this T toolSettings, bool? preserveRawInlineComments) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PreserveRawInlineComments = preserveRawInlineComments;
@@ -5374,7 +5374,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Preserve the existing xml comment tags inside 'summary' triple slash comments.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings ResetPreserveRawInlineComments(this DocFXMetadataSettings toolSettings)
+        public static T ResetPreserveRawInlineComments<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PreserveRawInlineComments = null;
@@ -5385,7 +5385,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Preserve the existing xml comment tags inside 'summary' triple slash comments.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings EnablePreserveRawInlineComments(this DocFXMetadataSettings toolSettings)
+        public static T EnablePreserveRawInlineComments<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PreserveRawInlineComments = true;
@@ -5396,7 +5396,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Preserve the existing xml comment tags inside 'summary' triple slash comments.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings DisablePreserveRawInlineComments(this DocFXMetadataSettings toolSettings)
+        public static T DisablePreserveRawInlineComments<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PreserveRawInlineComments = false;
@@ -5407,7 +5407,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Preserve the existing xml comment tags inside 'summary' triple slash comments.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings TogglePreserveRawInlineComments(this DocFXMetadataSettings toolSettings)
+        public static T TogglePreserveRawInlineComments<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PreserveRawInlineComments = !toolSettings.PreserveRawInlineComments;
@@ -5420,7 +5420,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings SetPrintHelpMessage(this DocFXMetadataSettings toolSettings, bool? printHelpMessage)
+        public static T SetPrintHelpMessage<T>(this T toolSettings, bool? printHelpMessage) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = printHelpMessage;
@@ -5431,7 +5431,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings ResetPrintHelpMessage(this DocFXMetadataSettings toolSettings)
+        public static T ResetPrintHelpMessage<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = null;
@@ -5442,7 +5442,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings EnablePrintHelpMessage(this DocFXMetadataSettings toolSettings)
+        public static T EnablePrintHelpMessage<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = true;
@@ -5453,7 +5453,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings DisablePrintHelpMessage(this DocFXMetadataSettings toolSettings)
+        public static T DisablePrintHelpMessage<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = false;
@@ -5464,7 +5464,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings TogglePrintHelpMessage(this DocFXMetadataSettings toolSettings)
+        public static T TogglePrintHelpMessage<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = !toolSettings.PrintHelpMessage;
@@ -5477,7 +5477,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Skip to markup the triple slash comments.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings SetShouldSkipMarkup(this DocFXMetadataSettings toolSettings, bool? shouldSkipMarkup)
+        public static T SetShouldSkipMarkup<T>(this T toolSettings, bool? shouldSkipMarkup) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShouldSkipMarkup = shouldSkipMarkup;
@@ -5488,7 +5488,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Skip to markup the triple slash comments.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings ResetShouldSkipMarkup(this DocFXMetadataSettings toolSettings)
+        public static T ResetShouldSkipMarkup<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShouldSkipMarkup = null;
@@ -5499,7 +5499,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Skip to markup the triple slash comments.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings EnableShouldSkipMarkup(this DocFXMetadataSettings toolSettings)
+        public static T EnableShouldSkipMarkup<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShouldSkipMarkup = true;
@@ -5510,7 +5510,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Skip to markup the triple slash comments.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings DisableShouldSkipMarkup(this DocFXMetadataSettings toolSettings)
+        public static T DisableShouldSkipMarkup<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShouldSkipMarkup = false;
@@ -5521,7 +5521,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Skip to markup the triple slash comments.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings ToggleShouldSkipMarkup(this DocFXMetadataSettings toolSettings)
+        public static T ToggleShouldSkipMarkup<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShouldSkipMarkup = !toolSettings.ShouldSkipMarkup;
@@ -5534,7 +5534,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the correlation id used for logging.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings SetCorrelationId(this DocFXMetadataSettings toolSettings, string correlationId)
+        public static T SetCorrelationId<T>(this T toolSettings, string correlationId) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CorrelationId = correlationId;
@@ -5545,7 +5545,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the correlation id used for logging.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings ResetCorrelationId(this DocFXMetadataSettings toolSettings)
+        public static T ResetCorrelationId<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CorrelationId = null;
@@ -5558,7 +5558,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the file name to save processing log.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings SetLogFilePath(this DocFXMetadataSettings toolSettings, string logFilePath)
+        public static T SetLogFilePath<T>(this T toolSettings, string logFilePath) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFilePath = logFilePath;
@@ -5569,7 +5569,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the file name to save processing log.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings ResetLogFilePath(this DocFXMetadataSettings toolSettings)
+        public static T ResetLogFilePath<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFilePath = null;
@@ -5582,7 +5582,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify to which log level will be logged. By default log level &gt;= Info will be logged. The acceptable value could be Verbose, Info, Warning, Error.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings SetLogLevel(this DocFXMetadataSettings toolSettings, DocFXLogLevel logLevel)
+        public static T SetLogLevel<T>(this T toolSettings, DocFXLogLevel logLevel) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogLevel = logLevel;
@@ -5593,7 +5593,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify to which log level will be logged. By default log level &gt;= Info will be logged. The acceptable value could be Verbose, Info, Warning, Error.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings ResetLogLevel(this DocFXMetadataSettings toolSettings)
+        public static T ResetLogLevel<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogLevel = null;
@@ -5606,7 +5606,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the GIT repository root folder.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings SetRepoRoot(this DocFXMetadataSettings toolSettings, string repoRoot)
+        public static T SetRepoRoot<T>(this T toolSettings, string repoRoot) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepoRoot = repoRoot;
@@ -5617,7 +5617,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the GIT repository root folder.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings ResetRepoRoot(this DocFXMetadataSettings toolSettings)
+        public static T ResetRepoRoot<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepoRoot = null;
@@ -5630,7 +5630,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if warnings should be treated as errors.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings SetWarningsAsErrors(this DocFXMetadataSettings toolSettings, bool? warningsAsErrors)
+        public static T SetWarningsAsErrors<T>(this T toolSettings, bool? warningsAsErrors) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WarningsAsErrors = warningsAsErrors;
@@ -5641,7 +5641,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if warnings should be treated as errors.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings ResetWarningsAsErrors(this DocFXMetadataSettings toolSettings)
+        public static T ResetWarningsAsErrors<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WarningsAsErrors = null;
@@ -5652,7 +5652,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if warnings should be treated as errors.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings EnableWarningsAsErrors(this DocFXMetadataSettings toolSettings)
+        public static T EnableWarningsAsErrors<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WarningsAsErrors = true;
@@ -5663,7 +5663,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if warnings should be treated as errors.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings DisableWarningsAsErrors(this DocFXMetadataSettings toolSettings)
+        public static T DisableWarningsAsErrors<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WarningsAsErrors = false;
@@ -5674,7 +5674,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if warnings should be treated as errors.</p>
         /// </summary>
         [Pure]
-        public static DocFXMetadataSettings ToggleWarningsAsErrors(this DocFXMetadataSettings toolSettings)
+        public static T ToggleWarningsAsErrors<T>(this T toolSettings) where T : DocFXMetadataSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WarningsAsErrors = !toolSettings.WarningsAsErrors;
@@ -5697,7 +5697,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the base path to generate external link, {host}/{locale}/{basePath}.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetBasePath(this DocFXPdfSettings toolSettings, string basePath)
+        public static T SetBasePath<T>(this T toolSettings, string basePath) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BasePath = basePath;
@@ -5708,7 +5708,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the base path to generate external link, {host}/{locale}/{basePath}.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetBasePath(this DocFXPdfSettings toolSettings)
+        public static T ResetBasePath<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BasePath = null;
@@ -5721,7 +5721,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the path for the css to generate pdf, default value is styles/default.css.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetCssFilePath(this DocFXPdfSettings toolSettings, string cssFilePath)
+        public static T SetCssFilePath<T>(this T toolSettings, string cssFilePath) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CssFilePath = cssFilePath;
@@ -5732,7 +5732,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the path for the css to generate pdf, default value is styles/default.css.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetCssFilePath(this DocFXPdfSettings toolSettings)
+        public static T ResetCssFilePath<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CssFilePath = null;
@@ -5745,7 +5745,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the toc files to be excluded.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetExcludedTocs(this DocFXPdfSettings toolSettings, params string[] excludedTocs)
+        public static T SetExcludedTocs<T>(this T toolSettings, params string[] excludedTocs) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludedTocsInternal = excludedTocs.ToList();
@@ -5756,7 +5756,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the toc files to be excluded.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetExcludedTocs(this DocFXPdfSettings toolSettings, IEnumerable<string> excludedTocs)
+        public static T SetExcludedTocs<T>(this T toolSettings, IEnumerable<string> excludedTocs) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludedTocsInternal = excludedTocs.ToList();
@@ -5767,7 +5767,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the toc files to be excluded.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings AddExcludedTocs(this DocFXPdfSettings toolSettings, params string[] excludedTocs)
+        public static T AddExcludedTocs<T>(this T toolSettings, params string[] excludedTocs) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludedTocsInternal.AddRange(excludedTocs);
@@ -5778,7 +5778,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the toc files to be excluded.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings AddExcludedTocs(this DocFXPdfSettings toolSettings, IEnumerable<string> excludedTocs)
+        public static T AddExcludedTocs<T>(this T toolSettings, IEnumerable<string> excludedTocs) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludedTocsInternal.AddRange(excludedTocs);
@@ -5789,7 +5789,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the toc files to be excluded.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ClearExcludedTocs(this DocFXPdfSettings toolSettings)
+        public static T ClearExcludedTocs<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludedTocsInternal.Clear();
@@ -5800,7 +5800,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the toc files to be excluded.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings RemoveExcludedTocs(this DocFXPdfSettings toolSettings, params string[] excludedTocs)
+        public static T RemoveExcludedTocs<T>(this T toolSettings, params string[] excludedTocs) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(excludedTocs);
@@ -5812,7 +5812,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the toc files to be excluded.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings RemoveExcludedTocs(this DocFXPdfSettings toolSettings, IEnumerable<string> excludedTocs)
+        public static T RemoveExcludedTocs<T>(this T toolSettings, IEnumerable<string> excludedTocs) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(excludedTocs);
@@ -5826,7 +5826,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify whether or not to generate appendices for not-in-TOC articles.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetGeneratesAppendices(this DocFXPdfSettings toolSettings, bool? generatesAppendices)
+        public static T SetGeneratesAppendices<T>(this T toolSettings, bool? generatesAppendices) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GeneratesAppendices = generatesAppendices;
@@ -5837,7 +5837,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify whether or not to generate appendices for not-in-TOC articles.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetGeneratesAppendices(this DocFXPdfSettings toolSettings)
+        public static T ResetGeneratesAppendices<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GeneratesAppendices = null;
@@ -5848,7 +5848,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify whether or not to generate appendices for not-in-TOC articles.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings EnableGeneratesAppendices(this DocFXPdfSettings toolSettings)
+        public static T EnableGeneratesAppendices<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GeneratesAppendices = true;
@@ -5859,7 +5859,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify whether or not to generate appendices for not-in-TOC articles.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings DisableGeneratesAppendices(this DocFXPdfSettings toolSettings)
+        public static T DisableGeneratesAppendices<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GeneratesAppendices = false;
@@ -5870,7 +5870,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify whether or not to generate appendices for not-in-TOC articles.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ToggleGeneratesAppendices(this DocFXPdfSettings toolSettings)
+        public static T ToggleGeneratesAppendices<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GeneratesAppendices = !toolSettings.GeneratesAppendices;
@@ -5883,7 +5883,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify whether or not to generate external links for PDF.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetGeneratesExternalLink(this DocFXPdfSettings toolSettings, bool? generatesExternalLink)
+        public static T SetGeneratesExternalLink<T>(this T toolSettings, bool? generatesExternalLink) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GeneratesExternalLink = generatesExternalLink;
@@ -5894,7 +5894,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify whether or not to generate external links for PDF.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetGeneratesExternalLink(this DocFXPdfSettings toolSettings)
+        public static T ResetGeneratesExternalLink<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GeneratesExternalLink = null;
@@ -5905,7 +5905,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify whether or not to generate external links for PDF.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings EnableGeneratesExternalLink(this DocFXPdfSettings toolSettings)
+        public static T EnableGeneratesExternalLink<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GeneratesExternalLink = true;
@@ -5916,7 +5916,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify whether or not to generate external links for PDF.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings DisableGeneratesExternalLink(this DocFXPdfSettings toolSettings)
+        public static T DisableGeneratesExternalLink<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GeneratesExternalLink = false;
@@ -5927,7 +5927,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify whether or not to generate external links for PDF.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ToggleGeneratesExternalLink(this DocFXPdfSettings toolSettings)
+        public static T ToggleGeneratesExternalLink<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GeneratesExternalLink = !toolSettings.GeneratesExternalLink;
@@ -5940,7 +5940,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the hostname to link not-in-TOC articles.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetPdfHost(this DocFXPdfSettings toolSettings, string pdfHost)
+        public static T SetPdfHost<T>(this T toolSettings, string pdfHost) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PdfHost = pdfHost;
@@ -5951,7 +5951,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the hostname to link not-in-TOC articles.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetPdfHost(this DocFXPdfSettings toolSettings)
+        public static T ResetPdfHost<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PdfHost = null;
@@ -5964,7 +5964,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify whether or not to keep the intermediate html files that used to generate the PDF file. It it usually used in debug purpose. By default the value is false.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetKeepRawFiles(this DocFXPdfSettings toolSettings, bool? keepRawFiles)
+        public static T SetKeepRawFiles<T>(this T toolSettings, bool? keepRawFiles) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepRawFiles = keepRawFiles;
@@ -5975,7 +5975,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify whether or not to keep the intermediate html files that used to generate the PDF file. It it usually used in debug purpose. By default the value is false.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetKeepRawFiles(this DocFXPdfSettings toolSettings)
+        public static T ResetKeepRawFiles<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepRawFiles = null;
@@ -5986,7 +5986,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify whether or not to keep the intermediate html files that used to generate the PDF file. It it usually used in debug purpose. By default the value is false.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings EnableKeepRawFiles(this DocFXPdfSettings toolSettings)
+        public static T EnableKeepRawFiles<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepRawFiles = true;
@@ -5997,7 +5997,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify whether or not to keep the intermediate html files that used to generate the PDF file. It it usually used in debug purpose. By default the value is false.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings DisableKeepRawFiles(this DocFXPdfSettings toolSettings)
+        public static T DisableKeepRawFiles<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepRawFiles = false;
@@ -6008,7 +6008,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify whether or not to keep the intermediate html files that used to generate the PDF file. It it usually used in debug purpose. By default the value is false.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ToggleKeepRawFiles(this DocFXPdfSettings toolSettings)
+        public static T ToggleKeepRawFiles<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepRawFiles = !toolSettings.KeepRawFiles;
@@ -6021,7 +6021,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify how to handle pdf pages that fail to load: abort, ignore or skip(default abort), it is the same input as wkhtmltopdf --load-error-handling options.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetLoadErrorHandling(this DocFXPdfSettings toolSettings, string loadErrorHandling)
+        public static T SetLoadErrorHandling<T>(this T toolSettings, string loadErrorHandling) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LoadErrorHandling = loadErrorHandling;
@@ -6032,7 +6032,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify how to handle pdf pages that fail to load: abort, ignore or skip(default abort), it is the same input as wkhtmltopdf --load-error-handling options.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetLoadErrorHandling(this DocFXPdfSettings toolSettings)
+        public static T ResetLoadErrorHandling<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LoadErrorHandling = null;
@@ -6045,7 +6045,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the locale of the pdf file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetLocale(this DocFXPdfSettings toolSettings, string locale)
+        public static T SetLocale<T>(this T toolSettings, string locale) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Locale = locale;
@@ -6056,7 +6056,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the locale of the pdf file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetLocale(this DocFXPdfSettings toolSettings)
+        public static T ResetLocale<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Locale = null;
@@ -6069,7 +6069,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the name of the generated pdf.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetName(this DocFXPdfSettings toolSettings, string name)
+        public static T SetName<T>(this T toolSettings, string name) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = name;
@@ -6080,7 +6080,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the name of the generated pdf.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetName(this DocFXPdfSettings toolSettings)
+        public static T ResetName<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = null;
@@ -6093,7 +6093,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Do not use stdin when wkhtmltopdf is executed.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetNoInputStreamArgs(this DocFXPdfSettings toolSettings, bool? noInputStreamArgs)
+        public static T SetNoInputStreamArgs<T>(this T toolSettings, bool? noInputStreamArgs) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoInputStreamArgs = noInputStreamArgs;
@@ -6104,7 +6104,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Do not use stdin when wkhtmltopdf is executed.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetNoInputStreamArgs(this DocFXPdfSettings toolSettings)
+        public static T ResetNoInputStreamArgs<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoInputStreamArgs = null;
@@ -6115,7 +6115,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Do not use stdin when wkhtmltopdf is executed.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings EnableNoInputStreamArgs(this DocFXPdfSettings toolSettings)
+        public static T EnableNoInputStreamArgs<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoInputStreamArgs = true;
@@ -6126,7 +6126,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Do not use stdin when wkhtmltopdf is executed.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings DisableNoInputStreamArgs(this DocFXPdfSettings toolSettings)
+        public static T DisableNoInputStreamArgs<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoInputStreamArgs = false;
@@ -6137,7 +6137,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Do not use stdin when wkhtmltopdf is executed.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ToggleNoInputStreamArgs(this DocFXPdfSettings toolSettings)
+        public static T ToggleNoInputStreamArgs<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoInputStreamArgs = !toolSettings.NoInputStreamArgs;
@@ -6150,7 +6150,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the output folder for the raw files, if not specified, raw files will by default be saved to _raw subfolder under output folder if keepRawFiles is set to true.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetRawOutputFolder(this DocFXPdfSettings toolSettings, string rawOutputFolder)
+        public static T SetRawOutputFolder<T>(this T toolSettings, string rawOutputFolder) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RawOutputFolder = rawOutputFolder;
@@ -6161,7 +6161,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the output folder for the raw files, if not specified, raw files will by default be saved to _raw subfolder under output folder if keepRawFiles is set to true.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetRawOutputFolder(this DocFXPdfSettings toolSettings)
+        public static T ResetRawOutputFolder<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RawOutputFolder = null;
@@ -6173,7 +6173,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p><em>Sets <see cref="DocFXPdfSettings.ConfigFile"/></em></p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetConfigFile(this DocFXPdfSettings toolSettings, string configFile)
+        public static T SetConfigFile<T>(this T toolSettings, string configFile) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigFile = configFile;
@@ -6183,7 +6183,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p><em>Resets <see cref="DocFXPdfSettings.ConfigFile"/></em></p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetConfigFile(this DocFXPdfSettings toolSettings)
+        public static T ResetConfigFile<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigFile = null;
@@ -6196,7 +6196,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set changes file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetChangesFile(this DocFXPdfSettings toolSettings, string changesFile)
+        public static T SetChangesFile<T>(this T toolSettings, string changesFile) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ChangesFile = changesFile;
@@ -6207,7 +6207,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set changes file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetChangesFile(this DocFXPdfSettings toolSettings)
+        public static T ResetChangesFile<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ChangesFile = null;
@@ -6220,7 +6220,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, docfx create a new intermediate folder for cache files, historical cache data will be cleaned up.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetCleanupCacheHistory(this DocFXPdfSettings toolSettings, bool? cleanupCacheHistory)
+        public static T SetCleanupCacheHistory<T>(this T toolSettings, bool? cleanupCacheHistory) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CleanupCacheHistory = cleanupCacheHistory;
@@ -6231,7 +6231,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, docfx create a new intermediate folder for cache files, historical cache data will be cleaned up.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetCleanupCacheHistory(this DocFXPdfSettings toolSettings)
+        public static T ResetCleanupCacheHistory<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CleanupCacheHistory = null;
@@ -6242,7 +6242,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, docfx create a new intermediate folder for cache files, historical cache data will be cleaned up.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings EnableCleanupCacheHistory(this DocFXPdfSettings toolSettings)
+        public static T EnableCleanupCacheHistory<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CleanupCacheHistory = true;
@@ -6253,7 +6253,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, docfx create a new intermediate folder for cache files, historical cache data will be cleaned up.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings DisableCleanupCacheHistory(this DocFXPdfSettings toolSettings)
+        public static T DisableCleanupCacheHistory<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CleanupCacheHistory = false;
@@ -6264,7 +6264,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, docfx create a new intermediate folder for cache files, historical cache data will be cleaned up.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ToggleCleanupCacheHistory(this DocFXPdfSettings toolSettings)
+        public static T ToggleCleanupCacheHistory<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CleanupCacheHistory = !toolSettings.CleanupCacheHistory;
@@ -6277,7 +6277,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify content files for generating documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetContent(this DocFXPdfSettings toolSettings, params string[] content)
+        public static T SetContent<T>(this T toolSettings, params string[] content) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContentInternal = content.ToList();
@@ -6288,7 +6288,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify content files for generating documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetContent(this DocFXPdfSettings toolSettings, IEnumerable<string> content)
+        public static T SetContent<T>(this T toolSettings, IEnumerable<string> content) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContentInternal = content.ToList();
@@ -6299,7 +6299,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify content files for generating documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings AddContent(this DocFXPdfSettings toolSettings, params string[] content)
+        public static T AddContent<T>(this T toolSettings, params string[] content) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContentInternal.AddRange(content);
@@ -6310,7 +6310,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify content files for generating documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings AddContent(this DocFXPdfSettings toolSettings, IEnumerable<string> content)
+        public static T AddContent<T>(this T toolSettings, IEnumerable<string> content) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContentInternal.AddRange(content);
@@ -6321,7 +6321,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify content files for generating documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ClearContent(this DocFXPdfSettings toolSettings)
+        public static T ClearContent<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContentInternal.Clear();
@@ -6332,7 +6332,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify content files for generating documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings RemoveContent(this DocFXPdfSettings toolSettings, params string[] content)
+        public static T RemoveContent<T>(this T toolSettings, params string[] content) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(content);
@@ -6344,7 +6344,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify content files for generating documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings RemoveContent(this DocFXPdfSettings toolSettings, IEnumerable<string> content)
+        public static T RemoveContent<T>(this T toolSettings, IEnumerable<string> content) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(content);
@@ -6358,7 +6358,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetDisableGitFeatures(this DocFXPdfSettings toolSettings, bool? disableGitFeatures)
+        public static T SetDisableGitFeatures<T>(this T toolSettings, bool? disableGitFeatures) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableGitFeatures = disableGitFeatures;
@@ -6369,7 +6369,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetDisableGitFeatures(this DocFXPdfSettings toolSettings)
+        public static T ResetDisableGitFeatures<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableGitFeatures = null;
@@ -6380,7 +6380,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings EnableDisableGitFeatures(this DocFXPdfSettings toolSettings)
+        public static T EnableDisableGitFeatures<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableGitFeatures = true;
@@ -6391,7 +6391,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings DisableDisableGitFeatures(this DocFXPdfSettings toolSettings)
+        public static T DisableDisableGitFeatures<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableGitFeatures = false;
@@ -6402,7 +6402,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ToggleDisableGitFeatures(this DocFXPdfSettings toolSettings)
+        public static T ToggleDisableGitFeatures<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableGitFeatures = !toolSettings.DisableGitFeatures;
@@ -6415,7 +6415,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, template will not be actually applied to the documents. This option is always used with --exportRawModel or --exportViewModel is set so that only raw model files or view model files are generated.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetDryRun(this DocFXPdfSettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -6426,7 +6426,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, template will not be actually applied to the documents. This option is always used with --exportRawModel or --exportViewModel is set so that only raw model files or view model files are generated.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetDryRun(this DocFXPdfSettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -6437,7 +6437,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, template will not be actually applied to the documents. This option is always used with --exportRawModel or --exportViewModel is set so that only raw model files or view model files are generated.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings EnableDryRun(this DocFXPdfSettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -6448,7 +6448,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, template will not be actually applied to the documents. This option is always used with --exportRawModel or --exportViewModel is set so that only raw model files or view model files are generated.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings DisableDryRun(this DocFXPdfSettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -6459,7 +6459,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, template will not be actually applied to the documents. This option is always used with --exportRawModel or --exportViewModel is set so that only raw model files or view model files are generated.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ToggleDryRun(this DocFXPdfSettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -6472,7 +6472,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Run in debug mode. With debug mode, raw model and view model will be exported automatically when it encounters error when applying templates. If not specified, it is false.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetEnableDebugMode(this DocFXPdfSettings toolSettings, bool? enableDebugMode)
+        public static T SetEnableDebugMode<T>(this T toolSettings, bool? enableDebugMode) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableDebugMode = enableDebugMode;
@@ -6483,7 +6483,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Run in debug mode. With debug mode, raw model and view model will be exported automatically when it encounters error when applying templates. If not specified, it is false.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetEnableDebugMode(this DocFXPdfSettings toolSettings)
+        public static T ResetEnableDebugMode<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableDebugMode = null;
@@ -6494,7 +6494,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Run in debug mode. With debug mode, raw model and view model will be exported automatically when it encounters error when applying templates. If not specified, it is false.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings EnableEnableDebugMode(this DocFXPdfSettings toolSettings)
+        public static T EnableEnableDebugMode<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableDebugMode = true;
@@ -6505,7 +6505,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Run in debug mode. With debug mode, raw model and view model will be exported automatically when it encounters error when applying templates. If not specified, it is false.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings DisableEnableDebugMode(this DocFXPdfSettings toolSettings)
+        public static T DisableEnableDebugMode<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableDebugMode = false;
@@ -6516,7 +6516,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Run in debug mode. With debug mode, raw model and view model will be exported automatically when it encounters error when applying templates. If not specified, it is false.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ToggleEnableDebugMode(this DocFXPdfSettings toolSettings)
+        public static T ToggleEnableDebugMode<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableDebugMode = !toolSettings.EnableDebugMode;
@@ -6529,7 +6529,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, data model to run template script will be extracted in .raw.model.json extension.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetExportRawModel(this DocFXPdfSettings toolSettings, bool? exportRawModel)
+        public static T SetExportRawModel<T>(this T toolSettings, bool? exportRawModel) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportRawModel = exportRawModel;
@@ -6540,7 +6540,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, data model to run template script will be extracted in .raw.model.json extension.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetExportRawModel(this DocFXPdfSettings toolSettings)
+        public static T ResetExportRawModel<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportRawModel = null;
@@ -6551,7 +6551,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, data model to run template script will be extracted in .raw.model.json extension.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings EnableExportRawModel(this DocFXPdfSettings toolSettings)
+        public static T EnableExportRawModel<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportRawModel = true;
@@ -6562,7 +6562,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, data model to run template script will be extracted in .raw.model.json extension.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings DisableExportRawModel(this DocFXPdfSettings toolSettings)
+        public static T DisableExportRawModel<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportRawModel = false;
@@ -6573,7 +6573,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, data model to run template script will be extracted in .raw.model.json extension.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ToggleExportRawModel(this DocFXPdfSettings toolSettings)
+        public static T ToggleExportRawModel<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportRawModel = !toolSettings.ExportRawModel;
@@ -6586,7 +6586,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, data model to apply template will be extracted in .view.model.json extension.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetExportViewModel(this DocFXPdfSettings toolSettings, bool? exportViewModel)
+        public static T SetExportViewModel<T>(this T toolSettings, bool? exportViewModel) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportViewModel = exportViewModel;
@@ -6597,7 +6597,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, data model to apply template will be extracted in .view.model.json extension.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetExportViewModel(this DocFXPdfSettings toolSettings)
+        public static T ResetExportViewModel<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportViewModel = null;
@@ -6608,7 +6608,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, data model to apply template will be extracted in .view.model.json extension.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings EnableExportViewModel(this DocFXPdfSettings toolSettings)
+        public static T EnableExportViewModel<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportViewModel = true;
@@ -6619,7 +6619,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, data model to apply template will be extracted in .view.model.json extension.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings DisableExportViewModel(this DocFXPdfSettings toolSettings)
+        public static T DisableExportViewModel<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportViewModel = false;
@@ -6630,7 +6630,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, data model to apply template will be extracted in .view.model.json extension.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ToggleExportViewModel(this DocFXPdfSettings toolSettings)
+        public static T ToggleExportViewModel<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportViewModel = !toolSettings.ExportViewModel;
@@ -6643,7 +6643,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the name of input file abstract layer builder.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetFALName(this DocFXPdfSettings toolSettings, string falname)
+        public static T SetFALName<T>(this T toolSettings, string falname) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FALName = falname;
@@ -6654,7 +6654,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the name of input file abstract layer builder.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetFALName(this DocFXPdfSettings toolSettings)
+        public static T ResetFALName<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FALName = null;
@@ -6667,7 +6667,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a JSON file path containing fileMetadata settings, as similar to {"fileMetadata":{"key":"value"}}. It overrides the fileMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetFileMetadataFilePath(this DocFXPdfSettings toolSettings, string fileMetadataFilePath)
+        public static T SetFileMetadataFilePath<T>(this T toolSettings, string fileMetadataFilePath) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileMetadataFilePath = fileMetadataFilePath;
@@ -6678,7 +6678,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a JSON file path containing fileMetadata settings, as similar to {"fileMetadata":{"key":"value"}}. It overrides the fileMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetFileMetadataFilePath(this DocFXPdfSettings toolSettings)
+        public static T ResetFileMetadataFilePath<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileMetadataFilePath = null;
@@ -6691,7 +6691,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing fileMetadata settings, as similar to {"key":"value"}. It overrides the fileMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetFileMetadataFilePaths(this DocFXPdfSettings toolSettings, params string[] fileMetadataFilePaths)
+        public static T SetFileMetadataFilePaths<T>(this T toolSettings, params string[] fileMetadataFilePaths) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileMetadataFilePathsInternal = fileMetadataFilePaths.ToList();
@@ -6702,7 +6702,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing fileMetadata settings, as similar to {"key":"value"}. It overrides the fileMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetFileMetadataFilePaths(this DocFXPdfSettings toolSettings, IEnumerable<string> fileMetadataFilePaths)
+        public static T SetFileMetadataFilePaths<T>(this T toolSettings, IEnumerable<string> fileMetadataFilePaths) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileMetadataFilePathsInternal = fileMetadataFilePaths.ToList();
@@ -6713,7 +6713,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing fileMetadata settings, as similar to {"key":"value"}. It overrides the fileMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings AddFileMetadataFilePaths(this DocFXPdfSettings toolSettings, params string[] fileMetadataFilePaths)
+        public static T AddFileMetadataFilePaths<T>(this T toolSettings, params string[] fileMetadataFilePaths) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileMetadataFilePathsInternal.AddRange(fileMetadataFilePaths);
@@ -6724,7 +6724,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing fileMetadata settings, as similar to {"key":"value"}. It overrides the fileMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings AddFileMetadataFilePaths(this DocFXPdfSettings toolSettings, IEnumerable<string> fileMetadataFilePaths)
+        public static T AddFileMetadataFilePaths<T>(this T toolSettings, IEnumerable<string> fileMetadataFilePaths) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileMetadataFilePathsInternal.AddRange(fileMetadataFilePaths);
@@ -6735,7 +6735,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing fileMetadata settings, as similar to {"key":"value"}. It overrides the fileMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ClearFileMetadataFilePaths(this DocFXPdfSettings toolSettings)
+        public static T ClearFileMetadataFilePaths<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileMetadataFilePathsInternal.Clear();
@@ -6746,7 +6746,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing fileMetadata settings, as similar to {"key":"value"}. It overrides the fileMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings RemoveFileMetadataFilePaths(this DocFXPdfSettings toolSettings, params string[] fileMetadataFilePaths)
+        public static T RemoveFileMetadataFilePaths<T>(this T toolSettings, params string[] fileMetadataFilePaths) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(fileMetadataFilePaths);
@@ -6758,7 +6758,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing fileMetadata settings, as similar to {"key":"value"}. It overrides the fileMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings RemoveFileMetadataFilePaths(this DocFXPdfSettings toolSettings, IEnumerable<string> fileMetadataFilePaths)
+        public static T RemoveFileMetadataFilePaths<T>(this T toolSettings, IEnumerable<string> fileMetadataFilePaths) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(fileMetadataFilePaths);
@@ -6772,7 +6772,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force to re-process the documentation in post processors. It will be cascaded from force option.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetForcePostProcess(this DocFXPdfSettings toolSettings, bool? forcePostProcess)
+        public static T SetForcePostProcess<T>(this T toolSettings, bool? forcePostProcess) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForcePostProcess = forcePostProcess;
@@ -6783,7 +6783,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force to re-process the documentation in post processors. It will be cascaded from force option.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetForcePostProcess(this DocFXPdfSettings toolSettings)
+        public static T ResetForcePostProcess<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForcePostProcess = null;
@@ -6794,7 +6794,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force to re-process the documentation in post processors. It will be cascaded from force option.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings EnableForcePostProcess(this DocFXPdfSettings toolSettings)
+        public static T EnableForcePostProcess<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForcePostProcess = true;
@@ -6805,7 +6805,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force to re-process the documentation in post processors. It will be cascaded from force option.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings DisableForcePostProcess(this DocFXPdfSettings toolSettings)
+        public static T DisableForcePostProcess<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForcePostProcess = false;
@@ -6816,7 +6816,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force to re-process the documentation in post processors. It will be cascaded from force option.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ToggleForcePostProcess(this DocFXPdfSettings toolSettings)
+        public static T ToggleForcePostProcess<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForcePostProcess = !toolSettings.ForcePostProcess;
@@ -6829,7 +6829,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force re-build all the documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetForceRebuild(this DocFXPdfSettings toolSettings, bool? forceRebuild)
+        public static T SetForceRebuild<T>(this T toolSettings, bool? forceRebuild) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceRebuild = forceRebuild;
@@ -6840,7 +6840,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force re-build all the documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetForceRebuild(this DocFXPdfSettings toolSettings)
+        public static T ResetForceRebuild<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceRebuild = null;
@@ -6851,7 +6851,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force re-build all the documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings EnableForceRebuild(this DocFXPdfSettings toolSettings)
+        public static T EnableForceRebuild<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceRebuild = true;
@@ -6862,7 +6862,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force re-build all the documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings DisableForceRebuild(this DocFXPdfSettings toolSettings)
+        public static T DisableForceRebuild<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceRebuild = false;
@@ -6873,7 +6873,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Force re-build all the documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ToggleForceRebuild(this DocFXPdfSettings toolSettings)
+        public static T ToggleForceRebuild<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceRebuild = !toolSettings.ForceRebuild;
@@ -6886,7 +6886,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify global metadata key-value pair in json format. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetGlobalMetadata(this DocFXPdfSettings toolSettings, string globalMetadata)
+        public static T SetGlobalMetadata<T>(this T toolSettings, string globalMetadata) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalMetadata = globalMetadata;
@@ -6897,7 +6897,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify global metadata key-value pair in json format. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetGlobalMetadata(this DocFXPdfSettings toolSettings)
+        public static T ResetGlobalMetadata<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalMetadata = null;
@@ -6910,7 +6910,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a JSON file path containing globalMetadata settings, as similar to {"globalMetadata":{"key":"value"}}. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetGlobalMetadataFilePath(this DocFXPdfSettings toolSettings, string globalMetadataFilePath)
+        public static T SetGlobalMetadataFilePath<T>(this T toolSettings, string globalMetadataFilePath) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalMetadataFilePath = globalMetadataFilePath;
@@ -6921,7 +6921,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a JSON file path containing globalMetadata settings, as similar to {"globalMetadata":{"key":"value"}}. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetGlobalMetadataFilePath(this DocFXPdfSettings toolSettings)
+        public static T ResetGlobalMetadataFilePath<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalMetadataFilePath = null;
@@ -6934,7 +6934,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing globalMetadata settings, as similar to {"key":"value"}. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetGlobalMetadataFilePaths(this DocFXPdfSettings toolSettings, params string[] globalMetadataFilePaths)
+        public static T SetGlobalMetadataFilePaths<T>(this T toolSettings, params string[] globalMetadataFilePaths) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalMetadataFilePathsInternal = globalMetadataFilePaths.ToList();
@@ -6945,7 +6945,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing globalMetadata settings, as similar to {"key":"value"}. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetGlobalMetadataFilePaths(this DocFXPdfSettings toolSettings, IEnumerable<string> globalMetadataFilePaths)
+        public static T SetGlobalMetadataFilePaths<T>(this T toolSettings, IEnumerable<string> globalMetadataFilePaths) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalMetadataFilePathsInternal = globalMetadataFilePaths.ToList();
@@ -6956,7 +6956,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing globalMetadata settings, as similar to {"key":"value"}. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings AddGlobalMetadataFilePaths(this DocFXPdfSettings toolSettings, params string[] globalMetadataFilePaths)
+        public static T AddGlobalMetadataFilePaths<T>(this T toolSettings, params string[] globalMetadataFilePaths) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalMetadataFilePathsInternal.AddRange(globalMetadataFilePaths);
@@ -6967,7 +6967,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing globalMetadata settings, as similar to {"key":"value"}. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings AddGlobalMetadataFilePaths(this DocFXPdfSettings toolSettings, IEnumerable<string> globalMetadataFilePaths)
+        public static T AddGlobalMetadataFilePaths<T>(this T toolSettings, IEnumerable<string> globalMetadataFilePaths) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalMetadataFilePathsInternal.AddRange(globalMetadataFilePaths);
@@ -6978,7 +6978,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing globalMetadata settings, as similar to {"key":"value"}. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ClearGlobalMetadataFilePaths(this DocFXPdfSettings toolSettings)
+        public static T ClearGlobalMetadataFilePaths<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalMetadataFilePathsInternal.Clear();
@@ -6989,7 +6989,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing globalMetadata settings, as similar to {"key":"value"}. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings RemoveGlobalMetadataFilePaths(this DocFXPdfSettings toolSettings, params string[] globalMetadataFilePaths)
+        public static T RemoveGlobalMetadataFilePaths<T>(this T toolSettings, params string[] globalMetadataFilePaths) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(globalMetadataFilePaths);
@@ -7001,7 +7001,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify a list of JSON file path containing globalMetadata settings, as similar to {"key":"value"}. It overrides the globalMetadata settings from the config file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings RemoveGlobalMetadataFilePaths(this DocFXPdfSettings toolSettings, IEnumerable<string> globalMetadataFilePaths)
+        public static T RemoveGlobalMetadataFilePaths<T>(this T toolSettings, IEnumerable<string> globalMetadataFilePaths) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(globalMetadataFilePaths);
@@ -7015,7 +7015,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the hostname of the hosted website (e.g., 'localhost' or '*').</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetHost(this DocFXPdfSettings toolSettings, string host)
+        public static T SetHost<T>(this T toolSettings, string host) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Host = host;
@@ -7026,7 +7026,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the hostname of the hosted website (e.g., 'localhost' or '*').</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetHost(this DocFXPdfSettings toolSettings)
+        public static T ResetHost<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Host = null;
@@ -7039,7 +7039,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set folder for intermediate build results.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetIntermediateFolder(this DocFXPdfSettings toolSettings, string intermediateFolder)
+        public static T SetIntermediateFolder<T>(this T toolSettings, string intermediateFolder) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IntermediateFolder = intermediateFolder;
@@ -7050,7 +7050,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set folder for intermediate build results.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetIntermediateFolder(this DocFXPdfSettings toolSettings)
+        public static T ResetIntermediateFolder<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IntermediateFolder = null;
@@ -7063,7 +7063,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, docfx does not dereference (aka. copy) file to the output folder, instead, it saves a link_to_path property inside mainfiest.json to indicate the physical location of that file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetKeepFileLink(this DocFXPdfSettings toolSettings, bool? keepFileLink)
+        public static T SetKeepFileLink<T>(this T toolSettings, bool? keepFileLink) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepFileLink = keepFileLink;
@@ -7074,7 +7074,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, docfx does not dereference (aka. copy) file to the output folder, instead, it saves a link_to_path property inside mainfiest.json to indicate the physical location of that file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetKeepFileLink(this DocFXPdfSettings toolSettings)
+        public static T ResetKeepFileLink<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepFileLink = null;
@@ -7085,7 +7085,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, docfx does not dereference (aka. copy) file to the output folder, instead, it saves a link_to_path property inside mainfiest.json to indicate the physical location of that file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings EnableKeepFileLink(this DocFXPdfSettings toolSettings)
+        public static T EnableKeepFileLink<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepFileLink = true;
@@ -7096,7 +7096,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, docfx does not dereference (aka. copy) file to the output folder, instead, it saves a link_to_path property inside mainfiest.json to indicate the physical location of that file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings DisableKeepFileLink(this DocFXPdfSettings toolSettings)
+        public static T DisableKeepFileLink<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepFileLink = false;
@@ -7107,7 +7107,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If set to true, docfx does not dereference (aka. copy) file to the output folder, instead, it saves a link_to_path property inside mainfiest.json to indicate the physical location of that file.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ToggleKeepFileLink(this DocFXPdfSettings toolSettings)
+        public static T ToggleKeepFileLink<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepFileLink = !toolSettings.KeepFileLink;
@@ -7120,7 +7120,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the LRU cached model count (approximately the same as the count of input files). By default, it is 8192 for 64bit and 3072 for 32bit process. With LRU cache enabled, memory usage decreases and time consumed increases. If set to 0, Lru cache is disabled.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetLruSize(this DocFXPdfSettings toolSettings, int? lruSize)
+        public static T SetLruSize<T>(this T toolSettings, int? lruSize) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LruSize = lruSize;
@@ -7131,7 +7131,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the LRU cached model count (approximately the same as the count of input files). By default, it is 8192 for 64bit and 3072 for 32bit process. With LRU cache enabled, memory usage decreases and time consumed increases. If set to 0, Lru cache is disabled.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetLruSize(this DocFXPdfSettings toolSettings)
+        public static T ResetLruSize<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LruSize = null;
@@ -7144,7 +7144,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the name of markdown engine, default is 'dfm'.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetMarkdownEngineName(this DocFXPdfSettings toolSettings, string markdownEngineName)
+        public static T SetMarkdownEngineName<T>(this T toolSettings, string markdownEngineName) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MarkdownEngineName = markdownEngineName;
@@ -7155,7 +7155,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the name of markdown engine, default is 'dfm'.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetMarkdownEngineName(this DocFXPdfSettings toolSettings)
+        public static T ResetMarkdownEngineName<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MarkdownEngineName = null;
@@ -7168,7 +7168,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the parameters for markdown engine, value should be a JSON string.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetMarkdownEngineProperties(this DocFXPdfSettings toolSettings, string markdownEngineProperties)
+        public static T SetMarkdownEngineProperties<T>(this T toolSettings, string markdownEngineProperties) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MarkdownEngineProperties = markdownEngineProperties;
@@ -7179,7 +7179,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the parameters for markdown engine, value should be a JSON string.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetMarkdownEngineProperties(this DocFXPdfSettings toolSettings)
+        public static T ResetMarkdownEngineProperties<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MarkdownEngineProperties = null;
@@ -7192,7 +7192,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the max parallelism, 0 is auto.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetMaxParallelism(this DocFXPdfSettings toolSettings, int? maxParallelism)
+        public static T SetMaxParallelism<T>(this T toolSettings, int? maxParallelism) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MaxParallelism = maxParallelism;
@@ -7203,7 +7203,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the max parallelism, 0 is auto.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetMaxParallelism(this DocFXPdfSettings toolSettings)
+        public static T ResetMaxParallelism<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MaxParallelism = null;
@@ -7216,7 +7216,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable default lang keyword.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetNoLangKeyword(this DocFXPdfSettings toolSettings, bool? noLangKeyword)
+        public static T SetNoLangKeyword<T>(this T toolSettings, bool? noLangKeyword) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLangKeyword = noLangKeyword;
@@ -7227,7 +7227,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable default lang keyword.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetNoLangKeyword(this DocFXPdfSettings toolSettings)
+        public static T ResetNoLangKeyword<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLangKeyword = null;
@@ -7238,7 +7238,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable default lang keyword.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings EnableNoLangKeyword(this DocFXPdfSettings toolSettings)
+        public static T EnableNoLangKeyword<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLangKeyword = true;
@@ -7249,7 +7249,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable default lang keyword.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings DisableNoLangKeyword(this DocFXPdfSettings toolSettings)
+        public static T DisableNoLangKeyword<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLangKeyword = false;
@@ -7260,7 +7260,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Disable default lang keyword.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ToggleNoLangKeyword(this DocFXPdfSettings toolSettings)
+        public static T ToggleNoLangKeyword<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLangKeyword = !toolSettings.NoLangKeyword;
@@ -7273,7 +7273,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the output base directory.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetOutputFolder(this DocFXPdfSettings toolSettings, string outputFolder)
+        public static T SetOutputFolder<T>(this T toolSettings, string outputFolder) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFolder = outputFolder;
@@ -7284,7 +7284,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the output base directory.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetOutputFolder(this DocFXPdfSettings toolSettings)
+        public static T ResetOutputFolder<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFolder = null;
@@ -7297,7 +7297,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>The output folder for files generated for debugging purpose when in debug mode. If not specified, it is ${TempPath}/docfx.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetOutputFolderForDebugFiles(this DocFXPdfSettings toolSettings, string outputFolderForDebugFiles)
+        public static T SetOutputFolderForDebugFiles<T>(this T toolSettings, string outputFolderForDebugFiles) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFolderForDebugFiles = outputFolderForDebugFiles;
@@ -7308,7 +7308,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>The output folder for files generated for debugging purpose when in debug mode. If not specified, it is ${TempPath}/docfx.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetOutputFolderForDebugFiles(this DocFXPdfSettings toolSettings)
+        public static T ResetOutputFolderForDebugFiles<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFolderForDebugFiles = null;
@@ -7321,7 +7321,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify overwrite files used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetOverwrite(this DocFXPdfSettings toolSettings, params string[] overwrite)
+        public static T SetOverwrite<T>(this T toolSettings, params string[] overwrite) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OverwriteInternal = overwrite.ToList();
@@ -7332,7 +7332,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify overwrite files used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetOverwrite(this DocFXPdfSettings toolSettings, IEnumerable<string> overwrite)
+        public static T SetOverwrite<T>(this T toolSettings, IEnumerable<string> overwrite) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OverwriteInternal = overwrite.ToList();
@@ -7343,7 +7343,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify overwrite files used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings AddOverwrite(this DocFXPdfSettings toolSettings, params string[] overwrite)
+        public static T AddOverwrite<T>(this T toolSettings, params string[] overwrite) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OverwriteInternal.AddRange(overwrite);
@@ -7354,7 +7354,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify overwrite files used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings AddOverwrite(this DocFXPdfSettings toolSettings, IEnumerable<string> overwrite)
+        public static T AddOverwrite<T>(this T toolSettings, IEnumerable<string> overwrite) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OverwriteInternal.AddRange(overwrite);
@@ -7365,7 +7365,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify overwrite files used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ClearOverwrite(this DocFXPdfSettings toolSettings)
+        public static T ClearOverwrite<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OverwriteInternal.Clear();
@@ -7376,7 +7376,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify overwrite files used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings RemoveOverwrite(this DocFXPdfSettings toolSettings, params string[] overwrite)
+        public static T RemoveOverwrite<T>(this T toolSettings, params string[] overwrite) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(overwrite);
@@ -7388,7 +7388,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify overwrite files used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings RemoveOverwrite(this DocFXPdfSettings toolSettings, IEnumerable<string> overwrite)
+        public static T RemoveOverwrite<T>(this T toolSettings, IEnumerable<string> overwrite) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(overwrite);
@@ -7402,7 +7402,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the port of the hosted website.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetPort(this DocFXPdfSettings toolSettings, int? port)
+        public static T SetPort<T>(this T toolSettings, int? port) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Port = port;
@@ -7413,7 +7413,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the port of the hosted website.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetPort(this DocFXPdfSettings toolSettings)
+        public static T ResetPort<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Port = null;
@@ -7426,7 +7426,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the order of post processors in plugins.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetPostProcessors(this DocFXPdfSettings toolSettings, params string[] postProcessors)
+        public static T SetPostProcessors<T>(this T toolSettings, params string[] postProcessors) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PostProcessorsInternal = postProcessors.ToList();
@@ -7437,7 +7437,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the order of post processors in plugins.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetPostProcessors(this DocFXPdfSettings toolSettings, IEnumerable<string> postProcessors)
+        public static T SetPostProcessors<T>(this T toolSettings, IEnumerable<string> postProcessors) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PostProcessorsInternal = postProcessors.ToList();
@@ -7448,7 +7448,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the order of post processors in plugins.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings AddPostProcessors(this DocFXPdfSettings toolSettings, params string[] postProcessors)
+        public static T AddPostProcessors<T>(this T toolSettings, params string[] postProcessors) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PostProcessorsInternal.AddRange(postProcessors);
@@ -7459,7 +7459,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the order of post processors in plugins.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings AddPostProcessors(this DocFXPdfSettings toolSettings, IEnumerable<string> postProcessors)
+        public static T AddPostProcessors<T>(this T toolSettings, IEnumerable<string> postProcessors) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PostProcessorsInternal.AddRange(postProcessors);
@@ -7470,7 +7470,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the order of post processors in plugins.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ClearPostProcessors(this DocFXPdfSettings toolSettings)
+        public static T ClearPostProcessors<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PostProcessorsInternal.Clear();
@@ -7481,7 +7481,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the order of post processors in plugins.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings RemovePostProcessors(this DocFXPdfSettings toolSettings, params string[] postProcessors)
+        public static T RemovePostProcessors<T>(this T toolSettings, params string[] postProcessors) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(postProcessors);
@@ -7493,7 +7493,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Set the order of post processors in plugins.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings RemovePostProcessors(this DocFXPdfSettings toolSettings, IEnumerable<string> postProcessors)
+        public static T RemovePostProcessors<T>(this T toolSettings, IEnumerable<string> postProcessors) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(postProcessors);
@@ -7507,7 +7507,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetPrintHelpMessage(this DocFXPdfSettings toolSettings, bool? printHelpMessage)
+        public static T SetPrintHelpMessage<T>(this T toolSettings, bool? printHelpMessage) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = printHelpMessage;
@@ -7518,7 +7518,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetPrintHelpMessage(this DocFXPdfSettings toolSettings)
+        public static T ResetPrintHelpMessage<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = null;
@@ -7529,7 +7529,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings EnablePrintHelpMessage(this DocFXPdfSettings toolSettings)
+        public static T EnablePrintHelpMessage<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = true;
@@ -7540,7 +7540,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings DisablePrintHelpMessage(this DocFXPdfSettings toolSettings)
+        public static T DisablePrintHelpMessage<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = false;
@@ -7551,7 +7551,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings TogglePrintHelpMessage(this DocFXPdfSettings toolSettings)
+        public static T TogglePrintHelpMessage<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = !toolSettings.PrintHelpMessage;
@@ -7564,7 +7564,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the output folder for the raw model. If not set, the raw model will be generated to the same folder as the output documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetRawModelOutputFolder(this DocFXPdfSettings toolSettings, string rawModelOutputFolder)
+        public static T SetRawModelOutputFolder<T>(this T toolSettings, string rawModelOutputFolder) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RawModelOutputFolder = rawModelOutputFolder;
@@ -7575,7 +7575,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the output folder for the raw model. If not set, the raw model will be generated to the same folder as the output documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetRawModelOutputFolder(this DocFXPdfSettings toolSettings)
+        public static T ResetRawModelOutputFolder<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RawModelOutputFolder = null;
@@ -7588,7 +7588,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify resources used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetResource(this DocFXPdfSettings toolSettings, params string[] resource)
+        public static T SetResource<T>(this T toolSettings, params string[] resource) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResourceInternal = resource.ToList();
@@ -7599,7 +7599,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify resources used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetResource(this DocFXPdfSettings toolSettings, IEnumerable<string> resource)
+        public static T SetResource<T>(this T toolSettings, IEnumerable<string> resource) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResourceInternal = resource.ToList();
@@ -7610,7 +7610,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify resources used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings AddResource(this DocFXPdfSettings toolSettings, params string[] resource)
+        public static T AddResource<T>(this T toolSettings, params string[] resource) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResourceInternal.AddRange(resource);
@@ -7621,7 +7621,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify resources used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings AddResource(this DocFXPdfSettings toolSettings, IEnumerable<string> resource)
+        public static T AddResource<T>(this T toolSettings, IEnumerable<string> resource) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResourceInternal.AddRange(resource);
@@ -7632,7 +7632,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify resources used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ClearResource(this DocFXPdfSettings toolSettings)
+        public static T ClearResource<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResourceInternal.Clear();
@@ -7643,7 +7643,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify resources used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings RemoveResource(this DocFXPdfSettings toolSettings, params string[] resource)
+        public static T RemoveResource<T>(this T toolSettings, params string[] resource) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(resource);
@@ -7655,7 +7655,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify resources used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings RemoveResource(this DocFXPdfSettings toolSettings, IEnumerable<string> resource)
+        public static T RemoveResource<T>(this T toolSettings, IEnumerable<string> resource) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(resource);
@@ -7669,7 +7669,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Please provide the license key for validating schema using NewtonsoftJson.Schema here.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetSchemaLicense(this DocFXPdfSettings toolSettings, string schemaLicense)
+        public static T SetSchemaLicense<T>(this T toolSettings, string schemaLicense) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SchemaLicense = schemaLicense;
@@ -7680,7 +7680,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Please provide the license key for validating schema using NewtonsoftJson.Schema here.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetSchemaLicense(this DocFXPdfSettings toolSettings)
+        public static T ResetSchemaLicense<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SchemaLicense = null;
@@ -7693,7 +7693,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Host the generated documentation to a website.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetServe(this DocFXPdfSettings toolSettings, bool? serve)
+        public static T SetServe<T>(this T toolSettings, bool? serve) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serve = serve;
@@ -7704,7 +7704,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Host the generated documentation to a website.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetServe(this DocFXPdfSettings toolSettings)
+        public static T ResetServe<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serve = null;
@@ -7715,7 +7715,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Host the generated documentation to a website.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings EnableServe(this DocFXPdfSettings toolSettings)
+        public static T EnableServe<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serve = true;
@@ -7726,7 +7726,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Host the generated documentation to a website.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings DisableServe(this DocFXPdfSettings toolSettings)
+        public static T DisableServe<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serve = false;
@@ -7737,7 +7737,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Host the generated documentation to a website.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ToggleServe(this DocFXPdfSettings toolSettings)
+        public static T ToggleServe<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serve = !toolSettings.Serve;
@@ -7750,7 +7750,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the template name to apply to. If not specified, output YAML file will not be transformed.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetTemplates(this DocFXPdfSettings toolSettings, params string[] templates)
+        public static T SetTemplates<T>(this T toolSettings, params string[] templates) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TemplatesInternal = templates.ToList();
@@ -7761,7 +7761,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the template name to apply to. If not specified, output YAML file will not be transformed.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetTemplates(this DocFXPdfSettings toolSettings, IEnumerable<string> templates)
+        public static T SetTemplates<T>(this T toolSettings, IEnumerable<string> templates) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TemplatesInternal = templates.ToList();
@@ -7772,7 +7772,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the template name to apply to. If not specified, output YAML file will not be transformed.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings AddTemplates(this DocFXPdfSettings toolSettings, params string[] templates)
+        public static T AddTemplates<T>(this T toolSettings, params string[] templates) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TemplatesInternal.AddRange(templates);
@@ -7783,7 +7783,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the template name to apply to. If not specified, output YAML file will not be transformed.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings AddTemplates(this DocFXPdfSettings toolSettings, IEnumerable<string> templates)
+        public static T AddTemplates<T>(this T toolSettings, IEnumerable<string> templates) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TemplatesInternal.AddRange(templates);
@@ -7794,7 +7794,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the template name to apply to. If not specified, output YAML file will not be transformed.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ClearTemplates(this DocFXPdfSettings toolSettings)
+        public static T ClearTemplates<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TemplatesInternal.Clear();
@@ -7805,7 +7805,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the template name to apply to. If not specified, output YAML file will not be transformed.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings RemoveTemplates(this DocFXPdfSettings toolSettings, params string[] templates)
+        public static T RemoveTemplates<T>(this T toolSettings, params string[] templates) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(templates);
@@ -7817,7 +7817,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the template name to apply to. If not specified, output YAML file will not be transformed.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings RemoveTemplates(this DocFXPdfSettings toolSettings, IEnumerable<string> templates)
+        public static T RemoveTemplates<T>(this T toolSettings, IEnumerable<string> templates) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(templates);
@@ -7831,7 +7831,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify which theme to use. By default 'default' theme is offered.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetThemes(this DocFXPdfSettings toolSettings, params string[] themes)
+        public static T SetThemes<T>(this T toolSettings, params string[] themes) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ThemesInternal = themes.ToList();
@@ -7842,7 +7842,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify which theme to use. By default 'default' theme is offered.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetThemes(this DocFXPdfSettings toolSettings, IEnumerable<string> themes)
+        public static T SetThemes<T>(this T toolSettings, IEnumerable<string> themes) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ThemesInternal = themes.ToList();
@@ -7853,7 +7853,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify which theme to use. By default 'default' theme is offered.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings AddThemes(this DocFXPdfSettings toolSettings, params string[] themes)
+        public static T AddThemes<T>(this T toolSettings, params string[] themes) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ThemesInternal.AddRange(themes);
@@ -7864,7 +7864,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify which theme to use. By default 'default' theme is offered.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings AddThemes(this DocFXPdfSettings toolSettings, IEnumerable<string> themes)
+        public static T AddThemes<T>(this T toolSettings, IEnumerable<string> themes) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ThemesInternal.AddRange(themes);
@@ -7875,7 +7875,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify which theme to use. By default 'default' theme is offered.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ClearThemes(this DocFXPdfSettings toolSettings)
+        public static T ClearThemes<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ThemesInternal.Clear();
@@ -7886,7 +7886,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify which theme to use. By default 'default' theme is offered.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings RemoveThemes(this DocFXPdfSettings toolSettings, params string[] themes)
+        public static T RemoveThemes<T>(this T toolSettings, params string[] themes) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(themes);
@@ -7898,7 +7898,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify which theme to use. By default 'default' theme is offered.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings RemoveThemes(this DocFXPdfSettings toolSettings, IEnumerable<string> themes)
+        public static T RemoveThemes<T>(this T toolSettings, IEnumerable<string> themes) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(themes);
@@ -7912,7 +7912,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the output folder for the view model. If not set, the view model will be generated to the same folder as the output documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetViewModelOutputFolder(this DocFXPdfSettings toolSettings, string viewModelOutputFolder)
+        public static T SetViewModelOutputFolder<T>(this T toolSettings, string viewModelOutputFolder) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ViewModelOutputFolder = viewModelOutputFolder;
@@ -7923,7 +7923,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the output folder for the view model. If not set, the view model will be generated to the same folder as the output documentation.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetViewModelOutputFolder(this DocFXPdfSettings toolSettings)
+        public static T ResetViewModelOutputFolder<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ViewModelOutputFolder = null;
@@ -7936,7 +7936,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the urls of xrefmap used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetXRefMaps(this DocFXPdfSettings toolSettings, params string[] xrefMaps)
+        public static T SetXRefMaps<T>(this T toolSettings, params string[] xrefMaps) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.XRefMapsInternal = xrefMaps.ToList();
@@ -7947,7 +7947,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the urls of xrefmap used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetXRefMaps(this DocFXPdfSettings toolSettings, IEnumerable<string> xrefMaps)
+        public static T SetXRefMaps<T>(this T toolSettings, IEnumerable<string> xrefMaps) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.XRefMapsInternal = xrefMaps.ToList();
@@ -7958,7 +7958,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the urls of xrefmap used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings AddXRefMaps(this DocFXPdfSettings toolSettings, params string[] xrefMaps)
+        public static T AddXRefMaps<T>(this T toolSettings, params string[] xrefMaps) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.XRefMapsInternal.AddRange(xrefMaps);
@@ -7969,7 +7969,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the urls of xrefmap used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings AddXRefMaps(this DocFXPdfSettings toolSettings, IEnumerable<string> xrefMaps)
+        public static T AddXRefMaps<T>(this T toolSettings, IEnumerable<string> xrefMaps) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.XRefMapsInternal.AddRange(xrefMaps);
@@ -7980,7 +7980,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the urls of xrefmap used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ClearXRefMaps(this DocFXPdfSettings toolSettings)
+        public static T ClearXRefMaps<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.XRefMapsInternal.Clear();
@@ -7991,7 +7991,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the urls of xrefmap used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings RemoveXRefMaps(this DocFXPdfSettings toolSettings, params string[] xrefMaps)
+        public static T RemoveXRefMaps<T>(this T toolSettings, params string[] xrefMaps) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(xrefMaps);
@@ -8003,7 +8003,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the urls of xrefmap used by content files.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings RemoveXRefMaps(this DocFXPdfSettings toolSettings, IEnumerable<string> xrefMaps)
+        public static T RemoveXRefMaps<T>(this T toolSettings, IEnumerable<string> xrefMaps) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(xrefMaps);
@@ -8017,7 +8017,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the correlation id used for logging.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetCorrelationId(this DocFXPdfSettings toolSettings, string correlationId)
+        public static T SetCorrelationId<T>(this T toolSettings, string correlationId) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CorrelationId = correlationId;
@@ -8028,7 +8028,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the correlation id used for logging.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetCorrelationId(this DocFXPdfSettings toolSettings)
+        public static T ResetCorrelationId<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CorrelationId = null;
@@ -8041,7 +8041,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the file name to save processing log.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetLogFilePath(this DocFXPdfSettings toolSettings, string logFilePath)
+        public static T SetLogFilePath<T>(this T toolSettings, string logFilePath) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFilePath = logFilePath;
@@ -8052,7 +8052,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the file name to save processing log.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetLogFilePath(this DocFXPdfSettings toolSettings)
+        public static T ResetLogFilePath<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFilePath = null;
@@ -8065,7 +8065,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify to which log level will be logged. By default log level &gt;= Info will be logged. The acceptable value could be Verbose, Info, Warning, Error.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetLogLevel(this DocFXPdfSettings toolSettings, DocFXLogLevel logLevel)
+        public static T SetLogLevel<T>(this T toolSettings, DocFXLogLevel logLevel) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogLevel = logLevel;
@@ -8076,7 +8076,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify to which log level will be logged. By default log level &gt;= Info will be logged. The acceptable value could be Verbose, Info, Warning, Error.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetLogLevel(this DocFXPdfSettings toolSettings)
+        public static T ResetLogLevel<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogLevel = null;
@@ -8089,7 +8089,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the GIT repository root folder.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetRepoRoot(this DocFXPdfSettings toolSettings, string repoRoot)
+        public static T SetRepoRoot<T>(this T toolSettings, string repoRoot) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepoRoot = repoRoot;
@@ -8100,7 +8100,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the GIT repository root folder.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetRepoRoot(this DocFXPdfSettings toolSettings)
+        public static T ResetRepoRoot<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepoRoot = null;
@@ -8113,7 +8113,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if warnings should be treated as errors.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings SetWarningsAsErrors(this DocFXPdfSettings toolSettings, bool? warningsAsErrors)
+        public static T SetWarningsAsErrors<T>(this T toolSettings, bool? warningsAsErrors) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WarningsAsErrors = warningsAsErrors;
@@ -8124,7 +8124,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if warnings should be treated as errors.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ResetWarningsAsErrors(this DocFXPdfSettings toolSettings)
+        public static T ResetWarningsAsErrors<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WarningsAsErrors = null;
@@ -8135,7 +8135,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if warnings should be treated as errors.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings EnableWarningsAsErrors(this DocFXPdfSettings toolSettings)
+        public static T EnableWarningsAsErrors<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WarningsAsErrors = true;
@@ -8146,7 +8146,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if warnings should be treated as errors.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings DisableWarningsAsErrors(this DocFXPdfSettings toolSettings)
+        public static T DisableWarningsAsErrors<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WarningsAsErrors = false;
@@ -8157,7 +8157,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify if warnings should be treated as errors.</p>
         /// </summary>
         [Pure]
-        public static DocFXPdfSettings ToggleWarningsAsErrors(this DocFXPdfSettings toolSettings)
+        public static T ToggleWarningsAsErrors<T>(this T toolSettings) where T : DocFXPdfSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WarningsAsErrors = !toolSettings.WarningsAsErrors;
@@ -8179,7 +8179,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p><em>Sets <see cref="DocFXServeSettings.Folder"/></em></p>
         /// </summary>
         [Pure]
-        public static DocFXServeSettings SetFolder(this DocFXServeSettings toolSettings, string folder)
+        public static T SetFolder<T>(this T toolSettings, string folder) where T : DocFXServeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Folder = folder;
@@ -8189,7 +8189,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p><em>Resets <see cref="DocFXServeSettings.Folder"/></em></p>
         /// </summary>
         [Pure]
-        public static DocFXServeSettings ResetFolder(this DocFXServeSettings toolSettings)
+        public static T ResetFolder<T>(this T toolSettings) where T : DocFXServeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Folder = null;
@@ -8202,7 +8202,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the hostname of the hosted website [localhost].</p>
         /// </summary>
         [Pure]
-        public static DocFXServeSettings SetHost(this DocFXServeSettings toolSettings, string host)
+        public static T SetHost<T>(this T toolSettings, string host) where T : DocFXServeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Host = host;
@@ -8213,7 +8213,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the hostname of the hosted website [localhost].</p>
         /// </summary>
         [Pure]
-        public static DocFXServeSettings ResetHost(this DocFXServeSettings toolSettings)
+        public static T ResetHost<T>(this T toolSettings) where T : DocFXServeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Host = null;
@@ -8226,7 +8226,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the port of the hosted website [8080].</p>
         /// </summary>
         [Pure]
-        public static DocFXServeSettings SetPort(this DocFXServeSettings toolSettings, int? port)
+        public static T SetPort<T>(this T toolSettings, int? port) where T : DocFXServeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Port = port;
@@ -8237,7 +8237,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the port of the hosted website [8080].</p>
         /// </summary>
         [Pure]
-        public static DocFXServeSettings ResetPort(this DocFXServeSettings toolSettings)
+        public static T ResetPort<T>(this T toolSettings) where T : DocFXServeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Port = null;
@@ -8250,7 +8250,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXServeSettings SetPrintHelpMessage(this DocFXServeSettings toolSettings, bool? printHelpMessage)
+        public static T SetPrintHelpMessage<T>(this T toolSettings, bool? printHelpMessage) where T : DocFXServeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = printHelpMessage;
@@ -8261,7 +8261,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXServeSettings ResetPrintHelpMessage(this DocFXServeSettings toolSettings)
+        public static T ResetPrintHelpMessage<T>(this T toolSettings) where T : DocFXServeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = null;
@@ -8272,7 +8272,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXServeSettings EnablePrintHelpMessage(this DocFXServeSettings toolSettings)
+        public static T EnablePrintHelpMessage<T>(this T toolSettings) where T : DocFXServeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = true;
@@ -8283,7 +8283,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXServeSettings DisablePrintHelpMessage(this DocFXServeSettings toolSettings)
+        public static T DisablePrintHelpMessage<T>(this T toolSettings) where T : DocFXServeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = false;
@@ -8294,7 +8294,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXServeSettings TogglePrintHelpMessage(this DocFXServeSettings toolSettings)
+        public static T TogglePrintHelpMessage<T>(this T toolSettings) where T : DocFXServeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = !toolSettings.PrintHelpMessage;
@@ -8317,7 +8317,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>The command to execute.</p>
         /// </summary>
         [Pure]
-        public static DocFXTemplateSettings SetCommand(this DocFXTemplateSettings toolSettings, string command)
+        public static T SetCommand<T>(this T toolSettings, string command) where T : DocFXTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Command = command;
@@ -8328,7 +8328,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>The command to execute.</p>
         /// </summary>
         [Pure]
-        public static DocFXTemplateSettings ResetCommand(this DocFXTemplateSettings toolSettings)
+        public static T ResetCommand<T>(this T toolSettings) where T : DocFXTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Command = null;
@@ -8341,7 +8341,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If specified, all the available templates will be exported.</p>
         /// </summary>
         [Pure]
-        public static DocFXTemplateSettings SetAll(this DocFXTemplateSettings toolSettings, bool? all)
+        public static T SetAll<T>(this T toolSettings, bool? all) where T : DocFXTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = all;
@@ -8352,7 +8352,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If specified, all the available templates will be exported.</p>
         /// </summary>
         [Pure]
-        public static DocFXTemplateSettings ResetAll(this DocFXTemplateSettings toolSettings)
+        public static T ResetAll<T>(this T toolSettings) where T : DocFXTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = null;
@@ -8363,7 +8363,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If specified, all the available templates will be exported.</p>
         /// </summary>
         [Pure]
-        public static DocFXTemplateSettings EnableAll(this DocFXTemplateSettings toolSettings)
+        public static T EnableAll<T>(this T toolSettings) where T : DocFXTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = true;
@@ -8374,7 +8374,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If specified, all the available templates will be exported.</p>
         /// </summary>
         [Pure]
-        public static DocFXTemplateSettings DisableAll(this DocFXTemplateSettings toolSettings)
+        public static T DisableAll<T>(this T toolSettings) where T : DocFXTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = false;
@@ -8385,7 +8385,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>If specified, all the available templates will be exported.</p>
         /// </summary>
         [Pure]
-        public static DocFXTemplateSettings ToggleAll(this DocFXTemplateSettings toolSettings)
+        public static T ToggleAll<T>(this T toolSettings) where T : DocFXTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = !toolSettings.All;
@@ -8398,7 +8398,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the output folder path for the exported templates.</p>
         /// </summary>
         [Pure]
-        public static DocFXTemplateSettings SetOutputFolder(this DocFXTemplateSettings toolSettings, string outputFolder)
+        public static T SetOutputFolder<T>(this T toolSettings, string outputFolder) where T : DocFXTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFolder = outputFolder;
@@ -8409,7 +8409,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Specify the output folder path for the exported templates.</p>
         /// </summary>
         [Pure]
-        public static DocFXTemplateSettings ResetOutputFolder(this DocFXTemplateSettings toolSettings)
+        public static T ResetOutputFolder<T>(this T toolSettings) where T : DocFXTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFolder = null;
@@ -8422,7 +8422,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXTemplateSettings SetPrintHelpMessage(this DocFXTemplateSettings toolSettings, bool? printHelpMessage)
+        public static T SetPrintHelpMessage<T>(this T toolSettings, bool? printHelpMessage) where T : DocFXTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = printHelpMessage;
@@ -8433,7 +8433,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXTemplateSettings ResetPrintHelpMessage(this DocFXTemplateSettings toolSettings)
+        public static T ResetPrintHelpMessage<T>(this T toolSettings) where T : DocFXTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = null;
@@ -8444,7 +8444,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXTemplateSettings EnablePrintHelpMessage(this DocFXTemplateSettings toolSettings)
+        public static T EnablePrintHelpMessage<T>(this T toolSettings) where T : DocFXTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = true;
@@ -8455,7 +8455,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXTemplateSettings DisablePrintHelpMessage(this DocFXTemplateSettings toolSettings)
+        public static T DisablePrintHelpMessage<T>(this T toolSettings) where T : DocFXTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = false;
@@ -8466,7 +8466,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>Print help message for this sub-command.</p>
         /// </summary>
         [Pure]
-        public static DocFXTemplateSettings TogglePrintHelpMessage(this DocFXTemplateSettings toolSettings)
+        public static T TogglePrintHelpMessage<T>(this T toolSettings) where T : DocFXTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrintHelpMessage = !toolSettings.PrintHelpMessage;

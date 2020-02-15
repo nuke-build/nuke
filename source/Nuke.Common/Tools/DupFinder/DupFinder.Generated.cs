@@ -245,7 +245,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Defines files included into the duplicates search. Use Visual Studio solution or project files, Ant-like wildcards or specific source file and folder names. Paths should be either absolute or relative to the working directory.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings SetSource(this DupFinderSettings toolSettings, string source)
+        public static T SetSource<T>(this T toolSettings, string source) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Source = source;
@@ -256,7 +256,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Defines files included into the duplicates search. Use Visual Studio solution or project files, Ant-like wildcards or specific source file and folder names. Paths should be either absolute or relative to the working directory.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings ResetSource(this DupFinderSettings toolSettings)
+        public static T ResetSource<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Source = null;
@@ -269,7 +269,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Lets you set the output file.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings SetOutputFile(this DupFinderSettings toolSettings, string outputFile)
+        public static T SetOutputFile<T>(this T toolSettings, string outputFile) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFile = outputFile;
@@ -280,7 +280,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Lets you set the output file.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings ResetOutputFile(this DupFinderSettings toolSettings)
+        public static T ResetOutputFile<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFile = null;
@@ -293,7 +293,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows excluding files from the duplicates search. Wildcards can be used; for example, <c>*Generated.cs</c>. Note that the paths should be either absolute or relative to the working directory.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings SetExcludeFiles(this DupFinderSettings toolSettings, params string[] excludeFiles)
+        public static T SetExcludeFiles<T>(this T toolSettings, params string[] excludeFiles) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeFilesInternal = excludeFiles.ToList();
@@ -304,7 +304,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows excluding files from the duplicates search. Wildcards can be used; for example, <c>*Generated.cs</c>. Note that the paths should be either absolute or relative to the working directory.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings SetExcludeFiles(this DupFinderSettings toolSettings, IEnumerable<string> excludeFiles)
+        public static T SetExcludeFiles<T>(this T toolSettings, IEnumerable<string> excludeFiles) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeFilesInternal = excludeFiles.ToList();
@@ -315,7 +315,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows excluding files from the duplicates search. Wildcards can be used; for example, <c>*Generated.cs</c>. Note that the paths should be either absolute or relative to the working directory.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings AddExcludeFiles(this DupFinderSettings toolSettings, params string[] excludeFiles)
+        public static T AddExcludeFiles<T>(this T toolSettings, params string[] excludeFiles) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeFilesInternal.AddRange(excludeFiles);
@@ -326,7 +326,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows excluding files from the duplicates search. Wildcards can be used; for example, <c>*Generated.cs</c>. Note that the paths should be either absolute or relative to the working directory.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings AddExcludeFiles(this DupFinderSettings toolSettings, IEnumerable<string> excludeFiles)
+        public static T AddExcludeFiles<T>(this T toolSettings, IEnumerable<string> excludeFiles) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeFilesInternal.AddRange(excludeFiles);
@@ -337,7 +337,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows excluding files from the duplicates search. Wildcards can be used; for example, <c>*Generated.cs</c>. Note that the paths should be either absolute or relative to the working directory.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings ClearExcludeFiles(this DupFinderSettings toolSettings)
+        public static T ClearExcludeFiles<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeFilesInternal.Clear();
@@ -348,7 +348,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows excluding files from the duplicates search. Wildcards can be used; for example, <c>*Generated.cs</c>. Note that the paths should be either absolute or relative to the working directory.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings RemoveExcludeFiles(this DupFinderSettings toolSettings, params string[] excludeFiles)
+        public static T RemoveExcludeFiles<T>(this T toolSettings, params string[] excludeFiles) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(excludeFiles);
@@ -360,7 +360,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows excluding files from the duplicates search. Wildcards can be used; for example, <c>*Generated.cs</c>. Note that the paths should be either absolute or relative to the working directory.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings RemoveExcludeFiles(this DupFinderSettings toolSettings, IEnumerable<string> excludeFiles)
+        public static T RemoveExcludeFiles<T>(this T toolSettings, IEnumerable<string> excludeFiles) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(excludeFiles);
@@ -374,7 +374,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows excluding files that have a matching substrings in the opening comments.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings SetExcludeComments(this DupFinderSettings toolSettings, params string[] excludeComments)
+        public static T SetExcludeComments<T>(this T toolSettings, params string[] excludeComments) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeCommentsInternal = excludeComments.ToList();
@@ -385,7 +385,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows excluding files that have a matching substrings in the opening comments.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings SetExcludeComments(this DupFinderSettings toolSettings, IEnumerable<string> excludeComments)
+        public static T SetExcludeComments<T>(this T toolSettings, IEnumerable<string> excludeComments) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeCommentsInternal = excludeComments.ToList();
@@ -396,7 +396,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows excluding files that have a matching substrings in the opening comments.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings AddExcludeComments(this DupFinderSettings toolSettings, params string[] excludeComments)
+        public static T AddExcludeComments<T>(this T toolSettings, params string[] excludeComments) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeCommentsInternal.AddRange(excludeComments);
@@ -407,7 +407,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows excluding files that have a matching substrings in the opening comments.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings AddExcludeComments(this DupFinderSettings toolSettings, IEnumerable<string> excludeComments)
+        public static T AddExcludeComments<T>(this T toolSettings, IEnumerable<string> excludeComments) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeCommentsInternal.AddRange(excludeComments);
@@ -418,7 +418,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows excluding files that have a matching substrings in the opening comments.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings ClearExcludeComments(this DupFinderSettings toolSettings)
+        public static T ClearExcludeComments<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeCommentsInternal.Clear();
@@ -429,7 +429,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows excluding files that have a matching substrings in the opening comments.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings RemoveExcludeComments(this DupFinderSettings toolSettings, params string[] excludeComments)
+        public static T RemoveExcludeComments<T>(this T toolSettings, params string[] excludeComments) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(excludeComments);
@@ -441,7 +441,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows excluding files that have a matching substrings in the opening comments.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings RemoveExcludeComments(this DupFinderSettings toolSettings, IEnumerable<string> excludeComments)
+        public static T RemoveExcludeComments<T>(this T toolSettings, IEnumerable<string> excludeComments) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(excludeComments);
@@ -455,7 +455,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>).</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings SetExcludeCodeRegions(this DupFinderSettings toolSettings, params string[] excludeCodeRegions)
+        public static T SetExcludeCodeRegions<T>(this T toolSettings, params string[] excludeCodeRegions) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeCodeRegionsInternal = excludeCodeRegions.ToList();
@@ -466,7 +466,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>).</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings SetExcludeCodeRegions(this DupFinderSettings toolSettings, IEnumerable<string> excludeCodeRegions)
+        public static T SetExcludeCodeRegions<T>(this T toolSettings, IEnumerable<string> excludeCodeRegions) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeCodeRegionsInternal = excludeCodeRegions.ToList();
@@ -477,7 +477,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>).</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings AddExcludeCodeRegions(this DupFinderSettings toolSettings, params string[] excludeCodeRegions)
+        public static T AddExcludeCodeRegions<T>(this T toolSettings, params string[] excludeCodeRegions) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeCodeRegionsInternal.AddRange(excludeCodeRegions);
@@ -488,7 +488,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>).</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings AddExcludeCodeRegions(this DupFinderSettings toolSettings, IEnumerable<string> excludeCodeRegions)
+        public static T AddExcludeCodeRegions<T>(this T toolSettings, IEnumerable<string> excludeCodeRegions) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeCodeRegionsInternal.AddRange(excludeCodeRegions);
@@ -499,7 +499,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>).</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings ClearExcludeCodeRegions(this DupFinderSettings toolSettings)
+        public static T ClearExcludeCodeRegions<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeCodeRegionsInternal.Clear();
@@ -510,7 +510,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>).</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings RemoveExcludeCodeRegions(this DupFinderSettings toolSettings, params string[] excludeCodeRegions)
+        public static T RemoveExcludeCodeRegions<T>(this T toolSettings, params string[] excludeCodeRegions) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(excludeCodeRegions);
@@ -522,7 +522,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>).</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings RemoveExcludeCodeRegions(this DupFinderSettings toolSettings, IEnumerable<string> excludeCodeRegions)
+        public static T RemoveExcludeCodeRegions<T>(this T toolSettings, IEnumerable<string> excludeCodeRegions) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(excludeCodeRegions);
@@ -536,7 +536,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Whether to consider similar fragments as duplicates if they have different fields. The default value is <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings SetDiscardFields(this DupFinderSettings toolSettings, bool? discardFields)
+        public static T SetDiscardFields<T>(this T toolSettings, bool? discardFields) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardFields = discardFields;
@@ -547,7 +547,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Whether to consider similar fragments as duplicates if they have different fields. The default value is <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings ResetDiscardFields(this DupFinderSettings toolSettings)
+        public static T ResetDiscardFields<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardFields = null;
@@ -558,7 +558,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Whether to consider similar fragments as duplicates if they have different fields. The default value is <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings EnableDiscardFields(this DupFinderSettings toolSettings)
+        public static T EnableDiscardFields<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardFields = true;
@@ -569,7 +569,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Whether to consider similar fragments as duplicates if they have different fields. The default value is <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings DisableDiscardFields(this DupFinderSettings toolSettings)
+        public static T DisableDiscardFields<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardFields = false;
@@ -580,7 +580,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Whether to consider similar fragments as duplicates if they have different fields. The default value is <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings ToggleDiscardFields(this DupFinderSettings toolSettings)
+        public static T ToggleDiscardFields<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardFields = !toolSettings.DiscardFields;
@@ -593,7 +593,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Whether to consider similar fragments as duplicates if they have different literals. The default value is <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings SetDiscardLiterals(this DupFinderSettings toolSettings, bool? discardLiterals)
+        public static T SetDiscardLiterals<T>(this T toolSettings, bool? discardLiterals) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardLiterals = discardLiterals;
@@ -604,7 +604,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Whether to consider similar fragments as duplicates if they have different literals. The default value is <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings ResetDiscardLiterals(this DupFinderSettings toolSettings)
+        public static T ResetDiscardLiterals<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardLiterals = null;
@@ -615,7 +615,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Whether to consider similar fragments as duplicates if they have different literals. The default value is <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings EnableDiscardLiterals(this DupFinderSettings toolSettings)
+        public static T EnableDiscardLiterals<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardLiterals = true;
@@ -626,7 +626,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Whether to consider similar fragments as duplicates if they have different literals. The default value is <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings DisableDiscardLiterals(this DupFinderSettings toolSettings)
+        public static T DisableDiscardLiterals<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardLiterals = false;
@@ -637,7 +637,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Whether to consider similar fragments as duplicates if they have different literals. The default value is <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings ToggleDiscardLiterals(this DupFinderSettings toolSettings)
+        public static T ToggleDiscardLiterals<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardLiterals = !toolSettings.DiscardLiterals;
@@ -650,7 +650,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Whether to consider similar fragments as duplicates if they have different local variables. The default value is <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings SetDiscardLocalVars(this DupFinderSettings toolSettings, bool? discardLocalVars)
+        public static T SetDiscardLocalVars<T>(this T toolSettings, bool? discardLocalVars) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardLocalVars = discardLocalVars;
@@ -661,7 +661,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Whether to consider similar fragments as duplicates if they have different local variables. The default value is <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings ResetDiscardLocalVars(this DupFinderSettings toolSettings)
+        public static T ResetDiscardLocalVars<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardLocalVars = null;
@@ -672,7 +672,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Whether to consider similar fragments as duplicates if they have different local variables. The default value is <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings EnableDiscardLocalVars(this DupFinderSettings toolSettings)
+        public static T EnableDiscardLocalVars<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardLocalVars = true;
@@ -683,7 +683,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Whether to consider similar fragments as duplicates if they have different local variables. The default value is <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings DisableDiscardLocalVars(this DupFinderSettings toolSettings)
+        public static T DisableDiscardLocalVars<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardLocalVars = false;
@@ -694,7 +694,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Whether to consider similar fragments as duplicates if they have different local variables. The default value is <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings ToggleDiscardLocalVars(this DupFinderSettings toolSettings)
+        public static T ToggleDiscardLocalVars<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardLocalVars = !toolSettings.DiscardLocalVars;
@@ -707,7 +707,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Whether to consider similar fragments as duplicates if they have different types. The default value is <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings SetDiscardTypes(this DupFinderSettings toolSettings, bool? discardTypes)
+        public static T SetDiscardTypes<T>(this T toolSettings, bool? discardTypes) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardTypes = discardTypes;
@@ -718,7 +718,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Whether to consider similar fragments as duplicates if they have different types. The default value is <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings ResetDiscardTypes(this DupFinderSettings toolSettings)
+        public static T ResetDiscardTypes<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardTypes = null;
@@ -729,7 +729,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Whether to consider similar fragments as duplicates if they have different types. The default value is <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings EnableDiscardTypes(this DupFinderSettings toolSettings)
+        public static T EnableDiscardTypes<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardTypes = true;
@@ -740,7 +740,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Whether to consider similar fragments as duplicates if they have different types. The default value is <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings DisableDiscardTypes(this DupFinderSettings toolSettings)
+        public static T DisableDiscardTypes<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardTypes = false;
@@ -751,7 +751,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Whether to consider similar fragments as duplicates if they have different types. The default value is <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings ToggleDiscardTypes(this DupFinderSettings toolSettings)
+        public static T ToggleDiscardTypes<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardTypes = !toolSettings.DiscardTypes;
@@ -764,7 +764,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows setting a threshold for code complexity of the duplicated fragments. The fragments with lower complexity are discarded as non-duplicates. The value for this option is provided in relative units. Using this option, you can filter out equal code fragments that present no semantic duplication. E.g. you can often have the following statements in tests: <c>Assert.AreEqual(gold, result);</c>. If the <c>discard-cost</c> value is less than 10, statements like that will appear as duplicates, which is obviously unhelpful. You'll need to play a bit with this value to find a balance between avoiding false positives and missing real duplicates. The proper values will differ for different codebases.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings SetDiscardCost(this DupFinderSettings toolSettings, bool? discardCost)
+        public static T SetDiscardCost<T>(this T toolSettings, bool? discardCost) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardCost = discardCost;
@@ -775,7 +775,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows setting a threshold for code complexity of the duplicated fragments. The fragments with lower complexity are discarded as non-duplicates. The value for this option is provided in relative units. Using this option, you can filter out equal code fragments that present no semantic duplication. E.g. you can often have the following statements in tests: <c>Assert.AreEqual(gold, result);</c>. If the <c>discard-cost</c> value is less than 10, statements like that will appear as duplicates, which is obviously unhelpful. You'll need to play a bit with this value to find a balance between avoiding false positives and missing real duplicates. The proper values will differ for different codebases.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings ResetDiscardCost(this DupFinderSettings toolSettings)
+        public static T ResetDiscardCost<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardCost = null;
@@ -786,7 +786,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows setting a threshold for code complexity of the duplicated fragments. The fragments with lower complexity are discarded as non-duplicates. The value for this option is provided in relative units. Using this option, you can filter out equal code fragments that present no semantic duplication. E.g. you can often have the following statements in tests: <c>Assert.AreEqual(gold, result);</c>. If the <c>discard-cost</c> value is less than 10, statements like that will appear as duplicates, which is obviously unhelpful. You'll need to play a bit with this value to find a balance between avoiding false positives and missing real duplicates. The proper values will differ for different codebases.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings EnableDiscardCost(this DupFinderSettings toolSettings)
+        public static T EnableDiscardCost<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardCost = true;
@@ -797,7 +797,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows setting a threshold for code complexity of the duplicated fragments. The fragments with lower complexity are discarded as non-duplicates. The value for this option is provided in relative units. Using this option, you can filter out equal code fragments that present no semantic duplication. E.g. you can often have the following statements in tests: <c>Assert.AreEqual(gold, result);</c>. If the <c>discard-cost</c> value is less than 10, statements like that will appear as duplicates, which is obviously unhelpful. You'll need to play a bit with this value to find a balance between avoiding false positives and missing real duplicates. The proper values will differ for different codebases.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings DisableDiscardCost(this DupFinderSettings toolSettings)
+        public static T DisableDiscardCost<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardCost = false;
@@ -808,7 +808,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows setting a threshold for code complexity of the duplicated fragments. The fragments with lower complexity are discarded as non-duplicates. The value for this option is provided in relative units. Using this option, you can filter out equal code fragments that present no semantic duplication. E.g. you can often have the following statements in tests: <c>Assert.AreEqual(gold, result);</c>. If the <c>discard-cost</c> value is less than 10, statements like that will appear as duplicates, which is obviously unhelpful. You'll need to play a bit with this value to find a balance between avoiding false positives and missing real duplicates. The proper values will differ for different codebases.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings ToggleDiscardCost(this DupFinderSettings toolSettings)
+        public static T ToggleDiscardCost<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardCost = !toolSettings.DiscardCost;
@@ -821,7 +821,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings SetProperties(this DupFinderSettings toolSettings, IDictionary<string, string> properties)
+        public static T SetProperties<T>(this T toolSettings, IDictionary<string, string> properties) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -832,7 +832,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings ClearProperties(this DupFinderSettings toolSettings)
+        public static T ClearProperties<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Clear();
@@ -843,7 +843,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings AddProperty(this DupFinderSettings toolSettings, string propertyKey, string propertyValue)
+        public static T AddProperty<T>(this T toolSettings, string propertyKey, string propertyValue) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
@@ -854,7 +854,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings RemoveProperty(this DupFinderSettings toolSettings, string propertyKey)
+        public static T RemoveProperty<T>(this T toolSettings, string propertyKey) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove(propertyKey);
@@ -865,7 +865,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings SetProperty(this DupFinderSettings toolSettings, string propertyKey, string propertyValue)
+        public static T SetProperty<T>(this T toolSettings, string propertyKey, string propertyValue) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal[propertyKey] = propertyValue;
@@ -878,7 +878,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows normalizing type names to the last subtype in the output (default: <c>false</c>).</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings SetNormalizeTypes(this DupFinderSettings toolSettings, bool? normalizeTypes)
+        public static T SetNormalizeTypes<T>(this T toolSettings, bool? normalizeTypes) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NormalizeTypes = normalizeTypes;
@@ -889,7 +889,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows normalizing type names to the last subtype in the output (default: <c>false</c>).</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings ResetNormalizeTypes(this DupFinderSettings toolSettings)
+        public static T ResetNormalizeTypes<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NormalizeTypes = null;
@@ -900,7 +900,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows normalizing type names to the last subtype in the output (default: <c>false</c>).</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings EnableNormalizeTypes(this DupFinderSettings toolSettings)
+        public static T EnableNormalizeTypes<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NormalizeTypes = true;
@@ -911,7 +911,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows normalizing type names to the last subtype in the output (default: <c>false</c>).</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings DisableNormalizeTypes(this DupFinderSettings toolSettings)
+        public static T DisableNormalizeTypes<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NormalizeTypes = false;
@@ -922,7 +922,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows normalizing type names to the last subtype in the output (default: <c>false</c>).</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings ToggleNormalizeTypes(this DupFinderSettings toolSettings)
+        public static T ToggleNormalizeTypes<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NormalizeTypes = !toolSettings.NormalizeTypes;
@@ -935,7 +935,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>If you use this parameter, the detected duplicate fragments will be embedded into the report.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings SetShowText(this DupFinderSettings toolSettings, bool? showText)
+        public static T SetShowText<T>(this T toolSettings, bool? showText) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowText = showText;
@@ -946,7 +946,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>If you use this parameter, the detected duplicate fragments will be embedded into the report.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings ResetShowText(this DupFinderSettings toolSettings)
+        public static T ResetShowText<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowText = null;
@@ -957,7 +957,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>If you use this parameter, the detected duplicate fragments will be embedded into the report.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings EnableShowText(this DupFinderSettings toolSettings)
+        public static T EnableShowText<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowText = true;
@@ -968,7 +968,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>If you use this parameter, the detected duplicate fragments will be embedded into the report.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings DisableShowText(this DupFinderSettings toolSettings)
+        public static T DisableShowText<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowText = false;
@@ -979,7 +979,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>If you use this parameter, the detected duplicate fragments will be embedded into the report.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings ToggleShowText(this DupFinderSettings toolSettings)
+        public static T ToggleShowText<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowText = !toolSettings.ShowText;
@@ -992,7 +992,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Used to save the current parameters to a configuration file.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings SetCreateConfigFile(this DupFinderSettings toolSettings, string createConfigFile)
+        public static T SetCreateConfigFile<T>(this T toolSettings, string createConfigFile) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CreateConfigFile = createConfigFile;
@@ -1003,7 +1003,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Used to save the current parameters to a configuration file.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings ResetCreateConfigFile(this DupFinderSettings toolSettings)
+        public static T ResetCreateConfigFile<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CreateConfigFile = null;
@@ -1016,7 +1016,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Used to load the parameters described above from a configuration file.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings SetConfigFile(this DupFinderSettings toolSettings, string configFile)
+        public static T SetConfigFile<T>(this T toolSettings, string configFile) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigFile = configFile;
@@ -1027,7 +1027,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Used to load the parameters described above from a configuration file.</p>
         /// </summary>
         [Pure]
-        public static DupFinderSettings ResetConfigFile(this DupFinderSettings toolSettings)
+        public static T ResetConfigFile<T>(this T toolSettings) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigFile = null;
