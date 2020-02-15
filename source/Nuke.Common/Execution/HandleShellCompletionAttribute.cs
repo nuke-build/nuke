@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common.IO;
+using static Nuke.Common.Constants;
 
 namespace Nuke.Common.Execution
 {
@@ -18,9 +19,9 @@ namespace Nuke.Common.Execution
         {
             var completionItems = new SortedDictionary<string, string[]>();
 
-            var targetNames = build.ExecutableTargets.Select(x => x.Name).OrderBy(x => x).ToList();
-            completionItems[Constants.InvokedTargetsParameterName] = targetNames.ToArray();
-            completionItems[Constants.SkippedTargetsParameterName] = targetNames.ToArray();
+            var targets = build.ExecutableTargets.OrderBy(x => x.Name).ToList();
+            completionItems[InvokedTargetsParameterName] = targets.Where(x => x.Listed).Select(x => x.Name).ToArray();
+            completionItems[SkippedTargetsParameterName] = targets.Select(x => x.Name).ToArray();
 
             var parameters = InjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false);
             foreach (var parameter in parameters)
@@ -33,9 +34,9 @@ namespace Nuke.Common.Execution
                 completionItems[parameterName] = subItems?.ToArray();
             }
 
-            SerializationTasks.YamlSerializeToFile(completionItems, Constants.GetCompletionFile(NukeBuild.RootDirectory));
+            SerializationTasks.YamlSerializeToFile(completionItems, GetCompletionFile(NukeBuild.RootDirectory));
 
-            if (EnvironmentInfo.GetParameter<bool>(Constants.CompletionParameterName))
+            if (EnvironmentInfo.GetParameter<bool>(CompletionParameterName))
                 Environment.Exit(exitCode: 0);
         }
     }
