@@ -2305,7 +2305,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>The name of the application.</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings SetAppName(this CloudFoundryPushSettings toolSettings, string appName)
+        public static T SetAppName<T>(this T toolSettings, string appName) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = appName;
@@ -2316,7 +2316,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>The name of the application.</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ResetAppName(this CloudFoundryPushSettings toolSettings)
+        public static T ResetAppName<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = null;
@@ -2329,7 +2329,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Buildpack to be used</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings SetBuildpack(this CloudFoundryPushSettings toolSettings, params string[] buildpack)
+        public static T SetBuildpack<T>(this T toolSettings, params string[] buildpack) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildpackInternal = buildpack.ToList();
@@ -2340,7 +2340,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Buildpack to be used</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings SetBuildpack(this CloudFoundryPushSettings toolSettings, IEnumerable<string> buildpack)
+        public static T SetBuildpack<T>(this T toolSettings, IEnumerable<string> buildpack) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildpackInternal = buildpack.ToList();
@@ -2351,7 +2351,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Buildpack to be used</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings AddBuildpack(this CloudFoundryPushSettings toolSettings, params string[] buildpack)
+        public static T AddBuildpack<T>(this T toolSettings, params string[] buildpack) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildpackInternal.AddRange(buildpack);
@@ -2362,7 +2362,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Buildpack to be used</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings AddBuildpack(this CloudFoundryPushSettings toolSettings, IEnumerable<string> buildpack)
+        public static T AddBuildpack<T>(this T toolSettings, IEnumerable<string> buildpack) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildpackInternal.AddRange(buildpack);
@@ -2373,7 +2373,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Buildpack to be used</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ClearBuildpack(this CloudFoundryPushSettings toolSettings)
+        public static T ClearBuildpack<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildpackInternal.Clear();
@@ -2384,7 +2384,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Buildpack to be used</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings RemoveBuildpack(this CloudFoundryPushSettings toolSettings, params string[] buildpack)
+        public static T RemoveBuildpack<T>(this T toolSettings, params string[] buildpack) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(buildpack);
@@ -2396,7 +2396,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Buildpack to be used</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings RemoveBuildpack(this CloudFoundryPushSettings toolSettings, IEnumerable<string> buildpack)
+        public static T RemoveBuildpack<T>(this T toolSettings, IEnumerable<string> buildpack) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(buildpack);
@@ -2410,7 +2410,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Startup command</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings SetCommand(this CloudFoundryPushSettings toolSettings, string command)
+        public static T SetCommand<T>(this T toolSettings, string command) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Command = command;
@@ -2421,7 +2421,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Startup command</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ResetCommand(this CloudFoundryPushSettings toolSettings)
+        public static T ResetCommand<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Command = null;
@@ -2434,7 +2434,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Specify a custom domain (e.g. private-domain.example.com, apps.internal.com) to use instead of the default domain</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings SetDomain(this CloudFoundryPushSettings toolSettings, string domain)
+        public static T SetDomain<T>(this T toolSettings, string domain) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Domain = domain;
@@ -2445,7 +2445,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Specify a custom domain (e.g. private-domain.example.com, apps.internal.com) to use instead of the default domain</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ResetDomain(this CloudFoundryPushSettings toolSettings)
+        public static T ResetDomain<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Domain = null;
@@ -2458,7 +2458,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Docker-image to be used (e.g. user/docker-image-name)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings SetDockerImage(this CloudFoundryPushSettings toolSettings, string dockerImage)
+        public static T SetDockerImage<T>(this T toolSettings, string dockerImage) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DockerImage = dockerImage;
@@ -2469,7 +2469,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Docker-image to be used (e.g. user/docker-image-name)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ResetDockerImage(this CloudFoundryPushSettings toolSettings)
+        public static T ResetDockerImage<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DockerImage = null;
@@ -2482,7 +2482,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Docker-image to be used (e.g. user/docker-image-name)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings SetDockerUsername(this CloudFoundryPushSettings toolSettings, string dockerUsername)
+        public static T SetDockerUsername<T>(this T toolSettings, string dockerUsername) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DockerUsername = dockerUsername;
@@ -2493,7 +2493,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Docker-image to be used (e.g. user/docker-image-name)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ResetDockerUsername(this CloudFoundryPushSettings toolSettings)
+        public static T ResetDockerUsername<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DockerUsername = null;
@@ -2506,7 +2506,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Path to a tgz file with a pre-staged app</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings SetDroplet(this CloudFoundryPushSettings toolSettings, string droplet)
+        public static T SetDroplet<T>(this T toolSettings, string droplet) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Droplet = droplet;
@@ -2517,7 +2517,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Path to a tgz file with a pre-staged app</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ResetDroplet(this CloudFoundryPushSettings toolSettings)
+        public static T ResetDroplet<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Droplet = null;
@@ -2530,7 +2530,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Path to manifest</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings SetManifest(this CloudFoundryPushSettings toolSettings, string manifest)
+        public static T SetManifest<T>(this T toolSettings, string manifest) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Manifest = manifest;
@@ -2541,7 +2541,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Path to manifest</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ResetManifest(this CloudFoundryPushSettings toolSettings)
+        public static T ResetManifest<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Manifest = null;
@@ -2554,7 +2554,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Application health check type</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings SetHealthCheckType(this CloudFoundryPushSettings toolSettings, HealthCheckType healthCheckType)
+        public static T SetHealthCheckType<T>(this T toolSettings, HealthCheckType healthCheckType) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HealthCheckType = healthCheckType;
@@ -2565,7 +2565,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Application health check type</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ResetHealthCheckType(this CloudFoundryPushSettings toolSettings)
+        public static T ResetHealthCheckType<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HealthCheckType = null;
@@ -2578,7 +2578,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Hostname (e.g. my-subdomain)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings SetHostname(this CloudFoundryPushSettings toolSettings, string hostname)
+        public static T SetHostname<T>(this T toolSettings, string hostname) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Hostname = hostname;
@@ -2589,7 +2589,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Hostname (e.g. my-subdomain)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ResetHostname(this CloudFoundryPushSettings toolSettings)
+        public static T ResetHostname<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Hostname = null;
@@ -2602,7 +2602,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Ignore manifest file</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings SetIgnoreManifest(this CloudFoundryPushSettings toolSettings, bool? ignoreManifest)
+        public static T SetIgnoreManifest<T>(this T toolSettings, bool? ignoreManifest) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreManifest = ignoreManifest;
@@ -2613,7 +2613,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Ignore manifest file</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ResetIgnoreManifest(this CloudFoundryPushSettings toolSettings)
+        public static T ResetIgnoreManifest<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreManifest = null;
@@ -2624,7 +2624,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Ignore manifest file</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings EnableIgnoreManifest(this CloudFoundryPushSettings toolSettings)
+        public static T EnableIgnoreManifest<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreManifest = true;
@@ -2635,7 +2635,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Ignore manifest file</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings DisableIgnoreManifest(this CloudFoundryPushSettings toolSettings)
+        public static T DisableIgnoreManifest<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreManifest = false;
@@ -2646,7 +2646,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Ignore manifest file</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ToggleIgnoreManifest(this CloudFoundryPushSettings toolSettings)
+        public static T ToggleIgnoreManifest<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreManifest = !toolSettings.IgnoreManifest;
@@ -2659,7 +2659,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Do not map a route to this app and remove routes from previous pushes of this app</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings SetNoRoute(this CloudFoundryPushSettings toolSettings, bool? noRoute)
+        public static T SetNoRoute<T>(this T toolSettings, bool? noRoute) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRoute = noRoute;
@@ -2670,7 +2670,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Do not map a route to this app and remove routes from previous pushes of this app</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ResetNoRoute(this CloudFoundryPushSettings toolSettings)
+        public static T ResetNoRoute<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRoute = null;
@@ -2681,7 +2681,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Do not map a route to this app and remove routes from previous pushes of this app</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings EnableNoRoute(this CloudFoundryPushSettings toolSettings)
+        public static T EnableNoRoute<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRoute = true;
@@ -2692,7 +2692,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Do not map a route to this app and remove routes from previous pushes of this app</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings DisableNoRoute(this CloudFoundryPushSettings toolSettings)
+        public static T DisableNoRoute<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRoute = false;
@@ -2703,7 +2703,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Do not map a route to this app and remove routes from previous pushes of this app</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ToggleNoRoute(this CloudFoundryPushSettings toolSettings)
+        public static T ToggleNoRoute<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRoute = !toolSettings.NoRoute;
@@ -2716,7 +2716,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Do not start an app after pushing</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings SetNoStart(this CloudFoundryPushSettings toolSettings, bool? noStart)
+        public static T SetNoStart<T>(this T toolSettings, bool? noStart) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoStart = noStart;
@@ -2727,7 +2727,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Do not start an app after pushing</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ResetNoStart(this CloudFoundryPushSettings toolSettings)
+        public static T ResetNoStart<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoStart = null;
@@ -2738,7 +2738,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Do not start an app after pushing</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings EnableNoStart(this CloudFoundryPushSettings toolSettings)
+        public static T EnableNoStart<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoStart = true;
@@ -2749,7 +2749,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Do not start an app after pushing</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings DisableNoStart(this CloudFoundryPushSettings toolSettings)
+        public static T DisableNoStart<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoStart = false;
@@ -2760,7 +2760,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Do not start an app after pushing</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ToggleNoStart(this CloudFoundryPushSettings toolSettings)
+        public static T ToggleNoStart<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoStart = !toolSettings.NoStart;
@@ -2773,7 +2773,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Path to app directory or to a zip file of the contents of the app directory</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings SetPath(this CloudFoundryPushSettings toolSettings, string path)
+        public static T SetPath<T>(this T toolSettings, string path) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Path = path;
@@ -2784,7 +2784,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Path to app directory or to a zip file of the contents of the app directory</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ResetPath(this CloudFoundryPushSettings toolSettings)
+        public static T ResetPath<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Path = null;
@@ -2797,7 +2797,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Create a random route for this app</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings SetRandomRoute(this CloudFoundryPushSettings toolSettings, bool? randomRoute)
+        public static T SetRandomRoute<T>(this T toolSettings, bool? randomRoute) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RandomRoute = randomRoute;
@@ -2808,7 +2808,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Create a random route for this app</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ResetRandomRoute(this CloudFoundryPushSettings toolSettings)
+        public static T ResetRandomRoute<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RandomRoute = null;
@@ -2819,7 +2819,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Create a random route for this app</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings EnableRandomRoute(this CloudFoundryPushSettings toolSettings)
+        public static T EnableRandomRoute<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RandomRoute = true;
@@ -2830,7 +2830,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Create a random route for this app</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings DisableRandomRoute(this CloudFoundryPushSettings toolSettings)
+        public static T DisableRandomRoute<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RandomRoute = false;
@@ -2841,7 +2841,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Create a random route for this app</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ToggleRandomRoute(this CloudFoundryPushSettings toolSettings)
+        public static T ToggleRandomRoute<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RandomRoute = !toolSettings.RandomRoute;
@@ -2854,7 +2854,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Path for the route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings SetRoutePath(this CloudFoundryPushSettings toolSettings, string routePath)
+        public static T SetRoutePath<T>(this T toolSettings, string routePath) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RoutePath = routePath;
@@ -2865,7 +2865,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Path for the route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ResetRoutePath(this CloudFoundryPushSettings toolSettings)
+        public static T ResetRoutePath<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RoutePath = null;
@@ -2878,7 +2878,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Stack to use (a stack is a pre-built file system, including an operating system, that can run apps)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings SetStack(this CloudFoundryPushSettings toolSettings, Stack stack)
+        public static T SetStack<T>(this T toolSettings, Stack stack) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stack = stack;
@@ -2889,7 +2889,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Stack to use (a stack is a pre-built file system, including an operating system, that can run apps)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ResetStack(this CloudFoundryPushSettings toolSettings)
+        public static T ResetStack<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stack = null;
@@ -2902,7 +2902,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Path to a variable substitution file for manifest; can specify multiple times</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings SetVariablesFile(this CloudFoundryPushSettings toolSettings, string variablesFile)
+        public static T SetVariablesFile<T>(this T toolSettings, string variablesFile) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VariablesFile = variablesFile;
@@ -2913,7 +2913,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Path to a variable substitution file for manifest; can specify multiple times</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ResetVariablesFile(this CloudFoundryPushSettings toolSettings)
+        public static T ResetVariablesFile<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VariablesFile = null;
@@ -2926,7 +2926,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Variable key value pair for variable substitution in manifest</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings SetVariables(this CloudFoundryPushSettings toolSettings, IDictionary<string, string> variables)
+        public static T SetVariables<T>(this T toolSettings, IDictionary<string, string> variables) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VariablesInternal = variables.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -2937,7 +2937,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Variable key value pair for variable substitution in manifest</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ClearVariables(this CloudFoundryPushSettings toolSettings)
+        public static T ClearVariables<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VariablesInternal.Clear();
@@ -2948,7 +2948,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Variable key value pair for variable substitution in manifest</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings AddVariable(this CloudFoundryPushSettings toolSettings, string variableKey, string variableValue)
+        public static T AddVariable<T>(this T toolSettings, string variableKey, string variableValue) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VariablesInternal.Add(variableKey, variableValue);
@@ -2959,7 +2959,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Variable key value pair for variable substitution in manifest</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings RemoveVariable(this CloudFoundryPushSettings toolSettings, string variableKey)
+        public static T RemoveVariable<T>(this T toolSettings, string variableKey) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VariablesInternal.Remove(variableKey);
@@ -2970,7 +2970,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Variable key value pair for variable substitution in manifest</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings SetVariable(this CloudFoundryPushSettings toolSettings, string variableKey, string variableValue)
+        public static T SetVariable<T>(this T toolSettings, string variableKey, string variableValue) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VariablesInternal[variableKey] = variableValue;
@@ -2983,7 +2983,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Time (in seconds) allowed to elapse between starting up an app and the first healthy response from the app</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings SetStartupTimeout(this CloudFoundryPushSettings toolSettings, int? startupTimeout)
+        public static T SetStartupTimeout<T>(this T toolSettings, int? startupTimeout) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StartupTimeout = startupTimeout;
@@ -2994,7 +2994,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Time (in seconds) allowed to elapse between starting up an app and the first healthy response from the app</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryPushSettings ResetStartupTimeout(this CloudFoundryPushSettings toolSettings)
+        public static T ResetStartupTimeout<T>(this T toolSettings) where T : CloudFoundryPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StartupTimeout = null;
@@ -3016,7 +3016,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryLoginSettings.Username"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryLoginSettings SetUsername(this CloudFoundryLoginSettings toolSettings, string username)
+        public static T SetUsername<T>(this T toolSettings, string username) where T : CloudFoundryLoginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = username;
@@ -3026,7 +3026,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryLoginSettings.Username"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryLoginSettings ResetUsername(this CloudFoundryLoginSettings toolSettings)
+        public static T ResetUsername<T>(this T toolSettings) where T : CloudFoundryLoginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = null;
@@ -3038,7 +3038,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryLoginSettings.Password"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryLoginSettings SetPassword(this CloudFoundryLoginSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : CloudFoundryLoginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -3048,7 +3048,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryLoginSettings.Password"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryLoginSettings ResetPassword(this CloudFoundryLoginSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : CloudFoundryLoginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -3061,7 +3061,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>API endpoint (e.g. https://api.example.com)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryLoginSettings SetApiEndpoint(this CloudFoundryLoginSettings toolSettings, string apiEndpoint)
+        public static T SetApiEndpoint<T>(this T toolSettings, string apiEndpoint) where T : CloudFoundryLoginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiEndpoint = apiEndpoint;
@@ -3072,7 +3072,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>API endpoint (e.g. https://api.example.com)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryLoginSettings ResetApiEndpoint(this CloudFoundryLoginSettings toolSettings)
+        public static T ResetApiEndpoint<T>(this T toolSettings) where T : CloudFoundryLoginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiEndpoint = null;
@@ -3084,7 +3084,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryLoginSettings.Org"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryLoginSettings SetOrg(this CloudFoundryLoginSettings toolSettings, string org)
+        public static T SetOrg<T>(this T toolSettings, string org) where T : CloudFoundryLoginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Org = org;
@@ -3094,7 +3094,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryLoginSettings.Org"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryLoginSettings ResetOrg(this CloudFoundryLoginSettings toolSettings)
+        public static T ResetOrg<T>(this T toolSettings) where T : CloudFoundryLoginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Org = null;
@@ -3106,7 +3106,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryLoginSettings.Space"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryLoginSettings SetSpace(this CloudFoundryLoginSettings toolSettings, string space)
+        public static T SetSpace<T>(this T toolSettings, string space) where T : CloudFoundryLoginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Space = space;
@@ -3116,7 +3116,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryLoginSettings.Space"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryLoginSettings ResetSpace(this CloudFoundryLoginSettings toolSettings)
+        public static T ResetSpace<T>(this T toolSettings) where T : CloudFoundryLoginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Space = null;
@@ -3129,7 +3129,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Skip verification of the API endpoint</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryLoginSettings SetSkipSslValidation(this CloudFoundryLoginSettings toolSettings, bool? skipSslValidation)
+        public static T SetSkipSslValidation<T>(this T toolSettings, bool? skipSslValidation) where T : CloudFoundryLoginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipSslValidation = skipSslValidation;
@@ -3140,7 +3140,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Skip verification of the API endpoint</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryLoginSettings ResetSkipSslValidation(this CloudFoundryLoginSettings toolSettings)
+        public static T ResetSkipSslValidation<T>(this T toolSettings) where T : CloudFoundryLoginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipSslValidation = null;
@@ -3151,7 +3151,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Skip verification of the API endpoint</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryLoginSettings EnableSkipSslValidation(this CloudFoundryLoginSettings toolSettings)
+        public static T EnableSkipSslValidation<T>(this T toolSettings) where T : CloudFoundryLoginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipSslValidation = true;
@@ -3162,7 +3162,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Skip verification of the API endpoint</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryLoginSettings DisableSkipSslValidation(this CloudFoundryLoginSettings toolSettings)
+        public static T DisableSkipSslValidation<T>(this T toolSettings) where T : CloudFoundryLoginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipSslValidation = false;
@@ -3173,7 +3173,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Skip verification of the API endpoint</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryLoginSettings ToggleSkipSslValidation(this CloudFoundryLoginSettings toolSettings)
+        public static T ToggleSkipSslValidation<T>(this T toolSettings) where T : CloudFoundryLoginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipSslValidation = !toolSettings.SkipSslValidation;
@@ -3195,7 +3195,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryAuthSettings.Username"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryAuthSettings SetUsername(this CloudFoundryAuthSettings toolSettings, string username)
+        public static T SetUsername<T>(this T toolSettings, string username) where T : CloudFoundryAuthSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = username;
@@ -3205,7 +3205,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryAuthSettings.Username"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryAuthSettings ResetUsername(this CloudFoundryAuthSettings toolSettings)
+        public static T ResetUsername<T>(this T toolSettings) where T : CloudFoundryAuthSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = null;
@@ -3217,7 +3217,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryAuthSettings.Password"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryAuthSettings SetPassword(this CloudFoundryAuthSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : CloudFoundryAuthSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -3227,7 +3227,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryAuthSettings.Password"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryAuthSettings ResetPassword(this CloudFoundryAuthSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : CloudFoundryAuthSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -3239,7 +3239,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryAuthSettings.Origin"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryAuthSettings SetOrigin(this CloudFoundryAuthSettings toolSettings, string origin)
+        public static T SetOrigin<T>(this T toolSettings, string origin) where T : CloudFoundryAuthSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Origin = origin;
@@ -3249,7 +3249,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryAuthSettings.Origin"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryAuthSettings ResetOrigin(this CloudFoundryAuthSettings toolSettings)
+        public static T ResetOrigin<T>(this T toolSettings) where T : CloudFoundryAuthSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Origin = null;
@@ -3262,7 +3262,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Use (non-user) service account (also called client credentials)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryAuthSettings SetClientCredentials(this CloudFoundryAuthSettings toolSettings, bool? clientCredentials)
+        public static T SetClientCredentials<T>(this T toolSettings, bool? clientCredentials) where T : CloudFoundryAuthSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClientCredentials = clientCredentials;
@@ -3273,7 +3273,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Use (non-user) service account (also called client credentials)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryAuthSettings ResetClientCredentials(this CloudFoundryAuthSettings toolSettings)
+        public static T ResetClientCredentials<T>(this T toolSettings) where T : CloudFoundryAuthSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClientCredentials = null;
@@ -3284,7 +3284,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Use (non-user) service account (also called client credentials)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryAuthSettings EnableClientCredentials(this CloudFoundryAuthSettings toolSettings)
+        public static T EnableClientCredentials<T>(this T toolSettings) where T : CloudFoundryAuthSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClientCredentials = true;
@@ -3295,7 +3295,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Use (non-user) service account (also called client credentials)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryAuthSettings DisableClientCredentials(this CloudFoundryAuthSettings toolSettings)
+        public static T DisableClientCredentials<T>(this T toolSettings) where T : CloudFoundryAuthSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClientCredentials = false;
@@ -3306,7 +3306,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Use (non-user) service account (also called client credentials)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryAuthSettings ToggleClientCredentials(this CloudFoundryAuthSettings toolSettings)
+        public static T ToggleClientCredentials<T>(this T toolSettings) where T : CloudFoundryAuthSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClientCredentials = !toolSettings.ClientCredentials;
@@ -3329,7 +3329,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Number of instances</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryScaleSettings SetInstances(this CloudFoundryScaleSettings toolSettings, string instances)
+        public static T SetInstances<T>(this T toolSettings, string instances) where T : CloudFoundryScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Instances = instances;
@@ -3340,7 +3340,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Number of instances</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryScaleSettings ResetInstances(this CloudFoundryScaleSettings toolSettings)
+        public static T ResetInstances<T>(this T toolSettings) where T : CloudFoundryScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Instances = null;
@@ -3353,7 +3353,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Disk limit (e.g. 256M, 1024M, 1G)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryScaleSettings SetDisk(this CloudFoundryScaleSettings toolSettings, string disk)
+        public static T SetDisk<T>(this T toolSettings, string disk) where T : CloudFoundryScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Disk = disk;
@@ -3364,7 +3364,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Disk limit (e.g. 256M, 1024M, 1G)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryScaleSettings ResetDisk(this CloudFoundryScaleSettings toolSettings)
+        public static T ResetDisk<T>(this T toolSettings) where T : CloudFoundryScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Disk = null;
@@ -3377,7 +3377,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Memory limit (e.g. 256M, 1024M, 1G)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryScaleSettings SetMemory(this CloudFoundryScaleSettings toolSettings, string memory)
+        public static T SetMemory<T>(this T toolSettings, string memory) where T : CloudFoundryScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Memory = memory;
@@ -3388,7 +3388,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Memory limit (e.g. 256M, 1024M, 1G)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryScaleSettings ResetMemory(this CloudFoundryScaleSettings toolSettings)
+        public static T ResetMemory<T>(this T toolSettings) where T : CloudFoundryScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Memory = null;
@@ -3411,7 +3411,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>App Name</p>
         /// </summary>
         [Pure]
-        public static CloudFoundrySetEnvSettings SetAppName(this CloudFoundrySetEnvSettings toolSettings, string appName)
+        public static T SetAppName<T>(this T toolSettings, string appName) where T : CloudFoundrySetEnvSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = appName;
@@ -3422,7 +3422,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>App Name</p>
         /// </summary>
         [Pure]
-        public static CloudFoundrySetEnvSettings ResetAppName(this CloudFoundrySetEnvSettings toolSettings)
+        public static T ResetAppName<T>(this T toolSettings) where T : CloudFoundrySetEnvSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = null;
@@ -3435,7 +3435,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Name of the environmental variable</p>
         /// </summary>
         [Pure]
-        public static CloudFoundrySetEnvSettings SetEnvVarName(this CloudFoundrySetEnvSettings toolSettings, string envVarName)
+        public static T SetEnvVarName<T>(this T toolSettings, string envVarName) where T : CloudFoundrySetEnvSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnvVarName = envVarName;
@@ -3446,7 +3446,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Name of the environmental variable</p>
         /// </summary>
         [Pure]
-        public static CloudFoundrySetEnvSettings ResetEnvVarName(this CloudFoundrySetEnvSettings toolSettings)
+        public static T ResetEnvVarName<T>(this T toolSettings) where T : CloudFoundrySetEnvSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnvVarName = null;
@@ -3459,7 +3459,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Value of the environmental variable</p>
         /// </summary>
         [Pure]
-        public static CloudFoundrySetEnvSettings SetEnvVarValue(this CloudFoundrySetEnvSettings toolSettings, string envVarValue)
+        public static T SetEnvVarValue<T>(this T toolSettings, string envVarValue) where T : CloudFoundrySetEnvSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnvVarValue = envVarValue;
@@ -3470,7 +3470,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Value of the environmental variable</p>
         /// </summary>
         [Pure]
-        public static CloudFoundrySetEnvSettings ResetEnvVarValue(this CloudFoundrySetEnvSettings toolSettings)
+        public static T ResetEnvVarValue<T>(this T toolSettings) where T : CloudFoundrySetEnvSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnvVarValue = null;
@@ -3493,7 +3493,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>CAPI Path to invoke (ex. /v2/info)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCurlSettings SetPath(this CloudFoundryCurlSettings toolSettings, string path)
+        public static T SetPath<T>(this T toolSettings, string path) where T : CloudFoundryCurlSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Path = path;
@@ -3504,7 +3504,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>CAPI Path to invoke (ex. /v2/info)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCurlSettings ResetPath(this CloudFoundryCurlSettings toolSettings)
+        public static T ResetPath<T>(this T toolSettings) where T : CloudFoundryCurlSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Path = null;
@@ -3517,7 +3517,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Include response headers in the output</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCurlSettings SetIncludeResponseHeaders(this CloudFoundryCurlSettings toolSettings, bool? includeResponseHeaders)
+        public static T SetIncludeResponseHeaders<T>(this T toolSettings, bool? includeResponseHeaders) where T : CloudFoundryCurlSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeResponseHeaders = includeResponseHeaders;
@@ -3528,7 +3528,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Include response headers in the output</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCurlSettings ResetIncludeResponseHeaders(this CloudFoundryCurlSettings toolSettings)
+        public static T ResetIncludeResponseHeaders<T>(this T toolSettings) where T : CloudFoundryCurlSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeResponseHeaders = null;
@@ -3539,7 +3539,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Include response headers in the output</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCurlSettings EnableIncludeResponseHeaders(this CloudFoundryCurlSettings toolSettings)
+        public static T EnableIncludeResponseHeaders<T>(this T toolSettings) where T : CloudFoundryCurlSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeResponseHeaders = true;
@@ -3550,7 +3550,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Include response headers in the output</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCurlSettings DisableIncludeResponseHeaders(this CloudFoundryCurlSettings toolSettings)
+        public static T DisableIncludeResponseHeaders<T>(this T toolSettings) where T : CloudFoundryCurlSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeResponseHeaders = false;
@@ -3561,7 +3561,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Include response headers in the output</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCurlSettings ToggleIncludeResponseHeaders(this CloudFoundryCurlSettings toolSettings)
+        public static T ToggleIncludeResponseHeaders<T>(this T toolSettings) where T : CloudFoundryCurlSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeResponseHeaders = !toolSettings.IncludeResponseHeaders;
@@ -3574,7 +3574,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>HTTP method (GET,POST,PUT,DELETE,etc). Default is GET</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCurlSettings SetHttpMethod(this CloudFoundryCurlSettings toolSettings, string httpMethod)
+        public static T SetHttpMethod<T>(this T toolSettings, string httpMethod) where T : CloudFoundryCurlSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HttpMethod = httpMethod;
@@ -3585,7 +3585,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>HTTP method (GET,POST,PUT,DELETE,etc). Default is GET</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCurlSettings ResetHttpMethod(this CloudFoundryCurlSettings toolSettings)
+        public static T ResetHttpMethod<T>(this T toolSettings) where T : CloudFoundryCurlSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HttpMethod = null;
@@ -3598,7 +3598,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>HTTP method (GET,POST,PUT,DELETE,etc). Default is GET</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCurlSettings SetHttpData(this CloudFoundryCurlSettings toolSettings, string httpData)
+        public static T SetHttpData<T>(this T toolSettings, string httpData) where T : CloudFoundryCurlSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HttpData = httpData;
@@ -3609,7 +3609,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>HTTP method (GET,POST,PUT,DELETE,etc). Default is GET</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCurlSettings ResetHttpData(this CloudFoundryCurlSettings toolSettings)
+        public static T ResetHttpData<T>(this T toolSettings) where T : CloudFoundryCurlSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HttpData = null;
@@ -3631,7 +3631,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryApiSettings.Url"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryApiSettings SetUrl(this CloudFoundryApiSettings toolSettings, string url)
+        public static T SetUrl<T>(this T toolSettings, string url) where T : CloudFoundryApiSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Url = url;
@@ -3641,7 +3641,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryApiSettings.Url"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryApiSettings ResetUrl(this CloudFoundryApiSettings toolSettings)
+        public static T ResetUrl<T>(this T toolSettings) where T : CloudFoundryApiSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Url = null;
@@ -3654,7 +3654,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Skip verification of the API endpoint</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryApiSettings SetSkipSSLValidation(this CloudFoundryApiSettings toolSettings, bool? skipSSLValidation)
+        public static T SetSkipSSLValidation<T>(this T toolSettings, bool? skipSSLValidation) where T : CloudFoundryApiSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipSSLValidation = skipSSLValidation;
@@ -3665,7 +3665,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Skip verification of the API endpoint</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryApiSettings ResetSkipSSLValidation(this CloudFoundryApiSettings toolSettings)
+        public static T ResetSkipSSLValidation<T>(this T toolSettings) where T : CloudFoundryApiSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipSSLValidation = null;
@@ -3676,7 +3676,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Skip verification of the API endpoint</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryApiSettings EnableSkipSSLValidation(this CloudFoundryApiSettings toolSettings)
+        public static T EnableSkipSSLValidation<T>(this T toolSettings) where T : CloudFoundryApiSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipSSLValidation = true;
@@ -3687,7 +3687,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Skip verification of the API endpoint</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryApiSettings DisableSkipSSLValidation(this CloudFoundryApiSettings toolSettings)
+        public static T DisableSkipSSLValidation<T>(this T toolSettings) where T : CloudFoundryApiSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipSSLValidation = false;
@@ -3698,7 +3698,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Skip verification of the API endpoint</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryApiSettings ToggleSkipSSLValidation(this CloudFoundryApiSettings toolSettings)
+        public static T ToggleSkipSSLValidation<T>(this T toolSettings) where T : CloudFoundryApiSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipSSLValidation = !toolSettings.SkipSSLValidation;
@@ -3711,7 +3711,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Remove all api endpoint targeting</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryApiSettings SetUnset(this CloudFoundryApiSettings toolSettings, bool? unset)
+        public static T SetUnset<T>(this T toolSettings, bool? unset) where T : CloudFoundryApiSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Unset = unset;
@@ -3722,7 +3722,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Remove all api endpoint targeting</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryApiSettings ResetUnset(this CloudFoundryApiSettings toolSettings)
+        public static T ResetUnset<T>(this T toolSettings) where T : CloudFoundryApiSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Unset = null;
@@ -3733,7 +3733,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Remove all api endpoint targeting</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryApiSettings EnableUnset(this CloudFoundryApiSettings toolSettings)
+        public static T EnableUnset<T>(this T toolSettings) where T : CloudFoundryApiSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Unset = true;
@@ -3744,7 +3744,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Remove all api endpoint targeting</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryApiSettings DisableUnset(this CloudFoundryApiSettings toolSettings)
+        public static T DisableUnset<T>(this T toolSettings) where T : CloudFoundryApiSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Unset = false;
@@ -3755,7 +3755,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Remove all api endpoint targeting</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryApiSettings ToggleUnset(this CloudFoundryApiSettings toolSettings)
+        public static T ToggleUnset<T>(this T toolSettings) where T : CloudFoundryApiSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Unset = !toolSettings.Unset;
@@ -3777,7 +3777,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryCreateUserProvidedServiceSettings.ServiceInstanceName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateUserProvidedServiceSettings SetServiceInstanceName(this CloudFoundryCreateUserProvidedServiceSettings toolSettings, string serviceInstanceName)
+        public static T SetServiceInstanceName<T>(this T toolSettings, string serviceInstanceName) where T : CloudFoundryCreateUserProvidedServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceInstanceName = serviceInstanceName;
@@ -3787,7 +3787,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryCreateUserProvidedServiceSettings.ServiceInstanceName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateUserProvidedServiceSettings ResetServiceInstanceName(this CloudFoundryCreateUserProvidedServiceSettings toolSettings)
+        public static T ResetServiceInstanceName<T>(this T toolSettings) where T : CloudFoundryCreateUserProvidedServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceInstanceName = null;
@@ -3800,7 +3800,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>URL to which requests for bound routes will be forwarded. Scheme for this URL must be https</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateUserProvidedServiceSettings SetRouteUrl(this CloudFoundryCreateUserProvidedServiceSettings toolSettings, string routeUrl)
+        public static T SetRouteUrl<T>(this T toolSettings, string routeUrl) where T : CloudFoundryCreateUserProvidedServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RouteUrl = routeUrl;
@@ -3811,7 +3811,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>URL to which requests for bound routes will be forwarded. Scheme for this URL must be https</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateUserProvidedServiceSettings ResetRouteUrl(this CloudFoundryCreateUserProvidedServiceSettings toolSettings)
+        public static T ResetRouteUrl<T>(this T toolSettings) where T : CloudFoundryCreateUserProvidedServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RouteUrl = null;
@@ -3824,7 +3824,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>URL to which logs for bound applications will be streamed</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateUserProvidedServiceSettings SetLogUrl(this CloudFoundryCreateUserProvidedServiceSettings toolSettings, string logUrl)
+        public static T SetLogUrl<T>(this T toolSettings, string logUrl) where T : CloudFoundryCreateUserProvidedServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogUrl = logUrl;
@@ -3835,7 +3835,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>URL to which logs for bound applications will be streamed</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateUserProvidedServiceSettings ResetLogUrl(this CloudFoundryCreateUserProvidedServiceSettings toolSettings)
+        public static T ResetLogUrl<T>(this T toolSettings) where T : CloudFoundryCreateUserProvidedServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogUrl = null;
@@ -3848,7 +3848,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Comma separated list of tags to assign to service. ex. 'db, relational'</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateUserProvidedServiceSettings SetTags(this CloudFoundryCreateUserProvidedServiceSettings toolSettings, string tags)
+        public static T SetTags<T>(this T toolSettings, string tags) where T : CloudFoundryCreateUserProvidedServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tags = tags;
@@ -3859,7 +3859,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Comma separated list of tags to assign to service. ex. 'db, relational'</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateUserProvidedServiceSettings ResetTags(this CloudFoundryCreateUserProvidedServiceSettings toolSettings)
+        public static T ResetTags<T>(this T toolSettings) where T : CloudFoundryCreateUserProvidedServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tags = null;
@@ -3881,7 +3881,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryStartSettings.AppName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryStartSettings SetAppName(this CloudFoundryStartSettings toolSettings, string appName)
+        public static T SetAppName<T>(this T toolSettings, string appName) where T : CloudFoundryStartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = appName;
@@ -3891,7 +3891,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryStartSettings.AppName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryStartSettings ResetAppName(this CloudFoundryStartSettings toolSettings)
+        public static T ResetAppName<T>(this T toolSettings) where T : CloudFoundryStartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = null;
@@ -3913,7 +3913,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryStopSettings.AppName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryStopSettings SetAppName(this CloudFoundryStopSettings toolSettings, string appName)
+        public static T SetAppName<T>(this T toolSettings, string appName) where T : CloudFoundryStopSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = appName;
@@ -3923,7 +3923,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryStopSettings.AppName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryStopSettings ResetAppName(this CloudFoundryStopSettings toolSettings)
+        public static T ResetAppName<T>(this T toolSettings) where T : CloudFoundryStopSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = null;
@@ -3945,7 +3945,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryRestartSettings.AppName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryRestartSettings SetAppName(this CloudFoundryRestartSettings toolSettings, string appName)
+        public static T SetAppName<T>(this T toolSettings, string appName) where T : CloudFoundryRestartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = appName;
@@ -3955,7 +3955,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryRestartSettings.AppName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryRestartSettings ResetAppName(this CloudFoundryRestartSettings toolSettings)
+        public static T ResetAppName<T>(this T toolSettings) where T : CloudFoundryRestartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = null;
@@ -3977,7 +3977,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryRestageSettings.AppName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryRestageSettings SetAppName(this CloudFoundryRestageSettings toolSettings, string appName)
+        public static T SetAppName<T>(this T toolSettings, string appName) where T : CloudFoundryRestageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = appName;
@@ -3987,7 +3987,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryRestageSettings.AppName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryRestageSettings ResetAppName(this CloudFoundryRestageSettings toolSettings)
+        public static T ResetAppName<T>(this T toolSettings) where T : CloudFoundryRestageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = null;
@@ -4009,7 +4009,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryDeleteApplicationSettings.AppName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryDeleteApplicationSettings SetAppName(this CloudFoundryDeleteApplicationSettings toolSettings, string appName)
+        public static T SetAppName<T>(this T toolSettings, string appName) where T : CloudFoundryDeleteApplicationSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = appName;
@@ -4019,7 +4019,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryDeleteApplicationSettings.AppName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryDeleteApplicationSettings ResetAppName(this CloudFoundryDeleteApplicationSettings toolSettings)
+        public static T ResetAppName<T>(this T toolSettings) where T : CloudFoundryDeleteApplicationSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = null;
@@ -4032,7 +4032,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Also delete any mapped routes</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryDeleteApplicationSettings SetDeleteRoutes(this CloudFoundryDeleteApplicationSettings toolSettings, bool? deleteRoutes)
+        public static T SetDeleteRoutes<T>(this T toolSettings, bool? deleteRoutes) where T : CloudFoundryDeleteApplicationSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeleteRoutes = deleteRoutes;
@@ -4043,7 +4043,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Also delete any mapped routes</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryDeleteApplicationSettings ResetDeleteRoutes(this CloudFoundryDeleteApplicationSettings toolSettings)
+        public static T ResetDeleteRoutes<T>(this T toolSettings) where T : CloudFoundryDeleteApplicationSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeleteRoutes = null;
@@ -4054,7 +4054,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Also delete any mapped routes</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryDeleteApplicationSettings EnableDeleteRoutes(this CloudFoundryDeleteApplicationSettings toolSettings)
+        public static T EnableDeleteRoutes<T>(this T toolSettings) where T : CloudFoundryDeleteApplicationSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeleteRoutes = true;
@@ -4065,7 +4065,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Also delete any mapped routes</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryDeleteApplicationSettings DisableDeleteRoutes(this CloudFoundryDeleteApplicationSettings toolSettings)
+        public static T DisableDeleteRoutes<T>(this T toolSettings) where T : CloudFoundryDeleteApplicationSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeleteRoutes = false;
@@ -4076,7 +4076,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Also delete any mapped routes</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryDeleteApplicationSettings ToggleDeleteRoutes(this CloudFoundryDeleteApplicationSettings toolSettings)
+        public static T ToggleDeleteRoutes<T>(this T toolSettings) where T : CloudFoundryDeleteApplicationSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeleteRoutes = !toolSettings.DeleteRoutes;
@@ -4099,7 +4099,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Service type</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateServiceSettings SetService(this CloudFoundryCreateServiceSettings toolSettings, string service)
+        public static T SetService<T>(this T toolSettings, string service) where T : CloudFoundryCreateServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Service = service;
@@ -4110,7 +4110,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Service type</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateServiceSettings ResetService(this CloudFoundryCreateServiceSettings toolSettings)
+        public static T ResetService<T>(this T toolSettings) where T : CloudFoundryCreateServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Service = null;
@@ -4123,7 +4123,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Service plan</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateServiceSettings SetPlan(this CloudFoundryCreateServiceSettings toolSettings, string plan)
+        public static T SetPlan<T>(this T toolSettings, string plan) where T : CloudFoundryCreateServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Plan = plan;
@@ -4134,7 +4134,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Service plan</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateServiceSettings ResetPlan(this CloudFoundryCreateServiceSettings toolSettings)
+        public static T ResetPlan<T>(this T toolSettings) where T : CloudFoundryCreateServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Plan = null;
@@ -4147,7 +4147,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Instance name</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateServiceSettings SetInstanceName(this CloudFoundryCreateServiceSettings toolSettings, string instanceName)
+        public static T SetInstanceName<T>(this T toolSettings, string instanceName) where T : CloudFoundryCreateServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InstanceName = instanceName;
@@ -4158,7 +4158,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Instance name</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateServiceSettings ResetInstanceName(this CloudFoundryCreateServiceSettings toolSettings)
+        public static T ResetInstanceName<T>(this T toolSettings) where T : CloudFoundryCreateServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InstanceName = null;
@@ -4171,7 +4171,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Valid JSON object containing service-specific configuration parameters, provided either in-line or in a file</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateServiceSettings SetConfigurationParameters(this CloudFoundryCreateServiceSettings toolSettings, string configurationParameters)
+        public static T SetConfigurationParameters<T>(this T toolSettings, string configurationParameters) where T : CloudFoundryCreateServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigurationParameters = configurationParameters;
@@ -4182,7 +4182,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Valid JSON object containing service-specific configuration parameters, provided either in-line or in a file</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateServiceSettings ResetConfigurationParameters(this CloudFoundryCreateServiceSettings toolSettings)
+        public static T ResetConfigurationParameters<T>(this T toolSettings) where T : CloudFoundryCreateServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigurationParameters = null;
@@ -4195,7 +4195,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>User provided tags</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateServiceSettings SetTags(this CloudFoundryCreateServiceSettings toolSettings, params string[] tags)
+        public static T SetTags<T>(this T toolSettings, params string[] tags) where T : CloudFoundryCreateServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TagsInternal = tags.ToList();
@@ -4206,7 +4206,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>User provided tags</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateServiceSettings SetTags(this CloudFoundryCreateServiceSettings toolSettings, IEnumerable<string> tags)
+        public static T SetTags<T>(this T toolSettings, IEnumerable<string> tags) where T : CloudFoundryCreateServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TagsInternal = tags.ToList();
@@ -4217,7 +4217,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>User provided tags</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateServiceSettings AddTags(this CloudFoundryCreateServiceSettings toolSettings, params string[] tags)
+        public static T AddTags<T>(this T toolSettings, params string[] tags) where T : CloudFoundryCreateServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TagsInternal.AddRange(tags);
@@ -4228,7 +4228,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>User provided tags</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateServiceSettings AddTags(this CloudFoundryCreateServiceSettings toolSettings, IEnumerable<string> tags)
+        public static T AddTags<T>(this T toolSettings, IEnumerable<string> tags) where T : CloudFoundryCreateServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TagsInternal.AddRange(tags);
@@ -4239,7 +4239,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>User provided tags</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateServiceSettings ClearTags(this CloudFoundryCreateServiceSettings toolSettings)
+        public static T ClearTags<T>(this T toolSettings) where T : CloudFoundryCreateServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TagsInternal.Clear();
@@ -4250,7 +4250,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>User provided tags</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateServiceSettings RemoveTags(this CloudFoundryCreateServiceSettings toolSettings, params string[] tags)
+        public static T RemoveTags<T>(this T toolSettings, params string[] tags) where T : CloudFoundryCreateServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(tags);
@@ -4262,7 +4262,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>User provided tags</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateServiceSettings RemoveTags(this CloudFoundryCreateServiceSettings toolSettings, IEnumerable<string> tags)
+        public static T RemoveTags<T>(this T toolSettings, IEnumerable<string> tags) where T : CloudFoundryCreateServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(tags);
@@ -4286,7 +4286,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Service Instance</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryDeleteServiceSettings SetServiceInstance(this CloudFoundryDeleteServiceSettings toolSettings, string serviceInstance)
+        public static T SetServiceInstance<T>(this T toolSettings, string serviceInstance) where T : CloudFoundryDeleteServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceInstance = serviceInstance;
@@ -4297,7 +4297,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Service Instance</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryDeleteServiceSettings ResetServiceInstance(this CloudFoundryDeleteServiceSettings toolSettings)
+        public static T ResetServiceInstance<T>(this T toolSettings) where T : CloudFoundryDeleteServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceInstance = null;
@@ -4320,7 +4320,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Service Instance</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryGetServiceInfoSettings SetServiceInstance(this CloudFoundryGetServiceInfoSettings toolSettings, string serviceInstance)
+        public static T SetServiceInstance<T>(this T toolSettings, string serviceInstance) where T : CloudFoundryGetServiceInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceInstance = serviceInstance;
@@ -4331,7 +4331,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Service Instance</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryGetServiceInfoSettings ResetServiceInstance(this CloudFoundryGetServiceInfoSettings toolSettings)
+        public static T ResetServiceInstance<T>(this T toolSettings) where T : CloudFoundryGetServiceInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceInstance = null;
@@ -4353,7 +4353,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryBindServiceSettings.AppName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryBindServiceSettings SetAppName(this CloudFoundryBindServiceSettings toolSettings, string appName)
+        public static T SetAppName<T>(this T toolSettings, string appName) where T : CloudFoundryBindServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = appName;
@@ -4363,7 +4363,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryBindServiceSettings.AppName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryBindServiceSettings ResetAppName(this CloudFoundryBindServiceSettings toolSettings)
+        public static T ResetAppName<T>(this T toolSettings) where T : CloudFoundryBindServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = null;
@@ -4375,7 +4375,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryBindServiceSettings.ServiceInstance"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryBindServiceSettings SetServiceInstance(this CloudFoundryBindServiceSettings toolSettings, string serviceInstance)
+        public static T SetServiceInstance<T>(this T toolSettings, string serviceInstance) where T : CloudFoundryBindServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceInstance = serviceInstance;
@@ -4385,7 +4385,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryBindServiceSettings.ServiceInstance"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryBindServiceSettings ResetServiceInstance(this CloudFoundryBindServiceSettings toolSettings)
+        public static T ResetServiceInstance<T>(this T toolSettings) where T : CloudFoundryBindServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceInstance = null;
@@ -4398,7 +4398,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Name to expose service instance to app process with (Default: service instance name)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryBindServiceSettings SetBindingName(this CloudFoundryBindServiceSettings toolSettings, string bindingName)
+        public static T SetBindingName<T>(this T toolSettings, string bindingName) where T : CloudFoundryBindServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BindingName = bindingName;
@@ -4409,7 +4409,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Name to expose service instance to app process with (Default: service instance name)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryBindServiceSettings ResetBindingName(this CloudFoundryBindServiceSettings toolSettings)
+        public static T ResetBindingName<T>(this T toolSettings) where T : CloudFoundryBindServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BindingName = null;
@@ -4422,7 +4422,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Valid JSON object containing service-specific configuration parameters, provided either in-line or in a file</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryBindServiceSettings SetConfigurationParameters(this CloudFoundryBindServiceSettings toolSettings, string configurationParameters)
+        public static T SetConfigurationParameters<T>(this T toolSettings, string configurationParameters) where T : CloudFoundryBindServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigurationParameters = configurationParameters;
@@ -4433,7 +4433,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Valid JSON object containing service-specific configuration parameters, provided either in-line or in a file</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryBindServiceSettings ResetConfigurationParameters(this CloudFoundryBindServiceSettings toolSettings)
+        public static T ResetConfigurationParameters<T>(this T toolSettings) where T : CloudFoundryBindServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigurationParameters = null;
@@ -4455,7 +4455,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryUnbindServiceSettings.AppName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryUnbindServiceSettings SetAppName(this CloudFoundryUnbindServiceSettings toolSettings, string appName)
+        public static T SetAppName<T>(this T toolSettings, string appName) where T : CloudFoundryUnbindServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = appName;
@@ -4465,7 +4465,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryUnbindServiceSettings.AppName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryUnbindServiceSettings ResetAppName(this CloudFoundryUnbindServiceSettings toolSettings)
+        public static T ResetAppName<T>(this T toolSettings) where T : CloudFoundryUnbindServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = null;
@@ -4477,7 +4477,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryUnbindServiceSettings.ServiceInstance"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryUnbindServiceSettings SetServiceInstance(this CloudFoundryUnbindServiceSettings toolSettings, string serviceInstance)
+        public static T SetServiceInstance<T>(this T toolSettings, string serviceInstance) where T : CloudFoundryUnbindServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceInstance = serviceInstance;
@@ -4487,7 +4487,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryUnbindServiceSettings.ServiceInstance"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryUnbindServiceSettings ResetServiceInstance(this CloudFoundryUnbindServiceSettings toolSettings)
+        public static T ResetServiceInstance<T>(this T toolSettings) where T : CloudFoundryUnbindServiceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceInstance = null;
@@ -4509,7 +4509,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryUnsetEnvSettings.AppName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryUnsetEnvSettings SetAppName(this CloudFoundryUnsetEnvSettings toolSettings, string appName)
+        public static T SetAppName<T>(this T toolSettings, string appName) where T : CloudFoundryUnsetEnvSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = appName;
@@ -4519,7 +4519,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryUnsetEnvSettings.AppName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryUnsetEnvSettings ResetAppName(this CloudFoundryUnsetEnvSettings toolSettings)
+        public static T ResetAppName<T>(this T toolSettings) where T : CloudFoundryUnsetEnvSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = null;
@@ -4531,7 +4531,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryUnsetEnvSettings.EnvironmentalVariableName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryUnsetEnvSettings SetEnvironmentalVariableName(this CloudFoundryUnsetEnvSettings toolSettings, string environmentalVariableName)
+        public static T SetEnvironmentalVariableName<T>(this T toolSettings, string environmentalVariableName) where T : CloudFoundryUnsetEnvSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnvironmentalVariableName = environmentalVariableName;
@@ -4541,7 +4541,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryUnsetEnvSettings.EnvironmentalVariableName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryUnsetEnvSettings ResetEnvironmentalVariableName(this CloudFoundryUnsetEnvSettings toolSettings)
+        public static T ResetEnvironmentalVariableName<T>(this T toolSettings) where T : CloudFoundryUnsetEnvSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnvironmentalVariableName = null;
@@ -4563,7 +4563,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryCreateRouteSettings.Space"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateRouteSettings SetSpace(this CloudFoundryCreateRouteSettings toolSettings, string space)
+        public static T SetSpace<T>(this T toolSettings, string space) where T : CloudFoundryCreateRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Space = space;
@@ -4573,7 +4573,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryCreateRouteSettings.Space"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateRouteSettings ResetSpace(this CloudFoundryCreateRouteSettings toolSettings)
+        public static T ResetSpace<T>(this T toolSettings) where T : CloudFoundryCreateRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Space = null;
@@ -4585,7 +4585,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryCreateRouteSettings.Domain"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateRouteSettings SetDomain(this CloudFoundryCreateRouteSettings toolSettings, string domain)
+        public static T SetDomain<T>(this T toolSettings, string domain) where T : CloudFoundryCreateRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Domain = domain;
@@ -4595,7 +4595,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryCreateRouteSettings.Domain"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateRouteSettings ResetDomain(this CloudFoundryCreateRouteSettings toolSettings)
+        public static T ResetDomain<T>(this T toolSettings) where T : CloudFoundryCreateRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Domain = null;
@@ -4608,7 +4608,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Hostname for the HTTP route (required for shared domains)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateRouteSettings SetHostname(this CloudFoundryCreateRouteSettings toolSettings, string hostname)
+        public static T SetHostname<T>(this T toolSettings, string hostname) where T : CloudFoundryCreateRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Hostname = hostname;
@@ -4619,7 +4619,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Hostname for the HTTP route (required for shared domains)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateRouteSettings ResetHostname(this CloudFoundryCreateRouteSettings toolSettings)
+        public static T ResetHostname<T>(this T toolSettings) where T : CloudFoundryCreateRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Hostname = null;
@@ -4632,7 +4632,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Path for the HTTP route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateRouteSettings SetPath(this CloudFoundryCreateRouteSettings toolSettings, string path)
+        public static T SetPath<T>(this T toolSettings, string path) where T : CloudFoundryCreateRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Path = path;
@@ -4643,7 +4643,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Path for the HTTP route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateRouteSettings ResetPath(this CloudFoundryCreateRouteSettings toolSettings)
+        public static T ResetPath<T>(this T toolSettings) where T : CloudFoundryCreateRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Path = null;
@@ -4656,7 +4656,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Port for the TCP route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateRouteSettings SetPort(this CloudFoundryCreateRouteSettings toolSettings, int? port)
+        public static T SetPort<T>(this T toolSettings, int? port) where T : CloudFoundryCreateRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Port = port;
@@ -4667,7 +4667,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Port for the TCP route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateRouteSettings ResetPort(this CloudFoundryCreateRouteSettings toolSettings)
+        public static T ResetPort<T>(this T toolSettings) where T : CloudFoundryCreateRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Port = null;
@@ -4680,7 +4680,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Create a random port for the TCP route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateRouteSettings SetRandomPort(this CloudFoundryCreateRouteSettings toolSettings, bool? randomPort)
+        public static T SetRandomPort<T>(this T toolSettings, bool? randomPort) where T : CloudFoundryCreateRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RandomPort = randomPort;
@@ -4691,7 +4691,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Create a random port for the TCP route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateRouteSettings ResetRandomPort(this CloudFoundryCreateRouteSettings toolSettings)
+        public static T ResetRandomPort<T>(this T toolSettings) where T : CloudFoundryCreateRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RandomPort = null;
@@ -4702,7 +4702,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Create a random port for the TCP route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateRouteSettings EnableRandomPort(this CloudFoundryCreateRouteSettings toolSettings)
+        public static T EnableRandomPort<T>(this T toolSettings) where T : CloudFoundryCreateRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RandomPort = true;
@@ -4713,7 +4713,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Create a random port for the TCP route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateRouteSettings DisableRandomPort(this CloudFoundryCreateRouteSettings toolSettings)
+        public static T DisableRandomPort<T>(this T toolSettings) where T : CloudFoundryCreateRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RandomPort = false;
@@ -4724,7 +4724,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Create a random port for the TCP route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateRouteSettings ToggleRandomPort(this CloudFoundryCreateRouteSettings toolSettings)
+        public static T ToggleRandomPort<T>(this T toolSettings) where T : CloudFoundryCreateRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RandomPort = !toolSettings.RandomPort;
@@ -4746,7 +4746,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryMapRouteSettings.AppName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryMapRouteSettings SetAppName(this CloudFoundryMapRouteSettings toolSettings, string appName)
+        public static T SetAppName<T>(this T toolSettings, string appName) where T : CloudFoundryMapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = appName;
@@ -4756,7 +4756,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryMapRouteSettings.AppName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryMapRouteSettings ResetAppName(this CloudFoundryMapRouteSettings toolSettings)
+        public static T ResetAppName<T>(this T toolSettings) where T : CloudFoundryMapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = null;
@@ -4768,7 +4768,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryMapRouteSettings.Domain"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryMapRouteSettings SetDomain(this CloudFoundryMapRouteSettings toolSettings, string domain)
+        public static T SetDomain<T>(this T toolSettings, string domain) where T : CloudFoundryMapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Domain = domain;
@@ -4778,7 +4778,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryMapRouteSettings.Domain"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryMapRouteSettings ResetDomain(this CloudFoundryMapRouteSettings toolSettings)
+        public static T ResetDomain<T>(this T toolSettings) where T : CloudFoundryMapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Domain = null;
@@ -4791,7 +4791,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Hostname for the HTTP route (required for shared domains)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryMapRouteSettings SetHostname(this CloudFoundryMapRouteSettings toolSettings, string hostname)
+        public static T SetHostname<T>(this T toolSettings, string hostname) where T : CloudFoundryMapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Hostname = hostname;
@@ -4802,7 +4802,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Hostname for the HTTP route (required for shared domains)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryMapRouteSettings ResetHostname(this CloudFoundryMapRouteSettings toolSettings)
+        public static T ResetHostname<T>(this T toolSettings) where T : CloudFoundryMapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Hostname = null;
@@ -4815,7 +4815,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Path for the HTTP route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryMapRouteSettings SetPath(this CloudFoundryMapRouteSettings toolSettings, string path)
+        public static T SetPath<T>(this T toolSettings, string path) where T : CloudFoundryMapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Path = path;
@@ -4826,7 +4826,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Path for the HTTP route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryMapRouteSettings ResetPath(this CloudFoundryMapRouteSettings toolSettings)
+        public static T ResetPath<T>(this T toolSettings) where T : CloudFoundryMapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Path = null;
@@ -4839,7 +4839,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Port for the TCP route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryMapRouteSettings SetPort(this CloudFoundryMapRouteSettings toolSettings, int? port)
+        public static T SetPort<T>(this T toolSettings, int? port) where T : CloudFoundryMapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Port = port;
@@ -4850,7 +4850,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Port for the TCP route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryMapRouteSettings ResetPort(this CloudFoundryMapRouteSettings toolSettings)
+        public static T ResetPort<T>(this T toolSettings) where T : CloudFoundryMapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Port = null;
@@ -4863,7 +4863,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Create a random port for the TCP route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryMapRouteSettings SetRandomPort(this CloudFoundryMapRouteSettings toolSettings, bool? randomPort)
+        public static T SetRandomPort<T>(this T toolSettings, bool? randomPort) where T : CloudFoundryMapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RandomPort = randomPort;
@@ -4874,7 +4874,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Create a random port for the TCP route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryMapRouteSettings ResetRandomPort(this CloudFoundryMapRouteSettings toolSettings)
+        public static T ResetRandomPort<T>(this T toolSettings) where T : CloudFoundryMapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RandomPort = null;
@@ -4885,7 +4885,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Create a random port for the TCP route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryMapRouteSettings EnableRandomPort(this CloudFoundryMapRouteSettings toolSettings)
+        public static T EnableRandomPort<T>(this T toolSettings) where T : CloudFoundryMapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RandomPort = true;
@@ -4896,7 +4896,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Create a random port for the TCP route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryMapRouteSettings DisableRandomPort(this CloudFoundryMapRouteSettings toolSettings)
+        public static T DisableRandomPort<T>(this T toolSettings) where T : CloudFoundryMapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RandomPort = false;
@@ -4907,7 +4907,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Create a random port for the TCP route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryMapRouteSettings ToggleRandomPort(this CloudFoundryMapRouteSettings toolSettings)
+        public static T ToggleRandomPort<T>(this T toolSettings) where T : CloudFoundryMapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RandomPort = !toolSettings.RandomPort;
@@ -4929,7 +4929,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryUnmapRouteSettings.AppName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryUnmapRouteSettings SetAppName(this CloudFoundryUnmapRouteSettings toolSettings, string appName)
+        public static T SetAppName<T>(this T toolSettings, string appName) where T : CloudFoundryUnmapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = appName;
@@ -4939,7 +4939,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryUnmapRouteSettings.AppName"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryUnmapRouteSettings ResetAppName(this CloudFoundryUnmapRouteSettings toolSettings)
+        public static T ResetAppName<T>(this T toolSettings) where T : CloudFoundryUnmapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppName = null;
@@ -4951,7 +4951,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryUnmapRouteSettings.Domain"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryUnmapRouteSettings SetDomain(this CloudFoundryUnmapRouteSettings toolSettings, string domain)
+        public static T SetDomain<T>(this T toolSettings, string domain) where T : CloudFoundryUnmapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Domain = domain;
@@ -4961,7 +4961,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryUnmapRouteSettings.Domain"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryUnmapRouteSettings ResetDomain(this CloudFoundryUnmapRouteSettings toolSettings)
+        public static T ResetDomain<T>(this T toolSettings) where T : CloudFoundryUnmapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Domain = null;
@@ -4974,7 +4974,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Hostname for the HTTP route (required for shared domains)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryUnmapRouteSettings SetHostname(this CloudFoundryUnmapRouteSettings toolSettings, string hostname)
+        public static T SetHostname<T>(this T toolSettings, string hostname) where T : CloudFoundryUnmapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Hostname = hostname;
@@ -4985,7 +4985,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Hostname for the HTTP route (required for shared domains)</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryUnmapRouteSettings ResetHostname(this CloudFoundryUnmapRouteSettings toolSettings)
+        public static T ResetHostname<T>(this T toolSettings) where T : CloudFoundryUnmapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Hostname = null;
@@ -4998,7 +4998,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Path for the HTTP route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryUnmapRouteSettings SetPath(this CloudFoundryUnmapRouteSettings toolSettings, string path)
+        public static T SetPath<T>(this T toolSettings, string path) where T : CloudFoundryUnmapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Path = path;
@@ -5009,7 +5009,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Path for the HTTP route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryUnmapRouteSettings ResetPath(this CloudFoundryUnmapRouteSettings toolSettings)
+        public static T ResetPath<T>(this T toolSettings) where T : CloudFoundryUnmapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Path = null;
@@ -5022,7 +5022,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Port for the TCP route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryUnmapRouteSettings SetPort(this CloudFoundryUnmapRouteSettings toolSettings, int? port)
+        public static T SetPort<T>(this T toolSettings, int? port) where T : CloudFoundryUnmapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Port = port;
@@ -5033,7 +5033,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Port for the TCP route</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryUnmapRouteSettings ResetPort(this CloudFoundryUnmapRouteSettings toolSettings)
+        public static T ResetPort<T>(this T toolSettings) where T : CloudFoundryUnmapRouteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Port = null;
@@ -5055,7 +5055,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryCreateSpaceSettings.Space"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateSpaceSettings SetSpace(this CloudFoundryCreateSpaceSettings toolSettings, string space)
+        public static T SetSpace<T>(this T toolSettings, string space) where T : CloudFoundryCreateSpaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Space = space;
@@ -5065,7 +5065,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryCreateSpaceSettings.Space"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateSpaceSettings ResetSpace(this CloudFoundryCreateSpaceSettings toolSettings)
+        public static T ResetSpace<T>(this T toolSettings) where T : CloudFoundryCreateSpaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Space = null;
@@ -5077,7 +5077,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryCreateSpaceSettings.Org"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateSpaceSettings SetOrg(this CloudFoundryCreateSpaceSettings toolSettings, string org)
+        public static T SetOrg<T>(this T toolSettings, string org) where T : CloudFoundryCreateSpaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Org = org;
@@ -5087,7 +5087,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryCreateSpaceSettings.Org"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateSpaceSettings ResetOrg(this CloudFoundryCreateSpaceSettings toolSettings)
+        public static T ResetOrg<T>(this T toolSettings) where T : CloudFoundryCreateSpaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Org = null;
@@ -5100,7 +5100,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Quota to assign to the newly created space</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateSpaceSettings SetQuota(this CloudFoundryCreateSpaceSettings toolSettings, string quota)
+        public static T SetQuota<T>(this T toolSettings, string quota) where T : CloudFoundryCreateSpaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quota = quota;
@@ -5111,7 +5111,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Quota to assign to the newly created space</p>
         /// </summary>
         [Pure]
-        public static CloudFoundryCreateSpaceSettings ResetQuota(this CloudFoundryCreateSpaceSettings toolSettings)
+        public static T ResetQuota<T>(this T toolSettings) where T : CloudFoundryCreateSpaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quota = null;
@@ -5133,7 +5133,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryDeleteSpaceSettings.Space"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryDeleteSpaceSettings SetSpace(this CloudFoundryDeleteSpaceSettings toolSettings, string space)
+        public static T SetSpace<T>(this T toolSettings, string space) where T : CloudFoundryDeleteSpaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Space = space;
@@ -5143,7 +5143,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryDeleteSpaceSettings.Space"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryDeleteSpaceSettings ResetSpace(this CloudFoundryDeleteSpaceSettings toolSettings)
+        public static T ResetSpace<T>(this T toolSettings) where T : CloudFoundryDeleteSpaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Space = null;
@@ -5155,7 +5155,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryDeleteSpaceSettings.Org"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryDeleteSpaceSettings SetOrg(this CloudFoundryDeleteSpaceSettings toolSettings, string org)
+        public static T SetOrg<T>(this T toolSettings, string org) where T : CloudFoundryDeleteSpaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Org = org;
@@ -5165,7 +5165,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryDeleteSpaceSettings.Org"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryDeleteSpaceSettings ResetOrg(this CloudFoundryDeleteSpaceSettings toolSettings)
+        public static T ResetOrg<T>(this T toolSettings) where T : CloudFoundryDeleteSpaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Org = null;
@@ -5187,7 +5187,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryTargetSettings.Space"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryTargetSettings SetSpace(this CloudFoundryTargetSettings toolSettings, string space)
+        public static T SetSpace<T>(this T toolSettings, string space) where T : CloudFoundryTargetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Space = space;
@@ -5197,7 +5197,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryTargetSettings.Space"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryTargetSettings ResetSpace(this CloudFoundryTargetSettings toolSettings)
+        public static T ResetSpace<T>(this T toolSettings) where T : CloudFoundryTargetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Space = null;
@@ -5209,7 +5209,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryTargetSettings.Org"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryTargetSettings SetOrg(this CloudFoundryTargetSettings toolSettings, string org)
+        public static T SetOrg<T>(this T toolSettings, string org) where T : CloudFoundryTargetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Org = org;
@@ -5219,7 +5219,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Resets <see cref="CloudFoundryTargetSettings.Org"/></em></p>
         /// </summary>
         [Pure]
-        public static CloudFoundryTargetSettings ResetOrg(this CloudFoundryTargetSettings toolSettings)
+        public static T ResetOrg<T>(this T toolSettings) where T : CloudFoundryTargetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Org = null;

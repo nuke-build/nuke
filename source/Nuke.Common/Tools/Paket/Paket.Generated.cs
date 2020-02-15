@@ -765,7 +765,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>NuGet package ID.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings SetPackageId(this PaketUpdateSettings toolSettings, string packageId)
+        public static T SetPackageId<T>(this T toolSettings, string packageId) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageId = packageId;
@@ -776,7 +776,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>NuGet package ID.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ResetPackageId(this PaketUpdateSettings toolSettings)
+        public static T ResetPackageId<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageId = null;
@@ -789,7 +789,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Dependency version constraint.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings SetPackageVersion(this PaketUpdateSettings toolSettings, string packageVersion)
+        public static T SetPackageVersion<T>(this T toolSettings, string packageVersion) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageVersion = packageVersion;
@@ -800,7 +800,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Dependency version constraint.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ResetPackageVersion(this PaketUpdateSettings toolSettings)
+        public static T ResetPackageVersion<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageVersion = null;
@@ -813,7 +813,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Dependency group to update. Default is <em>all groups</em>.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings SetDependencyGroup(this PaketUpdateSettings toolSettings, string dependencyGroup)
+        public static T SetDependencyGroup<T>(this T toolSettings, string dependencyGroup) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DependencyGroup = dependencyGroup;
@@ -824,7 +824,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Dependency group to update. Default is <em>all groups</em>.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ResetDependencyGroup(this PaketUpdateSettings toolSettings)
+        public static T ResetDependencyGroup<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DependencyGroup = null;
@@ -837,7 +837,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Creates binding redirect files if needed.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings SetCreateNewBindingFiles(this PaketUpdateSettings toolSettings, bool? createNewBindingFiles)
+        public static T SetCreateNewBindingFiles<T>(this T toolSettings, bool? createNewBindingFiles) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CreateNewBindingFiles = createNewBindingFiles;
@@ -848,7 +848,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Creates binding redirect files if needed.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ResetCreateNewBindingFiles(this PaketUpdateSettings toolSettings)
+        public static T ResetCreateNewBindingFiles<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CreateNewBindingFiles = null;
@@ -859,7 +859,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Creates binding redirect files if needed.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings EnableCreateNewBindingFiles(this PaketUpdateSettings toolSettings)
+        public static T EnableCreateNewBindingFiles<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CreateNewBindingFiles = true;
@@ -870,7 +870,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Creates binding redirect files if needed.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings DisableCreateNewBindingFiles(this PaketUpdateSettings toolSettings)
+        public static T DisableCreateNewBindingFiles<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CreateNewBindingFiles = false;
@@ -881,7 +881,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Creates binding redirect files if needed.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ToggleCreateNewBindingFiles(this PaketUpdateSettings toolSettings)
+        public static T ToggleCreateNewBindingFiles<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CreateNewBindingFiles = !toolSettings.CreateNewBindingFiles;
@@ -894,7 +894,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Force download and reinstallation of all dependencies.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings SetForce(this PaketUpdateSettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -905,7 +905,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Force download and reinstallation of all dependencies.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ResetForce(this PaketUpdateSettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -916,7 +916,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Force download and reinstallation of all dependencies.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings EnableForce(this PaketUpdateSettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -927,7 +927,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Force download and reinstallation of all dependencies.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings DisableForce(this PaketUpdateSettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -938,7 +938,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Force download and reinstallation of all dependencies.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ToggleForce(this PaketUpdateSettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -951,7 +951,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Create binding redirects.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings SetRedirects(this PaketUpdateSettings toolSettings, bool? redirects)
+        public static T SetRedirects<T>(this T toolSettings, bool? redirects) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Redirects = redirects;
@@ -962,7 +962,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Create binding redirects.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ResetRedirects(this PaketUpdateSettings toolSettings)
+        public static T ResetRedirects<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Redirects = null;
@@ -973,7 +973,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Create binding redirects.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings EnableRedirects(this PaketUpdateSettings toolSettings)
+        public static T EnableRedirects<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Redirects = true;
@@ -984,7 +984,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Create binding redirects.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings DisableRedirects(this PaketUpdateSettings toolSettings)
+        public static T DisableRedirects<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Redirects = false;
@@ -995,7 +995,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Create binding redirects.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ToggleRedirects(this PaketUpdateSettings toolSettings)
+        public static T ToggleRedirects<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Redirects = !toolSettings.Redirects;
@@ -1008,7 +1008,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Remove binding redirects that were not created by Paket.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings SetCleanRedirects(this PaketUpdateSettings toolSettings, bool? cleanRedirects)
+        public static T SetCleanRedirects<T>(this T toolSettings, bool? cleanRedirects) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CleanRedirects = cleanRedirects;
@@ -1019,7 +1019,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Remove binding redirects that were not created by Paket.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ResetCleanRedirects(this PaketUpdateSettings toolSettings)
+        public static T ResetCleanRedirects<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CleanRedirects = null;
@@ -1030,7 +1030,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Remove binding redirects that were not created by Paket.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings EnableCleanRedirects(this PaketUpdateSettings toolSettings)
+        public static T EnableCleanRedirects<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CleanRedirects = true;
@@ -1041,7 +1041,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Remove binding redirects that were not created by Paket.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings DisableCleanRedirects(this PaketUpdateSettings toolSettings)
+        public static T DisableCleanRedirects<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CleanRedirects = false;
@@ -1052,7 +1052,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Remove binding redirects that were not created by Paket.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ToggleCleanRedirects(this PaketUpdateSettings toolSettings)
+        public static T ToggleCleanRedirects<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CleanRedirects = !toolSettings.CleanRedirects;
@@ -1065,7 +1065,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Do not modify projects.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings SetNoInstall(this PaketUpdateSettings toolSettings, bool? noInstall)
+        public static T SetNoInstall<T>(this T toolSettings, bool? noInstall) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoInstall = noInstall;
@@ -1076,7 +1076,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Do not modify projects.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ResetNoInstall(this PaketUpdateSettings toolSettings)
+        public static T ResetNoInstall<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoInstall = null;
@@ -1087,7 +1087,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Do not modify projects.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings EnableNoInstall(this PaketUpdateSettings toolSettings)
+        public static T EnableNoInstall<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoInstall = true;
@@ -1098,7 +1098,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Do not modify projects.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings DisableNoInstall(this PaketUpdateSettings toolSettings)
+        public static T DisableNoInstall<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoInstall = false;
@@ -1109,7 +1109,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Do not modify projects.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ToggleNoInstall(this PaketUpdateSettings toolSettings)
+        public static T ToggleNoInstall<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoInstall = !toolSettings.NoInstall;
@@ -1122,7 +1122,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Only allow updates that preserve the major version.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings SetKeepMajor(this PaketUpdateSettings toolSettings, bool? keepMajor)
+        public static T SetKeepMajor<T>(this T toolSettings, bool? keepMajor) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepMajor = keepMajor;
@@ -1133,7 +1133,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Only allow updates that preserve the major version.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ResetKeepMajor(this PaketUpdateSettings toolSettings)
+        public static T ResetKeepMajor<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepMajor = null;
@@ -1144,7 +1144,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Only allow updates that preserve the major version.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings EnableKeepMajor(this PaketUpdateSettings toolSettings)
+        public static T EnableKeepMajor<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepMajor = true;
@@ -1155,7 +1155,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Only allow updates that preserve the major version.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings DisableKeepMajor(this PaketUpdateSettings toolSettings)
+        public static T DisableKeepMajor<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepMajor = false;
@@ -1166,7 +1166,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Only allow updates that preserve the major version.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ToggleKeepMajor(this PaketUpdateSettings toolSettings)
+        public static T ToggleKeepMajor<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepMajor = !toolSettings.KeepMajor;
@@ -1179,7 +1179,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Only allow updates that preserve the minor version.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings SetKeepMinor(this PaketUpdateSettings toolSettings, bool? keepMinor)
+        public static T SetKeepMinor<T>(this T toolSettings, bool? keepMinor) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepMinor = keepMinor;
@@ -1190,7 +1190,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Only allow updates that preserve the minor version.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ResetKeepMinor(this PaketUpdateSettings toolSettings)
+        public static T ResetKeepMinor<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepMinor = null;
@@ -1201,7 +1201,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Only allow updates that preserve the minor version.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings EnableKeepMinor(this PaketUpdateSettings toolSettings)
+        public static T EnableKeepMinor<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepMinor = true;
@@ -1212,7 +1212,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Only allow updates that preserve the minor version.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings DisableKeepMinor(this PaketUpdateSettings toolSettings)
+        public static T DisableKeepMinor<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepMinor = false;
@@ -1223,7 +1223,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Only allow updates that preserve the minor version.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ToggleKeepMinor(this PaketUpdateSettings toolSettings)
+        public static T ToggleKeepMinor<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepMinor = !toolSettings.KeepMinor;
@@ -1236,7 +1236,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Only allow updates that preserve the patch version.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings SetKeepPatch(this PaketUpdateSettings toolSettings, bool? keepPatch)
+        public static T SetKeepPatch<T>(this T toolSettings, bool? keepPatch) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepPatch = keepPatch;
@@ -1247,7 +1247,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Only allow updates that preserve the patch version.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ResetKeepPatch(this PaketUpdateSettings toolSettings)
+        public static T ResetKeepPatch<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepPatch = null;
@@ -1258,7 +1258,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Only allow updates that preserve the patch version.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings EnableKeepPatch(this PaketUpdateSettings toolSettings)
+        public static T EnableKeepPatch<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepPatch = true;
@@ -1269,7 +1269,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Only allow updates that preserve the patch version.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings DisableKeepPatch(this PaketUpdateSettings toolSettings)
+        public static T DisableKeepPatch<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepPatch = false;
@@ -1280,7 +1280,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Only allow updates that preserve the patch version.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ToggleKeepPatch(this PaketUpdateSettings toolSettings)
+        public static T ToggleKeepPatch<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeepPatch = !toolSettings.KeepPatch;
@@ -1293,7 +1293,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Treat the NuGet package ID as a regex to filter packages.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings SetFilter(this PaketUpdateSettings toolSettings, bool? filter)
+        public static T SetFilter<T>(this T toolSettings, bool? filter) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Filter = filter;
@@ -1304,7 +1304,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Treat the NuGet package ID as a regex to filter packages.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ResetFilter(this PaketUpdateSettings toolSettings)
+        public static T ResetFilter<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Filter = null;
@@ -1315,7 +1315,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Treat the NuGet package ID as a regex to filter packages.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings EnableFilter(this PaketUpdateSettings toolSettings)
+        public static T EnableFilter<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Filter = true;
@@ -1326,7 +1326,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Treat the NuGet package ID as a regex to filter packages.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings DisableFilter(this PaketUpdateSettings toolSettings)
+        public static T DisableFilter<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Filter = false;
@@ -1337,7 +1337,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Treat the NuGet package ID as a regex to filter packages.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ToggleFilter(this PaketUpdateSettings toolSettings)
+        public static T ToggleFilter<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Filter = !toolSettings.Filter;
@@ -1350,7 +1350,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Touch project files referencing affected dependencies, to help incremental build tools detecting the change.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings SetTouchAffectedReferences(this PaketUpdateSettings toolSettings, bool? touchAffectedReferences)
+        public static T SetTouchAffectedReferences<T>(this T toolSettings, bool? touchAffectedReferences) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TouchAffectedReferences = touchAffectedReferences;
@@ -1361,7 +1361,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Touch project files referencing affected dependencies, to help incremental build tools detecting the change.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ResetTouchAffectedReferences(this PaketUpdateSettings toolSettings)
+        public static T ResetTouchAffectedReferences<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TouchAffectedReferences = null;
@@ -1372,7 +1372,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Touch project files referencing affected dependencies, to help incremental build tools detecting the change.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings EnableTouchAffectedReferences(this PaketUpdateSettings toolSettings)
+        public static T EnableTouchAffectedReferences<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TouchAffectedReferences = true;
@@ -1383,7 +1383,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Touch project files referencing affected dependencies, to help incremental build tools detecting the change.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings DisableTouchAffectedReferences(this PaketUpdateSettings toolSettings)
+        public static T DisableTouchAffectedReferences<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TouchAffectedReferences = false;
@@ -1394,7 +1394,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Touch project files referencing affected dependencies, to help incremental build tools detecting the change.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ToggleTouchAffectedReferences(this PaketUpdateSettings toolSettings)
+        public static T ToggleTouchAffectedReferences<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TouchAffectedReferences = !toolSettings.TouchAffectedReferences;
@@ -1407,7 +1407,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Suppress console output.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings SetSilent(this PaketUpdateSettings toolSettings, bool? silent)
+        public static T SetSilent<T>(this T toolSettings, bool? silent) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Silent = silent;
@@ -1418,7 +1418,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Suppress console output.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ResetSilent(this PaketUpdateSettings toolSettings)
+        public static T ResetSilent<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Silent = null;
@@ -1429,7 +1429,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Suppress console output.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings EnableSilent(this PaketUpdateSettings toolSettings)
+        public static T EnableSilent<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Silent = true;
@@ -1440,7 +1440,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Suppress console output.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings DisableSilent(this PaketUpdateSettings toolSettings)
+        public static T DisableSilent<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Silent = false;
@@ -1451,7 +1451,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Suppress console output.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ToggleSilent(this PaketUpdateSettings toolSettings)
+        public static T ToggleSilent<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Silent = !toolSettings.Silent;
@@ -1464,7 +1464,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print detailed information to the console.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings SetVerbose(this PaketUpdateSettings toolSettings, bool? verbose)
+        public static T SetVerbose<T>(this T toolSettings, bool? verbose) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = verbose;
@@ -1475,7 +1475,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print detailed information to the console.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ResetVerbose(this PaketUpdateSettings toolSettings)
+        public static T ResetVerbose<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = null;
@@ -1486,7 +1486,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print detailed information to the console.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings EnableVerbose(this PaketUpdateSettings toolSettings)
+        public static T EnableVerbose<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = true;
@@ -1497,7 +1497,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print detailed information to the console.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings DisableVerbose(this PaketUpdateSettings toolSettings)
+        public static T DisableVerbose<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = false;
@@ -1508,7 +1508,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print detailed information to the console.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ToggleVerbose(this PaketUpdateSettings toolSettings)
+        public static T ToggleVerbose<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = !toolSettings.Verbose;
@@ -1521,7 +1521,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print output to a file.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings SetLogFile(this PaketUpdateSettings toolSettings, string logFile)
+        public static T SetLogFile<T>(this T toolSettings, string logFile) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = logFile;
@@ -1532,7 +1532,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print output to a file.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ResetLogFile(this PaketUpdateSettings toolSettings)
+        public static T ResetLogFile<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = null;
@@ -1545,7 +1545,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Call coming from the <c>--run</c> feature of the bootstrapper.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings SetFromBootstrapper(this PaketUpdateSettings toolSettings, bool? fromBootstrapper)
+        public static T SetFromBootstrapper<T>(this T toolSettings, bool? fromBootstrapper) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FromBootstrapper = fromBootstrapper;
@@ -1556,7 +1556,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Call coming from the <c>--run</c> feature of the bootstrapper.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ResetFromBootstrapper(this PaketUpdateSettings toolSettings)
+        public static T ResetFromBootstrapper<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FromBootstrapper = null;
@@ -1567,7 +1567,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Call coming from the <c>--run</c> feature of the bootstrapper.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings EnableFromBootstrapper(this PaketUpdateSettings toolSettings)
+        public static T EnableFromBootstrapper<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FromBootstrapper = true;
@@ -1578,7 +1578,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Call coming from the <c>--run</c> feature of the bootstrapper.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings DisableFromBootstrapper(this PaketUpdateSettings toolSettings)
+        public static T DisableFromBootstrapper<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FromBootstrapper = false;
@@ -1589,7 +1589,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Call coming from the <c>--run</c> feature of the bootstrapper.</p>
         /// </summary>
         [Pure]
-        public static PaketUpdateSettings ToggleFromBootstrapper(this PaketUpdateSettings toolSettings)
+        public static T ToggleFromBootstrapper<T>(this T toolSettings) where T : PaketUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FromBootstrapper = !toolSettings.FromBootstrapper;
@@ -1612,7 +1612,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Force download and reinstallation of all dependencies.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings SetForce(this PaketRestoreSettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -1623,7 +1623,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Force download and reinstallation of all dependencies.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings ResetForce(this PaketRestoreSettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -1634,7 +1634,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Force download and reinstallation of all dependencies.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings EnableForce(this PaketRestoreSettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -1645,7 +1645,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Force download and reinstallation of all dependencies.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings DisableForce(this PaketRestoreSettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -1656,7 +1656,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Force download and reinstallation of all dependencies.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings ToggleForce(this PaketRestoreSettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -1669,7 +1669,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Only restore packages that are referenced by paket.references files.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings SetOnlyReferenced(this PaketRestoreSettings toolSettings, bool? onlyReferenced)
+        public static T SetOnlyReferenced<T>(this T toolSettings, bool? onlyReferenced) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OnlyReferenced = onlyReferenced;
@@ -1680,7 +1680,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Only restore packages that are referenced by paket.references files.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings ResetOnlyReferenced(this PaketRestoreSettings toolSettings)
+        public static T ResetOnlyReferenced<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OnlyReferenced = null;
@@ -1691,7 +1691,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Only restore packages that are referenced by paket.references files.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings EnableOnlyReferenced(this PaketRestoreSettings toolSettings)
+        public static T EnableOnlyReferenced<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OnlyReferenced = true;
@@ -1702,7 +1702,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Only restore packages that are referenced by paket.references files.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings DisableOnlyReferenced(this PaketRestoreSettings toolSettings)
+        public static T DisableOnlyReferenced<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OnlyReferenced = false;
@@ -1713,7 +1713,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Only restore packages that are referenced by paket.references files.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings ToggleOnlyReferenced(this PaketRestoreSettings toolSettings)
+        public static T ToggleOnlyReferenced<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OnlyReferenced = !toolSettings.OnlyReferenced;
@@ -1726,7 +1726,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Touches project files referencing packages which are being restored, to help incremental build tools detecting the change.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings SetTouchAffectedRefs(this PaketRestoreSettings toolSettings, bool? touchAffectedRefs)
+        public static T SetTouchAffectedRefs<T>(this T toolSettings, bool? touchAffectedRefs) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TouchAffectedRefs = touchAffectedRefs;
@@ -1737,7 +1737,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Touches project files referencing packages which are being restored, to help incremental build tools detecting the change.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings ResetTouchAffectedRefs(this PaketRestoreSettings toolSettings)
+        public static T ResetTouchAffectedRefs<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TouchAffectedRefs = null;
@@ -1748,7 +1748,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Touches project files referencing packages which are being restored, to help incremental build tools detecting the change.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings EnableTouchAffectedRefs(this PaketRestoreSettings toolSettings)
+        public static T EnableTouchAffectedRefs<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TouchAffectedRefs = true;
@@ -1759,7 +1759,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Touches project files referencing packages which are being restored, to help incremental build tools detecting the change.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings DisableTouchAffectedRefs(this PaketRestoreSettings toolSettings)
+        public static T DisableTouchAffectedRefs<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TouchAffectedRefs = false;
@@ -1770,7 +1770,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Touches project files referencing packages which are being restored, to help incremental build tools detecting the change.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings ToggleTouchAffectedRefs(this PaketRestoreSettings toolSettings)
+        public static T ToggleTouchAffectedRefs<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TouchAffectedRefs = !toolSettings.TouchAffectedRefs;
@@ -1783,7 +1783,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Do not check if paket.dependencies and paket.lock are in sync.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings SetIgnoreChecks(this PaketRestoreSettings toolSettings, bool? ignoreChecks)
+        public static T SetIgnoreChecks<T>(this T toolSettings, bool? ignoreChecks) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreChecks = ignoreChecks;
@@ -1794,7 +1794,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Do not check if paket.dependencies and paket.lock are in sync.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings ResetIgnoreChecks(this PaketRestoreSettings toolSettings)
+        public static T ResetIgnoreChecks<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreChecks = null;
@@ -1805,7 +1805,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Do not check if paket.dependencies and paket.lock are in sync.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings EnableIgnoreChecks(this PaketRestoreSettings toolSettings)
+        public static T EnableIgnoreChecks<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreChecks = true;
@@ -1816,7 +1816,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Do not check if paket.dependencies and paket.lock are in sync.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings DisableIgnoreChecks(this PaketRestoreSettings toolSettings)
+        public static T DisableIgnoreChecks<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreChecks = false;
@@ -1827,7 +1827,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Do not check if paket.dependencies and paket.lock are in sync.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings ToggleIgnoreChecks(this PaketRestoreSettings toolSettings)
+        public static T ToggleIgnoreChecks<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreChecks = !toolSettings.IgnoreChecks;
@@ -1840,7 +1840,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Abort if any checks fail.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings SetFailOnChecks(this PaketRestoreSettings toolSettings, bool? failOnChecks)
+        public static T SetFailOnChecks<T>(this T toolSettings, bool? failOnChecks) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FailOnChecks = failOnChecks;
@@ -1851,7 +1851,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Abort if any checks fail.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings ResetFailOnChecks(this PaketRestoreSettings toolSettings)
+        public static T ResetFailOnChecks<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FailOnChecks = null;
@@ -1862,7 +1862,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Abort if any checks fail.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings EnableFailOnChecks(this PaketRestoreSettings toolSettings)
+        public static T EnableFailOnChecks<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FailOnChecks = true;
@@ -1873,7 +1873,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Abort if any checks fail.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings DisableFailOnChecks(this PaketRestoreSettings toolSettings)
+        public static T DisableFailOnChecks<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FailOnChecks = false;
@@ -1884,7 +1884,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Abort if any checks fail.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings ToggleFailOnChecks(this PaketRestoreSettings toolSettings)
+        public static T ToggleFailOnChecks<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FailOnChecks = !toolSettings.FailOnChecks;
@@ -1897,7 +1897,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Restore dependencies of a single group.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings SetDependencyGroup(this PaketRestoreSettings toolSettings, string dependencyGroup)
+        public static T SetDependencyGroup<T>(this T toolSettings, string dependencyGroup) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DependencyGroup = dependencyGroup;
@@ -1908,7 +1908,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Restore dependencies of a single group.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings ResetDependencyGroup(this PaketRestoreSettings toolSettings)
+        public static T ResetDependencyGroup<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DependencyGroup = null;
@@ -1921,7 +1921,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Restore dependencies of a single project.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings SetProjectFile(this PaketRestoreSettings toolSettings, string projectFile)
+        public static T SetProjectFile<T>(this T toolSettings, string projectFile) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProjectFile = projectFile;
@@ -1932,7 +1932,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Restore dependencies of a single project.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings ResetProjectFile(this PaketRestoreSettings toolSettings)
+        public static T ResetProjectFile<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProjectFile = null;
@@ -1945,7 +1945,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Restore packages from a paket.references file.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings SetReferencesFiles(this PaketRestoreSettings toolSettings, params string[] referencesFiles)
+        public static T SetReferencesFiles<T>(this T toolSettings, params string[] referencesFiles) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReferencesFilesInternal = referencesFiles.ToList();
@@ -1956,7 +1956,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Restore packages from a paket.references file.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings SetReferencesFiles(this PaketRestoreSettings toolSettings, IEnumerable<string> referencesFiles)
+        public static T SetReferencesFiles<T>(this T toolSettings, IEnumerable<string> referencesFiles) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReferencesFilesInternal = referencesFiles.ToList();
@@ -1967,7 +1967,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Restore packages from a paket.references file.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings AddReferencesFiles(this PaketRestoreSettings toolSettings, params string[] referencesFiles)
+        public static T AddReferencesFiles<T>(this T toolSettings, params string[] referencesFiles) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReferencesFilesInternal.AddRange(referencesFiles);
@@ -1978,7 +1978,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Restore packages from a paket.references file.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings AddReferencesFiles(this PaketRestoreSettings toolSettings, IEnumerable<string> referencesFiles)
+        public static T AddReferencesFiles<T>(this T toolSettings, IEnumerable<string> referencesFiles) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReferencesFilesInternal.AddRange(referencesFiles);
@@ -1989,7 +1989,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Restore packages from a paket.references file.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings ClearReferencesFiles(this PaketRestoreSettings toolSettings)
+        public static T ClearReferencesFiles<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReferencesFilesInternal.Clear();
@@ -2000,7 +2000,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Restore packages from a paket.references file.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings RemoveReferencesFiles(this PaketRestoreSettings toolSettings, params string[] referencesFiles)
+        public static T RemoveReferencesFiles<T>(this T toolSettings, params string[] referencesFiles) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(referencesFiles);
@@ -2012,7 +2012,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Restore packages from a paket.references file.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings RemoveReferencesFiles(this PaketRestoreSettings toolSettings, IEnumerable<string> referencesFiles)
+        public static T RemoveReferencesFiles<T>(this T toolSettings, IEnumerable<string> referencesFiles) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(referencesFiles);
@@ -2026,7 +2026,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Restore only for the specified target framework.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings SetTargetFramework(this PaketRestoreSettings toolSettings, string targetFramework)
+        public static T SetTargetFramework<T>(this T toolSettings, string targetFramework) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetFramework = targetFramework;
@@ -2037,7 +2037,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Restore only for the specified target framework.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings ResetTargetFramework(this PaketRestoreSettings toolSettings)
+        public static T ResetTargetFramework<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetFramework = null;
@@ -2050,7 +2050,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Suppress console output.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings SetSilent(this PaketRestoreSettings toolSettings, bool? silent)
+        public static T SetSilent<T>(this T toolSettings, bool? silent) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Silent = silent;
@@ -2061,7 +2061,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Suppress console output.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings ResetSilent(this PaketRestoreSettings toolSettings)
+        public static T ResetSilent<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Silent = null;
@@ -2072,7 +2072,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Suppress console output.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings EnableSilent(this PaketRestoreSettings toolSettings)
+        public static T EnableSilent<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Silent = true;
@@ -2083,7 +2083,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Suppress console output.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings DisableSilent(this PaketRestoreSettings toolSettings)
+        public static T DisableSilent<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Silent = false;
@@ -2094,7 +2094,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Suppress console output.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings ToggleSilent(this PaketRestoreSettings toolSettings)
+        public static T ToggleSilent<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Silent = !toolSettings.Silent;
@@ -2107,7 +2107,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print detailed information to the console.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings SetVerbose(this PaketRestoreSettings toolSettings, bool? verbose)
+        public static T SetVerbose<T>(this T toolSettings, bool? verbose) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = verbose;
@@ -2118,7 +2118,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print detailed information to the console.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings ResetVerbose(this PaketRestoreSettings toolSettings)
+        public static T ResetVerbose<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = null;
@@ -2129,7 +2129,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print detailed information to the console.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings EnableVerbose(this PaketRestoreSettings toolSettings)
+        public static T EnableVerbose<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = true;
@@ -2140,7 +2140,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print detailed information to the console.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings DisableVerbose(this PaketRestoreSettings toolSettings)
+        public static T DisableVerbose<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = false;
@@ -2151,7 +2151,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print detailed information to the console.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings ToggleVerbose(this PaketRestoreSettings toolSettings)
+        public static T ToggleVerbose<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = !toolSettings.Verbose;
@@ -2164,7 +2164,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print output to a file.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings SetLogFile(this PaketRestoreSettings toolSettings, string logFile)
+        public static T SetLogFile<T>(this T toolSettings, string logFile) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = logFile;
@@ -2175,7 +2175,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print output to a file.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings ResetLogFile(this PaketRestoreSettings toolSettings)
+        public static T ResetLogFile<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = null;
@@ -2188,7 +2188,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Call coming from the <c>--run</c> feature of the bootstrapper.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings SetFromBootstrapper(this PaketRestoreSettings toolSettings, bool? fromBootstrapper)
+        public static T SetFromBootstrapper<T>(this T toolSettings, bool? fromBootstrapper) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FromBootstrapper = fromBootstrapper;
@@ -2199,7 +2199,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Call coming from the <c>--run</c> feature of the bootstrapper.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings ResetFromBootstrapper(this PaketRestoreSettings toolSettings)
+        public static T ResetFromBootstrapper<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FromBootstrapper = null;
@@ -2210,7 +2210,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Call coming from the <c>--run</c> feature of the bootstrapper.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings EnableFromBootstrapper(this PaketRestoreSettings toolSettings)
+        public static T EnableFromBootstrapper<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FromBootstrapper = true;
@@ -2221,7 +2221,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Call coming from the <c>--run</c> feature of the bootstrapper.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings DisableFromBootstrapper(this PaketRestoreSettings toolSettings)
+        public static T DisableFromBootstrapper<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FromBootstrapper = false;
@@ -2232,7 +2232,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Call coming from the <c>--run</c> feature of the bootstrapper.</p>
         /// </summary>
         [Pure]
-        public static PaketRestoreSettings ToggleFromBootstrapper(this PaketRestoreSettings toolSettings)
+        public static T ToggleFromBootstrapper<T>(this T toolSettings) where T : PaketRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FromBootstrapper = !toolSettings.FromBootstrapper;
@@ -2255,7 +2255,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Path to the package.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings SetFile(this PaketPushSettings toolSettings, string file)
+        public static T SetFile<T>(this T toolSettings, string file) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.File = file;
@@ -2266,7 +2266,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Path to the package.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings ResetFile(this PaketPushSettings toolSettings)
+        public static T ResetFile<T>(this T toolSettings) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.File = null;
@@ -2279,7 +2279,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>URL of the NuGet feed.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings SetUrl(this PaketPushSettings toolSettings, string url)
+        public static T SetUrl<T>(this T toolSettings, string url) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Url = url;
@@ -2290,7 +2290,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>URL of the NuGet feed.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings ResetUrl(this PaketPushSettings toolSettings)
+        public static T ResetUrl<T>(this T toolSettings) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Url = null;
@@ -2303,7 +2303,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>API key for the URL. Default is the <c>NUGET_KEY</c> environment variable.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings SetApiKey(this PaketPushSettings toolSettings, string apiKey)
+        public static T SetApiKey<T>(this T toolSettings, string apiKey) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiKey = apiKey;
@@ -2314,7 +2314,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>API key for the URL. Default is the <c>NUGET_KEY</c> environment variable.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings ResetApiKey(this PaketPushSettings toolSettings)
+        public static T ResetApiKey<T>(this T toolSettings) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiKey = null;
@@ -2327,7 +2327,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>API endpoint to push to. Default is <em>/api/v2/package</em>.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings SetEndpoint(this PaketPushSettings toolSettings, string endpoint)
+        public static T SetEndpoint<T>(this T toolSettings, string endpoint) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Endpoint = endpoint;
@@ -2338,7 +2338,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>API endpoint to push to. Default is <em>/api/v2/package</em>.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings ResetEndpoint(this PaketPushSettings toolSettings)
+        public static T ResetEndpoint<T>(this T toolSettings) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Endpoint = null;
@@ -2351,7 +2351,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Suppress console output.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings SetSilent(this PaketPushSettings toolSettings, bool? silent)
+        public static T SetSilent<T>(this T toolSettings, bool? silent) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Silent = silent;
@@ -2362,7 +2362,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Suppress console output.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings ResetSilent(this PaketPushSettings toolSettings)
+        public static T ResetSilent<T>(this T toolSettings) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Silent = null;
@@ -2373,7 +2373,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Suppress console output.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings EnableSilent(this PaketPushSettings toolSettings)
+        public static T EnableSilent<T>(this T toolSettings) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Silent = true;
@@ -2384,7 +2384,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Suppress console output.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings DisableSilent(this PaketPushSettings toolSettings)
+        public static T DisableSilent<T>(this T toolSettings) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Silent = false;
@@ -2395,7 +2395,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Suppress console output.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings ToggleSilent(this PaketPushSettings toolSettings)
+        public static T ToggleSilent<T>(this T toolSettings) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Silent = !toolSettings.Silent;
@@ -2408,7 +2408,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print detailed information to the console.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings SetVerbose(this PaketPushSettings toolSettings, bool? verbose)
+        public static T SetVerbose<T>(this T toolSettings, bool? verbose) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = verbose;
@@ -2419,7 +2419,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print detailed information to the console.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings ResetVerbose(this PaketPushSettings toolSettings)
+        public static T ResetVerbose<T>(this T toolSettings) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = null;
@@ -2430,7 +2430,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print detailed information to the console.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings EnableVerbose(this PaketPushSettings toolSettings)
+        public static T EnableVerbose<T>(this T toolSettings) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = true;
@@ -2441,7 +2441,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print detailed information to the console.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings DisableVerbose(this PaketPushSettings toolSettings)
+        public static T DisableVerbose<T>(this T toolSettings) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = false;
@@ -2452,7 +2452,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print detailed information to the console.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings ToggleVerbose(this PaketPushSettings toolSettings)
+        public static T ToggleVerbose<T>(this T toolSettings) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = !toolSettings.Verbose;
@@ -2465,7 +2465,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print output to a file.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings SetLogFile(this PaketPushSettings toolSettings, string logFile)
+        public static T SetLogFile<T>(this T toolSettings, string logFile) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = logFile;
@@ -2476,7 +2476,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print output to a file.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings ResetLogFile(this PaketPushSettings toolSettings)
+        public static T ResetLogFile<T>(this T toolSettings) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = null;
@@ -2489,7 +2489,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Call coming from the <c>--run</c> feature of the bootstrapper.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings SetFromBootstrapper(this PaketPushSettings toolSettings, bool? fromBootstrapper)
+        public static T SetFromBootstrapper<T>(this T toolSettings, bool? fromBootstrapper) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FromBootstrapper = fromBootstrapper;
@@ -2500,7 +2500,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Call coming from the <c>--run</c> feature of the bootstrapper.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings ResetFromBootstrapper(this PaketPushSettings toolSettings)
+        public static T ResetFromBootstrapper<T>(this T toolSettings) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FromBootstrapper = null;
@@ -2511,7 +2511,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Call coming from the <c>--run</c> feature of the bootstrapper.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings EnableFromBootstrapper(this PaketPushSettings toolSettings)
+        public static T EnableFromBootstrapper<T>(this T toolSettings) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FromBootstrapper = true;
@@ -2522,7 +2522,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Call coming from the <c>--run</c> feature of the bootstrapper.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings DisableFromBootstrapper(this PaketPushSettings toolSettings)
+        public static T DisableFromBootstrapper<T>(this T toolSettings) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FromBootstrapper = false;
@@ -2533,7 +2533,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Call coming from the <c>--run</c> feature of the bootstrapper.</p>
         /// </summary>
         [Pure]
-        public static PaketPushSettings ToggleFromBootstrapper(this PaketPushSettings toolSettings)
+        public static T ToggleFromBootstrapper<T>(this T toolSettings) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FromBootstrapper = !toolSettings.FromBootstrapper;
@@ -2556,7 +2556,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Output directory for .nupkg files.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings SetOutputDirectory(this PaketPackSettings toolSettings, string outputDirectory)
+        public static T SetOutputDirectory<T>(this T toolSettings, string outputDirectory) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputDirectory = outputDirectory;
@@ -2567,7 +2567,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Output directory for .nupkg files.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ResetOutputDirectory(this PaketPackSettings toolSettings)
+        public static T ResetOutputDirectory<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputDirectory = null;
@@ -2580,7 +2580,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Build configuration that should be packaged. Default is <em>Release</em>.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings SetBuildConfiguration(this PaketPackSettings toolSettings, string buildConfiguration)
+        public static T SetBuildConfiguration<T>(this T toolSettings, string buildConfiguration) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildConfiguration = buildConfiguration;
@@ -2591,7 +2591,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Build configuration that should be packaged. Default is <em>Release</em>.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ResetBuildConfiguration(this PaketPackSettings toolSettings)
+        public static T ResetBuildConfiguration<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildConfiguration = null;
@@ -2604,7 +2604,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Build platform that should be packaged. Default is <em>check all known platform targets</em>.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings SetBuildPlatform(this PaketPackSettings toolSettings, string buildPlatform)
+        public static T SetBuildPlatform<T>(this T toolSettings, string buildPlatform) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildPlatform = buildPlatform;
@@ -2615,7 +2615,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Build platform that should be packaged. Default is <em>check all known platform targets</em>.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ResetBuildPlatform(this PaketPackSettings toolSettings)
+        public static T ResetBuildPlatform<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildPlatform = null;
@@ -2628,7 +2628,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Version of the package.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings SetPackageVersion(this PaketPackSettings toolSettings, string packageVersion)
+        public static T SetPackageVersion<T>(this T toolSettings, string packageVersion) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageVersion = packageVersion;
@@ -2639,7 +2639,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Version of the package.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ResetPackageVersion(this PaketPackSettings toolSettings)
+        public static T ResetPackageVersion<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageVersion = null;
@@ -2652,7 +2652,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Pack a single paket.template file.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings SetTemplateFile(this PaketPackSettings toolSettings, string templateFile)
+        public static T SetTemplateFile<T>(this T toolSettings, string templateFile) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TemplateFile = templateFile;
@@ -2663,7 +2663,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Pack a single paket.template file.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ResetTemplateFile(this PaketPackSettings toolSettings)
+        public static T ResetTemplateFile<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TemplateFile = null;
@@ -2676,7 +2676,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Exclude paket.template file by package ID.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings SetExclude(this PaketPackSettings toolSettings, params string[] exclude)
+        public static T SetExclude<T>(this T toolSettings, params string[] exclude) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeInternal = exclude.ToList();
@@ -2687,7 +2687,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Exclude paket.template file by package ID.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings SetExclude(this PaketPackSettings toolSettings, IEnumerable<string> exclude)
+        public static T SetExclude<T>(this T toolSettings, IEnumerable<string> exclude) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeInternal = exclude.ToList();
@@ -2698,7 +2698,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Exclude paket.template file by package ID.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings AddExclude(this PaketPackSettings toolSettings, params string[] exclude)
+        public static T AddExclude<T>(this T toolSettings, params string[] exclude) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeInternal.AddRange(exclude);
@@ -2709,7 +2709,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Exclude paket.template file by package ID.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings AddExclude(this PaketPackSettings toolSettings, IEnumerable<string> exclude)
+        public static T AddExclude<T>(this T toolSettings, IEnumerable<string> exclude) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeInternal.AddRange(exclude);
@@ -2720,7 +2720,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Exclude paket.template file by package ID.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ClearExclude(this PaketPackSettings toolSettings)
+        public static T ClearExclude<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeInternal.Clear();
@@ -2731,7 +2731,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Exclude paket.template file by package ID.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings RemoveExclude(this PaketPackSettings toolSettings, params string[] exclude)
+        public static T RemoveExclude<T>(this T toolSettings, params string[] exclude) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(exclude);
@@ -2743,7 +2743,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Exclude paket.template file by package ID.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings RemoveExclude(this PaketPackSettings toolSettings, IEnumerable<string> exclude)
+        public static T RemoveExclude<T>(this T toolSettings, IEnumerable<string> exclude) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(exclude);
@@ -2757,7 +2757,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Package IDs with version numbers.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings SetSpecificVersions(this PaketPackSettings toolSettings, IDictionary<string, string> specificVersions)
+        public static T SetSpecificVersions<T>(this T toolSettings, IDictionary<string, string> specificVersions) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SpecificVersionsInternal = specificVersions.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -2768,7 +2768,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Package IDs with version numbers.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ClearSpecificVersions(this PaketPackSettings toolSettings)
+        public static T ClearSpecificVersions<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SpecificVersionsInternal.Clear();
@@ -2779,7 +2779,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Package IDs with version numbers.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings AddSpecificVersion(this PaketPackSettings toolSettings, string specificVersionKey, string specificVersionValue)
+        public static T AddSpecificVersion<T>(this T toolSettings, string specificVersionKey, string specificVersionValue) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SpecificVersionsInternal.Add(specificVersionKey, specificVersionValue);
@@ -2790,7 +2790,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Package IDs with version numbers.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings RemoveSpecificVersion(this PaketPackSettings toolSettings, string specificVersionKey)
+        public static T RemoveSpecificVersion<T>(this T toolSettings, string specificVersionKey) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SpecificVersionsInternal.Remove(specificVersionKey);
@@ -2801,7 +2801,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Package IDs with version numbers.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings SetSpecificVersion(this PaketPackSettings toolSettings, string specificVersionKey, string specificVersionValue)
+        public static T SetSpecificVersion<T>(this T toolSettings, string specificVersionKey, string specificVersionValue) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SpecificVersionsInternal[specificVersionKey] = specificVersionValue;
@@ -2814,7 +2814,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Specify release notes for the package.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings SetReleaseNotes(this PaketPackSettings toolSettings, string releaseNotes)
+        public static T SetReleaseNotes<T>(this T toolSettings, string releaseNotes) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseNotes = releaseNotes;
@@ -2825,7 +2825,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Specify release notes for the package.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ResetReleaseNotes(this PaketPackSettings toolSettings)
+        public static T ResetReleaseNotes<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseNotes = null;
@@ -2838,7 +2838,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Use version requirements from paket.lock instead of paket.dependencies.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings SetLockDependencies(this PaketPackSettings toolSettings, bool? lockDependencies)
+        public static T SetLockDependencies<T>(this T toolSettings, bool? lockDependencies) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockDependencies = lockDependencies;
@@ -2849,7 +2849,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Use version requirements from paket.lock instead of paket.dependencies.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ResetLockDependencies(this PaketPackSettings toolSettings)
+        public static T ResetLockDependencies<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockDependencies = null;
@@ -2860,7 +2860,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Use version requirements from paket.lock instead of paket.dependencies.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings EnableLockDependencies(this PaketPackSettings toolSettings)
+        public static T EnableLockDependencies<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockDependencies = true;
@@ -2871,7 +2871,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Use version requirements from paket.lock instead of paket.dependencies.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings DisableLockDependencies(this PaketPackSettings toolSettings)
+        public static T DisableLockDependencies<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockDependencies = false;
@@ -2882,7 +2882,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Use version requirements from paket.lock instead of paket.dependencies.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ToggleLockDependencies(this PaketPackSettings toolSettings)
+        public static T ToggleLockDependencies<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockDependencies = !toolSettings.LockDependencies;
@@ -2895,7 +2895,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Use version requirements from paket.lock instead of paket.dependencies, and add them as a minimum version. <c>--lock-dependencies</c> will over-ride this option.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings SetMinimumFromLockFile(this PaketPackSettings toolSettings, bool? minimumFromLockFile)
+        public static T SetMinimumFromLockFile<T>(this T toolSettings, bool? minimumFromLockFile) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MinimumFromLockFile = minimumFromLockFile;
@@ -2906,7 +2906,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Use version requirements from paket.lock instead of paket.dependencies, and add them as a minimum version. <c>--lock-dependencies</c> will over-ride this option.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ResetMinimumFromLockFile(this PaketPackSettings toolSettings)
+        public static T ResetMinimumFromLockFile<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MinimumFromLockFile = null;
@@ -2917,7 +2917,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Use version requirements from paket.lock instead of paket.dependencies, and add them as a minimum version. <c>--lock-dependencies</c> will over-ride this option.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings EnableMinimumFromLockFile(this PaketPackSettings toolSettings)
+        public static T EnableMinimumFromLockFile<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MinimumFromLockFile = true;
@@ -2928,7 +2928,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Use version requirements from paket.lock instead of paket.dependencies, and add them as a minimum version. <c>--lock-dependencies</c> will over-ride this option.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings DisableMinimumFromLockFile(this PaketPackSettings toolSettings)
+        public static T DisableMinimumFromLockFile<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MinimumFromLockFile = false;
@@ -2939,7 +2939,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Use version requirements from paket.lock instead of paket.dependencies, and add them as a minimum version. <c>--lock-dependencies</c> will over-ride this option.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ToggleMinimumFromLockFile(this PaketPackSettings toolSettings)
+        public static T ToggleMinimumFromLockFile<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MinimumFromLockFile = !toolSettings.MinimumFromLockFile;
@@ -2952,7 +2952,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Pin dependencies generated from project references (=) instead of using minimum (>=) for version specification.  If <c>--lock-dependencies</c> is specified, project references will be pinned even if this option is not specified.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings SetPinProjectReferences(this PaketPackSettings toolSettings, bool? pinProjectReferences)
+        public static T SetPinProjectReferences<T>(this T toolSettings, bool? pinProjectReferences) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PinProjectReferences = pinProjectReferences;
@@ -2963,7 +2963,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Pin dependencies generated from project references (=) instead of using minimum (>=) for version specification.  If <c>--lock-dependencies</c> is specified, project references will be pinned even if this option is not specified.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ResetPinProjectReferences(this PaketPackSettings toolSettings)
+        public static T ResetPinProjectReferences<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PinProjectReferences = null;
@@ -2974,7 +2974,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Pin dependencies generated from project references (=) instead of using minimum (>=) for version specification.  If <c>--lock-dependencies</c> is specified, project references will be pinned even if this option is not specified.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings EnablePinProjectReferences(this PaketPackSettings toolSettings)
+        public static T EnablePinProjectReferences<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PinProjectReferences = true;
@@ -2985,7 +2985,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Pin dependencies generated from project references (=) instead of using minimum (>=) for version specification.  If <c>--lock-dependencies</c> is specified, project references will be pinned even if this option is not specified.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings DisablePinProjectReferences(this PaketPackSettings toolSettings)
+        public static T DisablePinProjectReferences<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PinProjectReferences = false;
@@ -2996,7 +2996,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Pin dependencies generated from project references (=) instead of using minimum (>=) for version specification.  If <c>--lock-dependencies</c> is specified, project references will be pinned even if this option is not specified.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings TogglePinProjectReferences(this PaketPackSettings toolSettings)
+        public static T TogglePinProjectReferences<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PinProjectReferences = !toolSettings.PinProjectReferences;
@@ -3009,7 +3009,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Build symbol/source packages in addition to library/content packages.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings SetSymbols(this PaketPackSettings toolSettings, bool? symbols)
+        public static T SetSymbols<T>(this T toolSettings, bool? symbols) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Symbols = symbols;
@@ -3020,7 +3020,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Build symbol/source packages in addition to library/content packages.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ResetSymbols(this PaketPackSettings toolSettings)
+        public static T ResetSymbols<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Symbols = null;
@@ -3031,7 +3031,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Build symbol/source packages in addition to library/content packages.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings EnableSymbols(this PaketPackSettings toolSettings)
+        public static T EnableSymbols<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Symbols = true;
@@ -3042,7 +3042,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Build symbol/source packages in addition to library/content packages.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings DisableSymbols(this PaketPackSettings toolSettings)
+        public static T DisableSymbols<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Symbols = false;
@@ -3053,7 +3053,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Build symbol/source packages in addition to library/content packages.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ToggleSymbols(this PaketPackSettings toolSettings)
+        public static T ToggleSymbols<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Symbols = !toolSettings.Symbols;
@@ -3066,7 +3066,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Include symbol/source from referenced projects.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings SetIncludeReferencedProjects(this PaketPackSettings toolSettings, bool? includeReferencedProjects)
+        public static T SetIncludeReferencedProjects<T>(this T toolSettings, bool? includeReferencedProjects) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeReferencedProjects = includeReferencedProjects;
@@ -3077,7 +3077,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Include symbol/source from referenced projects.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ResetIncludeReferencedProjects(this PaketPackSettings toolSettings)
+        public static T ResetIncludeReferencedProjects<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeReferencedProjects = null;
@@ -3088,7 +3088,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Include symbol/source from referenced projects.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings EnableIncludeReferencedProjects(this PaketPackSettings toolSettings)
+        public static T EnableIncludeReferencedProjects<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeReferencedProjects = true;
@@ -3099,7 +3099,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Include symbol/source from referenced projects.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings DisableIncludeReferencedProjects(this PaketPackSettings toolSettings)
+        public static T DisableIncludeReferencedProjects<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeReferencedProjects = false;
@@ -3110,7 +3110,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Include symbol/source from referenced projects.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ToggleIncludeReferencedProjects(this PaketPackSettings toolSettings)
+        public static T ToggleIncludeReferencedProjects<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeReferencedProjects = !toolSettings.IncludeReferencedProjects;
@@ -3123,7 +3123,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Url to the projects home page.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings SetProjectUrl(this PaketPackSettings toolSettings, string projectUrl)
+        public static T SetProjectUrl<T>(this T toolSettings, string projectUrl) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProjectUrl = projectUrl;
@@ -3134,7 +3134,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Url to the projects home page.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ResetProjectUrl(this PaketPackSettings toolSettings)
+        public static T ResetProjectUrl<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProjectUrl = null;
@@ -3147,7 +3147,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Suppress console output.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings SetSilent(this PaketPackSettings toolSettings, bool? silent)
+        public static T SetSilent<T>(this T toolSettings, bool? silent) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Silent = silent;
@@ -3158,7 +3158,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Suppress console output.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ResetSilent(this PaketPackSettings toolSettings)
+        public static T ResetSilent<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Silent = null;
@@ -3169,7 +3169,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Suppress console output.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings EnableSilent(this PaketPackSettings toolSettings)
+        public static T EnableSilent<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Silent = true;
@@ -3180,7 +3180,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Suppress console output.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings DisableSilent(this PaketPackSettings toolSettings)
+        public static T DisableSilent<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Silent = false;
@@ -3191,7 +3191,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Suppress console output.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ToggleSilent(this PaketPackSettings toolSettings)
+        public static T ToggleSilent<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Silent = !toolSettings.Silent;
@@ -3204,7 +3204,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print detailed information to the console.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings SetVerbose(this PaketPackSettings toolSettings, bool? verbose)
+        public static T SetVerbose<T>(this T toolSettings, bool? verbose) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = verbose;
@@ -3215,7 +3215,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print detailed information to the console.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ResetVerbose(this PaketPackSettings toolSettings)
+        public static T ResetVerbose<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = null;
@@ -3226,7 +3226,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print detailed information to the console.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings EnableVerbose(this PaketPackSettings toolSettings)
+        public static T EnableVerbose<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = true;
@@ -3237,7 +3237,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print detailed information to the console.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings DisableVerbose(this PaketPackSettings toolSettings)
+        public static T DisableVerbose<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = false;
@@ -3248,7 +3248,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print detailed information to the console.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ToggleVerbose(this PaketPackSettings toolSettings)
+        public static T ToggleVerbose<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = !toolSettings.Verbose;
@@ -3261,7 +3261,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print output to a file.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings SetLogFile(this PaketPackSettings toolSettings, string logFile)
+        public static T SetLogFile<T>(this T toolSettings, string logFile) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = logFile;
@@ -3272,7 +3272,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Print output to a file.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ResetLogFile(this PaketPackSettings toolSettings)
+        public static T ResetLogFile<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = null;
@@ -3285,7 +3285,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Call coming from the <c>--run</c> feature of the bootstrapper.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings SetFromBootstrapper(this PaketPackSettings toolSettings, bool? fromBootstrapper)
+        public static T SetFromBootstrapper<T>(this T toolSettings, bool? fromBootstrapper) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FromBootstrapper = fromBootstrapper;
@@ -3296,7 +3296,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Call coming from the <c>--run</c> feature of the bootstrapper.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ResetFromBootstrapper(this PaketPackSettings toolSettings)
+        public static T ResetFromBootstrapper<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FromBootstrapper = null;
@@ -3307,7 +3307,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Call coming from the <c>--run</c> feature of the bootstrapper.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings EnableFromBootstrapper(this PaketPackSettings toolSettings)
+        public static T EnableFromBootstrapper<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FromBootstrapper = true;
@@ -3318,7 +3318,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Call coming from the <c>--run</c> feature of the bootstrapper.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings DisableFromBootstrapper(this PaketPackSettings toolSettings)
+        public static T DisableFromBootstrapper<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FromBootstrapper = false;
@@ -3329,7 +3329,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Call coming from the <c>--run</c> feature of the bootstrapper.</p>
         /// </summary>
         [Pure]
-        public static PaketPackSettings ToggleFromBootstrapper(this PaketPackSettings toolSettings)
+        public static T ToggleFromBootstrapper<T>(this T toolSettings) where T : PaketPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FromBootstrapper = !toolSettings.FromBootstrapper;

@@ -5996,7 +5996,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for completion.</p>
         /// </summary>
         [Pure]
-        public static HelmCompletionSettings SetHelp(this HelmCompletionSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmCompletionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -6007,7 +6007,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for completion.</p>
         /// </summary>
         [Pure]
-        public static HelmCompletionSettings ResetHelp(this HelmCompletionSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmCompletionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -6018,7 +6018,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for completion.</p>
         /// </summary>
         [Pure]
-        public static HelmCompletionSettings EnableHelp(this HelmCompletionSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmCompletionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -6029,7 +6029,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for completion.</p>
         /// </summary>
         [Pure]
-        public static HelmCompletionSettings DisableHelp(this HelmCompletionSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmCompletionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -6040,7 +6040,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for completion.</p>
         /// </summary>
         [Pure]
-        public static HelmCompletionSettings ToggleHelp(this HelmCompletionSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmCompletionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -6052,7 +6052,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p><em>Sets <see cref="HelmCompletionSettings.Shell"/></em></p>
         /// </summary>
         [Pure]
-        public static HelmCompletionSettings SetShell(this HelmCompletionSettings toolSettings, string shell)
+        public static T SetShell<T>(this T toolSettings, string shell) where T : HelmCompletionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Shell = shell;
@@ -6062,7 +6062,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p><em>Resets <see cref="HelmCompletionSettings.Shell"/></em></p>
         /// </summary>
         [Pure]
-        public static HelmCompletionSettings ResetShell(this HelmCompletionSettings toolSettings)
+        public static T ResetShell<T>(this T toolSettings) where T : HelmCompletionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Shell = null;
@@ -6085,7 +6085,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for create.</p>
         /// </summary>
         [Pure]
-        public static HelmCreateSettings SetHelp(this HelmCreateSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -6096,7 +6096,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for create.</p>
         /// </summary>
         [Pure]
-        public static HelmCreateSettings ResetHelp(this HelmCreateSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -6107,7 +6107,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for create.</p>
         /// </summary>
         [Pure]
-        public static HelmCreateSettings EnableHelp(this HelmCreateSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -6118,7 +6118,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for create.</p>
         /// </summary>
         [Pure]
-        public static HelmCreateSettings DisableHelp(this HelmCreateSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -6129,7 +6129,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for create.</p>
         /// </summary>
         [Pure]
-        public static HelmCreateSettings ToggleHelp(this HelmCreateSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -6142,7 +6142,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The named Helm starter scaffold.</p>
         /// </summary>
         [Pure]
-        public static HelmCreateSettings SetStarter(this HelmCreateSettings toolSettings, string starter)
+        public static T SetStarter<T>(this T toolSettings, string starter) where T : HelmCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Starter = starter;
@@ -6153,7 +6153,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The named Helm starter scaffold.</p>
         /// </summary>
         [Pure]
-        public static HelmCreateSettings ResetStarter(this HelmCreateSettings toolSettings)
+        public static T ResetStarter<T>(this T toolSettings) where T : HelmCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Starter = null;
@@ -6166,7 +6166,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of chart directory to create.</p>
         /// </summary>
         [Pure]
-        public static HelmCreateSettings SetName(this HelmCreateSettings toolSettings, string name)
+        public static T SetName<T>(this T toolSettings, string name) where T : HelmCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = name;
@@ -6177,7 +6177,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of chart directory to create.</p>
         /// </summary>
         [Pure]
-        public static HelmCreateSettings ResetName(this HelmCreateSettings toolSettings)
+        public static T ResetName<T>(this T toolSettings) where T : HelmCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = null;
@@ -6200,7 +6200,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify a description for the release.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings SetDescription(this HelmDeleteSettings toolSettings, string description)
+        public static T SetDescription<T>(this T toolSettings, string description) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Description = description;
@@ -6211,7 +6211,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify a description for the release.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings ResetDescription(this HelmDeleteSettings toolSettings)
+        public static T ResetDescription<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Description = null;
@@ -6224,7 +6224,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Simulate a delete.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings SetDryRun(this HelmDeleteSettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -6235,7 +6235,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Simulate a delete.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings ResetDryRun(this HelmDeleteSettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -6246,7 +6246,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Simulate a delete.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings EnableDryRun(this HelmDeleteSettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -6257,7 +6257,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Simulate a delete.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings DisableDryRun(this HelmDeleteSettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -6268,7 +6268,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Simulate a delete.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings ToggleDryRun(this HelmDeleteSettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -6281,7 +6281,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for delete.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings SetHelp(this HelmDeleteSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -6292,7 +6292,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for delete.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings ResetHelp(this HelmDeleteSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -6303,7 +6303,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for delete.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings EnableHelp(this HelmDeleteSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -6314,7 +6314,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for delete.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings DisableHelp(this HelmDeleteSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -6325,7 +6325,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for delete.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings ToggleHelp(this HelmDeleteSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -6338,7 +6338,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Prevent hooks from running during deletion.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings SetNoHooks(this HelmDeleteSettings toolSettings, bool? noHooks)
+        public static T SetNoHooks<T>(this T toolSettings, bool? noHooks) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHooks = noHooks;
@@ -6349,7 +6349,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Prevent hooks from running during deletion.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings ResetNoHooks(this HelmDeleteSettings toolSettings)
+        public static T ResetNoHooks<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHooks = null;
@@ -6360,7 +6360,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Prevent hooks from running during deletion.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings EnableNoHooks(this HelmDeleteSettings toolSettings)
+        public static T EnableNoHooks<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHooks = true;
@@ -6371,7 +6371,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Prevent hooks from running during deletion.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings DisableNoHooks(this HelmDeleteSettings toolSettings)
+        public static T DisableNoHooks<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHooks = false;
@@ -6382,7 +6382,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Prevent hooks from running during deletion.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings ToggleNoHooks(this HelmDeleteSettings toolSettings)
+        public static T ToggleNoHooks<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHooks = !toolSettings.NoHooks;
@@ -6395,7 +6395,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Remove the release from the store and make its name free for later use.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings SetPurge(this HelmDeleteSettings toolSettings, bool? purge)
+        public static T SetPurge<T>(this T toolSettings, bool? purge) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Purge = purge;
@@ -6406,7 +6406,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Remove the release from the store and make its name free for later use.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings ResetPurge(this HelmDeleteSettings toolSettings)
+        public static T ResetPurge<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Purge = null;
@@ -6417,7 +6417,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Remove the release from the store and make its name free for later use.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings EnablePurge(this HelmDeleteSettings toolSettings)
+        public static T EnablePurge<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Purge = true;
@@ -6428,7 +6428,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Remove the release from the store and make its name free for later use.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings DisablePurge(this HelmDeleteSettings toolSettings)
+        public static T DisablePurge<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Purge = false;
@@ -6439,7 +6439,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Remove the release from the store and make its name free for later use.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings TogglePurge(this HelmDeleteSettings toolSettings)
+        public static T TogglePurge<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Purge = !toolSettings.Purge;
@@ -6452,7 +6452,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Time in seconds to wait for any individual Kubernetes operation (like Jobs for hooks) (default 300).</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings SetTimeout(this HelmDeleteSettings toolSettings, long? timeout)
+        public static T SetTimeout<T>(this T toolSettings, long? timeout) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = timeout;
@@ -6463,7 +6463,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Time in seconds to wait for any individual Kubernetes operation (like Jobs for hooks) (default 300).</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings ResetTimeout(this HelmDeleteSettings toolSettings)
+        public static T ResetTimeout<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = null;
@@ -6476,7 +6476,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings SetTls(this HelmDeleteSettings toolSettings, bool? tls)
+        public static T SetTls<T>(this T toolSettings, bool? tls) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = tls;
@@ -6487,7 +6487,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings ResetTls(this HelmDeleteSettings toolSettings)
+        public static T ResetTls<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = null;
@@ -6498,7 +6498,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings EnableTls(this HelmDeleteSettings toolSettings)
+        public static T EnableTls<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = true;
@@ -6509,7 +6509,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings DisableTls(this HelmDeleteSettings toolSettings)
+        public static T DisableTls<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = false;
@@ -6520,7 +6520,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings ToggleTls(this HelmDeleteSettings toolSettings)
+        public static T ToggleTls<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = !toolSettings.Tls;
@@ -6533,7 +6533,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings SetTlsCaCert(this HelmDeleteSettings toolSettings, string tlsCaCert)
+        public static T SetTlsCaCert<T>(this T toolSettings, string tlsCaCert) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = tlsCaCert;
@@ -6544,7 +6544,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings ResetTlsCaCert(this HelmDeleteSettings toolSettings)
+        public static T ResetTlsCaCert<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = null;
@@ -6557,7 +6557,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings SetTlsCert(this HelmDeleteSettings toolSettings, string tlsCert)
+        public static T SetTlsCert<T>(this T toolSettings, string tlsCert) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = tlsCert;
@@ -6568,7 +6568,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings ResetTlsCert(this HelmDeleteSettings toolSettings)
+        public static T ResetTlsCert<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = null;
@@ -6581,7 +6581,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings SetTlsHostname(this HelmDeleteSettings toolSettings, string tlsHostname)
+        public static T SetTlsHostname<T>(this T toolSettings, string tlsHostname) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = tlsHostname;
@@ -6592,7 +6592,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings ResetTlsHostname(this HelmDeleteSettings toolSettings)
+        public static T ResetTlsHostname<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = null;
@@ -6605,7 +6605,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings SetTlsKey(this HelmDeleteSettings toolSettings, string tlsKey)
+        public static T SetTlsKey<T>(this T toolSettings, string tlsKey) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = tlsKey;
@@ -6616,7 +6616,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings ResetTlsKey(this HelmDeleteSettings toolSettings)
+        public static T ResetTlsKey<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = null;
@@ -6629,7 +6629,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings SetTlsVerify(this HelmDeleteSettings toolSettings, bool? tlsVerify)
+        public static T SetTlsVerify<T>(this T toolSettings, bool? tlsVerify) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = tlsVerify;
@@ -6640,7 +6640,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings ResetTlsVerify(this HelmDeleteSettings toolSettings)
+        public static T ResetTlsVerify<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = null;
@@ -6651,7 +6651,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings EnableTlsVerify(this HelmDeleteSettings toolSettings)
+        public static T EnableTlsVerify<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = true;
@@ -6662,7 +6662,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings DisableTlsVerify(this HelmDeleteSettings toolSettings)
+        public static T DisableTlsVerify<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = false;
@@ -6673,7 +6673,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings ToggleTlsVerify(this HelmDeleteSettings toolSettings)
+        public static T ToggleTlsVerify<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = !toolSettings.TlsVerify;
@@ -6686,7 +6686,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the releases to delete.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings SetReleaseNames(this HelmDeleteSettings toolSettings, params string[] releaseNames)
+        public static T SetReleaseNames<T>(this T toolSettings, params string[] releaseNames) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseNamesInternal = releaseNames.ToList();
@@ -6697,7 +6697,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the releases to delete.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings SetReleaseNames(this HelmDeleteSettings toolSettings, IEnumerable<string> releaseNames)
+        public static T SetReleaseNames<T>(this T toolSettings, IEnumerable<string> releaseNames) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseNamesInternal = releaseNames.ToList();
@@ -6708,7 +6708,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the releases to delete.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings AddReleaseNames(this HelmDeleteSettings toolSettings, params string[] releaseNames)
+        public static T AddReleaseNames<T>(this T toolSettings, params string[] releaseNames) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseNamesInternal.AddRange(releaseNames);
@@ -6719,7 +6719,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the releases to delete.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings AddReleaseNames(this HelmDeleteSettings toolSettings, IEnumerable<string> releaseNames)
+        public static T AddReleaseNames<T>(this T toolSettings, IEnumerable<string> releaseNames) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseNamesInternal.AddRange(releaseNames);
@@ -6730,7 +6730,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the releases to delete.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings ClearReleaseNames(this HelmDeleteSettings toolSettings)
+        public static T ClearReleaseNames<T>(this T toolSettings) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseNamesInternal.Clear();
@@ -6741,7 +6741,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the releases to delete.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings RemoveReleaseNames(this HelmDeleteSettings toolSettings, params string[] releaseNames)
+        public static T RemoveReleaseNames<T>(this T toolSettings, params string[] releaseNames) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(releaseNames);
@@ -6753,7 +6753,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the releases to delete.</p>
         /// </summary>
         [Pure]
-        public static HelmDeleteSettings RemoveReleaseNames(this HelmDeleteSettings toolSettings, IEnumerable<string> releaseNames)
+        public static T RemoveReleaseNames<T>(this T toolSettings, IEnumerable<string> releaseNames) where T : HelmDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(releaseNames);
@@ -6777,7 +6777,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for build.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyBuildSettings SetHelp(this HelmDependencyBuildSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmDependencyBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -6788,7 +6788,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for build.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyBuildSettings ResetHelp(this HelmDependencyBuildSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmDependencyBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -6799,7 +6799,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for build.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyBuildSettings EnableHelp(this HelmDependencyBuildSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmDependencyBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -6810,7 +6810,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for build.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyBuildSettings DisableHelp(this HelmDependencyBuildSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmDependencyBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -6821,7 +6821,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for build.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyBuildSettings ToggleHelp(this HelmDependencyBuildSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmDependencyBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -6834,7 +6834,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Keyring containing public keys (default "~/.gnupg/pubring.gpg").</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyBuildSettings SetKeyring(this HelmDependencyBuildSettings toolSettings, string keyring)
+        public static T SetKeyring<T>(this T toolSettings, string keyring) where T : HelmDependencyBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyring = keyring;
@@ -6845,7 +6845,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Keyring containing public keys (default "~/.gnupg/pubring.gpg").</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyBuildSettings ResetKeyring(this HelmDependencyBuildSettings toolSettings)
+        public static T ResetKeyring<T>(this T toolSettings) where T : HelmDependencyBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyring = null;
@@ -6858,7 +6858,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the packages against signatures.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyBuildSettings SetVerify(this HelmDependencyBuildSettings toolSettings, bool? verify)
+        public static T SetVerify<T>(this T toolSettings, bool? verify) where T : HelmDependencyBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = verify;
@@ -6869,7 +6869,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the packages against signatures.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyBuildSettings ResetVerify(this HelmDependencyBuildSettings toolSettings)
+        public static T ResetVerify<T>(this T toolSettings) where T : HelmDependencyBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = null;
@@ -6880,7 +6880,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the packages against signatures.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyBuildSettings EnableVerify(this HelmDependencyBuildSettings toolSettings)
+        public static T EnableVerify<T>(this T toolSettings) where T : HelmDependencyBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = true;
@@ -6891,7 +6891,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the packages against signatures.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyBuildSettings DisableVerify(this HelmDependencyBuildSettings toolSettings)
+        public static T DisableVerify<T>(this T toolSettings) where T : HelmDependencyBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = false;
@@ -6902,7 +6902,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the packages against signatures.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyBuildSettings ToggleVerify(this HelmDependencyBuildSettings toolSettings)
+        public static T ToggleVerify<T>(this T toolSettings) where T : HelmDependencyBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = !toolSettings.Verify;
@@ -6915,7 +6915,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the chart to build.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyBuildSettings SetChart(this HelmDependencyBuildSettings toolSettings, string chart)
+        public static T SetChart<T>(this T toolSettings, string chart) where T : HelmDependencyBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Chart = chart;
@@ -6926,7 +6926,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the chart to build.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyBuildSettings ResetChart(this HelmDependencyBuildSettings toolSettings)
+        public static T ResetChart<T>(this T toolSettings) where T : HelmDependencyBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Chart = null;
@@ -6949,7 +6949,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for list.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyListSettings SetHelp(this HelmDependencyListSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmDependencyListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -6960,7 +6960,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for list.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyListSettings ResetHelp(this HelmDependencyListSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmDependencyListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -6971,7 +6971,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for list.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyListSettings EnableHelp(this HelmDependencyListSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmDependencyListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -6982,7 +6982,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for list.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyListSettings DisableHelp(this HelmDependencyListSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmDependencyListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -6993,7 +6993,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for list.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyListSettings ToggleHelp(this HelmDependencyListSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmDependencyListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -7006,7 +7006,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the chart to list.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyListSettings SetChart(this HelmDependencyListSettings toolSettings, string chart)
+        public static T SetChart<T>(this T toolSettings, string chart) where T : HelmDependencyListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Chart = chart;
@@ -7017,7 +7017,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the chart to list.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyListSettings ResetChart(this HelmDependencyListSettings toolSettings)
+        public static T ResetChart<T>(this T toolSettings) where T : HelmDependencyListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Chart = null;
@@ -7040,7 +7040,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for update.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyUpdateSettings SetHelp(this HelmDependencyUpdateSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmDependencyUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -7051,7 +7051,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for update.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyUpdateSettings ResetHelp(this HelmDependencyUpdateSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmDependencyUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -7062,7 +7062,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for update.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyUpdateSettings EnableHelp(this HelmDependencyUpdateSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmDependencyUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -7073,7 +7073,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for update.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyUpdateSettings DisableHelp(this HelmDependencyUpdateSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmDependencyUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -7084,7 +7084,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for update.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyUpdateSettings ToggleHelp(this HelmDependencyUpdateSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmDependencyUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -7097,7 +7097,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Keyring containing public keys (default "~/.gnupg/pubring.gpg").</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyUpdateSettings SetKeyring(this HelmDependencyUpdateSettings toolSettings, string keyring)
+        public static T SetKeyring<T>(this T toolSettings, string keyring) where T : HelmDependencyUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyring = keyring;
@@ -7108,7 +7108,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Keyring containing public keys (default "~/.gnupg/pubring.gpg").</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyUpdateSettings ResetKeyring(this HelmDependencyUpdateSettings toolSettings)
+        public static T ResetKeyring<T>(this T toolSettings) where T : HelmDependencyUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyring = null;
@@ -7121,7 +7121,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Do not refresh the local repository cache.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyUpdateSettings SetSkipRefresh(this HelmDependencyUpdateSettings toolSettings, bool? skipRefresh)
+        public static T SetSkipRefresh<T>(this T toolSettings, bool? skipRefresh) where T : HelmDependencyUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipRefresh = skipRefresh;
@@ -7132,7 +7132,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Do not refresh the local repository cache.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyUpdateSettings ResetSkipRefresh(this HelmDependencyUpdateSettings toolSettings)
+        public static T ResetSkipRefresh<T>(this T toolSettings) where T : HelmDependencyUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipRefresh = null;
@@ -7143,7 +7143,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Do not refresh the local repository cache.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyUpdateSettings EnableSkipRefresh(this HelmDependencyUpdateSettings toolSettings)
+        public static T EnableSkipRefresh<T>(this T toolSettings) where T : HelmDependencyUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipRefresh = true;
@@ -7154,7 +7154,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Do not refresh the local repository cache.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyUpdateSettings DisableSkipRefresh(this HelmDependencyUpdateSettings toolSettings)
+        public static T DisableSkipRefresh<T>(this T toolSettings) where T : HelmDependencyUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipRefresh = false;
@@ -7165,7 +7165,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Do not refresh the local repository cache.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyUpdateSettings ToggleSkipRefresh(this HelmDependencyUpdateSettings toolSettings)
+        public static T ToggleSkipRefresh<T>(this T toolSettings) where T : HelmDependencyUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipRefresh = !toolSettings.SkipRefresh;
@@ -7178,7 +7178,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the packages against signatures.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyUpdateSettings SetVerify(this HelmDependencyUpdateSettings toolSettings, bool? verify)
+        public static T SetVerify<T>(this T toolSettings, bool? verify) where T : HelmDependencyUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = verify;
@@ -7189,7 +7189,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the packages against signatures.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyUpdateSettings ResetVerify(this HelmDependencyUpdateSettings toolSettings)
+        public static T ResetVerify<T>(this T toolSettings) where T : HelmDependencyUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = null;
@@ -7200,7 +7200,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the packages against signatures.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyUpdateSettings EnableVerify(this HelmDependencyUpdateSettings toolSettings)
+        public static T EnableVerify<T>(this T toolSettings) where T : HelmDependencyUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = true;
@@ -7211,7 +7211,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the packages against signatures.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyUpdateSettings DisableVerify(this HelmDependencyUpdateSettings toolSettings)
+        public static T DisableVerify<T>(this T toolSettings) where T : HelmDependencyUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = false;
@@ -7222,7 +7222,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the packages against signatures.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyUpdateSettings ToggleVerify(this HelmDependencyUpdateSettings toolSettings)
+        public static T ToggleVerify<T>(this T toolSettings) where T : HelmDependencyUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = !toolSettings.Verify;
@@ -7235,7 +7235,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the chart to update.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyUpdateSettings SetChart(this HelmDependencyUpdateSettings toolSettings, string chart)
+        public static T SetChart<T>(this T toolSettings, string chart) where T : HelmDependencyUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Chart = chart;
@@ -7246,7 +7246,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the chart to update.</p>
         /// </summary>
         [Pure]
-        public static HelmDependencyUpdateSettings ResetChart(this HelmDependencyUpdateSettings toolSettings)
+        public static T ResetChart<T>(this T toolSettings) where T : HelmDependencyUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Chart = null;
@@ -7269,7 +7269,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify certificates of HTTPS-enabled servers using this CA bundle.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings SetCaFile(this HelmFetchSettings toolSettings, string caFile)
+        public static T SetCaFile<T>(this T toolSettings, string caFile) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CaFile = caFile;
@@ -7280,7 +7280,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify certificates of HTTPS-enabled servers using this CA bundle.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings ResetCaFile(this HelmFetchSettings toolSettings)
+        public static T ResetCaFile<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CaFile = null;
@@ -7293,7 +7293,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL certificate file.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings SetCertFile(this HelmFetchSettings toolSettings, string certFile)
+        public static T SetCertFile<T>(this T toolSettings, string certFile) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CertFile = certFile;
@@ -7304,7 +7304,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL certificate file.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings ResetCertFile(this HelmFetchSettings toolSettings)
+        public static T ResetCertFile<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CertFile = null;
@@ -7317,7 +7317,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Location to write the chart. If this and tardir are specified, tardir is appended to this (default ".").</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings SetDestination(this HelmFetchSettings toolSettings, string destination)
+        public static T SetDestination<T>(this T toolSettings, string destination) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Destination = destination;
@@ -7328,7 +7328,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Location to write the chart. If this and tardir are specified, tardir is appended to this (default ".").</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings ResetDestination(this HelmFetchSettings toolSettings)
+        public static T ResetDestination<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Destination = null;
@@ -7341,7 +7341,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings SetDevel(this HelmFetchSettings toolSettings, bool? devel)
+        public static T SetDevel<T>(this T toolSettings, bool? devel) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = devel;
@@ -7352,7 +7352,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings ResetDevel(this HelmFetchSettings toolSettings)
+        public static T ResetDevel<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = null;
@@ -7363,7 +7363,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings EnableDevel(this HelmFetchSettings toolSettings)
+        public static T EnableDevel<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = true;
@@ -7374,7 +7374,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings DisableDevel(this HelmFetchSettings toolSettings)
+        public static T DisableDevel<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = false;
@@ -7385,7 +7385,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings ToggleDevel(this HelmFetchSettings toolSettings)
+        public static T ToggleDevel<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = !toolSettings.Devel;
@@ -7398,7 +7398,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for fetch.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings SetHelp(this HelmFetchSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -7409,7 +7409,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for fetch.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings ResetHelp(this HelmFetchSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -7420,7 +7420,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for fetch.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings EnableHelp(this HelmFetchSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -7431,7 +7431,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for fetch.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings DisableHelp(this HelmFetchSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -7442,7 +7442,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for fetch.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings ToggleHelp(this HelmFetchSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -7455,7 +7455,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL key file.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings SetKeyFile(this HelmFetchSettings toolSettings, string keyFile)
+        public static T SetKeyFile<T>(this T toolSettings, string keyFile) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyFile = keyFile;
@@ -7466,7 +7466,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL key file.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings ResetKeyFile(this HelmFetchSettings toolSettings)
+        public static T ResetKeyFile<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyFile = null;
@@ -7479,7 +7479,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Keyring containing public keys (default "~/.gnupg/pubring.gpg").</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings SetKeyring(this HelmFetchSettings toolSettings, string keyring)
+        public static T SetKeyring<T>(this T toolSettings, string keyring) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyring = keyring;
@@ -7490,7 +7490,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Keyring containing public keys (default "~/.gnupg/pubring.gpg").</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings ResetKeyring(this HelmFetchSettings toolSettings)
+        public static T ResetKeyring<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyring = null;
@@ -7503,7 +7503,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository password.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings SetPassword(this HelmFetchSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -7514,7 +7514,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository password.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings ResetPassword(this HelmFetchSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -7527,7 +7527,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Fetch the provenance file, but don't perform verification.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings SetProv(this HelmFetchSettings toolSettings, bool? prov)
+        public static T SetProv<T>(this T toolSettings, bool? prov) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Prov = prov;
@@ -7538,7 +7538,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Fetch the provenance file, but don't perform verification.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings ResetProv(this HelmFetchSettings toolSettings)
+        public static T ResetProv<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Prov = null;
@@ -7549,7 +7549,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Fetch the provenance file, but don't perform verification.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings EnableProv(this HelmFetchSettings toolSettings)
+        public static T EnableProv<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Prov = true;
@@ -7560,7 +7560,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Fetch the provenance file, but don't perform verification.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings DisableProv(this HelmFetchSettings toolSettings)
+        public static T DisableProv<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Prov = false;
@@ -7571,7 +7571,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Fetch the provenance file, but don't perform verification.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings ToggleProv(this HelmFetchSettings toolSettings)
+        public static T ToggleProv<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Prov = !toolSettings.Prov;
@@ -7584,7 +7584,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository url where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings SetRepo(this HelmFetchSettings toolSettings, string repo)
+        public static T SetRepo<T>(this T toolSettings, string repo) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Repo = repo;
@@ -7595,7 +7595,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository url where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings ResetRepo(this HelmFetchSettings toolSettings)
+        public static T ResetRepo<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Repo = null;
@@ -7608,7 +7608,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set to true, will untar the chart after downloading it.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings SetUntar(this HelmFetchSettings toolSettings, bool? untar)
+        public static T SetUntar<T>(this T toolSettings, bool? untar) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Untar = untar;
@@ -7619,7 +7619,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set to true, will untar the chart after downloading it.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings ResetUntar(this HelmFetchSettings toolSettings)
+        public static T ResetUntar<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Untar = null;
@@ -7630,7 +7630,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set to true, will untar the chart after downloading it.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings EnableUntar(this HelmFetchSettings toolSettings)
+        public static T EnableUntar<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Untar = true;
@@ -7641,7 +7641,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set to true, will untar the chart after downloading it.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings DisableUntar(this HelmFetchSettings toolSettings)
+        public static T DisableUntar<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Untar = false;
@@ -7652,7 +7652,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set to true, will untar the chart after downloading it.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings ToggleUntar(this HelmFetchSettings toolSettings)
+        public static T ToggleUntar<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Untar = !toolSettings.Untar;
@@ -7665,7 +7665,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If untar is specified, this flag specifies the name of the directory into which the chart is expanded (default ".").</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings SetUntardir(this HelmFetchSettings toolSettings, string untardir)
+        public static T SetUntardir<T>(this T toolSettings, string untardir) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Untardir = untardir;
@@ -7676,7 +7676,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If untar is specified, this flag specifies the name of the directory into which the chart is expanded (default ".").</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings ResetUntardir(this HelmFetchSettings toolSettings)
+        public static T ResetUntardir<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Untardir = null;
@@ -7689,7 +7689,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository username.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings SetUsername(this HelmFetchSettings toolSettings, string username)
+        public static T SetUsername<T>(this T toolSettings, string username) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = username;
@@ -7700,7 +7700,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository username.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings ResetUsername(this HelmFetchSettings toolSettings)
+        public static T ResetUsername<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = null;
@@ -7713,7 +7713,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the package against its signature.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings SetVerify(this HelmFetchSettings toolSettings, bool? verify)
+        public static T SetVerify<T>(this T toolSettings, bool? verify) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = verify;
@@ -7724,7 +7724,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the package against its signature.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings ResetVerify(this HelmFetchSettings toolSettings)
+        public static T ResetVerify<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = null;
@@ -7735,7 +7735,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the package against its signature.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings EnableVerify(this HelmFetchSettings toolSettings)
+        public static T EnableVerify<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = true;
@@ -7746,7 +7746,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the package against its signature.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings DisableVerify(this HelmFetchSettings toolSettings)
+        public static T DisableVerify<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = false;
@@ -7757,7 +7757,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the package against its signature.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings ToggleVerify(this HelmFetchSettings toolSettings)
+        public static T ToggleVerify<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = !toolSettings.Verify;
@@ -7770,7 +7770,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specific version of a chart. Without this, the latest version is fetched.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings SetVersion(this HelmFetchSettings toolSettings, string version)
+        public static T SetVersion<T>(this T toolSettings, string version) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = version;
@@ -7781,7 +7781,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specific version of a chart. Without this, the latest version is fetched.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings ResetVersion(this HelmFetchSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = null;
@@ -7794,7 +7794,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The charts to fetch. Can either be specified by <c>repoName/chartName</c> or directly by an url.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings SetCharts(this HelmFetchSettings toolSettings, params string[] charts)
+        public static T SetCharts<T>(this T toolSettings, params string[] charts) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ChartsInternal = charts.ToList();
@@ -7805,7 +7805,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The charts to fetch. Can either be specified by <c>repoName/chartName</c> or directly by an url.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings SetCharts(this HelmFetchSettings toolSettings, IEnumerable<string> charts)
+        public static T SetCharts<T>(this T toolSettings, IEnumerable<string> charts) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ChartsInternal = charts.ToList();
@@ -7816,7 +7816,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The charts to fetch. Can either be specified by <c>repoName/chartName</c> or directly by an url.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings AddCharts(this HelmFetchSettings toolSettings, params string[] charts)
+        public static T AddCharts<T>(this T toolSettings, params string[] charts) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ChartsInternal.AddRange(charts);
@@ -7827,7 +7827,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The charts to fetch. Can either be specified by <c>repoName/chartName</c> or directly by an url.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings AddCharts(this HelmFetchSettings toolSettings, IEnumerable<string> charts)
+        public static T AddCharts<T>(this T toolSettings, IEnumerable<string> charts) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ChartsInternal.AddRange(charts);
@@ -7838,7 +7838,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The charts to fetch. Can either be specified by <c>repoName/chartName</c> or directly by an url.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings ClearCharts(this HelmFetchSettings toolSettings)
+        public static T ClearCharts<T>(this T toolSettings) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ChartsInternal.Clear();
@@ -7849,7 +7849,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The charts to fetch. Can either be specified by <c>repoName/chartName</c> or directly by an url.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings RemoveCharts(this HelmFetchSettings toolSettings, params string[] charts)
+        public static T RemoveCharts<T>(this T toolSettings, params string[] charts) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(charts);
@@ -7861,7 +7861,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The charts to fetch. Can either be specified by <c>repoName/chartName</c> or directly by an url.</p>
         /// </summary>
         [Pure]
-        public static HelmFetchSettings RemoveCharts(this HelmFetchSettings toolSettings, IEnumerable<string> charts)
+        public static T RemoveCharts<T>(this T toolSettings, IEnumerable<string> charts) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(charts);
@@ -7885,7 +7885,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for get.</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings SetHelp(this HelmGetSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -7896,7 +7896,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for get.</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings ResetHelp(this HelmGetSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -7907,7 +7907,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for get.</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings EnableHelp(this HelmGetSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -7918,7 +7918,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for get.</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings DisableHelp(this HelmGetSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -7929,7 +7929,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for get.</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings ToggleHelp(this HelmGetSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -7942,7 +7942,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Get the named release with revision.</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings SetRevision(this HelmGetSettings toolSettings, int? revision)
+        public static T SetRevision<T>(this T toolSettings, int? revision) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Revision = revision;
@@ -7953,7 +7953,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Get the named release with revision.</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings ResetRevision(this HelmGetSettings toolSettings)
+        public static T ResetRevision<T>(this T toolSettings) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Revision = null;
@@ -7966,7 +7966,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings SetTls(this HelmGetSettings toolSettings, bool? tls)
+        public static T SetTls<T>(this T toolSettings, bool? tls) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = tls;
@@ -7977,7 +7977,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings ResetTls(this HelmGetSettings toolSettings)
+        public static T ResetTls<T>(this T toolSettings) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = null;
@@ -7988,7 +7988,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings EnableTls(this HelmGetSettings toolSettings)
+        public static T EnableTls<T>(this T toolSettings) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = true;
@@ -7999,7 +7999,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings DisableTls(this HelmGetSettings toolSettings)
+        public static T DisableTls<T>(this T toolSettings) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = false;
@@ -8010,7 +8010,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings ToggleTls(this HelmGetSettings toolSettings)
+        public static T ToggleTls<T>(this T toolSettings) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = !toolSettings.Tls;
@@ -8023,7 +8023,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings SetTlsCaCert(this HelmGetSettings toolSettings, string tlsCaCert)
+        public static T SetTlsCaCert<T>(this T toolSettings, string tlsCaCert) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = tlsCaCert;
@@ -8034,7 +8034,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings ResetTlsCaCert(this HelmGetSettings toolSettings)
+        public static T ResetTlsCaCert<T>(this T toolSettings) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = null;
@@ -8047,7 +8047,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings SetTlsCert(this HelmGetSettings toolSettings, string tlsCert)
+        public static T SetTlsCert<T>(this T toolSettings, string tlsCert) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = tlsCert;
@@ -8058,7 +8058,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings ResetTlsCert(this HelmGetSettings toolSettings)
+        public static T ResetTlsCert<T>(this T toolSettings) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = null;
@@ -8071,7 +8071,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings SetTlsHostname(this HelmGetSettings toolSettings, string tlsHostname)
+        public static T SetTlsHostname<T>(this T toolSettings, string tlsHostname) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = tlsHostname;
@@ -8082,7 +8082,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings ResetTlsHostname(this HelmGetSettings toolSettings)
+        public static T ResetTlsHostname<T>(this T toolSettings) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = null;
@@ -8095,7 +8095,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings SetTlsKey(this HelmGetSettings toolSettings, string tlsKey)
+        public static T SetTlsKey<T>(this T toolSettings, string tlsKey) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = tlsKey;
@@ -8106,7 +8106,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings ResetTlsKey(this HelmGetSettings toolSettings)
+        public static T ResetTlsKey<T>(this T toolSettings) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = null;
@@ -8119,7 +8119,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings SetTlsVerify(this HelmGetSettings toolSettings, bool? tlsVerify)
+        public static T SetTlsVerify<T>(this T toolSettings, bool? tlsVerify) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = tlsVerify;
@@ -8130,7 +8130,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings ResetTlsVerify(this HelmGetSettings toolSettings)
+        public static T ResetTlsVerify<T>(this T toolSettings) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = null;
@@ -8141,7 +8141,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings EnableTlsVerify(this HelmGetSettings toolSettings)
+        public static T EnableTlsVerify<T>(this T toolSettings) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = true;
@@ -8152,7 +8152,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings DisableTlsVerify(this HelmGetSettings toolSettings)
+        public static T DisableTlsVerify<T>(this T toolSettings) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = false;
@@ -8163,7 +8163,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings ToggleTlsVerify(this HelmGetSettings toolSettings)
+        public static T ToggleTlsVerify<T>(this T toolSettings) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = !toolSettings.TlsVerify;
@@ -8176,7 +8176,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the release to get.</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings SetReleaseName(this HelmGetSettings toolSettings, string releaseName)
+        public static T SetReleaseName<T>(this T toolSettings, string releaseName) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseName = releaseName;
@@ -8187,7 +8187,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the release to get.</p>
         /// </summary>
         [Pure]
-        public static HelmGetSettings ResetReleaseName(this HelmGetSettings toolSettings)
+        public static T ResetReleaseName<T>(this T toolSettings) where T : HelmGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseName = null;
@@ -8210,7 +8210,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for hooks.</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings SetHelp(this HelmGetHooksSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -8221,7 +8221,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for hooks.</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings ResetHelp(this HelmGetHooksSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -8232,7 +8232,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for hooks.</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings EnableHelp(this HelmGetHooksSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -8243,7 +8243,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for hooks.</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings DisableHelp(this HelmGetHooksSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -8254,7 +8254,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for hooks.</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings ToggleHelp(this HelmGetHooksSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -8267,7 +8267,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Get the named release with revision.</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings SetRevision(this HelmGetHooksSettings toolSettings, int? revision)
+        public static T SetRevision<T>(this T toolSettings, int? revision) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Revision = revision;
@@ -8278,7 +8278,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Get the named release with revision.</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings ResetRevision(this HelmGetHooksSettings toolSettings)
+        public static T ResetRevision<T>(this T toolSettings) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Revision = null;
@@ -8291,7 +8291,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings SetTls(this HelmGetHooksSettings toolSettings, bool? tls)
+        public static T SetTls<T>(this T toolSettings, bool? tls) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = tls;
@@ -8302,7 +8302,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings ResetTls(this HelmGetHooksSettings toolSettings)
+        public static T ResetTls<T>(this T toolSettings) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = null;
@@ -8313,7 +8313,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings EnableTls(this HelmGetHooksSettings toolSettings)
+        public static T EnableTls<T>(this T toolSettings) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = true;
@@ -8324,7 +8324,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings DisableTls(this HelmGetHooksSettings toolSettings)
+        public static T DisableTls<T>(this T toolSettings) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = false;
@@ -8335,7 +8335,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings ToggleTls(this HelmGetHooksSettings toolSettings)
+        public static T ToggleTls<T>(this T toolSettings) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = !toolSettings.Tls;
@@ -8348,7 +8348,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings SetTlsCaCert(this HelmGetHooksSettings toolSettings, string tlsCaCert)
+        public static T SetTlsCaCert<T>(this T toolSettings, string tlsCaCert) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = tlsCaCert;
@@ -8359,7 +8359,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings ResetTlsCaCert(this HelmGetHooksSettings toolSettings)
+        public static T ResetTlsCaCert<T>(this T toolSettings) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = null;
@@ -8372,7 +8372,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings SetTlsCert(this HelmGetHooksSettings toolSettings, string tlsCert)
+        public static T SetTlsCert<T>(this T toolSettings, string tlsCert) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = tlsCert;
@@ -8383,7 +8383,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings ResetTlsCert(this HelmGetHooksSettings toolSettings)
+        public static T ResetTlsCert<T>(this T toolSettings) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = null;
@@ -8396,7 +8396,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings SetTlsHostname(this HelmGetHooksSettings toolSettings, string tlsHostname)
+        public static T SetTlsHostname<T>(this T toolSettings, string tlsHostname) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = tlsHostname;
@@ -8407,7 +8407,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings ResetTlsHostname(this HelmGetHooksSettings toolSettings)
+        public static T ResetTlsHostname<T>(this T toolSettings) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = null;
@@ -8420,7 +8420,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings SetTlsKey(this HelmGetHooksSettings toolSettings, string tlsKey)
+        public static T SetTlsKey<T>(this T toolSettings, string tlsKey) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = tlsKey;
@@ -8431,7 +8431,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings ResetTlsKey(this HelmGetHooksSettings toolSettings)
+        public static T ResetTlsKey<T>(this T toolSettings) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = null;
@@ -8444,7 +8444,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings SetTlsVerify(this HelmGetHooksSettings toolSettings, bool? tlsVerify)
+        public static T SetTlsVerify<T>(this T toolSettings, bool? tlsVerify) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = tlsVerify;
@@ -8455,7 +8455,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings ResetTlsVerify(this HelmGetHooksSettings toolSettings)
+        public static T ResetTlsVerify<T>(this T toolSettings) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = null;
@@ -8466,7 +8466,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings EnableTlsVerify(this HelmGetHooksSettings toolSettings)
+        public static T EnableTlsVerify<T>(this T toolSettings) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = true;
@@ -8477,7 +8477,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings DisableTlsVerify(this HelmGetHooksSettings toolSettings)
+        public static T DisableTlsVerify<T>(this T toolSettings) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = false;
@@ -8488,7 +8488,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings ToggleTlsVerify(this HelmGetHooksSettings toolSettings)
+        public static T ToggleTlsVerify<T>(this T toolSettings) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = !toolSettings.TlsVerify;
@@ -8501,7 +8501,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the release to get the hooks for.</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings SetReleaseName(this HelmGetHooksSettings toolSettings, string releaseName)
+        public static T SetReleaseName<T>(this T toolSettings, string releaseName) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseName = releaseName;
@@ -8512,7 +8512,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the release to get the hooks for.</p>
         /// </summary>
         [Pure]
-        public static HelmGetHooksSettings ResetReleaseName(this HelmGetHooksSettings toolSettings)
+        public static T ResetReleaseName<T>(this T toolSettings) where T : HelmGetHooksSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseName = null;
@@ -8535,7 +8535,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for manifest.</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings SetHelp(this HelmGetManifestSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -8546,7 +8546,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for manifest.</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings ResetHelp(this HelmGetManifestSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -8557,7 +8557,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for manifest.</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings EnableHelp(this HelmGetManifestSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -8568,7 +8568,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for manifest.</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings DisableHelp(this HelmGetManifestSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -8579,7 +8579,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for manifest.</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings ToggleHelp(this HelmGetManifestSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -8592,7 +8592,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Get the named release with revision.</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings SetRevision(this HelmGetManifestSettings toolSettings, int? revision)
+        public static T SetRevision<T>(this T toolSettings, int? revision) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Revision = revision;
@@ -8603,7 +8603,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Get the named release with revision.</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings ResetRevision(this HelmGetManifestSettings toolSettings)
+        public static T ResetRevision<T>(this T toolSettings) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Revision = null;
@@ -8616,7 +8616,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings SetTls(this HelmGetManifestSettings toolSettings, bool? tls)
+        public static T SetTls<T>(this T toolSettings, bool? tls) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = tls;
@@ -8627,7 +8627,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings ResetTls(this HelmGetManifestSettings toolSettings)
+        public static T ResetTls<T>(this T toolSettings) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = null;
@@ -8638,7 +8638,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings EnableTls(this HelmGetManifestSettings toolSettings)
+        public static T EnableTls<T>(this T toolSettings) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = true;
@@ -8649,7 +8649,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings DisableTls(this HelmGetManifestSettings toolSettings)
+        public static T DisableTls<T>(this T toolSettings) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = false;
@@ -8660,7 +8660,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings ToggleTls(this HelmGetManifestSettings toolSettings)
+        public static T ToggleTls<T>(this T toolSettings) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = !toolSettings.Tls;
@@ -8673,7 +8673,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings SetTlsCaCert(this HelmGetManifestSettings toolSettings, string tlsCaCert)
+        public static T SetTlsCaCert<T>(this T toolSettings, string tlsCaCert) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = tlsCaCert;
@@ -8684,7 +8684,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings ResetTlsCaCert(this HelmGetManifestSettings toolSettings)
+        public static T ResetTlsCaCert<T>(this T toolSettings) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = null;
@@ -8697,7 +8697,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings SetTlsCert(this HelmGetManifestSettings toolSettings, string tlsCert)
+        public static T SetTlsCert<T>(this T toolSettings, string tlsCert) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = tlsCert;
@@ -8708,7 +8708,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings ResetTlsCert(this HelmGetManifestSettings toolSettings)
+        public static T ResetTlsCert<T>(this T toolSettings) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = null;
@@ -8721,7 +8721,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings SetTlsHostname(this HelmGetManifestSettings toolSettings, string tlsHostname)
+        public static T SetTlsHostname<T>(this T toolSettings, string tlsHostname) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = tlsHostname;
@@ -8732,7 +8732,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings ResetTlsHostname(this HelmGetManifestSettings toolSettings)
+        public static T ResetTlsHostname<T>(this T toolSettings) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = null;
@@ -8745,7 +8745,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings SetTlsKey(this HelmGetManifestSettings toolSettings, string tlsKey)
+        public static T SetTlsKey<T>(this T toolSettings, string tlsKey) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = tlsKey;
@@ -8756,7 +8756,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings ResetTlsKey(this HelmGetManifestSettings toolSettings)
+        public static T ResetTlsKey<T>(this T toolSettings) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = null;
@@ -8769,7 +8769,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings SetTlsVerify(this HelmGetManifestSettings toolSettings, bool? tlsVerify)
+        public static T SetTlsVerify<T>(this T toolSettings, bool? tlsVerify) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = tlsVerify;
@@ -8780,7 +8780,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings ResetTlsVerify(this HelmGetManifestSettings toolSettings)
+        public static T ResetTlsVerify<T>(this T toolSettings) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = null;
@@ -8791,7 +8791,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings EnableTlsVerify(this HelmGetManifestSettings toolSettings)
+        public static T EnableTlsVerify<T>(this T toolSettings) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = true;
@@ -8802,7 +8802,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings DisableTlsVerify(this HelmGetManifestSettings toolSettings)
+        public static T DisableTlsVerify<T>(this T toolSettings) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = false;
@@ -8813,7 +8813,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings ToggleTlsVerify(this HelmGetManifestSettings toolSettings)
+        public static T ToggleTlsVerify<T>(this T toolSettings) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = !toolSettings.TlsVerify;
@@ -8826,7 +8826,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the release to get the manifest for.</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings SetReleaseName(this HelmGetManifestSettings toolSettings, string releaseName)
+        public static T SetReleaseName<T>(this T toolSettings, string releaseName) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseName = releaseName;
@@ -8837,7 +8837,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the release to get the manifest for.</p>
         /// </summary>
         [Pure]
-        public static HelmGetManifestSettings ResetReleaseName(this HelmGetManifestSettings toolSettings)
+        public static T ResetReleaseName<T>(this T toolSettings) where T : HelmGetManifestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseName = null;
@@ -8860,7 +8860,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for notes.</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings SetHelp(this HelmGetNotesSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -8871,7 +8871,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for notes.</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings ResetHelp(this HelmGetNotesSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -8882,7 +8882,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for notes.</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings EnableHelp(this HelmGetNotesSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -8893,7 +8893,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for notes.</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings DisableHelp(this HelmGetNotesSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -8904,7 +8904,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for notes.</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings ToggleHelp(this HelmGetNotesSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -8917,7 +8917,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Get the notes of the named release with revision.</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings SetRevision(this HelmGetNotesSettings toolSettings, int? revision)
+        public static T SetRevision<T>(this T toolSettings, int? revision) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Revision = revision;
@@ -8928,7 +8928,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Get the notes of the named release with revision.</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings ResetRevision(this HelmGetNotesSettings toolSettings)
+        public static T ResetRevision<T>(this T toolSettings) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Revision = null;
@@ -8941,7 +8941,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings SetTls(this HelmGetNotesSettings toolSettings, bool? tls)
+        public static T SetTls<T>(this T toolSettings, bool? tls) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = tls;
@@ -8952,7 +8952,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings ResetTls(this HelmGetNotesSettings toolSettings)
+        public static T ResetTls<T>(this T toolSettings) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = null;
@@ -8963,7 +8963,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings EnableTls(this HelmGetNotesSettings toolSettings)
+        public static T EnableTls<T>(this T toolSettings) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = true;
@@ -8974,7 +8974,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings DisableTls(this HelmGetNotesSettings toolSettings)
+        public static T DisableTls<T>(this T toolSettings) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = false;
@@ -8985,7 +8985,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings ToggleTls(this HelmGetNotesSettings toolSettings)
+        public static T ToggleTls<T>(this T toolSettings) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = !toolSettings.Tls;
@@ -8998,7 +8998,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings SetTlsCaCert(this HelmGetNotesSettings toolSettings, string tlsCaCert)
+        public static T SetTlsCaCert<T>(this T toolSettings, string tlsCaCert) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = tlsCaCert;
@@ -9009,7 +9009,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings ResetTlsCaCert(this HelmGetNotesSettings toolSettings)
+        public static T ResetTlsCaCert<T>(this T toolSettings) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = null;
@@ -9022,7 +9022,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings SetTlsCert(this HelmGetNotesSettings toolSettings, string tlsCert)
+        public static T SetTlsCert<T>(this T toolSettings, string tlsCert) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = tlsCert;
@@ -9033,7 +9033,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings ResetTlsCert(this HelmGetNotesSettings toolSettings)
+        public static T ResetTlsCert<T>(this T toolSettings) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = null;
@@ -9046,7 +9046,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings SetTlsHostname(this HelmGetNotesSettings toolSettings, string tlsHostname)
+        public static T SetTlsHostname<T>(this T toolSettings, string tlsHostname) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = tlsHostname;
@@ -9057,7 +9057,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings ResetTlsHostname(this HelmGetNotesSettings toolSettings)
+        public static T ResetTlsHostname<T>(this T toolSettings) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = null;
@@ -9070,7 +9070,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings SetTlsKey(this HelmGetNotesSettings toolSettings, string tlsKey)
+        public static T SetTlsKey<T>(this T toolSettings, string tlsKey) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = tlsKey;
@@ -9081,7 +9081,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings ResetTlsKey(this HelmGetNotesSettings toolSettings)
+        public static T ResetTlsKey<T>(this T toolSettings) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = null;
@@ -9094,7 +9094,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings SetTlsVerify(this HelmGetNotesSettings toolSettings, bool? tlsVerify)
+        public static T SetTlsVerify<T>(this T toolSettings, bool? tlsVerify) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = tlsVerify;
@@ -9105,7 +9105,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings ResetTlsVerify(this HelmGetNotesSettings toolSettings)
+        public static T ResetTlsVerify<T>(this T toolSettings) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = null;
@@ -9116,7 +9116,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings EnableTlsVerify(this HelmGetNotesSettings toolSettings)
+        public static T EnableTlsVerify<T>(this T toolSettings) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = true;
@@ -9127,7 +9127,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings DisableTlsVerify(this HelmGetNotesSettings toolSettings)
+        public static T DisableTlsVerify<T>(this T toolSettings) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = false;
@@ -9138,7 +9138,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings ToggleTlsVerify(this HelmGetNotesSettings toolSettings)
+        public static T ToggleTlsVerify<T>(this T toolSettings) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = !toolSettings.TlsVerify;
@@ -9150,7 +9150,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p><em>Sets <see cref="HelmGetNotesSettings.ReleaseName"/></em></p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings SetReleaseName(this HelmGetNotesSettings toolSettings, string releaseName)
+        public static T SetReleaseName<T>(this T toolSettings, string releaseName) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseName = releaseName;
@@ -9160,7 +9160,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p><em>Resets <see cref="HelmGetNotesSettings.ReleaseName"/></em></p>
         /// </summary>
         [Pure]
-        public static HelmGetNotesSettings ResetReleaseName(this HelmGetNotesSettings toolSettings)
+        public static T ResetReleaseName<T>(this T toolSettings) where T : HelmGetNotesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseName = null;
@@ -9183,7 +9183,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Dump all (computed) values.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings SetAll(this HelmGetValuesSettings toolSettings, bool? all)
+        public static T SetAll<T>(this T toolSettings, bool? all) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = all;
@@ -9194,7 +9194,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Dump all (computed) values.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings ResetAll(this HelmGetValuesSettings toolSettings)
+        public static T ResetAll<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = null;
@@ -9205,7 +9205,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Dump all (computed) values.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings EnableAll(this HelmGetValuesSettings toolSettings)
+        public static T EnableAll<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = true;
@@ -9216,7 +9216,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Dump all (computed) values.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings DisableAll(this HelmGetValuesSettings toolSettings)
+        public static T DisableAll<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = false;
@@ -9227,7 +9227,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Dump all (computed) values.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings ToggleAll(this HelmGetValuesSettings toolSettings)
+        public static T ToggleAll<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = !toolSettings.All;
@@ -9240,7 +9240,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for values.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings SetHelp(this HelmGetValuesSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -9251,7 +9251,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for values.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings ResetHelp(this HelmGetValuesSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -9262,7 +9262,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for values.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings EnableHelp(this HelmGetValuesSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -9273,7 +9273,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for values.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings DisableHelp(this HelmGetValuesSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -9284,7 +9284,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for values.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings ToggleHelp(this HelmGetValuesSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -9297,7 +9297,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Output the specified format (json or yaml) (default "yaml").</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings SetOutput(this HelmGetValuesSettings toolSettings, string output)
+        public static T SetOutput<T>(this T toolSettings, string output) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -9308,7 +9308,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Output the specified format (json or yaml) (default "yaml").</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings ResetOutput(this HelmGetValuesSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -9321,7 +9321,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Get the named release with revision.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings SetRevision(this HelmGetValuesSettings toolSettings, int? revision)
+        public static T SetRevision<T>(this T toolSettings, int? revision) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Revision = revision;
@@ -9332,7 +9332,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Get the named release with revision.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings ResetRevision(this HelmGetValuesSettings toolSettings)
+        public static T ResetRevision<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Revision = null;
@@ -9345,7 +9345,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings SetTls(this HelmGetValuesSettings toolSettings, bool? tls)
+        public static T SetTls<T>(this T toolSettings, bool? tls) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = tls;
@@ -9356,7 +9356,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings ResetTls(this HelmGetValuesSettings toolSettings)
+        public static T ResetTls<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = null;
@@ -9367,7 +9367,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings EnableTls(this HelmGetValuesSettings toolSettings)
+        public static T EnableTls<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = true;
@@ -9378,7 +9378,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings DisableTls(this HelmGetValuesSettings toolSettings)
+        public static T DisableTls<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = false;
@@ -9389,7 +9389,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings ToggleTls(this HelmGetValuesSettings toolSettings)
+        public static T ToggleTls<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = !toolSettings.Tls;
@@ -9402,7 +9402,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings SetTlsCaCert(this HelmGetValuesSettings toolSettings, string tlsCaCert)
+        public static T SetTlsCaCert<T>(this T toolSettings, string tlsCaCert) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = tlsCaCert;
@@ -9413,7 +9413,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings ResetTlsCaCert(this HelmGetValuesSettings toolSettings)
+        public static T ResetTlsCaCert<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = null;
@@ -9426,7 +9426,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings SetTlsCert(this HelmGetValuesSettings toolSettings, string tlsCert)
+        public static T SetTlsCert<T>(this T toolSettings, string tlsCert) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = tlsCert;
@@ -9437,7 +9437,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings ResetTlsCert(this HelmGetValuesSettings toolSettings)
+        public static T ResetTlsCert<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = null;
@@ -9450,7 +9450,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings SetTlsHostname(this HelmGetValuesSettings toolSettings, string tlsHostname)
+        public static T SetTlsHostname<T>(this T toolSettings, string tlsHostname) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = tlsHostname;
@@ -9461,7 +9461,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings ResetTlsHostname(this HelmGetValuesSettings toolSettings)
+        public static T ResetTlsHostname<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = null;
@@ -9474,7 +9474,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings SetTlsKey(this HelmGetValuesSettings toolSettings, string tlsKey)
+        public static T SetTlsKey<T>(this T toolSettings, string tlsKey) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = tlsKey;
@@ -9485,7 +9485,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings ResetTlsKey(this HelmGetValuesSettings toolSettings)
+        public static T ResetTlsKey<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = null;
@@ -9498,7 +9498,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings SetTlsVerify(this HelmGetValuesSettings toolSettings, bool? tlsVerify)
+        public static T SetTlsVerify<T>(this T toolSettings, bool? tlsVerify) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = tlsVerify;
@@ -9509,7 +9509,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings ResetTlsVerify(this HelmGetValuesSettings toolSettings)
+        public static T ResetTlsVerify<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = null;
@@ -9520,7 +9520,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings EnableTlsVerify(this HelmGetValuesSettings toolSettings)
+        public static T EnableTlsVerify<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = true;
@@ -9531,7 +9531,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings DisableTlsVerify(this HelmGetValuesSettings toolSettings)
+        public static T DisableTlsVerify<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = false;
@@ -9542,7 +9542,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings ToggleTlsVerify(this HelmGetValuesSettings toolSettings)
+        public static T ToggleTlsVerify<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = !toolSettings.TlsVerify;
@@ -9555,7 +9555,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the release to get the values for.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings SetReleaseName(this HelmGetValuesSettings toolSettings, string releaseName)
+        public static T SetReleaseName<T>(this T toolSettings, string releaseName) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseName = releaseName;
@@ -9566,7 +9566,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the release to get the values for.</p>
         /// </summary>
         [Pure]
-        public static HelmGetValuesSettings ResetReleaseName(this HelmGetValuesSettings toolSettings)
+        public static T ResetReleaseName<T>(this T toolSettings) where T : HelmGetValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseName = null;
@@ -9589,7 +9589,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specifies the max column width of output (default 60).</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings SetColWidth(this HelmHistorySettings toolSettings, uint? colWidth)
+        public static T SetColWidth<T>(this T toolSettings, uint? colWidth) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ColWidth = colWidth;
@@ -9600,7 +9600,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specifies the max column width of output (default 60).</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings ResetColWidth(this HelmHistorySettings toolSettings)
+        public static T ResetColWidth<T>(this T toolSettings) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ColWidth = null;
@@ -9613,7 +9613,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for history.</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings SetHelp(this HelmHistorySettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -9624,7 +9624,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for history.</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings ResetHelp(this HelmHistorySettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -9635,7 +9635,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for history.</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings EnableHelp(this HelmHistorySettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -9646,7 +9646,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for history.</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings DisableHelp(this HelmHistorySettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -9657,7 +9657,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for history.</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings ToggleHelp(this HelmHistorySettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -9670,7 +9670,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Maximum number of revision to include in history (default 256).</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings SetMax(this HelmHistorySettings toolSettings, int? max)
+        public static T SetMax<T>(this T toolSettings, int? max) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Max = max;
@@ -9681,7 +9681,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Maximum number of revision to include in history (default 256).</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings ResetMax(this HelmHistorySettings toolSettings)
+        public static T ResetMax<T>(this T toolSettings) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Max = null;
@@ -9694,7 +9694,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Prints the output in the specified format (json|table|yaml) (default "table").</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings SetOutput(this HelmHistorySettings toolSettings, string output)
+        public static T SetOutput<T>(this T toolSettings, string output) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -9705,7 +9705,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Prints the output in the specified format (json|table|yaml) (default "table").</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings ResetOutput(this HelmHistorySettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -9718,7 +9718,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings SetTls(this HelmHistorySettings toolSettings, bool? tls)
+        public static T SetTls<T>(this T toolSettings, bool? tls) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = tls;
@@ -9729,7 +9729,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings ResetTls(this HelmHistorySettings toolSettings)
+        public static T ResetTls<T>(this T toolSettings) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = null;
@@ -9740,7 +9740,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings EnableTls(this HelmHistorySettings toolSettings)
+        public static T EnableTls<T>(this T toolSettings) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = true;
@@ -9751,7 +9751,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings DisableTls(this HelmHistorySettings toolSettings)
+        public static T DisableTls<T>(this T toolSettings) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = false;
@@ -9762,7 +9762,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings ToggleTls(this HelmHistorySettings toolSettings)
+        public static T ToggleTls<T>(this T toolSettings) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = !toolSettings.Tls;
@@ -9775,7 +9775,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings SetTlsCaCert(this HelmHistorySettings toolSettings, string tlsCaCert)
+        public static T SetTlsCaCert<T>(this T toolSettings, string tlsCaCert) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = tlsCaCert;
@@ -9786,7 +9786,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings ResetTlsCaCert(this HelmHistorySettings toolSettings)
+        public static T ResetTlsCaCert<T>(this T toolSettings) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = null;
@@ -9799,7 +9799,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings SetTlsCert(this HelmHistorySettings toolSettings, string tlsCert)
+        public static T SetTlsCert<T>(this T toolSettings, string tlsCert) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = tlsCert;
@@ -9810,7 +9810,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings ResetTlsCert(this HelmHistorySettings toolSettings)
+        public static T ResetTlsCert<T>(this T toolSettings) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = null;
@@ -9823,7 +9823,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings SetTlsHostname(this HelmHistorySettings toolSettings, string tlsHostname)
+        public static T SetTlsHostname<T>(this T toolSettings, string tlsHostname) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = tlsHostname;
@@ -9834,7 +9834,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings ResetTlsHostname(this HelmHistorySettings toolSettings)
+        public static T ResetTlsHostname<T>(this T toolSettings) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = null;
@@ -9847,7 +9847,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings SetTlsKey(this HelmHistorySettings toolSettings, string tlsKey)
+        public static T SetTlsKey<T>(this T toolSettings, string tlsKey) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = tlsKey;
@@ -9858,7 +9858,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings ResetTlsKey(this HelmHistorySettings toolSettings)
+        public static T ResetTlsKey<T>(this T toolSettings) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = null;
@@ -9871,7 +9871,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings SetTlsVerify(this HelmHistorySettings toolSettings, bool? tlsVerify)
+        public static T SetTlsVerify<T>(this T toolSettings, bool? tlsVerify) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = tlsVerify;
@@ -9882,7 +9882,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings ResetTlsVerify(this HelmHistorySettings toolSettings)
+        public static T ResetTlsVerify<T>(this T toolSettings) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = null;
@@ -9893,7 +9893,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings EnableTlsVerify(this HelmHistorySettings toolSettings)
+        public static T EnableTlsVerify<T>(this T toolSettings) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = true;
@@ -9904,7 +9904,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings DisableTlsVerify(this HelmHistorySettings toolSettings)
+        public static T DisableTlsVerify<T>(this T toolSettings) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = false;
@@ -9915,7 +9915,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings ToggleTlsVerify(this HelmHistorySettings toolSettings)
+        public static T ToggleTlsVerify<T>(this T toolSettings) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = !toolSettings.TlsVerify;
@@ -9928,7 +9928,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the release to get the history for.</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings SetReleaseName(this HelmHistorySettings toolSettings, string releaseName)
+        public static T SetReleaseName<T>(this T toolSettings, string releaseName) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseName = releaseName;
@@ -9939,7 +9939,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the release to get the history for.</p>
         /// </summary>
         [Pure]
-        public static HelmHistorySettings ResetReleaseName(this HelmHistorySettings toolSettings)
+        public static T ResetReleaseName<T>(this T toolSettings) where T : HelmHistorySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseName = null;
@@ -9962,7 +9962,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for home.</p>
         /// </summary>
         [Pure]
-        public static HelmHomeSettings SetHelp(this HelmHomeSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmHomeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -9973,7 +9973,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for home.</p>
         /// </summary>
         [Pure]
-        public static HelmHomeSettings ResetHelp(this HelmHomeSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmHomeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -9984,7 +9984,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for home.</p>
         /// </summary>
         [Pure]
-        public static HelmHomeSettings EnableHelp(this HelmHomeSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmHomeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -9995,7 +9995,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for home.</p>
         /// </summary>
         [Pure]
-        public static HelmHomeSettings DisableHelp(this HelmHomeSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmHomeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -10006,7 +10006,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for home.</p>
         /// </summary>
         [Pure]
-        public static HelmHomeSettings ToggleHelp(this HelmHomeSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmHomeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -10029,7 +10029,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Auto-mount the given service account to tiller (default true).</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetAutomountServiceAccountToken(this HelmInitSettings toolSettings, bool? automountServiceAccountToken)
+        public static T SetAutomountServiceAccountToken<T>(this T toolSettings, bool? automountServiceAccountToken) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AutomountServiceAccountToken = automountServiceAccountToken;
@@ -10040,7 +10040,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Auto-mount the given service account to tiller (default true).</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetAutomountServiceAccountToken(this HelmInitSettings toolSettings)
+        public static T ResetAutomountServiceAccountToken<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AutomountServiceAccountToken = null;
@@ -10051,7 +10051,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Auto-mount the given service account to tiller (default true).</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings EnableAutomountServiceAccountToken(this HelmInitSettings toolSettings)
+        public static T EnableAutomountServiceAccountToken<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AutomountServiceAccountToken = true;
@@ -10062,7 +10062,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Auto-mount the given service account to tiller (default true).</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings DisableAutomountServiceAccountToken(this HelmInitSettings toolSettings)
+        public static T DisableAutomountServiceAccountToken<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AutomountServiceAccountToken = false;
@@ -10073,7 +10073,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Auto-mount the given service account to tiller (default true).</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ToggleAutomountServiceAccountToken(this HelmInitSettings toolSettings)
+        public static T ToggleAutomountServiceAccountToken<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AutomountServiceAccountToken = !toolSettings.AutomountServiceAccountToken;
@@ -10086,7 +10086,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use the canary Tiller image.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetCanaryImage(this HelmInitSettings toolSettings, bool? canaryImage)
+        public static T SetCanaryImage<T>(this T toolSettings, bool? canaryImage) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CanaryImage = canaryImage;
@@ -10097,7 +10097,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use the canary Tiller image.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetCanaryImage(this HelmInitSettings toolSettings)
+        public static T ResetCanaryImage<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CanaryImage = null;
@@ -10108,7 +10108,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use the canary Tiller image.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings EnableCanaryImage(this HelmInitSettings toolSettings)
+        public static T EnableCanaryImage<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CanaryImage = true;
@@ -10119,7 +10119,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use the canary Tiller image.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings DisableCanaryImage(this HelmInitSettings toolSettings)
+        public static T DisableCanaryImage<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CanaryImage = false;
@@ -10130,7 +10130,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use the canary Tiller image.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ToggleCanaryImage(this HelmInitSettings toolSettings)
+        public static T ToggleCanaryImage<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CanaryImage = !toolSettings.CanaryImage;
@@ -10143,7 +10143,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set does not install Tiller.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetClientOnly(this HelmInitSettings toolSettings, bool? clientOnly)
+        public static T SetClientOnly<T>(this T toolSettings, bool? clientOnly) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClientOnly = clientOnly;
@@ -10154,7 +10154,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set does not install Tiller.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetClientOnly(this HelmInitSettings toolSettings)
+        public static T ResetClientOnly<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClientOnly = null;
@@ -10165,7 +10165,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set does not install Tiller.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings EnableClientOnly(this HelmInitSettings toolSettings)
+        public static T EnableClientOnly<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClientOnly = true;
@@ -10176,7 +10176,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set does not install Tiller.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings DisableClientOnly(this HelmInitSettings toolSettings)
+        public static T DisableClientOnly<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClientOnly = false;
@@ -10187,7 +10187,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set does not install Tiller.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ToggleClientOnly(this HelmInitSettings toolSettings)
+        public static T ToggleClientOnly<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClientOnly = !toolSettings.ClientOnly;
@@ -10200,7 +10200,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Do not install local or remote.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetDryRun(this HelmInitSettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -10211,7 +10211,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Do not install local or remote.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetDryRun(this HelmInitSettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -10222,7 +10222,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Do not install local or remote.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings EnableDryRun(this HelmInitSettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -10233,7 +10233,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Do not install local or remote.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings DisableDryRun(this HelmInitSettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -10244,7 +10244,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Do not install local or remote.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ToggleDryRun(this HelmInitSettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -10257,7 +10257,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Force upgrade of Tiller to the current helm version.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetForceUpgrade(this HelmInitSettings toolSettings, bool? forceUpgrade)
+        public static T SetForceUpgrade<T>(this T toolSettings, bool? forceUpgrade) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceUpgrade = forceUpgrade;
@@ -10268,7 +10268,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Force upgrade of Tiller to the current helm version.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetForceUpgrade(this HelmInitSettings toolSettings)
+        public static T ResetForceUpgrade<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceUpgrade = null;
@@ -10279,7 +10279,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Force upgrade of Tiller to the current helm version.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings EnableForceUpgrade(this HelmInitSettings toolSettings)
+        public static T EnableForceUpgrade<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceUpgrade = true;
@@ -10290,7 +10290,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Force upgrade of Tiller to the current helm version.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings DisableForceUpgrade(this HelmInitSettings toolSettings)
+        public static T DisableForceUpgrade<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceUpgrade = false;
@@ -10301,7 +10301,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Force upgrade of Tiller to the current helm version.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ToggleForceUpgrade(this HelmInitSettings toolSettings)
+        public static T ToggleForceUpgrade<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceUpgrade = !toolSettings.ForceUpgrade;
@@ -10314,7 +10314,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for init.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetHelp(this HelmInitSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -10325,7 +10325,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for init.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetHelp(this HelmInitSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -10336,7 +10336,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for init.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings EnableHelp(this HelmInitSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -10347,7 +10347,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for init.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings DisableHelp(this HelmInitSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -10358,7 +10358,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for init.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ToggleHelp(this HelmInitSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -10371,7 +10371,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Limit the maximum number of revisions saved per release. Use 0 for no limit.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetHistoryMax(this HelmInitSettings toolSettings, long? historyMax)
+        public static T SetHistoryMax<T>(this T toolSettings, long? historyMax) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HistoryMax = historyMax;
@@ -10382,7 +10382,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Limit the maximum number of revisions saved per release. Use 0 for no limit.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetHistoryMax(this HelmInitSettings toolSettings)
+        public static T ResetHistoryMax<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HistoryMax = null;
@@ -10395,7 +10395,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>URL for local repository (default "http://127.0.0.1:8879/charts").</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetLocalRepoUrl(this HelmInitSettings toolSettings, string localRepoUrl)
+        public static T SetLocalRepoUrl<T>(this T toolSettings, string localRepoUrl) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LocalRepoUrl = localRepoUrl;
@@ -10406,7 +10406,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>URL for local repository (default "http://127.0.0.1:8879/charts").</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetLocalRepoUrl(this HelmInitSettings toolSettings)
+        public static T ResetLocalRepoUrl<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LocalRepoUrl = null;
@@ -10419,7 +10419,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Install Tiller with net=host.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetNetHost(this HelmInitSettings toolSettings, bool? netHost)
+        public static T SetNetHost<T>(this T toolSettings, bool? netHost) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NetHost = netHost;
@@ -10430,7 +10430,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Install Tiller with net=host.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetNetHost(this HelmInitSettings toolSettings)
+        public static T ResetNetHost<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NetHost = null;
@@ -10441,7 +10441,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Install Tiller with net=host.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings EnableNetHost(this HelmInitSettings toolSettings)
+        public static T EnableNetHost<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NetHost = true;
@@ -10452,7 +10452,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Install Tiller with net=host.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings DisableNetHost(this HelmInitSettings toolSettings)
+        public static T DisableNetHost<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NetHost = false;
@@ -10463,7 +10463,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Install Tiller with net=host.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ToggleNetHost(this HelmInitSettings toolSettings)
+        public static T ToggleNetHost<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NetHost = !toolSettings.NetHost;
@@ -10476,7 +10476,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Labels to specify the node on which Tiller is installed (app=tiller,helm=rocks).</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetNodeSelectors(this HelmInitSettings toolSettings, string nodeSelectors)
+        public static T SetNodeSelectors<T>(this T toolSettings, string nodeSelectors) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NodeSelectors = nodeSelectors;
@@ -10487,7 +10487,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Labels to specify the node on which Tiller is installed (app=tiller,helm=rocks).</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetNodeSelectors(this HelmInitSettings toolSettings)
+        public static T ResetNodeSelectors<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NodeSelectors = null;
@@ -10500,7 +10500,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Skip installation and output Tiller's manifest in specified format (json or yaml).</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetOutput(this HelmInitSettings toolSettings, HelmOutputFormat output)
+        public static T SetOutput<T>(this T toolSettings, HelmOutputFormat output) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -10511,7 +10511,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Skip installation and output Tiller's manifest in specified format (json or yaml).</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetOutput(this HelmInitSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -10524,7 +10524,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Override values for the Tiller Deployment manifest (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetOverride(this HelmInitSettings toolSettings, IDictionary<string, object> @override)
+        public static T SetOverride<T>(this T toolSettings, IDictionary<string, object> @override) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OverrideInternal = @override.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -10535,7 +10535,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Override values for the Tiller Deployment manifest (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ClearOverride(this HelmInitSettings toolSettings)
+        public static T ClearOverride<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OverrideInternal.Clear();
@@ -10546,7 +10546,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Override values for the Tiller Deployment manifest (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings AddOverride(this HelmInitSettings toolSettings, string overrideKey, object overrideValue)
+        public static T AddOverride<T>(this T toolSettings, string overrideKey, object overrideValue) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OverrideInternal.Add(overrideKey, overrideValue);
@@ -10557,7 +10557,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Override values for the Tiller Deployment manifest (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings RemoveOverride(this HelmInitSettings toolSettings, string overrideKey)
+        public static T RemoveOverride<T>(this T toolSettings, string overrideKey) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OverrideInternal.Remove(overrideKey);
@@ -10568,7 +10568,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Override values for the Tiller Deployment manifest (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetOverride(this HelmInitSettings toolSettings, string overrideKey, object overrideValue)
+        public static T SetOverride<T>(this T toolSettings, string overrideKey, object overrideValue) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OverrideInternal[overrideKey] = overrideValue;
@@ -10581,7 +10581,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Amount of tiller instances to run on the cluster (default 1).</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetReplicas(this HelmInitSettings toolSettings, long? replicas)
+        public static T SetReplicas<T>(this T toolSettings, long? replicas) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Replicas = replicas;
@@ -10592,7 +10592,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Amount of tiller instances to run on the cluster (default 1).</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetReplicas(this HelmInitSettings toolSettings)
+        public static T ResetReplicas<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Replicas = null;
@@ -10605,7 +10605,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Name of service account.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetServiceAccount(this HelmInitSettings toolSettings, string serviceAccount)
+        public static T SetServiceAccount<T>(this T toolSettings, string serviceAccount) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceAccount = serviceAccount;
@@ -10616,7 +10616,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Name of service account.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetServiceAccount(this HelmInitSettings toolSettings)
+        public static T ResetServiceAccount<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceAccount = null;
@@ -10629,7 +10629,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Do not refresh (download) the local repository cache.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetSkipRefresh(this HelmInitSettings toolSettings, bool? skipRefresh)
+        public static T SetSkipRefresh<T>(this T toolSettings, bool? skipRefresh) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipRefresh = skipRefresh;
@@ -10640,7 +10640,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Do not refresh (download) the local repository cache.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetSkipRefresh(this HelmInitSettings toolSettings)
+        public static T ResetSkipRefresh<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipRefresh = null;
@@ -10651,7 +10651,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Do not refresh (download) the local repository cache.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings EnableSkipRefresh(this HelmInitSettings toolSettings)
+        public static T EnableSkipRefresh<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipRefresh = true;
@@ -10662,7 +10662,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Do not refresh (download) the local repository cache.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings DisableSkipRefresh(this HelmInitSettings toolSettings)
+        public static T DisableSkipRefresh<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipRefresh = false;
@@ -10673,7 +10673,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Do not refresh (download) the local repository cache.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ToggleSkipRefresh(this HelmInitSettings toolSettings)
+        public static T ToggleSkipRefresh<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipRefresh = !toolSettings.SkipRefresh;
@@ -10686,7 +10686,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>URL for stable repository (default "https://kubernetes-charts.storage.googleapis.com").</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetStableRepoUrl(this HelmInitSettings toolSettings, string stableRepoUrl)
+        public static T SetStableRepoUrl<T>(this T toolSettings, string stableRepoUrl) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StableRepoUrl = stableRepoUrl;
@@ -10697,7 +10697,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>URL for stable repository (default "https://kubernetes-charts.storage.googleapis.com").</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetStableRepoUrl(this HelmInitSettings toolSettings)
+        public static T ResetStableRepoUrl<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StableRepoUrl = null;
@@ -10710,7 +10710,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Override Tiller image.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetTillerImage(this HelmInitSettings toolSettings, string tillerImage)
+        public static T SetTillerImage<T>(this T toolSettings, string tillerImage) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TillerImage = tillerImage;
@@ -10721,7 +10721,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Override Tiller image.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetTillerImage(this HelmInitSettings toolSettings)
+        public static T ResetTillerImage<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TillerImage = null;
@@ -10734,7 +10734,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Install Tiller with TLS enabled.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetTillerTls(this HelmInitSettings toolSettings, bool? tillerTls)
+        public static T SetTillerTls<T>(this T toolSettings, bool? tillerTls) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TillerTls = tillerTls;
@@ -10745,7 +10745,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Install Tiller with TLS enabled.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetTillerTls(this HelmInitSettings toolSettings)
+        public static T ResetTillerTls<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TillerTls = null;
@@ -10756,7 +10756,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Install Tiller with TLS enabled.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings EnableTillerTls(this HelmInitSettings toolSettings)
+        public static T EnableTillerTls<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TillerTls = true;
@@ -10767,7 +10767,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Install Tiller with TLS enabled.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings DisableTillerTls(this HelmInitSettings toolSettings)
+        public static T DisableTillerTls<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TillerTls = false;
@@ -10778,7 +10778,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Install Tiller with TLS enabled.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ToggleTillerTls(this HelmInitSettings toolSettings)
+        public static T ToggleTillerTls<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TillerTls = !toolSettings.TillerTls;
@@ -10791,7 +10791,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file to install with Tiller.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetTillerTlsCert(this HelmInitSettings toolSettings, string tillerTlsCert)
+        public static T SetTillerTlsCert<T>(this T toolSettings, string tillerTlsCert) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TillerTlsCert = tillerTlsCert;
@@ -10802,7 +10802,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file to install with Tiller.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetTillerTlsCert(this HelmInitSettings toolSettings)
+        public static T ResetTillerTlsCert<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TillerTlsCert = null;
@@ -10815,7 +10815,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from Tiller.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetTillerTlsHostname(this HelmInitSettings toolSettings, string tillerTlsHostname)
+        public static T SetTillerTlsHostname<T>(this T toolSettings, string tillerTlsHostname) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TillerTlsHostname = tillerTlsHostname;
@@ -10826,7 +10826,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from Tiller.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetTillerTlsHostname(this HelmInitSettings toolSettings)
+        public static T ResetTillerTlsHostname<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TillerTlsHostname = null;
@@ -10839,7 +10839,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file to install with Tiller.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetTillerTlsKey(this HelmInitSettings toolSettings, string tillerTlsKey)
+        public static T SetTillerTlsKey<T>(this T toolSettings, string tillerTlsKey) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TillerTlsKey = tillerTlsKey;
@@ -10850,7 +10850,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file to install with Tiller.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetTillerTlsKey(this HelmInitSettings toolSettings)
+        public static T ResetTillerTlsKey<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TillerTlsKey = null;
@@ -10863,7 +10863,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Install Tiller with TLS enabled and to verify remote certificates.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetTillerTlsVerify(this HelmInitSettings toolSettings, bool? tillerTlsVerify)
+        public static T SetTillerTlsVerify<T>(this T toolSettings, bool? tillerTlsVerify) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TillerTlsVerify = tillerTlsVerify;
@@ -10874,7 +10874,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Install Tiller with TLS enabled and to verify remote certificates.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetTillerTlsVerify(this HelmInitSettings toolSettings)
+        public static T ResetTillerTlsVerify<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TillerTlsVerify = null;
@@ -10885,7 +10885,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Install Tiller with TLS enabled and to verify remote certificates.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings EnableTillerTlsVerify(this HelmInitSettings toolSettings)
+        public static T EnableTillerTlsVerify<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TillerTlsVerify = true;
@@ -10896,7 +10896,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Install Tiller with TLS enabled and to verify remote certificates.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings DisableTillerTlsVerify(this HelmInitSettings toolSettings)
+        public static T DisableTillerTlsVerify<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TillerTlsVerify = false;
@@ -10907,7 +10907,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Install Tiller with TLS enabled and to verify remote certificates.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ToggleTillerTlsVerify(this HelmInitSettings toolSettings)
+        public static T ToggleTillerTlsVerify<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TillerTlsVerify = !toolSettings.TillerTlsVerify;
@@ -10920,7 +10920,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to CA root certificate.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetTlsCaCert(this HelmInitSettings toolSettings, string tlsCaCert)
+        public static T SetTlsCaCert<T>(this T toolSettings, string tlsCaCert) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = tlsCaCert;
@@ -10931,7 +10931,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to CA root certificate.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetTlsCaCert(this HelmInitSettings toolSettings)
+        public static T ResetTlsCaCert<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = null;
@@ -10944,7 +10944,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Upgrade if Tiller is already installed.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetUpgrade(this HelmInitSettings toolSettings, bool? upgrade)
+        public static T SetUpgrade<T>(this T toolSettings, bool? upgrade) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Upgrade = upgrade;
@@ -10955,7 +10955,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Upgrade if Tiller is already installed.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetUpgrade(this HelmInitSettings toolSettings)
+        public static T ResetUpgrade<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Upgrade = null;
@@ -10966,7 +10966,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Upgrade if Tiller is already installed.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings EnableUpgrade(this HelmInitSettings toolSettings)
+        public static T EnableUpgrade<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Upgrade = true;
@@ -10977,7 +10977,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Upgrade if Tiller is already installed.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings DisableUpgrade(this HelmInitSettings toolSettings)
+        public static T DisableUpgrade<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Upgrade = false;
@@ -10988,7 +10988,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Upgrade if Tiller is already installed.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ToggleUpgrade(this HelmInitSettings toolSettings)
+        public static T ToggleUpgrade<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Upgrade = !toolSettings.Upgrade;
@@ -11001,7 +11001,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Block until Tiller is running and ready to receive requests.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings SetWait(this HelmInitSettings toolSettings, bool? wait)
+        public static T SetWait<T>(this T toolSettings, bool? wait) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = wait;
@@ -11012,7 +11012,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Block until Tiller is running and ready to receive requests.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ResetWait(this HelmInitSettings toolSettings)
+        public static T ResetWait<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = null;
@@ -11023,7 +11023,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Block until Tiller is running and ready to receive requests.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings EnableWait(this HelmInitSettings toolSettings)
+        public static T EnableWait<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = true;
@@ -11034,7 +11034,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Block until Tiller is running and ready to receive requests.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings DisableWait(this HelmInitSettings toolSettings)
+        public static T DisableWait<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = false;
@@ -11045,7 +11045,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Block until Tiller is running and ready to receive requests.</p>
         /// </summary>
         [Pure]
-        public static HelmInitSettings ToggleWait(this HelmInitSettings toolSettings)
+        public static T ToggleWait<T>(this T toolSettings) where T : HelmInitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = !toolSettings.Wait;
@@ -11068,7 +11068,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository url where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings SetCaFile(this HelmInspectSettings toolSettings, string caFile)
+        public static T SetCaFile<T>(this T toolSettings, string caFile) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CaFile = caFile;
@@ -11079,7 +11079,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository url where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings ResetCaFile(this HelmInspectSettings toolSettings)
+        public static T ResetCaFile<T>(this T toolSettings) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CaFile = null;
@@ -11092,7 +11092,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify certificates of HTTPS-enabled servers using this CA bundle.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings SetCertFile(this HelmInspectSettings toolSettings, string certFile)
+        public static T SetCertFile<T>(this T toolSettings, string certFile) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CertFile = certFile;
@@ -11103,7 +11103,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify certificates of HTTPS-enabled servers using this CA bundle.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings ResetCertFile(this HelmInspectSettings toolSettings)
+        public static T ResetCertFile<T>(this T toolSettings) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CertFile = null;
@@ -11116,7 +11116,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings SetDevel(this HelmInspectSettings toolSettings, bool? devel)
+        public static T SetDevel<T>(this T toolSettings, bool? devel) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = devel;
@@ -11127,7 +11127,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings ResetDevel(this HelmInspectSettings toolSettings)
+        public static T ResetDevel<T>(this T toolSettings) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = null;
@@ -11138,7 +11138,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings EnableDevel(this HelmInspectSettings toolSettings)
+        public static T EnableDevel<T>(this T toolSettings) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = true;
@@ -11149,7 +11149,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings DisableDevel(this HelmInspectSettings toolSettings)
+        public static T DisableDevel<T>(this T toolSettings) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = false;
@@ -11160,7 +11160,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings ToggleDevel(this HelmInspectSettings toolSettings)
+        public static T ToggleDevel<T>(this T toolSettings) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = !toolSettings.Devel;
@@ -11173,7 +11173,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for inspect.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings SetHelp(this HelmInspectSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -11184,7 +11184,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for inspect.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings ResetHelp(this HelmInspectSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -11195,7 +11195,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for inspect.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings EnableHelp(this HelmInspectSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -11206,7 +11206,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for inspect.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings DisableHelp(this HelmInspectSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -11217,7 +11217,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for inspect.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings ToggleHelp(this HelmInspectSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -11230,7 +11230,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL key file.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings SetKeyFile(this HelmInspectSettings toolSettings, string keyFile)
+        public static T SetKeyFile<T>(this T toolSettings, string keyFile) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyFile = keyFile;
@@ -11241,7 +11241,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL key file.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings ResetKeyFile(this HelmInspectSettings toolSettings)
+        public static T ResetKeyFile<T>(this T toolSettings) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyFile = null;
@@ -11254,7 +11254,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to the keyring containing public verification keys (default "~/.gnupg/pubring.gpg").</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings SetKeyring(this HelmInspectSettings toolSettings, string keyring)
+        public static T SetKeyring<T>(this T toolSettings, string keyring) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyring = keyring;
@@ -11265,7 +11265,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to the keyring containing public verification keys (default "~/.gnupg/pubring.gpg").</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings ResetKeyring(this HelmInspectSettings toolSettings)
+        public static T ResetKeyring<T>(this T toolSettings) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyring = null;
@@ -11278,7 +11278,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository password where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings SetPassword(this HelmInspectSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -11289,7 +11289,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository password where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings ResetPassword(this HelmInspectSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -11302,7 +11302,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository url where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings SetRepo(this HelmInspectSettings toolSettings, string repo)
+        public static T SetRepo<T>(this T toolSettings, string repo) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Repo = repo;
@@ -11313,7 +11313,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository url where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings ResetRepo(this HelmInspectSettings toolSettings)
+        public static T ResetRepo<T>(this T toolSettings) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Repo = null;
@@ -11326,7 +11326,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository username where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings SetUsername(this HelmInspectSettings toolSettings, string username)
+        public static T SetUsername<T>(this T toolSettings, string username) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = username;
@@ -11337,7 +11337,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository username where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings ResetUsername(this HelmInspectSettings toolSettings)
+        public static T ResetUsername<T>(this T toolSettings) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = null;
@@ -11350,7 +11350,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance data for this chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings SetVerify(this HelmInspectSettings toolSettings, bool? verify)
+        public static T SetVerify<T>(this T toolSettings, bool? verify) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = verify;
@@ -11361,7 +11361,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance data for this chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings ResetVerify(this HelmInspectSettings toolSettings)
+        public static T ResetVerify<T>(this T toolSettings) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = null;
@@ -11372,7 +11372,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance data for this chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings EnableVerify(this HelmInspectSettings toolSettings)
+        public static T EnableVerify<T>(this T toolSettings) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = true;
@@ -11383,7 +11383,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance data for this chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings DisableVerify(this HelmInspectSettings toolSettings)
+        public static T DisableVerify<T>(this T toolSettings) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = false;
@@ -11394,7 +11394,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance data for this chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings ToggleVerify(this HelmInspectSettings toolSettings)
+        public static T ToggleVerify<T>(this T toolSettings) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = !toolSettings.Verify;
@@ -11407,7 +11407,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Version of the chart. By default, the newest chart is shown.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings SetVersion(this HelmInspectSettings toolSettings, string version)
+        public static T SetVersion<T>(this T toolSettings, string version) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = version;
@@ -11418,7 +11418,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Version of the chart. By default, the newest chart is shown.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings ResetVersion(this HelmInspectSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = null;
@@ -11431,7 +11431,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the chart to inspect.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings SetChart(this HelmInspectSettings toolSettings, string chart)
+        public static T SetChart<T>(this T toolSettings, string chart) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Chart = chart;
@@ -11442,7 +11442,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the chart to inspect.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectSettings ResetChart(this HelmInspectSettings toolSettings)
+        public static T ResetChart<T>(this T toolSettings) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Chart = null;
@@ -11465,7 +11465,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository url where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings SetCaFile(this HelmInspectChartSettings toolSettings, string caFile)
+        public static T SetCaFile<T>(this T toolSettings, string caFile) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CaFile = caFile;
@@ -11476,7 +11476,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository url where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings ResetCaFile(this HelmInspectChartSettings toolSettings)
+        public static T ResetCaFile<T>(this T toolSettings) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CaFile = null;
@@ -11489,7 +11489,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify certificates of HTTPS-enabled servers using this CA bundle.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings SetCertFile(this HelmInspectChartSettings toolSettings, string certFile)
+        public static T SetCertFile<T>(this T toolSettings, string certFile) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CertFile = certFile;
@@ -11500,7 +11500,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify certificates of HTTPS-enabled servers using this CA bundle.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings ResetCertFile(this HelmInspectChartSettings toolSettings)
+        public static T ResetCertFile<T>(this T toolSettings) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CertFile = null;
@@ -11513,7 +11513,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings SetDevel(this HelmInspectChartSettings toolSettings, bool? devel)
+        public static T SetDevel<T>(this T toolSettings, bool? devel) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = devel;
@@ -11524,7 +11524,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings ResetDevel(this HelmInspectChartSettings toolSettings)
+        public static T ResetDevel<T>(this T toolSettings) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = null;
@@ -11535,7 +11535,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings EnableDevel(this HelmInspectChartSettings toolSettings)
+        public static T EnableDevel<T>(this T toolSettings) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = true;
@@ -11546,7 +11546,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings DisableDevel(this HelmInspectChartSettings toolSettings)
+        public static T DisableDevel<T>(this T toolSettings) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = false;
@@ -11557,7 +11557,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings ToggleDevel(this HelmInspectChartSettings toolSettings)
+        public static T ToggleDevel<T>(this T toolSettings) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = !toolSettings.Devel;
@@ -11570,7 +11570,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings SetHelp(this HelmInspectChartSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -11581,7 +11581,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings ResetHelp(this HelmInspectChartSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -11592,7 +11592,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings EnableHelp(this HelmInspectChartSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -11603,7 +11603,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings DisableHelp(this HelmInspectChartSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -11614,7 +11614,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings ToggleHelp(this HelmInspectChartSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -11627,7 +11627,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL key file.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings SetKeyFile(this HelmInspectChartSettings toolSettings, string keyFile)
+        public static T SetKeyFile<T>(this T toolSettings, string keyFile) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyFile = keyFile;
@@ -11638,7 +11638,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL key file.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings ResetKeyFile(this HelmInspectChartSettings toolSettings)
+        public static T ResetKeyFile<T>(this T toolSettings) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyFile = null;
@@ -11651,7 +11651,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to the keyring containing public verification keys (default "~/.gnupg/pubring.gpg").</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings SetKeyring(this HelmInspectChartSettings toolSettings, string keyring)
+        public static T SetKeyring<T>(this T toolSettings, string keyring) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyring = keyring;
@@ -11662,7 +11662,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to the keyring containing public verification keys (default "~/.gnupg/pubring.gpg").</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings ResetKeyring(this HelmInspectChartSettings toolSettings)
+        public static T ResetKeyring<T>(this T toolSettings) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyring = null;
@@ -11675,7 +11675,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository password where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings SetPassword(this HelmInspectChartSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -11686,7 +11686,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository password where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings ResetPassword(this HelmInspectChartSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -11699,7 +11699,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository url where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings SetRepo(this HelmInspectChartSettings toolSettings, string repo)
+        public static T SetRepo<T>(this T toolSettings, string repo) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Repo = repo;
@@ -11710,7 +11710,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository url where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings ResetRepo(this HelmInspectChartSettings toolSettings)
+        public static T ResetRepo<T>(this T toolSettings) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Repo = null;
@@ -11723,7 +11723,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository username where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings SetUsername(this HelmInspectChartSettings toolSettings, string username)
+        public static T SetUsername<T>(this T toolSettings, string username) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = username;
@@ -11734,7 +11734,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository username where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings ResetUsername(this HelmInspectChartSettings toolSettings)
+        public static T ResetUsername<T>(this T toolSettings) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = null;
@@ -11747,7 +11747,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance data for this chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings SetVerify(this HelmInspectChartSettings toolSettings, bool? verify)
+        public static T SetVerify<T>(this T toolSettings, bool? verify) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = verify;
@@ -11758,7 +11758,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance data for this chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings ResetVerify(this HelmInspectChartSettings toolSettings)
+        public static T ResetVerify<T>(this T toolSettings) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = null;
@@ -11769,7 +11769,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance data for this chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings EnableVerify(this HelmInspectChartSettings toolSettings)
+        public static T EnableVerify<T>(this T toolSettings) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = true;
@@ -11780,7 +11780,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance data for this chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings DisableVerify(this HelmInspectChartSettings toolSettings)
+        public static T DisableVerify<T>(this T toolSettings) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = false;
@@ -11791,7 +11791,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance data for this chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings ToggleVerify(this HelmInspectChartSettings toolSettings)
+        public static T ToggleVerify<T>(this T toolSettings) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = !toolSettings.Verify;
@@ -11804,7 +11804,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Version of the chart. By default, the newest chart is shown.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings SetVersion(this HelmInspectChartSettings toolSettings, string version)
+        public static T SetVersion<T>(this T toolSettings, string version) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = version;
@@ -11815,7 +11815,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Version of the chart. By default, the newest chart is shown.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings ResetVersion(this HelmInspectChartSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = null;
@@ -11828,7 +11828,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the chart to inspect.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings SetChart(this HelmInspectChartSettings toolSettings, string chart)
+        public static T SetChart<T>(this T toolSettings, string chart) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Chart = chart;
@@ -11839,7 +11839,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the chart to inspect.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectChartSettings ResetChart(this HelmInspectChartSettings toolSettings)
+        public static T ResetChart<T>(this T toolSettings) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Chart = null;
@@ -11862,7 +11862,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository url where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings SetCaFile(this HelmInspectReadmeSettings toolSettings, string caFile)
+        public static T SetCaFile<T>(this T toolSettings, string caFile) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CaFile = caFile;
@@ -11873,7 +11873,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository url where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings ResetCaFile(this HelmInspectReadmeSettings toolSettings)
+        public static T ResetCaFile<T>(this T toolSettings) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CaFile = null;
@@ -11886,7 +11886,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify certificates of HTTPS-enabled servers using this CA bundle.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings SetCertFile(this HelmInspectReadmeSettings toolSettings, string certFile)
+        public static T SetCertFile<T>(this T toolSettings, string certFile) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CertFile = certFile;
@@ -11897,7 +11897,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify certificates of HTTPS-enabled servers using this CA bundle.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings ResetCertFile(this HelmInspectReadmeSettings toolSettings)
+        public static T ResetCertFile<T>(this T toolSettings) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CertFile = null;
@@ -11910,7 +11910,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings SetDevel(this HelmInspectReadmeSettings toolSettings, bool? devel)
+        public static T SetDevel<T>(this T toolSettings, bool? devel) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = devel;
@@ -11921,7 +11921,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings ResetDevel(this HelmInspectReadmeSettings toolSettings)
+        public static T ResetDevel<T>(this T toolSettings) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = null;
@@ -11932,7 +11932,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings EnableDevel(this HelmInspectReadmeSettings toolSettings)
+        public static T EnableDevel<T>(this T toolSettings) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = true;
@@ -11943,7 +11943,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings DisableDevel(this HelmInspectReadmeSettings toolSettings)
+        public static T DisableDevel<T>(this T toolSettings) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = false;
@@ -11954,7 +11954,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings ToggleDevel(this HelmInspectReadmeSettings toolSettings)
+        public static T ToggleDevel<T>(this T toolSettings) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = !toolSettings.Devel;
@@ -11967,7 +11967,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for readme.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings SetHelp(this HelmInspectReadmeSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -11978,7 +11978,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for readme.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings ResetHelp(this HelmInspectReadmeSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -11989,7 +11989,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for readme.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings EnableHelp(this HelmInspectReadmeSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -12000,7 +12000,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for readme.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings DisableHelp(this HelmInspectReadmeSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -12011,7 +12011,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for readme.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings ToggleHelp(this HelmInspectReadmeSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -12024,7 +12024,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL key file.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings SetKeyFile(this HelmInspectReadmeSettings toolSettings, string keyFile)
+        public static T SetKeyFile<T>(this T toolSettings, string keyFile) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyFile = keyFile;
@@ -12035,7 +12035,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL key file.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings ResetKeyFile(this HelmInspectReadmeSettings toolSettings)
+        public static T ResetKeyFile<T>(this T toolSettings) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyFile = null;
@@ -12048,7 +12048,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to the keyring containing public verification keys (default "~/.gnupg/pubring.gpg").</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings SetKeyring(this HelmInspectReadmeSettings toolSettings, string keyring)
+        public static T SetKeyring<T>(this T toolSettings, string keyring) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyring = keyring;
@@ -12059,7 +12059,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to the keyring containing public verification keys (default "~/.gnupg/pubring.gpg").</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings ResetKeyring(this HelmInspectReadmeSettings toolSettings)
+        public static T ResetKeyring<T>(this T toolSettings) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyring = null;
@@ -12072,7 +12072,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository url where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings SetRepo(this HelmInspectReadmeSettings toolSettings, string repo)
+        public static T SetRepo<T>(this T toolSettings, string repo) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Repo = repo;
@@ -12083,7 +12083,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository url where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings ResetRepo(this HelmInspectReadmeSettings toolSettings)
+        public static T ResetRepo<T>(this T toolSettings) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Repo = null;
@@ -12096,7 +12096,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance data for this chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings SetVerify(this HelmInspectReadmeSettings toolSettings, bool? verify)
+        public static T SetVerify<T>(this T toolSettings, bool? verify) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = verify;
@@ -12107,7 +12107,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance data for this chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings ResetVerify(this HelmInspectReadmeSettings toolSettings)
+        public static T ResetVerify<T>(this T toolSettings) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = null;
@@ -12118,7 +12118,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance data for this chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings EnableVerify(this HelmInspectReadmeSettings toolSettings)
+        public static T EnableVerify<T>(this T toolSettings) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = true;
@@ -12129,7 +12129,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance data for this chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings DisableVerify(this HelmInspectReadmeSettings toolSettings)
+        public static T DisableVerify<T>(this T toolSettings) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = false;
@@ -12140,7 +12140,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance data for this chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings ToggleVerify(this HelmInspectReadmeSettings toolSettings)
+        public static T ToggleVerify<T>(this T toolSettings) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = !toolSettings.Verify;
@@ -12153,7 +12153,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Version of the chart. By default, the newest chart is shown.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings SetVersion(this HelmInspectReadmeSettings toolSettings, string version)
+        public static T SetVersion<T>(this T toolSettings, string version) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = version;
@@ -12164,7 +12164,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Version of the chart. By default, the newest chart is shown.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings ResetVersion(this HelmInspectReadmeSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = null;
@@ -12177,7 +12177,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the chart to inspect.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings SetChart(this HelmInspectReadmeSettings toolSettings, string chart)
+        public static T SetChart<T>(this T toolSettings, string chart) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Chart = chart;
@@ -12188,7 +12188,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the chart to inspect.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectReadmeSettings ResetChart(this HelmInspectReadmeSettings toolSettings)
+        public static T ResetChart<T>(this T toolSettings) where T : HelmInspectReadmeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Chart = null;
@@ -12211,7 +12211,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository url where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings SetCaFile(this HelmInspectValuesSettings toolSettings, string caFile)
+        public static T SetCaFile<T>(this T toolSettings, string caFile) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CaFile = caFile;
@@ -12222,7 +12222,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository url where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings ResetCaFile(this HelmInspectValuesSettings toolSettings)
+        public static T ResetCaFile<T>(this T toolSettings) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CaFile = null;
@@ -12235,7 +12235,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify certificates of HTTPS-enabled servers using this CA bundle.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings SetCertFile(this HelmInspectValuesSettings toolSettings, string certFile)
+        public static T SetCertFile<T>(this T toolSettings, string certFile) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CertFile = certFile;
@@ -12246,7 +12246,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify certificates of HTTPS-enabled servers using this CA bundle.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings ResetCertFile(this HelmInspectValuesSettings toolSettings)
+        public static T ResetCertFile<T>(this T toolSettings) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CertFile = null;
@@ -12259,7 +12259,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings SetDevel(this HelmInspectValuesSettings toolSettings, bool? devel)
+        public static T SetDevel<T>(this T toolSettings, bool? devel) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = devel;
@@ -12270,7 +12270,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings ResetDevel(this HelmInspectValuesSettings toolSettings)
+        public static T ResetDevel<T>(this T toolSettings) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = null;
@@ -12281,7 +12281,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings EnableDevel(this HelmInspectValuesSettings toolSettings)
+        public static T EnableDevel<T>(this T toolSettings) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = true;
@@ -12292,7 +12292,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings DisableDevel(this HelmInspectValuesSettings toolSettings)
+        public static T DisableDevel<T>(this T toolSettings) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = false;
@@ -12303,7 +12303,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings ToggleDevel(this HelmInspectValuesSettings toolSettings)
+        public static T ToggleDevel<T>(this T toolSettings) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = !toolSettings.Devel;
@@ -12316,7 +12316,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for values.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings SetHelp(this HelmInspectValuesSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -12327,7 +12327,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for values.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings ResetHelp(this HelmInspectValuesSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -12338,7 +12338,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for values.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings EnableHelp(this HelmInspectValuesSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -12349,7 +12349,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for values.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings DisableHelp(this HelmInspectValuesSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -12360,7 +12360,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for values.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings ToggleHelp(this HelmInspectValuesSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -12373,7 +12373,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL key file.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings SetKeyFile(this HelmInspectValuesSettings toolSettings, string keyFile)
+        public static T SetKeyFile<T>(this T toolSettings, string keyFile) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyFile = keyFile;
@@ -12384,7 +12384,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL key file.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings ResetKeyFile(this HelmInspectValuesSettings toolSettings)
+        public static T ResetKeyFile<T>(this T toolSettings) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyFile = null;
@@ -12397,7 +12397,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to the keyring containing public verification keys (default "~/.gnupg/pubring.gpg").</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings SetKeyring(this HelmInspectValuesSettings toolSettings, string keyring)
+        public static T SetKeyring<T>(this T toolSettings, string keyring) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyring = keyring;
@@ -12408,7 +12408,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to the keyring containing public verification keys (default "~/.gnupg/pubring.gpg").</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings ResetKeyring(this HelmInspectValuesSettings toolSettings)
+        public static T ResetKeyring<T>(this T toolSettings) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyring = null;
@@ -12421,7 +12421,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository password where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings SetPassword(this HelmInspectValuesSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -12432,7 +12432,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository password where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings ResetPassword(this HelmInspectValuesSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -12445,7 +12445,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository url where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings SetRepo(this HelmInspectValuesSettings toolSettings, string repo)
+        public static T SetRepo<T>(this T toolSettings, string repo) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Repo = repo;
@@ -12456,7 +12456,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository url where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings ResetRepo(this HelmInspectValuesSettings toolSettings)
+        public static T ResetRepo<T>(this T toolSettings) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Repo = null;
@@ -12469,7 +12469,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository username where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings SetUsername(this HelmInspectValuesSettings toolSettings, string username)
+        public static T SetUsername<T>(this T toolSettings, string username) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = username;
@@ -12480,7 +12480,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository username where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings ResetUsername(this HelmInspectValuesSettings toolSettings)
+        public static T ResetUsername<T>(this T toolSettings) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = null;
@@ -12493,7 +12493,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance data for this chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings SetVerify(this HelmInspectValuesSettings toolSettings, bool? verify)
+        public static T SetVerify<T>(this T toolSettings, bool? verify) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = verify;
@@ -12504,7 +12504,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance data for this chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings ResetVerify(this HelmInspectValuesSettings toolSettings)
+        public static T ResetVerify<T>(this T toolSettings) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = null;
@@ -12515,7 +12515,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance data for this chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings EnableVerify(this HelmInspectValuesSettings toolSettings)
+        public static T EnableVerify<T>(this T toolSettings) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = true;
@@ -12526,7 +12526,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance data for this chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings DisableVerify(this HelmInspectValuesSettings toolSettings)
+        public static T DisableVerify<T>(this T toolSettings) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = false;
@@ -12537,7 +12537,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance data for this chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings ToggleVerify(this HelmInspectValuesSettings toolSettings)
+        public static T ToggleVerify<T>(this T toolSettings) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = !toolSettings.Verify;
@@ -12550,7 +12550,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Version of the chart. By default, the newest chart is shown.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings SetVersion(this HelmInspectValuesSettings toolSettings, string version)
+        public static T SetVersion<T>(this T toolSettings, string version) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = version;
@@ -12561,7 +12561,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Version of the chart. By default, the newest chart is shown.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings ResetVersion(this HelmInspectValuesSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = null;
@@ -12574,7 +12574,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the chart to inspect.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings SetChart(this HelmInspectValuesSettings toolSettings, string chart)
+        public static T SetChart<T>(this T toolSettings, string chart) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Chart = chart;
@@ -12585,7 +12585,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the chart to inspect.</p>
         /// </summary>
         [Pure]
-        public static HelmInspectValuesSettings ResetChart(this HelmInspectValuesSettings toolSettings)
+        public static T ResetChart<T>(this T toolSettings) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Chart = null;
@@ -12608,7 +12608,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, installation process purges chart on fail, also sets --wait flag.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetAtomic(this HelmInstallSettings toolSettings, bool? atomic)
+        public static T SetAtomic<T>(this T toolSettings, bool? atomic) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Atomic = atomic;
@@ -12619,7 +12619,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, installation process purges chart on fail, also sets --wait flag.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetAtomic(this HelmInstallSettings toolSettings)
+        public static T ResetAtomic<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Atomic = null;
@@ -12630,7 +12630,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, installation process purges chart on fail, also sets --wait flag.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings EnableAtomic(this HelmInstallSettings toolSettings)
+        public static T EnableAtomic<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Atomic = true;
@@ -12641,7 +12641,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, installation process purges chart on fail, also sets --wait flag.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings DisableAtomic(this HelmInstallSettings toolSettings)
+        public static T DisableAtomic<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Atomic = false;
@@ -12652,7 +12652,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, installation process purges chart on fail, also sets --wait flag.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ToggleAtomic(this HelmInstallSettings toolSettings)
+        public static T ToggleAtomic<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Atomic = !toolSettings.Atomic;
@@ -12665,7 +12665,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify certificates of HTTPS-enabled servers using this CA bundle.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetCaFile(this HelmInstallSettings toolSettings, string caFile)
+        public static T SetCaFile<T>(this T toolSettings, string caFile) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CaFile = caFile;
@@ -12676,7 +12676,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify certificates of HTTPS-enabled servers using this CA bundle.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetCaFile(this HelmInstallSettings toolSettings)
+        public static T ResetCaFile<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CaFile = null;
@@ -12689,7 +12689,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL certificate file.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetCertFile(this HelmInstallSettings toolSettings, string certFile)
+        public static T SetCertFile<T>(this T toolSettings, string certFile) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CertFile = certFile;
@@ -12700,7 +12700,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL certificate file.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetCertFile(this HelmInstallSettings toolSettings)
+        public static T ResetCertFile<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CertFile = null;
@@ -12713,7 +12713,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Run helm dependency update before installing the chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetDepUp(this HelmInstallSettings toolSettings, bool? depUp)
+        public static T SetDepUp<T>(this T toolSettings, bool? depUp) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DepUp = depUp;
@@ -12724,7 +12724,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Run helm dependency update before installing the chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetDepUp(this HelmInstallSettings toolSettings)
+        public static T ResetDepUp<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DepUp = null;
@@ -12735,7 +12735,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Run helm dependency update before installing the chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings EnableDepUp(this HelmInstallSettings toolSettings)
+        public static T EnableDepUp<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DepUp = true;
@@ -12746,7 +12746,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Run helm dependency update before installing the chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings DisableDepUp(this HelmInstallSettings toolSettings)
+        public static T DisableDepUp<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DepUp = false;
@@ -12757,7 +12757,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Run helm dependency update before installing the chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ToggleDepUp(this HelmInstallSettings toolSettings)
+        public static T ToggleDepUp<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DepUp = !toolSettings.DepUp;
@@ -12770,7 +12770,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify a description for the release.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetDescription(this HelmInstallSettings toolSettings, string description)
+        public static T SetDescription<T>(this T toolSettings, string description) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Description = description;
@@ -12781,7 +12781,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify a description for the release.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetDescription(this HelmInstallSettings toolSettings)
+        public static T ResetDescription<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Description = null;
@@ -12794,7 +12794,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetDevel(this HelmInstallSettings toolSettings, bool? devel)
+        public static T SetDevel<T>(this T toolSettings, bool? devel) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = devel;
@@ -12805,7 +12805,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetDevel(this HelmInstallSettings toolSettings)
+        public static T ResetDevel<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = null;
@@ -12816,7 +12816,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings EnableDevel(this HelmInstallSettings toolSettings)
+        public static T EnableDevel<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = true;
@@ -12827,7 +12827,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings DisableDevel(this HelmInstallSettings toolSettings)
+        public static T DisableDevel<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = false;
@@ -12838,7 +12838,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ToggleDevel(this HelmInstallSettings toolSettings)
+        public static T ToggleDevel<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = !toolSettings.Devel;
@@ -12851,7 +12851,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Simulate an install.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetDryRun(this HelmInstallSettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -12862,7 +12862,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Simulate an install.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetDryRun(this HelmInstallSettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -12873,7 +12873,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Simulate an install.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings EnableDryRun(this HelmInstallSettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -12884,7 +12884,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Simulate an install.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings DisableDryRun(this HelmInstallSettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -12895,7 +12895,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Simulate an install.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ToggleDryRun(this HelmInstallSettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -12908,7 +12908,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for install.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetHelp(this HelmInstallSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -12919,7 +12919,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for install.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetHelp(this HelmInstallSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -12930,7 +12930,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for install.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings EnableHelp(this HelmInstallSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -12941,7 +12941,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for install.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings DisableHelp(this HelmInstallSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -12952,7 +12952,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for install.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ToggleHelp(this HelmInstallSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -12965,7 +12965,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL key file.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetKeyFile(this HelmInstallSettings toolSettings, string keyFile)
+        public static T SetKeyFile<T>(this T toolSettings, string keyFile) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyFile = keyFile;
@@ -12976,7 +12976,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL key file.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetKeyFile(this HelmInstallSettings toolSettings)
+        public static T ResetKeyFile<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyFile = null;
@@ -12989,7 +12989,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Location of public keys used for verification (default "~/.gnupg/pubring.gpg").</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetKeyring(this HelmInstallSettings toolSettings, string keyring)
+        public static T SetKeyring<T>(this T toolSettings, string keyring) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyring = keyring;
@@ -13000,7 +13000,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Location of public keys used for verification (default "~/.gnupg/pubring.gpg").</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetKeyring(this HelmInstallSettings toolSettings)
+        public static T ResetKeyring<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyring = null;
@@ -13013,7 +13013,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Release name. If unspecified, it will autogenerate one for you.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetName(this HelmInstallSettings toolSettings, string name)
+        public static T SetName<T>(this T toolSettings, string name) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = name;
@@ -13024,7 +13024,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Release name. If unspecified, it will autogenerate one for you.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetName(this HelmInstallSettings toolSettings)
+        public static T ResetName<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = null;
@@ -13037,7 +13037,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify template used to name the release.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetNameTemplate(this HelmInstallSettings toolSettings, string nameTemplate)
+        public static T SetNameTemplate<T>(this T toolSettings, string nameTemplate) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NameTemplate = nameTemplate;
@@ -13048,7 +13048,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify template used to name the release.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetNameTemplate(this HelmInstallSettings toolSettings)
+        public static T ResetNameTemplate<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NameTemplate = null;
@@ -13061,7 +13061,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Namespace to install the release into. Defaults to the current kube config namespace.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetNamespace(this HelmInstallSettings toolSettings, string @namespace)
+        public static T SetNamespace<T>(this T toolSettings, string @namespace) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Namespace = @namespace;
@@ -13072,7 +13072,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Namespace to install the release into. Defaults to the current kube config namespace.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetNamespace(this HelmInstallSettings toolSettings)
+        public static T ResetNamespace<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Namespace = null;
@@ -13085,7 +13085,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Prevent CRD hooks from running, but run other hooks.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetNoCrdHook(this HelmInstallSettings toolSettings, bool? noCrdHook)
+        public static T SetNoCrdHook<T>(this T toolSettings, bool? noCrdHook) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCrdHook = noCrdHook;
@@ -13096,7 +13096,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Prevent CRD hooks from running, but run other hooks.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetNoCrdHook(this HelmInstallSettings toolSettings)
+        public static T ResetNoCrdHook<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCrdHook = null;
@@ -13107,7 +13107,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Prevent CRD hooks from running, but run other hooks.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings EnableNoCrdHook(this HelmInstallSettings toolSettings)
+        public static T EnableNoCrdHook<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCrdHook = true;
@@ -13118,7 +13118,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Prevent CRD hooks from running, but run other hooks.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings DisableNoCrdHook(this HelmInstallSettings toolSettings)
+        public static T DisableNoCrdHook<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCrdHook = false;
@@ -13129,7 +13129,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Prevent CRD hooks from running, but run other hooks.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ToggleNoCrdHook(this HelmInstallSettings toolSettings)
+        public static T ToggleNoCrdHook<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCrdHook = !toolSettings.NoCrdHook;
@@ -13142,7 +13142,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Prevent hooks from running during install.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetNoHooks(this HelmInstallSettings toolSettings, bool? noHooks)
+        public static T SetNoHooks<T>(this T toolSettings, bool? noHooks) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHooks = noHooks;
@@ -13153,7 +13153,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Prevent hooks from running during install.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetNoHooks(this HelmInstallSettings toolSettings)
+        public static T ResetNoHooks<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHooks = null;
@@ -13164,7 +13164,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Prevent hooks from running during install.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings EnableNoHooks(this HelmInstallSettings toolSettings)
+        public static T EnableNoHooks<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHooks = true;
@@ -13175,7 +13175,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Prevent hooks from running during install.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings DisableNoHooks(this HelmInstallSettings toolSettings)
+        public static T DisableNoHooks<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHooks = false;
@@ -13186,7 +13186,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Prevent hooks from running during install.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ToggleNoHooks(this HelmInstallSettings toolSettings)
+        public static T ToggleNoHooks<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHooks = !toolSettings.NoHooks;
@@ -13199,7 +13199,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository password where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetPassword(this HelmInstallSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -13210,7 +13210,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository password where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetPassword(this HelmInstallSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -13223,7 +13223,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Render subchart notes along with the parent.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetRenderSubchartNotes(this HelmInstallSettings toolSettings, bool? renderSubchartNotes)
+        public static T SetRenderSubchartNotes<T>(this T toolSettings, bool? renderSubchartNotes) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RenderSubchartNotes = renderSubchartNotes;
@@ -13234,7 +13234,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Render subchart notes along with the parent.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetRenderSubchartNotes(this HelmInstallSettings toolSettings)
+        public static T ResetRenderSubchartNotes<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RenderSubchartNotes = null;
@@ -13245,7 +13245,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Render subchart notes along with the parent.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings EnableRenderSubchartNotes(this HelmInstallSettings toolSettings)
+        public static T EnableRenderSubchartNotes<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RenderSubchartNotes = true;
@@ -13256,7 +13256,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Render subchart notes along with the parent.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings DisableRenderSubchartNotes(this HelmInstallSettings toolSettings)
+        public static T DisableRenderSubchartNotes<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RenderSubchartNotes = false;
@@ -13267,7 +13267,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Render subchart notes along with the parent.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ToggleRenderSubchartNotes(this HelmInstallSettings toolSettings)
+        public static T ToggleRenderSubchartNotes<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RenderSubchartNotes = !toolSettings.RenderSubchartNotes;
@@ -13280,7 +13280,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Re-use the given name, even if that name is already used. This is unsafe in production.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetReplace(this HelmInstallSettings toolSettings, bool? replace)
+        public static T SetReplace<T>(this T toolSettings, bool? replace) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Replace = replace;
@@ -13291,7 +13291,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Re-use the given name, even if that name is already used. This is unsafe in production.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetReplace(this HelmInstallSettings toolSettings)
+        public static T ResetReplace<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Replace = null;
@@ -13302,7 +13302,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Re-use the given name, even if that name is already used. This is unsafe in production.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings EnableReplace(this HelmInstallSettings toolSettings)
+        public static T EnableReplace<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Replace = true;
@@ -13313,7 +13313,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Re-use the given name, even if that name is already used. This is unsafe in production.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings DisableReplace(this HelmInstallSettings toolSettings)
+        public static T DisableReplace<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Replace = false;
@@ -13324,7 +13324,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Re-use the given name, even if that name is already used. This is unsafe in production.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ToggleReplace(this HelmInstallSettings toolSettings)
+        public static T ToggleReplace<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Replace = !toolSettings.Replace;
@@ -13337,7 +13337,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository url where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetRepo(this HelmInstallSettings toolSettings, string repo)
+        public static T SetRepo<T>(this T toolSettings, string repo) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Repo = repo;
@@ -13348,7 +13348,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository url where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetRepo(this HelmInstallSettings toolSettings)
+        public static T ResetRepo<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Repo = null;
@@ -13361,7 +13361,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetSet(this HelmInstallSettings toolSettings, IDictionary<string, object> set)
+        public static T SetSet<T>(this T toolSettings, IDictionary<string, object> set) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetInternal = set.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -13372,7 +13372,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ClearSet(this HelmInstallSettings toolSettings)
+        public static T ClearSet<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetInternal.Clear();
@@ -13383,7 +13383,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings AddSet(this HelmInstallSettings toolSettings, string setKey, object setValue)
+        public static T AddSet<T>(this T toolSettings, string setKey, object setValue) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetInternal.Add(setKey, setValue);
@@ -13394,7 +13394,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings RemoveSet(this HelmInstallSettings toolSettings, string setKey)
+        public static T RemoveSet<T>(this T toolSettings, string setKey) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetInternal.Remove(setKey);
@@ -13405,7 +13405,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetSet(this HelmInstallSettings toolSettings, string setKey, object setValue)
+        public static T SetSet<T>(this T toolSettings, string setKey, object setValue) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetInternal[setKey] = setValue;
@@ -13418,7 +13418,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetSetFile(this HelmInstallSettings toolSettings, IDictionary<string, object> setFile)
+        public static T SetSetFile<T>(this T toolSettings, IDictionary<string, object> setFile) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetFileInternal = setFile.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -13429,7 +13429,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ClearSetFile(this HelmInstallSettings toolSettings)
+        public static T ClearSetFile<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetFileInternal.Clear();
@@ -13440,7 +13440,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings AddSetFile(this HelmInstallSettings toolSettings, string setFileKey, object setFileValue)
+        public static T AddSetFile<T>(this T toolSettings, string setFileKey, object setFileValue) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetFileInternal.Add(setFileKey, setFileValue);
@@ -13451,7 +13451,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings RemoveSetFile(this HelmInstallSettings toolSettings, string setFileKey)
+        public static T RemoveSetFile<T>(this T toolSettings, string setFileKey) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetFileInternal.Remove(setFileKey);
@@ -13462,7 +13462,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetSetFile(this HelmInstallSettings toolSettings, string setFileKey, object setFileValue)
+        public static T SetSetFile<T>(this T toolSettings, string setFileKey, object setFileValue) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetFileInternal[setFileKey] = setFileValue;
@@ -13475,7 +13475,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetSetString(this HelmInstallSettings toolSettings, IDictionary<string, object> setString)
+        public static T SetSetString<T>(this T toolSettings, IDictionary<string, object> setString) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetStringInternal = setString.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -13486,7 +13486,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ClearSetString(this HelmInstallSettings toolSettings)
+        public static T ClearSetString<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetStringInternal.Clear();
@@ -13497,7 +13497,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings AddSetString(this HelmInstallSettings toolSettings, string setStringKey, object setStringValue)
+        public static T AddSetString<T>(this T toolSettings, string setStringKey, object setStringValue) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetStringInternal.Add(setStringKey, setStringValue);
@@ -13508,7 +13508,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings RemoveSetString(this HelmInstallSettings toolSettings, string setStringKey)
+        public static T RemoveSetString<T>(this T toolSettings, string setStringKey) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetStringInternal.Remove(setStringKey);
@@ -13519,7 +13519,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetSetString(this HelmInstallSettings toolSettings, string setStringKey, object setStringValue)
+        public static T SetSetString<T>(this T toolSettings, string setStringKey, object setStringValue) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetStringInternal[setStringKey] = setStringValue;
@@ -13532,7 +13532,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Time in seconds to wait for any individual Kubernetes operation (like Jobs for hooks) (default 300).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetTimeout(this HelmInstallSettings toolSettings, long? timeout)
+        public static T SetTimeout<T>(this T toolSettings, long? timeout) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = timeout;
@@ -13543,7 +13543,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Time in seconds to wait for any individual Kubernetes operation (like Jobs for hooks) (default 300).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetTimeout(this HelmInstallSettings toolSettings)
+        public static T ResetTimeout<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = null;
@@ -13556,7 +13556,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetTls(this HelmInstallSettings toolSettings, bool? tls)
+        public static T SetTls<T>(this T toolSettings, bool? tls) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = tls;
@@ -13567,7 +13567,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetTls(this HelmInstallSettings toolSettings)
+        public static T ResetTls<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = null;
@@ -13578,7 +13578,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings EnableTls(this HelmInstallSettings toolSettings)
+        public static T EnableTls<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = true;
@@ -13589,7 +13589,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings DisableTls(this HelmInstallSettings toolSettings)
+        public static T DisableTls<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = false;
@@ -13600,7 +13600,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ToggleTls(this HelmInstallSettings toolSettings)
+        public static T ToggleTls<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = !toolSettings.Tls;
@@ -13613,7 +13613,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetTlsCaCert(this HelmInstallSettings toolSettings, string tlsCaCert)
+        public static T SetTlsCaCert<T>(this T toolSettings, string tlsCaCert) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = tlsCaCert;
@@ -13624,7 +13624,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetTlsCaCert(this HelmInstallSettings toolSettings)
+        public static T ResetTlsCaCert<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = null;
@@ -13637,7 +13637,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetTlsCert(this HelmInstallSettings toolSettings, string tlsCert)
+        public static T SetTlsCert<T>(this T toolSettings, string tlsCert) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = tlsCert;
@@ -13648,7 +13648,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetTlsCert(this HelmInstallSettings toolSettings)
+        public static T ResetTlsCert<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = null;
@@ -13661,7 +13661,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetTlsHostname(this HelmInstallSettings toolSettings, string tlsHostname)
+        public static T SetTlsHostname<T>(this T toolSettings, string tlsHostname) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = tlsHostname;
@@ -13672,7 +13672,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetTlsHostname(this HelmInstallSettings toolSettings)
+        public static T ResetTlsHostname<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = null;
@@ -13685,7 +13685,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetTlsKey(this HelmInstallSettings toolSettings, string tlsKey)
+        public static T SetTlsKey<T>(this T toolSettings, string tlsKey) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = tlsKey;
@@ -13696,7 +13696,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetTlsKey(this HelmInstallSettings toolSettings)
+        public static T ResetTlsKey<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = null;
@@ -13709,7 +13709,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetTlsVerify(this HelmInstallSettings toolSettings, bool? tlsVerify)
+        public static T SetTlsVerify<T>(this T toolSettings, bool? tlsVerify) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = tlsVerify;
@@ -13720,7 +13720,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetTlsVerify(this HelmInstallSettings toolSettings)
+        public static T ResetTlsVerify<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = null;
@@ -13731,7 +13731,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings EnableTlsVerify(this HelmInstallSettings toolSettings)
+        public static T EnableTlsVerify<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = true;
@@ -13742,7 +13742,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings DisableTlsVerify(this HelmInstallSettings toolSettings)
+        public static T DisableTlsVerify<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = false;
@@ -13753,7 +13753,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ToggleTlsVerify(this HelmInstallSettings toolSettings)
+        public static T ToggleTlsVerify<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = !toolSettings.TlsVerify;
@@ -13766,7 +13766,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository username where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetUsername(this HelmInstallSettings toolSettings, string username)
+        public static T SetUsername<T>(this T toolSettings, string username) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = username;
@@ -13777,7 +13777,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository username where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetUsername(this HelmInstallSettings toolSettings)
+        public static T ResetUsername<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = null;
@@ -13790,7 +13790,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file or a URL(can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetValues(this HelmInstallSettings toolSettings, params string[] values)
+        public static T SetValues<T>(this T toolSettings, params string[] values) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ValuesInternal = values.ToList();
@@ -13801,7 +13801,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file or a URL(can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetValues(this HelmInstallSettings toolSettings, IEnumerable<string> values)
+        public static T SetValues<T>(this T toolSettings, IEnumerable<string> values) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ValuesInternal = values.ToList();
@@ -13812,7 +13812,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file or a URL(can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings AddValues(this HelmInstallSettings toolSettings, params string[] values)
+        public static T AddValues<T>(this T toolSettings, params string[] values) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ValuesInternal.AddRange(values);
@@ -13823,7 +13823,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file or a URL(can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings AddValues(this HelmInstallSettings toolSettings, IEnumerable<string> values)
+        public static T AddValues<T>(this T toolSettings, IEnumerable<string> values) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ValuesInternal.AddRange(values);
@@ -13834,7 +13834,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file or a URL(can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ClearValues(this HelmInstallSettings toolSettings)
+        public static T ClearValues<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ValuesInternal.Clear();
@@ -13845,7 +13845,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file or a URL(can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings RemoveValues(this HelmInstallSettings toolSettings, params string[] values)
+        public static T RemoveValues<T>(this T toolSettings, params string[] values) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(values);
@@ -13857,7 +13857,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file or a URL(can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings RemoveValues(this HelmInstallSettings toolSettings, IEnumerable<string> values)
+        public static T RemoveValues<T>(this T toolSettings, IEnumerable<string> values) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(values);
@@ -13871,7 +13871,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the package before installing it.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetVerify(this HelmInstallSettings toolSettings, bool? verify)
+        public static T SetVerify<T>(this T toolSettings, bool? verify) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = verify;
@@ -13882,7 +13882,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the package before installing it.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetVerify(this HelmInstallSettings toolSettings)
+        public static T ResetVerify<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = null;
@@ -13893,7 +13893,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the package before installing it.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings EnableVerify(this HelmInstallSettings toolSettings)
+        public static T EnableVerify<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = true;
@@ -13904,7 +13904,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the package before installing it.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings DisableVerify(this HelmInstallSettings toolSettings)
+        public static T DisableVerify<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = false;
@@ -13915,7 +13915,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the package before installing it.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ToggleVerify(this HelmInstallSettings toolSettings)
+        public static T ToggleVerify<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = !toolSettings.Verify;
@@ -13928,7 +13928,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify the exact chart version to install. If this is not specified, the latest version is installed.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetVersion(this HelmInstallSettings toolSettings, string version)
+        public static T SetVersion<T>(this T toolSettings, string version) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = version;
@@ -13939,7 +13939,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify the exact chart version to install. If this is not specified, the latest version is installed.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetVersion(this HelmInstallSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = null;
@@ -13952,7 +13952,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment are in a ready state before marking the release as successful. It will wait for as long as --timeout.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetWait(this HelmInstallSettings toolSettings, bool? wait)
+        public static T SetWait<T>(this T toolSettings, bool? wait) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = wait;
@@ -13963,7 +13963,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment are in a ready state before marking the release as successful. It will wait for as long as --timeout.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetWait(this HelmInstallSettings toolSettings)
+        public static T ResetWait<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = null;
@@ -13974,7 +13974,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment are in a ready state before marking the release as successful. It will wait for as long as --timeout.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings EnableWait(this HelmInstallSettings toolSettings)
+        public static T EnableWait<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = true;
@@ -13985,7 +13985,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment are in a ready state before marking the release as successful. It will wait for as long as --timeout.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings DisableWait(this HelmInstallSettings toolSettings)
+        public static T DisableWait<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = false;
@@ -13996,7 +13996,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment are in a ready state before marking the release as successful. It will wait for as long as --timeout.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ToggleWait(this HelmInstallSettings toolSettings)
+        public static T ToggleWait<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = !toolSettings.Wait;
@@ -14009,7 +14009,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the chart to install.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings SetChart(this HelmInstallSettings toolSettings, string chart)
+        public static T SetChart<T>(this T toolSettings, string chart) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Chart = chart;
@@ -14020,7 +14020,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the chart to install.</p>
         /// </summary>
         [Pure]
-        public static HelmInstallSettings ResetChart(this HelmInstallSettings toolSettings)
+        public static T ResetChart<T>(this T toolSettings) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Chart = null;
@@ -14043,7 +14043,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for lint.</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings SetHelp(this HelmLintSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -14054,7 +14054,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for lint.</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings ResetHelp(this HelmLintSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -14065,7 +14065,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for lint.</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings EnableHelp(this HelmLintSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -14076,7 +14076,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for lint.</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings DisableHelp(this HelmLintSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -14087,7 +14087,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for lint.</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings ToggleHelp(this HelmLintSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -14100,7 +14100,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Namespace to put the release into (default "default").</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings SetNamespace(this HelmLintSettings toolSettings, string @namespace)
+        public static T SetNamespace<T>(this T toolSettings, string @namespace) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Namespace = @namespace;
@@ -14111,7 +14111,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Namespace to put the release into (default "default").</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings ResetNamespace(this HelmLintSettings toolSettings)
+        public static T ResetNamespace<T>(this T toolSettings) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Namespace = null;
@@ -14124,7 +14124,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings SetSet(this HelmLintSettings toolSettings, IDictionary<string, object> set)
+        public static T SetSet<T>(this T toolSettings, IDictionary<string, object> set) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetInternal = set.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -14135,7 +14135,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings ClearSet(this HelmLintSettings toolSettings)
+        public static T ClearSet<T>(this T toolSettings) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetInternal.Clear();
@@ -14146,7 +14146,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings AddSet(this HelmLintSettings toolSettings, string setKey, object setValue)
+        public static T AddSet<T>(this T toolSettings, string setKey, object setValue) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetInternal.Add(setKey, setValue);
@@ -14157,7 +14157,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings RemoveSet(this HelmLintSettings toolSettings, string setKey)
+        public static T RemoveSet<T>(this T toolSettings, string setKey) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetInternal.Remove(setKey);
@@ -14168,7 +14168,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings SetSet(this HelmLintSettings toolSettings, string setKey, object setValue)
+        public static T SetSet<T>(this T toolSettings, string setKey, object setValue) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetInternal[setKey] = setValue;
@@ -14181,7 +14181,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings SetSetFile(this HelmLintSettings toolSettings, IDictionary<string, object> setFile)
+        public static T SetSetFile<T>(this T toolSettings, IDictionary<string, object> setFile) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetFileInternal = setFile.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -14192,7 +14192,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings ClearSetFile(this HelmLintSettings toolSettings)
+        public static T ClearSetFile<T>(this T toolSettings) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetFileInternal.Clear();
@@ -14203,7 +14203,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings AddSetFile(this HelmLintSettings toolSettings, string setFileKey, object setFileValue)
+        public static T AddSetFile<T>(this T toolSettings, string setFileKey, object setFileValue) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetFileInternal.Add(setFileKey, setFileValue);
@@ -14214,7 +14214,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings RemoveSetFile(this HelmLintSettings toolSettings, string setFileKey)
+        public static T RemoveSetFile<T>(this T toolSettings, string setFileKey) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetFileInternal.Remove(setFileKey);
@@ -14225,7 +14225,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings SetSetFile(this HelmLintSettings toolSettings, string setFileKey, object setFileValue)
+        public static T SetSetFile<T>(this T toolSettings, string setFileKey, object setFileValue) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetFileInternal[setFileKey] = setFileValue;
@@ -14238,7 +14238,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings SetSetString(this HelmLintSettings toolSettings, IDictionary<string, object> setString)
+        public static T SetSetString<T>(this T toolSettings, IDictionary<string, object> setString) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetStringInternal = setString.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -14249,7 +14249,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings ClearSetString(this HelmLintSettings toolSettings)
+        public static T ClearSetString<T>(this T toolSettings) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetStringInternal.Clear();
@@ -14260,7 +14260,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings AddSetString(this HelmLintSettings toolSettings, string setStringKey, object setStringValue)
+        public static T AddSetString<T>(this T toolSettings, string setStringKey, object setStringValue) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetStringInternal.Add(setStringKey, setStringValue);
@@ -14271,7 +14271,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings RemoveSetString(this HelmLintSettings toolSettings, string setStringKey)
+        public static T RemoveSetString<T>(this T toolSettings, string setStringKey) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetStringInternal.Remove(setStringKey);
@@ -14282,7 +14282,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings SetSetString(this HelmLintSettings toolSettings, string setStringKey, object setStringValue)
+        public static T SetSetString<T>(this T toolSettings, string setStringKey, object setStringValue) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetStringInternal[setStringKey] = setStringValue;
@@ -14295,7 +14295,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Fail on lint warnings.</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings SetStrict(this HelmLintSettings toolSettings, bool? strict)
+        public static T SetStrict<T>(this T toolSettings, bool? strict) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Strict = strict;
@@ -14306,7 +14306,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Fail on lint warnings.</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings ResetStrict(this HelmLintSettings toolSettings)
+        public static T ResetStrict<T>(this T toolSettings) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Strict = null;
@@ -14317,7 +14317,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Fail on lint warnings.</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings EnableStrict(this HelmLintSettings toolSettings)
+        public static T EnableStrict<T>(this T toolSettings) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Strict = true;
@@ -14328,7 +14328,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Fail on lint warnings.</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings DisableStrict(this HelmLintSettings toolSettings)
+        public static T DisableStrict<T>(this T toolSettings) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Strict = false;
@@ -14339,7 +14339,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Fail on lint warnings.</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings ToggleStrict(this HelmLintSettings toolSettings)
+        public static T ToggleStrict<T>(this T toolSettings) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Strict = !toolSettings.Strict;
@@ -14352,7 +14352,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file (can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings SetValues(this HelmLintSettings toolSettings, params string[] values)
+        public static T SetValues<T>(this T toolSettings, params string[] values) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ValuesInternal = values.ToList();
@@ -14363,7 +14363,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file (can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings SetValues(this HelmLintSettings toolSettings, IEnumerable<string> values)
+        public static T SetValues<T>(this T toolSettings, IEnumerable<string> values) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ValuesInternal = values.ToList();
@@ -14374,7 +14374,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file (can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings AddValues(this HelmLintSettings toolSettings, params string[] values)
+        public static T AddValues<T>(this T toolSettings, params string[] values) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ValuesInternal.AddRange(values);
@@ -14385,7 +14385,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file (can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings AddValues(this HelmLintSettings toolSettings, IEnumerable<string> values)
+        public static T AddValues<T>(this T toolSettings, IEnumerable<string> values) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ValuesInternal.AddRange(values);
@@ -14396,7 +14396,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file (can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings ClearValues(this HelmLintSettings toolSettings)
+        public static T ClearValues<T>(this T toolSettings) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ValuesInternal.Clear();
@@ -14407,7 +14407,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file (can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings RemoveValues(this HelmLintSettings toolSettings, params string[] values)
+        public static T RemoveValues<T>(this T toolSettings, params string[] values) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(values);
@@ -14419,7 +14419,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file (can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings RemoveValues(this HelmLintSettings toolSettings, IEnumerable<string> values)
+        public static T RemoveValues<T>(this T toolSettings, IEnumerable<string> values) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(values);
@@ -14433,7 +14433,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The Path to a chart.</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings SetPath(this HelmLintSettings toolSettings, string path)
+        public static T SetPath<T>(this T toolSettings, string path) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Path = path;
@@ -14444,7 +14444,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The Path to a chart.</p>
         /// </summary>
         [Pure]
-        public static HelmLintSettings ResetPath(this HelmLintSettings toolSettings)
+        public static T ResetPath<T>(this T toolSettings) where T : HelmLintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Path = null;
@@ -14467,7 +14467,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show all releases, not just the ones marked DEPLOYED.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetAll(this HelmListSettings toolSettings, bool? all)
+        public static T SetAll<T>(this T toolSettings, bool? all) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = all;
@@ -14478,7 +14478,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show all releases, not just the ones marked DEPLOYED.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetAll(this HelmListSettings toolSettings)
+        public static T ResetAll<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = null;
@@ -14489,7 +14489,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show all releases, not just the ones marked DEPLOYED.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings EnableAll(this HelmListSettings toolSettings)
+        public static T EnableAll<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = true;
@@ -14500,7 +14500,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show all releases, not just the ones marked DEPLOYED.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings DisableAll(this HelmListSettings toolSettings)
+        public static T DisableAll<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = false;
@@ -14511,7 +14511,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show all releases, not just the ones marked DEPLOYED.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ToggleAll(this HelmListSettings toolSettings)
+        public static T ToggleAll<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = !toolSettings.All;
@@ -14524,7 +14524,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Sort by chart name.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetChartName(this HelmListSettings toolSettings, bool? chartName)
+        public static T SetChartName<T>(this T toolSettings, bool? chartName) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ChartName = chartName;
@@ -14535,7 +14535,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Sort by chart name.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetChartName(this HelmListSettings toolSettings)
+        public static T ResetChartName<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ChartName = null;
@@ -14546,7 +14546,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Sort by chart name.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings EnableChartName(this HelmListSettings toolSettings)
+        public static T EnableChartName<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ChartName = true;
@@ -14557,7 +14557,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Sort by chart name.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings DisableChartName(this HelmListSettings toolSettings)
+        public static T DisableChartName<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ChartName = false;
@@ -14568,7 +14568,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Sort by chart name.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ToggleChartName(this HelmListSettings toolSettings)
+        public static T ToggleChartName<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ChartName = !toolSettings.ChartName;
@@ -14581,7 +14581,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specifies the max column width of output (default 60).</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetColWidth(this HelmListSettings toolSettings, uint? colWidth)
+        public static T SetColWidth<T>(this T toolSettings, uint? colWidth) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ColWidth = colWidth;
@@ -14592,7 +14592,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specifies the max column width of output (default 60).</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetColWidth(this HelmListSettings toolSettings)
+        public static T ResetColWidth<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ColWidth = null;
@@ -14605,7 +14605,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Sort by release date.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetDate(this HelmListSettings toolSettings, bool? date)
+        public static T SetDate<T>(this T toolSettings, bool? date) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Date = date;
@@ -14616,7 +14616,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Sort by release date.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetDate(this HelmListSettings toolSettings)
+        public static T ResetDate<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Date = null;
@@ -14627,7 +14627,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Sort by release date.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings EnableDate(this HelmListSettings toolSettings)
+        public static T EnableDate<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Date = true;
@@ -14638,7 +14638,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Sort by release date.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings DisableDate(this HelmListSettings toolSettings)
+        public static T DisableDate<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Date = false;
@@ -14649,7 +14649,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Sort by release date.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ToggleDate(this HelmListSettings toolSettings)
+        public static T ToggleDate<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Date = !toolSettings.Date;
@@ -14662,7 +14662,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show deleted releases.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetDeleted(this HelmListSettings toolSettings, bool? deleted)
+        public static T SetDeleted<T>(this T toolSettings, bool? deleted) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Deleted = deleted;
@@ -14673,7 +14673,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show deleted releases.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetDeleted(this HelmListSettings toolSettings)
+        public static T ResetDeleted<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Deleted = null;
@@ -14684,7 +14684,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show deleted releases.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings EnableDeleted(this HelmListSettings toolSettings)
+        public static T EnableDeleted<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Deleted = true;
@@ -14695,7 +14695,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show deleted releases.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings DisableDeleted(this HelmListSettings toolSettings)
+        public static T DisableDeleted<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Deleted = false;
@@ -14706,7 +14706,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show deleted releases.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ToggleDeleted(this HelmListSettings toolSettings)
+        public static T ToggleDeleted<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Deleted = !toolSettings.Deleted;
@@ -14719,7 +14719,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show releases that are currently being deleted.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetDeleting(this HelmListSettings toolSettings, bool? deleting)
+        public static T SetDeleting<T>(this T toolSettings, bool? deleting) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Deleting = deleting;
@@ -14730,7 +14730,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show releases that are currently being deleted.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetDeleting(this HelmListSettings toolSettings)
+        public static T ResetDeleting<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Deleting = null;
@@ -14741,7 +14741,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show releases that are currently being deleted.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings EnableDeleting(this HelmListSettings toolSettings)
+        public static T EnableDeleting<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Deleting = true;
@@ -14752,7 +14752,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show releases that are currently being deleted.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings DisableDeleting(this HelmListSettings toolSettings)
+        public static T DisableDeleting<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Deleting = false;
@@ -14763,7 +14763,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show releases that are currently being deleted.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ToggleDeleting(this HelmListSettings toolSettings)
+        public static T ToggleDeleting<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Deleting = !toolSettings.Deleting;
@@ -14776,7 +14776,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show deployed releases. If no other is specified, this will be automatically enabled.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetDeployed(this HelmListSettings toolSettings, bool? deployed)
+        public static T SetDeployed<T>(this T toolSettings, bool? deployed) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Deployed = deployed;
@@ -14787,7 +14787,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show deployed releases. If no other is specified, this will be automatically enabled.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetDeployed(this HelmListSettings toolSettings)
+        public static T ResetDeployed<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Deployed = null;
@@ -14798,7 +14798,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show deployed releases. If no other is specified, this will be automatically enabled.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings EnableDeployed(this HelmListSettings toolSettings)
+        public static T EnableDeployed<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Deployed = true;
@@ -14809,7 +14809,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show deployed releases. If no other is specified, this will be automatically enabled.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings DisableDeployed(this HelmListSettings toolSettings)
+        public static T DisableDeployed<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Deployed = false;
@@ -14820,7 +14820,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show deployed releases. If no other is specified, this will be automatically enabled.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ToggleDeployed(this HelmListSettings toolSettings)
+        public static T ToggleDeployed<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Deployed = !toolSettings.Deployed;
@@ -14833,7 +14833,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show failed releases.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetFailed(this HelmListSettings toolSettings, bool? failed)
+        public static T SetFailed<T>(this T toolSettings, bool? failed) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Failed = failed;
@@ -14844,7 +14844,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show failed releases.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetFailed(this HelmListSettings toolSettings)
+        public static T ResetFailed<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Failed = null;
@@ -14855,7 +14855,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show failed releases.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings EnableFailed(this HelmListSettings toolSettings)
+        public static T EnableFailed<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Failed = true;
@@ -14866,7 +14866,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show failed releases.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings DisableFailed(this HelmListSettings toolSettings)
+        public static T DisableFailed<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Failed = false;
@@ -14877,7 +14877,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show failed releases.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ToggleFailed(this HelmListSettings toolSettings)
+        public static T ToggleFailed<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Failed = !toolSettings.Failed;
@@ -14890,7 +14890,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for list.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetHelp(this HelmListSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -14901,7 +14901,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for list.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetHelp(this HelmListSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -14912,7 +14912,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for list.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings EnableHelp(this HelmListSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -14923,7 +14923,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for list.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings DisableHelp(this HelmListSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -14934,7 +14934,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for list.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ToggleHelp(this HelmListSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -14947,7 +14947,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Maximum number of releases to fetch (default 256).</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetMax(this HelmListSettings toolSettings, long? max)
+        public static T SetMax<T>(this T toolSettings, long? max) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Max = max;
@@ -14958,7 +14958,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Maximum number of releases to fetch (default 256).</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetMax(this HelmListSettings toolSettings)
+        public static T ResetMax<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Max = null;
@@ -14971,7 +14971,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show releases within a specific namespace.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetNamespace(this HelmListSettings toolSettings, string @namespace)
+        public static T SetNamespace<T>(this T toolSettings, string @namespace) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Namespace = @namespace;
@@ -14982,7 +14982,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show releases within a specific namespace.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetNamespace(this HelmListSettings toolSettings)
+        public static T ResetNamespace<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Namespace = null;
@@ -14995,7 +14995,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Next release name in the list, used to offset from start value.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetOffset(this HelmListSettings toolSettings, string offset)
+        public static T SetOffset<T>(this T toolSettings, string offset) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Offset = offset;
@@ -15006,7 +15006,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Next release name in the list, used to offset from start value.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetOffset(this HelmListSettings toolSettings)
+        public static T ResetOffset<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Offset = null;
@@ -15019,7 +15019,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Output the specified format (json or yaml).</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetOutput(this HelmListSettings toolSettings, HelmOutputFormat output)
+        public static T SetOutput<T>(this T toolSettings, HelmOutputFormat output) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -15030,7 +15030,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Output the specified format (json or yaml).</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetOutput(this HelmListSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -15043,7 +15043,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show pending releases.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetPending(this HelmListSettings toolSettings, bool? pending)
+        public static T SetPending<T>(this T toolSettings, bool? pending) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Pending = pending;
@@ -15054,7 +15054,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show pending releases.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetPending(this HelmListSettings toolSettings)
+        public static T ResetPending<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Pending = null;
@@ -15065,7 +15065,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show pending releases.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings EnablePending(this HelmListSettings toolSettings)
+        public static T EnablePending<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Pending = true;
@@ -15076,7 +15076,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show pending releases.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings DisablePending(this HelmListSettings toolSettings)
+        public static T DisablePending<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Pending = false;
@@ -15087,7 +15087,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show pending releases.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings TogglePending(this HelmListSettings toolSettings)
+        public static T TogglePending<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Pending = !toolSettings.Pending;
@@ -15100,7 +15100,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Reverse the sort order.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetReverse(this HelmListSettings toolSettings, bool? reverse)
+        public static T SetReverse<T>(this T toolSettings, bool? reverse) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Reverse = reverse;
@@ -15111,7 +15111,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Reverse the sort order.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetReverse(this HelmListSettings toolSettings)
+        public static T ResetReverse<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Reverse = null;
@@ -15122,7 +15122,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Reverse the sort order.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings EnableReverse(this HelmListSettings toolSettings)
+        public static T EnableReverse<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Reverse = true;
@@ -15133,7 +15133,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Reverse the sort order.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings DisableReverse(this HelmListSettings toolSettings)
+        public static T DisableReverse<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Reverse = false;
@@ -15144,7 +15144,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Reverse the sort order.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ToggleReverse(this HelmListSettings toolSettings)
+        public static T ToggleReverse<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Reverse = !toolSettings.Reverse;
@@ -15157,7 +15157,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Output short (quiet) listing format.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetShort(this HelmListSettings toolSettings, bool? @short)
+        public static T SetShort<T>(this T toolSettings, bool? @short) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Short = @short;
@@ -15168,7 +15168,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Output short (quiet) listing format.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetShort(this HelmListSettings toolSettings)
+        public static T ResetShort<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Short = null;
@@ -15179,7 +15179,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Output short (quiet) listing format.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings EnableShort(this HelmListSettings toolSettings)
+        public static T EnableShort<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Short = true;
@@ -15190,7 +15190,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Output short (quiet) listing format.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings DisableShort(this HelmListSettings toolSettings)
+        public static T DisableShort<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Short = false;
@@ -15201,7 +15201,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Output short (quiet) listing format.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ToggleShort(this HelmListSettings toolSettings)
+        public static T ToggleShort<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Short = !toolSettings.Short;
@@ -15214,7 +15214,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetTls(this HelmListSettings toolSettings, bool? tls)
+        public static T SetTls<T>(this T toolSettings, bool? tls) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = tls;
@@ -15225,7 +15225,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetTls(this HelmListSettings toolSettings)
+        public static T ResetTls<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = null;
@@ -15236,7 +15236,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings EnableTls(this HelmListSettings toolSettings)
+        public static T EnableTls<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = true;
@@ -15247,7 +15247,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings DisableTls(this HelmListSettings toolSettings)
+        public static T DisableTls<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = false;
@@ -15258,7 +15258,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ToggleTls(this HelmListSettings toolSettings)
+        public static T ToggleTls<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = !toolSettings.Tls;
@@ -15271,7 +15271,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetTlsCaCert(this HelmListSettings toolSettings, string tlsCaCert)
+        public static T SetTlsCaCert<T>(this T toolSettings, string tlsCaCert) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = tlsCaCert;
@@ -15282,7 +15282,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetTlsCaCert(this HelmListSettings toolSettings)
+        public static T ResetTlsCaCert<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = null;
@@ -15295,7 +15295,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetTlsCert(this HelmListSettings toolSettings, string tlsCert)
+        public static T SetTlsCert<T>(this T toolSettings, string tlsCert) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = tlsCert;
@@ -15306,7 +15306,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetTlsCert(this HelmListSettings toolSettings)
+        public static T ResetTlsCert<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = null;
@@ -15319,7 +15319,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetTlsHostname(this HelmListSettings toolSettings, string tlsHostname)
+        public static T SetTlsHostname<T>(this T toolSettings, string tlsHostname) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = tlsHostname;
@@ -15330,7 +15330,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetTlsHostname(this HelmListSettings toolSettings)
+        public static T ResetTlsHostname<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = null;
@@ -15343,7 +15343,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetTlsKey(this HelmListSettings toolSettings, string tlsKey)
+        public static T SetTlsKey<T>(this T toolSettings, string tlsKey) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = tlsKey;
@@ -15354,7 +15354,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetTlsKey(this HelmListSettings toolSettings)
+        public static T ResetTlsKey<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = null;
@@ -15367,7 +15367,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetTlsVerify(this HelmListSettings toolSettings, bool? tlsVerify)
+        public static T SetTlsVerify<T>(this T toolSettings, bool? tlsVerify) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = tlsVerify;
@@ -15378,7 +15378,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetTlsVerify(this HelmListSettings toolSettings)
+        public static T ResetTlsVerify<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = null;
@@ -15389,7 +15389,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings EnableTlsVerify(this HelmListSettings toolSettings)
+        public static T EnableTlsVerify<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = true;
@@ -15400,7 +15400,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings DisableTlsVerify(this HelmListSettings toolSettings)
+        public static T DisableTlsVerify<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = false;
@@ -15411,7 +15411,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ToggleTlsVerify(this HelmListSettings toolSettings)
+        public static T ToggleTlsVerify<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = !toolSettings.TlsVerify;
@@ -15424,7 +15424,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The filter to use.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings SetFilter(this HelmListSettings toolSettings, string filter)
+        public static T SetFilter<T>(this T toolSettings, string filter) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Filter = filter;
@@ -15435,7 +15435,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The filter to use.</p>
         /// </summary>
         [Pure]
-        public static HelmListSettings ResetFilter(this HelmListSettings toolSettings)
+        public static T ResetFilter<T>(this T toolSettings) where T : HelmListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Filter = null;
@@ -15458,7 +15458,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set the appVersion on the chart to this version.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings SetAppVersion(this HelmPackageSettings toolSettings, string appVersion)
+        public static T SetAppVersion<T>(this T toolSettings, string appVersion) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppVersion = appVersion;
@@ -15469,7 +15469,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set the appVersion on the chart to this version.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings ResetAppVersion(this HelmPackageSettings toolSettings)
+        public static T ResetAppVersion<T>(this T toolSettings) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppVersion = null;
@@ -15482,7 +15482,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Update dependencies from "requirements.yaml" to dir "charts/" before packaging.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings SetDependencyUpdate(this HelmPackageSettings toolSettings, bool? dependencyUpdate)
+        public static T SetDependencyUpdate<T>(this T toolSettings, bool? dependencyUpdate) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DependencyUpdate = dependencyUpdate;
@@ -15493,7 +15493,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Update dependencies from "requirements.yaml" to dir "charts/" before packaging.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings ResetDependencyUpdate(this HelmPackageSettings toolSettings)
+        public static T ResetDependencyUpdate<T>(this T toolSettings) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DependencyUpdate = null;
@@ -15504,7 +15504,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Update dependencies from "requirements.yaml" to dir "charts/" before packaging.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings EnableDependencyUpdate(this HelmPackageSettings toolSettings)
+        public static T EnableDependencyUpdate<T>(this T toolSettings) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DependencyUpdate = true;
@@ -15515,7 +15515,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Update dependencies from "requirements.yaml" to dir "charts/" before packaging.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings DisableDependencyUpdate(this HelmPackageSettings toolSettings)
+        public static T DisableDependencyUpdate<T>(this T toolSettings) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DependencyUpdate = false;
@@ -15526,7 +15526,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Update dependencies from "requirements.yaml" to dir "charts/" before packaging.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings ToggleDependencyUpdate(this HelmPackageSettings toolSettings)
+        public static T ToggleDependencyUpdate<T>(this T toolSettings) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DependencyUpdate = !toolSettings.DependencyUpdate;
@@ -15539,7 +15539,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Location to write the chart. (default ".").</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings SetDestination(this HelmPackageSettings toolSettings, string destination)
+        public static T SetDestination<T>(this T toolSettings, string destination) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Destination = destination;
@@ -15550,7 +15550,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Location to write the chart. (default ".").</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings ResetDestination(this HelmPackageSettings toolSettings)
+        public static T ResetDestination<T>(this T toolSettings) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Destination = null;
@@ -15563,7 +15563,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for package.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings SetHelp(this HelmPackageSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -15574,7 +15574,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for package.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings ResetHelp(this HelmPackageSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -15585,7 +15585,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for package.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings EnableHelp(this HelmPackageSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -15596,7 +15596,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for package.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings DisableHelp(this HelmPackageSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -15607,7 +15607,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for package.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings ToggleHelp(this HelmPackageSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -15620,7 +15620,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Name of the key to use when signing. Used if --sign is true.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings SetKey(this HelmPackageSettings toolSettings, string key)
+        public static T SetKey<T>(this T toolSettings, string key) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Key = key;
@@ -15631,7 +15631,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Name of the key to use when signing. Used if --sign is true.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings ResetKey(this HelmPackageSettings toolSettings)
+        public static T ResetKey<T>(this T toolSettings) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Key = null;
@@ -15644,7 +15644,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Location of a public keyring (default "~/.gnupg/pubring.gpg").</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings SetKeyring(this HelmPackageSettings toolSettings, string keyring)
+        public static T SetKeyring<T>(this T toolSettings, string keyring) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyring = keyring;
@@ -15655,7 +15655,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Location of a public keyring (default "~/.gnupg/pubring.gpg").</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings ResetKeyring(this HelmPackageSettings toolSettings)
+        public static T ResetKeyring<T>(this T toolSettings) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyring = null;
@@ -15668,7 +15668,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Save packaged chart to local chart repository (default true).</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings SetSave(this HelmPackageSettings toolSettings, bool? save)
+        public static T SetSave<T>(this T toolSettings, bool? save) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Save = save;
@@ -15679,7 +15679,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Save packaged chart to local chart repository (default true).</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings ResetSave(this HelmPackageSettings toolSettings)
+        public static T ResetSave<T>(this T toolSettings) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Save = null;
@@ -15690,7 +15690,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Save packaged chart to local chart repository (default true).</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings EnableSave(this HelmPackageSettings toolSettings)
+        public static T EnableSave<T>(this T toolSettings) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Save = true;
@@ -15701,7 +15701,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Save packaged chart to local chart repository (default true).</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings DisableSave(this HelmPackageSettings toolSettings)
+        public static T DisableSave<T>(this T toolSettings) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Save = false;
@@ -15712,7 +15712,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Save packaged chart to local chart repository (default true).</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings ToggleSave(this HelmPackageSettings toolSettings)
+        public static T ToggleSave<T>(this T toolSettings) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Save = !toolSettings.Save;
@@ -15725,7 +15725,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use a PGP private key to sign this package.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings SetSign(this HelmPackageSettings toolSettings, bool? sign)
+        public static T SetSign<T>(this T toolSettings, bool? sign) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Sign = sign;
@@ -15736,7 +15736,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use a PGP private key to sign this package.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings ResetSign(this HelmPackageSettings toolSettings)
+        public static T ResetSign<T>(this T toolSettings) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Sign = null;
@@ -15747,7 +15747,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use a PGP private key to sign this package.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings EnableSign(this HelmPackageSettings toolSettings)
+        public static T EnableSign<T>(this T toolSettings) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Sign = true;
@@ -15758,7 +15758,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use a PGP private key to sign this package.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings DisableSign(this HelmPackageSettings toolSettings)
+        public static T DisableSign<T>(this T toolSettings) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Sign = false;
@@ -15769,7 +15769,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use a PGP private key to sign this package.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings ToggleSign(this HelmPackageSettings toolSettings)
+        public static T ToggleSign<T>(this T toolSettings) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Sign = !toolSettings.Sign;
@@ -15782,7 +15782,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set the version on the chart to this semver version.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings SetVersion(this HelmPackageSettings toolSettings, string version)
+        public static T SetVersion<T>(this T toolSettings, string version) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = version;
@@ -15793,7 +15793,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set the version on the chart to this semver version.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings ResetVersion(this HelmPackageSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = null;
@@ -15806,7 +15806,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The paths to the charts to package.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings SetChartPaths(this HelmPackageSettings toolSettings, params string[] chartPaths)
+        public static T SetChartPaths<T>(this T toolSettings, params string[] chartPaths) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ChartPathsInternal = chartPaths.ToList();
@@ -15817,7 +15817,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The paths to the charts to package.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings SetChartPaths(this HelmPackageSettings toolSettings, IEnumerable<string> chartPaths)
+        public static T SetChartPaths<T>(this T toolSettings, IEnumerable<string> chartPaths) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ChartPathsInternal = chartPaths.ToList();
@@ -15828,7 +15828,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The paths to the charts to package.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings AddChartPaths(this HelmPackageSettings toolSettings, params string[] chartPaths)
+        public static T AddChartPaths<T>(this T toolSettings, params string[] chartPaths) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ChartPathsInternal.AddRange(chartPaths);
@@ -15839,7 +15839,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The paths to the charts to package.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings AddChartPaths(this HelmPackageSettings toolSettings, IEnumerable<string> chartPaths)
+        public static T AddChartPaths<T>(this T toolSettings, IEnumerable<string> chartPaths) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ChartPathsInternal.AddRange(chartPaths);
@@ -15850,7 +15850,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The paths to the charts to package.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings ClearChartPaths(this HelmPackageSettings toolSettings)
+        public static T ClearChartPaths<T>(this T toolSettings) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ChartPathsInternal.Clear();
@@ -15861,7 +15861,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The paths to the charts to package.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings RemoveChartPaths(this HelmPackageSettings toolSettings, params string[] chartPaths)
+        public static T RemoveChartPaths<T>(this T toolSettings, params string[] chartPaths) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(chartPaths);
@@ -15873,7 +15873,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The paths to the charts to package.</p>
         /// </summary>
         [Pure]
-        public static HelmPackageSettings RemoveChartPaths(this HelmPackageSettings toolSettings, IEnumerable<string> chartPaths)
+        public static T RemoveChartPaths<T>(this T toolSettings, IEnumerable<string> chartPaths) where T : HelmPackageSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(chartPaths);
@@ -15897,7 +15897,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for install.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginInstallSettings SetHelp(this HelmPluginInstallSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmPluginInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -15908,7 +15908,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for install.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginInstallSettings ResetHelp(this HelmPluginInstallSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmPluginInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -15919,7 +15919,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for install.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginInstallSettings EnableHelp(this HelmPluginInstallSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmPluginInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -15930,7 +15930,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for install.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginInstallSettings DisableHelp(this HelmPluginInstallSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmPluginInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -15941,7 +15941,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for install.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginInstallSettings ToggleHelp(this HelmPluginInstallSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmPluginInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -15954,7 +15954,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify a version constraint. If this is not specified, the latest version is installed.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginInstallSettings SetVersion(this HelmPluginInstallSettings toolSettings, string version)
+        public static T SetVersion<T>(this T toolSettings, string version) where T : HelmPluginInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = version;
@@ -15965,7 +15965,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify a version constraint. If this is not specified, the latest version is installed.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginInstallSettings ResetVersion(this HelmPluginInstallSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : HelmPluginInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = null;
@@ -15977,7 +15977,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p><em>Sets <see cref="HelmPluginInstallSettings.Options"/></em></p>
         /// </summary>
         [Pure]
-        public static HelmPluginInstallSettings SetOptions(this HelmPluginInstallSettings toolSettings, string options)
+        public static T SetOptions<T>(this T toolSettings, string options) where T : HelmPluginInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Options = options;
@@ -15987,7 +15987,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p><em>Resets <see cref="HelmPluginInstallSettings.Options"/></em></p>
         /// </summary>
         [Pure]
-        public static HelmPluginInstallSettings ResetOptions(this HelmPluginInstallSettings toolSettings)
+        public static T ResetOptions<T>(this T toolSettings) where T : HelmPluginInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Options = null;
@@ -16000,7 +16000,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>List of paths or urls of packages to install.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginInstallSettings SetPaths(this HelmPluginInstallSettings toolSettings, params string[] paths)
+        public static T SetPaths<T>(this T toolSettings, params string[] paths) where T : HelmPluginInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PathsInternal = paths.ToList();
@@ -16011,7 +16011,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>List of paths or urls of packages to install.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginInstallSettings SetPaths(this HelmPluginInstallSettings toolSettings, IEnumerable<string> paths)
+        public static T SetPaths<T>(this T toolSettings, IEnumerable<string> paths) where T : HelmPluginInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PathsInternal = paths.ToList();
@@ -16022,7 +16022,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>List of paths or urls of packages to install.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginInstallSettings AddPaths(this HelmPluginInstallSettings toolSettings, params string[] paths)
+        public static T AddPaths<T>(this T toolSettings, params string[] paths) where T : HelmPluginInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PathsInternal.AddRange(paths);
@@ -16033,7 +16033,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>List of paths or urls of packages to install.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginInstallSettings AddPaths(this HelmPluginInstallSettings toolSettings, IEnumerable<string> paths)
+        public static T AddPaths<T>(this T toolSettings, IEnumerable<string> paths) where T : HelmPluginInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PathsInternal.AddRange(paths);
@@ -16044,7 +16044,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>List of paths or urls of packages to install.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginInstallSettings ClearPaths(this HelmPluginInstallSettings toolSettings)
+        public static T ClearPaths<T>(this T toolSettings) where T : HelmPluginInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PathsInternal.Clear();
@@ -16055,7 +16055,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>List of paths or urls of packages to install.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginInstallSettings RemovePaths(this HelmPluginInstallSettings toolSettings, params string[] paths)
+        public static T RemovePaths<T>(this T toolSettings, params string[] paths) where T : HelmPluginInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(paths);
@@ -16067,7 +16067,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>List of paths or urls of packages to install.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginInstallSettings RemovePaths(this HelmPluginInstallSettings toolSettings, IEnumerable<string> paths)
+        public static T RemovePaths<T>(this T toolSettings, IEnumerable<string> paths) where T : HelmPluginInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(paths);
@@ -16091,7 +16091,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for list.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginListSettings SetHelp(this HelmPluginListSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmPluginListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -16102,7 +16102,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for list.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginListSettings ResetHelp(this HelmPluginListSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmPluginListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -16113,7 +16113,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for list.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginListSettings EnableHelp(this HelmPluginListSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmPluginListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -16124,7 +16124,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for list.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginListSettings DisableHelp(this HelmPluginListSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmPluginListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -16135,7 +16135,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for list.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginListSettings ToggleHelp(this HelmPluginListSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmPluginListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -16158,7 +16158,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for remove.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginRemoveSettings SetHelp(this HelmPluginRemoveSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmPluginRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -16169,7 +16169,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for remove.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginRemoveSettings ResetHelp(this HelmPluginRemoveSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmPluginRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -16180,7 +16180,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for remove.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginRemoveSettings EnableHelp(this HelmPluginRemoveSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmPluginRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -16191,7 +16191,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for remove.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginRemoveSettings DisableHelp(this HelmPluginRemoveSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmPluginRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -16202,7 +16202,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for remove.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginRemoveSettings ToggleHelp(this HelmPluginRemoveSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmPluginRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -16215,7 +16215,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>List of plugins to remove.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginRemoveSettings SetPlugins(this HelmPluginRemoveSettings toolSettings, params string[] plugins)
+        public static T SetPlugins<T>(this T toolSettings, params string[] plugins) where T : HelmPluginRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PluginsInternal = plugins.ToList();
@@ -16226,7 +16226,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>List of plugins to remove.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginRemoveSettings SetPlugins(this HelmPluginRemoveSettings toolSettings, IEnumerable<string> plugins)
+        public static T SetPlugins<T>(this T toolSettings, IEnumerable<string> plugins) where T : HelmPluginRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PluginsInternal = plugins.ToList();
@@ -16237,7 +16237,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>List of plugins to remove.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginRemoveSettings AddPlugins(this HelmPluginRemoveSettings toolSettings, params string[] plugins)
+        public static T AddPlugins<T>(this T toolSettings, params string[] plugins) where T : HelmPluginRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PluginsInternal.AddRange(plugins);
@@ -16248,7 +16248,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>List of plugins to remove.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginRemoveSettings AddPlugins(this HelmPluginRemoveSettings toolSettings, IEnumerable<string> plugins)
+        public static T AddPlugins<T>(this T toolSettings, IEnumerable<string> plugins) where T : HelmPluginRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PluginsInternal.AddRange(plugins);
@@ -16259,7 +16259,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>List of plugins to remove.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginRemoveSettings ClearPlugins(this HelmPluginRemoveSettings toolSettings)
+        public static T ClearPlugins<T>(this T toolSettings) where T : HelmPluginRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PluginsInternal.Clear();
@@ -16270,7 +16270,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>List of plugins to remove.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginRemoveSettings RemovePlugins(this HelmPluginRemoveSettings toolSettings, params string[] plugins)
+        public static T RemovePlugins<T>(this T toolSettings, params string[] plugins) where T : HelmPluginRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(plugins);
@@ -16282,7 +16282,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>List of plugins to remove.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginRemoveSettings RemovePlugins(this HelmPluginRemoveSettings toolSettings, IEnumerable<string> plugins)
+        public static T RemovePlugins<T>(this T toolSettings, IEnumerable<string> plugins) where T : HelmPluginRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(plugins);
@@ -16306,7 +16306,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for update.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginUpdateSettings SetHelp(this HelmPluginUpdateSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmPluginUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -16317,7 +16317,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for update.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginUpdateSettings ResetHelp(this HelmPluginUpdateSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmPluginUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -16328,7 +16328,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for update.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginUpdateSettings EnableHelp(this HelmPluginUpdateSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmPluginUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -16339,7 +16339,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for update.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginUpdateSettings DisableHelp(this HelmPluginUpdateSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmPluginUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -16350,7 +16350,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for update.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginUpdateSettings ToggleHelp(this HelmPluginUpdateSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmPluginUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -16363,7 +16363,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>List of plugins to update.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginUpdateSettings SetPlugins(this HelmPluginUpdateSettings toolSettings, params string[] plugins)
+        public static T SetPlugins<T>(this T toolSettings, params string[] plugins) where T : HelmPluginUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PluginsInternal = plugins.ToList();
@@ -16374,7 +16374,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>List of plugins to update.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginUpdateSettings SetPlugins(this HelmPluginUpdateSettings toolSettings, IEnumerable<string> plugins)
+        public static T SetPlugins<T>(this T toolSettings, IEnumerable<string> plugins) where T : HelmPluginUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PluginsInternal = plugins.ToList();
@@ -16385,7 +16385,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>List of plugins to update.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginUpdateSettings AddPlugins(this HelmPluginUpdateSettings toolSettings, params string[] plugins)
+        public static T AddPlugins<T>(this T toolSettings, params string[] plugins) where T : HelmPluginUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PluginsInternal.AddRange(plugins);
@@ -16396,7 +16396,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>List of plugins to update.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginUpdateSettings AddPlugins(this HelmPluginUpdateSettings toolSettings, IEnumerable<string> plugins)
+        public static T AddPlugins<T>(this T toolSettings, IEnumerable<string> plugins) where T : HelmPluginUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PluginsInternal.AddRange(plugins);
@@ -16407,7 +16407,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>List of plugins to update.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginUpdateSettings ClearPlugins(this HelmPluginUpdateSettings toolSettings)
+        public static T ClearPlugins<T>(this T toolSettings) where T : HelmPluginUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PluginsInternal.Clear();
@@ -16418,7 +16418,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>List of plugins to update.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginUpdateSettings RemovePlugins(this HelmPluginUpdateSettings toolSettings, params string[] plugins)
+        public static T RemovePlugins<T>(this T toolSettings, params string[] plugins) where T : HelmPluginUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(plugins);
@@ -16430,7 +16430,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>List of plugins to update.</p>
         /// </summary>
         [Pure]
-        public static HelmPluginUpdateSettings RemovePlugins(this HelmPluginUpdateSettings toolSettings, IEnumerable<string> plugins)
+        public static T RemovePlugins<T>(this T toolSettings, IEnumerable<string> plugins) where T : HelmPluginUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(plugins);
@@ -16454,7 +16454,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify certificates of HTTPS-enabled servers using this CA bundle.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings SetCaFile(this HelmRepoAddSettings toolSettings, string caFile)
+        public static T SetCaFile<T>(this T toolSettings, string caFile) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CaFile = caFile;
@@ -16465,7 +16465,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify certificates of HTTPS-enabled servers using this CA bundle.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings ResetCaFile(this HelmRepoAddSettings toolSettings)
+        public static T ResetCaFile<T>(this T toolSettings) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CaFile = null;
@@ -16478,7 +16478,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL certificate file.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings SetCertFile(this HelmRepoAddSettings toolSettings, string certFile)
+        public static T SetCertFile<T>(this T toolSettings, string certFile) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CertFile = certFile;
@@ -16489,7 +16489,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL certificate file.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings ResetCertFile(this HelmRepoAddSettings toolSettings)
+        public static T ResetCertFile<T>(this T toolSettings) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CertFile = null;
@@ -16502,7 +16502,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for add.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings SetHelp(this HelmRepoAddSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -16513,7 +16513,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for add.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings ResetHelp(this HelmRepoAddSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -16524,7 +16524,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for add.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings EnableHelp(this HelmRepoAddSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -16535,7 +16535,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for add.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings DisableHelp(this HelmRepoAddSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -16546,7 +16546,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for add.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings ToggleHelp(this HelmRepoAddSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -16559,7 +16559,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL key file.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings SetKeyFile(this HelmRepoAddSettings toolSettings, string keyFile)
+        public static T SetKeyFile<T>(this T toolSettings, string keyFile) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyFile = keyFile;
@@ -16570,7 +16570,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL key file.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings ResetKeyFile(this HelmRepoAddSettings toolSettings)
+        public static T ResetKeyFile<T>(this T toolSettings) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyFile = null;
@@ -16583,7 +16583,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Raise error if repo is already registered.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings SetNoUpdate(this HelmRepoAddSettings toolSettings, bool? noUpdate)
+        public static T SetNoUpdate<T>(this T toolSettings, bool? noUpdate) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoUpdate = noUpdate;
@@ -16594,7 +16594,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Raise error if repo is already registered.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings ResetNoUpdate(this HelmRepoAddSettings toolSettings)
+        public static T ResetNoUpdate<T>(this T toolSettings) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoUpdate = null;
@@ -16605,7 +16605,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Raise error if repo is already registered.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings EnableNoUpdate(this HelmRepoAddSettings toolSettings)
+        public static T EnableNoUpdate<T>(this T toolSettings) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoUpdate = true;
@@ -16616,7 +16616,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Raise error if repo is already registered.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings DisableNoUpdate(this HelmRepoAddSettings toolSettings)
+        public static T DisableNoUpdate<T>(this T toolSettings) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoUpdate = false;
@@ -16627,7 +16627,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Raise error if repo is already registered.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings ToggleNoUpdate(this HelmRepoAddSettings toolSettings)
+        public static T ToggleNoUpdate<T>(this T toolSettings) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoUpdate = !toolSettings.NoUpdate;
@@ -16640,7 +16640,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository password.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings SetPassword(this HelmRepoAddSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -16651,7 +16651,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository password.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings ResetPassword(this HelmRepoAddSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -16664,7 +16664,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository username.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings SetUsername(this HelmRepoAddSettings toolSettings, string username)
+        public static T SetUsername<T>(this T toolSettings, string username) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = username;
@@ -16675,7 +16675,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository username.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings ResetUsername(this HelmRepoAddSettings toolSettings)
+        public static T ResetUsername<T>(this T toolSettings) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = null;
@@ -16688,7 +16688,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the repository to add.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings SetName(this HelmRepoAddSettings toolSettings, string name)
+        public static T SetName<T>(this T toolSettings, string name) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = name;
@@ -16699,7 +16699,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the repository to add.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings ResetName(this HelmRepoAddSettings toolSettings)
+        public static T ResetName<T>(this T toolSettings) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = null;
@@ -16712,7 +16712,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The url of the repository to add.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings SetUrl(this HelmRepoAddSettings toolSettings, string url)
+        public static T SetUrl<T>(this T toolSettings, string url) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Url = url;
@@ -16723,7 +16723,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The url of the repository to add.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoAddSettings ResetUrl(this HelmRepoAddSettings toolSettings)
+        public static T ResetUrl<T>(this T toolSettings) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Url = null;
@@ -16746,7 +16746,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for index.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoIndexSettings SetHelp(this HelmRepoIndexSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmRepoIndexSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -16757,7 +16757,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for index.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoIndexSettings ResetHelp(this HelmRepoIndexSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmRepoIndexSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -16768,7 +16768,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for index.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoIndexSettings EnableHelp(this HelmRepoIndexSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmRepoIndexSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -16779,7 +16779,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for index.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoIndexSettings DisableHelp(this HelmRepoIndexSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmRepoIndexSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -16790,7 +16790,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for index.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoIndexSettings ToggleHelp(this HelmRepoIndexSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmRepoIndexSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -16803,7 +16803,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Merge the generated index into the given index.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoIndexSettings SetMerge(this HelmRepoIndexSettings toolSettings, string merge)
+        public static T SetMerge<T>(this T toolSettings, string merge) where T : HelmRepoIndexSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Merge = merge;
@@ -16814,7 +16814,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Merge the generated index into the given index.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoIndexSettings ResetMerge(this HelmRepoIndexSettings toolSettings)
+        public static T ResetMerge<T>(this T toolSettings) where T : HelmRepoIndexSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Merge = null;
@@ -16827,7 +16827,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Url of chart repository.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoIndexSettings SetUrl(this HelmRepoIndexSettings toolSettings, string url)
+        public static T SetUrl<T>(this T toolSettings, string url) where T : HelmRepoIndexSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Url = url;
@@ -16838,7 +16838,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Url of chart repository.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoIndexSettings ResetUrl(this HelmRepoIndexSettings toolSettings)
+        public static T ResetUrl<T>(this T toolSettings) where T : HelmRepoIndexSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Url = null;
@@ -16851,7 +16851,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The directory of the repository.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoIndexSettings SetDirectory(this HelmRepoIndexSettings toolSettings, string directory)
+        public static T SetDirectory<T>(this T toolSettings, string directory) where T : HelmRepoIndexSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Directory = directory;
@@ -16862,7 +16862,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The directory of the repository.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoIndexSettings ResetDirectory(this HelmRepoIndexSettings toolSettings)
+        public static T ResetDirectory<T>(this T toolSettings) where T : HelmRepoIndexSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Directory = null;
@@ -16885,7 +16885,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for list.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoListSettings SetHelp(this HelmRepoListSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmRepoListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -16896,7 +16896,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for list.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoListSettings ResetHelp(this HelmRepoListSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmRepoListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -16907,7 +16907,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for list.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoListSettings EnableHelp(this HelmRepoListSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmRepoListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -16918,7 +16918,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for list.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoListSettings DisableHelp(this HelmRepoListSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmRepoListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -16929,7 +16929,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for list.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoListSettings ToggleHelp(this HelmRepoListSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmRepoListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -16952,7 +16952,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for remove.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoRemoveSettings SetHelp(this HelmRepoRemoveSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmRepoRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -16963,7 +16963,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for remove.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoRemoveSettings ResetHelp(this HelmRepoRemoveSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmRepoRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -16974,7 +16974,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for remove.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoRemoveSettings EnableHelp(this HelmRepoRemoveSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmRepoRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -16985,7 +16985,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for remove.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoRemoveSettings DisableHelp(this HelmRepoRemoveSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmRepoRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -16996,7 +16996,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for remove.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoRemoveSettings ToggleHelp(this HelmRepoRemoveSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmRepoRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -17009,7 +17009,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the repository.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoRemoveSettings SetName(this HelmRepoRemoveSettings toolSettings, string name)
+        public static T SetName<T>(this T toolSettings, string name) where T : HelmRepoRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = name;
@@ -17020,7 +17020,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the repository.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoRemoveSettings ResetName(this HelmRepoRemoveSettings toolSettings)
+        public static T ResetName<T>(this T toolSettings) where T : HelmRepoRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = null;
@@ -17043,7 +17043,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for update.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoUpdateSettings SetHelp(this HelmRepoUpdateSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmRepoUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -17054,7 +17054,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for update.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoUpdateSettings ResetHelp(this HelmRepoUpdateSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmRepoUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -17065,7 +17065,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for update.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoUpdateSettings EnableHelp(this HelmRepoUpdateSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmRepoUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -17076,7 +17076,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for update.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoUpdateSettings DisableHelp(this HelmRepoUpdateSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmRepoUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -17087,7 +17087,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for update.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoUpdateSettings ToggleHelp(this HelmRepoUpdateSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmRepoUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -17100,7 +17100,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Fail on update warnings.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoUpdateSettings SetStrict(this HelmRepoUpdateSettings toolSettings, bool? strict)
+        public static T SetStrict<T>(this T toolSettings, bool? strict) where T : HelmRepoUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Strict = strict;
@@ -17111,7 +17111,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Fail on update warnings.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoUpdateSettings ResetStrict(this HelmRepoUpdateSettings toolSettings)
+        public static T ResetStrict<T>(this T toolSettings) where T : HelmRepoUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Strict = null;
@@ -17122,7 +17122,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Fail on update warnings.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoUpdateSettings EnableStrict(this HelmRepoUpdateSettings toolSettings)
+        public static T EnableStrict<T>(this T toolSettings) where T : HelmRepoUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Strict = true;
@@ -17133,7 +17133,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Fail on update warnings.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoUpdateSettings DisableStrict(this HelmRepoUpdateSettings toolSettings)
+        public static T DisableStrict<T>(this T toolSettings) where T : HelmRepoUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Strict = false;
@@ -17144,7 +17144,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Fail on update warnings.</p>
         /// </summary>
         [Pure]
-        public static HelmRepoUpdateSettings ToggleStrict(this HelmRepoUpdateSettings toolSettings)
+        public static T ToggleStrict<T>(this T toolSettings) where T : HelmRepoUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Strict = !toolSettings.Strict;
@@ -17167,7 +17167,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Forces Tiller uninstall even if there are releases installed, or if Tiller is not in ready state. Releases are not deleted.).</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings SetForce(this HelmResetSettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -17178,7 +17178,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Forces Tiller uninstall even if there are releases installed, or if Tiller is not in ready state. Releases are not deleted.).</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings ResetForce(this HelmResetSettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -17189,7 +17189,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Forces Tiller uninstall even if there are releases installed, or if Tiller is not in ready state. Releases are not deleted.).</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings EnableForce(this HelmResetSettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -17200,7 +17200,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Forces Tiller uninstall even if there are releases installed, or if Tiller is not in ready state. Releases are not deleted.).</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings DisableForce(this HelmResetSettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -17211,7 +17211,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Forces Tiller uninstall even if there are releases installed, or if Tiller is not in ready state. Releases are not deleted.).</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings ToggleForce(this HelmResetSettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -17224,7 +17224,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for reset.</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings SetHelp(this HelmResetSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -17235,7 +17235,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for reset.</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings ResetHelp(this HelmResetSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -17246,7 +17246,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for reset.</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings EnableHelp(this HelmResetSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -17257,7 +17257,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for reset.</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings DisableHelp(this HelmResetSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -17268,7 +17268,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for reset.</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings ToggleHelp(this HelmResetSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -17281,7 +17281,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set deletes $HELM_HOME.</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings SetRemoveHelmHome(this HelmResetSettings toolSettings, bool? removeHelmHome)
+        public static T SetRemoveHelmHome<T>(this T toolSettings, bool? removeHelmHome) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RemoveHelmHome = removeHelmHome;
@@ -17292,7 +17292,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set deletes $HELM_HOME.</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings ResetRemoveHelmHome(this HelmResetSettings toolSettings)
+        public static T ResetRemoveHelmHome<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RemoveHelmHome = null;
@@ -17303,7 +17303,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set deletes $HELM_HOME.</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings EnableRemoveHelmHome(this HelmResetSettings toolSettings)
+        public static T EnableRemoveHelmHome<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RemoveHelmHome = true;
@@ -17314,7 +17314,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set deletes $HELM_HOME.</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings DisableRemoveHelmHome(this HelmResetSettings toolSettings)
+        public static T DisableRemoveHelmHome<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RemoveHelmHome = false;
@@ -17325,7 +17325,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set deletes $HELM_HOME.</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings ToggleRemoveHelmHome(this HelmResetSettings toolSettings)
+        public static T ToggleRemoveHelmHome<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RemoveHelmHome = !toolSettings.RemoveHelmHome;
@@ -17338,7 +17338,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings SetTls(this HelmResetSettings toolSettings, bool? tls)
+        public static T SetTls<T>(this T toolSettings, bool? tls) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = tls;
@@ -17349,7 +17349,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings ResetTls(this HelmResetSettings toolSettings)
+        public static T ResetTls<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = null;
@@ -17360,7 +17360,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings EnableTls(this HelmResetSettings toolSettings)
+        public static T EnableTls<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = true;
@@ -17371,7 +17371,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings DisableTls(this HelmResetSettings toolSettings)
+        public static T DisableTls<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = false;
@@ -17382,7 +17382,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings ToggleTls(this HelmResetSettings toolSettings)
+        public static T ToggleTls<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = !toolSettings.Tls;
@@ -17395,7 +17395,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings SetTlsCaCert(this HelmResetSettings toolSettings, string tlsCaCert)
+        public static T SetTlsCaCert<T>(this T toolSettings, string tlsCaCert) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = tlsCaCert;
@@ -17406,7 +17406,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings ResetTlsCaCert(this HelmResetSettings toolSettings)
+        public static T ResetTlsCaCert<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = null;
@@ -17419,7 +17419,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings SetTlsCert(this HelmResetSettings toolSettings, string tlsCert)
+        public static T SetTlsCert<T>(this T toolSettings, string tlsCert) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = tlsCert;
@@ -17430,7 +17430,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings ResetTlsCert(this HelmResetSettings toolSettings)
+        public static T ResetTlsCert<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = null;
@@ -17443,7 +17443,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings SetTlsHostname(this HelmResetSettings toolSettings, string tlsHostname)
+        public static T SetTlsHostname<T>(this T toolSettings, string tlsHostname) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = tlsHostname;
@@ -17454,7 +17454,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings ResetTlsHostname(this HelmResetSettings toolSettings)
+        public static T ResetTlsHostname<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = null;
@@ -17467,7 +17467,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings SetTlsKey(this HelmResetSettings toolSettings, string tlsKey)
+        public static T SetTlsKey<T>(this T toolSettings, string tlsKey) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = tlsKey;
@@ -17478,7 +17478,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings ResetTlsKey(this HelmResetSettings toolSettings)
+        public static T ResetTlsKey<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = null;
@@ -17491,7 +17491,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings SetTlsVerify(this HelmResetSettings toolSettings, bool? tlsVerify)
+        public static T SetTlsVerify<T>(this T toolSettings, bool? tlsVerify) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = tlsVerify;
@@ -17502,7 +17502,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings ResetTlsVerify(this HelmResetSettings toolSettings)
+        public static T ResetTlsVerify<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = null;
@@ -17513,7 +17513,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings EnableTlsVerify(this HelmResetSettings toolSettings)
+        public static T EnableTlsVerify<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = true;
@@ -17524,7 +17524,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings DisableTlsVerify(this HelmResetSettings toolSettings)
+        public static T DisableTlsVerify<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = false;
@@ -17535,7 +17535,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmResetSettings ToggleTlsVerify(this HelmResetSettings toolSettings)
+        public static T ToggleTlsVerify<T>(this T toolSettings) where T : HelmResetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = !toolSettings.TlsVerify;
@@ -17558,7 +17558,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify a description for the release.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings SetDescription(this HelmRollbackSettings toolSettings, string description)
+        public static T SetDescription<T>(this T toolSettings, string description) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Description = description;
@@ -17569,7 +17569,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify a description for the release.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ResetDescription(this HelmRollbackSettings toolSettings)
+        public static T ResetDescription<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Description = null;
@@ -17582,7 +17582,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Simulate a rollback.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings SetDryRun(this HelmRollbackSettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -17593,7 +17593,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Simulate a rollback.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ResetDryRun(this HelmRollbackSettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -17604,7 +17604,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Simulate a rollback.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings EnableDryRun(this HelmRollbackSettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -17615,7 +17615,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Simulate a rollback.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings DisableDryRun(this HelmRollbackSettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -17626,7 +17626,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Simulate a rollback.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ToggleDryRun(this HelmRollbackSettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -17639,7 +17639,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Force resource update through delete/recreate if needed.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings SetForce(this HelmRollbackSettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -17650,7 +17650,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Force resource update through delete/recreate if needed.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ResetForce(this HelmRollbackSettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -17661,7 +17661,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Force resource update through delete/recreate if needed.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings EnableForce(this HelmRollbackSettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -17672,7 +17672,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Force resource update through delete/recreate if needed.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings DisableForce(this HelmRollbackSettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -17683,7 +17683,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Force resource update through delete/recreate if needed.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ToggleForce(this HelmRollbackSettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -17696,7 +17696,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for rollback.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings SetHelp(this HelmRollbackSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -17707,7 +17707,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for rollback.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ResetHelp(this HelmRollbackSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -17718,7 +17718,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for rollback.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings EnableHelp(this HelmRollbackSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -17729,7 +17729,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for rollback.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings DisableHelp(this HelmRollbackSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -17740,7 +17740,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for rollback.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ToggleHelp(this HelmRollbackSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -17753,7 +17753,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Prevent hooks from running during rollback.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings SetNoHooks(this HelmRollbackSettings toolSettings, bool? noHooks)
+        public static T SetNoHooks<T>(this T toolSettings, bool? noHooks) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHooks = noHooks;
@@ -17764,7 +17764,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Prevent hooks from running during rollback.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ResetNoHooks(this HelmRollbackSettings toolSettings)
+        public static T ResetNoHooks<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHooks = null;
@@ -17775,7 +17775,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Prevent hooks from running during rollback.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings EnableNoHooks(this HelmRollbackSettings toolSettings)
+        public static T EnableNoHooks<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHooks = true;
@@ -17786,7 +17786,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Prevent hooks from running during rollback.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings DisableNoHooks(this HelmRollbackSettings toolSettings)
+        public static T DisableNoHooks<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHooks = false;
@@ -17797,7 +17797,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Prevent hooks from running during rollback.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ToggleNoHooks(this HelmRollbackSettings toolSettings)
+        public static T ToggleNoHooks<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHooks = !toolSettings.NoHooks;
@@ -17810,7 +17810,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Performs pods restart for the resource if applicable.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings SetRecreatePods(this HelmRollbackSettings toolSettings, bool? recreatePods)
+        public static T SetRecreatePods<T>(this T toolSettings, bool? recreatePods) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RecreatePods = recreatePods;
@@ -17821,7 +17821,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Performs pods restart for the resource if applicable.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ResetRecreatePods(this HelmRollbackSettings toolSettings)
+        public static T ResetRecreatePods<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RecreatePods = null;
@@ -17832,7 +17832,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Performs pods restart for the resource if applicable.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings EnableRecreatePods(this HelmRollbackSettings toolSettings)
+        public static T EnableRecreatePods<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RecreatePods = true;
@@ -17843,7 +17843,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Performs pods restart for the resource if applicable.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings DisableRecreatePods(this HelmRollbackSettings toolSettings)
+        public static T DisableRecreatePods<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RecreatePods = false;
@@ -17854,7 +17854,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Performs pods restart for the resource if applicable.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ToggleRecreatePods(this HelmRollbackSettings toolSettings)
+        public static T ToggleRecreatePods<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RecreatePods = !toolSettings.RecreatePods;
@@ -17867,7 +17867,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Time in seconds to wait for any individual Kubernetes operation (like Jobs for hooks) (default 300).</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings SetTimeout(this HelmRollbackSettings toolSettings, long? timeout)
+        public static T SetTimeout<T>(this T toolSettings, long? timeout) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = timeout;
@@ -17878,7 +17878,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Time in seconds to wait for any individual Kubernetes operation (like Jobs for hooks) (default 300).</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ResetTimeout(this HelmRollbackSettings toolSettings)
+        public static T ResetTimeout<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = null;
@@ -17891,7 +17891,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings SetTls(this HelmRollbackSettings toolSettings, bool? tls)
+        public static T SetTls<T>(this T toolSettings, bool? tls) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = tls;
@@ -17902,7 +17902,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ResetTls(this HelmRollbackSettings toolSettings)
+        public static T ResetTls<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = null;
@@ -17913,7 +17913,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings EnableTls(this HelmRollbackSettings toolSettings)
+        public static T EnableTls<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = true;
@@ -17924,7 +17924,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings DisableTls(this HelmRollbackSettings toolSettings)
+        public static T DisableTls<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = false;
@@ -17935,7 +17935,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ToggleTls(this HelmRollbackSettings toolSettings)
+        public static T ToggleTls<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = !toolSettings.Tls;
@@ -17948,7 +17948,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings SetTlsCaCert(this HelmRollbackSettings toolSettings, string tlsCaCert)
+        public static T SetTlsCaCert<T>(this T toolSettings, string tlsCaCert) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = tlsCaCert;
@@ -17959,7 +17959,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ResetTlsCaCert(this HelmRollbackSettings toolSettings)
+        public static T ResetTlsCaCert<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = null;
@@ -17972,7 +17972,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings SetTlsCert(this HelmRollbackSettings toolSettings, string tlsCert)
+        public static T SetTlsCert<T>(this T toolSettings, string tlsCert) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = tlsCert;
@@ -17983,7 +17983,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ResetTlsCert(this HelmRollbackSettings toolSettings)
+        public static T ResetTlsCert<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = null;
@@ -17996,7 +17996,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings SetTlsHostname(this HelmRollbackSettings toolSettings, string tlsHostname)
+        public static T SetTlsHostname<T>(this T toolSettings, string tlsHostname) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = tlsHostname;
@@ -18007,7 +18007,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ResetTlsHostname(this HelmRollbackSettings toolSettings)
+        public static T ResetTlsHostname<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = null;
@@ -18020,7 +18020,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings SetTlsKey(this HelmRollbackSettings toolSettings, string tlsKey)
+        public static T SetTlsKey<T>(this T toolSettings, string tlsKey) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = tlsKey;
@@ -18031,7 +18031,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ResetTlsKey(this HelmRollbackSettings toolSettings)
+        public static T ResetTlsKey<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = null;
@@ -18044,7 +18044,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings SetTlsVerify(this HelmRollbackSettings toolSettings, bool? tlsVerify)
+        public static T SetTlsVerify<T>(this T toolSettings, bool? tlsVerify) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = tlsVerify;
@@ -18055,7 +18055,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ResetTlsVerify(this HelmRollbackSettings toolSettings)
+        public static T ResetTlsVerify<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = null;
@@ -18066,7 +18066,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings EnableTlsVerify(this HelmRollbackSettings toolSettings)
+        public static T EnableTlsVerify<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = true;
@@ -18077,7 +18077,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings DisableTlsVerify(this HelmRollbackSettings toolSettings)
+        public static T DisableTlsVerify<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = false;
@@ -18088,7 +18088,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ToggleTlsVerify(this HelmRollbackSettings toolSettings)
+        public static T ToggleTlsVerify<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = !toolSettings.TlsVerify;
@@ -18101,7 +18101,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment are in a ready state before marking the release as successful. It will wait for as long as --timeout.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings SetWait(this HelmRollbackSettings toolSettings, bool? wait)
+        public static T SetWait<T>(this T toolSettings, bool? wait) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = wait;
@@ -18112,7 +18112,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment are in a ready state before marking the release as successful. It will wait for as long as --timeout.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ResetWait(this HelmRollbackSettings toolSettings)
+        public static T ResetWait<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = null;
@@ -18123,7 +18123,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment are in a ready state before marking the release as successful. It will wait for as long as --timeout.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings EnableWait(this HelmRollbackSettings toolSettings)
+        public static T EnableWait<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = true;
@@ -18134,7 +18134,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment are in a ready state before marking the release as successful. It will wait for as long as --timeout.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings DisableWait(this HelmRollbackSettings toolSettings)
+        public static T DisableWait<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = false;
@@ -18145,7 +18145,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment are in a ready state before marking the release as successful. It will wait for as long as --timeout.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ToggleWait(this HelmRollbackSettings toolSettings)
+        public static T ToggleWait<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = !toolSettings.Wait;
@@ -18158,7 +18158,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the release.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings SetRelease(this HelmRollbackSettings toolSettings, string release)
+        public static T SetRelease<T>(this T toolSettings, string release) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Release = release;
@@ -18169,7 +18169,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the release.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ResetRelease(this HelmRollbackSettings toolSettings)
+        public static T ResetRelease<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Release = null;
@@ -18182,7 +18182,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The revison to roll back.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings SetRevision(this HelmRollbackSettings toolSettings, string revision)
+        public static T SetRevision<T>(this T toolSettings, string revision) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Revision = revision;
@@ -18193,7 +18193,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The revison to roll back.</p>
         /// </summary>
         [Pure]
-        public static HelmRollbackSettings ResetRevision(this HelmRollbackSettings toolSettings)
+        public static T ResetRevision<T>(this T toolSettings) where T : HelmRollbackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Revision = null;
@@ -18216,7 +18216,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specifies the max column width of output (default 60).</p>
         /// </summary>
         [Pure]
-        public static HelmSearchSettings SetColWidth(this HelmSearchSettings toolSettings, uint? colWidth)
+        public static T SetColWidth<T>(this T toolSettings, uint? colWidth) where T : HelmSearchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ColWidth = colWidth;
@@ -18227,7 +18227,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specifies the max column width of output (default 60).</p>
         /// </summary>
         [Pure]
-        public static HelmSearchSettings ResetColWidth(this HelmSearchSettings toolSettings)
+        public static T ResetColWidth<T>(this T toolSettings) where T : HelmSearchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ColWidth = null;
@@ -18240,7 +18240,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for search.</p>
         /// </summary>
         [Pure]
-        public static HelmSearchSettings SetHelp(this HelmSearchSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmSearchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -18251,7 +18251,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for search.</p>
         /// </summary>
         [Pure]
-        public static HelmSearchSettings ResetHelp(this HelmSearchSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmSearchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -18262,7 +18262,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for search.</p>
         /// </summary>
         [Pure]
-        public static HelmSearchSettings EnableHelp(this HelmSearchSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmSearchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -18273,7 +18273,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for search.</p>
         /// </summary>
         [Pure]
-        public static HelmSearchSettings DisableHelp(this HelmSearchSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmSearchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -18284,7 +18284,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for search.</p>
         /// </summary>
         [Pure]
-        public static HelmSearchSettings ToggleHelp(this HelmSearchSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmSearchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -18297,7 +18297,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use regular expressions for searching.</p>
         /// </summary>
         [Pure]
-        public static HelmSearchSettings SetRegexp(this HelmSearchSettings toolSettings, bool? regexp)
+        public static T SetRegexp<T>(this T toolSettings, bool? regexp) where T : HelmSearchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Regexp = regexp;
@@ -18308,7 +18308,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use regular expressions for searching.</p>
         /// </summary>
         [Pure]
-        public static HelmSearchSettings ResetRegexp(this HelmSearchSettings toolSettings)
+        public static T ResetRegexp<T>(this T toolSettings) where T : HelmSearchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Regexp = null;
@@ -18319,7 +18319,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use regular expressions for searching.</p>
         /// </summary>
         [Pure]
-        public static HelmSearchSettings EnableRegexp(this HelmSearchSettings toolSettings)
+        public static T EnableRegexp<T>(this T toolSettings) where T : HelmSearchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Regexp = true;
@@ -18330,7 +18330,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use regular expressions for searching.</p>
         /// </summary>
         [Pure]
-        public static HelmSearchSettings DisableRegexp(this HelmSearchSettings toolSettings)
+        public static T DisableRegexp<T>(this T toolSettings) where T : HelmSearchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Regexp = false;
@@ -18341,7 +18341,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use regular expressions for searching.</p>
         /// </summary>
         [Pure]
-        public static HelmSearchSettings ToggleRegexp(this HelmSearchSettings toolSettings)
+        public static T ToggleRegexp<T>(this T toolSettings) where T : HelmSearchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Regexp = !toolSettings.Regexp;
@@ -18354,7 +18354,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Search using semantic versioning constraints.</p>
         /// </summary>
         [Pure]
-        public static HelmSearchSettings SetVersion(this HelmSearchSettings toolSettings, string version)
+        public static T SetVersion<T>(this T toolSettings, string version) where T : HelmSearchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = version;
@@ -18365,7 +18365,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Search using semantic versioning constraints.</p>
         /// </summary>
         [Pure]
-        public static HelmSearchSettings ResetVersion(this HelmSearchSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : HelmSearchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = null;
@@ -18378,7 +18378,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show the long listing, with each version of each chart on its own line.</p>
         /// </summary>
         [Pure]
-        public static HelmSearchSettings SetVersions(this HelmSearchSettings toolSettings, bool? versions)
+        public static T SetVersions<T>(this T toolSettings, bool? versions) where T : HelmSearchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Versions = versions;
@@ -18389,7 +18389,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show the long listing, with each version of each chart on its own line.</p>
         /// </summary>
         [Pure]
-        public static HelmSearchSettings ResetVersions(this HelmSearchSettings toolSettings)
+        public static T ResetVersions<T>(this T toolSettings) where T : HelmSearchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Versions = null;
@@ -18400,7 +18400,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show the long listing, with each version of each chart on its own line.</p>
         /// </summary>
         [Pure]
-        public static HelmSearchSettings EnableVersions(this HelmSearchSettings toolSettings)
+        public static T EnableVersions<T>(this T toolSettings) where T : HelmSearchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Versions = true;
@@ -18411,7 +18411,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show the long listing, with each version of each chart on its own line.</p>
         /// </summary>
         [Pure]
-        public static HelmSearchSettings DisableVersions(this HelmSearchSettings toolSettings)
+        public static T DisableVersions<T>(this T toolSettings) where T : HelmSearchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Versions = false;
@@ -18422,7 +18422,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show the long listing, with each version of each chart on its own line.</p>
         /// </summary>
         [Pure]
-        public static HelmSearchSettings ToggleVersions(this HelmSearchSettings toolSettings)
+        public static T ToggleVersions<T>(this T toolSettings) where T : HelmSearchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Versions = !toolSettings.Versions;
@@ -18435,7 +18435,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The keyword to search for.</p>
         /// </summary>
         [Pure]
-        public static HelmSearchSettings SetKeyword(this HelmSearchSettings toolSettings, string keyword)
+        public static T SetKeyword<T>(this T toolSettings, string keyword) where T : HelmSearchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyword = keyword;
@@ -18446,7 +18446,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The keyword to search for.</p>
         /// </summary>
         [Pure]
-        public static HelmSearchSettings ResetKeyword(this HelmSearchSettings toolSettings)
+        public static T ResetKeyword<T>(this T toolSettings) where T : HelmSearchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyword = null;
@@ -18469,7 +18469,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Address to listen on (default "127.0.0.1:8879").</p>
         /// </summary>
         [Pure]
-        public static HelmServeSettings SetAddress(this HelmServeSettings toolSettings, string address)
+        public static T SetAddress<T>(this T toolSettings, string address) where T : HelmServeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Address = address;
@@ -18480,7 +18480,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Address to listen on (default "127.0.0.1:8879").</p>
         /// </summary>
         [Pure]
-        public static HelmServeSettings ResetAddress(this HelmServeSettings toolSettings)
+        public static T ResetAddress<T>(this T toolSettings) where T : HelmServeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Address = null;
@@ -18493,7 +18493,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for serve.</p>
         /// </summary>
         [Pure]
-        public static HelmServeSettings SetHelp(this HelmServeSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmServeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -18504,7 +18504,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for serve.</p>
         /// </summary>
         [Pure]
-        public static HelmServeSettings ResetHelp(this HelmServeSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmServeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -18515,7 +18515,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for serve.</p>
         /// </summary>
         [Pure]
-        public static HelmServeSettings EnableHelp(this HelmServeSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmServeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -18526,7 +18526,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for serve.</p>
         /// </summary>
         [Pure]
-        public static HelmServeSettings DisableHelp(this HelmServeSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmServeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -18537,7 +18537,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for serve.</p>
         /// </summary>
         [Pure]
-        public static HelmServeSettings ToggleHelp(this HelmServeSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmServeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -18550,7 +18550,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Local directory path from which to serve charts.</p>
         /// </summary>
         [Pure]
-        public static HelmServeSettings SetRepoPath(this HelmServeSettings toolSettings, string repoPath)
+        public static T SetRepoPath<T>(this T toolSettings, string repoPath) where T : HelmServeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepoPath = repoPath;
@@ -18561,7 +18561,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Local directory path from which to serve charts.</p>
         /// </summary>
         [Pure]
-        public static HelmServeSettings ResetRepoPath(this HelmServeSettings toolSettings)
+        public static T ResetRepoPath<T>(this T toolSettings) where T : HelmServeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepoPath = null;
@@ -18574,7 +18574,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>External URL of chart repository.</p>
         /// </summary>
         [Pure]
-        public static HelmServeSettings SetUrl(this HelmServeSettings toolSettings, string url)
+        public static T SetUrl<T>(this T toolSettings, string url) where T : HelmServeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Url = url;
@@ -18585,7 +18585,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>External URL of chart repository.</p>
         /// </summary>
         [Pure]
-        public static HelmServeSettings ResetUrl(this HelmServeSettings toolSettings)
+        public static T ResetUrl<T>(this T toolSettings) where T : HelmServeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Url = null;
@@ -18608,7 +18608,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for status.</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings SetHelp(this HelmStatusSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -18619,7 +18619,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for status.</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings ResetHelp(this HelmStatusSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -18630,7 +18630,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for status.</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings EnableHelp(this HelmStatusSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -18641,7 +18641,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for status.</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings DisableHelp(this HelmStatusSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -18652,7 +18652,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for status.</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings ToggleHelp(this HelmStatusSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -18665,7 +18665,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Output the status in the specified format (json or yaml).</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings SetOutput(this HelmStatusSettings toolSettings, HelmOutputFormat output)
+        public static T SetOutput<T>(this T toolSettings, HelmOutputFormat output) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -18676,7 +18676,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Output the status in the specified format (json or yaml).</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings ResetOutput(this HelmStatusSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -18689,7 +18689,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, display the status of the named release with revision.</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings SetRevision(this HelmStatusSettings toolSettings, int? revision)
+        public static T SetRevision<T>(this T toolSettings, int? revision) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Revision = revision;
@@ -18700,7 +18700,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, display the status of the named release with revision.</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings ResetRevision(this HelmStatusSettings toolSettings)
+        public static T ResetRevision<T>(this T toolSettings) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Revision = null;
@@ -18713,7 +18713,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings SetTls(this HelmStatusSettings toolSettings, bool? tls)
+        public static T SetTls<T>(this T toolSettings, bool? tls) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = tls;
@@ -18724,7 +18724,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings ResetTls(this HelmStatusSettings toolSettings)
+        public static T ResetTls<T>(this T toolSettings) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = null;
@@ -18735,7 +18735,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings EnableTls(this HelmStatusSettings toolSettings)
+        public static T EnableTls<T>(this T toolSettings) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = true;
@@ -18746,7 +18746,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings DisableTls(this HelmStatusSettings toolSettings)
+        public static T DisableTls<T>(this T toolSettings) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = false;
@@ -18757,7 +18757,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings ToggleTls(this HelmStatusSettings toolSettings)
+        public static T ToggleTls<T>(this T toolSettings) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = !toolSettings.Tls;
@@ -18770,7 +18770,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings SetTlsCaCert(this HelmStatusSettings toolSettings, string tlsCaCert)
+        public static T SetTlsCaCert<T>(this T toolSettings, string tlsCaCert) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = tlsCaCert;
@@ -18781,7 +18781,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings ResetTlsCaCert(this HelmStatusSettings toolSettings)
+        public static T ResetTlsCaCert<T>(this T toolSettings) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = null;
@@ -18794,7 +18794,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings SetTlsCert(this HelmStatusSettings toolSettings, string tlsCert)
+        public static T SetTlsCert<T>(this T toolSettings, string tlsCert) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = tlsCert;
@@ -18805,7 +18805,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings ResetTlsCert(this HelmStatusSettings toolSettings)
+        public static T ResetTlsCert<T>(this T toolSettings) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = null;
@@ -18818,7 +18818,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings SetTlsHostname(this HelmStatusSettings toolSettings, string tlsHostname)
+        public static T SetTlsHostname<T>(this T toolSettings, string tlsHostname) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = tlsHostname;
@@ -18829,7 +18829,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings ResetTlsHostname(this HelmStatusSettings toolSettings)
+        public static T ResetTlsHostname<T>(this T toolSettings) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = null;
@@ -18842,7 +18842,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings SetTlsKey(this HelmStatusSettings toolSettings, string tlsKey)
+        public static T SetTlsKey<T>(this T toolSettings, string tlsKey) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = tlsKey;
@@ -18853,7 +18853,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings ResetTlsKey(this HelmStatusSettings toolSettings)
+        public static T ResetTlsKey<T>(this T toolSettings) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = null;
@@ -18866,7 +18866,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings SetTlsVerify(this HelmStatusSettings toolSettings, bool? tlsVerify)
+        public static T SetTlsVerify<T>(this T toolSettings, bool? tlsVerify) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = tlsVerify;
@@ -18877,7 +18877,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings ResetTlsVerify(this HelmStatusSettings toolSettings)
+        public static T ResetTlsVerify<T>(this T toolSettings) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = null;
@@ -18888,7 +18888,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings EnableTlsVerify(this HelmStatusSettings toolSettings)
+        public static T EnableTlsVerify<T>(this T toolSettings) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = true;
@@ -18899,7 +18899,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings DisableTlsVerify(this HelmStatusSettings toolSettings)
+        public static T DisableTlsVerify<T>(this T toolSettings) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = false;
@@ -18910,7 +18910,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings ToggleTlsVerify(this HelmStatusSettings toolSettings)
+        public static T ToggleTlsVerify<T>(this T toolSettings) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = !toolSettings.TlsVerify;
@@ -18923,7 +18923,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the release to get the status for.</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings SetReleaseName(this HelmStatusSettings toolSettings, string releaseName)
+        public static T SetReleaseName<T>(this T toolSettings, string releaseName) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseName = releaseName;
@@ -18934,7 +18934,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the release to get the status for.</p>
         /// </summary>
         [Pure]
-        public static HelmStatusSettings ResetReleaseName(this HelmStatusSettings toolSettings)
+        public static T ResetReleaseName<T>(this T toolSettings) where T : HelmStatusSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseName = null;
@@ -18957,7 +18957,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Only execute the given templates.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings SetExecute(this HelmTemplateSettings toolSettings, IDictionary<string, object> execute)
+        public static T SetExecute<T>(this T toolSettings, IDictionary<string, object> execute) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExecuteInternal = execute.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -18968,7 +18968,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Only execute the given templates.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings ClearExecute(this HelmTemplateSettings toolSettings)
+        public static T ClearExecute<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExecuteInternal.Clear();
@@ -18979,7 +18979,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Only execute the given templates.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings AddExecute(this HelmTemplateSettings toolSettings, string executeKey, object executeValue)
+        public static T AddExecute<T>(this T toolSettings, string executeKey, object executeValue) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExecuteInternal.Add(executeKey, executeValue);
@@ -18990,7 +18990,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Only execute the given templates.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings RemoveExecute(this HelmTemplateSettings toolSettings, string executeKey)
+        public static T RemoveExecute<T>(this T toolSettings, string executeKey) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExecuteInternal.Remove(executeKey);
@@ -19001,7 +19001,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Only execute the given templates.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings SetExecute(this HelmTemplateSettings toolSettings, string executeKey, object executeValue)
+        public static T SetExecute<T>(this T toolSettings, string executeKey, object executeValue) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExecuteInternal[executeKey] = executeValue;
@@ -19014,7 +19014,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for template.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings SetHelp(this HelmTemplateSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -19025,7 +19025,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for template.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings ResetHelp(this HelmTemplateSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -19036,7 +19036,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for template.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings EnableHelp(this HelmTemplateSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -19047,7 +19047,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for template.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings DisableHelp(this HelmTemplateSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -19058,7 +19058,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for template.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings ToggleHelp(this HelmTemplateSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -19071,7 +19071,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set .Release.IsUpgrade instead of .Release.IsInstall.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings SetIsUpgrade(this HelmTemplateSettings toolSettings, bool? isUpgrade)
+        public static T SetIsUpgrade<T>(this T toolSettings, bool? isUpgrade) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IsUpgrade = isUpgrade;
@@ -19082,7 +19082,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set .Release.IsUpgrade instead of .Release.IsInstall.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings ResetIsUpgrade(this HelmTemplateSettings toolSettings)
+        public static T ResetIsUpgrade<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IsUpgrade = null;
@@ -19093,7 +19093,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set .Release.IsUpgrade instead of .Release.IsInstall.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings EnableIsUpgrade(this HelmTemplateSettings toolSettings)
+        public static T EnableIsUpgrade<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IsUpgrade = true;
@@ -19104,7 +19104,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set .Release.IsUpgrade instead of .Release.IsInstall.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings DisableIsUpgrade(this HelmTemplateSettings toolSettings)
+        public static T DisableIsUpgrade<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IsUpgrade = false;
@@ -19115,7 +19115,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set .Release.IsUpgrade instead of .Release.IsInstall.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings ToggleIsUpgrade(this HelmTemplateSettings toolSettings)
+        public static T ToggleIsUpgrade<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IsUpgrade = !toolSettings.IsUpgrade;
@@ -19128,7 +19128,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Kubernetes version used as Capabilities.KubeVersion.Major/Minor (default "1.9").</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings SetKubeVersion(this HelmTemplateSettings toolSettings, string kubeVersion)
+        public static T SetKubeVersion<T>(this T toolSettings, string kubeVersion) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KubeVersion = kubeVersion;
@@ -19139,7 +19139,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Kubernetes version used as Capabilities.KubeVersion.Major/Minor (default "1.9").</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings ResetKubeVersion(this HelmTemplateSettings toolSettings)
+        public static T ResetKubeVersion<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KubeVersion = null;
@@ -19152,7 +19152,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Release name (default "release-name").</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings SetName(this HelmTemplateSettings toolSettings, string name)
+        public static T SetName<T>(this T toolSettings, string name) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = name;
@@ -19163,7 +19163,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Release name (default "release-name").</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings ResetName(this HelmTemplateSettings toolSettings)
+        public static T ResetName<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = null;
@@ -19176,7 +19176,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify template used to name the release.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings SetNameTemplate(this HelmTemplateSettings toolSettings, string nameTemplate)
+        public static T SetNameTemplate<T>(this T toolSettings, string nameTemplate) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NameTemplate = nameTemplate;
@@ -19187,7 +19187,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify template used to name the release.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings ResetNameTemplate(this HelmTemplateSettings toolSettings)
+        public static T ResetNameTemplate<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NameTemplate = null;
@@ -19200,7 +19200,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Namespace to install the release into.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings SetNamespace(this HelmTemplateSettings toolSettings, string @namespace)
+        public static T SetNamespace<T>(this T toolSettings, string @namespace) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Namespace = @namespace;
@@ -19211,7 +19211,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Namespace to install the release into.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings ResetNamespace(this HelmTemplateSettings toolSettings)
+        public static T ResetNamespace<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Namespace = null;
@@ -19224,7 +19224,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show the computed NOTES.txt file as well.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings SetNotes(this HelmTemplateSettings toolSettings, bool? notes)
+        public static T SetNotes<T>(this T toolSettings, bool? notes) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Notes = notes;
@@ -19235,7 +19235,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show the computed NOTES.txt file as well.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings ResetNotes(this HelmTemplateSettings toolSettings)
+        public static T ResetNotes<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Notes = null;
@@ -19246,7 +19246,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show the computed NOTES.txt file as well.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings EnableNotes(this HelmTemplateSettings toolSettings)
+        public static T EnableNotes<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Notes = true;
@@ -19257,7 +19257,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show the computed NOTES.txt file as well.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings DisableNotes(this HelmTemplateSettings toolSettings)
+        public static T DisableNotes<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Notes = false;
@@ -19268,7 +19268,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Show the computed NOTES.txt file as well.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings ToggleNotes(this HelmTemplateSettings toolSettings)
+        public static T ToggleNotes<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Notes = !toolSettings.Notes;
@@ -19281,7 +19281,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Writes the executed templates to files in output-dir instead of stdout.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings SetOutputDir(this HelmTemplateSettings toolSettings, string outputDir)
+        public static T SetOutputDir<T>(this T toolSettings, string outputDir) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputDir = outputDir;
@@ -19292,7 +19292,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Writes the executed templates to files in output-dir instead of stdout.</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings ResetOutputDir(this HelmTemplateSettings toolSettings)
+        public static T ResetOutputDir<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputDir = null;
@@ -19305,7 +19305,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings SetSet(this HelmTemplateSettings toolSettings, IDictionary<string, object> set)
+        public static T SetSet<T>(this T toolSettings, IDictionary<string, object> set) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetInternal = set.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -19316,7 +19316,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings ClearSet(this HelmTemplateSettings toolSettings)
+        public static T ClearSet<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetInternal.Clear();
@@ -19327,7 +19327,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings AddSet(this HelmTemplateSettings toolSettings, string setKey, object setValue)
+        public static T AddSet<T>(this T toolSettings, string setKey, object setValue) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetInternal.Add(setKey, setValue);
@@ -19338,7 +19338,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings RemoveSet(this HelmTemplateSettings toolSettings, string setKey)
+        public static T RemoveSet<T>(this T toolSettings, string setKey) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetInternal.Remove(setKey);
@@ -19349,7 +19349,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings SetSet(this HelmTemplateSettings toolSettings, string setKey, object setValue)
+        public static T SetSet<T>(this T toolSettings, string setKey, object setValue) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetInternal[setKey] = setValue;
@@ -19362,7 +19362,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings SetSetFile(this HelmTemplateSettings toolSettings, IDictionary<string, object> setFile)
+        public static T SetSetFile<T>(this T toolSettings, IDictionary<string, object> setFile) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetFileInternal = setFile.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -19373,7 +19373,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings ClearSetFile(this HelmTemplateSettings toolSettings)
+        public static T ClearSetFile<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetFileInternal.Clear();
@@ -19384,7 +19384,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings AddSetFile(this HelmTemplateSettings toolSettings, string setFileKey, object setFileValue)
+        public static T AddSetFile<T>(this T toolSettings, string setFileKey, object setFileValue) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetFileInternal.Add(setFileKey, setFileValue);
@@ -19395,7 +19395,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings RemoveSetFile(this HelmTemplateSettings toolSettings, string setFileKey)
+        public static T RemoveSetFile<T>(this T toolSettings, string setFileKey) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetFileInternal.Remove(setFileKey);
@@ -19406,7 +19406,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings SetSetFile(this HelmTemplateSettings toolSettings, string setFileKey, object setFileValue)
+        public static T SetSetFile<T>(this T toolSettings, string setFileKey, object setFileValue) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetFileInternal[setFileKey] = setFileValue;
@@ -19419,7 +19419,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings SetSetString(this HelmTemplateSettings toolSettings, IDictionary<string, object> setString)
+        public static T SetSetString<T>(this T toolSettings, IDictionary<string, object> setString) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetStringInternal = setString.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -19430,7 +19430,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings ClearSetString(this HelmTemplateSettings toolSettings)
+        public static T ClearSetString<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetStringInternal.Clear();
@@ -19441,7 +19441,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings AddSetString(this HelmTemplateSettings toolSettings, string setStringKey, object setStringValue)
+        public static T AddSetString<T>(this T toolSettings, string setStringKey, object setStringValue) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetStringInternal.Add(setStringKey, setStringValue);
@@ -19452,7 +19452,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings RemoveSetString(this HelmTemplateSettings toolSettings, string setStringKey)
+        public static T RemoveSetString<T>(this T toolSettings, string setStringKey) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetStringInternal.Remove(setStringKey);
@@ -19463,7 +19463,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings SetSetString(this HelmTemplateSettings toolSettings, string setStringKey, object setStringValue)
+        public static T SetSetString<T>(this T toolSettings, string setStringKey, object setStringValue) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetStringInternal[setStringKey] = setStringValue;
@@ -19476,7 +19476,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file (can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings SetValues(this HelmTemplateSettings toolSettings, params string[] values)
+        public static T SetValues<T>(this T toolSettings, params string[] values) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ValuesInternal = values.ToList();
@@ -19487,7 +19487,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file (can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings SetValues(this HelmTemplateSettings toolSettings, IEnumerable<string> values)
+        public static T SetValues<T>(this T toolSettings, IEnumerable<string> values) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ValuesInternal = values.ToList();
@@ -19498,7 +19498,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file (can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings AddValues(this HelmTemplateSettings toolSettings, params string[] values)
+        public static T AddValues<T>(this T toolSettings, params string[] values) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ValuesInternal.AddRange(values);
@@ -19509,7 +19509,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file (can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings AddValues(this HelmTemplateSettings toolSettings, IEnumerable<string> values)
+        public static T AddValues<T>(this T toolSettings, IEnumerable<string> values) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ValuesInternal.AddRange(values);
@@ -19520,7 +19520,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file (can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings ClearValues(this HelmTemplateSettings toolSettings)
+        public static T ClearValues<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ValuesInternal.Clear();
@@ -19531,7 +19531,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file (can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings RemoveValues(this HelmTemplateSettings toolSettings, params string[] values)
+        public static T RemoveValues<T>(this T toolSettings, params string[] values) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(values);
@@ -19543,7 +19543,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file (can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings RemoveValues(this HelmTemplateSettings toolSettings, IEnumerable<string> values)
+        public static T RemoveValues<T>(this T toolSettings, IEnumerable<string> values) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(values);
@@ -19556,7 +19556,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p><em>Sets <see cref="HelmTemplateSettings.Chart"/></em></p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings SetChart(this HelmTemplateSettings toolSettings, string chart)
+        public static T SetChart<T>(this T toolSettings, string chart) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Chart = chart;
@@ -19566,7 +19566,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p><em>Resets <see cref="HelmTemplateSettings.Chart"/></em></p>
         /// </summary>
         [Pure]
-        public static HelmTemplateSettings ResetChart(this HelmTemplateSettings toolSettings)
+        public static T ResetChart<T>(this T toolSettings) where T : HelmTemplateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Chart = null;
@@ -19589,7 +19589,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Delete test pods upon completion.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings SetCleanup(this HelmTestSettings toolSettings, bool? cleanup)
+        public static T SetCleanup<T>(this T toolSettings, bool? cleanup) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cleanup = cleanup;
@@ -19600,7 +19600,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Delete test pods upon completion.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings ResetCleanup(this HelmTestSettings toolSettings)
+        public static T ResetCleanup<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cleanup = null;
@@ -19611,7 +19611,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Delete test pods upon completion.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings EnableCleanup(this HelmTestSettings toolSettings)
+        public static T EnableCleanup<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cleanup = true;
@@ -19622,7 +19622,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Delete test pods upon completion.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings DisableCleanup(this HelmTestSettings toolSettings)
+        public static T DisableCleanup<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cleanup = false;
@@ -19633,7 +19633,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Delete test pods upon completion.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings ToggleCleanup(this HelmTestSettings toolSettings)
+        public static T ToggleCleanup<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cleanup = !toolSettings.Cleanup;
@@ -19646,7 +19646,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for test.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings SetHelp(this HelmTestSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -19657,7 +19657,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for test.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings ResetHelp(this HelmTestSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -19668,7 +19668,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for test.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings EnableHelp(this HelmTestSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -19679,7 +19679,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for test.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings DisableHelp(this HelmTestSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -19690,7 +19690,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for test.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings ToggleHelp(this HelmTestSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -19703,7 +19703,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Run test pods in parallel.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings SetParallel(this HelmTestSettings toolSettings, bool? parallel)
+        public static T SetParallel<T>(this T toolSettings, bool? parallel) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Parallel = parallel;
@@ -19714,7 +19714,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Run test pods in parallel.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings ResetParallel(this HelmTestSettings toolSettings)
+        public static T ResetParallel<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Parallel = null;
@@ -19725,7 +19725,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Run test pods in parallel.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings EnableParallel(this HelmTestSettings toolSettings)
+        public static T EnableParallel<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Parallel = true;
@@ -19736,7 +19736,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Run test pods in parallel.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings DisableParallel(this HelmTestSettings toolSettings)
+        public static T DisableParallel<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Parallel = false;
@@ -19747,7 +19747,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Run test pods in parallel.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings ToggleParallel(this HelmTestSettings toolSettings)
+        public static T ToggleParallel<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Parallel = !toolSettings.Parallel;
@@ -19760,7 +19760,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Time in seconds to wait for any individual Kubernetes operation (like Jobs for hooks) (default 300).</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings SetTimeout(this HelmTestSettings toolSettings, long? timeout)
+        public static T SetTimeout<T>(this T toolSettings, long? timeout) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = timeout;
@@ -19771,7 +19771,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Time in seconds to wait for any individual Kubernetes operation (like Jobs for hooks) (default 300).</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings ResetTimeout(this HelmTestSettings toolSettings)
+        public static T ResetTimeout<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = null;
@@ -19784,7 +19784,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings SetTls(this HelmTestSettings toolSettings, bool? tls)
+        public static T SetTls<T>(this T toolSettings, bool? tls) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = tls;
@@ -19795,7 +19795,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings ResetTls(this HelmTestSettings toolSettings)
+        public static T ResetTls<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = null;
@@ -19806,7 +19806,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings EnableTls(this HelmTestSettings toolSettings)
+        public static T EnableTls<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = true;
@@ -19817,7 +19817,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings DisableTls(this HelmTestSettings toolSettings)
+        public static T DisableTls<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = false;
@@ -19828,7 +19828,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings ToggleTls(this HelmTestSettings toolSettings)
+        public static T ToggleTls<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = !toolSettings.Tls;
@@ -19841,7 +19841,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings SetTlsCaCert(this HelmTestSettings toolSettings, string tlsCaCert)
+        public static T SetTlsCaCert<T>(this T toolSettings, string tlsCaCert) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = tlsCaCert;
@@ -19852,7 +19852,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings ResetTlsCaCert(this HelmTestSettings toolSettings)
+        public static T ResetTlsCaCert<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = null;
@@ -19865,7 +19865,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings SetTlsCert(this HelmTestSettings toolSettings, string tlsCert)
+        public static T SetTlsCert<T>(this T toolSettings, string tlsCert) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = tlsCert;
@@ -19876,7 +19876,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings ResetTlsCert(this HelmTestSettings toolSettings)
+        public static T ResetTlsCert<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = null;
@@ -19889,7 +19889,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings SetTlsHostname(this HelmTestSettings toolSettings, string tlsHostname)
+        public static T SetTlsHostname<T>(this T toolSettings, string tlsHostname) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = tlsHostname;
@@ -19900,7 +19900,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings ResetTlsHostname(this HelmTestSettings toolSettings)
+        public static T ResetTlsHostname<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = null;
@@ -19913,7 +19913,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings SetTlsKey(this HelmTestSettings toolSettings, string tlsKey)
+        public static T SetTlsKey<T>(this T toolSettings, string tlsKey) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = tlsKey;
@@ -19924,7 +19924,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings ResetTlsKey(this HelmTestSettings toolSettings)
+        public static T ResetTlsKey<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = null;
@@ -19937,7 +19937,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings SetTlsVerify(this HelmTestSettings toolSettings, bool? tlsVerify)
+        public static T SetTlsVerify<T>(this T toolSettings, bool? tlsVerify) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = tlsVerify;
@@ -19948,7 +19948,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings ResetTlsVerify(this HelmTestSettings toolSettings)
+        public static T ResetTlsVerify<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = null;
@@ -19959,7 +19959,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings EnableTlsVerify(this HelmTestSettings toolSettings)
+        public static T EnableTlsVerify<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = true;
@@ -19970,7 +19970,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings DisableTlsVerify(this HelmTestSettings toolSettings)
+        public static T DisableTlsVerify<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = false;
@@ -19981,7 +19981,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings ToggleTlsVerify(this HelmTestSettings toolSettings)
+        public static T ToggleTlsVerify<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = !toolSettings.TlsVerify;
@@ -19994,7 +19994,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the release to test.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings SetRelease(this HelmTestSettings toolSettings, string release)
+        public static T SetRelease<T>(this T toolSettings, string release) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Release = release;
@@ -20005,7 +20005,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the release to test.</p>
         /// </summary>
         [Pure]
-        public static HelmTestSettings ResetRelease(this HelmTestSettings toolSettings)
+        public static T ResetRelease<T>(this T toolSettings) where T : HelmTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Release = null;
@@ -20028,7 +20028,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, upgrade process rolls back changes made in case of failed upgrade, also sets --wait flag.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetAtomic(this HelmUpgradeSettings toolSettings, bool? atomic)
+        public static T SetAtomic<T>(this T toolSettings, bool? atomic) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Atomic = atomic;
@@ -20039,7 +20039,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, upgrade process rolls back changes made in case of failed upgrade, also sets --wait flag.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetAtomic(this HelmUpgradeSettings toolSettings)
+        public static T ResetAtomic<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Atomic = null;
@@ -20050,7 +20050,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, upgrade process rolls back changes made in case of failed upgrade, also sets --wait flag.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings EnableAtomic(this HelmUpgradeSettings toolSettings)
+        public static T EnableAtomic<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Atomic = true;
@@ -20061,7 +20061,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, upgrade process rolls back changes made in case of failed upgrade, also sets --wait flag.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings DisableAtomic(this HelmUpgradeSettings toolSettings)
+        public static T DisableAtomic<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Atomic = false;
@@ -20072,7 +20072,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, upgrade process rolls back changes made in case of failed upgrade, also sets --wait flag.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ToggleAtomic(this HelmUpgradeSettings toolSettings)
+        public static T ToggleAtomic<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Atomic = !toolSettings.Atomic;
@@ -20085,7 +20085,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify certificates of HTTPS-enabled servers using this CA bundle.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetCaFile(this HelmUpgradeSettings toolSettings, string caFile)
+        public static T SetCaFile<T>(this T toolSettings, string caFile) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CaFile = caFile;
@@ -20096,7 +20096,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify certificates of HTTPS-enabled servers using this CA bundle.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetCaFile(this HelmUpgradeSettings toolSettings)
+        public static T ResetCaFile<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CaFile = null;
@@ -20109,7 +20109,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL certificate file.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetCertFile(this HelmUpgradeSettings toolSettings, string certFile)
+        public static T SetCertFile<T>(this T toolSettings, string certFile) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CertFile = certFile;
@@ -20120,7 +20120,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL certificate file.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetCertFile(this HelmUpgradeSettings toolSettings)
+        public static T ResetCertFile<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CertFile = null;
@@ -20133,7 +20133,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify the description to use for the upgrade, rather than the default.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetDescription(this HelmUpgradeSettings toolSettings, string description)
+        public static T SetDescription<T>(this T toolSettings, string description) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Description = description;
@@ -20144,7 +20144,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify the description to use for the upgrade, rather than the default.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetDescription(this HelmUpgradeSettings toolSettings)
+        public static T ResetDescription<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Description = null;
@@ -20157,7 +20157,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetDevel(this HelmUpgradeSettings toolSettings, bool? devel)
+        public static T SetDevel<T>(this T toolSettings, bool? devel) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = devel;
@@ -20168,7 +20168,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetDevel(this HelmUpgradeSettings toolSettings)
+        public static T ResetDevel<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = null;
@@ -20179,7 +20179,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings EnableDevel(this HelmUpgradeSettings toolSettings)
+        public static T EnableDevel<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = true;
@@ -20190,7 +20190,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings DisableDevel(this HelmUpgradeSettings toolSettings)
+        public static T DisableDevel<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = false;
@@ -20201,7 +20201,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ToggleDevel(this HelmUpgradeSettings toolSettings)
+        public static T ToggleDevel<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devel = !toolSettings.Devel;
@@ -20214,7 +20214,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Simulate an upgrade.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetDryRun(this HelmUpgradeSettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -20225,7 +20225,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Simulate an upgrade.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetDryRun(this HelmUpgradeSettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -20236,7 +20236,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Simulate an upgrade.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings EnableDryRun(this HelmUpgradeSettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -20247,7 +20247,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Simulate an upgrade.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings DisableDryRun(this HelmUpgradeSettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -20258,7 +20258,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Simulate an upgrade.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ToggleDryRun(this HelmUpgradeSettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -20271,7 +20271,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Force resource update through delete/recreate if needed.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetForce(this HelmUpgradeSettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -20282,7 +20282,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Force resource update through delete/recreate if needed.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetForce(this HelmUpgradeSettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -20293,7 +20293,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Force resource update through delete/recreate if needed.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings EnableForce(this HelmUpgradeSettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -20304,7 +20304,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Force resource update through delete/recreate if needed.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings DisableForce(this HelmUpgradeSettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -20315,7 +20315,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Force resource update through delete/recreate if needed.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ToggleForce(this HelmUpgradeSettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -20328,7 +20328,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for upgrade.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetHelp(this HelmUpgradeSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -20339,7 +20339,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for upgrade.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetHelp(this HelmUpgradeSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -20350,7 +20350,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for upgrade.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings EnableHelp(this HelmUpgradeSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -20361,7 +20361,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for upgrade.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings DisableHelp(this HelmUpgradeSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -20372,7 +20372,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for upgrade.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ToggleHelp(this HelmUpgradeSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -20385,7 +20385,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If a release by this name doesn't already exist, run an install.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetInstall(this HelmUpgradeSettings toolSettings, bool? install)
+        public static T SetInstall<T>(this T toolSettings, bool? install) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Install = install;
@@ -20396,7 +20396,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If a release by this name doesn't already exist, run an install.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetInstall(this HelmUpgradeSettings toolSettings)
+        public static T ResetInstall<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Install = null;
@@ -20407,7 +20407,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If a release by this name doesn't already exist, run an install.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings EnableInstall(this HelmUpgradeSettings toolSettings)
+        public static T EnableInstall<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Install = true;
@@ -20418,7 +20418,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If a release by this name doesn't already exist, run an install.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings DisableInstall(this HelmUpgradeSettings toolSettings)
+        public static T DisableInstall<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Install = false;
@@ -20429,7 +20429,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If a release by this name doesn't already exist, run an install.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ToggleInstall(this HelmUpgradeSettings toolSettings)
+        public static T ToggleInstall<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Install = !toolSettings.Install;
@@ -20442,7 +20442,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL key file.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetKeyFile(this HelmUpgradeSettings toolSettings, string keyFile)
+        public static T SetKeyFile<T>(this T toolSettings, string keyFile) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyFile = keyFile;
@@ -20453,7 +20453,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Identify HTTPS client using this SSL key file.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetKeyFile(this HelmUpgradeSettings toolSettings)
+        public static T ResetKeyFile<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyFile = null;
@@ -20466,7 +20466,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to the keyring that contains public signing keys (default "~/.gnupg/pubring.gpg").</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetKeyring(this HelmUpgradeSettings toolSettings, string keyring)
+        public static T SetKeyring<T>(this T toolSettings, string keyring) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyring = keyring;
@@ -20477,7 +20477,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to the keyring that contains public signing keys (default "~/.gnupg/pubring.gpg").</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetKeyring(this HelmUpgradeSettings toolSettings)
+        public static T ResetKeyring<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyring = null;
@@ -20490,7 +20490,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Namespace to install the release into (only used if --install is set). Defaults to the current kube config namespace.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetNamespace(this HelmUpgradeSettings toolSettings, string @namespace)
+        public static T SetNamespace<T>(this T toolSettings, string @namespace) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Namespace = @namespace;
@@ -20501,7 +20501,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Namespace to install the release into (only used if --install is set). Defaults to the current kube config namespace.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetNamespace(this HelmUpgradeSettings toolSettings)
+        public static T ResetNamespace<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Namespace = null;
@@ -20514,7 +20514,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Disable pre/post upgrade hooks.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetNoHooks(this HelmUpgradeSettings toolSettings, bool? noHooks)
+        public static T SetNoHooks<T>(this T toolSettings, bool? noHooks) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHooks = noHooks;
@@ -20525,7 +20525,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Disable pre/post upgrade hooks.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetNoHooks(this HelmUpgradeSettings toolSettings)
+        public static T ResetNoHooks<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHooks = null;
@@ -20536,7 +20536,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Disable pre/post upgrade hooks.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings EnableNoHooks(this HelmUpgradeSettings toolSettings)
+        public static T EnableNoHooks<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHooks = true;
@@ -20547,7 +20547,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Disable pre/post upgrade hooks.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings DisableNoHooks(this HelmUpgradeSettings toolSettings)
+        public static T DisableNoHooks<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHooks = false;
@@ -20558,7 +20558,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Disable pre/post upgrade hooks.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ToggleNoHooks(this HelmUpgradeSettings toolSettings)
+        public static T ToggleNoHooks<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHooks = !toolSettings.NoHooks;
@@ -20571,7 +20571,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository password where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetPassword(this HelmUpgradeSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -20582,7 +20582,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository password where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetPassword(this HelmUpgradeSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -20595,7 +20595,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Performs pods restart for the resource if applicable.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetRecreatePods(this HelmUpgradeSettings toolSettings, bool? recreatePods)
+        public static T SetRecreatePods<T>(this T toolSettings, bool? recreatePods) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RecreatePods = recreatePods;
@@ -20606,7 +20606,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Performs pods restart for the resource if applicable.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetRecreatePods(this HelmUpgradeSettings toolSettings)
+        public static T ResetRecreatePods<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RecreatePods = null;
@@ -20617,7 +20617,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Performs pods restart for the resource if applicable.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings EnableRecreatePods(this HelmUpgradeSettings toolSettings)
+        public static T EnableRecreatePods<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RecreatePods = true;
@@ -20628,7 +20628,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Performs pods restart for the resource if applicable.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings DisableRecreatePods(this HelmUpgradeSettings toolSettings)
+        public static T DisableRecreatePods<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RecreatePods = false;
@@ -20639,7 +20639,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Performs pods restart for the resource if applicable.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ToggleRecreatePods(this HelmUpgradeSettings toolSettings)
+        public static T ToggleRecreatePods<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RecreatePods = !toolSettings.RecreatePods;
@@ -20652,7 +20652,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Render subchart notes along with parent.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetRenderSubchartNotes(this HelmUpgradeSettings toolSettings, bool? renderSubchartNotes)
+        public static T SetRenderSubchartNotes<T>(this T toolSettings, bool? renderSubchartNotes) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RenderSubchartNotes = renderSubchartNotes;
@@ -20663,7 +20663,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Render subchart notes along with parent.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetRenderSubchartNotes(this HelmUpgradeSettings toolSettings)
+        public static T ResetRenderSubchartNotes<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RenderSubchartNotes = null;
@@ -20674,7 +20674,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Render subchart notes along with parent.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings EnableRenderSubchartNotes(this HelmUpgradeSettings toolSettings)
+        public static T EnableRenderSubchartNotes<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RenderSubchartNotes = true;
@@ -20685,7 +20685,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Render subchart notes along with parent.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings DisableRenderSubchartNotes(this HelmUpgradeSettings toolSettings)
+        public static T DisableRenderSubchartNotes<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RenderSubchartNotes = false;
@@ -20696,7 +20696,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Render subchart notes along with parent.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ToggleRenderSubchartNotes(this HelmUpgradeSettings toolSettings)
+        public static T ToggleRenderSubchartNotes<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RenderSubchartNotes = !toolSettings.RenderSubchartNotes;
@@ -20709,7 +20709,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository url where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetRepo(this HelmUpgradeSettings toolSettings, string repo)
+        public static T SetRepo<T>(this T toolSettings, string repo) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Repo = repo;
@@ -20720,7 +20720,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository url where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetRepo(this HelmUpgradeSettings toolSettings)
+        public static T ResetRepo<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Repo = null;
@@ -20733,7 +20733,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>When upgrading, reset the values to the ones built into the chart.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetResetValues(this HelmUpgradeSettings toolSettings, bool? resetValues)
+        public static T SetResetValues<T>(this T toolSettings, bool? resetValues) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResetValues = resetValues;
@@ -20744,7 +20744,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>When upgrading, reset the values to the ones built into the chart.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetResetValues(this HelmUpgradeSettings toolSettings)
+        public static T ResetResetValues<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResetValues = null;
@@ -20755,7 +20755,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>When upgrading, reset the values to the ones built into the chart.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings EnableResetValues(this HelmUpgradeSettings toolSettings)
+        public static T EnableResetValues<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResetValues = true;
@@ -20766,7 +20766,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>When upgrading, reset the values to the ones built into the chart.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings DisableResetValues(this HelmUpgradeSettings toolSettings)
+        public static T DisableResetValues<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResetValues = false;
@@ -20777,7 +20777,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>When upgrading, reset the values to the ones built into the chart.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ToggleResetValues(this HelmUpgradeSettings toolSettings)
+        public static T ToggleResetValues<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResetValues = !toolSettings.ResetValues;
@@ -20790,7 +20790,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>When upgrading, reuse the last release's values and merge in any overrides from the command line via --set and -f. If '--reset-values' is specified, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetReuseValues(this HelmUpgradeSettings toolSettings, bool? reuseValues)
+        public static T SetReuseValues<T>(this T toolSettings, bool? reuseValues) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReuseValues = reuseValues;
@@ -20801,7 +20801,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>When upgrading, reuse the last release's values and merge in any overrides from the command line via --set and -f. If '--reset-values' is specified, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetReuseValues(this HelmUpgradeSettings toolSettings)
+        public static T ResetReuseValues<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReuseValues = null;
@@ -20812,7 +20812,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>When upgrading, reuse the last release's values and merge in any overrides from the command line via --set and -f. If '--reset-values' is specified, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings EnableReuseValues(this HelmUpgradeSettings toolSettings)
+        public static T EnableReuseValues<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReuseValues = true;
@@ -20823,7 +20823,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>When upgrading, reuse the last release's values and merge in any overrides from the command line via --set and -f. If '--reset-values' is specified, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings DisableReuseValues(this HelmUpgradeSettings toolSettings)
+        public static T DisableReuseValues<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReuseValues = false;
@@ -20834,7 +20834,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>When upgrading, reuse the last release's values and merge in any overrides from the command line via --set and -f. If '--reset-values' is specified, this is ignored.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ToggleReuseValues(this HelmUpgradeSettings toolSettings)
+        public static T ToggleReuseValues<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReuseValues = !toolSettings.ReuseValues;
@@ -20847,7 +20847,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetSet(this HelmUpgradeSettings toolSettings, IDictionary<string, object> set)
+        public static T SetSet<T>(this T toolSettings, IDictionary<string, object> set) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetInternal = set.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -20858,7 +20858,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ClearSet(this HelmUpgradeSettings toolSettings)
+        public static T ClearSet<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetInternal.Clear();
@@ -20869,7 +20869,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings AddSet(this HelmUpgradeSettings toolSettings, string setKey, object setValue)
+        public static T AddSet<T>(this T toolSettings, string setKey, object setValue) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetInternal.Add(setKey, setValue);
@@ -20880,7 +20880,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings RemoveSet(this HelmUpgradeSettings toolSettings, string setKey)
+        public static T RemoveSet<T>(this T toolSettings, string setKey) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetInternal.Remove(setKey);
@@ -20891,7 +20891,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetSet(this HelmUpgradeSettings toolSettings, string setKey, object setValue)
+        public static T SetSet<T>(this T toolSettings, string setKey, object setValue) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetInternal[setKey] = setValue;
@@ -20904,7 +20904,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetSetFile(this HelmUpgradeSettings toolSettings, IDictionary<string, object> setFile)
+        public static T SetSetFile<T>(this T toolSettings, IDictionary<string, object> setFile) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetFileInternal = setFile.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -20915,7 +20915,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ClearSetFile(this HelmUpgradeSettings toolSettings)
+        public static T ClearSetFile<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetFileInternal.Clear();
@@ -20926,7 +20926,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings AddSetFile(this HelmUpgradeSettings toolSettings, string setFileKey, object setFileValue)
+        public static T AddSetFile<T>(this T toolSettings, string setFileKey, object setFileValue) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetFileInternal.Add(setFileKey, setFileValue);
@@ -20937,7 +20937,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings RemoveSetFile(this HelmUpgradeSettings toolSettings, string setFileKey)
+        public static T RemoveSetFile<T>(this T toolSettings, string setFileKey) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetFileInternal.Remove(setFileKey);
@@ -20948,7 +20948,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetSetFile(this HelmUpgradeSettings toolSettings, string setFileKey, object setFileValue)
+        public static T SetSetFile<T>(this T toolSettings, string setFileKey, object setFileValue) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetFileInternal[setFileKey] = setFileValue;
@@ -20961,7 +20961,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetSetString(this HelmUpgradeSettings toolSettings, IDictionary<string, object> setString)
+        public static T SetSetString<T>(this T toolSettings, IDictionary<string, object> setString) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetStringInternal = setString.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -20972,7 +20972,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ClearSetString(this HelmUpgradeSettings toolSettings)
+        public static T ClearSetString<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetStringInternal.Clear();
@@ -20983,7 +20983,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings AddSetString(this HelmUpgradeSettings toolSettings, string setStringKey, object setStringValue)
+        public static T AddSetString<T>(this T toolSettings, string setStringKey, object setStringValue) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetStringInternal.Add(setStringKey, setStringValue);
@@ -20994,7 +20994,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings RemoveSetString(this HelmUpgradeSettings toolSettings, string setStringKey)
+        public static T RemoveSetString<T>(this T toolSettings, string setStringKey) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetStringInternal.Remove(setStringKey);
@@ -21005,7 +21005,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetSetString(this HelmUpgradeSettings toolSettings, string setStringKey, object setStringValue)
+        public static T SetSetString<T>(this T toolSettings, string setStringKey, object setStringValue) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetStringInternal[setStringKey] = setStringValue;
@@ -21018,7 +21018,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Time in seconds to wait for any individual Kubernetes operation (like Jobs for hooks) (default 300).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetTimeout(this HelmUpgradeSettings toolSettings, long? timeout)
+        public static T SetTimeout<T>(this T toolSettings, long? timeout) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = timeout;
@@ -21029,7 +21029,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Time in seconds to wait for any individual Kubernetes operation (like Jobs for hooks) (default 300).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetTimeout(this HelmUpgradeSettings toolSettings)
+        public static T ResetTimeout<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = null;
@@ -21042,7 +21042,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetTls(this HelmUpgradeSettings toolSettings, bool? tls)
+        public static T SetTls<T>(this T toolSettings, bool? tls) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = tls;
@@ -21053,7 +21053,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetTls(this HelmUpgradeSettings toolSettings)
+        public static T ResetTls<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = null;
@@ -21064,7 +21064,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings EnableTls(this HelmUpgradeSettings toolSettings)
+        public static T EnableTls<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = true;
@@ -21075,7 +21075,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings DisableTls(this HelmUpgradeSettings toolSettings)
+        public static T DisableTls<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = false;
@@ -21086,7 +21086,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ToggleTls(this HelmUpgradeSettings toolSettings)
+        public static T ToggleTls<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = !toolSettings.Tls;
@@ -21099,7 +21099,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetTlsCaCert(this HelmUpgradeSettings toolSettings, string tlsCaCert)
+        public static T SetTlsCaCert<T>(this T toolSettings, string tlsCaCert) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = tlsCaCert;
@@ -21110,7 +21110,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetTlsCaCert(this HelmUpgradeSettings toolSettings)
+        public static T ResetTlsCaCert<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = null;
@@ -21123,7 +21123,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetTlsCert(this HelmUpgradeSettings toolSettings, string tlsCert)
+        public static T SetTlsCert<T>(this T toolSettings, string tlsCert) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = tlsCert;
@@ -21134,7 +21134,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetTlsCert(this HelmUpgradeSettings toolSettings)
+        public static T ResetTlsCert<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = null;
@@ -21147,7 +21147,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetTlsHostname(this HelmUpgradeSettings toolSettings, string tlsHostname)
+        public static T SetTlsHostname<T>(this T toolSettings, string tlsHostname) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = tlsHostname;
@@ -21158,7 +21158,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetTlsHostname(this HelmUpgradeSettings toolSettings)
+        public static T ResetTlsHostname<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = null;
@@ -21171,7 +21171,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetTlsKey(this HelmUpgradeSettings toolSettings, string tlsKey)
+        public static T SetTlsKey<T>(this T toolSettings, string tlsKey) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = tlsKey;
@@ -21182,7 +21182,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetTlsKey(this HelmUpgradeSettings toolSettings)
+        public static T ResetTlsKey<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = null;
@@ -21195,7 +21195,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetTlsVerify(this HelmUpgradeSettings toolSettings, bool? tlsVerify)
+        public static T SetTlsVerify<T>(this T toolSettings, bool? tlsVerify) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = tlsVerify;
@@ -21206,7 +21206,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetTlsVerify(this HelmUpgradeSettings toolSettings)
+        public static T ResetTlsVerify<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = null;
@@ -21217,7 +21217,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings EnableTlsVerify(this HelmUpgradeSettings toolSettings)
+        public static T EnableTlsVerify<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = true;
@@ -21228,7 +21228,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings DisableTlsVerify(this HelmUpgradeSettings toolSettings)
+        public static T DisableTlsVerify<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = false;
@@ -21239,7 +21239,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ToggleTlsVerify(this HelmUpgradeSettings toolSettings)
+        public static T ToggleTlsVerify<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = !toolSettings.TlsVerify;
@@ -21252,7 +21252,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository username where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetUsername(this HelmUpgradeSettings toolSettings, string username)
+        public static T SetUsername<T>(this T toolSettings, string username) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = username;
@@ -21263,7 +21263,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository username where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetUsername(this HelmUpgradeSettings toolSettings)
+        public static T ResetUsername<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = null;
@@ -21276,7 +21276,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file or a URL(can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetValues(this HelmUpgradeSettings toolSettings, params string[] values)
+        public static T SetValues<T>(this T toolSettings, params string[] values) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ValuesInternal = values.ToList();
@@ -21287,7 +21287,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file or a URL(can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetValues(this HelmUpgradeSettings toolSettings, IEnumerable<string> values)
+        public static T SetValues<T>(this T toolSettings, IEnumerable<string> values) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ValuesInternal = values.ToList();
@@ -21298,7 +21298,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file or a URL(can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings AddValues(this HelmUpgradeSettings toolSettings, params string[] values)
+        public static T AddValues<T>(this T toolSettings, params string[] values) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ValuesInternal.AddRange(values);
@@ -21309,7 +21309,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file or a URL(can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings AddValues(this HelmUpgradeSettings toolSettings, IEnumerable<string> values)
+        public static T AddValues<T>(this T toolSettings, IEnumerable<string> values) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ValuesInternal.AddRange(values);
@@ -21320,7 +21320,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file or a URL(can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ClearValues(this HelmUpgradeSettings toolSettings)
+        public static T ClearValues<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ValuesInternal.Clear();
@@ -21331,7 +21331,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file or a URL(can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings RemoveValues(this HelmUpgradeSettings toolSettings, params string[] values)
+        public static T RemoveValues<T>(this T toolSettings, params string[] values) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(values);
@@ -21343,7 +21343,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify values in a YAML file or a URL(can specify multiple) (default []).</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings RemoveValues(this HelmUpgradeSettings toolSettings, IEnumerable<string> values)
+        public static T RemoveValues<T>(this T toolSettings, IEnumerable<string> values) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(values);
@@ -21357,7 +21357,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance of the chart before upgrading.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetVerify(this HelmUpgradeSettings toolSettings, bool? verify)
+        public static T SetVerify<T>(this T toolSettings, bool? verify) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = verify;
@@ -21368,7 +21368,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance of the chart before upgrading.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetVerify(this HelmUpgradeSettings toolSettings)
+        public static T ResetVerify<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = null;
@@ -21379,7 +21379,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance of the chart before upgrading.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings EnableVerify(this HelmUpgradeSettings toolSettings)
+        public static T EnableVerify<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = true;
@@ -21390,7 +21390,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance of the chart before upgrading.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings DisableVerify(this HelmUpgradeSettings toolSettings)
+        public static T DisableVerify<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = false;
@@ -21401,7 +21401,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Verify the provenance of the chart before upgrading.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ToggleVerify(this HelmUpgradeSettings toolSettings)
+        public static T ToggleVerify<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verify = !toolSettings.Verify;
@@ -21414,7 +21414,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify the exact chart version to use. If this is not specified, the latest version is used.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetVersion(this HelmUpgradeSettings toolSettings, string version)
+        public static T SetVersion<T>(this T toolSettings, string version) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = version;
@@ -21425,7 +21425,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Specify the exact chart version to use. If this is not specified, the latest version is used.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetVersion(this HelmUpgradeSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = null;
@@ -21438,7 +21438,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment are in a ready state before marking the release as successful. It will wait for as long as --timeout.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetWait(this HelmUpgradeSettings toolSettings, bool? wait)
+        public static T SetWait<T>(this T toolSettings, bool? wait) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = wait;
@@ -21449,7 +21449,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment are in a ready state before marking the release as successful. It will wait for as long as --timeout.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetWait(this HelmUpgradeSettings toolSettings)
+        public static T ResetWait<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = null;
@@ -21460,7 +21460,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment are in a ready state before marking the release as successful. It will wait for as long as --timeout.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings EnableWait(this HelmUpgradeSettings toolSettings)
+        public static T EnableWait<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = true;
@@ -21471,7 +21471,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment are in a ready state before marking the release as successful. It will wait for as long as --timeout.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings DisableWait(this HelmUpgradeSettings toolSettings)
+        public static T DisableWait<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = false;
@@ -21482,7 +21482,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment are in a ready state before marking the release as successful. It will wait for as long as --timeout.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ToggleWait(this HelmUpgradeSettings toolSettings)
+        public static T ToggleWait<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = !toolSettings.Wait;
@@ -21495,7 +21495,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the release to upgrade.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetRelease(this HelmUpgradeSettings toolSettings, string release)
+        public static T SetRelease<T>(this T toolSettings, string release) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Release = release;
@@ -21506,7 +21506,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the release to upgrade.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetRelease(this HelmUpgradeSettings toolSettings)
+        public static T ResetRelease<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Release = null;
@@ -21519,7 +21519,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the chart to upgrade.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings SetChart(this HelmUpgradeSettings toolSettings, string chart)
+        public static T SetChart<T>(this T toolSettings, string chart) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Chart = chart;
@@ -21530,7 +21530,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The name of the chart to upgrade.</p>
         /// </summary>
         [Pure]
-        public static HelmUpgradeSettings ResetChart(this HelmUpgradeSettings toolSettings)
+        public static T ResetChart<T>(this T toolSettings) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Chart = null;
@@ -21553,7 +21553,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for verify.</p>
         /// </summary>
         [Pure]
-        public static HelmVerifySettings SetHelp(this HelmVerifySettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmVerifySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -21564,7 +21564,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for verify.</p>
         /// </summary>
         [Pure]
-        public static HelmVerifySettings ResetHelp(this HelmVerifySettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmVerifySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -21575,7 +21575,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for verify.</p>
         /// </summary>
         [Pure]
-        public static HelmVerifySettings EnableHelp(this HelmVerifySettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmVerifySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -21586,7 +21586,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for verify.</p>
         /// </summary>
         [Pure]
-        public static HelmVerifySettings DisableHelp(this HelmVerifySettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmVerifySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -21597,7 +21597,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for verify.</p>
         /// </summary>
         [Pure]
-        public static HelmVerifySettings ToggleHelp(this HelmVerifySettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmVerifySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -21610,7 +21610,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Keyring containing public keys (default "~/.gnupg/pubring.gpg").</p>
         /// </summary>
         [Pure]
-        public static HelmVerifySettings SetKeyring(this HelmVerifySettings toolSettings, string keyring)
+        public static T SetKeyring<T>(this T toolSettings, string keyring) where T : HelmVerifySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyring = keyring;
@@ -21621,7 +21621,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Keyring containing public keys (default "~/.gnupg/pubring.gpg").</p>
         /// </summary>
         [Pure]
-        public static HelmVerifySettings ResetKeyring(this HelmVerifySettings toolSettings)
+        public static T ResetKeyring<T>(this T toolSettings) where T : HelmVerifySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Keyring = null;
@@ -21634,7 +21634,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The path to the chart to verify.</p>
         /// </summary>
         [Pure]
-        public static HelmVerifySettings SetPath(this HelmVerifySettings toolSettings, string path)
+        public static T SetPath<T>(this T toolSettings, string path) where T : HelmVerifySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Path = path;
@@ -21645,7 +21645,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The path to the chart to verify.</p>
         /// </summary>
         [Pure]
-        public static HelmVerifySettings ResetPath(this HelmVerifySettings toolSettings)
+        public static T ResetPath<T>(this T toolSettings) where T : HelmVerifySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Path = null;
@@ -21668,7 +21668,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Client version only.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings SetClient(this HelmVersionSettings toolSettings, bool? client)
+        public static T SetClient<T>(this T toolSettings, bool? client) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Client = client;
@@ -21679,7 +21679,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Client version only.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings ResetClient(this HelmVersionSettings toolSettings)
+        public static T ResetClient<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Client = null;
@@ -21690,7 +21690,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Client version only.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings EnableClient(this HelmVersionSettings toolSettings)
+        public static T EnableClient<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Client = true;
@@ -21701,7 +21701,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Client version only.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings DisableClient(this HelmVersionSettings toolSettings)
+        public static T DisableClient<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Client = false;
@@ -21712,7 +21712,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Client version only.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings ToggleClient(this HelmVersionSettings toolSettings)
+        public static T ToggleClient<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Client = !toolSettings.Client;
@@ -21725,7 +21725,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for version.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings SetHelp(this HelmVersionSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -21736,7 +21736,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for version.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings ResetHelp(this HelmVersionSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -21747,7 +21747,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for version.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings EnableHelp(this HelmVersionSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -21758,7 +21758,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for version.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings DisableHelp(this HelmVersionSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -21769,7 +21769,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for version.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings ToggleHelp(this HelmVersionSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -21782,7 +21782,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Server version only.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings SetServer(this HelmVersionSettings toolSettings, bool? server)
+        public static T SetServer<T>(this T toolSettings, bool? server) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Server = server;
@@ -21793,7 +21793,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Server version only.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings ResetServer(this HelmVersionSettings toolSettings)
+        public static T ResetServer<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Server = null;
@@ -21804,7 +21804,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Server version only.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings EnableServer(this HelmVersionSettings toolSettings)
+        public static T EnableServer<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Server = true;
@@ -21815,7 +21815,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Server version only.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings DisableServer(this HelmVersionSettings toolSettings)
+        public static T DisableServer<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Server = false;
@@ -21826,7 +21826,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Server version only.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings ToggleServer(this HelmVersionSettings toolSettings)
+        public static T ToggleServer<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Server = !toolSettings.Server;
@@ -21839,7 +21839,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Print the version number.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings SetShort(this HelmVersionSettings toolSettings, bool? @short)
+        public static T SetShort<T>(this T toolSettings, bool? @short) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Short = @short;
@@ -21850,7 +21850,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Print the version number.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings ResetShort(this HelmVersionSettings toolSettings)
+        public static T ResetShort<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Short = null;
@@ -21861,7 +21861,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Print the version number.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings EnableShort(this HelmVersionSettings toolSettings)
+        public static T EnableShort<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Short = true;
@@ -21872,7 +21872,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Print the version number.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings DisableShort(this HelmVersionSettings toolSettings)
+        public static T DisableShort<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Short = false;
@@ -21883,7 +21883,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Print the version number.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings ToggleShort(this HelmVersionSettings toolSettings)
+        public static T ToggleShort<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Short = !toolSettings.Short;
@@ -21896,7 +21896,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Template for version string format.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings SetTemplate(this HelmVersionSettings toolSettings, string template)
+        public static T SetTemplate<T>(this T toolSettings, string template) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = template;
@@ -21907,7 +21907,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Template for version string format.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings ResetTemplate(this HelmVersionSettings toolSettings)
+        public static T ResetTemplate<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = null;
@@ -21920,7 +21920,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings SetTls(this HelmVersionSettings toolSettings, bool? tls)
+        public static T SetTls<T>(this T toolSettings, bool? tls) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = tls;
@@ -21931,7 +21931,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings ResetTls(this HelmVersionSettings toolSettings)
+        public static T ResetTls<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = null;
@@ -21942,7 +21942,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings EnableTls(this HelmVersionSettings toolSettings)
+        public static T EnableTls<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = true;
@@ -21953,7 +21953,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings DisableTls(this HelmVersionSettings toolSettings)
+        public static T DisableTls<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = false;
@@ -21964,7 +21964,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings ToggleTls(this HelmVersionSettings toolSettings)
+        public static T ToggleTls<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tls = !toolSettings.Tls;
@@ -21977,7 +21977,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings SetTlsCaCert(this HelmVersionSettings toolSettings, string tlsCaCert)
+        public static T SetTlsCaCert<T>(this T toolSettings, string tlsCaCert) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = tlsCaCert;
@@ -21988,7 +21988,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings ResetTlsCaCert(this HelmVersionSettings toolSettings)
+        public static T ResetTlsCaCert<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCaCert = null;
@@ -22001,7 +22001,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings SetTlsCert(this HelmVersionSettings toolSettings, string tlsCert)
+        public static T SetTlsCert<T>(this T toolSettings, string tlsCert) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = tlsCert;
@@ -22012,7 +22012,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS certificate file (default "$HELM_HOME/cert.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings ResetTlsCert(this HelmVersionSettings toolSettings)
+        public static T ResetTlsCert<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsCert = null;
@@ -22025,7 +22025,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings SetTlsHostname(this HelmVersionSettings toolSettings, string tlsHostname)
+        public static T SetTlsHostname<T>(this T toolSettings, string tlsHostname) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = tlsHostname;
@@ -22036,7 +22036,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The server name used to verify the hostname on the returned certificates from the server.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings ResetTlsHostname(this HelmVersionSettings toolSettings)
+        public static T ResetTlsHostname<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsHostname = null;
@@ -22049,7 +22049,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings SetTlsKey(this HelmVersionSettings toolSettings, string tlsKey)
+        public static T SetTlsKey<T>(this T toolSettings, string tlsKey) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = tlsKey;
@@ -22060,7 +22060,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Path to TLS key file (default "$HELM_HOME/key.pem").</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings ResetTlsKey(this HelmVersionSettings toolSettings)
+        public static T ResetTlsKey<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsKey = null;
@@ -22073,7 +22073,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings SetTlsVerify(this HelmVersionSettings toolSettings, bool? tlsVerify)
+        public static T SetTlsVerify<T>(this T toolSettings, bool? tlsVerify) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = tlsVerify;
@@ -22084,7 +22084,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings ResetTlsVerify(this HelmVersionSettings toolSettings)
+        public static T ResetTlsVerify<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = null;
@@ -22095,7 +22095,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings EnableTlsVerify(this HelmVersionSettings toolSettings)
+        public static T EnableTlsVerify<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = true;
@@ -22106,7 +22106,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings DisableTlsVerify(this HelmVersionSettings toolSettings)
+        public static T DisableTlsVerify<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = false;
@@ -22117,7 +22117,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable TLS for request and verify remote.</p>
         /// </summary>
         [Pure]
-        public static HelmVersionSettings ToggleTlsVerify(this HelmVersionSettings toolSettings)
+        public static T ToggleTlsVerify<T>(this T toolSettings) where T : HelmVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TlsVerify = !toolSettings.TlsVerify;
@@ -22140,7 +22140,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable verbose output.</p>
         /// </summary>
         [Pure]
-        public static HelmCommonSettings SetDebug(this HelmCommonSettings toolSettings, bool? debug)
+        public static T SetDebug<T>(this T toolSettings, bool? debug) where T : HelmCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = debug;
@@ -22151,7 +22151,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable verbose output.</p>
         /// </summary>
         [Pure]
-        public static HelmCommonSettings ResetDebug(this HelmCommonSettings toolSettings)
+        public static T ResetDebug<T>(this T toolSettings) where T : HelmCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = null;
@@ -22162,7 +22162,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable verbose output.</p>
         /// </summary>
         [Pure]
-        public static HelmCommonSettings EnableDebug(this HelmCommonSettings toolSettings)
+        public static T EnableDebug<T>(this T toolSettings) where T : HelmCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = true;
@@ -22173,7 +22173,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable verbose output.</p>
         /// </summary>
         [Pure]
-        public static HelmCommonSettings DisableDebug(this HelmCommonSettings toolSettings)
+        public static T DisableDebug<T>(this T toolSettings) where T : HelmCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = false;
@@ -22184,7 +22184,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Enable verbose output.</p>
         /// </summary>
         [Pure]
-        public static HelmCommonSettings ToggleDebug(this HelmCommonSettings toolSettings)
+        public static T ToggleDebug<T>(this T toolSettings) where T : HelmCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = !toolSettings.Debug;
@@ -22197,7 +22197,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for helm.</p>
         /// </summary>
         [Pure]
-        public static HelmCommonSettings SetHelp(this HelmCommonSettings toolSettings, bool? help)
+        public static T SetHelp<T>(this T toolSettings, bool? help) where T : HelmCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = help;
@@ -22208,7 +22208,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for helm.</p>
         /// </summary>
         [Pure]
-        public static HelmCommonSettings ResetHelp(this HelmCommonSettings toolSettings)
+        public static T ResetHelp<T>(this T toolSettings) where T : HelmCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = null;
@@ -22219,7 +22219,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for helm.</p>
         /// </summary>
         [Pure]
-        public static HelmCommonSettings EnableHelp(this HelmCommonSettings toolSettings)
+        public static T EnableHelp<T>(this T toolSettings) where T : HelmCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = true;
@@ -22230,7 +22230,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for helm.</p>
         /// </summary>
         [Pure]
-        public static HelmCommonSettings DisableHelp(this HelmCommonSettings toolSettings)
+        public static T DisableHelp<T>(this T toolSettings) where T : HelmCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = false;
@@ -22241,7 +22241,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Help for helm.</p>
         /// </summary>
         [Pure]
-        public static HelmCommonSettings ToggleHelp(this HelmCommonSettings toolSettings)
+        public static T ToggleHelp<T>(this T toolSettings) where T : HelmCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Help = !toolSettings.Help;
@@ -22254,7 +22254,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Location of your Helm config. Overrides $HELM_HOME (default "~/.helm").</p>
         /// </summary>
         [Pure]
-        public static HelmCommonSettings SetHome(this HelmCommonSettings toolSettings, string home)
+        public static T SetHome<T>(this T toolSettings, string home) where T : HelmCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Home = home;
@@ -22265,7 +22265,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Location of your Helm config. Overrides $HELM_HOME (default "~/.helm").</p>
         /// </summary>
         [Pure]
-        public static HelmCommonSettings ResetHome(this HelmCommonSettings toolSettings)
+        public static T ResetHome<T>(this T toolSettings) where T : HelmCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Home = null;
@@ -22278,7 +22278,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Address of Tiller. Overrides $HELM_HOST.</p>
         /// </summary>
         [Pure]
-        public static HelmCommonSettings SetHost(this HelmCommonSettings toolSettings, string host)
+        public static T SetHost<T>(this T toolSettings, string host) where T : HelmCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Host = host;
@@ -22289,7 +22289,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Address of Tiller. Overrides $HELM_HOST.</p>
         /// </summary>
         [Pure]
-        public static HelmCommonSettings ResetHost(this HelmCommonSettings toolSettings)
+        public static T ResetHost<T>(this T toolSettings) where T : HelmCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Host = null;
@@ -22302,7 +22302,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Name of the kubeconfig context to use.</p>
         /// </summary>
         [Pure]
-        public static HelmCommonSettings SetKubeContext(this HelmCommonSettings toolSettings, string kubeContext)
+        public static T SetKubeContext<T>(this T toolSettings, string kubeContext) where T : HelmCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KubeContext = kubeContext;
@@ -22313,7 +22313,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Name of the kubeconfig context to use.</p>
         /// </summary>
         [Pure]
-        public static HelmCommonSettings ResetKubeContext(this HelmCommonSettings toolSettings)
+        public static T ResetKubeContext<T>(this T toolSettings) where T : HelmCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KubeContext = null;
@@ -22326,7 +22326,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Absolute path to the kubeconfig file to use.</p>
         /// </summary>
         [Pure]
-        public static HelmCommonSettings SetKubeconfig(this HelmCommonSettings toolSettings, string kubeconfig)
+        public static T SetKubeconfig<T>(this T toolSettings, string kubeconfig) where T : HelmCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Kubeconfig = kubeconfig;
@@ -22337,7 +22337,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Absolute path to the kubeconfig file to use.</p>
         /// </summary>
         [Pure]
-        public static HelmCommonSettings ResetKubeconfig(this HelmCommonSettings toolSettings)
+        public static T ResetKubeconfig<T>(this T toolSettings) where T : HelmCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Kubeconfig = null;
@@ -22350,7 +22350,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The duration (in seconds) Helm will wait to establish a connection to tiller (default 300).</p>
         /// </summary>
         [Pure]
-        public static HelmCommonSettings SetTillerConnectionTimeout(this HelmCommonSettings toolSettings, long? tillerConnectionTimeout)
+        public static T SetTillerConnectionTimeout<T>(this T toolSettings, long? tillerConnectionTimeout) where T : HelmCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TillerConnectionTimeout = tillerConnectionTimeout;
@@ -22361,7 +22361,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>The duration (in seconds) Helm will wait to establish a connection to tiller (default 300).</p>
         /// </summary>
         [Pure]
-        public static HelmCommonSettings ResetTillerConnectionTimeout(this HelmCommonSettings toolSettings)
+        public static T ResetTillerConnectionTimeout<T>(this T toolSettings) where T : HelmCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TillerConnectionTimeout = null;
@@ -22374,7 +22374,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Namespace of Tiller (default "kube-system").</p>
         /// </summary>
         [Pure]
-        public static HelmCommonSettings SetTillerNamespace(this HelmCommonSettings toolSettings, string tillerNamespace)
+        public static T SetTillerNamespace<T>(this T toolSettings, string tillerNamespace) where T : HelmCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TillerNamespace = tillerNamespace;
@@ -22385,7 +22385,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Namespace of Tiller (default "kube-system").</p>
         /// </summary>
         [Pure]
-        public static HelmCommonSettings ResetTillerNamespace(this HelmCommonSettings toolSettings)
+        public static T ResetTillerNamespace<T>(this T toolSettings) where T : HelmCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TillerNamespace = null;

@@ -330,10 +330,10 @@ namespace Nuke.CodeGeneration.Generators
             params string[] modifications)
         {
             // NOTE: methods cannot be generic because constraints are not taken into account for overload resolution
-            var parameters = new[] { $"this {writer.DataClass.Name} toolSettings" }.Concat(additionalParameters);
+            var parameters = new[] { "this T toolSettings" }.Concat(additionalParameters);
             return writer
                 .WriteLine("[Pure]")
-                .WriteLine($"public static {writer.DataClass.Name} {name}({parameters.JoinComma()})")
+                .WriteLine($"public static T {name}<T>({parameters.JoinComma()}) where T : {writer.DataClass.Name}")
                 .WriteBlock(w => w
                     .WriteLine("toolSettings = toolSettings.NewInstance();")
                     .ForEachWriteLine(modifications)

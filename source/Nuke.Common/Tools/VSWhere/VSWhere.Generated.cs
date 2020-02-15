@@ -277,7 +277,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p> Return only the newest version and last installed.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings SetLatest(this VSWhereSettings toolSettings, bool? latest)
+        public static T SetLatest<T>(this T toolSettings, bool? latest) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Latest = latest;
@@ -288,7 +288,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p> Return only the newest version and last installed.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings ResetLatest(this VSWhereSettings toolSettings)
+        public static T ResetLatest<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Latest = null;
@@ -299,7 +299,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p> Return only the newest version and last installed.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings EnableLatest(this VSWhereSettings toolSettings)
+        public static T EnableLatest<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Latest = true;
@@ -310,7 +310,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p> Return only the newest version and last installed.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings DisableLatest(this VSWhereSettings toolSettings)
+        public static T DisableLatest<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Latest = false;
@@ -321,7 +321,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p> Return only the newest version and last installed.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings ToggleLatest(this VSWhereSettings toolSettings)
+        public static T ToggleLatest<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Latest = !toolSettings.Latest;
@@ -334,7 +334,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings SetFormat(this VSWhereSettings toolSettings, VSWhereFormat format)
+        public static T SetFormat<T>(this T toolSettings, VSWhereFormat format) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Format = format;
@@ -345,7 +345,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings ResetFormat(this VSWhereSettings toolSettings)
+        public static T ResetFormat<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Format = null;
@@ -358,7 +358,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Do not show logo information.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings SetNoLogo(this VSWhereSettings toolSettings, bool? noLogo)
+        public static T SetNoLogo<T>(this T toolSettings, bool? noLogo) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLogo = noLogo;
@@ -369,7 +369,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Do not show logo information.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings ResetNoLogo(this VSWhereSettings toolSettings)
+        public static T ResetNoLogo<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLogo = null;
@@ -380,7 +380,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Do not show logo information.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings EnableNoLogo(this VSWhereSettings toolSettings)
+        public static T EnableNoLogo<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLogo = true;
@@ -391,7 +391,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Do not show logo information.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings DisableNoLogo(this VSWhereSettings toolSettings)
+        public static T DisableNoLogo<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLogo = false;
@@ -402,7 +402,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Do not show logo information.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings ToggleNoLogo(this VSWhereSettings toolSettings)
+        public static T ToggleNoLogo<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLogo = !toolSettings.NoLogo;
@@ -415,7 +415,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Use UTF-8 encoding (recommended for JSON).</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings SetUTF8(this VSWhereSettings toolSettings, bool? utf8)
+        public static T SetUTF8<T>(this T toolSettings, bool? utf8) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UTF8 = utf8;
@@ -426,7 +426,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Use UTF-8 encoding (recommended for JSON).</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings ResetUTF8(this VSWhereSettings toolSettings)
+        public static T ResetUTF8<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UTF8 = null;
@@ -437,7 +437,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Use UTF-8 encoding (recommended for JSON).</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings EnableUTF8(this VSWhereSettings toolSettings)
+        public static T EnableUTF8<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UTF8 = true;
@@ -448,7 +448,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Use UTF-8 encoding (recommended for JSON).</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings DisableUTF8(this VSWhereSettings toolSettings)
+        public static T DisableUTF8<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UTF8 = false;
@@ -459,7 +459,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Use UTF-8 encoding (recommended for JSON).</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings ToggleUTF8(this VSWhereSettings toolSettings)
+        public static T ToggleUTF8<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UTF8 = !toolSettings.UTF8;
@@ -472,7 +472,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings SetLegacy(this VSWhereSettings toolSettings, bool? legacy)
+        public static T SetLegacy<T>(this T toolSettings, bool? legacy) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Legacy = legacy;
@@ -483,7 +483,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings ResetLegacy(this VSWhereSettings toolSettings)
+        public static T ResetLegacy<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Legacy = null;
@@ -494,7 +494,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings EnableLegacy(this VSWhereSettings toolSettings)
+        public static T EnableLegacy<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Legacy = true;
@@ -505,7 +505,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings DisableLegacy(this VSWhereSettings toolSettings)
+        public static T DisableLegacy<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Legacy = false;
@@ -516,7 +516,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings ToggleLegacy(this VSWhereSettings toolSettings)
+        public static T ToggleLegacy<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Legacy = !toolSettings.Legacy;
@@ -529,7 +529,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Finds all instances even if they are incomplete and may not launch.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings SetAll(this VSWhereSettings toolSettings, bool? all)
+        public static T SetAll<T>(this T toolSettings, bool? all) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = all;
@@ -540,7 +540,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Finds all instances even if they are incomplete and may not launch.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings ResetAll(this VSWhereSettings toolSettings)
+        public static T ResetAll<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = null;
@@ -551,7 +551,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Finds all instances even if they are incomplete and may not launch.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings EnableAll(this VSWhereSettings toolSettings)
+        public static T EnableAll<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = true;
@@ -562,7 +562,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Finds all instances even if they are incomplete and may not launch.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings DisableAll(this VSWhereSettings toolSettings)
+        public static T DisableAll<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = false;
@@ -573,7 +573,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Finds all instances even if they are incomplete and may not launch.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings ToggleAll(this VSWhereSettings toolSettings)
+        public static T ToggleAll<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = !toolSettings.All;
@@ -586,7 +586,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Also searches prereleases. By default, only releases are searched.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings SetPrerelease(this VSWhereSettings toolSettings, bool? prerelease)
+        public static T SetPrerelease<T>(this T toolSettings, bool? prerelease) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Prerelease = prerelease;
@@ -597,7 +597,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Also searches prereleases. By default, only releases are searched.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings ResetPrerelease(this VSWhereSettings toolSettings)
+        public static T ResetPrerelease<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Prerelease = null;
@@ -608,7 +608,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Also searches prereleases. By default, only releases are searched.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings EnablePrerelease(this VSWhereSettings toolSettings)
+        public static T EnablePrerelease<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Prerelease = true;
@@ -619,7 +619,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Also searches prereleases. By default, only releases are searched.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings DisablePrerelease(this VSWhereSettings toolSettings)
+        public static T DisablePrerelease<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Prerelease = false;
@@ -630,7 +630,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Also searches prereleases. By default, only releases are searched.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings TogglePrerelease(this VSWhereSettings toolSettings)
+        public static T TogglePrerelease<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Prerelease = !toolSettings.Prerelease;
@@ -643,7 +643,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings SetProducts(this VSWhereSettings toolSettings, params string[] products)
+        public static T SetProducts<T>(this T toolSettings, params string[] products) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProductsInternal = products.ToList();
@@ -654,7 +654,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings SetProducts(this VSWhereSettings toolSettings, IEnumerable<string> products)
+        public static T SetProducts<T>(this T toolSettings, IEnumerable<string> products) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProductsInternal = products.ToList();
@@ -665,7 +665,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings AddProducts(this VSWhereSettings toolSettings, params string[] products)
+        public static T AddProducts<T>(this T toolSettings, params string[] products) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProductsInternal.AddRange(products);
@@ -676,7 +676,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings AddProducts(this VSWhereSettings toolSettings, IEnumerable<string> products)
+        public static T AddProducts<T>(this T toolSettings, IEnumerable<string> products) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProductsInternal.AddRange(products);
@@ -687,7 +687,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings ClearProducts(this VSWhereSettings toolSettings)
+        public static T ClearProducts<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProductsInternal.Clear();
@@ -698,7 +698,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings RemoveProducts(this VSWhereSettings toolSettings, params string[] products)
+        public static T RemoveProducts<T>(this T toolSettings, params string[] products) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(products);
@@ -710,7 +710,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings RemoveProducts(this VSWhereSettings toolSettings, IEnumerable<string> products)
+        public static T RemoveProducts<T>(this T toolSettings, IEnumerable<string> products) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(products);
@@ -724,7 +724,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings SetRequires(this VSWhereSettings toolSettings, params string[] requires)
+        public static T SetRequires<T>(this T toolSettings, params string[] requires) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RequiresInternal = requires.ToList();
@@ -735,7 +735,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings SetRequires(this VSWhereSettings toolSettings, IEnumerable<string> requires)
+        public static T SetRequires<T>(this T toolSettings, IEnumerable<string> requires) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RequiresInternal = requires.ToList();
@@ -746,7 +746,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings AddRequires(this VSWhereSettings toolSettings, params string[] requires)
+        public static T AddRequires<T>(this T toolSettings, params string[] requires) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RequiresInternal.AddRange(requires);
@@ -757,7 +757,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings AddRequires(this VSWhereSettings toolSettings, IEnumerable<string> requires)
+        public static T AddRequires<T>(this T toolSettings, IEnumerable<string> requires) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RequiresInternal.AddRange(requires);
@@ -768,7 +768,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings ClearRequires(this VSWhereSettings toolSettings)
+        public static T ClearRequires<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RequiresInternal.Clear();
@@ -779,7 +779,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings RemoveRequires(this VSWhereSettings toolSettings, params string[] requires)
+        public static T RemoveRequires<T>(this T toolSettings, params string[] requires) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(requires);
@@ -791,7 +791,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings RemoveRequires(this VSWhereSettings toolSettings, IEnumerable<string> requires)
+        public static T RemoveRequires<T>(this T toolSettings, IEnumerable<string> requires) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(requires);
@@ -805,7 +805,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Find instances with any one or more workload or components IDs passed to <c>-requires</c>.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings SetRequiresAny(this VSWhereSettings toolSettings, bool? requiresAny)
+        public static T SetRequiresAny<T>(this T toolSettings, bool? requiresAny) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RequiresAny = requiresAny;
@@ -816,7 +816,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Find instances with any one or more workload or components IDs passed to <c>-requires</c>.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings ResetRequiresAny(this VSWhereSettings toolSettings)
+        public static T ResetRequiresAny<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RequiresAny = null;
@@ -827,7 +827,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Find instances with any one or more workload or components IDs passed to <c>-requires</c>.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings EnableRequiresAny(this VSWhereSettings toolSettings)
+        public static T EnableRequiresAny<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RequiresAny = true;
@@ -838,7 +838,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Find instances with any one or more workload or components IDs passed to <c>-requires</c>.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings DisableRequiresAny(this VSWhereSettings toolSettings)
+        public static T DisableRequiresAny<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RequiresAny = false;
@@ -849,7 +849,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Find instances with any one or more workload or components IDs passed to <c>-requires</c>.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings ToggleRequiresAny(this VSWhereSettings toolSettings)
+        public static T ToggleRequiresAny<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RequiresAny = !toolSettings.RequiresAny;
@@ -862,7 +862,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings SetVersion(this VSWhereSettings toolSettings, string version)
+        public static T SetVersion<T>(this T toolSettings, string version) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = version;
@@ -873,7 +873,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings ResetVersion(this VSWhereSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = null;
@@ -886,7 +886,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>The name of a property to return. Use delimiters <c>'.'</c>, <c>'/'</c>, or <c>'_'</c> to separate object and property names. Example: <c>properties.nickname</c> will return the <em>nickname</em> property under <em>properties</em>.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings SetProperty(this VSWhereSettings toolSettings, string property)
+        public static T SetProperty<T>(this T toolSettings, string property) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Property = property;
@@ -897,7 +897,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>The name of a property to return. Use delimiters <c>'.'</c>, <c>'/'</c>, or <c>'_'</c> to separate object and property names. Example: <c>properties.nickname</c> will return the <em>nickname</em> property under <em>properties</em>.</p>
         /// </summary>
         [Pure]
-        public static VSWhereSettings ResetProperty(this VSWhereSettings toolSettings)
+        public static T ResetProperty<T>(this T toolSettings) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Property = null;

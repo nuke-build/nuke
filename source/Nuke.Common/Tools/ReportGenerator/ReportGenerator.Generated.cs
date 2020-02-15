@@ -208,7 +208,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>The coverage reports that should be parsed (separated by semicolon). Wildcards are allowed.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings SetReports(this ReportGeneratorSettings toolSettings, params string[] reports)
+        public static T SetReports<T>(this T toolSettings, params string[] reports) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReportsInternal = reports.ToList();
@@ -219,7 +219,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>The coverage reports that should be parsed (separated by semicolon). Wildcards are allowed.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings SetReports(this ReportGeneratorSettings toolSettings, IEnumerable<string> reports)
+        public static T SetReports<T>(this T toolSettings, IEnumerable<string> reports) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReportsInternal = reports.ToList();
@@ -230,7 +230,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>The coverage reports that should be parsed (separated by semicolon). Wildcards are allowed.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings AddReports(this ReportGeneratorSettings toolSettings, params string[] reports)
+        public static T AddReports<T>(this T toolSettings, params string[] reports) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReportsInternal.AddRange(reports);
@@ -241,7 +241,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>The coverage reports that should be parsed (separated by semicolon). Wildcards are allowed.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings AddReports(this ReportGeneratorSettings toolSettings, IEnumerable<string> reports)
+        public static T AddReports<T>(this T toolSettings, IEnumerable<string> reports) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReportsInternal.AddRange(reports);
@@ -252,7 +252,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>The coverage reports that should be parsed (separated by semicolon). Wildcards are allowed.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings ClearReports(this ReportGeneratorSettings toolSettings)
+        public static T ClearReports<T>(this T toolSettings) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReportsInternal.Clear();
@@ -263,7 +263,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>The coverage reports that should be parsed (separated by semicolon). Wildcards are allowed.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings RemoveReports(this ReportGeneratorSettings toolSettings, params string[] reports)
+        public static T RemoveReports<T>(this T toolSettings, params string[] reports) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(reports);
@@ -275,7 +275,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>The coverage reports that should be parsed (separated by semicolon). Wildcards are allowed.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings RemoveReports(this ReportGeneratorSettings toolSettings, IEnumerable<string> reports)
+        public static T RemoveReports<T>(this T toolSettings, IEnumerable<string> reports) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(reports);
@@ -289,7 +289,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>The directory where the generated report should be saved.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings SetTargetDirectory(this ReportGeneratorSettings toolSettings, string targetDirectory)
+        public static T SetTargetDirectory<T>(this T toolSettings, string targetDirectory) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetDirectory = targetDirectory;
@@ -300,7 +300,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>The directory where the generated report should be saved.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings ResetTargetDirectory(this ReportGeneratorSettings toolSettings)
+        public static T ResetTargetDirectory<T>(this T toolSettings) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetDirectory = null;
@@ -313,7 +313,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>The output formats and scope (separated by semicolon). Default is Html.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings SetReportTypes(this ReportGeneratorSettings toolSettings, params ReportTypes[] reportTypes)
+        public static T SetReportTypes<T>(this T toolSettings, params ReportTypes[] reportTypes) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReportTypesInternal = reportTypes.ToList();
@@ -324,7 +324,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>The output formats and scope (separated by semicolon). Default is Html.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings SetReportTypes(this ReportGeneratorSettings toolSettings, IEnumerable<ReportTypes> reportTypes)
+        public static T SetReportTypes<T>(this T toolSettings, IEnumerable<ReportTypes> reportTypes) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReportTypesInternal = reportTypes.ToList();
@@ -335,7 +335,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>The output formats and scope (separated by semicolon). Default is Html.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings AddReportTypes(this ReportGeneratorSettings toolSettings, params ReportTypes[] reportTypes)
+        public static T AddReportTypes<T>(this T toolSettings, params ReportTypes[] reportTypes) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReportTypesInternal.AddRange(reportTypes);
@@ -346,7 +346,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>The output formats and scope (separated by semicolon). Default is Html.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings AddReportTypes(this ReportGeneratorSettings toolSettings, IEnumerable<ReportTypes> reportTypes)
+        public static T AddReportTypes<T>(this T toolSettings, IEnumerable<ReportTypes> reportTypes) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReportTypesInternal.AddRange(reportTypes);
@@ -357,7 +357,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>The output formats and scope (separated by semicolon). Default is Html.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings ClearReportTypes(this ReportGeneratorSettings toolSettings)
+        public static T ClearReportTypes<T>(this T toolSettings) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReportTypesInternal.Clear();
@@ -368,7 +368,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>The output formats and scope (separated by semicolon). Default is Html.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings RemoveReportTypes(this ReportGeneratorSettings toolSettings, params ReportTypes[] reportTypes)
+        public static T RemoveReportTypes<T>(this T toolSettings, params ReportTypes[] reportTypes) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<ReportTypes>(reportTypes);
@@ -380,7 +380,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>The output formats and scope (separated by semicolon). Default is Html.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings RemoveReportTypes(this ReportGeneratorSettings toolSettings, IEnumerable<ReportTypes> reportTypes)
+        public static T RemoveReportTypes<T>(this T toolSettings, IEnumerable<ReportTypes> reportTypes) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<ReportTypes>(reportTypes);
@@ -394,7 +394,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional directories which contain the corresponding source code (separated by semicolon). The source files are used if coverage report contains classes without path information.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings SetSourceDirectories(this ReportGeneratorSettings toolSettings, params string[] sourceDirectories)
+        public static T SetSourceDirectories<T>(this T toolSettings, params string[] sourceDirectories) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceDirectoriesInternal = sourceDirectories.ToList();
@@ -405,7 +405,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional directories which contain the corresponding source code (separated by semicolon). The source files are used if coverage report contains classes without path information.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings SetSourceDirectories(this ReportGeneratorSettings toolSettings, IEnumerable<string> sourceDirectories)
+        public static T SetSourceDirectories<T>(this T toolSettings, IEnumerable<string> sourceDirectories) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceDirectoriesInternal = sourceDirectories.ToList();
@@ -416,7 +416,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional directories which contain the corresponding source code (separated by semicolon). The source files are used if coverage report contains classes without path information.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings AddSourceDirectories(this ReportGeneratorSettings toolSettings, params string[] sourceDirectories)
+        public static T AddSourceDirectories<T>(this T toolSettings, params string[] sourceDirectories) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceDirectoriesInternal.AddRange(sourceDirectories);
@@ -427,7 +427,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional directories which contain the corresponding source code (separated by semicolon). The source files are used if coverage report contains classes without path information.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings AddSourceDirectories(this ReportGeneratorSettings toolSettings, IEnumerable<string> sourceDirectories)
+        public static T AddSourceDirectories<T>(this T toolSettings, IEnumerable<string> sourceDirectories) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceDirectoriesInternal.AddRange(sourceDirectories);
@@ -438,7 +438,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional directories which contain the corresponding source code (separated by semicolon). The source files are used if coverage report contains classes without path information.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings ClearSourceDirectories(this ReportGeneratorSettings toolSettings)
+        public static T ClearSourceDirectories<T>(this T toolSettings) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourceDirectoriesInternal.Clear();
@@ -449,7 +449,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional directories which contain the corresponding source code (separated by semicolon). The source files are used if coverage report contains classes without path information.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings RemoveSourceDirectories(this ReportGeneratorSettings toolSettings, params string[] sourceDirectories)
+        public static T RemoveSourceDirectories<T>(this T toolSettings, params string[] sourceDirectories) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(sourceDirectories);
@@ -461,7 +461,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional directories which contain the corresponding source code (separated by semicolon). The source files are used if coverage report contains classes without path information.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings RemoveSourceDirectories(this ReportGeneratorSettings toolSettings, IEnumerable<string> sourceDirectories)
+        public static T RemoveSourceDirectories<T>(this T toolSettings, IEnumerable<string> sourceDirectories) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(sourceDirectories);
@@ -475,7 +475,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional directory for storing persistent coverage information. Can be used in future reports to show coverage evolution.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings SetHistoryDirectory(this ReportGeneratorSettings toolSettings, string historyDirectory)
+        public static T SetHistoryDirectory<T>(this T toolSettings, string historyDirectory) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HistoryDirectory = historyDirectory;
@@ -486,7 +486,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional directory for storing persistent coverage information. Can be used in future reports to show coverage evolution.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings ResetHistoryDirectory(this ReportGeneratorSettings toolSettings)
+        public static T ResetHistoryDirectory<T>(this T toolSettings) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HistoryDirectory = null;
@@ -499,7 +499,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional list of assemblies that should be included (+) or excluded (-) in the report. Default is +*.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings SetAssemblyFilters(this ReportGeneratorSettings toolSettings, params string[] assemblyFilters)
+        public static T SetAssemblyFilters<T>(this T toolSettings, params string[] assemblyFilters) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AssemblyFiltersInternal = assemblyFilters.ToList();
@@ -510,7 +510,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional list of assemblies that should be included (+) or excluded (-) in the report. Default is +*.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings SetAssemblyFilters(this ReportGeneratorSettings toolSettings, IEnumerable<string> assemblyFilters)
+        public static T SetAssemblyFilters<T>(this T toolSettings, IEnumerable<string> assemblyFilters) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AssemblyFiltersInternal = assemblyFilters.ToList();
@@ -521,7 +521,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional list of assemblies that should be included (+) or excluded (-) in the report. Default is +*.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings AddAssemblyFilters(this ReportGeneratorSettings toolSettings, params string[] assemblyFilters)
+        public static T AddAssemblyFilters<T>(this T toolSettings, params string[] assemblyFilters) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AssemblyFiltersInternal.AddRange(assemblyFilters);
@@ -532,7 +532,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional list of assemblies that should be included (+) or excluded (-) in the report. Default is +*.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings AddAssemblyFilters(this ReportGeneratorSettings toolSettings, IEnumerable<string> assemblyFilters)
+        public static T AddAssemblyFilters<T>(this T toolSettings, IEnumerable<string> assemblyFilters) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AssemblyFiltersInternal.AddRange(assemblyFilters);
@@ -543,7 +543,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional list of assemblies that should be included (+) or excluded (-) in the report. Default is +*.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings ClearAssemblyFilters(this ReportGeneratorSettings toolSettings)
+        public static T ClearAssemblyFilters<T>(this T toolSettings) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AssemblyFiltersInternal.Clear();
@@ -554,7 +554,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional list of assemblies that should be included (+) or excluded (-) in the report. Default is +*.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings RemoveAssemblyFilters(this ReportGeneratorSettings toolSettings, params string[] assemblyFilters)
+        public static T RemoveAssemblyFilters<T>(this T toolSettings, params string[] assemblyFilters) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(assemblyFilters);
@@ -566,7 +566,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional list of assemblies that should be included (+) or excluded (-) in the report. Default is +*.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings RemoveAssemblyFilters(this ReportGeneratorSettings toolSettings, IEnumerable<string> assemblyFilters)
+        public static T RemoveAssemblyFilters<T>(this T toolSettings, IEnumerable<string> assemblyFilters) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(assemblyFilters);
@@ -580,7 +580,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional list of classes that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings SetClassFilters(this ReportGeneratorSettings toolSettings, params string[] classFilters)
+        public static T SetClassFilters<T>(this T toolSettings, params string[] classFilters) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClassFiltersInternal = classFilters.ToList();
@@ -591,7 +591,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional list of classes that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings SetClassFilters(this ReportGeneratorSettings toolSettings, IEnumerable<string> classFilters)
+        public static T SetClassFilters<T>(this T toolSettings, IEnumerable<string> classFilters) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClassFiltersInternal = classFilters.ToList();
@@ -602,7 +602,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional list of classes that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings AddClassFilters(this ReportGeneratorSettings toolSettings, params string[] classFilters)
+        public static T AddClassFilters<T>(this T toolSettings, params string[] classFilters) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClassFiltersInternal.AddRange(classFilters);
@@ -613,7 +613,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional list of classes that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings AddClassFilters(this ReportGeneratorSettings toolSettings, IEnumerable<string> classFilters)
+        public static T AddClassFilters<T>(this T toolSettings, IEnumerable<string> classFilters) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClassFiltersInternal.AddRange(classFilters);
@@ -624,7 +624,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional list of classes that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings ClearClassFilters(this ReportGeneratorSettings toolSettings)
+        public static T ClearClassFilters<T>(this T toolSettings) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClassFiltersInternal.Clear();
@@ -635,7 +635,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional list of classes that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings RemoveClassFilters(this ReportGeneratorSettings toolSettings, params string[] classFilters)
+        public static T RemoveClassFilters<T>(this T toolSettings, params string[] classFilters) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(classFilters);
@@ -647,7 +647,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional list of classes that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings RemoveClassFilters(this ReportGeneratorSettings toolSettings, IEnumerable<string> classFilters)
+        public static T RemoveClassFilters<T>(this T toolSettings, IEnumerable<string> classFilters) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(classFilters);
@@ -661,7 +661,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional list of files that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings SetFileFilters(this ReportGeneratorSettings toolSettings, params string[] fileFilters)
+        public static T SetFileFilters<T>(this T toolSettings, params string[] fileFilters) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileFiltersInternal = fileFilters.ToList();
@@ -672,7 +672,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional list of files that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings SetFileFilters(this ReportGeneratorSettings toolSettings, IEnumerable<string> fileFilters)
+        public static T SetFileFilters<T>(this T toolSettings, IEnumerable<string> fileFilters) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileFiltersInternal = fileFilters.ToList();
@@ -683,7 +683,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional list of files that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings AddFileFilters(this ReportGeneratorSettings toolSettings, params string[] fileFilters)
+        public static T AddFileFilters<T>(this T toolSettings, params string[] fileFilters) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileFiltersInternal.AddRange(fileFilters);
@@ -694,7 +694,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional list of files that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings AddFileFilters(this ReportGeneratorSettings toolSettings, IEnumerable<string> fileFilters)
+        public static T AddFileFilters<T>(this T toolSettings, IEnumerable<string> fileFilters) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileFiltersInternal.AddRange(fileFilters);
@@ -705,7 +705,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional list of files that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings ClearFileFilters(this ReportGeneratorSettings toolSettings)
+        public static T ClearFileFilters<T>(this T toolSettings) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileFiltersInternal.Clear();
@@ -716,7 +716,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional list of files that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings RemoveFileFilters(this ReportGeneratorSettings toolSettings, params string[] fileFilters)
+        public static T RemoveFileFilters<T>(this T toolSettings, params string[] fileFilters) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(fileFilters);
@@ -728,7 +728,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional list of files that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings RemoveFileFilters(this ReportGeneratorSettings toolSettings, IEnumerable<string> fileFilters)
+        public static T RemoveFileFilters<T>(this T toolSettings, IEnumerable<string> fileFilters) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(fileFilters);
@@ -742,7 +742,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional tag or build version.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings SetTag(this ReportGeneratorSettings toolSettings, string tag)
+        public static T SetTag<T>(this T toolSettings, string tag) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tag = tag;
@@ -753,7 +753,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>Optional tag or build version.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings ResetTag(this ReportGeneratorSettings toolSettings)
+        public static T ResetTag<T>(this T toolSettings) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tag = null;
@@ -766,7 +766,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>The verbosity level of the log messages. Default is Verbose.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings SetVerbosity(this ReportGeneratorSettings toolSettings, ReportGeneratorVerbosity verbosity)
+        public static T SetVerbosity<T>(this T toolSettings, ReportGeneratorVerbosity verbosity) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = verbosity;
@@ -777,7 +777,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p>The verbosity level of the log messages. Default is Verbose.</p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings ResetVerbosity(this ReportGeneratorSettings toolSettings)
+        public static T ResetVerbosity<T>(this T toolSettings) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = null;
@@ -789,7 +789,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p><em>Sets <see cref="ReportGeneratorSettings.Framework"/></em></p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings SetFramework(this ReportGeneratorSettings toolSettings, string framework)
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = framework;
@@ -799,7 +799,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <p><em>Resets <see cref="ReportGeneratorSettings.Framework"/></em></p>
         /// </summary>
         [Pure]
-        public static ReportGeneratorSettings ResetFramework(this ReportGeneratorSettings toolSettings)
+        public static T ResetFramework<T>(this T toolSettings) where T : ReportGeneratorSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = null;

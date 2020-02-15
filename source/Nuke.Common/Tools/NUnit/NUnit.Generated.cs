@@ -430,7 +430,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetInputFiles(this NUnit3Settings toolSettings, params string[] inputFiles)
+        public static T SetInputFiles<T>(this T toolSettings, params string[] inputFiles) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InputFilesInternal = inputFiles.ToList();
@@ -441,7 +441,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetInputFiles(this NUnit3Settings toolSettings, IEnumerable<string> inputFiles)
+        public static T SetInputFiles<T>(this T toolSettings, IEnumerable<string> inputFiles) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InputFilesInternal = inputFiles.ToList();
@@ -452,7 +452,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings AddInputFiles(this NUnit3Settings toolSettings, params string[] inputFiles)
+        public static T AddInputFiles<T>(this T toolSettings, params string[] inputFiles) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InputFilesInternal.AddRange(inputFiles);
@@ -463,7 +463,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings AddInputFiles(this NUnit3Settings toolSettings, IEnumerable<string> inputFiles)
+        public static T AddInputFiles<T>(this T toolSettings, IEnumerable<string> inputFiles) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InputFilesInternal.AddRange(inputFiles);
@@ -474,7 +474,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ClearInputFiles(this NUnit3Settings toolSettings)
+        public static T ClearInputFiles<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InputFilesInternal.Clear();
@@ -485,7 +485,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings RemoveInputFiles(this NUnit3Settings toolSettings, params string[] inputFiles)
+        public static T RemoveInputFiles<T>(this T toolSettings, params string[] inputFiles) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(inputFiles);
@@ -497,7 +497,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings RemoveInputFiles(this NUnit3Settings toolSettings, IEnumerable<string> inputFiles)
+        public static T RemoveInputFiles<T>(this T toolSettings, IEnumerable<string> inputFiles) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(inputFiles);
@@ -511,7 +511,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Comma-separated list of names of tests to run or explore. This option may be repeated. Note that this option is retained for backward compatibility. The --where option can now be used instead.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetTests(this NUnit3Settings toolSettings, params string[] tests)
+        public static T SetTests<T>(this T toolSettings, params string[] tests) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestsInternal = tests.ToList();
@@ -522,7 +522,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Comma-separated list of names of tests to run or explore. This option may be repeated. Note that this option is retained for backward compatibility. The --where option can now be used instead.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetTests(this NUnit3Settings toolSettings, IEnumerable<string> tests)
+        public static T SetTests<T>(this T toolSettings, IEnumerable<string> tests) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestsInternal = tests.ToList();
@@ -533,7 +533,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Comma-separated list of names of tests to run or explore. This option may be repeated. Note that this option is retained for backward compatibility. The --where option can now be used instead.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings AddTests(this NUnit3Settings toolSettings, params string[] tests)
+        public static T AddTests<T>(this T toolSettings, params string[] tests) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestsInternal.AddRange(tests);
@@ -544,7 +544,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Comma-separated list of names of tests to run or explore. This option may be repeated. Note that this option is retained for backward compatibility. The --where option can now be used instead.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings AddTests(this NUnit3Settings toolSettings, IEnumerable<string> tests)
+        public static T AddTests<T>(this T toolSettings, IEnumerable<string> tests) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestsInternal.AddRange(tests);
@@ -555,7 +555,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Comma-separated list of names of tests to run or explore. This option may be repeated. Note that this option is retained for backward compatibility. The --where option can now be used instead.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ClearTests(this NUnit3Settings toolSettings)
+        public static T ClearTests<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestsInternal.Clear();
@@ -566,7 +566,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Comma-separated list of names of tests to run or explore. This option may be repeated. Note that this option is retained for backward compatibility. The --where option can now be used instead.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings RemoveTests(this NUnit3Settings toolSettings, params string[] tests)
+        public static T RemoveTests<T>(this T toolSettings, params string[] tests) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(tests);
@@ -578,7 +578,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Comma-separated list of names of tests to run or explore. This option may be repeated. Note that this option is retained for backward compatibility. The --where option can now be used instead.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings RemoveTests(this NUnit3Settings toolSettings, IEnumerable<string> tests)
+        public static T RemoveTests<T>(this T toolSettings, IEnumerable<string> tests) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(tests);
@@ -592,7 +592,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>The name (or path) of a file containing a list of tests to run or explore, one per line.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetTestListFile(this NUnit3Settings toolSettings, string testListFile)
+        public static T SetTestListFile<T>(this T toolSettings, string testListFile) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestListFile = testListFile;
@@ -603,7 +603,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>The name (or path) of a file containing a list of tests to run or explore, one per line.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetTestListFile(this NUnit3Settings toolSettings)
+        public static T ResetTestListFile<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestListFile = null;
@@ -616,7 +616,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>An expression indicating which tests to run. It may specify test names, classes, methods, catgories or properties comparing them to actual values with the operators ==, !=, =~ and !~. See Test Selection Language for a full description of the syntax.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetWhereExpression(this NUnit3Settings toolSettings, string whereExpression)
+        public static T SetWhereExpression<T>(this T toolSettings, string whereExpression) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WhereExpression = whereExpression;
@@ -627,7 +627,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>An expression indicating which tests to run. It may specify test names, classes, methods, catgories or properties comparing them to actual values with the operators ==, !=, =~ and !~. See Test Selection Language for a full description of the syntax.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetWhereExpression(this NUnit3Settings toolSettings)
+        public static T ResetWhereExpression<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WhereExpression = null;
@@ -640,7 +640,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the --params option multiple times.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetParameters(this NUnit3Settings toolSettings, IDictionary<string, string> parameters)
+        public static T SetParameters<T>(this T toolSettings, IDictionary<string, string> parameters) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ParametersInternal = parameters.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -651,7 +651,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the --params option multiple times.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ClearParameters(this NUnit3Settings toolSettings)
+        public static T ClearParameters<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ParametersInternal.Clear();
@@ -662,7 +662,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the --params option multiple times.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings AddParameter(this NUnit3Settings toolSettings, string parameterKey, string parameterValue)
+        public static T AddParameter<T>(this T toolSettings, string parameterKey, string parameterValue) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ParametersInternal.Add(parameterKey, parameterValue);
@@ -673,7 +673,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the --params option multiple times.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings RemoveParameter(this NUnit3Settings toolSettings, string parameterKey)
+        public static T RemoveParameter<T>(this T toolSettings, string parameterKey) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ParametersInternal.Remove(parameterKey);
@@ -684,7 +684,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the --params option multiple times.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetParameter(this NUnit3Settings toolSettings, string parameterKey, string parameterValue)
+        public static T SetParameter<T>(this T toolSettings, string parameterKey, string parameterValue) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ParametersInternal[parameterKey] = parameterValue;
@@ -697,7 +697,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Name of a project configuration to load (e.g.: Debug).</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetConfiguration(this NUnit3Settings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -708,7 +708,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Name of a project configuration to load (e.g.: Debug).</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetConfiguration(this NUnit3Settings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -721,7 +721,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Process isolation for test assemblies. Values: Single, Separate, Multiple. If not specified, defaults to Separate for a single assembly or Multiple for more than one. By default, processes are run in parallel.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetProcess(this NUnit3Settings toolSettings, NUnitProcessType process)
+        public static T SetProcess<T>(this T toolSettings, NUnitProcessType process) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Process = process;
@@ -732,7 +732,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Process isolation for test assemblies. Values: Single, Separate, Multiple. If not specified, defaults to Separate for a single assembly or Multiple for more than one. By default, processes are run in parallel.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetProcess(this NUnit3Settings toolSettings)
+        public static T ResetProcess<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Process = null;
@@ -745,7 +745,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>This option is a synonym for --process=Single</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetInProcess(this NUnit3Settings toolSettings, bool? inProcess)
+        public static T SetInProcess<T>(this T toolSettings, bool? inProcess) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InProcess = inProcess;
@@ -756,7 +756,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>This option is a synonym for --process=Single</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetInProcess(this NUnit3Settings toolSettings)
+        public static T ResetInProcess<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InProcess = null;
@@ -767,7 +767,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>This option is a synonym for --process=Single</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings EnableInProcess(this NUnit3Settings toolSettings)
+        public static T EnableInProcess<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InProcess = true;
@@ -778,7 +778,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>This option is a synonym for --process=Single</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings DisableInProcess(this NUnit3Settings toolSettings)
+        public static T DisableInProcess<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InProcess = false;
@@ -789,7 +789,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>This option is a synonym for --process=Single</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ToggleInProcess(this NUnit3Settings toolSettings)
+        public static T ToggleInProcess<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InProcess = !toolSettings.InProcess;
@@ -802,7 +802,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Number of agents that may be allowed to run simultaneously assuming you are not running inprocess. If not specified, all agent processes run tests at the same time, whatever the number of assemblies. This setting is used to control running your assemblies in parallel.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetAgents(this NUnit3Settings toolSettings, int? agents)
+        public static T SetAgents<T>(this T toolSettings, int? agents) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Agents = agents;
@@ -813,7 +813,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Number of agents that may be allowed to run simultaneously assuming you are not running inprocess. If not specified, all agent processes run tests at the same time, whatever the number of assemblies. This setting is used to control running your assemblies in parallel.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetAgents(this NUnit3Settings toolSettings)
+        public static T ResetAgents<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Agents = null;
@@ -826,7 +826,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Domain isolation for test assemblies. Values: None, Single, Multiple. If not specified, defaults to Single for a single assembly or Multiple for more than one.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetDomain(this NUnit3Settings toolSettings, string domain)
+        public static T SetDomain<T>(this T toolSettings, string domain) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Domain = domain;
@@ -837,7 +837,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Domain isolation for test assemblies. Values: None, Single, Multiple. If not specified, defaults to Single for a single assembly or Multiple for more than one.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetDomain(this NUnit3Settings toolSettings)
+        public static T ResetDomain<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Domain = null;
@@ -850,7 +850,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Framework type/version to use for tests. Examples: mono, net-4.5, v4.0, 2.0, mono-4.0</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetFramework(this NUnit3Settings toolSettings, string framework)
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = framework;
@@ -861,7 +861,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Framework type/version to use for tests. Examples: mono, net-4.5, v4.0, 2.0, mono-4.0</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetFramework(this NUnit3Settings toolSettings)
+        public static T ResetFramework<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = null;
@@ -874,7 +874,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Run tests in a 32-bit process on 64-bit systems.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetX86(this NUnit3Settings toolSettings, bool? x86)
+        public static T SetX86<T>(this T toolSettings, bool? x86) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.X86 = x86;
@@ -885,7 +885,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Run tests in a 32-bit process on 64-bit systems.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetX86(this NUnit3Settings toolSettings)
+        public static T ResetX86<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.X86 = null;
@@ -896,7 +896,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Run tests in a 32-bit process on 64-bit systems.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings EnableX86(this NUnit3Settings toolSettings)
+        public static T EnableX86<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.X86 = true;
@@ -907,7 +907,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Run tests in a 32-bit process on 64-bit systems.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings DisableX86(this NUnit3Settings toolSettings)
+        public static T DisableX86<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.X86 = false;
@@ -918,7 +918,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Run tests in a 32-bit process on 64-bit systems.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ToggleX86(this NUnit3Settings toolSettings)
+        public static T ToggleX86<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.X86 = !toolSettings.X86;
@@ -931,7 +931,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Dispose each test runner after it has finished running its tests</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetDisposeRunners(this NUnit3Settings toolSettings, bool? disposeRunners)
+        public static T SetDisposeRunners<T>(this T toolSettings, bool? disposeRunners) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisposeRunners = disposeRunners;
@@ -942,7 +942,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Dispose each test runner after it has finished running its tests</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetDisposeRunners(this NUnit3Settings toolSettings)
+        public static T ResetDisposeRunners<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisposeRunners = null;
@@ -953,7 +953,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Dispose each test runner after it has finished running its tests</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings EnableDisposeRunners(this NUnit3Settings toolSettings)
+        public static T EnableDisposeRunners<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisposeRunners = true;
@@ -964,7 +964,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Dispose each test runner after it has finished running its tests</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings DisableDisposeRunners(this NUnit3Settings toolSettings)
+        public static T DisableDisposeRunners<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisposeRunners = false;
@@ -975,7 +975,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Dispose each test runner after it has finished running its tests</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ToggleDisposeRunners(this NUnit3Settings toolSettings)
+        public static T ToggleDisposeRunners<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisposeRunners = !toolSettings.DisposeRunners;
@@ -988,7 +988,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Set timeout for each test case in milliseconds.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetTimeout(this NUnit3Settings toolSettings, int? timeout)
+        public static T SetTimeout<T>(this T toolSettings, int? timeout) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = timeout;
@@ -999,7 +999,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Set timeout for each test case in milliseconds.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetTimeout(this NUnit3Settings toolSettings)
+        public static T ResetTimeout<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = null;
@@ -1012,7 +1012,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Set the random seed used to generate test cases.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetSeed(this NUnit3Settings toolSettings, int? seed)
+        public static T SetSeed<T>(this T toolSettings, int? seed) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Seed = seed;
@@ -1023,7 +1023,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Set the random seed used to generate test cases.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetSeed(this NUnit3Settings toolSettings)
+        public static T ResetSeed<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Seed = null;
@@ -1036,7 +1036,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Specify the number of worker threads to be used in running tests. This setting is used to control running your tests in parallel and is used in conjunction with the Parallelizable Attribute. If not specified, workers defaults to the number of processors on the machine, or 2, whichever is greater.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetWorkers(this NUnit3Settings toolSettings, int? workers)
+        public static T SetWorkers<T>(this T toolSettings, int? workers) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Workers = workers;
@@ -1047,7 +1047,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Specify the number of worker threads to be used in running tests. This setting is used to control running your tests in parallel and is used in conjunction with the Parallelizable Attribute. If not specified, workers defaults to the number of processors on the machine, or 2, whichever is greater.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetWorkers(this NUnit3Settings toolSettings)
+        public static T ResetWorkers<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Workers = null;
@@ -1060,7 +1060,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Stop run immediately upon any test failure or error.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetStopOnError(this NUnit3Settings toolSettings, bool? stopOnError)
+        public static T SetStopOnError<T>(this T toolSettings, bool? stopOnError) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StopOnError = stopOnError;
@@ -1071,7 +1071,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Stop run immediately upon any test failure or error.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetStopOnError(this NUnit3Settings toolSettings)
+        public static T ResetStopOnError<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StopOnError = null;
@@ -1082,7 +1082,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Stop run immediately upon any test failure or error.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings EnableStopOnError(this NUnit3Settings toolSettings)
+        public static T EnableStopOnError<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StopOnError = true;
@@ -1093,7 +1093,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Stop run immediately upon any test failure or error.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings DisableStopOnError(this NUnit3Settings toolSettings)
+        public static T DisableStopOnError<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StopOnError = false;
@@ -1104,7 +1104,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Stop run immediately upon any test failure or error.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ToggleStopOnError(this NUnit3Settings toolSettings)
+        public static T ToggleStopOnError<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StopOnError = !toolSettings.StopOnError;
@@ -1117,7 +1117,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Skip any non-test assemblies specified, without error.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetSkipNonTestAssemblies(this NUnit3Settings toolSettings, bool? skipNonTestAssemblies)
+        public static T SetSkipNonTestAssemblies<T>(this T toolSettings, bool? skipNonTestAssemblies) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipNonTestAssemblies = skipNonTestAssemblies;
@@ -1128,7 +1128,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Skip any non-test assemblies specified, without error.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetSkipNonTestAssemblies(this NUnit3Settings toolSettings)
+        public static T ResetSkipNonTestAssemblies<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipNonTestAssemblies = null;
@@ -1139,7 +1139,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Skip any non-test assemblies specified, without error.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings EnableSkipNonTestAssemblies(this NUnit3Settings toolSettings)
+        public static T EnableSkipNonTestAssemblies<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipNonTestAssemblies = true;
@@ -1150,7 +1150,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Skip any non-test assemblies specified, without error.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings DisableSkipNonTestAssemblies(this NUnit3Settings toolSettings)
+        public static T DisableSkipNonTestAssemblies<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipNonTestAssemblies = false;
@@ -1161,7 +1161,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Skip any non-test assemblies specified, without error.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ToggleSkipNonTestAssemblies(this NUnit3Settings toolSettings)
+        public static T ToggleSkipNonTestAssemblies<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipNonTestAssemblies = !toolSettings.SkipNonTestAssemblies;
@@ -1174,7 +1174,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Causes NUnit to break into the debugger immediately before it executes your tests. This is particularly useful when the tests are running in a separate process to which you would otherwise have to attach.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetDebug(this NUnit3Settings toolSettings, bool? debug)
+        public static T SetDebug<T>(this T toolSettings, bool? debug) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = debug;
@@ -1185,7 +1185,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Causes NUnit to break into the debugger immediately before it executes your tests. This is particularly useful when the tests are running in a separate process to which you would otherwise have to attach.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetDebug(this NUnit3Settings toolSettings)
+        public static T ResetDebug<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = null;
@@ -1196,7 +1196,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Causes NUnit to break into the debugger immediately before it executes your tests. This is particularly useful when the tests are running in a separate process to which you would otherwise have to attach.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings EnableDebug(this NUnit3Settings toolSettings)
+        public static T EnableDebug<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = true;
@@ -1207,7 +1207,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Causes NUnit to break into the debugger immediately before it executes your tests. This is particularly useful when the tests are running in a separate process to which you would otherwise have to attach.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings DisableDebug(this NUnit3Settings toolSettings)
+        public static T DisableDebug<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = false;
@@ -1218,7 +1218,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Causes NUnit to break into the debugger immediately before it executes your tests. This is particularly useful when the tests are running in a separate process to which you would otherwise have to attach.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ToggleDebug(this NUnit3Settings toolSettings)
+        public static T ToggleDebug<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = !toolSettings.Debug;
@@ -1231,7 +1231,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Available only in debug builds of NUnit, this option is for use by developers in debugging the nunit-agent itself. It breaks in the agent code immediately upon entry of the process.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetDebugAgent(this NUnit3Settings toolSettings, bool? debugAgent)
+        public static T SetDebugAgent<T>(this T toolSettings, bool? debugAgent) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DebugAgent = debugAgent;
@@ -1242,7 +1242,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Available only in debug builds of NUnit, this option is for use by developers in debugging the nunit-agent itself. It breaks in the agent code immediately upon entry of the process.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetDebugAgent(this NUnit3Settings toolSettings)
+        public static T ResetDebugAgent<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DebugAgent = null;
@@ -1253,7 +1253,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Available only in debug builds of NUnit, this option is for use by developers in debugging the nunit-agent itself. It breaks in the agent code immediately upon entry of the process.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings EnableDebugAgent(this NUnit3Settings toolSettings)
+        public static T EnableDebugAgent<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DebugAgent = true;
@@ -1264,7 +1264,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Available only in debug builds of NUnit, this option is for use by developers in debugging the nunit-agent itself. It breaks in the agent code immediately upon entry of the process.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings DisableDebugAgent(this NUnit3Settings toolSettings)
+        public static T DisableDebugAgent<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DebugAgent = false;
@@ -1275,7 +1275,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Available only in debug builds of NUnit, this option is for use by developers in debugging the nunit-agent itself. It breaks in the agent code immediately upon entry of the process.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ToggleDebugAgent(this NUnit3Settings toolSettings)
+        public static T ToggleDebugAgent<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DebugAgent = !toolSettings.DebugAgent;
@@ -1288,7 +1288,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Causes NUnit to immediately open a message box, allowing you to attach a debugger. For cases where --debug does not work.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetPause(this NUnit3Settings toolSettings, bool? pause)
+        public static T SetPause<T>(this T toolSettings, bool? pause) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Pause = pause;
@@ -1299,7 +1299,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Causes NUnit to immediately open a message box, allowing you to attach a debugger. For cases where --debug does not work.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetPause(this NUnit3Settings toolSettings)
+        public static T ResetPause<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Pause = null;
@@ -1310,7 +1310,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Causes NUnit to immediately open a message box, allowing you to attach a debugger. For cases where --debug does not work.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings EnablePause(this NUnit3Settings toolSettings)
+        public static T EnablePause<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Pause = true;
@@ -1321,7 +1321,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Causes NUnit to immediately open a message box, allowing you to attach a debugger. For cases where --debug does not work.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings DisablePause(this NUnit3Settings toolSettings)
+        public static T DisablePause<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Pause = false;
@@ -1332,7 +1332,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Causes NUnit to immediately open a message box, allowing you to attach a debugger. For cases where --debug does not work.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings TogglePause(this NUnit3Settings toolSettings)
+        public static T TogglePause<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Pause = !toolSettings.Pause;
@@ -1345,7 +1345,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Wait for input before closing console window.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetWait(this NUnit3Settings toolSettings, bool? wait)
+        public static T SetWait<T>(this T toolSettings, bool? wait) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = wait;
@@ -1356,7 +1356,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Wait for input before closing console window.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetWait(this NUnit3Settings toolSettings)
+        public static T ResetWait<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = null;
@@ -1367,7 +1367,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Wait for input before closing console window.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings EnableWait(this NUnit3Settings toolSettings)
+        public static T EnableWait<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = true;
@@ -1378,7 +1378,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Wait for input before closing console window.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings DisableWait(this NUnit3Settings toolSettings)
+        public static T DisableWait<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = false;
@@ -1389,7 +1389,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Wait for input before closing console window.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ToggleWait(this NUnit3Settings toolSettings)
+        public static T ToggleWait<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = !toolSettings.Wait;
@@ -1402,7 +1402,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Path of the directory to use for output files.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetWorkPath(this NUnit3Settings toolSettings, string workPath)
+        public static T SetWorkPath<T>(this T toolSettings, string workPath) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WorkPath = workPath;
@@ -1413,7 +1413,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Path of the directory to use for output files.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetWorkPath(this NUnit3Settings toolSettings)
+        public static T ResetWorkPath<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WorkPath = null;
@@ -1426,7 +1426,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>File path to contain text output from the tests.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetOutputFile(this NUnit3Settings toolSettings, string outputFile)
+        public static T SetOutputFile<T>(this T toolSettings, string outputFile) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFile = outputFile;
@@ -1437,7 +1437,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>File path to contain text output from the tests.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetOutputFile(this NUnit3Settings toolSettings)
+        public static T ResetOutputFile<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFile = null;
@@ -1450,7 +1450,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>File path to contain error output from the tests.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetErrorFile(this NUnit3Settings toolSettings, string errorFile)
+        public static T SetErrorFile<T>(this T toolSettings, string errorFile) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ErrorFile = errorFile;
@@ -1461,7 +1461,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>File path to contain error output from the tests.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetErrorFile(this NUnit3Settings toolSettings)
+        public static T ResetErrorFile<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ErrorFile = null;
@@ -1474,7 +1474,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>An output spec for saving the test results. This option may be repeated.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetResults(this NUnit3Settings toolSettings, params string[] results)
+        public static T SetResults<T>(this T toolSettings, params string[] results) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResultsInternal = results.ToList();
@@ -1485,7 +1485,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>An output spec for saving the test results. This option may be repeated.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetResults(this NUnit3Settings toolSettings, IEnumerable<string> results)
+        public static T SetResults<T>(this T toolSettings, IEnumerable<string> results) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResultsInternal = results.ToList();
@@ -1496,7 +1496,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>An output spec for saving the test results. This option may be repeated.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings AddResults(this NUnit3Settings toolSettings, params string[] results)
+        public static T AddResults<T>(this T toolSettings, params string[] results) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResultsInternal.AddRange(results);
@@ -1507,7 +1507,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>An output spec for saving the test results. This option may be repeated.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings AddResults(this NUnit3Settings toolSettings, IEnumerable<string> results)
+        public static T AddResults<T>(this T toolSettings, IEnumerable<string> results) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResultsInternal.AddRange(results);
@@ -1518,7 +1518,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>An output spec for saving the test results. This option may be repeated.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ClearResults(this NUnit3Settings toolSettings)
+        public static T ClearResults<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResultsInternal.Clear();
@@ -1529,7 +1529,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>An output spec for saving the test results. This option may be repeated.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings RemoveResults(this NUnit3Settings toolSettings, params string[] results)
+        public static T RemoveResults<T>(this T toolSettings, params string[] results) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(results);
@@ -1541,7 +1541,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>An output spec for saving the test results. This option may be repeated.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings RemoveResults(this NUnit3Settings toolSettings, IEnumerable<string> results)
+        public static T RemoveResults<T>(this T toolSettings, IEnumerable<string> results) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(results);
@@ -1555,7 +1555,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Display or save test info rather than running tests. Optionally provide an output spec for saving the test info. This option may be repeated.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetExplores(this NUnit3Settings toolSettings, params string[] explores)
+        public static T SetExplores<T>(this T toolSettings, params string[] explores) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExploresInternal = explores.ToList();
@@ -1566,7 +1566,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Display or save test info rather than running tests. Optionally provide an output spec for saving the test info. This option may be repeated.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetExplores(this NUnit3Settings toolSettings, IEnumerable<string> explores)
+        public static T SetExplores<T>(this T toolSettings, IEnumerable<string> explores) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExploresInternal = explores.ToList();
@@ -1577,7 +1577,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Display or save test info rather than running tests. Optionally provide an output spec for saving the test info. This option may be repeated.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings AddExplores(this NUnit3Settings toolSettings, params string[] explores)
+        public static T AddExplores<T>(this T toolSettings, params string[] explores) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExploresInternal.AddRange(explores);
@@ -1588,7 +1588,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Display or save test info rather than running tests. Optionally provide an output spec for saving the test info. This option may be repeated.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings AddExplores(this NUnit3Settings toolSettings, IEnumerable<string> explores)
+        public static T AddExplores<T>(this T toolSettings, IEnumerable<string> explores) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExploresInternal.AddRange(explores);
@@ -1599,7 +1599,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Display or save test info rather than running tests. Optionally provide an output spec for saving the test info. This option may be repeated.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ClearExplores(this NUnit3Settings toolSettings)
+        public static T ClearExplores<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExploresInternal.Clear();
@@ -1610,7 +1610,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Display or save test info rather than running tests. Optionally provide an output spec for saving the test info. This option may be repeated.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings RemoveExplores(this NUnit3Settings toolSettings, params string[] explores)
+        public static T RemoveExplores<T>(this T toolSettings, params string[] explores) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(explores);
@@ -1622,7 +1622,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Display or save test info rather than running tests. Optionally provide an output spec for saving the test info. This option may be repeated.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings RemoveExplores(this NUnit3Settings toolSettings, IEnumerable<string> explores)
+        public static T RemoveExplores<T>(this T toolSettings, IEnumerable<string> explores) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(explores);
@@ -1636,7 +1636,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Don't save any test results.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetNoResults(this NUnit3Settings toolSettings, bool? noResults)
+        public static T SetNoResults<T>(this T toolSettings, bool? noResults) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoResults = noResults;
@@ -1647,7 +1647,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Don't save any test results.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetNoResults(this NUnit3Settings toolSettings)
+        public static T ResetNoResults<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoResults = null;
@@ -1658,7 +1658,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Don't save any test results.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings EnableNoResults(this NUnit3Settings toolSettings)
+        public static T EnableNoResults<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoResults = true;
@@ -1669,7 +1669,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Don't save any test results.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings DisableNoResults(this NUnit3Settings toolSettings)
+        public static T DisableNoResults<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoResults = false;
@@ -1680,7 +1680,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Don't save any test results.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ToggleNoResults(this NUnit3Settings toolSettings)
+        public static T ToggleNoResults<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoResults = !toolSettings.NoResults;
@@ -1693,7 +1693,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Specify whether to write test case names to the output. Values: Off, On, All</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetLabels(this NUnit3Settings toolSettings, NUnitLabelType labels)
+        public static T SetLabels<T>(this T toolSettings, NUnitLabelType labels) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Labels = labels;
@@ -1704,7 +1704,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Specify whether to write test case names to the output. Values: Off, On, All</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetLabels(this NUnit3Settings toolSettings)
+        public static T ResetLabels<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Labels = null;
@@ -1717,7 +1717,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Set internal trace LEVEL. Values: Off, Error, Warning, Info, Verbose (Debug)</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetTrace(this NUnit3Settings toolSettings, NUnitTraceLevel trace)
+        public static T SetTrace<T>(this T toolSettings, NUnitTraceLevel trace) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Trace = trace;
@@ -1728,7 +1728,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Set internal trace LEVEL. Values: Off, Error, Warning, Info, Verbose (Debug)</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetTrace(this NUnit3Settings toolSettings)
+        public static T ResetTrace<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Trace = null;
@@ -1741,7 +1741,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Specify the console codepage, such as utf-8, ascii, etc. This option is not normally needed unless your output includes special characters. The page specified must be available on the system.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetEncoding(this NUnit3Settings toolSettings, string encoding)
+        public static T SetEncoding<T>(this T toolSettings, string encoding) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Encoding = encoding;
@@ -1752,7 +1752,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Specify the console codepage, such as utf-8, ascii, etc. This option is not normally needed unless your output includes special characters. The page specified must be available on the system.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetEncoding(this NUnit3Settings toolSettings)
+        public static T ResetEncoding<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Encoding = null;
@@ -1765,7 +1765,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Tells .NET to copy loaded assemblies to the shadowcopy directory.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetShadowCopy(this NUnit3Settings toolSettings, bool? shadowCopy)
+        public static T SetShadowCopy<T>(this T toolSettings, bool? shadowCopy) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShadowCopy = shadowCopy;
@@ -1776,7 +1776,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Tells .NET to copy loaded assemblies to the shadowcopy directory.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetShadowCopy(this NUnit3Settings toolSettings)
+        public static T ResetShadowCopy<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShadowCopy = null;
@@ -1787,7 +1787,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Tells .NET to copy loaded assemblies to the shadowcopy directory.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings EnableShadowCopy(this NUnit3Settings toolSettings)
+        public static T EnableShadowCopy<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShadowCopy = true;
@@ -1798,7 +1798,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Tells .NET to copy loaded assemblies to the shadowcopy directory.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings DisableShadowCopy(this NUnit3Settings toolSettings)
+        public static T DisableShadowCopy<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShadowCopy = false;
@@ -1809,7 +1809,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Tells .NET to copy loaded assemblies to the shadowcopy directory.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ToggleShadowCopy(this NUnit3Settings toolSettings)
+        public static T ToggleShadowCopy<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShadowCopy = !toolSettings.ShadowCopy;
@@ -1822,7 +1822,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Turns on use of TeamCity service messages.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetTeamCity(this NUnit3Settings toolSettings, bool? teamCity)
+        public static T SetTeamCity<T>(this T toolSettings, bool? teamCity) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TeamCity = teamCity;
@@ -1833,7 +1833,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Turns on use of TeamCity service messages.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetTeamCity(this NUnit3Settings toolSettings)
+        public static T ResetTeamCity<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TeamCity = null;
@@ -1844,7 +1844,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Turns on use of TeamCity service messages.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings EnableTeamCity(this NUnit3Settings toolSettings)
+        public static T EnableTeamCity<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TeamCity = true;
@@ -1855,7 +1855,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Turns on use of TeamCity service messages.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings DisableTeamCity(this NUnit3Settings toolSettings)
+        public static T DisableTeamCity<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TeamCity = false;
@@ -1866,7 +1866,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Turns on use of TeamCity service messages.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ToggleTeamCity(this NUnit3Settings toolSettings)
+        public static T ToggleTeamCity<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TeamCity = !toolSettings.TeamCity;
@@ -1879,7 +1879,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Causes the user profile to be loaded in any separate test processes.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetLoadUserProfile(this NUnit3Settings toolSettings, bool? loadUserProfile)
+        public static T SetLoadUserProfile<T>(this T toolSettings, bool? loadUserProfile) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LoadUserProfile = loadUserProfile;
@@ -1890,7 +1890,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Causes the user profile to be loaded in any separate test processes.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetLoadUserProfile(this NUnit3Settings toolSettings)
+        public static T ResetLoadUserProfile<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LoadUserProfile = null;
@@ -1901,7 +1901,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Causes the user profile to be loaded in any separate test processes.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings EnableLoadUserProfile(this NUnit3Settings toolSettings)
+        public static T EnableLoadUserProfile<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LoadUserProfile = true;
@@ -1912,7 +1912,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Causes the user profile to be loaded in any separate test processes.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings DisableLoadUserProfile(this NUnit3Settings toolSettings)
+        public static T DisableLoadUserProfile<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LoadUserProfile = false;
@@ -1923,7 +1923,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Causes the user profile to be loaded in any separate test processes.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ToggleLoadUserProfile(this NUnit3Settings toolSettings)
+        public static T ToggleLoadUserProfile<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LoadUserProfile = !toolSettings.LoadUserProfile;
@@ -1936,7 +1936,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Lists all extension points and the extensions installed on each of them.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetListExtensions(this NUnit3Settings toolSettings, bool? listExtensions)
+        public static T SetListExtensions<T>(this T toolSettings, bool? listExtensions) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListExtensions = listExtensions;
@@ -1947,7 +1947,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Lists all extension points and the extensions installed on each of them.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetListExtensions(this NUnit3Settings toolSettings)
+        public static T ResetListExtensions<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListExtensions = null;
@@ -1958,7 +1958,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Lists all extension points and the extensions installed on each of them.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings EnableListExtensions(this NUnit3Settings toolSettings)
+        public static T EnableListExtensions<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListExtensions = true;
@@ -1969,7 +1969,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Lists all extension points and the extensions installed on each of them.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings DisableListExtensions(this NUnit3Settings toolSettings)
+        public static T DisableListExtensions<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListExtensions = false;
@@ -1980,7 +1980,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Lists all extension points and the extensions installed on each of them.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ToggleListExtensions(this NUnit3Settings toolSettings)
+        public static T ToggleListExtensions<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListExtensions = !toolSettings.ListExtensions;
@@ -1993,7 +1993,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Set the principal policy for the test domain to POLICY. Values: UnauthenticatedPrincipal, NoPrincipal, WindowsPrincipal</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetSetPrincipalPolicy(this NUnit3Settings toolSettings, NUnitPrincipalPolicy setPrincipalPolicy)
+        public static T SetSetPrincipalPolicy<T>(this T toolSettings, NUnitPrincipalPolicy setPrincipalPolicy) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetPrincipalPolicy = setPrincipalPolicy;
@@ -2004,7 +2004,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Set the principal policy for the test domain to POLICY. Values: UnauthenticatedPrincipal, NoPrincipal, WindowsPrincipal</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetSetPrincipalPolicy(this NUnit3Settings toolSettings)
+        public static T ResetSetPrincipalPolicy<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SetPrincipalPolicy = null;
@@ -2017,7 +2017,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Suppress display of program information at start of run.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetNoHeader(this NUnit3Settings toolSettings, bool? noHeader)
+        public static T SetNoHeader<T>(this T toolSettings, bool? noHeader) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHeader = noHeader;
@@ -2028,7 +2028,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Suppress display of program information at start of run.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetNoHeader(this NUnit3Settings toolSettings)
+        public static T ResetNoHeader<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHeader = null;
@@ -2039,7 +2039,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Suppress display of program information at start of run.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings EnableNoHeader(this NUnit3Settings toolSettings)
+        public static T EnableNoHeader<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHeader = true;
@@ -2050,7 +2050,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Suppress display of program information at start of run.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings DisableNoHeader(this NUnit3Settings toolSettings)
+        public static T DisableNoHeader<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHeader = false;
@@ -2061,7 +2061,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Suppress display of program information at start of run.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ToggleNoHeader(this NUnit3Settings toolSettings)
+        public static T ToggleNoHeader<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHeader = !toolSettings.NoHeader;
@@ -2074,7 +2074,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Displays console output without color.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings SetNoColor(this NUnit3Settings toolSettings, bool? noColor)
+        public static T SetNoColor<T>(this T toolSettings, bool? noColor) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = noColor;
@@ -2085,7 +2085,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Displays console output without color.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ResetNoColor(this NUnit3Settings toolSettings)
+        public static T ResetNoColor<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = null;
@@ -2096,7 +2096,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Displays console output without color.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings EnableNoColor(this NUnit3Settings toolSettings)
+        public static T EnableNoColor<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = true;
@@ -2107,7 +2107,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Displays console output without color.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings DisableNoColor(this NUnit3Settings toolSettings)
+        public static T DisableNoColor<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = false;
@@ -2118,7 +2118,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>Displays console output without color.</p>
         /// </summary>
         [Pure]
-        public static NUnit3Settings ToggleNoColor(this NUnit3Settings toolSettings)
+        public static T ToggleNoColor<T>(this T toolSettings) where T : NUnit3Settings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = !toolSettings.NoColor;

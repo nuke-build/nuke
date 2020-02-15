@@ -145,7 +145,7 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         ///   <p>The base web.config file</p>
         /// </summary>
         [Pure]
-        public static WebConfigTransformRunnerSettings SetWebConfigFilename(this WebConfigTransformRunnerSettings toolSettings, string webConfigFilename)
+        public static T SetWebConfigFilename<T>(this T toolSettings, string webConfigFilename) where T : WebConfigTransformRunnerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WebConfigFilename = webConfigFilename;
@@ -156,7 +156,7 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         ///   <p>The base web.config file</p>
         /// </summary>
         [Pure]
-        public static WebConfigTransformRunnerSettings ResetWebConfigFilename(this WebConfigTransformRunnerSettings toolSettings)
+        public static T ResetWebConfigFilename<T>(this T toolSettings) where T : WebConfigTransformRunnerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WebConfigFilename = null;
@@ -169,7 +169,7 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         ///   <p>The transformation web.config file</p>
         /// </summary>
         [Pure]
-        public static WebConfigTransformRunnerSettings SetTransformFilename(this WebConfigTransformRunnerSettings toolSettings, string transformFilename)
+        public static T SetTransformFilename<T>(this T toolSettings, string transformFilename) where T : WebConfigTransformRunnerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TransformFilename = transformFilename;
@@ -180,7 +180,7 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         ///   <p>The transformation web.config file</p>
         /// </summary>
         [Pure]
-        public static WebConfigTransformRunnerSettings ResetTransformFilename(this WebConfigTransformRunnerSettings toolSettings)
+        public static T ResetTransformFilename<T>(this T toolSettings) where T : WebConfigTransformRunnerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TransformFilename = null;
@@ -193,7 +193,7 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         ///   <p>The path to the output web.config file</p>
         /// </summary>
         [Pure]
-        public static WebConfigTransformRunnerSettings SetOutputFilename(this WebConfigTransformRunnerSettings toolSettings, string outputFilename)
+        public static T SetOutputFilename<T>(this T toolSettings, string outputFilename) where T : WebConfigTransformRunnerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFilename = outputFilename;
@@ -204,7 +204,7 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         ///   <p>The path to the output web.config file</p>
         /// </summary>
         [Pure]
-        public static WebConfigTransformRunnerSettings ResetOutputFilename(this WebConfigTransformRunnerSettings toolSettings)
+        public static T ResetOutputFilename<T>(this T toolSettings) where T : WebConfigTransformRunnerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFilename = null;

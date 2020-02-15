@@ -476,7 +476,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetAutomaticSelection(this SignToolSettings toolSettings, bool? automaticSelection)
+        public static T SetAutomaticSelection<T>(this T toolSettings, bool? automaticSelection) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AutomaticSelection = automaticSelection;
@@ -487,7 +487,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetAutomaticSelection(this SignToolSettings toolSettings)
+        public static T ResetAutomaticSelection<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AutomaticSelection = null;
@@ -498,7 +498,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings EnableAutomaticSelection(this SignToolSettings toolSettings)
+        public static T EnableAutomaticSelection<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AutomaticSelection = true;
@@ -509,7 +509,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings DisableAutomaticSelection(this SignToolSettings toolSettings)
+        public static T DisableAutomaticSelection<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AutomaticSelection = false;
@@ -520,7 +520,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ToggleAutomaticSelection(this SignToolSettings toolSettings)
+        public static T ToggleAutomaticSelection<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AutomaticSelection = !toolSettings.AutomaticSelection;
@@ -533,7 +533,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Add an additional certificate to the signature block.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetAdditionalCertificate(this SignToolSettings toolSettings, string additionalCertificate)
+        public static T SetAdditionalCertificate<T>(this T toolSettings, string additionalCertificate) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AdditionalCertificate = additionalCertificate;
@@ -544,7 +544,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Add an additional certificate to the signature block.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetAdditionalCertificate(this SignToolSettings toolSettings)
+        public static T ResetAdditionalCertificate<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AdditionalCertificate = null;
@@ -557,7 +557,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the Certificate Template Name (Microsoft extension) of the signing cert.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetCertificateTemplateName(this SignToolSettings toolSettings, string certificateTemplateName)
+        public static T SetCertificateTemplateName<T>(this T toolSettings, string certificateTemplateName) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CertificateTemplateName = certificateTemplateName;
@@ -568,7 +568,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the Certificate Template Name (Microsoft extension) of the signing cert.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetCertificateTemplateName(this SignToolSettings toolSettings)
+        public static T ResetCertificateTemplateName<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CertificateTemplateName = null;
@@ -581,7 +581,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the signing cert in a file. If this file is a PFX with a password, the password may be supplied with the <c>/p</c> option. If the file does not contain private keys, use the <c>/csp</c> and <c>/kc</c> options to specify the CSP and container name of the private key.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetFile(this SignToolSettings toolSettings, string file)
+        public static T SetFile<T>(this T toolSettings, string file) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.File = file;
@@ -592,7 +592,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the signing cert in a file. If this file is a PFX with a password, the password may be supplied with the <c>/p</c> option. If the file does not contain private keys, use the <c>/csp</c> and <c>/kc</c> options to specify the CSP and container name of the private key.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetFile(this SignToolSettings toolSettings)
+        public static T ResetFile<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.File = null;
@@ -605,7 +605,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the Issuer of the signing cert, or a substring.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetIssuer(this SignToolSettings toolSettings, string issuer)
+        public static T SetIssuer<T>(this T toolSettings, string issuer) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Issuer = issuer;
@@ -616,7 +616,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the Issuer of the signing cert, or a substring.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetIssuer(this SignToolSettings toolSettings)
+        public static T ResetIssuer<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Issuer = null;
@@ -629,7 +629,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the Subject Name of the signing cert, or a substring.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetSigningSubjectName(this SignToolSettings toolSettings, string signingSubjectName)
+        public static T SetSigningSubjectName<T>(this T toolSettings, string signingSubjectName) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SigningSubjectName = signingSubjectName;
@@ -640,7 +640,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the Subject Name of the signing cert, or a substring.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetSigningSubjectName(this SignToolSettings toolSettings)
+        public static T ResetSigningSubjectName<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SigningSubjectName = null;
@@ -653,7 +653,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify a password to use when opening the PFX file.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetPassword(this SignToolSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -664,7 +664,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify a password to use when opening the PFX file.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetPassword(this SignToolSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -677,7 +677,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the Subject Name of a Root cert that the signing cert must chain to.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetRootSubjectName(this SignToolSettings toolSettings, string rootSubjectName)
+        public static T SetRootSubjectName<T>(this T toolSettings, string rootSubjectName) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RootSubjectName = rootSubjectName;
@@ -688,7 +688,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the Subject Name of a Root cert that the signing cert must chain to.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetRootSubjectName(this SignToolSettings toolSettings)
+        public static T ResetRootSubjectName<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RootSubjectName = null;
@@ -701,7 +701,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the Store to open when searching for the cert. The default is the <c>MY</c> Store.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetStore(this SignToolSettings toolSettings, string store)
+        public static T SetStore<T>(this T toolSettings, string store) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Store = store;
@@ -712,7 +712,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the Store to open when searching for the cert. The default is the <c>MY</c> Store.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetStore(this SignToolSettings toolSettings)
+        public static T ResetStore<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Store = null;
@@ -725,7 +725,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Open a Machine store instead of a User store.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetMachineStore(this SignToolSettings toolSettings, bool? machineStore)
+        public static T SetMachineStore<T>(this T toolSettings, bool? machineStore) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MachineStore = machineStore;
@@ -736,7 +736,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Open a Machine store instead of a User store.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetMachineStore(this SignToolSettings toolSettings)
+        public static T ResetMachineStore<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MachineStore = null;
@@ -747,7 +747,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Open a Machine store instead of a User store.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings EnableMachineStore(this SignToolSettings toolSettings)
+        public static T EnableMachineStore<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MachineStore = true;
@@ -758,7 +758,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Open a Machine store instead of a User store.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings DisableMachineStore(this SignToolSettings toolSettings)
+        public static T DisableMachineStore<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MachineStore = false;
@@ -769,7 +769,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Open a Machine store instead of a User store.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ToggleMachineStore(this SignToolSettings toolSettings)
+        public static T ToggleMachineStore<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MachineStore = !toolSettings.MachineStore;
@@ -782,7 +782,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the SHA1 thumbprint of the signing cert.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetSha1Thumbprint(this SignToolSettings toolSettings, string sha1Thumbprint)
+        public static T SetSha1Thumbprint<T>(this T toolSettings, string sha1Thumbprint) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Sha1Thumbprint = sha1Thumbprint;
@@ -793,7 +793,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the SHA1 thumbprint of the signing cert.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetSha1Thumbprint(this SignToolSettings toolSettings)
+        public static T ResetSha1Thumbprint<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Sha1Thumbprint = null;
@@ -806,7 +806,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specifies the file digest algorithm to use for creating file signatures. (Default is <c>SHA1</c>)</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetFileDigestAlgorithm(this SignToolSettings toolSettings, string fileDigestAlgorithm)
+        public static T SetFileDigestAlgorithm<T>(this T toolSettings, string fileDigestAlgorithm) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileDigestAlgorithm = fileDigestAlgorithm;
@@ -817,7 +817,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specifies the file digest algorithm to use for creating file signatures. (Default is <c>SHA1</c>)</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetFileDigestAlgorithm(this SignToolSettings toolSettings)
+        public static T ResetFileDigestAlgorithm<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileDigestAlgorithm = null;
@@ -830,7 +830,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the Enhanced Key Usage that must be present in the cert.<para/>The parameter may be specified by OID or by string. The default usage is <em>Code Signing</em> (1.3.6.1.5.5.7.3.3).</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetEnhancedKeyUsage(this SignToolSettings toolSettings, string enhancedKeyUsage)
+        public static T SetEnhancedKeyUsage<T>(this T toolSettings, string enhancedKeyUsage) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnhancedKeyUsage = enhancedKeyUsage;
@@ -841,7 +841,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the Enhanced Key Usage that must be present in the cert.<para/>The parameter may be specified by OID or by string. The default usage is <em>Code Signing</em> (1.3.6.1.5.5.7.3.3).</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetEnhancedKeyUsage(this SignToolSettings toolSettings)
+        public static T ResetEnhancedKeyUsage<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnhancedKeyUsage = null;
@@ -854,7 +854,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify usage of <em>Windows System Component Verification</em> (1.3.6.1.4.1.311.10.3.6).</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetWindowsSystemComponentVerification(this SignToolSettings toolSettings, bool? windowsSystemComponentVerification)
+        public static T SetWindowsSystemComponentVerification<T>(this T toolSettings, bool? windowsSystemComponentVerification) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WindowsSystemComponentVerification = windowsSystemComponentVerification;
@@ -865,7 +865,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify usage of <em>Windows System Component Verification</em> (1.3.6.1.4.1.311.10.3.6).</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetWindowsSystemComponentVerification(this SignToolSettings toolSettings)
+        public static T ResetWindowsSystemComponentVerification<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WindowsSystemComponentVerification = null;
@@ -876,7 +876,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify usage of <em>Windows System Component Verification</em> (1.3.6.1.4.1.311.10.3.6).</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings EnableWindowsSystemComponentVerification(this SignToolSettings toolSettings)
+        public static T EnableWindowsSystemComponentVerification<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WindowsSystemComponentVerification = true;
@@ -887,7 +887,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify usage of <em>Windows System Component Verification</em> (1.3.6.1.4.1.311.10.3.6).</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings DisableWindowsSystemComponentVerification(this SignToolSettings toolSettings)
+        public static T DisableWindowsSystemComponentVerification<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WindowsSystemComponentVerification = false;
@@ -898,7 +898,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify usage of <em>Windows System Component Verification</em> (1.3.6.1.4.1.311.10.3.6).</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ToggleWindowsSystemComponentVerification(this SignToolSettings toolSettings)
+        public static T ToggleWindowsSystemComponentVerification<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WindowsSystemComponentVerification = !toolSettings.WindowsSystemComponentVerification;
@@ -911,7 +911,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the CSP containing the Private Key Container.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetCsp(this SignToolSettings toolSettings, string csp)
+        public static T SetCsp<T>(this T toolSettings, string csp) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Csp = csp;
@@ -922,7 +922,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the CSP containing the Private Key Container.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetCsp(this SignToolSettings toolSettings)
+        public static T ResetCsp<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Csp = null;
@@ -935,7 +935,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the Key Container Name of the Private Key.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetKeyContainer(this SignToolSettings toolSettings, string keyContainer)
+        public static T SetKeyContainer<T>(this T toolSettings, string keyContainer) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyContainer = keyContainer;
@@ -946,7 +946,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the Key Container Name of the Private Key.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetKeyContainer(this SignToolSettings toolSettings)
+        public static T ResetKeyContainer<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.KeyContainer = null;
@@ -959,7 +959,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Append this signature. If no primary signature is present, this signature will be made the primary signature instead.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetAppendSignature(this SignToolSettings toolSettings, bool? appendSignature)
+        public static T SetAppendSignature<T>(this T toolSettings, bool? appendSignature) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppendSignature = appendSignature;
@@ -970,7 +970,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Append this signature. If no primary signature is present, this signature will be made the primary signature instead.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetAppendSignature(this SignToolSettings toolSettings)
+        public static T ResetAppendSignature<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppendSignature = null;
@@ -981,7 +981,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Append this signature. If no primary signature is present, this signature will be made the primary signature instead.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings EnableAppendSignature(this SignToolSettings toolSettings)
+        public static T EnableAppendSignature<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppendSignature = true;
@@ -992,7 +992,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Append this signature. If no primary signature is present, this signature will be made the primary signature instead.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings DisableAppendSignature(this SignToolSettings toolSettings)
+        public static T DisableAppendSignature<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppendSignature = false;
@@ -1003,7 +1003,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Append this signature. If no primary signature is present, this signature will be made the primary signature instead.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ToggleAppendSignature(this SignToolSettings toolSettings)
+        public static T ToggleAppendSignature<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AppendSignature = !toolSettings.AppendSignature;
@@ -1016,7 +1016,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Provide a description of the signed content.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetDescription(this SignToolSettings toolSettings, string description)
+        public static T SetDescription<T>(this T toolSettings, string description) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Description = description;
@@ -1027,7 +1027,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Provide a description of the signed content.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetDescription(this SignToolSettings toolSettings)
+        public static T ResetDescription<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Description = null;
@@ -1040,7 +1040,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Provide a URL with more information about the signed content.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetUrl(this SignToolSettings toolSettings, string url)
+        public static T SetUrl<T>(this T toolSettings, string url) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Url = url;
@@ -1051,7 +1051,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Provide a URL with more information about the signed content.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetUrl(this SignToolSettings toolSettings)
+        public static T ResetUrl<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Url = null;
@@ -1064,7 +1064,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the timestamp server's URL. If this option is not present, the signed file will not be timestamped. A warning is generated if timestamping fails.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetTimestampServerUrl(this SignToolSettings toolSettings, string timestampServerUrl)
+        public static T SetTimestampServerUrl<T>(this T toolSettings, string timestampServerUrl) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TimestampServerUrl = timestampServerUrl;
@@ -1075,7 +1075,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the timestamp server's URL. If this option is not present, the signed file will not be timestamped. A warning is generated if timestamping fails.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetTimestampServerUrl(this SignToolSettings toolSettings)
+        public static T ResetTimestampServerUrl<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TimestampServerUrl = null;
@@ -1088,7 +1088,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specifies the RFC 3161 timestamp server's URL. If this option (or <c>/t</c>) is not specified, the signed file will not be timestamped. A warning is generated if timestamping fails. This switch cannot be used with the <c>/t</c> switch.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetRfc3161TimestampServerUrl(this SignToolSettings toolSettings, string rfc3161TimestampServerUrl)
+        public static T SetRfc3161TimestampServerUrl<T>(this T toolSettings, string rfc3161TimestampServerUrl) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Rfc3161TimestampServerUrl = rfc3161TimestampServerUrl;
@@ -1099,7 +1099,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specifies the RFC 3161 timestamp server's URL. If this option (or <c>/t</c>) is not specified, the signed file will not be timestamped. A warning is generated if timestamping fails. This switch cannot be used with the <c>/t</c> switch.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetRfc3161TimestampServerUrl(this SignToolSettings toolSettings)
+        public static T ResetRfc3161TimestampServerUrl<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Rfc3161TimestampServerUrl = null;
@@ -1112,7 +1112,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specifies the RFC 3161 timestamp server's URL for timestamping a sealed file.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetRfc3161TimestampServerUrlSealed(this SignToolSettings toolSettings, string rfc3161TimestampServerUrlSealed)
+        public static T SetRfc3161TimestampServerUrlSealed<T>(this T toolSettings, string rfc3161TimestampServerUrlSealed) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Rfc3161TimestampServerUrlSealed = rfc3161TimestampServerUrlSealed;
@@ -1123,7 +1123,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specifies the RFC 3161 timestamp server's URL for timestamping a sealed file.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetRfc3161TimestampServerUrlSealed(this SignToolSettings toolSettings)
+        public static T ResetRfc3161TimestampServerUrlSealed<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Rfc3161TimestampServerUrlSealed = null;
@@ -1136,7 +1136,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Used with the <c>/tr</c> or <c>/tseal</c> switch to request a digest algorithm used by the RFC 3161 timestamp server.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetTimestampServerDigestAlgorithm(this SignToolSettings toolSettings, string timestampServerDigestAlgorithm)
+        public static T SetTimestampServerDigestAlgorithm<T>(this T toolSettings, string timestampServerDigestAlgorithm) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TimestampServerDigestAlgorithm = timestampServerDigestAlgorithm;
@@ -1147,7 +1147,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Used with the <c>/tr</c> or <c>/tseal</c> switch to request a digest algorithm used by the RFC 3161 timestamp server.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetTimestampServerDigestAlgorithm(this SignToolSettings toolSettings)
+        public static T ResetTimestampServerDigestAlgorithm<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TimestampServerDigestAlgorithm = null;
@@ -1160,7 +1160,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify an OID and value to be included as an authenticated attribute in the signature. The value will be encoded as an ASN1 UTF8 string. This option may be given multiple times.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetAuthenticatedAttributes(this SignToolSettings toolSettings, IDictionary<string, string> authenticatedAttributes)
+        public static T SetAuthenticatedAttributes<T>(this T toolSettings, IDictionary<string, string> authenticatedAttributes) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AuthenticatedAttributesInternal = authenticatedAttributes.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -1171,7 +1171,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify an OID and value to be included as an authenticated attribute in the signature. The value will be encoded as an ASN1 UTF8 string. This option may be given multiple times.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ClearAuthenticatedAttributes(this SignToolSettings toolSettings)
+        public static T ClearAuthenticatedAttributes<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AuthenticatedAttributesInternal.Clear();
@@ -1182,7 +1182,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify an OID and value to be included as an authenticated attribute in the signature. The value will be encoded as an ASN1 UTF8 string. This option may be given multiple times.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings AddAuthenticatedAttribute(this SignToolSettings toolSettings, string authenticatedAttributeKey, string authenticatedAttributeValue)
+        public static T AddAuthenticatedAttribute<T>(this T toolSettings, string authenticatedAttributeKey, string authenticatedAttributeValue) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AuthenticatedAttributesInternal.Add(authenticatedAttributeKey, authenticatedAttributeValue);
@@ -1193,7 +1193,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify an OID and value to be included as an authenticated attribute in the signature. The value will be encoded as an ASN1 UTF8 string. This option may be given multiple times.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings RemoveAuthenticatedAttribute(this SignToolSettings toolSettings, string authenticatedAttributeKey)
+        public static T RemoveAuthenticatedAttribute<T>(this T toolSettings, string authenticatedAttributeKey) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AuthenticatedAttributesInternal.Remove(authenticatedAttributeKey);
@@ -1204,7 +1204,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify an OID and value to be included as an authenticated attribute in the signature. The value will be encoded as an ASN1 UTF8 string. This option may be given multiple times.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetAuthenticatedAttribute(this SignToolSettings toolSettings, string authenticatedAttributeKey, string authenticatedAttributeValue)
+        public static T SetAuthenticatedAttribute<T>(this T toolSettings, string authenticatedAttributeKey, string authenticatedAttributeValue) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AuthenticatedAttributesInternal[authenticatedAttributeKey] = authenticatedAttributeValue;
@@ -1217,7 +1217,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Add a sealing signature if the file format supports it.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetSealingSignature(this SignToolSettings toolSettings, bool? sealingSignature)
+        public static T SetSealingSignature<T>(this T toolSettings, bool? sealingSignature) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SealingSignature = sealingSignature;
@@ -1228,7 +1228,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Add a sealing signature if the file format supports it.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetSealingSignature(this SignToolSettings toolSettings)
+        public static T ResetSealingSignature<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SealingSignature = null;
@@ -1239,7 +1239,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Add a sealing signature if the file format supports it.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings EnableSealingSignature(this SignToolSettings toolSettings)
+        public static T EnableSealingSignature<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SealingSignature = true;
@@ -1250,7 +1250,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Add a sealing signature if the file format supports it.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings DisableSealingSignature(this SignToolSettings toolSettings)
+        public static T DisableSealingSignature<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SealingSignature = false;
@@ -1261,7 +1261,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Add a sealing signature if the file format supports it.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ToggleSealingSignature(this SignToolSettings toolSettings)
+        public static T ToggleSealingSignature<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SealingSignature = !toolSettings.SealingSignature;
@@ -1274,7 +1274,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Create a primary signature with the intent-to-seal attribute.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetIntentToSealAttribute(this SignToolSettings toolSettings, bool? intentToSealAttribute)
+        public static T SetIntentToSealAttribute<T>(this T toolSettings, bool? intentToSealAttribute) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IntentToSealAttribute = intentToSealAttribute;
@@ -1285,7 +1285,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Create a primary signature with the intent-to-seal attribute.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetIntentToSealAttribute(this SignToolSettings toolSettings)
+        public static T ResetIntentToSealAttribute<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IntentToSealAttribute = null;
@@ -1296,7 +1296,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Create a primary signature with the intent-to-seal attribute.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings EnableIntentToSealAttribute(this SignToolSettings toolSettings)
+        public static T EnableIntentToSealAttribute<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IntentToSealAttribute = true;
@@ -1307,7 +1307,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Create a primary signature with the intent-to-seal attribute.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings DisableIntentToSealAttribute(this SignToolSettings toolSettings)
+        public static T DisableIntentToSealAttribute<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IntentToSealAttribute = false;
@@ -1318,7 +1318,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Create a primary signature with the intent-to-seal attribute.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ToggleIntentToSealAttribute(this SignToolSettings toolSettings)
+        public static T ToggleIntentToSealAttribute<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IntentToSealAttribute = !toolSettings.IntentToSealAttribute;
@@ -1331,7 +1331,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Continue to seal or sign in situations where the existing signature or sealing signature needs to be removed to support sealing.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetForce(this SignToolSettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -1342,7 +1342,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Continue to seal or sign in situations where the existing signature or sealing signature needs to be removed to support sealing.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetForce(this SignToolSettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -1353,7 +1353,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Continue to seal or sign in situations where the existing signature or sealing signature needs to be removed to support sealing.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings EnableForce(this SignToolSettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -1364,7 +1364,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Continue to seal or sign in situations where the existing signature or sealing signature needs to be removed to support sealing.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings DisableForce(this SignToolSettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -1375,7 +1375,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Continue to seal or sign in situations where the existing signature or sealing signature needs to be removed to support sealing.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ToggleForce(this SignToolSettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -1388,7 +1388,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Sealing-related warnings do not affect SignTool's return code.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetNoSealWarn(this SignToolSettings toolSettings, bool? noSealWarn)
+        public static T SetNoSealWarn<T>(this T toolSettings, bool? noSealWarn) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoSealWarn = noSealWarn;
@@ -1399,7 +1399,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Sealing-related warnings do not affect SignTool's return code.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetNoSealWarn(this SignToolSettings toolSettings)
+        public static T ResetNoSealWarn<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoSealWarn = null;
@@ -1410,7 +1410,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Sealing-related warnings do not affect SignTool's return code.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings EnableNoSealWarn(this SignToolSettings toolSettings)
+        public static T EnableNoSealWarn<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoSealWarn = true;
@@ -1421,7 +1421,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Sealing-related warnings do not affect SignTool's return code.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings DisableNoSealWarn(this SignToolSettings toolSettings)
+        public static T DisableNoSealWarn<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoSealWarn = false;
@@ -1432,7 +1432,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Sealing-related warnings do not affect SignTool's return code.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ToggleNoSealWarn(this SignToolSettings toolSettings)
+        public static T ToggleNoSealWarn<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoSealWarn = !toolSettings.NoSealWarn;
@@ -1445,7 +1445,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Generates the to be signed digest and the unsigned PKCS7 files. The output digest and PKCS7 files will be: <c>&lt;path&gt;\&lt;file&gt;.dig</c> and <c>&lt;path&gt;\&lt;file&gt;.p7u</c>. To output an additional XML file, see <c>/dxml</c>.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetSignedDigestAndUnsignedPkcs7Path(this SignToolSettings toolSettings, string signedDigestAndUnsignedPkcs7Path)
+        public static T SetSignedDigestAndUnsignedPkcs7Path<T>(this T toolSettings, string signedDigestAndUnsignedPkcs7Path) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SignedDigestAndUnsignedPkcs7Path = signedDigestAndUnsignedPkcs7Path;
@@ -1456,7 +1456,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Generates the to be signed digest and the unsigned PKCS7 files. The output digest and PKCS7 files will be: <c>&lt;path&gt;\&lt;file&gt;.dig</c> and <c>&lt;path&gt;\&lt;file&gt;.p7u</c>. To output an additional XML file, see <c>/dxml</c>.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetSignedDigestAndUnsignedPkcs7Path(this SignToolSettings toolSettings)
+        public static T ResetSignedDigestAndUnsignedPkcs7Path<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SignedDigestAndUnsignedPkcs7Path = null;
@@ -1469,7 +1469,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Signs the digest only. The input file should be the digest generated by the <c>/dg</c> option. The output file will be: <c>&lt;file&gt;.signed</c>.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetSignDigestOnly(this SignToolSettings toolSettings, bool? signDigestOnly)
+        public static T SetSignDigestOnly<T>(this T toolSettings, bool? signDigestOnly) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SignDigestOnly = signDigestOnly;
@@ -1480,7 +1480,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Signs the digest only. The input file should be the digest generated by the <c>/dg</c> option. The output file will be: <c>&lt;file&gt;.signed</c>.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetSignDigestOnly(this SignToolSettings toolSettings)
+        public static T ResetSignDigestOnly<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SignDigestOnly = null;
@@ -1491,7 +1491,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Signs the digest only. The input file should be the digest generated by the <c>/dg</c> option. The output file will be: <c>&lt;file&gt;.signed</c>.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings EnableSignDigestOnly(this SignToolSettings toolSettings)
+        public static T EnableSignDigestOnly<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SignDigestOnly = true;
@@ -1502,7 +1502,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Signs the digest only. The input file should be the digest generated by the <c>/dg</c> option. The output file will be: <c>&lt;file&gt;.signed</c>.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings DisableSignDigestOnly(this SignToolSettings toolSettings)
+        public static T DisableSignDigestOnly<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SignDigestOnly = false;
@@ -1513,7 +1513,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Signs the digest only. The input file should be the digest generated by the <c>/dg</c> option. The output file will be: <c>&lt;file&gt;.signed</c>.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ToggleSignDigestOnly(this SignToolSettings toolSettings)
+        public static T ToggleSignDigestOnly<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SignDigestOnly = !toolSettings.SignDigestOnly;
@@ -1526,7 +1526,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Creates the signature by ingesting the signed digest to the unsigned PKCS7 file. The input signed digest and unsigned PKCS7 files should be: <c>&lt;path&gt;\&lt;file&gt;.dig.signed</c> and <c>&lt;path&gt;\&lt;file&gt;.p7u</c>.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetGenerateSignature(this SignToolSettings toolSettings, string generateSignature)
+        public static T SetGenerateSignature<T>(this T toolSettings, string generateSignature) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GenerateSignature = generateSignature;
@@ -1537,7 +1537,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Creates the signature by ingesting the signed digest to the unsigned PKCS7 file. The input signed digest and unsigned PKCS7 files should be: <c>&lt;path&gt;\&lt;file&gt;.dig.signed</c> and <c>&lt;path&gt;\&lt;file&gt;.p7u</c>.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetGenerateSignature(this SignToolSettings toolSettings)
+        public static T ResetGenerateSignature<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GenerateSignature = null;
@@ -1550,7 +1550,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>When used with the <c>/dg</c> option, produces an XML file. The output file will be: <c>&lt;path&gt;\&lt;file&gt;.dig.xml</c>.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetXmlFile(this SignToolSettings toolSettings, bool? xmlFile)
+        public static T SetXmlFile<T>(this T toolSettings, bool? xmlFile) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.XmlFile = xmlFile;
@@ -1561,7 +1561,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>When used with the <c>/dg</c> option, produces an XML file. The output file will be: <c>&lt;path&gt;\&lt;file&gt;.dig.xml</c>.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetXmlFile(this SignToolSettings toolSettings)
+        public static T ResetXmlFile<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.XmlFile = null;
@@ -1572,7 +1572,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>When used with the <c>/dg</c> option, produces an XML file. The output file will be: <c>&lt;path&gt;\&lt;file&gt;.dig.xml</c>.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings EnableXmlFile(this SignToolSettings toolSettings)
+        public static T EnableXmlFile<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.XmlFile = true;
@@ -1583,7 +1583,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>When used with the <c>/dg</c> option, produces an XML file. The output file will be: <c>&lt;path&gt;\&lt;file&gt;.dig.xml</c>.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings DisableXmlFile(this SignToolSettings toolSettings)
+        public static T DisableXmlFile<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.XmlFile = false;
@@ -1594,7 +1594,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>When used with the <c>/dg</c> option, produces an XML file. The output file will be: <c>&lt;path&gt;\&lt;file&gt;.dig.xml</c>.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ToggleXmlFile(this SignToolSettings toolSettings)
+        public static T ToggleXmlFile<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.XmlFile = !toolSettings.XmlFile;
@@ -1607,7 +1607,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specifies the DLL implementing the AuthenticodeDigestSign function to sign the digest with. This option is equivalent to using SignTool separately with the <c>/dg</c>, <c>/ds</c>, and <c>/di</c> switches, except this option invokes all three as one atomic operation.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetAuthenticodeDigestSignLibDll(this SignToolSettings toolSettings, string authenticodeDigestSignLibDll)
+        public static T SetAuthenticodeDigestSignLibDll<T>(this T toolSettings, string authenticodeDigestSignLibDll) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AuthenticodeDigestSignLibDll = authenticodeDigestSignLibDll;
@@ -1618,7 +1618,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specifies the DLL implementing the AuthenticodeDigestSign function to sign the digest with. This option is equivalent to using SignTool separately with the <c>/dg</c>, <c>/ds</c>, and <c>/di</c> switches, except this option invokes all three as one atomic operation.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetAuthenticodeDigestSignLibDll(this SignToolSettings toolSettings)
+        public static T ResetAuthenticodeDigestSignLibDll<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AuthenticodeDigestSignLibDll = null;
@@ -1631,7 +1631,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>When used with the <c>/dlib</c> option, passes the file's contents to the AuthenticodeDigestSign function without modification.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetAuthenticodeDigestSignPassUnmodified(this SignToolSettings toolSettings, string authenticodeDigestSignPassUnmodified)
+        public static T SetAuthenticodeDigestSignPassUnmodified<T>(this T toolSettings, string authenticodeDigestSignPassUnmodified) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AuthenticodeDigestSignPassUnmodified = authenticodeDigestSignPassUnmodified;
@@ -1642,7 +1642,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>When used with the <c>/dlib</c> option, passes the file's contents to the AuthenticodeDigestSign function without modification.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetAuthenticodeDigestSignPassUnmodified(this SignToolSettings toolSettings)
+        public static T ResetAuthenticodeDigestSignPassUnmodified<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AuthenticodeDigestSignPassUnmodified = null;
@@ -1655,7 +1655,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specifies that for each specified content file a PKCS7 file is produced. The PKCS7 file will be named: <c>&lt;path&gt;\&lt;file&gt;.p7</c></p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetContentFileToPkcs7(this SignToolSettings toolSettings, string contentFileToPkcs7)
+        public static T SetContentFileToPkcs7<T>(this T toolSettings, string contentFileToPkcs7) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContentFileToPkcs7 = contentFileToPkcs7;
@@ -1666,7 +1666,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specifies that for each specified content file a PKCS7 file is produced. The PKCS7 file will be named: <c>&lt;path&gt;\&lt;file&gt;.p7</c></p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetContentFileToPkcs7(this SignToolSettings toolSettings)
+        public static T ResetContentFileToPkcs7<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContentFileToPkcs7 = null;
@@ -1679,7 +1679,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specifies the <c>&lt;OID&gt;</c> that identifies the signed content.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetSignedContentIdentifier(this SignToolSettings toolSettings, string signedContentIdentifier)
+        public static T SetSignedContentIdentifier<T>(this T toolSettings, string signedContentIdentifier) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SignedContentIdentifier = signedContentIdentifier;
@@ -1690,7 +1690,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specifies the <c>&lt;OID&gt;</c> that identifies the signed content.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetSignedContentIdentifier(this SignToolSettings toolSettings)
+        public static T ResetSignedContentIdentifier<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SignedContentIdentifier = null;
@@ -1703,7 +1703,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>efined values:<ul><li><b>Embedded:</b> Embeds the signed content in the PKCS7.</li><li><b>DetachedSignedData:</b> Produces the signed data part of a detached PKCS7.</li></ul>The default is <c>Embedded</c>.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetSignedContentMethod(this SignToolSettings toolSettings, SignToolContentMethod signedContentMethod)
+        public static T SetSignedContentMethod<T>(this T toolSettings, SignToolContentMethod signedContentMethod) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SignedContentMethod = signedContentMethod;
@@ -1714,7 +1714,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>efined values:<ul><li><b>Embedded:</b> Embeds the signed content in the PKCS7.</li><li><b>DetachedSignedData:</b> Produces the signed data part of a detached PKCS7.</li></ul>The default is <c>Embedded</c>.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetSignedContentMethod(this SignToolSettings toolSettings)
+        public static T ResetSignedContentMethod<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SignedContentMethod = null;
@@ -1727,7 +1727,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Generate page hashes for executable files if supported.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetPageHashes(this SignToolSettings toolSettings, bool? pageHashes)
+        public static T SetPageHashes<T>(this T toolSettings, bool? pageHashes) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PageHashes = pageHashes;
@@ -1738,7 +1738,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Generate page hashes for executable files if supported.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetPageHashes(this SignToolSettings toolSettings)
+        public static T ResetPageHashes<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PageHashes = null;
@@ -1749,7 +1749,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Generate page hashes for executable files if supported.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings EnablePageHashes(this SignToolSettings toolSettings)
+        public static T EnablePageHashes<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PageHashes = true;
@@ -1760,7 +1760,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Generate page hashes for executable files if supported.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings DisablePageHashes(this SignToolSettings toolSettings)
+        public static T DisablePageHashes<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PageHashes = false;
@@ -1771,7 +1771,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Generate page hashes for executable files if supported.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings TogglePageHashes(this SignToolSettings toolSettings)
+        public static T TogglePageHashes<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PageHashes = !toolSettings.PageHashes;
@@ -1784,7 +1784,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Suppress page hashes for executable files if supported. The default is determined by the <c>SIGNTOOL_PAGE_HASHES</c> environment variable and by the <em>wintrust.dll</em> version.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetSuppressPageHashes(this SignToolSettings toolSettings, bool? suppressPageHashes)
+        public static T SetSuppressPageHashes<T>(this T toolSettings, bool? suppressPageHashes) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SuppressPageHashes = suppressPageHashes;
@@ -1795,7 +1795,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Suppress page hashes for executable files if supported. The default is determined by the <c>SIGNTOOL_PAGE_HASHES</c> environment variable and by the <em>wintrust.dll</em> version.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetSuppressPageHashes(this SignToolSettings toolSettings)
+        public static T ResetSuppressPageHashes<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SuppressPageHashes = null;
@@ -1806,7 +1806,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Suppress page hashes for executable files if supported. The default is determined by the <c>SIGNTOOL_PAGE_HASHES</c> environment variable and by the <em>wintrust.dll</em> version.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings EnableSuppressPageHashes(this SignToolSettings toolSettings)
+        public static T EnableSuppressPageHashes<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SuppressPageHashes = true;
@@ -1817,7 +1817,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Suppress page hashes for executable files if supported. The default is determined by the <c>SIGNTOOL_PAGE_HASHES</c> environment variable and by the <em>wintrust.dll</em> version.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings DisableSuppressPageHashes(this SignToolSettings toolSettings)
+        public static T DisableSuppressPageHashes<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SuppressPageHashes = false;
@@ -1828,7 +1828,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Suppress page hashes for executable files if supported. The default is determined by the <c>SIGNTOOL_PAGE_HASHES</c> environment variable and by the <em>wintrust.dll</em> version.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ToggleSuppressPageHashes(this SignToolSettings toolSettings)
+        public static T ToggleSuppressPageHashes<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SuppressPageHashes = !toolSettings.SuppressPageHashes;
@@ -1841,7 +1841,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specifies signing a PE file with the relaxed marker check semantic. The flag is ignored for non-PE files. During verification, certain authenticated sections of the signature will bypass invalid PE markers check. This option should only be used after careful consideration and reviewing the details of MSRC case MS12-024 to ensure that no vulnerabilities are introduced.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetRelaxedMarkerCheck(this SignToolSettings toolSettings, bool? relaxedMarkerCheck)
+        public static T SetRelaxedMarkerCheck<T>(this T toolSettings, bool? relaxedMarkerCheck) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RelaxedMarkerCheck = relaxedMarkerCheck;
@@ -1852,7 +1852,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specifies signing a PE file with the relaxed marker check semantic. The flag is ignored for non-PE files. During verification, certain authenticated sections of the signature will bypass invalid PE markers check. This option should only be used after careful consideration and reviewing the details of MSRC case MS12-024 to ensure that no vulnerabilities are introduced.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetRelaxedMarkerCheck(this SignToolSettings toolSettings)
+        public static T ResetRelaxedMarkerCheck<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RelaxedMarkerCheck = null;
@@ -1863,7 +1863,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specifies signing a PE file with the relaxed marker check semantic. The flag is ignored for non-PE files. During verification, certain authenticated sections of the signature will bypass invalid PE markers check. This option should only be used after careful consideration and reviewing the details of MSRC case MS12-024 to ensure that no vulnerabilities are introduced.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings EnableRelaxedMarkerCheck(this SignToolSettings toolSettings)
+        public static T EnableRelaxedMarkerCheck<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RelaxedMarkerCheck = true;
@@ -1874,7 +1874,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specifies signing a PE file with the relaxed marker check semantic. The flag is ignored for non-PE files. During verification, certain authenticated sections of the signature will bypass invalid PE markers check. This option should only be used after careful consideration and reviewing the details of MSRC case MS12-024 to ensure that no vulnerabilities are introduced.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings DisableRelaxedMarkerCheck(this SignToolSettings toolSettings)
+        public static T DisableRelaxedMarkerCheck<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RelaxedMarkerCheck = false;
@@ -1885,7 +1885,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specifies signing a PE file with the relaxed marker check semantic. The flag is ignored for non-PE files. During verification, certain authenticated sections of the signature will bypass invalid PE markers check. This option should only be used after careful consideration and reviewing the details of MSRC case MS12-024 to ensure that no vulnerabilities are introduced.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ToggleRelaxedMarkerCheck(this SignToolSettings toolSettings)
+        public static T ToggleRelaxedMarkerCheck<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RelaxedMarkerCheck = !toolSettings.RelaxedMarkerCheck;
@@ -1898,7 +1898,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>No output on success and minimal output on failure.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetQuiet(this SignToolSettings toolSettings, bool? quiet)
+        public static T SetQuiet<T>(this T toolSettings, bool? quiet) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = quiet;
@@ -1909,7 +1909,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>No output on success and minimal output on failure.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetQuiet(this SignToolSettings toolSettings)
+        public static T ResetQuiet<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = null;
@@ -1920,7 +1920,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>No output on success and minimal output on failure.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings EnableQuiet(this SignToolSettings toolSettings)
+        public static T EnableQuiet<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = true;
@@ -1931,7 +1931,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>No output on success and minimal output on failure.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings DisableQuiet(this SignToolSettings toolSettings)
+        public static T DisableQuiet<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = false;
@@ -1942,7 +1942,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>No output on success and minimal output on failure.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ToggleQuiet(this SignToolSettings toolSettings)
+        public static T ToggleQuiet<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = !toolSettings.Quiet;
@@ -1955,7 +1955,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Print verbose success and status messages. This may also provide slightly more information on error.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetVerbose(this SignToolSettings toolSettings, bool? verbose)
+        public static T SetVerbose<T>(this T toolSettings, bool? verbose) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = verbose;
@@ -1966,7 +1966,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Print verbose success and status messages. This may also provide slightly more information on error.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetVerbose(this SignToolSettings toolSettings)
+        public static T ResetVerbose<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = null;
@@ -1977,7 +1977,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Print verbose success and status messages. This may also provide slightly more information on error.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings EnableVerbose(this SignToolSettings toolSettings)
+        public static T EnableVerbose<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = true;
@@ -1988,7 +1988,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Print verbose success and status messages. This may also provide slightly more information on error.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings DisableVerbose(this SignToolSettings toolSettings)
+        public static T DisableVerbose<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = false;
@@ -1999,7 +1999,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Print verbose success and status messages. This may also provide slightly more information on error.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ToggleVerbose(this SignToolSettings toolSettings)
+        public static T ToggleVerbose<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = !toolSettings.Verbose;
@@ -2012,7 +2012,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Display additional debug information.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetDebug(this SignToolSettings toolSettings, bool? debug)
+        public static T SetDebug<T>(this T toolSettings, bool? debug) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = debug;
@@ -2023,7 +2023,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Display additional debug information.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ResetDebug(this SignToolSettings toolSettings)
+        public static T ResetDebug<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = null;
@@ -2034,7 +2034,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Display additional debug information.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings EnableDebug(this SignToolSettings toolSettings)
+        public static T EnableDebug<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = true;
@@ -2045,7 +2045,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Display additional debug information.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings DisableDebug(this SignToolSettings toolSettings)
+        public static T DisableDebug<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = false;
@@ -2056,7 +2056,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Display additional debug information.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ToggleDebug(this SignToolSettings toolSettings)
+        public static T ToggleDebug<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = !toolSettings.Debug;
@@ -2069,7 +2069,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Files to sign.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetFiles(this SignToolSettings toolSettings, params string[] files)
+        public static T SetFiles<T>(this T toolSettings, params string[] files) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilesInternal = files.ToList();
@@ -2080,7 +2080,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Files to sign.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings SetFiles(this SignToolSettings toolSettings, IEnumerable<string> files)
+        public static T SetFiles<T>(this T toolSettings, IEnumerable<string> files) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilesInternal = files.ToList();
@@ -2091,7 +2091,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Files to sign.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings AddFiles(this SignToolSettings toolSettings, params string[] files)
+        public static T AddFiles<T>(this T toolSettings, params string[] files) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilesInternal.AddRange(files);
@@ -2102,7 +2102,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Files to sign.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings AddFiles(this SignToolSettings toolSettings, IEnumerable<string> files)
+        public static T AddFiles<T>(this T toolSettings, IEnumerable<string> files) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilesInternal.AddRange(files);
@@ -2113,7 +2113,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Files to sign.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings ClearFiles(this SignToolSettings toolSettings)
+        public static T ClearFiles<T>(this T toolSettings) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilesInternal.Clear();
@@ -2124,7 +2124,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Files to sign.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings RemoveFiles(this SignToolSettings toolSettings, params string[] files)
+        public static T RemoveFiles<T>(this T toolSettings, params string[] files) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(files);
@@ -2136,7 +2136,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Files to sign.</p>
         /// </summary>
         [Pure]
-        public static SignToolSettings RemoveFiles(this SignToolSettings toolSettings, IEnumerable<string> files)
+        public static T RemoveFiles<T>(this T toolSettings, IEnumerable<string> files) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(files);

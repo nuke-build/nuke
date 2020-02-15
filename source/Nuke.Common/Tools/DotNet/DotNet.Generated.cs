@@ -2128,7 +2128,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a path to the test project. If omitted, it defaults to current directory.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetProjectFile(this DotNetTestSettings toolSettings, string projectFile)
+        public static T SetProjectFile<T>(this T toolSettings, string projectFile) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProjectFile = projectFile;
@@ -2139,7 +2139,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a path to the test project. If omitted, it defaults to current directory.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetProjectFile(this DotNetTestSettings toolSettings)
+        public static T ResetProjectFile<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProjectFile = null;
@@ -2152,7 +2152,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Use the custom test adapters from the specified path in the test run.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetTestAdapterPath(this DotNetTestSettings toolSettings, string testAdapterPath)
+        public static T SetTestAdapterPath<T>(this T toolSettings, string testAdapterPath) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestAdapterPath = testAdapterPath;
@@ -2163,7 +2163,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Use the custom test adapters from the specified path in the test run.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetTestAdapterPath(this DotNetTestSettings toolSettings)
+        public static T ResetTestAdapterPath<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestAdapterPath = null;
@@ -2176,7 +2176,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Configuration under which to build. The default value is <c>Debug</c>, but your project's configuration could override this default SDK setting.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetConfiguration(this DotNetTestSettings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -2187,7 +2187,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Configuration under which to build. The default value is <c>Debug</c>, but your project's configuration could override this default SDK setting.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetConfiguration(this DotNetTestSettings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -2200,7 +2200,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables data collector for the test run. For more information, see <a href="https://aka.ms/vstest-collect">Monitor and analyze test run</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetDataCollector(this DotNetTestSettings toolSettings, string dataCollector)
+        public static T SetDataCollector<T>(this T toolSettings, string dataCollector) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DataCollector = dataCollector;
@@ -2211,7 +2211,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables data collector for the test run. For more information, see <a href="https://aka.ms/vstest-collect">Monitor and analyze test run</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetDataCollector(this DotNetTestSettings toolSettings)
+        public static T ResetDataCollector<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DataCollector = null;
@@ -2224,7 +2224,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables diagnostic mode for the test platform and write diagnostic messages to the specified file.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetDiagnosticsFile(this DotNetTestSettings toolSettings, string diagnosticsFile)
+        public static T SetDiagnosticsFile<T>(this T toolSettings, string diagnosticsFile) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiagnosticsFile = diagnosticsFile;
@@ -2235,7 +2235,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables diagnostic mode for the test platform and write diagnostic messages to the specified file.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetDiagnosticsFile(this DotNetTestSettings toolSettings)
+        public static T ResetDiagnosticsFile<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiagnosticsFile = null;
@@ -2248,7 +2248,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Looks for test binaries for a specific <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">framework</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetFramework(this DotNetTestSettings toolSettings, string framework)
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = framework;
@@ -2259,7 +2259,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Looks for test binaries for a specific <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">framework</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetFramework(this DotNetTestSettings toolSettings)
+        public static T ResetFramework<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = null;
@@ -2272,7 +2272,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Filters out tests in the current project using the given expression. For more information, see the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-test#filter-option-details">Filter option details</a> section. For additional information and examples on how to use selective unit test filtering, see <a href="https://docs.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests">Running selective unit tests</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetFilter(this DotNetTestSettings toolSettings, string filter)
+        public static T SetFilter<T>(this T toolSettings, string filter) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Filter = filter;
@@ -2283,7 +2283,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Filters out tests in the current project using the given expression. For more information, see the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-test#filter-option-details">Filter option details</a> section. For additional information and examples on how to use selective unit test filtering, see <a href="https://docs.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests">Running selective unit tests</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetFilter(this DotNetTestSettings toolSettings)
+        public static T ResetFilter<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Filter = null;
@@ -2296,7 +2296,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a logger for test results.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetLogger(this DotNetTestSettings toolSettings, string logger)
+        public static T SetLogger<T>(this T toolSettings, string logger) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Logger = logger;
@@ -2307,7 +2307,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a logger for test results.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetLogger(this DotNetTestSettings toolSettings)
+        public static T ResetLogger<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Logger = null;
@@ -2320,7 +2320,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Does not build the test project prior to running it.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetNoBuild(this DotNetTestSettings toolSettings, bool? noBuild)
+        public static T SetNoBuild<T>(this T toolSettings, bool? noBuild) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = noBuild;
@@ -2331,7 +2331,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Does not build the test project prior to running it.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetNoBuild(this DotNetTestSettings toolSettings)
+        public static T ResetNoBuild<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = null;
@@ -2342,7 +2342,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Does not build the test project prior to running it.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings EnableNoBuild(this DotNetTestSettings toolSettings)
+        public static T EnableNoBuild<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = true;
@@ -2353,7 +2353,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Does not build the test project prior to running it.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings DisableNoBuild(this DotNetTestSettings toolSettings)
+        public static T DisableNoBuild<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = false;
@@ -2364,7 +2364,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Does not build the test project prior to running it.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ToggleNoBuild(this DotNetTestSettings toolSettings)
+        public static T ToggleNoBuild<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = !toolSettings.NoBuild;
@@ -2377,7 +2377,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore when running the command.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetNoRestore(this DotNetTestSettings toolSettings, bool? noRestore)
+        public static T SetNoRestore<T>(this T toolSettings, bool? noRestore) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = noRestore;
@@ -2388,7 +2388,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore when running the command.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetNoRestore(this DotNetTestSettings toolSettings)
+        public static T ResetNoRestore<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = null;
@@ -2399,7 +2399,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore when running the command.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings EnableNoRestore(this DotNetTestSettings toolSettings)
+        public static T EnableNoRestore<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = true;
@@ -2410,7 +2410,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore when running the command.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings DisableNoRestore(this DotNetTestSettings toolSettings)
+        public static T DisableNoRestore<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = false;
@@ -2421,7 +2421,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore when running the command.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ToggleNoRestore(this DotNetTestSettings toolSettings)
+        public static T ToggleNoRestore<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = !toolSettings.NoRestore;
@@ -2434,7 +2434,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Directory in which to find the binaries to run.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetOutput(this DotNetTestSettings toolSettings, string output)
+        public static T SetOutput<T>(this T toolSettings, string output) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -2445,7 +2445,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Directory in which to find the binaries to run.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetOutput(this DotNetTestSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -2458,7 +2458,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The directory where the test results are going to be placed. The specified directory will be created if it doesn't exist.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetResultsDirectory(this DotNetTestSettings toolSettings, string resultsDirectory)
+        public static T SetResultsDirectory<T>(this T toolSettings, string resultsDirectory) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResultsDirectory = resultsDirectory;
@@ -2469,7 +2469,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The directory where the test results are going to be placed. The specified directory will be created if it doesn't exist.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetResultsDirectory(this DotNetTestSettings toolSettings)
+        public static T ResetResultsDirectory<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResultsDirectory = null;
@@ -2482,7 +2482,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Settings to use when running tests.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetSettingsFile(this DotNetTestSettings toolSettings, string settingsFile)
+        public static T SetSettingsFile<T>(this T toolSettings, string settingsFile) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SettingsFile = settingsFile;
@@ -2493,7 +2493,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Settings to use when running tests.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetSettingsFile(this DotNetTestSettings toolSettings)
+        public static T ResetSettingsFile<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SettingsFile = null;
@@ -2506,7 +2506,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>List all of the discovered tests in the current project.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetListTests(this DotNetTestSettings toolSettings, bool? listTests)
+        public static T SetListTests<T>(this T toolSettings, bool? listTests) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListTests = listTests;
@@ -2517,7 +2517,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>List all of the discovered tests in the current project.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetListTests(this DotNetTestSettings toolSettings)
+        public static T ResetListTests<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListTests = null;
@@ -2528,7 +2528,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>List all of the discovered tests in the current project.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings EnableListTests(this DotNetTestSettings toolSettings)
+        public static T EnableListTests<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListTests = true;
@@ -2539,7 +2539,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>List all of the discovered tests in the current project.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings DisableListTests(this DotNetTestSettings toolSettings)
+        public static T DisableListTests<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListTests = false;
@@ -2550,7 +2550,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>List all of the discovered tests in the current project.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ToggleListTests(this DotNetTestSettings toolSettings)
+        public static T ToggleListTests<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListTests = !toolSettings.ListTests;
@@ -2563,7 +2563,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetVerbosity(this DotNetTestSettings toolSettings, DotNetVerbosity verbosity)
+        public static T SetVerbosity<T>(this T toolSettings, DotNetVerbosity verbosity) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = verbosity;
@@ -2574,7 +2574,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetVerbosity(this DotNetTestSettings toolSettings)
+        public static T ResetVerbosity<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = null;
@@ -2587,7 +2587,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetProperties(this DotNetTestSettings toolSettings, IDictionary<string, object> properties)
+        public static T SetProperties<T>(this T toolSettings, IDictionary<string, object> properties) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -2598,7 +2598,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ClearProperties(this DotNetTestSettings toolSettings)
+        public static T ClearProperties<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Clear();
@@ -2609,7 +2609,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings AddProperty(this DotNetTestSettings toolSettings, string propertyKey, object propertyValue)
+        public static T AddProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
@@ -2620,7 +2620,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings RemoveProperty(this DotNetTestSettings toolSettings, string propertyKey)
+        public static T RemoveProperty<T>(this T toolSettings, string propertyKey) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove(propertyKey);
@@ -2631,7 +2631,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetProperty(this DotNetTestSettings toolSettings, string propertyKey, object propertyValue)
+        public static T SetProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal[propertyKey] = propertyValue;
@@ -2644,7 +2644,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetDisableParallel(this DotNetTestSettings toolSettings, bool? disableParallel)
+        public static T SetDisableParallel<T>(this T toolSettings, bool? disableParallel) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = disableParallel;
@@ -2655,7 +2655,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetDisableParallel(this DotNetTestSettings toolSettings)
+        public static T ResetDisableParallel<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = null;
@@ -2666,7 +2666,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings EnableDisableParallel(this DotNetTestSettings toolSettings)
+        public static T EnableDisableParallel<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = true;
@@ -2677,7 +2677,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings DisableDisableParallel(this DotNetTestSettings toolSettings)
+        public static T DisableDisableParallel<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = false;
@@ -2688,7 +2688,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ToggleDisableParallel(this DotNetTestSettings toolSettings)
+        public static T ToggleDisableParallel<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = !toolSettings.DisableParallel;
@@ -2701,7 +2701,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetForce(this DotNetTestSettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -2712,7 +2712,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetForce(this DotNetTestSettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -2723,7 +2723,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings EnableForce(this DotNetTestSettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -2734,7 +2734,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings DisableForce(this DotNetTestSettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -2745,7 +2745,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ToggleForce(this DotNetTestSettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -2758,7 +2758,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetIgnoreFailedSources(this DotNetTestSettings toolSettings, bool? ignoreFailedSources)
+        public static T SetIgnoreFailedSources<T>(this T toolSettings, bool? ignoreFailedSources) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = ignoreFailedSources;
@@ -2769,7 +2769,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetIgnoreFailedSources(this DotNetTestSettings toolSettings)
+        public static T ResetIgnoreFailedSources<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = null;
@@ -2780,7 +2780,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings EnableIgnoreFailedSources(this DotNetTestSettings toolSettings)
+        public static T EnableIgnoreFailedSources<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = true;
@@ -2791,7 +2791,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings DisableIgnoreFailedSources(this DotNetTestSettings toolSettings)
+        public static T DisableIgnoreFailedSources<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = false;
@@ -2802,7 +2802,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ToggleIgnoreFailedSources(this DotNetTestSettings toolSettings)
+        public static T ToggleIgnoreFailedSources<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = !toolSettings.IgnoreFailedSources;
@@ -2815,7 +2815,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetNoCache(this DotNetTestSettings toolSettings, bool? noCache)
+        public static T SetNoCache<T>(this T toolSettings, bool? noCache) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = noCache;
@@ -2826,7 +2826,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetNoCache(this DotNetTestSettings toolSettings)
+        public static T ResetNoCache<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = null;
@@ -2837,7 +2837,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings EnableNoCache(this DotNetTestSettings toolSettings)
+        public static T EnableNoCache<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = true;
@@ -2848,7 +2848,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings DisableNoCache(this DotNetTestSettings toolSettings)
+        public static T DisableNoCache<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = false;
@@ -2859,7 +2859,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ToggleNoCache(this DotNetTestSettings toolSettings)
+        public static T ToggleNoCache<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = !toolSettings.NoCache;
@@ -2872,7 +2872,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetNoDependencies(this DotNetTestSettings toolSettings, bool? noDependencies)
+        public static T SetNoDependencies<T>(this T toolSettings, bool? noDependencies) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = noDependencies;
@@ -2883,7 +2883,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetNoDependencies(this DotNetTestSettings toolSettings)
+        public static T ResetNoDependencies<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = null;
@@ -2894,7 +2894,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings EnableNoDependencies(this DotNetTestSettings toolSettings)
+        public static T EnableNoDependencies<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = true;
@@ -2905,7 +2905,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings DisableNoDependencies(this DotNetTestSettings toolSettings)
+        public static T DisableNoDependencies<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = false;
@@ -2916,7 +2916,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ToggleNoDependencies(this DotNetTestSettings toolSettings)
+        public static T ToggleNoDependencies<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = !toolSettings.NoDependencies;
@@ -2929,7 +2929,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the directory for restored packages.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetPackageDirectory(this DotNetTestSettings toolSettings, string packageDirectory)
+        public static T SetPackageDirectory<T>(this T toolSettings, string packageDirectory) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageDirectory = packageDirectory;
@@ -2940,7 +2940,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the directory for restored packages.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetPackageDirectory(this DotNetTestSettings toolSettings)
+        public static T ResetPackageDirectory<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageDirectory = null;
@@ -2953,7 +2953,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetSources(this DotNetTestSettings toolSettings, params string[] sources)
+        public static T SetSources<T>(this T toolSettings, params string[] sources) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal = sources.ToList();
@@ -2964,7 +2964,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetSources(this DotNetTestSettings toolSettings, IEnumerable<string> sources)
+        public static T SetSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal = sources.ToList();
@@ -2975,7 +2975,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings AddSources(this DotNetTestSettings toolSettings, params string[] sources)
+        public static T AddSources<T>(this T toolSettings, params string[] sources) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.AddRange(sources);
@@ -2986,7 +2986,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings AddSources(this DotNetTestSettings toolSettings, IEnumerable<string> sources)
+        public static T AddSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.AddRange(sources);
@@ -2997,7 +2997,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ClearSources(this DotNetTestSettings toolSettings)
+        public static T ClearSources<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.Clear();
@@ -3008,7 +3008,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings RemoveSources(this DotNetTestSettings toolSettings, params string[] sources)
+        public static T RemoveSources<T>(this T toolSettings, params string[] sources) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(sources);
@@ -3020,7 +3020,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings RemoveSources(this DotNetTestSettings toolSettings, IEnumerable<string> sources)
+        public static T RemoveSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(sources);
@@ -3034,7 +3034,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetUseLockFile(this DotNetTestSettings toolSettings, bool? useLockFile)
+        public static T SetUseLockFile<T>(this T toolSettings, bool? useLockFile) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = useLockFile;
@@ -3045,7 +3045,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetUseLockFile(this DotNetTestSettings toolSettings)
+        public static T ResetUseLockFile<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = null;
@@ -3056,7 +3056,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings EnableUseLockFile(this DotNetTestSettings toolSettings)
+        public static T EnableUseLockFile<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = true;
@@ -3067,7 +3067,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings DisableUseLockFile(this DotNetTestSettings toolSettings)
+        public static T DisableUseLockFile<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = false;
@@ -3078,7 +3078,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ToggleUseLockFile(this DotNetTestSettings toolSettings)
+        public static T ToggleUseLockFile<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = !toolSettings.UseLockFile;
@@ -3091,7 +3091,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetLockedMode(this DotNetTestSettings toolSettings, bool? lockedMode)
+        public static T SetLockedMode<T>(this T toolSettings, bool? lockedMode) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = lockedMode;
@@ -3102,7 +3102,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetLockedMode(this DotNetTestSettings toolSettings)
+        public static T ResetLockedMode<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = null;
@@ -3113,7 +3113,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings EnableLockedMode(this DotNetTestSettings toolSettings)
+        public static T EnableLockedMode<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = true;
@@ -3124,7 +3124,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings DisableLockedMode(this DotNetTestSettings toolSettings)
+        public static T DisableLockedMode<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = false;
@@ -3135,7 +3135,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ToggleLockedMode(this DotNetTestSettings toolSettings)
+        public static T ToggleLockedMode<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = !toolSettings.LockedMode;
@@ -3148,7 +3148,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetLockFilePath(this DotNetTestSettings toolSettings, string lockFilePath)
+        public static T SetLockFilePath<T>(this T toolSettings, string lockFilePath) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockFilePath = lockFilePath;
@@ -3159,7 +3159,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetLockFilePath(this DotNetTestSettings toolSettings)
+        public static T ResetLockFilePath<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockFilePath = null;
@@ -3172,7 +3172,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetForceEvaluate(this DotNetTestSettings toolSettings, bool? forceEvaluate)
+        public static T SetForceEvaluate<T>(this T toolSettings, bool? forceEvaluate) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = forceEvaluate;
@@ -3183,7 +3183,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetForceEvaluate(this DotNetTestSettings toolSettings)
+        public static T ResetForceEvaluate<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = null;
@@ -3194,7 +3194,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings EnableForceEvaluate(this DotNetTestSettings toolSettings)
+        public static T EnableForceEvaluate<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = true;
@@ -3205,7 +3205,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings DisableForceEvaluate(this DotNetTestSettings toolSettings)
+        public static T DisableForceEvaluate<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = false;
@@ -3216,7 +3216,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ToggleForceEvaluate(this DotNetTestSettings toolSettings)
+        public static T ToggleForceEvaluate<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = !toolSettings.ForceEvaluate;
@@ -3229,7 +3229,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetRuntime(this DotNetTestSettings toolSettings, string runtime)
+        public static T SetRuntime<T>(this T toolSettings, string runtime) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = runtime;
@@ -3240,7 +3240,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetRuntime(this DotNetTestSettings toolSettings)
+        public static T ResetRuntime<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = null;
@@ -3263,7 +3263,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Configuration to use for building the project. The default value is Debug.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetConfiguration(this DotNetRunSettings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -3274,7 +3274,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Configuration to use for building the project. The default value is Debug.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetConfiguration(this DotNetRunSettings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -3287,7 +3287,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Builds and runs the app using the specified framework. The framework must be specified in the project file.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetFramework(this DotNetRunSettings toolSettings, string framework)
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = framework;
@@ -3298,7 +3298,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Builds and runs the app using the specified framework. The framework must be specified in the project file.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetFramework(this DotNetRunSettings toolSettings)
+        public static T ResetFramework<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = null;
@@ -3311,7 +3311,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The name of the launch profile (if any) to use when launching the application. Launch profiles are defined in the <em>launchSettings.json</em> file and are typically called <c>Development</c>, <c>Staging</c> and <c>Production</c>. For more information, see <a href="https://docs.microsoft.com/en-us/aspnetcore/fundamentals/environments">Working with multiple environments</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetLaunchProfile(this DotNetRunSettings toolSettings, string launchProfile)
+        public static T SetLaunchProfile<T>(this T toolSettings, string launchProfile) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LaunchProfile = launchProfile;
@@ -3322,7 +3322,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The name of the launch profile (if any) to use when launching the application. Launch profiles are defined in the <em>launchSettings.json</em> file and are typically called <c>Development</c>, <c>Staging</c> and <c>Production</c>. For more information, see <a href="https://docs.microsoft.com/en-us/aspnetcore/fundamentals/environments">Working with multiple environments</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetLaunchProfile(this DotNetRunSettings toolSettings)
+        public static T ResetLaunchProfile<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LaunchProfile = null;
@@ -3335,7 +3335,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't build the project before running.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetNoBuild(this DotNetRunSettings toolSettings, bool? noBuild)
+        public static T SetNoBuild<T>(this T toolSettings, bool? noBuild) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = noBuild;
@@ -3346,7 +3346,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't build the project before running.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetNoBuild(this DotNetRunSettings toolSettings)
+        public static T ResetNoBuild<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = null;
@@ -3357,7 +3357,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't build the project before running.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings EnableNoBuild(this DotNetRunSettings toolSettings)
+        public static T EnableNoBuild<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = true;
@@ -3368,7 +3368,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't build the project before running.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings DisableNoBuild(this DotNetRunSettings toolSettings)
+        public static T DisableNoBuild<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = false;
@@ -3379,7 +3379,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't build the project before running.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ToggleNoBuild(this DotNetRunSettings toolSettings)
+        public static T ToggleNoBuild<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = !toolSettings.NoBuild;
@@ -3392,7 +3392,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't attempt to use <em>launchSettings.json</em> to configure the application.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetNoLaunchProfile(this DotNetRunSettings toolSettings, bool? noLaunchProfile)
+        public static T SetNoLaunchProfile<T>(this T toolSettings, bool? noLaunchProfile) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLaunchProfile = noLaunchProfile;
@@ -3403,7 +3403,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't attempt to use <em>launchSettings.json</em> to configure the application.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetNoLaunchProfile(this DotNetRunSettings toolSettings)
+        public static T ResetNoLaunchProfile<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLaunchProfile = null;
@@ -3414,7 +3414,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't attempt to use <em>launchSettings.json</em> to configure the application.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings EnableNoLaunchProfile(this DotNetRunSettings toolSettings)
+        public static T EnableNoLaunchProfile<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLaunchProfile = true;
@@ -3425,7 +3425,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't attempt to use <em>launchSettings.json</em> to configure the application.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings DisableNoLaunchProfile(this DotNetRunSettings toolSettings)
+        public static T DisableNoLaunchProfile<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLaunchProfile = false;
@@ -3436,7 +3436,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't attempt to use <em>launchSettings.json</em> to configure the application.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ToggleNoLaunchProfile(this DotNetRunSettings toolSettings)
+        public static T ToggleNoLaunchProfile<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoLaunchProfile = !toolSettings.NoLaunchProfile;
@@ -3449,7 +3449,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore when running the command.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetNoRestore(this DotNetRunSettings toolSettings, bool? noRestore)
+        public static T SetNoRestore<T>(this T toolSettings, bool? noRestore) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = noRestore;
@@ -3460,7 +3460,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore when running the command.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetNoRestore(this DotNetRunSettings toolSettings)
+        public static T ResetNoRestore<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = null;
@@ -3471,7 +3471,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore when running the command.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings EnableNoRestore(this DotNetRunSettings toolSettings)
+        public static T EnableNoRestore<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = true;
@@ -3482,7 +3482,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore when running the command.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings DisableNoRestore(this DotNetRunSettings toolSettings)
+        public static T DisableNoRestore<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = false;
@@ -3493,7 +3493,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore when running the command.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ToggleNoRestore(this DotNetRunSettings toolSettings)
+        public static T ToggleNoRestore<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = !toolSettings.NoRestore;
@@ -3506,7 +3506,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the path and name of the project file. (See the NOTE.) It defaults to the current directory if not specified.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetProjectFile(this DotNetRunSettings toolSettings, string projectFile)
+        public static T SetProjectFile<T>(this T toolSettings, string projectFile) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProjectFile = projectFile;
@@ -3517,7 +3517,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the path and name of the project file. (See the NOTE.) It defaults to the current directory if not specified.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetProjectFile(this DotNetRunSettings toolSettings)
+        public static T ResetProjectFile<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProjectFile = null;
@@ -3530,7 +3530,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Arguments passed to the application being run.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetApplicationArguments(this DotNetRunSettings toolSettings, string applicationArguments)
+        public static T SetApplicationArguments<T>(this T toolSettings, string applicationArguments) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApplicationArguments = applicationArguments;
@@ -3541,7 +3541,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Arguments passed to the application being run.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetApplicationArguments(this DotNetRunSettings toolSettings)
+        public static T ResetApplicationArguments<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApplicationArguments = null;
@@ -3554,7 +3554,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetDisableParallel(this DotNetRunSettings toolSettings, bool? disableParallel)
+        public static T SetDisableParallel<T>(this T toolSettings, bool? disableParallel) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = disableParallel;
@@ -3565,7 +3565,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetDisableParallel(this DotNetRunSettings toolSettings)
+        public static T ResetDisableParallel<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = null;
@@ -3576,7 +3576,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings EnableDisableParallel(this DotNetRunSettings toolSettings)
+        public static T EnableDisableParallel<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = true;
@@ -3587,7 +3587,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings DisableDisableParallel(this DotNetRunSettings toolSettings)
+        public static T DisableDisableParallel<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = false;
@@ -3598,7 +3598,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ToggleDisableParallel(this DotNetRunSettings toolSettings)
+        public static T ToggleDisableParallel<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = !toolSettings.DisableParallel;
@@ -3611,7 +3611,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetForce(this DotNetRunSettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -3622,7 +3622,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetForce(this DotNetRunSettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -3633,7 +3633,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings EnableForce(this DotNetRunSettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -3644,7 +3644,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings DisableForce(this DotNetRunSettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -3655,7 +3655,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ToggleForce(this DotNetRunSettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -3668,7 +3668,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetIgnoreFailedSources(this DotNetRunSettings toolSettings, bool? ignoreFailedSources)
+        public static T SetIgnoreFailedSources<T>(this T toolSettings, bool? ignoreFailedSources) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = ignoreFailedSources;
@@ -3679,7 +3679,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetIgnoreFailedSources(this DotNetRunSettings toolSettings)
+        public static T ResetIgnoreFailedSources<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = null;
@@ -3690,7 +3690,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings EnableIgnoreFailedSources(this DotNetRunSettings toolSettings)
+        public static T EnableIgnoreFailedSources<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = true;
@@ -3701,7 +3701,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings DisableIgnoreFailedSources(this DotNetRunSettings toolSettings)
+        public static T DisableIgnoreFailedSources<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = false;
@@ -3712,7 +3712,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ToggleIgnoreFailedSources(this DotNetRunSettings toolSettings)
+        public static T ToggleIgnoreFailedSources<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = !toolSettings.IgnoreFailedSources;
@@ -3725,7 +3725,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetNoCache(this DotNetRunSettings toolSettings, bool? noCache)
+        public static T SetNoCache<T>(this T toolSettings, bool? noCache) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = noCache;
@@ -3736,7 +3736,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetNoCache(this DotNetRunSettings toolSettings)
+        public static T ResetNoCache<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = null;
@@ -3747,7 +3747,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings EnableNoCache(this DotNetRunSettings toolSettings)
+        public static T EnableNoCache<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = true;
@@ -3758,7 +3758,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings DisableNoCache(this DotNetRunSettings toolSettings)
+        public static T DisableNoCache<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = false;
@@ -3769,7 +3769,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ToggleNoCache(this DotNetRunSettings toolSettings)
+        public static T ToggleNoCache<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = !toolSettings.NoCache;
@@ -3782,7 +3782,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetNoDependencies(this DotNetRunSettings toolSettings, bool? noDependencies)
+        public static T SetNoDependencies<T>(this T toolSettings, bool? noDependencies) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = noDependencies;
@@ -3793,7 +3793,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetNoDependencies(this DotNetRunSettings toolSettings)
+        public static T ResetNoDependencies<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = null;
@@ -3804,7 +3804,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings EnableNoDependencies(this DotNetRunSettings toolSettings)
+        public static T EnableNoDependencies<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = true;
@@ -3815,7 +3815,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings DisableNoDependencies(this DotNetRunSettings toolSettings)
+        public static T DisableNoDependencies<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = false;
@@ -3826,7 +3826,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ToggleNoDependencies(this DotNetRunSettings toolSettings)
+        public static T ToggleNoDependencies<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = !toolSettings.NoDependencies;
@@ -3839,7 +3839,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the directory for restored packages.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetPackageDirectory(this DotNetRunSettings toolSettings, string packageDirectory)
+        public static T SetPackageDirectory<T>(this T toolSettings, string packageDirectory) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageDirectory = packageDirectory;
@@ -3850,7 +3850,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the directory for restored packages.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetPackageDirectory(this DotNetRunSettings toolSettings)
+        public static T ResetPackageDirectory<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageDirectory = null;
@@ -3863,7 +3863,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetSources(this DotNetRunSettings toolSettings, params string[] sources)
+        public static T SetSources<T>(this T toolSettings, params string[] sources) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal = sources.ToList();
@@ -3874,7 +3874,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetSources(this DotNetRunSettings toolSettings, IEnumerable<string> sources)
+        public static T SetSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal = sources.ToList();
@@ -3885,7 +3885,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings AddSources(this DotNetRunSettings toolSettings, params string[] sources)
+        public static T AddSources<T>(this T toolSettings, params string[] sources) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.AddRange(sources);
@@ -3896,7 +3896,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings AddSources(this DotNetRunSettings toolSettings, IEnumerable<string> sources)
+        public static T AddSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.AddRange(sources);
@@ -3907,7 +3907,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ClearSources(this DotNetRunSettings toolSettings)
+        public static T ClearSources<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.Clear();
@@ -3918,7 +3918,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings RemoveSources(this DotNetRunSettings toolSettings, params string[] sources)
+        public static T RemoveSources<T>(this T toolSettings, params string[] sources) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(sources);
@@ -3930,7 +3930,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings RemoveSources(this DotNetRunSettings toolSettings, IEnumerable<string> sources)
+        public static T RemoveSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(sources);
@@ -3944,7 +3944,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetUseLockFile(this DotNetRunSettings toolSettings, bool? useLockFile)
+        public static T SetUseLockFile<T>(this T toolSettings, bool? useLockFile) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = useLockFile;
@@ -3955,7 +3955,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetUseLockFile(this DotNetRunSettings toolSettings)
+        public static T ResetUseLockFile<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = null;
@@ -3966,7 +3966,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings EnableUseLockFile(this DotNetRunSettings toolSettings)
+        public static T EnableUseLockFile<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = true;
@@ -3977,7 +3977,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings DisableUseLockFile(this DotNetRunSettings toolSettings)
+        public static T DisableUseLockFile<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = false;
@@ -3988,7 +3988,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ToggleUseLockFile(this DotNetRunSettings toolSettings)
+        public static T ToggleUseLockFile<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = !toolSettings.UseLockFile;
@@ -4001,7 +4001,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetLockedMode(this DotNetRunSettings toolSettings, bool? lockedMode)
+        public static T SetLockedMode<T>(this T toolSettings, bool? lockedMode) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = lockedMode;
@@ -4012,7 +4012,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetLockedMode(this DotNetRunSettings toolSettings)
+        public static T ResetLockedMode<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = null;
@@ -4023,7 +4023,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings EnableLockedMode(this DotNetRunSettings toolSettings)
+        public static T EnableLockedMode<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = true;
@@ -4034,7 +4034,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings DisableLockedMode(this DotNetRunSettings toolSettings)
+        public static T DisableLockedMode<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = false;
@@ -4045,7 +4045,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ToggleLockedMode(this DotNetRunSettings toolSettings)
+        public static T ToggleLockedMode<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = !toolSettings.LockedMode;
@@ -4058,7 +4058,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetLockFilePath(this DotNetRunSettings toolSettings, string lockFilePath)
+        public static T SetLockFilePath<T>(this T toolSettings, string lockFilePath) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockFilePath = lockFilePath;
@@ -4069,7 +4069,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetLockFilePath(this DotNetRunSettings toolSettings)
+        public static T ResetLockFilePath<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockFilePath = null;
@@ -4082,7 +4082,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetForceEvaluate(this DotNetRunSettings toolSettings, bool? forceEvaluate)
+        public static T SetForceEvaluate<T>(this T toolSettings, bool? forceEvaluate) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = forceEvaluate;
@@ -4093,7 +4093,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetForceEvaluate(this DotNetRunSettings toolSettings)
+        public static T ResetForceEvaluate<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = null;
@@ -4104,7 +4104,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings EnableForceEvaluate(this DotNetRunSettings toolSettings)
+        public static T EnableForceEvaluate<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = true;
@@ -4115,7 +4115,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings DisableForceEvaluate(this DotNetRunSettings toolSettings)
+        public static T DisableForceEvaluate<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = false;
@@ -4126,7 +4126,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ToggleForceEvaluate(this DotNetRunSettings toolSettings)
+        public static T ToggleForceEvaluate<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = !toolSettings.ForceEvaluate;
@@ -4139,7 +4139,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetRuntime(this DotNetRunSettings toolSettings, string runtime)
+        public static T SetRuntime<T>(this T toolSettings, string runtime) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = runtime;
@@ -4150,7 +4150,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetRuntime(this DotNetRunSettings toolSettings)
+        public static T ResetRuntime<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = null;
@@ -4163,7 +4163,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetProperties(this DotNetRunSettings toolSettings, IDictionary<string, object> properties)
+        public static T SetProperties<T>(this T toolSettings, IDictionary<string, object> properties) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -4174,7 +4174,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ClearProperties(this DotNetRunSettings toolSettings)
+        public static T ClearProperties<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Clear();
@@ -4185,7 +4185,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings AddProperty(this DotNetRunSettings toolSettings, string propertyKey, object propertyValue)
+        public static T AddProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
@@ -4196,7 +4196,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings RemoveProperty(this DotNetRunSettings toolSettings, string propertyKey)
+        public static T RemoveProperty<T>(this T toolSettings, string propertyKey) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove(propertyKey);
@@ -4207,7 +4207,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetProperty(this DotNetRunSettings toolSettings, string propertyKey, object propertyValue)
+        public static T SetProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal[propertyKey] = propertyValue;
@@ -4219,7 +4219,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetRunCodeAnalysis(this DotNetRunSettings toolSettings, bool? runCodeAnalysis)
+        public static T SetRunCodeAnalysis<T>(this T toolSettings, bool? runCodeAnalysis) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RunCodeAnalysis"] = runCodeAnalysis;
@@ -4230,7 +4230,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetRunCodeAnalysis(this DotNetRunSettings toolSettings)
+        public static T ResetRunCodeAnalysis<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("RunCodeAnalysis");
@@ -4241,7 +4241,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings EnableRunCodeAnalysis(this DotNetRunSettings toolSettings)
+        public static T EnableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RunCodeAnalysis"] = true;
@@ -4252,7 +4252,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings DisableRunCodeAnalysis(this DotNetRunSettings toolSettings)
+        public static T DisableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RunCodeAnalysis"] = false;
@@ -4263,7 +4263,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ToggleRunCodeAnalysis(this DotNetRunSettings toolSettings)
+        public static T ToggleRunCodeAnalysis<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "RunCodeAnalysis");
@@ -4276,7 +4276,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetNoWarns(this DotNetRunSettings toolSettings, params int[] noWarn)
+        public static T SetNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -4287,7 +4287,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetNoWarns(this DotNetRunSettings toolSettings, IEnumerable<int> noWarn)
+        public static T SetNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -4298,7 +4298,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings AddNoWarns(this DotNetRunSettings toolSettings, params int[] noWarn)
+        public static T AddNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -4309,7 +4309,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings AddNoWarns(this DotNetRunSettings toolSettings, IEnumerable<int> noWarn)
+        public static T AddNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -4320,7 +4320,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ClearNoWarns(this DotNetRunSettings toolSettings)
+        public static T ClearNoWarns<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("NoWarn");
@@ -4331,7 +4331,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings RemoveNoWarns(this DotNetRunSettings toolSettings, params int[] noWarn)
+        public static T RemoveNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -4342,7 +4342,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings RemoveNoWarns(this DotNetRunSettings toolSettings, IEnumerable<int> noWarn)
+        public static T RemoveNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -4355,7 +4355,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetWarningsAsErrors(this DotNetRunSettings toolSettings, params int[] warningsAsErrors)
+        public static T SetWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -4366,7 +4366,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetWarningsAsErrors(this DotNetRunSettings toolSettings, IEnumerable<int> warningsAsErrors)
+        public static T SetWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -4377,7 +4377,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings AddWarningsAsErrors(this DotNetRunSettings toolSettings, params int[] warningsAsErrors)
+        public static T AddWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -4388,7 +4388,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings AddWarningsAsErrors(this DotNetRunSettings toolSettings, IEnumerable<int> warningsAsErrors)
+        public static T AddWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -4399,7 +4399,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ClearWarningsAsErrors(this DotNetRunSettings toolSettings)
+        public static T ClearWarningsAsErrors<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("WarningsAsErrors");
@@ -4410,7 +4410,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings RemoveWarningsAsErrors(this DotNetRunSettings toolSettings, params int[] warningsAsErrors)
+        public static T RemoveWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -4421,7 +4421,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings RemoveWarningsAsErrors(this DotNetRunSettings toolSettings, IEnumerable<int> warningsAsErrors)
+        public static T RemoveWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -4434,7 +4434,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetWarningLevel(this DotNetRunSettings toolSettings, int? warningLevel)
+        public static T SetWarningLevel<T>(this T toolSettings, int? warningLevel) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["WarningLevel"] = warningLevel;
@@ -4445,7 +4445,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetWarningLevel(this DotNetRunSettings toolSettings)
+        public static T ResetWarningLevel<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("WarningLevel");
@@ -4458,7 +4458,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetTreatWarningsAsErrors(this DotNetRunSettings toolSettings, bool? treatWarningsAsErrors)
+        public static T SetTreatWarningsAsErrors<T>(this T toolSettings, bool? treatWarningsAsErrors) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = treatWarningsAsErrors;
@@ -4469,7 +4469,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetTreatWarningsAsErrors(this DotNetRunSettings toolSettings)
+        public static T ResetTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("TreatWarningsAsErrors");
@@ -4480,7 +4480,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings EnableTreatWarningsAsErrors(this DotNetRunSettings toolSettings)
+        public static T EnableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = true;
@@ -4491,7 +4491,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings DisableTreatWarningsAsErrors(this DotNetRunSettings toolSettings)
+        public static T DisableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = false;
@@ -4502,7 +4502,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ToggleTreatWarningsAsErrors(this DotNetRunSettings toolSettings)
+        public static T ToggleTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "TreatWarningsAsErrors");
@@ -4515,7 +4515,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetAssemblyVersion(this DotNetRunSettings toolSettings, string assemblyVersion)
+        public static T SetAssemblyVersion<T>(this T toolSettings, string assemblyVersion) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["AssemblyVersion"] = assemblyVersion;
@@ -4526,7 +4526,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetAssemblyVersion(this DotNetRunSettings toolSettings)
+        public static T ResetAssemblyVersion<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("AssemblyVersion");
@@ -4539,7 +4539,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetFileVersion(this DotNetRunSettings toolSettings, string fileVersion)
+        public static T SetFileVersion<T>(this T toolSettings, string fileVersion) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["FileVersion"] = fileVersion;
@@ -4550,7 +4550,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetFileVersion(this DotNetRunSettings toolSettings)
+        public static T ResetFileVersion<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("FileVersion");
@@ -4563,7 +4563,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetInformationalVersion(this DotNetRunSettings toolSettings, string informationalVersion)
+        public static T SetInformationalVersion<T>(this T toolSettings, string informationalVersion) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["InformationalVersion"] = informationalVersion;
@@ -4574,7 +4574,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetInformationalVersion(this DotNetRunSettings toolSettings)
+        public static T ResetInformationalVersion<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("InformationalVersion");
@@ -4587,7 +4587,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetPackageId(this DotNetRunSettings toolSettings, string packageId)
+        public static T SetPackageId<T>(this T toolSettings, string packageId) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageId"] = packageId;
@@ -4598,7 +4598,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetPackageId(this DotNetRunSettings toolSettings)
+        public static T ResetPackageId<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageId");
@@ -4611,7 +4611,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetVersion(this DotNetRunSettings toolSettings, string version)
+        public static T SetVersion<T>(this T toolSettings, string version) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Version"] = version;
@@ -4622,7 +4622,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetVersion(this DotNetRunSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Version");
@@ -4635,7 +4635,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetVersionPrefix(this DotNetRunSettings toolSettings, string versionPrefix)
+        public static T SetVersionPrefix<T>(this T toolSettings, string versionPrefix) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["VersionPrefix"] = versionPrefix;
@@ -4646,7 +4646,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetVersionPrefix(this DotNetRunSettings toolSettings)
+        public static T ResetVersionPrefix<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("VersionPrefix");
@@ -4659,7 +4659,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetAuthors(this DotNetRunSettings toolSettings, params string[] authors)
+        public static T SetAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -4670,7 +4670,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetAuthors(this DotNetRunSettings toolSettings, IEnumerable<string> authors)
+        public static T SetAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -4681,7 +4681,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings AddAuthors(this DotNetRunSettings toolSettings, params string[] authors)
+        public static T AddAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -4692,7 +4692,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings AddAuthors(this DotNetRunSettings toolSettings, IEnumerable<string> authors)
+        public static T AddAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -4703,7 +4703,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ClearAuthors(this DotNetRunSettings toolSettings)
+        public static T ClearAuthors<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Authors");
@@ -4714,7 +4714,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings RemoveAuthors(this DotNetRunSettings toolSettings, params string[] authors)
+        public static T RemoveAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -4725,7 +4725,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings RemoveAuthors(this DotNetRunSettings toolSettings, IEnumerable<string> authors)
+        public static T RemoveAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -4738,7 +4738,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetTitle(this DotNetRunSettings toolSettings, string title)
+        public static T SetTitle<T>(this T toolSettings, string title) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Title"] = title;
@@ -4749,7 +4749,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetTitle(this DotNetRunSettings toolSettings)
+        public static T ResetTitle<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Title");
@@ -4762,7 +4762,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetDescription(this DotNetRunSettings toolSettings, string description)
+        public static T SetDescription<T>(this T toolSettings, string description) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Description"] = description;
@@ -4773,7 +4773,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetDescription(this DotNetRunSettings toolSettings)
+        public static T ResetDescription<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Description");
@@ -4786,7 +4786,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetCopyright(this DotNetRunSettings toolSettings, string copyright)
+        public static T SetCopyright<T>(this T toolSettings, string copyright) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Copyright"] = copyright;
@@ -4797,7 +4797,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetCopyright(this DotNetRunSettings toolSettings)
+        public static T ResetCopyright<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Copyright");
@@ -4810,7 +4810,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetPackageRequireLicenseAcceptance(this DotNetRunSettings toolSettings, bool? packageRequireLicenseAcceptance)
+        public static T SetPackageRequireLicenseAcceptance<T>(this T toolSettings, bool? packageRequireLicenseAcceptance) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = packageRequireLicenseAcceptance;
@@ -4821,7 +4821,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetPackageRequireLicenseAcceptance(this DotNetRunSettings toolSettings)
+        public static T ResetPackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageRequireLicenseAcceptance");
@@ -4832,7 +4832,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings EnablePackageRequireLicenseAcceptance(this DotNetRunSettings toolSettings)
+        public static T EnablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = true;
@@ -4843,7 +4843,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings DisablePackageRequireLicenseAcceptance(this DotNetRunSettings toolSettings)
+        public static T DisablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = false;
@@ -4854,7 +4854,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings TogglePackageRequireLicenseAcceptance(this DotNetRunSettings toolSettings)
+        public static T TogglePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PackageRequireLicenseAcceptance");
@@ -4867,7 +4867,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetPackageLicenseUrl(this DotNetRunSettings toolSettings, string packageLicenseUrl)
+        public static T SetPackageLicenseUrl<T>(this T toolSettings, string packageLicenseUrl) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageLicenseUrl"] = packageLicenseUrl;
@@ -4878,7 +4878,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetPackageLicenseUrl(this DotNetRunSettings toolSettings)
+        public static T ResetPackageLicenseUrl<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageLicenseUrl");
@@ -4891,7 +4891,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetPackageProjectUrl(this DotNetRunSettings toolSettings, string packageProjectUrl)
+        public static T SetPackageProjectUrl<T>(this T toolSettings, string packageProjectUrl) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageProjectUrl"] = packageProjectUrl;
@@ -4902,7 +4902,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetPackageProjectUrl(this DotNetRunSettings toolSettings)
+        public static T ResetPackageProjectUrl<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageProjectUrl");
@@ -4915,7 +4915,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetPackageIconUrl(this DotNetRunSettings toolSettings, string packageIconUrl)
+        public static T SetPackageIconUrl<T>(this T toolSettings, string packageIconUrl) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageIconUrl"] = packageIconUrl;
@@ -4926,7 +4926,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetPackageIconUrl(this DotNetRunSettings toolSettings)
+        public static T ResetPackageIconUrl<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageIconUrl");
@@ -4939,7 +4939,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetPackageTags(this DotNetRunSettings toolSettings, params string[] packageTags)
+        public static T SetPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -4950,7 +4950,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetPackageTags(this DotNetRunSettings toolSettings, IEnumerable<string> packageTags)
+        public static T SetPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -4961,7 +4961,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings AddPackageTags(this DotNetRunSettings toolSettings, params string[] packageTags)
+        public static T AddPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -4972,7 +4972,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings AddPackageTags(this DotNetRunSettings toolSettings, IEnumerable<string> packageTags)
+        public static T AddPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -4983,7 +4983,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ClearPackageTags(this DotNetRunSettings toolSettings)
+        public static T ClearPackageTags<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageTags");
@@ -4994,7 +4994,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings RemovePackageTags(this DotNetRunSettings toolSettings, params string[] packageTags)
+        public static T RemovePackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -5005,7 +5005,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings RemovePackageTags(this DotNetRunSettings toolSettings, IEnumerable<string> packageTags)
+        public static T RemovePackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -5018,7 +5018,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetPackageReleaseNotes(this DotNetRunSettings toolSettings, string packageReleaseNotes)
+        public static T SetPackageReleaseNotes<T>(this T toolSettings, string packageReleaseNotes) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageReleaseNotes"] = packageReleaseNotes;
@@ -5029,7 +5029,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetPackageReleaseNotes(this DotNetRunSettings toolSettings)
+        public static T ResetPackageReleaseNotes<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageReleaseNotes");
@@ -5042,7 +5042,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetRepositoryUrl(this DotNetRunSettings toolSettings, string repositoryUrl)
+        public static T SetRepositoryUrl<T>(this T toolSettings, string repositoryUrl) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RepositoryUrl"] = repositoryUrl;
@@ -5053,7 +5053,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetRepositoryUrl(this DotNetRunSettings toolSettings)
+        public static T ResetRepositoryUrl<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("RepositoryUrl");
@@ -5066,7 +5066,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetRepositoryType(this DotNetRunSettings toolSettings, string repositoryType)
+        public static T SetRepositoryType<T>(this T toolSettings, string repositoryType) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RepositoryType"] = repositoryType;
@@ -5077,7 +5077,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetRepositoryType(this DotNetRunSettings toolSettings)
+        public static T ResetRepositoryType<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("RepositoryType");
@@ -5090,7 +5090,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Format for packaging symbols.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings SetSymbolPackageFormat(this DotNetRunSettings toolSettings, DotNetSymbolPackageFormat symbolPackageFormat)
+        public static T SetSymbolPackageFormat<T>(this T toolSettings, DotNetSymbolPackageFormat symbolPackageFormat) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
@@ -5101,7 +5101,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Format for packaging symbols.</p>
         /// </summary>
         [Pure]
-        public static DotNetRunSettings ResetSymbolPackageFormat(this DotNetRunSettings toolSettings)
+        public static T ResetSymbolPackageFormat<T>(this T toolSettings) where T : DotNetRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
@@ -5125,7 +5125,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Optional path to the project file to restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetProjectFile(this DotNetRestoreSettings toolSettings, string projectFile)
+        public static T SetProjectFile<T>(this T toolSettings, string projectFile) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProjectFile = projectFile;
@@ -5136,7 +5136,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Optional path to the project file to restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetProjectFile(this DotNetRestoreSettings toolSettings)
+        public static T ResetProjectFile<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProjectFile = null;
@@ -5149,7 +5149,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The NuGet configuration file (<em>NuGet.config</em>) to use for the restore operation.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetConfigFile(this DotNetRestoreSettings toolSettings, string configFile)
+        public static T SetConfigFile<T>(this T toolSettings, string configFile) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigFile = configFile;
@@ -5160,7 +5160,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The NuGet configuration file (<em>NuGet.config</em>) to use for the restore operation.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetConfigFile(this DotNetRestoreSettings toolSettings)
+        public static T ResetConfigFile<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigFile = null;
@@ -5173,7 +5173,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetVerbosity(this DotNetRestoreSettings toolSettings, DotNetVerbosity verbosity)
+        public static T SetVerbosity<T>(this T toolSettings, DotNetVerbosity verbosity) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = verbosity;
@@ -5184,7 +5184,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetVerbosity(this DotNetRestoreSettings toolSettings)
+        public static T ResetVerbosity<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = null;
@@ -5197,7 +5197,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetDisableParallel(this DotNetRestoreSettings toolSettings, bool? disableParallel)
+        public static T SetDisableParallel<T>(this T toolSettings, bool? disableParallel) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = disableParallel;
@@ -5208,7 +5208,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetDisableParallel(this DotNetRestoreSettings toolSettings)
+        public static T ResetDisableParallel<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = null;
@@ -5219,7 +5219,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings EnableDisableParallel(this DotNetRestoreSettings toolSettings)
+        public static T EnableDisableParallel<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = true;
@@ -5230,7 +5230,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings DisableDisableParallel(this DotNetRestoreSettings toolSettings)
+        public static T DisableDisableParallel<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = false;
@@ -5241,7 +5241,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ToggleDisableParallel(this DotNetRestoreSettings toolSettings)
+        public static T ToggleDisableParallel<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = !toolSettings.DisableParallel;
@@ -5254,7 +5254,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetForce(this DotNetRestoreSettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -5265,7 +5265,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetForce(this DotNetRestoreSettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -5276,7 +5276,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings EnableForce(this DotNetRestoreSettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -5287,7 +5287,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings DisableForce(this DotNetRestoreSettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -5298,7 +5298,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ToggleForce(this DotNetRestoreSettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -5311,7 +5311,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetIgnoreFailedSources(this DotNetRestoreSettings toolSettings, bool? ignoreFailedSources)
+        public static T SetIgnoreFailedSources<T>(this T toolSettings, bool? ignoreFailedSources) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = ignoreFailedSources;
@@ -5322,7 +5322,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetIgnoreFailedSources(this DotNetRestoreSettings toolSettings)
+        public static T ResetIgnoreFailedSources<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = null;
@@ -5333,7 +5333,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings EnableIgnoreFailedSources(this DotNetRestoreSettings toolSettings)
+        public static T EnableIgnoreFailedSources<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = true;
@@ -5344,7 +5344,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings DisableIgnoreFailedSources(this DotNetRestoreSettings toolSettings)
+        public static T DisableIgnoreFailedSources<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = false;
@@ -5355,7 +5355,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ToggleIgnoreFailedSources(this DotNetRestoreSettings toolSettings)
+        public static T ToggleIgnoreFailedSources<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = !toolSettings.IgnoreFailedSources;
@@ -5368,7 +5368,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetNoCache(this DotNetRestoreSettings toolSettings, bool? noCache)
+        public static T SetNoCache<T>(this T toolSettings, bool? noCache) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = noCache;
@@ -5379,7 +5379,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetNoCache(this DotNetRestoreSettings toolSettings)
+        public static T ResetNoCache<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = null;
@@ -5390,7 +5390,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings EnableNoCache(this DotNetRestoreSettings toolSettings)
+        public static T EnableNoCache<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = true;
@@ -5401,7 +5401,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings DisableNoCache(this DotNetRestoreSettings toolSettings)
+        public static T DisableNoCache<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = false;
@@ -5412,7 +5412,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ToggleNoCache(this DotNetRestoreSettings toolSettings)
+        public static T ToggleNoCache<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = !toolSettings.NoCache;
@@ -5425,7 +5425,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetNoDependencies(this DotNetRestoreSettings toolSettings, bool? noDependencies)
+        public static T SetNoDependencies<T>(this T toolSettings, bool? noDependencies) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = noDependencies;
@@ -5436,7 +5436,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetNoDependencies(this DotNetRestoreSettings toolSettings)
+        public static T ResetNoDependencies<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = null;
@@ -5447,7 +5447,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings EnableNoDependencies(this DotNetRestoreSettings toolSettings)
+        public static T EnableNoDependencies<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = true;
@@ -5458,7 +5458,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings DisableNoDependencies(this DotNetRestoreSettings toolSettings)
+        public static T DisableNoDependencies<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = false;
@@ -5469,7 +5469,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ToggleNoDependencies(this DotNetRestoreSettings toolSettings)
+        public static T ToggleNoDependencies<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = !toolSettings.NoDependencies;
@@ -5482,7 +5482,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the directory for restored packages.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetPackageDirectory(this DotNetRestoreSettings toolSettings, string packageDirectory)
+        public static T SetPackageDirectory<T>(this T toolSettings, string packageDirectory) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageDirectory = packageDirectory;
@@ -5493,7 +5493,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the directory for restored packages.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetPackageDirectory(this DotNetRestoreSettings toolSettings)
+        public static T ResetPackageDirectory<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageDirectory = null;
@@ -5506,7 +5506,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetSources(this DotNetRestoreSettings toolSettings, params string[] sources)
+        public static T SetSources<T>(this T toolSettings, params string[] sources) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal = sources.ToList();
@@ -5517,7 +5517,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetSources(this DotNetRestoreSettings toolSettings, IEnumerable<string> sources)
+        public static T SetSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal = sources.ToList();
@@ -5528,7 +5528,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings AddSources(this DotNetRestoreSettings toolSettings, params string[] sources)
+        public static T AddSources<T>(this T toolSettings, params string[] sources) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.AddRange(sources);
@@ -5539,7 +5539,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings AddSources(this DotNetRestoreSettings toolSettings, IEnumerable<string> sources)
+        public static T AddSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.AddRange(sources);
@@ -5550,7 +5550,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ClearSources(this DotNetRestoreSettings toolSettings)
+        public static T ClearSources<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.Clear();
@@ -5561,7 +5561,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings RemoveSources(this DotNetRestoreSettings toolSettings, params string[] sources)
+        public static T RemoveSources<T>(this T toolSettings, params string[] sources) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(sources);
@@ -5573,7 +5573,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings RemoveSources(this DotNetRestoreSettings toolSettings, IEnumerable<string> sources)
+        public static T RemoveSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(sources);
@@ -5587,7 +5587,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetUseLockFile(this DotNetRestoreSettings toolSettings, bool? useLockFile)
+        public static T SetUseLockFile<T>(this T toolSettings, bool? useLockFile) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = useLockFile;
@@ -5598,7 +5598,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetUseLockFile(this DotNetRestoreSettings toolSettings)
+        public static T ResetUseLockFile<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = null;
@@ -5609,7 +5609,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings EnableUseLockFile(this DotNetRestoreSettings toolSettings)
+        public static T EnableUseLockFile<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = true;
@@ -5620,7 +5620,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings DisableUseLockFile(this DotNetRestoreSettings toolSettings)
+        public static T DisableUseLockFile<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = false;
@@ -5631,7 +5631,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ToggleUseLockFile(this DotNetRestoreSettings toolSettings)
+        public static T ToggleUseLockFile<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = !toolSettings.UseLockFile;
@@ -5644,7 +5644,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetLockedMode(this DotNetRestoreSettings toolSettings, bool? lockedMode)
+        public static T SetLockedMode<T>(this T toolSettings, bool? lockedMode) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = lockedMode;
@@ -5655,7 +5655,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetLockedMode(this DotNetRestoreSettings toolSettings)
+        public static T ResetLockedMode<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = null;
@@ -5666,7 +5666,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings EnableLockedMode(this DotNetRestoreSettings toolSettings)
+        public static T EnableLockedMode<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = true;
@@ -5677,7 +5677,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings DisableLockedMode(this DotNetRestoreSettings toolSettings)
+        public static T DisableLockedMode<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = false;
@@ -5688,7 +5688,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ToggleLockedMode(this DotNetRestoreSettings toolSettings)
+        public static T ToggleLockedMode<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = !toolSettings.LockedMode;
@@ -5701,7 +5701,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetLockFilePath(this DotNetRestoreSettings toolSettings, string lockFilePath)
+        public static T SetLockFilePath<T>(this T toolSettings, string lockFilePath) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockFilePath = lockFilePath;
@@ -5712,7 +5712,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetLockFilePath(this DotNetRestoreSettings toolSettings)
+        public static T ResetLockFilePath<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockFilePath = null;
@@ -5725,7 +5725,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetForceEvaluate(this DotNetRestoreSettings toolSettings, bool? forceEvaluate)
+        public static T SetForceEvaluate<T>(this T toolSettings, bool? forceEvaluate) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = forceEvaluate;
@@ -5736,7 +5736,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetForceEvaluate(this DotNetRestoreSettings toolSettings)
+        public static T ResetForceEvaluate<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = null;
@@ -5747,7 +5747,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings EnableForceEvaluate(this DotNetRestoreSettings toolSettings)
+        public static T EnableForceEvaluate<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = true;
@@ -5758,7 +5758,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings DisableForceEvaluate(this DotNetRestoreSettings toolSettings)
+        public static T DisableForceEvaluate<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = false;
@@ -5769,7 +5769,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ToggleForceEvaluate(this DotNetRestoreSettings toolSettings)
+        public static T ToggleForceEvaluate<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = !toolSettings.ForceEvaluate;
@@ -5782,7 +5782,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetRuntime(this DotNetRestoreSettings toolSettings, string runtime)
+        public static T SetRuntime<T>(this T toolSettings, string runtime) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = runtime;
@@ -5793,7 +5793,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetRuntime(this DotNetRestoreSettings toolSettings)
+        public static T ResetRuntime<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = null;
@@ -5806,7 +5806,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetProperties(this DotNetRestoreSettings toolSettings, IDictionary<string, object> properties)
+        public static T SetProperties<T>(this T toolSettings, IDictionary<string, object> properties) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -5817,7 +5817,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ClearProperties(this DotNetRestoreSettings toolSettings)
+        public static T ClearProperties<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Clear();
@@ -5828,7 +5828,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings AddProperty(this DotNetRestoreSettings toolSettings, string propertyKey, object propertyValue)
+        public static T AddProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
@@ -5839,7 +5839,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings RemoveProperty(this DotNetRestoreSettings toolSettings, string propertyKey)
+        public static T RemoveProperty<T>(this T toolSettings, string propertyKey) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove(propertyKey);
@@ -5850,7 +5850,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetProperty(this DotNetRestoreSettings toolSettings, string propertyKey, object propertyValue)
+        public static T SetProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal[propertyKey] = propertyValue;
@@ -5862,7 +5862,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetRunCodeAnalysis(this DotNetRestoreSettings toolSettings, bool? runCodeAnalysis)
+        public static T SetRunCodeAnalysis<T>(this T toolSettings, bool? runCodeAnalysis) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RunCodeAnalysis"] = runCodeAnalysis;
@@ -5873,7 +5873,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetRunCodeAnalysis(this DotNetRestoreSettings toolSettings)
+        public static T ResetRunCodeAnalysis<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("RunCodeAnalysis");
@@ -5884,7 +5884,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings EnableRunCodeAnalysis(this DotNetRestoreSettings toolSettings)
+        public static T EnableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RunCodeAnalysis"] = true;
@@ -5895,7 +5895,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings DisableRunCodeAnalysis(this DotNetRestoreSettings toolSettings)
+        public static T DisableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RunCodeAnalysis"] = false;
@@ -5906,7 +5906,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ToggleRunCodeAnalysis(this DotNetRestoreSettings toolSettings)
+        public static T ToggleRunCodeAnalysis<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "RunCodeAnalysis");
@@ -5919,7 +5919,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetNoWarns(this DotNetRestoreSettings toolSettings, params int[] noWarn)
+        public static T SetNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -5930,7 +5930,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetNoWarns(this DotNetRestoreSettings toolSettings, IEnumerable<int> noWarn)
+        public static T SetNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -5941,7 +5941,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings AddNoWarns(this DotNetRestoreSettings toolSettings, params int[] noWarn)
+        public static T AddNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -5952,7 +5952,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings AddNoWarns(this DotNetRestoreSettings toolSettings, IEnumerable<int> noWarn)
+        public static T AddNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -5963,7 +5963,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ClearNoWarns(this DotNetRestoreSettings toolSettings)
+        public static T ClearNoWarns<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("NoWarn");
@@ -5974,7 +5974,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings RemoveNoWarns(this DotNetRestoreSettings toolSettings, params int[] noWarn)
+        public static T RemoveNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -5985,7 +5985,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings RemoveNoWarns(this DotNetRestoreSettings toolSettings, IEnumerable<int> noWarn)
+        public static T RemoveNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -5998,7 +5998,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetWarningsAsErrors(this DotNetRestoreSettings toolSettings, params int[] warningsAsErrors)
+        public static T SetWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -6009,7 +6009,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetWarningsAsErrors(this DotNetRestoreSettings toolSettings, IEnumerable<int> warningsAsErrors)
+        public static T SetWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -6020,7 +6020,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings AddWarningsAsErrors(this DotNetRestoreSettings toolSettings, params int[] warningsAsErrors)
+        public static T AddWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -6031,7 +6031,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings AddWarningsAsErrors(this DotNetRestoreSettings toolSettings, IEnumerable<int> warningsAsErrors)
+        public static T AddWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -6042,7 +6042,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ClearWarningsAsErrors(this DotNetRestoreSettings toolSettings)
+        public static T ClearWarningsAsErrors<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("WarningsAsErrors");
@@ -6053,7 +6053,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings RemoveWarningsAsErrors(this DotNetRestoreSettings toolSettings, params int[] warningsAsErrors)
+        public static T RemoveWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -6064,7 +6064,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings RemoveWarningsAsErrors(this DotNetRestoreSettings toolSettings, IEnumerable<int> warningsAsErrors)
+        public static T RemoveWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -6077,7 +6077,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetWarningLevel(this DotNetRestoreSettings toolSettings, int? warningLevel)
+        public static T SetWarningLevel<T>(this T toolSettings, int? warningLevel) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["WarningLevel"] = warningLevel;
@@ -6088,7 +6088,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetWarningLevel(this DotNetRestoreSettings toolSettings)
+        public static T ResetWarningLevel<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("WarningLevel");
@@ -6101,7 +6101,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetTreatWarningsAsErrors(this DotNetRestoreSettings toolSettings, bool? treatWarningsAsErrors)
+        public static T SetTreatWarningsAsErrors<T>(this T toolSettings, bool? treatWarningsAsErrors) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = treatWarningsAsErrors;
@@ -6112,7 +6112,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetTreatWarningsAsErrors(this DotNetRestoreSettings toolSettings)
+        public static T ResetTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("TreatWarningsAsErrors");
@@ -6123,7 +6123,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings EnableTreatWarningsAsErrors(this DotNetRestoreSettings toolSettings)
+        public static T EnableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = true;
@@ -6134,7 +6134,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings DisableTreatWarningsAsErrors(this DotNetRestoreSettings toolSettings)
+        public static T DisableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = false;
@@ -6145,7 +6145,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ToggleTreatWarningsAsErrors(this DotNetRestoreSettings toolSettings)
+        public static T ToggleTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "TreatWarningsAsErrors");
@@ -6158,7 +6158,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetAssemblyVersion(this DotNetRestoreSettings toolSettings, string assemblyVersion)
+        public static T SetAssemblyVersion<T>(this T toolSettings, string assemblyVersion) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["AssemblyVersion"] = assemblyVersion;
@@ -6169,7 +6169,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetAssemblyVersion(this DotNetRestoreSettings toolSettings)
+        public static T ResetAssemblyVersion<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("AssemblyVersion");
@@ -6182,7 +6182,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetFileVersion(this DotNetRestoreSettings toolSettings, string fileVersion)
+        public static T SetFileVersion<T>(this T toolSettings, string fileVersion) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["FileVersion"] = fileVersion;
@@ -6193,7 +6193,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetFileVersion(this DotNetRestoreSettings toolSettings)
+        public static T ResetFileVersion<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("FileVersion");
@@ -6206,7 +6206,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetInformationalVersion(this DotNetRestoreSettings toolSettings, string informationalVersion)
+        public static T SetInformationalVersion<T>(this T toolSettings, string informationalVersion) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["InformationalVersion"] = informationalVersion;
@@ -6217,7 +6217,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetInformationalVersion(this DotNetRestoreSettings toolSettings)
+        public static T ResetInformationalVersion<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("InformationalVersion");
@@ -6230,7 +6230,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetPackageId(this DotNetRestoreSettings toolSettings, string packageId)
+        public static T SetPackageId<T>(this T toolSettings, string packageId) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageId"] = packageId;
@@ -6241,7 +6241,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetPackageId(this DotNetRestoreSettings toolSettings)
+        public static T ResetPackageId<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageId");
@@ -6254,7 +6254,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetVersion(this DotNetRestoreSettings toolSettings, string version)
+        public static T SetVersion<T>(this T toolSettings, string version) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Version"] = version;
@@ -6265,7 +6265,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetVersion(this DotNetRestoreSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Version");
@@ -6278,7 +6278,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetVersionPrefix(this DotNetRestoreSettings toolSettings, string versionPrefix)
+        public static T SetVersionPrefix<T>(this T toolSettings, string versionPrefix) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["VersionPrefix"] = versionPrefix;
@@ -6289,7 +6289,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetVersionPrefix(this DotNetRestoreSettings toolSettings)
+        public static T ResetVersionPrefix<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("VersionPrefix");
@@ -6302,7 +6302,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetAuthors(this DotNetRestoreSettings toolSettings, params string[] authors)
+        public static T SetAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -6313,7 +6313,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetAuthors(this DotNetRestoreSettings toolSettings, IEnumerable<string> authors)
+        public static T SetAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -6324,7 +6324,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings AddAuthors(this DotNetRestoreSettings toolSettings, params string[] authors)
+        public static T AddAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -6335,7 +6335,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings AddAuthors(this DotNetRestoreSettings toolSettings, IEnumerable<string> authors)
+        public static T AddAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -6346,7 +6346,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ClearAuthors(this DotNetRestoreSettings toolSettings)
+        public static T ClearAuthors<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Authors");
@@ -6357,7 +6357,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings RemoveAuthors(this DotNetRestoreSettings toolSettings, params string[] authors)
+        public static T RemoveAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -6368,7 +6368,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings RemoveAuthors(this DotNetRestoreSettings toolSettings, IEnumerable<string> authors)
+        public static T RemoveAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -6381,7 +6381,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetTitle(this DotNetRestoreSettings toolSettings, string title)
+        public static T SetTitle<T>(this T toolSettings, string title) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Title"] = title;
@@ -6392,7 +6392,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetTitle(this DotNetRestoreSettings toolSettings)
+        public static T ResetTitle<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Title");
@@ -6405,7 +6405,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetDescription(this DotNetRestoreSettings toolSettings, string description)
+        public static T SetDescription<T>(this T toolSettings, string description) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Description"] = description;
@@ -6416,7 +6416,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetDescription(this DotNetRestoreSettings toolSettings)
+        public static T ResetDescription<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Description");
@@ -6429,7 +6429,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetCopyright(this DotNetRestoreSettings toolSettings, string copyright)
+        public static T SetCopyright<T>(this T toolSettings, string copyright) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Copyright"] = copyright;
@@ -6440,7 +6440,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetCopyright(this DotNetRestoreSettings toolSettings)
+        public static T ResetCopyright<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Copyright");
@@ -6453,7 +6453,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetPackageRequireLicenseAcceptance(this DotNetRestoreSettings toolSettings, bool? packageRequireLicenseAcceptance)
+        public static T SetPackageRequireLicenseAcceptance<T>(this T toolSettings, bool? packageRequireLicenseAcceptance) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = packageRequireLicenseAcceptance;
@@ -6464,7 +6464,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetPackageRequireLicenseAcceptance(this DotNetRestoreSettings toolSettings)
+        public static T ResetPackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageRequireLicenseAcceptance");
@@ -6475,7 +6475,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings EnablePackageRequireLicenseAcceptance(this DotNetRestoreSettings toolSettings)
+        public static T EnablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = true;
@@ -6486,7 +6486,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings DisablePackageRequireLicenseAcceptance(this DotNetRestoreSettings toolSettings)
+        public static T DisablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = false;
@@ -6497,7 +6497,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings TogglePackageRequireLicenseAcceptance(this DotNetRestoreSettings toolSettings)
+        public static T TogglePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PackageRequireLicenseAcceptance");
@@ -6510,7 +6510,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetPackageLicenseUrl(this DotNetRestoreSettings toolSettings, string packageLicenseUrl)
+        public static T SetPackageLicenseUrl<T>(this T toolSettings, string packageLicenseUrl) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageLicenseUrl"] = packageLicenseUrl;
@@ -6521,7 +6521,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetPackageLicenseUrl(this DotNetRestoreSettings toolSettings)
+        public static T ResetPackageLicenseUrl<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageLicenseUrl");
@@ -6534,7 +6534,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetPackageProjectUrl(this DotNetRestoreSettings toolSettings, string packageProjectUrl)
+        public static T SetPackageProjectUrl<T>(this T toolSettings, string packageProjectUrl) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageProjectUrl"] = packageProjectUrl;
@@ -6545,7 +6545,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetPackageProjectUrl(this DotNetRestoreSettings toolSettings)
+        public static T ResetPackageProjectUrl<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageProjectUrl");
@@ -6558,7 +6558,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetPackageIconUrl(this DotNetRestoreSettings toolSettings, string packageIconUrl)
+        public static T SetPackageIconUrl<T>(this T toolSettings, string packageIconUrl) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageIconUrl"] = packageIconUrl;
@@ -6569,7 +6569,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetPackageIconUrl(this DotNetRestoreSettings toolSettings)
+        public static T ResetPackageIconUrl<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageIconUrl");
@@ -6582,7 +6582,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetPackageTags(this DotNetRestoreSettings toolSettings, params string[] packageTags)
+        public static T SetPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -6593,7 +6593,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetPackageTags(this DotNetRestoreSettings toolSettings, IEnumerable<string> packageTags)
+        public static T SetPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -6604,7 +6604,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings AddPackageTags(this DotNetRestoreSettings toolSettings, params string[] packageTags)
+        public static T AddPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -6615,7 +6615,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings AddPackageTags(this DotNetRestoreSettings toolSettings, IEnumerable<string> packageTags)
+        public static T AddPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -6626,7 +6626,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ClearPackageTags(this DotNetRestoreSettings toolSettings)
+        public static T ClearPackageTags<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageTags");
@@ -6637,7 +6637,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings RemovePackageTags(this DotNetRestoreSettings toolSettings, params string[] packageTags)
+        public static T RemovePackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -6648,7 +6648,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings RemovePackageTags(this DotNetRestoreSettings toolSettings, IEnumerable<string> packageTags)
+        public static T RemovePackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -6661,7 +6661,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetPackageReleaseNotes(this DotNetRestoreSettings toolSettings, string packageReleaseNotes)
+        public static T SetPackageReleaseNotes<T>(this T toolSettings, string packageReleaseNotes) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageReleaseNotes"] = packageReleaseNotes;
@@ -6672,7 +6672,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetPackageReleaseNotes(this DotNetRestoreSettings toolSettings)
+        public static T ResetPackageReleaseNotes<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageReleaseNotes");
@@ -6685,7 +6685,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetRepositoryUrl(this DotNetRestoreSettings toolSettings, string repositoryUrl)
+        public static T SetRepositoryUrl<T>(this T toolSettings, string repositoryUrl) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RepositoryUrl"] = repositoryUrl;
@@ -6696,7 +6696,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetRepositoryUrl(this DotNetRestoreSettings toolSettings)
+        public static T ResetRepositoryUrl<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("RepositoryUrl");
@@ -6709,7 +6709,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetRepositoryType(this DotNetRestoreSettings toolSettings, string repositoryType)
+        public static T SetRepositoryType<T>(this T toolSettings, string repositoryType) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RepositoryType"] = repositoryType;
@@ -6720,7 +6720,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetRepositoryType(this DotNetRestoreSettings toolSettings)
+        public static T ResetRepositoryType<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("RepositoryType");
@@ -6733,7 +6733,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Format for packaging symbols.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetSymbolPackageFormat(this DotNetRestoreSettings toolSettings, DotNetSymbolPackageFormat symbolPackageFormat)
+        public static T SetSymbolPackageFormat<T>(this T toolSettings, DotNetSymbolPackageFormat symbolPackageFormat) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
@@ -6744,7 +6744,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Format for packaging symbols.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings ResetSymbolPackageFormat(this DotNetRestoreSettings toolSettings)
+        public static T ResetSymbolPackageFormat<T>(this T toolSettings) where T : DotNetRestoreSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
@@ -6768,7 +6768,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The project to pack. It's either a path to a csproj file or to a directory. If omitted, it defaults to the current directory.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetProject(this DotNetPackSettings toolSettings, string project)
+        public static T SetProject<T>(this T toolSettings, string project) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = project;
@@ -6779,7 +6779,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The project to pack. It's either a path to a csproj file or to a directory. If omitted, it defaults to the current directory.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetProject(this DotNetPackSettings toolSettings)
+        public static T ResetProject<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = null;
@@ -6792,7 +6792,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Configuration to use when building the project. If not specified, configuration defaults to <c>Debug</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetConfiguration(this DotNetPackSettings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -6803,7 +6803,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Configuration to use when building the project. If not specified, configuration defaults to <c>Debug</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetConfiguration(this DotNetPackSettings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -6816,7 +6816,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Includes the source files in the NuGet package. The sources files are included in the <c>src</c> folder within the <c>nupkg</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetIncludeSource(this DotNetPackSettings toolSettings, bool? includeSource)
+        public static T SetIncludeSource<T>(this T toolSettings, bool? includeSource) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeSource = includeSource;
@@ -6827,7 +6827,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Includes the source files in the NuGet package. The sources files are included in the <c>src</c> folder within the <c>nupkg</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetIncludeSource(this DotNetPackSettings toolSettings)
+        public static T ResetIncludeSource<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeSource = null;
@@ -6838,7 +6838,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Includes the source files in the NuGet package. The sources files are included in the <c>src</c> folder within the <c>nupkg</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings EnableIncludeSource(this DotNetPackSettings toolSettings)
+        public static T EnableIncludeSource<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeSource = true;
@@ -6849,7 +6849,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Includes the source files in the NuGet package. The sources files are included in the <c>src</c> folder within the <c>nupkg</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings DisableIncludeSource(this DotNetPackSettings toolSettings)
+        public static T DisableIncludeSource<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeSource = false;
@@ -6860,7 +6860,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Includes the source files in the NuGet package. The sources files are included in the <c>src</c> folder within the <c>nupkg</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ToggleIncludeSource(this DotNetPackSettings toolSettings)
+        public static T ToggleIncludeSource<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeSource = !toolSettings.IncludeSource;
@@ -6873,7 +6873,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Generates the symbols <c>nupkg</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetIncludeSymbols(this DotNetPackSettings toolSettings, bool? includeSymbols)
+        public static T SetIncludeSymbols<T>(this T toolSettings, bool? includeSymbols) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeSymbols = includeSymbols;
@@ -6884,7 +6884,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Generates the symbols <c>nupkg</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetIncludeSymbols(this DotNetPackSettings toolSettings)
+        public static T ResetIncludeSymbols<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeSymbols = null;
@@ -6895,7 +6895,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Generates the symbols <c>nupkg</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings EnableIncludeSymbols(this DotNetPackSettings toolSettings)
+        public static T EnableIncludeSymbols<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeSymbols = true;
@@ -6906,7 +6906,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Generates the symbols <c>nupkg</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings DisableIncludeSymbols(this DotNetPackSettings toolSettings)
+        public static T DisableIncludeSymbols<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeSymbols = false;
@@ -6917,7 +6917,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Generates the symbols <c>nupkg</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ToggleIncludeSymbols(this DotNetPackSettings toolSettings)
+        public static T ToggleIncludeSymbols<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeSymbols = !toolSettings.IncludeSymbols;
@@ -6930,7 +6930,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't build the project before packing.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetNoBuild(this DotNetPackSettings toolSettings, bool? noBuild)
+        public static T SetNoBuild<T>(this T toolSettings, bool? noBuild) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = noBuild;
@@ -6941,7 +6941,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't build the project before packing.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetNoBuild(this DotNetPackSettings toolSettings)
+        public static T ResetNoBuild<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = null;
@@ -6952,7 +6952,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't build the project before packing.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings EnableNoBuild(this DotNetPackSettings toolSettings)
+        public static T EnableNoBuild<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = true;
@@ -6963,7 +6963,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't build the project before packing.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings DisableNoBuild(this DotNetPackSettings toolSettings)
+        public static T DisableNoBuild<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = false;
@@ -6974,7 +6974,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't build the project before packing.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ToggleNoBuild(this DotNetPackSettings toolSettings)
+        public static T ToggleNoBuild<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = !toolSettings.NoBuild;
@@ -6987,7 +6987,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore when running the command.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetNoRestore(this DotNetPackSettings toolSettings, bool? noRestore)
+        public static T SetNoRestore<T>(this T toolSettings, bool? noRestore) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = noRestore;
@@ -6998,7 +6998,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore when running the command.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetNoRestore(this DotNetPackSettings toolSettings)
+        public static T ResetNoRestore<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = null;
@@ -7009,7 +7009,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore when running the command.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings EnableNoRestore(this DotNetPackSettings toolSettings)
+        public static T EnableNoRestore<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = true;
@@ -7020,7 +7020,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore when running the command.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings DisableNoRestore(this DotNetPackSettings toolSettings)
+        public static T DisableNoRestore<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = false;
@@ -7031,7 +7031,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore when running the command.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ToggleNoRestore(this DotNetPackSettings toolSettings)
+        public static T ToggleNoRestore<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = !toolSettings.NoRestore;
@@ -7044,7 +7044,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Places the built packages in the directory specified.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetOutputDirectory(this DotNetPackSettings toolSettings, string outputDirectory)
+        public static T SetOutputDirectory<T>(this T toolSettings, string outputDirectory) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputDirectory = outputDirectory;
@@ -7055,7 +7055,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Places the built packages in the directory specified.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetOutputDirectory(this DotNetPackSettings toolSettings)
+        public static T ResetOutputDirectory<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputDirectory = null;
@@ -7068,7 +7068,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the serviceable flag in the package. For more information, see <a href="https://aka.ms/nupkgservicing">.NET Blog: .NET 4.5.1 Supports Microsoft Security Updates for .NET NuGet Libraries</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetServiceable(this DotNetPackSettings toolSettings, bool? serviceable)
+        public static T SetServiceable<T>(this T toolSettings, bool? serviceable) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serviceable = serviceable;
@@ -7079,7 +7079,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the serviceable flag in the package. For more information, see <a href="https://aka.ms/nupkgservicing">.NET Blog: .NET 4.5.1 Supports Microsoft Security Updates for .NET NuGet Libraries</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetServiceable(this DotNetPackSettings toolSettings)
+        public static T ResetServiceable<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serviceable = null;
@@ -7090,7 +7090,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the serviceable flag in the package. For more information, see <a href="https://aka.ms/nupkgservicing">.NET Blog: .NET 4.5.1 Supports Microsoft Security Updates for .NET NuGet Libraries</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings EnableServiceable(this DotNetPackSettings toolSettings)
+        public static T EnableServiceable<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serviceable = true;
@@ -7101,7 +7101,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the serviceable flag in the package. For more information, see <a href="https://aka.ms/nupkgservicing">.NET Blog: .NET 4.5.1 Supports Microsoft Security Updates for .NET NuGet Libraries</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings DisableServiceable(this DotNetPackSettings toolSettings)
+        public static T DisableServiceable<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serviceable = false;
@@ -7112,7 +7112,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the serviceable flag in the package. For more information, see <a href="https://aka.ms/nupkgservicing">.NET Blog: .NET 4.5.1 Supports Microsoft Security Updates for .NET NuGet Libraries</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ToggleServiceable(this DotNetPackSettings toolSettings)
+        public static T ToggleServiceable<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serviceable = !toolSettings.Serviceable;
@@ -7125,7 +7125,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetVerbostiy(this DotNetPackSettings toolSettings, DotNetVerbosity verbostiy)
+        public static T SetVerbostiy<T>(this T toolSettings, DotNetVerbosity verbostiy) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbostiy = verbostiy;
@@ -7136,7 +7136,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetVerbostiy(this DotNetPackSettings toolSettings)
+        public static T ResetVerbostiy<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbostiy = null;
@@ -7149,7 +7149,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Defines the value for the <c>$(VersionSuffix)</c> MSBuild property in the project.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetVersionSuffix(this DotNetPackSettings toolSettings, string versionSuffix)
+        public static T SetVersionSuffix<T>(this T toolSettings, string versionSuffix) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VersionSuffix = versionSuffix;
@@ -7160,7 +7160,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Defines the value for the <c>$(VersionSuffix)</c> MSBuild property in the project.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetVersionSuffix(this DotNetPackSettings toolSettings)
+        public static T ResetVersionSuffix<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VersionSuffix = null;
@@ -7173,7 +7173,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetDisableParallel(this DotNetPackSettings toolSettings, bool? disableParallel)
+        public static T SetDisableParallel<T>(this T toolSettings, bool? disableParallel) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = disableParallel;
@@ -7184,7 +7184,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetDisableParallel(this DotNetPackSettings toolSettings)
+        public static T ResetDisableParallel<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = null;
@@ -7195,7 +7195,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings EnableDisableParallel(this DotNetPackSettings toolSettings)
+        public static T EnableDisableParallel<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = true;
@@ -7206,7 +7206,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings DisableDisableParallel(this DotNetPackSettings toolSettings)
+        public static T DisableDisableParallel<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = false;
@@ -7217,7 +7217,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ToggleDisableParallel(this DotNetPackSettings toolSettings)
+        public static T ToggleDisableParallel<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = !toolSettings.DisableParallel;
@@ -7230,7 +7230,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetForce(this DotNetPackSettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -7241,7 +7241,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetForce(this DotNetPackSettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -7252,7 +7252,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings EnableForce(this DotNetPackSettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -7263,7 +7263,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings DisableForce(this DotNetPackSettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -7274,7 +7274,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ToggleForce(this DotNetPackSettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -7287,7 +7287,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetIgnoreFailedSources(this DotNetPackSettings toolSettings, bool? ignoreFailedSources)
+        public static T SetIgnoreFailedSources<T>(this T toolSettings, bool? ignoreFailedSources) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = ignoreFailedSources;
@@ -7298,7 +7298,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetIgnoreFailedSources(this DotNetPackSettings toolSettings)
+        public static T ResetIgnoreFailedSources<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = null;
@@ -7309,7 +7309,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings EnableIgnoreFailedSources(this DotNetPackSettings toolSettings)
+        public static T EnableIgnoreFailedSources<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = true;
@@ -7320,7 +7320,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings DisableIgnoreFailedSources(this DotNetPackSettings toolSettings)
+        public static T DisableIgnoreFailedSources<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = false;
@@ -7331,7 +7331,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ToggleIgnoreFailedSources(this DotNetPackSettings toolSettings)
+        public static T ToggleIgnoreFailedSources<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = !toolSettings.IgnoreFailedSources;
@@ -7344,7 +7344,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetNoCache(this DotNetPackSettings toolSettings, bool? noCache)
+        public static T SetNoCache<T>(this T toolSettings, bool? noCache) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = noCache;
@@ -7355,7 +7355,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetNoCache(this DotNetPackSettings toolSettings)
+        public static T ResetNoCache<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = null;
@@ -7366,7 +7366,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings EnableNoCache(this DotNetPackSettings toolSettings)
+        public static T EnableNoCache<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = true;
@@ -7377,7 +7377,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings DisableNoCache(this DotNetPackSettings toolSettings)
+        public static T DisableNoCache<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = false;
@@ -7388,7 +7388,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ToggleNoCache(this DotNetPackSettings toolSettings)
+        public static T ToggleNoCache<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = !toolSettings.NoCache;
@@ -7401,7 +7401,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetNoDependencies(this DotNetPackSettings toolSettings, bool? noDependencies)
+        public static T SetNoDependencies<T>(this T toolSettings, bool? noDependencies) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = noDependencies;
@@ -7412,7 +7412,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetNoDependencies(this DotNetPackSettings toolSettings)
+        public static T ResetNoDependencies<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = null;
@@ -7423,7 +7423,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings EnableNoDependencies(this DotNetPackSettings toolSettings)
+        public static T EnableNoDependencies<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = true;
@@ -7434,7 +7434,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings DisableNoDependencies(this DotNetPackSettings toolSettings)
+        public static T DisableNoDependencies<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = false;
@@ -7445,7 +7445,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ToggleNoDependencies(this DotNetPackSettings toolSettings)
+        public static T ToggleNoDependencies<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = !toolSettings.NoDependencies;
@@ -7458,7 +7458,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the directory for restored packages.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetPackageDirectory(this DotNetPackSettings toolSettings, string packageDirectory)
+        public static T SetPackageDirectory<T>(this T toolSettings, string packageDirectory) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageDirectory = packageDirectory;
@@ -7469,7 +7469,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the directory for restored packages.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetPackageDirectory(this DotNetPackSettings toolSettings)
+        public static T ResetPackageDirectory<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageDirectory = null;
@@ -7482,7 +7482,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetSources(this DotNetPackSettings toolSettings, params string[] sources)
+        public static T SetSources<T>(this T toolSettings, params string[] sources) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal = sources.ToList();
@@ -7493,7 +7493,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetSources(this DotNetPackSettings toolSettings, IEnumerable<string> sources)
+        public static T SetSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal = sources.ToList();
@@ -7504,7 +7504,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings AddSources(this DotNetPackSettings toolSettings, params string[] sources)
+        public static T AddSources<T>(this T toolSettings, params string[] sources) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.AddRange(sources);
@@ -7515,7 +7515,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings AddSources(this DotNetPackSettings toolSettings, IEnumerable<string> sources)
+        public static T AddSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.AddRange(sources);
@@ -7526,7 +7526,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ClearSources(this DotNetPackSettings toolSettings)
+        public static T ClearSources<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.Clear();
@@ -7537,7 +7537,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings RemoveSources(this DotNetPackSettings toolSettings, params string[] sources)
+        public static T RemoveSources<T>(this T toolSettings, params string[] sources) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(sources);
@@ -7549,7 +7549,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings RemoveSources(this DotNetPackSettings toolSettings, IEnumerable<string> sources)
+        public static T RemoveSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(sources);
@@ -7563,7 +7563,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetUseLockFile(this DotNetPackSettings toolSettings, bool? useLockFile)
+        public static T SetUseLockFile<T>(this T toolSettings, bool? useLockFile) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = useLockFile;
@@ -7574,7 +7574,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetUseLockFile(this DotNetPackSettings toolSettings)
+        public static T ResetUseLockFile<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = null;
@@ -7585,7 +7585,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings EnableUseLockFile(this DotNetPackSettings toolSettings)
+        public static T EnableUseLockFile<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = true;
@@ -7596,7 +7596,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings DisableUseLockFile(this DotNetPackSettings toolSettings)
+        public static T DisableUseLockFile<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = false;
@@ -7607,7 +7607,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ToggleUseLockFile(this DotNetPackSettings toolSettings)
+        public static T ToggleUseLockFile<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = !toolSettings.UseLockFile;
@@ -7620,7 +7620,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetLockedMode(this DotNetPackSettings toolSettings, bool? lockedMode)
+        public static T SetLockedMode<T>(this T toolSettings, bool? lockedMode) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = lockedMode;
@@ -7631,7 +7631,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetLockedMode(this DotNetPackSettings toolSettings)
+        public static T ResetLockedMode<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = null;
@@ -7642,7 +7642,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings EnableLockedMode(this DotNetPackSettings toolSettings)
+        public static T EnableLockedMode<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = true;
@@ -7653,7 +7653,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings DisableLockedMode(this DotNetPackSettings toolSettings)
+        public static T DisableLockedMode<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = false;
@@ -7664,7 +7664,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ToggleLockedMode(this DotNetPackSettings toolSettings)
+        public static T ToggleLockedMode<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = !toolSettings.LockedMode;
@@ -7677,7 +7677,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetLockFilePath(this DotNetPackSettings toolSettings, string lockFilePath)
+        public static T SetLockFilePath<T>(this T toolSettings, string lockFilePath) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockFilePath = lockFilePath;
@@ -7688,7 +7688,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetLockFilePath(this DotNetPackSettings toolSettings)
+        public static T ResetLockFilePath<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockFilePath = null;
@@ -7701,7 +7701,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetForceEvaluate(this DotNetPackSettings toolSettings, bool? forceEvaluate)
+        public static T SetForceEvaluate<T>(this T toolSettings, bool? forceEvaluate) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = forceEvaluate;
@@ -7712,7 +7712,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetForceEvaluate(this DotNetPackSettings toolSettings)
+        public static T ResetForceEvaluate<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = null;
@@ -7723,7 +7723,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings EnableForceEvaluate(this DotNetPackSettings toolSettings)
+        public static T EnableForceEvaluate<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = true;
@@ -7734,7 +7734,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings DisableForceEvaluate(this DotNetPackSettings toolSettings)
+        public static T DisableForceEvaluate<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = false;
@@ -7745,7 +7745,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ToggleForceEvaluate(this DotNetPackSettings toolSettings)
+        public static T ToggleForceEvaluate<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = !toolSettings.ForceEvaluate;
@@ -7758,7 +7758,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetRuntime(this DotNetPackSettings toolSettings, string runtime)
+        public static T SetRuntime<T>(this T toolSettings, string runtime) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = runtime;
@@ -7769,7 +7769,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetRuntime(this DotNetPackSettings toolSettings)
+        public static T ResetRuntime<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = null;
@@ -7782,7 +7782,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetProperties(this DotNetPackSettings toolSettings, IDictionary<string, object> properties)
+        public static T SetProperties<T>(this T toolSettings, IDictionary<string, object> properties) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -7793,7 +7793,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ClearProperties(this DotNetPackSettings toolSettings)
+        public static T ClearProperties<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Clear();
@@ -7804,7 +7804,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings AddProperty(this DotNetPackSettings toolSettings, string propertyKey, object propertyValue)
+        public static T AddProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
@@ -7815,7 +7815,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings RemoveProperty(this DotNetPackSettings toolSettings, string propertyKey)
+        public static T RemoveProperty<T>(this T toolSettings, string propertyKey) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove(propertyKey);
@@ -7826,7 +7826,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetProperty(this DotNetPackSettings toolSettings, string propertyKey, object propertyValue)
+        public static T SetProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal[propertyKey] = propertyValue;
@@ -7838,7 +7838,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetRunCodeAnalysis(this DotNetPackSettings toolSettings, bool? runCodeAnalysis)
+        public static T SetRunCodeAnalysis<T>(this T toolSettings, bool? runCodeAnalysis) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RunCodeAnalysis"] = runCodeAnalysis;
@@ -7849,7 +7849,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetRunCodeAnalysis(this DotNetPackSettings toolSettings)
+        public static T ResetRunCodeAnalysis<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("RunCodeAnalysis");
@@ -7860,7 +7860,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings EnableRunCodeAnalysis(this DotNetPackSettings toolSettings)
+        public static T EnableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RunCodeAnalysis"] = true;
@@ -7871,7 +7871,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings DisableRunCodeAnalysis(this DotNetPackSettings toolSettings)
+        public static T DisableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RunCodeAnalysis"] = false;
@@ -7882,7 +7882,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ToggleRunCodeAnalysis(this DotNetPackSettings toolSettings)
+        public static T ToggleRunCodeAnalysis<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "RunCodeAnalysis");
@@ -7895,7 +7895,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetNoWarns(this DotNetPackSettings toolSettings, params int[] noWarn)
+        public static T SetNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -7906,7 +7906,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetNoWarns(this DotNetPackSettings toolSettings, IEnumerable<int> noWarn)
+        public static T SetNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -7917,7 +7917,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings AddNoWarns(this DotNetPackSettings toolSettings, params int[] noWarn)
+        public static T AddNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -7928,7 +7928,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings AddNoWarns(this DotNetPackSettings toolSettings, IEnumerable<int> noWarn)
+        public static T AddNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -7939,7 +7939,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ClearNoWarns(this DotNetPackSettings toolSettings)
+        public static T ClearNoWarns<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("NoWarn");
@@ -7950,7 +7950,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings RemoveNoWarns(this DotNetPackSettings toolSettings, params int[] noWarn)
+        public static T RemoveNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -7961,7 +7961,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings RemoveNoWarns(this DotNetPackSettings toolSettings, IEnumerable<int> noWarn)
+        public static T RemoveNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -7974,7 +7974,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetWarningsAsErrors(this DotNetPackSettings toolSettings, params int[] warningsAsErrors)
+        public static T SetWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -7985,7 +7985,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetWarningsAsErrors(this DotNetPackSettings toolSettings, IEnumerable<int> warningsAsErrors)
+        public static T SetWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -7996,7 +7996,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings AddWarningsAsErrors(this DotNetPackSettings toolSettings, params int[] warningsAsErrors)
+        public static T AddWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -8007,7 +8007,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings AddWarningsAsErrors(this DotNetPackSettings toolSettings, IEnumerable<int> warningsAsErrors)
+        public static T AddWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -8018,7 +8018,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ClearWarningsAsErrors(this DotNetPackSettings toolSettings)
+        public static T ClearWarningsAsErrors<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("WarningsAsErrors");
@@ -8029,7 +8029,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings RemoveWarningsAsErrors(this DotNetPackSettings toolSettings, params int[] warningsAsErrors)
+        public static T RemoveWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -8040,7 +8040,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings RemoveWarningsAsErrors(this DotNetPackSettings toolSettings, IEnumerable<int> warningsAsErrors)
+        public static T RemoveWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -8053,7 +8053,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetWarningLevel(this DotNetPackSettings toolSettings, int? warningLevel)
+        public static T SetWarningLevel<T>(this T toolSettings, int? warningLevel) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["WarningLevel"] = warningLevel;
@@ -8064,7 +8064,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetWarningLevel(this DotNetPackSettings toolSettings)
+        public static T ResetWarningLevel<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("WarningLevel");
@@ -8077,7 +8077,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetTreatWarningsAsErrors(this DotNetPackSettings toolSettings, bool? treatWarningsAsErrors)
+        public static T SetTreatWarningsAsErrors<T>(this T toolSettings, bool? treatWarningsAsErrors) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = treatWarningsAsErrors;
@@ -8088,7 +8088,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetTreatWarningsAsErrors(this DotNetPackSettings toolSettings)
+        public static T ResetTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("TreatWarningsAsErrors");
@@ -8099,7 +8099,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings EnableTreatWarningsAsErrors(this DotNetPackSettings toolSettings)
+        public static T EnableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = true;
@@ -8110,7 +8110,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings DisableTreatWarningsAsErrors(this DotNetPackSettings toolSettings)
+        public static T DisableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = false;
@@ -8121,7 +8121,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ToggleTreatWarningsAsErrors(this DotNetPackSettings toolSettings)
+        public static T ToggleTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "TreatWarningsAsErrors");
@@ -8134,7 +8134,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetAssemblyVersion(this DotNetPackSettings toolSettings, string assemblyVersion)
+        public static T SetAssemblyVersion<T>(this T toolSettings, string assemblyVersion) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["AssemblyVersion"] = assemblyVersion;
@@ -8145,7 +8145,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetAssemblyVersion(this DotNetPackSettings toolSettings)
+        public static T ResetAssemblyVersion<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("AssemblyVersion");
@@ -8158,7 +8158,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetFileVersion(this DotNetPackSettings toolSettings, string fileVersion)
+        public static T SetFileVersion<T>(this T toolSettings, string fileVersion) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["FileVersion"] = fileVersion;
@@ -8169,7 +8169,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetFileVersion(this DotNetPackSettings toolSettings)
+        public static T ResetFileVersion<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("FileVersion");
@@ -8182,7 +8182,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetInformationalVersion(this DotNetPackSettings toolSettings, string informationalVersion)
+        public static T SetInformationalVersion<T>(this T toolSettings, string informationalVersion) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["InformationalVersion"] = informationalVersion;
@@ -8193,7 +8193,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetInformationalVersion(this DotNetPackSettings toolSettings)
+        public static T ResetInformationalVersion<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("InformationalVersion");
@@ -8206,7 +8206,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetPackageId(this DotNetPackSettings toolSettings, string packageId)
+        public static T SetPackageId<T>(this T toolSettings, string packageId) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageId"] = packageId;
@@ -8217,7 +8217,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetPackageId(this DotNetPackSettings toolSettings)
+        public static T ResetPackageId<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageId");
@@ -8230,7 +8230,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetVersion(this DotNetPackSettings toolSettings, string version)
+        public static T SetVersion<T>(this T toolSettings, string version) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Version"] = version;
@@ -8241,7 +8241,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetVersion(this DotNetPackSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Version");
@@ -8254,7 +8254,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetVersionPrefix(this DotNetPackSettings toolSettings, string versionPrefix)
+        public static T SetVersionPrefix<T>(this T toolSettings, string versionPrefix) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["VersionPrefix"] = versionPrefix;
@@ -8265,7 +8265,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetVersionPrefix(this DotNetPackSettings toolSettings)
+        public static T ResetVersionPrefix<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("VersionPrefix");
@@ -8278,7 +8278,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetAuthors(this DotNetPackSettings toolSettings, params string[] authors)
+        public static T SetAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -8289,7 +8289,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetAuthors(this DotNetPackSettings toolSettings, IEnumerable<string> authors)
+        public static T SetAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -8300,7 +8300,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings AddAuthors(this DotNetPackSettings toolSettings, params string[] authors)
+        public static T AddAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -8311,7 +8311,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings AddAuthors(this DotNetPackSettings toolSettings, IEnumerable<string> authors)
+        public static T AddAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -8322,7 +8322,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ClearAuthors(this DotNetPackSettings toolSettings)
+        public static T ClearAuthors<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Authors");
@@ -8333,7 +8333,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings RemoveAuthors(this DotNetPackSettings toolSettings, params string[] authors)
+        public static T RemoveAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -8344,7 +8344,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings RemoveAuthors(this DotNetPackSettings toolSettings, IEnumerable<string> authors)
+        public static T RemoveAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -8357,7 +8357,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetTitle(this DotNetPackSettings toolSettings, string title)
+        public static T SetTitle<T>(this T toolSettings, string title) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Title"] = title;
@@ -8368,7 +8368,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetTitle(this DotNetPackSettings toolSettings)
+        public static T ResetTitle<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Title");
@@ -8381,7 +8381,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetDescription(this DotNetPackSettings toolSettings, string description)
+        public static T SetDescription<T>(this T toolSettings, string description) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Description"] = description;
@@ -8392,7 +8392,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetDescription(this DotNetPackSettings toolSettings)
+        public static T ResetDescription<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Description");
@@ -8405,7 +8405,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetCopyright(this DotNetPackSettings toolSettings, string copyright)
+        public static T SetCopyright<T>(this T toolSettings, string copyright) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Copyright"] = copyright;
@@ -8416,7 +8416,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetCopyright(this DotNetPackSettings toolSettings)
+        public static T ResetCopyright<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Copyright");
@@ -8429,7 +8429,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetPackageRequireLicenseAcceptance(this DotNetPackSettings toolSettings, bool? packageRequireLicenseAcceptance)
+        public static T SetPackageRequireLicenseAcceptance<T>(this T toolSettings, bool? packageRequireLicenseAcceptance) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = packageRequireLicenseAcceptance;
@@ -8440,7 +8440,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetPackageRequireLicenseAcceptance(this DotNetPackSettings toolSettings)
+        public static T ResetPackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageRequireLicenseAcceptance");
@@ -8451,7 +8451,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings EnablePackageRequireLicenseAcceptance(this DotNetPackSettings toolSettings)
+        public static T EnablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = true;
@@ -8462,7 +8462,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings DisablePackageRequireLicenseAcceptance(this DotNetPackSettings toolSettings)
+        public static T DisablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = false;
@@ -8473,7 +8473,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings TogglePackageRequireLicenseAcceptance(this DotNetPackSettings toolSettings)
+        public static T TogglePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PackageRequireLicenseAcceptance");
@@ -8486,7 +8486,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetPackageLicenseUrl(this DotNetPackSettings toolSettings, string packageLicenseUrl)
+        public static T SetPackageLicenseUrl<T>(this T toolSettings, string packageLicenseUrl) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageLicenseUrl"] = packageLicenseUrl;
@@ -8497,7 +8497,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetPackageLicenseUrl(this DotNetPackSettings toolSettings)
+        public static T ResetPackageLicenseUrl<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageLicenseUrl");
@@ -8510,7 +8510,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetPackageProjectUrl(this DotNetPackSettings toolSettings, string packageProjectUrl)
+        public static T SetPackageProjectUrl<T>(this T toolSettings, string packageProjectUrl) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageProjectUrl"] = packageProjectUrl;
@@ -8521,7 +8521,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetPackageProjectUrl(this DotNetPackSettings toolSettings)
+        public static T ResetPackageProjectUrl<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageProjectUrl");
@@ -8534,7 +8534,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetPackageIconUrl(this DotNetPackSettings toolSettings, string packageIconUrl)
+        public static T SetPackageIconUrl<T>(this T toolSettings, string packageIconUrl) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageIconUrl"] = packageIconUrl;
@@ -8545,7 +8545,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetPackageIconUrl(this DotNetPackSettings toolSettings)
+        public static T ResetPackageIconUrl<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageIconUrl");
@@ -8558,7 +8558,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetPackageTags(this DotNetPackSettings toolSettings, params string[] packageTags)
+        public static T SetPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -8569,7 +8569,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetPackageTags(this DotNetPackSettings toolSettings, IEnumerable<string> packageTags)
+        public static T SetPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -8580,7 +8580,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings AddPackageTags(this DotNetPackSettings toolSettings, params string[] packageTags)
+        public static T AddPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -8591,7 +8591,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings AddPackageTags(this DotNetPackSettings toolSettings, IEnumerable<string> packageTags)
+        public static T AddPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -8602,7 +8602,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ClearPackageTags(this DotNetPackSettings toolSettings)
+        public static T ClearPackageTags<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageTags");
@@ -8613,7 +8613,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings RemovePackageTags(this DotNetPackSettings toolSettings, params string[] packageTags)
+        public static T RemovePackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -8624,7 +8624,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings RemovePackageTags(this DotNetPackSettings toolSettings, IEnumerable<string> packageTags)
+        public static T RemovePackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -8637,7 +8637,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetPackageReleaseNotes(this DotNetPackSettings toolSettings, string packageReleaseNotes)
+        public static T SetPackageReleaseNotes<T>(this T toolSettings, string packageReleaseNotes) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageReleaseNotes"] = packageReleaseNotes;
@@ -8648,7 +8648,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetPackageReleaseNotes(this DotNetPackSettings toolSettings)
+        public static T ResetPackageReleaseNotes<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageReleaseNotes");
@@ -8661,7 +8661,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetRepositoryUrl(this DotNetPackSettings toolSettings, string repositoryUrl)
+        public static T SetRepositoryUrl<T>(this T toolSettings, string repositoryUrl) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RepositoryUrl"] = repositoryUrl;
@@ -8672,7 +8672,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetRepositoryUrl(this DotNetPackSettings toolSettings)
+        public static T ResetRepositoryUrl<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("RepositoryUrl");
@@ -8685,7 +8685,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetRepositoryType(this DotNetPackSettings toolSettings, string repositoryType)
+        public static T SetRepositoryType<T>(this T toolSettings, string repositoryType) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RepositoryType"] = repositoryType;
@@ -8696,7 +8696,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetRepositoryType(this DotNetPackSettings toolSettings)
+        public static T ResetRepositoryType<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("RepositoryType");
@@ -8709,7 +8709,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Format for packaging symbols.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetSymbolPackageFormat(this DotNetPackSettings toolSettings, DotNetSymbolPackageFormat symbolPackageFormat)
+        public static T SetSymbolPackageFormat<T>(this T toolSettings, DotNetSymbolPackageFormat symbolPackageFormat) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
@@ -8720,7 +8720,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Format for packaging symbols.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings ResetSymbolPackageFormat(this DotNetPackSettings toolSettings)
+        public static T ResetSymbolPackageFormat<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
@@ -8744,7 +8744,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The project file to build. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in proj and uses that file.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetProjectFile(this DotNetBuildSettings toolSettings, string projectFile)
+        public static T SetProjectFile<T>(this T toolSettings, string projectFile) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProjectFile = projectFile;
@@ -8755,7 +8755,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The project file to build. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in proj and uses that file.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetProjectFile(this DotNetBuildSettings toolSettings)
+        public static T ResetProjectFile<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProjectFile = null;
@@ -8768,7 +8768,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Defines the build configuration. If omitted, the build configuration defaults to <c>Debug</c>. Use <c>Release</c> build a Release configuration.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetConfiguration(this DotNetBuildSettings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -8779,7 +8779,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Defines the build configuration. If omitted, the build configuration defaults to <c>Debug</c>. Use <c>Release</c> build a Release configuration.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetConfiguration(this DotNetBuildSettings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -8792,7 +8792,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Compiles for a specific <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">framework</a>. The framework must be defined in the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/csproj">project file</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetFramework(this DotNetBuildSettings toolSettings, string framework)
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = framework;
@@ -8803,7 +8803,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Compiles for a specific <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">framework</a>. The framework must be defined in the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/csproj">project file</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetFramework(this DotNetBuildSettings toolSettings)
+        public static T ResetFramework<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = null;
@@ -8816,7 +8816,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Marks the build as unsafe for incremental build. This turns off incremental compilation and forces a clean rebuild of the project's dependency graph.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetNoIncremental(this DotNetBuildSettings toolSettings, bool? noIncremental)
+        public static T SetNoIncremental<T>(this T toolSettings, bool? noIncremental) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoIncremental = noIncremental;
@@ -8827,7 +8827,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Marks the build as unsafe for incremental build. This turns off incremental compilation and forces a clean rebuild of the project's dependency graph.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetNoIncremental(this DotNetBuildSettings toolSettings)
+        public static T ResetNoIncremental<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoIncremental = null;
@@ -8838,7 +8838,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Marks the build as unsafe for incremental build. This turns off incremental compilation and forces a clean rebuild of the project's dependency graph.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings EnableNoIncremental(this DotNetBuildSettings toolSettings)
+        public static T EnableNoIncremental<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoIncremental = true;
@@ -8849,7 +8849,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Marks the build as unsafe for incremental build. This turns off incremental compilation and forces a clean rebuild of the project's dependency graph.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings DisableNoIncremental(this DotNetBuildSettings toolSettings)
+        public static T DisableNoIncremental<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoIncremental = false;
@@ -8860,7 +8860,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Marks the build as unsafe for incremental build. This turns off incremental compilation and forces a clean rebuild of the project's dependency graph.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ToggleNoIncremental(this DotNetBuildSettings toolSettings)
+        public static T ToggleNoIncremental<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoIncremental = !toolSettings.NoIncremental;
@@ -8873,7 +8873,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore during build.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetNoRestore(this DotNetBuildSettings toolSettings, bool? noRestore)
+        public static T SetNoRestore<T>(this T toolSettings, bool? noRestore) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = noRestore;
@@ -8884,7 +8884,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore during build.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetNoRestore(this DotNetBuildSettings toolSettings)
+        public static T ResetNoRestore<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = null;
@@ -8895,7 +8895,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore during build.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings EnableNoRestore(this DotNetBuildSettings toolSettings)
+        public static T EnableNoRestore<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = true;
@@ -8906,7 +8906,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore during build.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings DisableNoRestore(this DotNetBuildSettings toolSettings)
+        public static T DisableNoRestore<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = false;
@@ -8917,7 +8917,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore during build.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ToggleNoRestore(this DotNetBuildSettings toolSettings)
+        public static T ToggleNoRestore<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = !toolSettings.NoRestore;
@@ -8930,7 +8930,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Directory in which to place the built binaries. You also need to define <c>--framework</c> when you specify this option.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetOutputDirectory(this DotNetBuildSettings toolSettings, string outputDirectory)
+        public static T SetOutputDirectory<T>(this T toolSettings, string outputDirectory) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputDirectory = outputDirectory;
@@ -8941,7 +8941,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Directory in which to place the built binaries. You also need to define <c>--framework</c> when you specify this option.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetOutputDirectory(this DotNetBuildSettings toolSettings)
+        public static T ResetOutputDirectory<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputDirectory = null;
@@ -8954,7 +8954,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the target runtime. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetRuntime(this DotNetBuildSettings toolSettings, string runtime)
+        public static T SetRuntime<T>(this T toolSettings, string runtime) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = runtime;
@@ -8965,7 +8965,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the target runtime. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetRuntime(this DotNetBuildSettings toolSettings)
+        public static T ResetRuntime<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = null;
@@ -8978,7 +8978,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetVerbosity(this DotNetBuildSettings toolSettings, DotNetVerbosity verbosity)
+        public static T SetVerbosity<T>(this T toolSettings, DotNetVerbosity verbosity) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = verbosity;
@@ -8989,7 +8989,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetVerbosity(this DotNetBuildSettings toolSettings)
+        public static T ResetVerbosity<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = null;
@@ -9002,7 +9002,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Defines the version suffix for an asterisk (<c>*</c>) in the version field of the project file. The format follows NuGet's version guidelines.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetVersionSuffix(this DotNetBuildSettings toolSettings, string versionSuffix)
+        public static T SetVersionSuffix<T>(this T toolSettings, string versionSuffix) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VersionSuffix = versionSuffix;
@@ -9013,7 +9013,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Defines the version suffix for an asterisk (<c>*</c>) in the version field of the project file. The format follows NuGet's version guidelines.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetVersionSuffix(this DotNetBuildSettings toolSettings)
+        public static T ResetVersionSuffix<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VersionSuffix = null;
@@ -9026,7 +9026,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetLoggers(this DotNetBuildSettings toolSettings, params string[] loggers)
+        public static T SetLoggers<T>(this T toolSettings, params string[] loggers) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LoggersInternal = loggers.ToList();
@@ -9037,7 +9037,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetLoggers(this DotNetBuildSettings toolSettings, IEnumerable<string> loggers)
+        public static T SetLoggers<T>(this T toolSettings, IEnumerable<string> loggers) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LoggersInternal = loggers.ToList();
@@ -9048,7 +9048,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings AddLoggers(this DotNetBuildSettings toolSettings, params string[] loggers)
+        public static T AddLoggers<T>(this T toolSettings, params string[] loggers) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LoggersInternal.AddRange(loggers);
@@ -9059,7 +9059,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings AddLoggers(this DotNetBuildSettings toolSettings, IEnumerable<string> loggers)
+        public static T AddLoggers<T>(this T toolSettings, IEnumerable<string> loggers) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LoggersInternal.AddRange(loggers);
@@ -9070,7 +9070,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ClearLoggers(this DotNetBuildSettings toolSettings)
+        public static T ClearLoggers<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LoggersInternal.Clear();
@@ -9081,7 +9081,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings RemoveLoggers(this DotNetBuildSettings toolSettings, params string[] loggers)
+        public static T RemoveLoggers<T>(this T toolSettings, params string[] loggers) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(loggers);
@@ -9093,7 +9093,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings RemoveLoggers(this DotNetBuildSettings toolSettings, IEnumerable<string> loggers)
+        public static T RemoveLoggers<T>(this T toolSettings, IEnumerable<string> loggers) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(loggers);
@@ -9107,7 +9107,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disable the default console logger, and don't log events to the console.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetNoConsoleLogger(this DotNetBuildSettings toolSettings, bool? noConsoleLogger)
+        public static T SetNoConsoleLogger<T>(this T toolSettings, bool? noConsoleLogger) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoConsoleLogger = noConsoleLogger;
@@ -9118,7 +9118,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disable the default console logger, and don't log events to the console.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetNoConsoleLogger(this DotNetBuildSettings toolSettings)
+        public static T ResetNoConsoleLogger<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoConsoleLogger = null;
@@ -9129,7 +9129,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disable the default console logger, and don't log events to the console.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings EnableNoConsoleLogger(this DotNetBuildSettings toolSettings)
+        public static T EnableNoConsoleLogger<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoConsoleLogger = true;
@@ -9140,7 +9140,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disable the default console logger, and don't log events to the console.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings DisableNoConsoleLogger(this DotNetBuildSettings toolSettings)
+        public static T DisableNoConsoleLogger<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoConsoleLogger = false;
@@ -9151,7 +9151,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disable the default console logger, and don't log events to the console.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ToggleNoConsoleLogger(this DotNetBuildSettings toolSettings)
+        public static T ToggleNoConsoleLogger<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoConsoleLogger = !toolSettings.NoConsoleLogger;
@@ -9164,7 +9164,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetDisableParallel(this DotNetBuildSettings toolSettings, bool? disableParallel)
+        public static T SetDisableParallel<T>(this T toolSettings, bool? disableParallel) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = disableParallel;
@@ -9175,7 +9175,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetDisableParallel(this DotNetBuildSettings toolSettings)
+        public static T ResetDisableParallel<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = null;
@@ -9186,7 +9186,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings EnableDisableParallel(this DotNetBuildSettings toolSettings)
+        public static T EnableDisableParallel<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = true;
@@ -9197,7 +9197,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings DisableDisableParallel(this DotNetBuildSettings toolSettings)
+        public static T DisableDisableParallel<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = false;
@@ -9208,7 +9208,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ToggleDisableParallel(this DotNetBuildSettings toolSettings)
+        public static T ToggleDisableParallel<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = !toolSettings.DisableParallel;
@@ -9221,7 +9221,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetForce(this DotNetBuildSettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -9232,7 +9232,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetForce(this DotNetBuildSettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -9243,7 +9243,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings EnableForce(this DotNetBuildSettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -9254,7 +9254,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings DisableForce(this DotNetBuildSettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -9265,7 +9265,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ToggleForce(this DotNetBuildSettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -9278,7 +9278,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetIgnoreFailedSources(this DotNetBuildSettings toolSettings, bool? ignoreFailedSources)
+        public static T SetIgnoreFailedSources<T>(this T toolSettings, bool? ignoreFailedSources) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = ignoreFailedSources;
@@ -9289,7 +9289,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetIgnoreFailedSources(this DotNetBuildSettings toolSettings)
+        public static T ResetIgnoreFailedSources<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = null;
@@ -9300,7 +9300,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings EnableIgnoreFailedSources(this DotNetBuildSettings toolSettings)
+        public static T EnableIgnoreFailedSources<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = true;
@@ -9311,7 +9311,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings DisableIgnoreFailedSources(this DotNetBuildSettings toolSettings)
+        public static T DisableIgnoreFailedSources<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = false;
@@ -9322,7 +9322,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ToggleIgnoreFailedSources(this DotNetBuildSettings toolSettings)
+        public static T ToggleIgnoreFailedSources<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = !toolSettings.IgnoreFailedSources;
@@ -9335,7 +9335,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetNoCache(this DotNetBuildSettings toolSettings, bool? noCache)
+        public static T SetNoCache<T>(this T toolSettings, bool? noCache) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = noCache;
@@ -9346,7 +9346,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetNoCache(this DotNetBuildSettings toolSettings)
+        public static T ResetNoCache<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = null;
@@ -9357,7 +9357,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings EnableNoCache(this DotNetBuildSettings toolSettings)
+        public static T EnableNoCache<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = true;
@@ -9368,7 +9368,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings DisableNoCache(this DotNetBuildSettings toolSettings)
+        public static T DisableNoCache<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = false;
@@ -9379,7 +9379,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ToggleNoCache(this DotNetBuildSettings toolSettings)
+        public static T ToggleNoCache<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = !toolSettings.NoCache;
@@ -9392,7 +9392,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetNoDependencies(this DotNetBuildSettings toolSettings, bool? noDependencies)
+        public static T SetNoDependencies<T>(this T toolSettings, bool? noDependencies) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = noDependencies;
@@ -9403,7 +9403,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetNoDependencies(this DotNetBuildSettings toolSettings)
+        public static T ResetNoDependencies<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = null;
@@ -9414,7 +9414,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings EnableNoDependencies(this DotNetBuildSettings toolSettings)
+        public static T EnableNoDependencies<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = true;
@@ -9425,7 +9425,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings DisableNoDependencies(this DotNetBuildSettings toolSettings)
+        public static T DisableNoDependencies<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = false;
@@ -9436,7 +9436,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ToggleNoDependencies(this DotNetBuildSettings toolSettings)
+        public static T ToggleNoDependencies<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = !toolSettings.NoDependencies;
@@ -9449,7 +9449,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the directory for restored packages.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetPackageDirectory(this DotNetBuildSettings toolSettings, string packageDirectory)
+        public static T SetPackageDirectory<T>(this T toolSettings, string packageDirectory) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageDirectory = packageDirectory;
@@ -9460,7 +9460,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the directory for restored packages.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetPackageDirectory(this DotNetBuildSettings toolSettings)
+        public static T ResetPackageDirectory<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageDirectory = null;
@@ -9473,7 +9473,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetSources(this DotNetBuildSettings toolSettings, params string[] sources)
+        public static T SetSources<T>(this T toolSettings, params string[] sources) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal = sources.ToList();
@@ -9484,7 +9484,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetSources(this DotNetBuildSettings toolSettings, IEnumerable<string> sources)
+        public static T SetSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal = sources.ToList();
@@ -9495,7 +9495,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings AddSources(this DotNetBuildSettings toolSettings, params string[] sources)
+        public static T AddSources<T>(this T toolSettings, params string[] sources) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.AddRange(sources);
@@ -9506,7 +9506,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings AddSources(this DotNetBuildSettings toolSettings, IEnumerable<string> sources)
+        public static T AddSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.AddRange(sources);
@@ -9517,7 +9517,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ClearSources(this DotNetBuildSettings toolSettings)
+        public static T ClearSources<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.Clear();
@@ -9528,7 +9528,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings RemoveSources(this DotNetBuildSettings toolSettings, params string[] sources)
+        public static T RemoveSources<T>(this T toolSettings, params string[] sources) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(sources);
@@ -9540,7 +9540,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings RemoveSources(this DotNetBuildSettings toolSettings, IEnumerable<string> sources)
+        public static T RemoveSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(sources);
@@ -9554,7 +9554,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetUseLockFile(this DotNetBuildSettings toolSettings, bool? useLockFile)
+        public static T SetUseLockFile<T>(this T toolSettings, bool? useLockFile) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = useLockFile;
@@ -9565,7 +9565,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetUseLockFile(this DotNetBuildSettings toolSettings)
+        public static T ResetUseLockFile<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = null;
@@ -9576,7 +9576,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings EnableUseLockFile(this DotNetBuildSettings toolSettings)
+        public static T EnableUseLockFile<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = true;
@@ -9587,7 +9587,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings DisableUseLockFile(this DotNetBuildSettings toolSettings)
+        public static T DisableUseLockFile<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = false;
@@ -9598,7 +9598,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ToggleUseLockFile(this DotNetBuildSettings toolSettings)
+        public static T ToggleUseLockFile<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = !toolSettings.UseLockFile;
@@ -9611,7 +9611,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetLockedMode(this DotNetBuildSettings toolSettings, bool? lockedMode)
+        public static T SetLockedMode<T>(this T toolSettings, bool? lockedMode) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = lockedMode;
@@ -9622,7 +9622,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetLockedMode(this DotNetBuildSettings toolSettings)
+        public static T ResetLockedMode<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = null;
@@ -9633,7 +9633,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings EnableLockedMode(this DotNetBuildSettings toolSettings)
+        public static T EnableLockedMode<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = true;
@@ -9644,7 +9644,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings DisableLockedMode(this DotNetBuildSettings toolSettings)
+        public static T DisableLockedMode<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = false;
@@ -9655,7 +9655,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ToggleLockedMode(this DotNetBuildSettings toolSettings)
+        public static T ToggleLockedMode<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = !toolSettings.LockedMode;
@@ -9668,7 +9668,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetLockFilePath(this DotNetBuildSettings toolSettings, string lockFilePath)
+        public static T SetLockFilePath<T>(this T toolSettings, string lockFilePath) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockFilePath = lockFilePath;
@@ -9679,7 +9679,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetLockFilePath(this DotNetBuildSettings toolSettings)
+        public static T ResetLockFilePath<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockFilePath = null;
@@ -9692,7 +9692,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetForceEvaluate(this DotNetBuildSettings toolSettings, bool? forceEvaluate)
+        public static T SetForceEvaluate<T>(this T toolSettings, bool? forceEvaluate) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = forceEvaluate;
@@ -9703,7 +9703,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetForceEvaluate(this DotNetBuildSettings toolSettings)
+        public static T ResetForceEvaluate<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = null;
@@ -9714,7 +9714,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings EnableForceEvaluate(this DotNetBuildSettings toolSettings)
+        public static T EnableForceEvaluate<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = true;
@@ -9725,7 +9725,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings DisableForceEvaluate(this DotNetBuildSettings toolSettings)
+        public static T DisableForceEvaluate<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = false;
@@ -9736,7 +9736,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ToggleForceEvaluate(this DotNetBuildSettings toolSettings)
+        public static T ToggleForceEvaluate<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = !toolSettings.ForceEvaluate;
@@ -9749,7 +9749,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetProperties(this DotNetBuildSettings toolSettings, IDictionary<string, object> properties)
+        public static T SetProperties<T>(this T toolSettings, IDictionary<string, object> properties) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -9760,7 +9760,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ClearProperties(this DotNetBuildSettings toolSettings)
+        public static T ClearProperties<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Clear();
@@ -9771,7 +9771,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings AddProperty(this DotNetBuildSettings toolSettings, string propertyKey, object propertyValue)
+        public static T AddProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
@@ -9782,7 +9782,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings RemoveProperty(this DotNetBuildSettings toolSettings, string propertyKey)
+        public static T RemoveProperty<T>(this T toolSettings, string propertyKey) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove(propertyKey);
@@ -9793,7 +9793,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetProperty(this DotNetBuildSettings toolSettings, string propertyKey, object propertyValue)
+        public static T SetProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal[propertyKey] = propertyValue;
@@ -9805,7 +9805,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetRunCodeAnalysis(this DotNetBuildSettings toolSettings, bool? runCodeAnalysis)
+        public static T SetRunCodeAnalysis<T>(this T toolSettings, bool? runCodeAnalysis) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RunCodeAnalysis"] = runCodeAnalysis;
@@ -9816,7 +9816,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetRunCodeAnalysis(this DotNetBuildSettings toolSettings)
+        public static T ResetRunCodeAnalysis<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("RunCodeAnalysis");
@@ -9827,7 +9827,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings EnableRunCodeAnalysis(this DotNetBuildSettings toolSettings)
+        public static T EnableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RunCodeAnalysis"] = true;
@@ -9838,7 +9838,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings DisableRunCodeAnalysis(this DotNetBuildSettings toolSettings)
+        public static T DisableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RunCodeAnalysis"] = false;
@@ -9849,7 +9849,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ToggleRunCodeAnalysis(this DotNetBuildSettings toolSettings)
+        public static T ToggleRunCodeAnalysis<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "RunCodeAnalysis");
@@ -9862,7 +9862,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetNoWarns(this DotNetBuildSettings toolSettings, params int[] noWarn)
+        public static T SetNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -9873,7 +9873,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetNoWarns(this DotNetBuildSettings toolSettings, IEnumerable<int> noWarn)
+        public static T SetNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -9884,7 +9884,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings AddNoWarns(this DotNetBuildSettings toolSettings, params int[] noWarn)
+        public static T AddNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -9895,7 +9895,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings AddNoWarns(this DotNetBuildSettings toolSettings, IEnumerable<int> noWarn)
+        public static T AddNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -9906,7 +9906,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ClearNoWarns(this DotNetBuildSettings toolSettings)
+        public static T ClearNoWarns<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("NoWarn");
@@ -9917,7 +9917,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings RemoveNoWarns(this DotNetBuildSettings toolSettings, params int[] noWarn)
+        public static T RemoveNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -9928,7 +9928,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings RemoveNoWarns(this DotNetBuildSettings toolSettings, IEnumerable<int> noWarn)
+        public static T RemoveNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -9941,7 +9941,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetWarningsAsErrors(this DotNetBuildSettings toolSettings, params int[] warningsAsErrors)
+        public static T SetWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -9952,7 +9952,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetWarningsAsErrors(this DotNetBuildSettings toolSettings, IEnumerable<int> warningsAsErrors)
+        public static T SetWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -9963,7 +9963,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings AddWarningsAsErrors(this DotNetBuildSettings toolSettings, params int[] warningsAsErrors)
+        public static T AddWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -9974,7 +9974,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings AddWarningsAsErrors(this DotNetBuildSettings toolSettings, IEnumerable<int> warningsAsErrors)
+        public static T AddWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -9985,7 +9985,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ClearWarningsAsErrors(this DotNetBuildSettings toolSettings)
+        public static T ClearWarningsAsErrors<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("WarningsAsErrors");
@@ -9996,7 +9996,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings RemoveWarningsAsErrors(this DotNetBuildSettings toolSettings, params int[] warningsAsErrors)
+        public static T RemoveWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -10007,7 +10007,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings RemoveWarningsAsErrors(this DotNetBuildSettings toolSettings, IEnumerable<int> warningsAsErrors)
+        public static T RemoveWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -10020,7 +10020,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetWarningLevel(this DotNetBuildSettings toolSettings, int? warningLevel)
+        public static T SetWarningLevel<T>(this T toolSettings, int? warningLevel) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["WarningLevel"] = warningLevel;
@@ -10031,7 +10031,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetWarningLevel(this DotNetBuildSettings toolSettings)
+        public static T ResetWarningLevel<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("WarningLevel");
@@ -10044,7 +10044,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetTreatWarningsAsErrors(this DotNetBuildSettings toolSettings, bool? treatWarningsAsErrors)
+        public static T SetTreatWarningsAsErrors<T>(this T toolSettings, bool? treatWarningsAsErrors) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = treatWarningsAsErrors;
@@ -10055,7 +10055,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetTreatWarningsAsErrors(this DotNetBuildSettings toolSettings)
+        public static T ResetTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("TreatWarningsAsErrors");
@@ -10066,7 +10066,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings EnableTreatWarningsAsErrors(this DotNetBuildSettings toolSettings)
+        public static T EnableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = true;
@@ -10077,7 +10077,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings DisableTreatWarningsAsErrors(this DotNetBuildSettings toolSettings)
+        public static T DisableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = false;
@@ -10088,7 +10088,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ToggleTreatWarningsAsErrors(this DotNetBuildSettings toolSettings)
+        public static T ToggleTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "TreatWarningsAsErrors");
@@ -10101,7 +10101,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetAssemblyVersion(this DotNetBuildSettings toolSettings, string assemblyVersion)
+        public static T SetAssemblyVersion<T>(this T toolSettings, string assemblyVersion) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["AssemblyVersion"] = assemblyVersion;
@@ -10112,7 +10112,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetAssemblyVersion(this DotNetBuildSettings toolSettings)
+        public static T ResetAssemblyVersion<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("AssemblyVersion");
@@ -10125,7 +10125,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetFileVersion(this DotNetBuildSettings toolSettings, string fileVersion)
+        public static T SetFileVersion<T>(this T toolSettings, string fileVersion) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["FileVersion"] = fileVersion;
@@ -10136,7 +10136,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetFileVersion(this DotNetBuildSettings toolSettings)
+        public static T ResetFileVersion<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("FileVersion");
@@ -10149,7 +10149,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetInformationalVersion(this DotNetBuildSettings toolSettings, string informationalVersion)
+        public static T SetInformationalVersion<T>(this T toolSettings, string informationalVersion) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["InformationalVersion"] = informationalVersion;
@@ -10160,7 +10160,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetInformationalVersion(this DotNetBuildSettings toolSettings)
+        public static T ResetInformationalVersion<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("InformationalVersion");
@@ -10173,7 +10173,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetPackageId(this DotNetBuildSettings toolSettings, string packageId)
+        public static T SetPackageId<T>(this T toolSettings, string packageId) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageId"] = packageId;
@@ -10184,7 +10184,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetPackageId(this DotNetBuildSettings toolSettings)
+        public static T ResetPackageId<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageId");
@@ -10197,7 +10197,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetVersion(this DotNetBuildSettings toolSettings, string version)
+        public static T SetVersion<T>(this T toolSettings, string version) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Version"] = version;
@@ -10208,7 +10208,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetVersion(this DotNetBuildSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Version");
@@ -10221,7 +10221,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetVersionPrefix(this DotNetBuildSettings toolSettings, string versionPrefix)
+        public static T SetVersionPrefix<T>(this T toolSettings, string versionPrefix) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["VersionPrefix"] = versionPrefix;
@@ -10232,7 +10232,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetVersionPrefix(this DotNetBuildSettings toolSettings)
+        public static T ResetVersionPrefix<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("VersionPrefix");
@@ -10245,7 +10245,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetAuthors(this DotNetBuildSettings toolSettings, params string[] authors)
+        public static T SetAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -10256,7 +10256,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetAuthors(this DotNetBuildSettings toolSettings, IEnumerable<string> authors)
+        public static T SetAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -10267,7 +10267,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings AddAuthors(this DotNetBuildSettings toolSettings, params string[] authors)
+        public static T AddAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -10278,7 +10278,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings AddAuthors(this DotNetBuildSettings toolSettings, IEnumerable<string> authors)
+        public static T AddAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -10289,7 +10289,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ClearAuthors(this DotNetBuildSettings toolSettings)
+        public static T ClearAuthors<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Authors");
@@ -10300,7 +10300,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings RemoveAuthors(this DotNetBuildSettings toolSettings, params string[] authors)
+        public static T RemoveAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -10311,7 +10311,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings RemoveAuthors(this DotNetBuildSettings toolSettings, IEnumerable<string> authors)
+        public static T RemoveAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -10324,7 +10324,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetTitle(this DotNetBuildSettings toolSettings, string title)
+        public static T SetTitle<T>(this T toolSettings, string title) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Title"] = title;
@@ -10335,7 +10335,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetTitle(this DotNetBuildSettings toolSettings)
+        public static T ResetTitle<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Title");
@@ -10348,7 +10348,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetDescription(this DotNetBuildSettings toolSettings, string description)
+        public static T SetDescription<T>(this T toolSettings, string description) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Description"] = description;
@@ -10359,7 +10359,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetDescription(this DotNetBuildSettings toolSettings)
+        public static T ResetDescription<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Description");
@@ -10372,7 +10372,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetCopyright(this DotNetBuildSettings toolSettings, string copyright)
+        public static T SetCopyright<T>(this T toolSettings, string copyright) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Copyright"] = copyright;
@@ -10383,7 +10383,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetCopyright(this DotNetBuildSettings toolSettings)
+        public static T ResetCopyright<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Copyright");
@@ -10396,7 +10396,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetPackageRequireLicenseAcceptance(this DotNetBuildSettings toolSettings, bool? packageRequireLicenseAcceptance)
+        public static T SetPackageRequireLicenseAcceptance<T>(this T toolSettings, bool? packageRequireLicenseAcceptance) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = packageRequireLicenseAcceptance;
@@ -10407,7 +10407,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetPackageRequireLicenseAcceptance(this DotNetBuildSettings toolSettings)
+        public static T ResetPackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageRequireLicenseAcceptance");
@@ -10418,7 +10418,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings EnablePackageRequireLicenseAcceptance(this DotNetBuildSettings toolSettings)
+        public static T EnablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = true;
@@ -10429,7 +10429,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings DisablePackageRequireLicenseAcceptance(this DotNetBuildSettings toolSettings)
+        public static T DisablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = false;
@@ -10440,7 +10440,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings TogglePackageRequireLicenseAcceptance(this DotNetBuildSettings toolSettings)
+        public static T TogglePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PackageRequireLicenseAcceptance");
@@ -10453,7 +10453,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetPackageLicenseUrl(this DotNetBuildSettings toolSettings, string packageLicenseUrl)
+        public static T SetPackageLicenseUrl<T>(this T toolSettings, string packageLicenseUrl) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageLicenseUrl"] = packageLicenseUrl;
@@ -10464,7 +10464,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetPackageLicenseUrl(this DotNetBuildSettings toolSettings)
+        public static T ResetPackageLicenseUrl<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageLicenseUrl");
@@ -10477,7 +10477,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetPackageProjectUrl(this DotNetBuildSettings toolSettings, string packageProjectUrl)
+        public static T SetPackageProjectUrl<T>(this T toolSettings, string packageProjectUrl) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageProjectUrl"] = packageProjectUrl;
@@ -10488,7 +10488,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetPackageProjectUrl(this DotNetBuildSettings toolSettings)
+        public static T ResetPackageProjectUrl<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageProjectUrl");
@@ -10501,7 +10501,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetPackageIconUrl(this DotNetBuildSettings toolSettings, string packageIconUrl)
+        public static T SetPackageIconUrl<T>(this T toolSettings, string packageIconUrl) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageIconUrl"] = packageIconUrl;
@@ -10512,7 +10512,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetPackageIconUrl(this DotNetBuildSettings toolSettings)
+        public static T ResetPackageIconUrl<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageIconUrl");
@@ -10525,7 +10525,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetPackageTags(this DotNetBuildSettings toolSettings, params string[] packageTags)
+        public static T SetPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -10536,7 +10536,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetPackageTags(this DotNetBuildSettings toolSettings, IEnumerable<string> packageTags)
+        public static T SetPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -10547,7 +10547,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings AddPackageTags(this DotNetBuildSettings toolSettings, params string[] packageTags)
+        public static T AddPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -10558,7 +10558,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings AddPackageTags(this DotNetBuildSettings toolSettings, IEnumerable<string> packageTags)
+        public static T AddPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -10569,7 +10569,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ClearPackageTags(this DotNetBuildSettings toolSettings)
+        public static T ClearPackageTags<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageTags");
@@ -10580,7 +10580,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings RemovePackageTags(this DotNetBuildSettings toolSettings, params string[] packageTags)
+        public static T RemovePackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -10591,7 +10591,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings RemovePackageTags(this DotNetBuildSettings toolSettings, IEnumerable<string> packageTags)
+        public static T RemovePackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -10604,7 +10604,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetPackageReleaseNotes(this DotNetBuildSettings toolSettings, string packageReleaseNotes)
+        public static T SetPackageReleaseNotes<T>(this T toolSettings, string packageReleaseNotes) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageReleaseNotes"] = packageReleaseNotes;
@@ -10615,7 +10615,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetPackageReleaseNotes(this DotNetBuildSettings toolSettings)
+        public static T ResetPackageReleaseNotes<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageReleaseNotes");
@@ -10628,7 +10628,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetRepositoryUrl(this DotNetBuildSettings toolSettings, string repositoryUrl)
+        public static T SetRepositoryUrl<T>(this T toolSettings, string repositoryUrl) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RepositoryUrl"] = repositoryUrl;
@@ -10639,7 +10639,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetRepositoryUrl(this DotNetBuildSettings toolSettings)
+        public static T ResetRepositoryUrl<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("RepositoryUrl");
@@ -10652,7 +10652,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetRepositoryType(this DotNetBuildSettings toolSettings, string repositoryType)
+        public static T SetRepositoryType<T>(this T toolSettings, string repositoryType) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RepositoryType"] = repositoryType;
@@ -10663,7 +10663,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetRepositoryType(this DotNetBuildSettings toolSettings)
+        public static T ResetRepositoryType<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("RepositoryType");
@@ -10676,7 +10676,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Format for packaging symbols.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetSymbolPackageFormat(this DotNetBuildSettings toolSettings, DotNetSymbolPackageFormat symbolPackageFormat)
+        public static T SetSymbolPackageFormat<T>(this T toolSettings, DotNetSymbolPackageFormat symbolPackageFormat) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
@@ -10687,7 +10687,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Format for packaging symbols.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings ResetSymbolPackageFormat(this DotNetBuildSettings toolSettings)
+        public static T ResetSymbolPackageFormat<T>(this T toolSettings) where T : DotNetBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
@@ -10711,7 +10711,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The MSBuild project to clean. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in <em>proj</em> and uses that file.</p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetProject(this DotNetCleanSettings toolSettings, string project)
+        public static T SetProject<T>(this T toolSettings, string project) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = project;
@@ -10722,7 +10722,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The MSBuild project to clean. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in <em>proj</em> and uses that file.</p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetProject(this DotNetCleanSettings toolSettings)
+        public static T ResetProject<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = null;
@@ -10735,7 +10735,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Defines the build configuration. The default value is <c>Debug</c>. This option is only required when cleaning if you specified it during build time.</p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetConfiguration(this DotNetCleanSettings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -10746,7 +10746,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Defines the build configuration. The default value is <c>Debug</c>. This option is only required when cleaning if you specified it during build time.</p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetConfiguration(this DotNetCleanSettings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -10759,7 +10759,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">framework</a> that was specified at build time. The framework must be defined in the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/csproj">project file</a>. If you specified the framework at build time, you must specify the framework when cleaning.</p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetFramework(this DotNetCleanSettings toolSettings, string framework)
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = framework;
@@ -10770,7 +10770,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">framework</a> that was specified at build time. The framework must be defined in the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/csproj">project file</a>. If you specified the framework at build time, you must specify the framework when cleaning.</p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetFramework(this DotNetCleanSettings toolSettings)
+        public static T ResetFramework<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = null;
@@ -10783,7 +10783,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Directory in which the build outputs are placed. Specify the <c>--framework</c> switch with the output directory switch if you specified the framework when the project was built.</p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetOutput(this DotNetCleanSettings toolSettings, string output)
+        public static T SetOutput<T>(this T toolSettings, string output) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -10794,7 +10794,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Directory in which the build outputs are placed. Specify the <c>--framework</c> switch with the output directory switch if you specified the framework when the project was built.</p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetOutput(this DotNetCleanSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -10807,7 +10807,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Cleans the output folder of the specified runtime. This is used when a <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index#self-contained-deployments-scd">self-contained deployment</a> was created.</p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetRuntime(this DotNetCleanSettings toolSettings, string runtime)
+        public static T SetRuntime<T>(this T toolSettings, string runtime) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = runtime;
@@ -10818,7 +10818,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Cleans the output folder of the specified runtime. This is used when a <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index#self-contained-deployments-scd">self-contained deployment</a> was created.</p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetRuntime(this DotNetCleanSettings toolSettings)
+        public static T ResetRuntime<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = null;
@@ -10831,7 +10831,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the verbosity level of the command. Allowed levels are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].</p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetVerbosity(this DotNetCleanSettings toolSettings, DotNetVerbosity verbosity)
+        public static T SetVerbosity<T>(this T toolSettings, DotNetVerbosity verbosity) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = verbosity;
@@ -10842,7 +10842,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the verbosity level of the command. Allowed levels are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].</p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetVerbosity(this DotNetCleanSettings toolSettings)
+        public static T ResetVerbosity<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = null;
@@ -10855,7 +10855,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetProperties(this DotNetCleanSettings toolSettings, IDictionary<string, object> properties)
+        public static T SetProperties<T>(this T toolSettings, IDictionary<string, object> properties) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -10866,7 +10866,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ClearProperties(this DotNetCleanSettings toolSettings)
+        public static T ClearProperties<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Clear();
@@ -10877,7 +10877,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings AddProperty(this DotNetCleanSettings toolSettings, string propertyKey, object propertyValue)
+        public static T AddProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
@@ -10888,7 +10888,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings RemoveProperty(this DotNetCleanSettings toolSettings, string propertyKey)
+        public static T RemoveProperty<T>(this T toolSettings, string propertyKey) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove(propertyKey);
@@ -10899,7 +10899,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetProperty(this DotNetCleanSettings toolSettings, string propertyKey, object propertyValue)
+        public static T SetProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal[propertyKey] = propertyValue;
@@ -10911,7 +10911,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetRunCodeAnalysis(this DotNetCleanSettings toolSettings, bool? runCodeAnalysis)
+        public static T SetRunCodeAnalysis<T>(this T toolSettings, bool? runCodeAnalysis) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RunCodeAnalysis"] = runCodeAnalysis;
@@ -10922,7 +10922,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetRunCodeAnalysis(this DotNetCleanSettings toolSettings)
+        public static T ResetRunCodeAnalysis<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("RunCodeAnalysis");
@@ -10933,7 +10933,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings EnableRunCodeAnalysis(this DotNetCleanSettings toolSettings)
+        public static T EnableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RunCodeAnalysis"] = true;
@@ -10944,7 +10944,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings DisableRunCodeAnalysis(this DotNetCleanSettings toolSettings)
+        public static T DisableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RunCodeAnalysis"] = false;
@@ -10955,7 +10955,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ToggleRunCodeAnalysis(this DotNetCleanSettings toolSettings)
+        public static T ToggleRunCodeAnalysis<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "RunCodeAnalysis");
@@ -10968,7 +10968,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetNoWarns(this DotNetCleanSettings toolSettings, params int[] noWarn)
+        public static T SetNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -10979,7 +10979,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetNoWarns(this DotNetCleanSettings toolSettings, IEnumerable<int> noWarn)
+        public static T SetNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -10990,7 +10990,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings AddNoWarns(this DotNetCleanSettings toolSettings, params int[] noWarn)
+        public static T AddNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -11001,7 +11001,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings AddNoWarns(this DotNetCleanSettings toolSettings, IEnumerable<int> noWarn)
+        public static T AddNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -11012,7 +11012,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ClearNoWarns(this DotNetCleanSettings toolSettings)
+        public static T ClearNoWarns<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("NoWarn");
@@ -11023,7 +11023,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings RemoveNoWarns(this DotNetCleanSettings toolSettings, params int[] noWarn)
+        public static T RemoveNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -11034,7 +11034,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings RemoveNoWarns(this DotNetCleanSettings toolSettings, IEnumerable<int> noWarn)
+        public static T RemoveNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -11047,7 +11047,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetWarningsAsErrors(this DotNetCleanSettings toolSettings, params int[] warningsAsErrors)
+        public static T SetWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -11058,7 +11058,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetWarningsAsErrors(this DotNetCleanSettings toolSettings, IEnumerable<int> warningsAsErrors)
+        public static T SetWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -11069,7 +11069,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings AddWarningsAsErrors(this DotNetCleanSettings toolSettings, params int[] warningsAsErrors)
+        public static T AddWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -11080,7 +11080,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings AddWarningsAsErrors(this DotNetCleanSettings toolSettings, IEnumerable<int> warningsAsErrors)
+        public static T AddWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -11091,7 +11091,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ClearWarningsAsErrors(this DotNetCleanSettings toolSettings)
+        public static T ClearWarningsAsErrors<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("WarningsAsErrors");
@@ -11102,7 +11102,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings RemoveWarningsAsErrors(this DotNetCleanSettings toolSettings, params int[] warningsAsErrors)
+        public static T RemoveWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -11113,7 +11113,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings RemoveWarningsAsErrors(this DotNetCleanSettings toolSettings, IEnumerable<int> warningsAsErrors)
+        public static T RemoveWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -11126,7 +11126,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetWarningLevel(this DotNetCleanSettings toolSettings, int? warningLevel)
+        public static T SetWarningLevel<T>(this T toolSettings, int? warningLevel) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["WarningLevel"] = warningLevel;
@@ -11137,7 +11137,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetWarningLevel(this DotNetCleanSettings toolSettings)
+        public static T ResetWarningLevel<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("WarningLevel");
@@ -11150,7 +11150,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetTreatWarningsAsErrors(this DotNetCleanSettings toolSettings, bool? treatWarningsAsErrors)
+        public static T SetTreatWarningsAsErrors<T>(this T toolSettings, bool? treatWarningsAsErrors) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = treatWarningsAsErrors;
@@ -11161,7 +11161,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetTreatWarningsAsErrors(this DotNetCleanSettings toolSettings)
+        public static T ResetTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("TreatWarningsAsErrors");
@@ -11172,7 +11172,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings EnableTreatWarningsAsErrors(this DotNetCleanSettings toolSettings)
+        public static T EnableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = true;
@@ -11183,7 +11183,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings DisableTreatWarningsAsErrors(this DotNetCleanSettings toolSettings)
+        public static T DisableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = false;
@@ -11194,7 +11194,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ToggleTreatWarningsAsErrors(this DotNetCleanSettings toolSettings)
+        public static T ToggleTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "TreatWarningsAsErrors");
@@ -11207,7 +11207,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetAssemblyVersion(this DotNetCleanSettings toolSettings, string assemblyVersion)
+        public static T SetAssemblyVersion<T>(this T toolSettings, string assemblyVersion) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["AssemblyVersion"] = assemblyVersion;
@@ -11218,7 +11218,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetAssemblyVersion(this DotNetCleanSettings toolSettings)
+        public static T ResetAssemblyVersion<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("AssemblyVersion");
@@ -11231,7 +11231,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetFileVersion(this DotNetCleanSettings toolSettings, string fileVersion)
+        public static T SetFileVersion<T>(this T toolSettings, string fileVersion) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["FileVersion"] = fileVersion;
@@ -11242,7 +11242,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetFileVersion(this DotNetCleanSettings toolSettings)
+        public static T ResetFileVersion<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("FileVersion");
@@ -11255,7 +11255,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetInformationalVersion(this DotNetCleanSettings toolSettings, string informationalVersion)
+        public static T SetInformationalVersion<T>(this T toolSettings, string informationalVersion) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["InformationalVersion"] = informationalVersion;
@@ -11266,7 +11266,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetInformationalVersion(this DotNetCleanSettings toolSettings)
+        public static T ResetInformationalVersion<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("InformationalVersion");
@@ -11279,7 +11279,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetPackageId(this DotNetCleanSettings toolSettings, string packageId)
+        public static T SetPackageId<T>(this T toolSettings, string packageId) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageId"] = packageId;
@@ -11290,7 +11290,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetPackageId(this DotNetCleanSettings toolSettings)
+        public static T ResetPackageId<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageId");
@@ -11303,7 +11303,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetVersion(this DotNetCleanSettings toolSettings, string version)
+        public static T SetVersion<T>(this T toolSettings, string version) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Version"] = version;
@@ -11314,7 +11314,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetVersion(this DotNetCleanSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Version");
@@ -11327,7 +11327,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetVersionPrefix(this DotNetCleanSettings toolSettings, string versionPrefix)
+        public static T SetVersionPrefix<T>(this T toolSettings, string versionPrefix) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["VersionPrefix"] = versionPrefix;
@@ -11338,7 +11338,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetVersionPrefix(this DotNetCleanSettings toolSettings)
+        public static T ResetVersionPrefix<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("VersionPrefix");
@@ -11351,7 +11351,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetAuthors(this DotNetCleanSettings toolSettings, params string[] authors)
+        public static T SetAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -11362,7 +11362,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetAuthors(this DotNetCleanSettings toolSettings, IEnumerable<string> authors)
+        public static T SetAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -11373,7 +11373,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings AddAuthors(this DotNetCleanSettings toolSettings, params string[] authors)
+        public static T AddAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -11384,7 +11384,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings AddAuthors(this DotNetCleanSettings toolSettings, IEnumerable<string> authors)
+        public static T AddAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -11395,7 +11395,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ClearAuthors(this DotNetCleanSettings toolSettings)
+        public static T ClearAuthors<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Authors");
@@ -11406,7 +11406,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings RemoveAuthors(this DotNetCleanSettings toolSettings, params string[] authors)
+        public static T RemoveAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -11417,7 +11417,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings RemoveAuthors(this DotNetCleanSettings toolSettings, IEnumerable<string> authors)
+        public static T RemoveAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -11430,7 +11430,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetTitle(this DotNetCleanSettings toolSettings, string title)
+        public static T SetTitle<T>(this T toolSettings, string title) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Title"] = title;
@@ -11441,7 +11441,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetTitle(this DotNetCleanSettings toolSettings)
+        public static T ResetTitle<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Title");
@@ -11454,7 +11454,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetDescription(this DotNetCleanSettings toolSettings, string description)
+        public static T SetDescription<T>(this T toolSettings, string description) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Description"] = description;
@@ -11465,7 +11465,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetDescription(this DotNetCleanSettings toolSettings)
+        public static T ResetDescription<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Description");
@@ -11478,7 +11478,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetCopyright(this DotNetCleanSettings toolSettings, string copyright)
+        public static T SetCopyright<T>(this T toolSettings, string copyright) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Copyright"] = copyright;
@@ -11489,7 +11489,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetCopyright(this DotNetCleanSettings toolSettings)
+        public static T ResetCopyright<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Copyright");
@@ -11502,7 +11502,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetPackageRequireLicenseAcceptance(this DotNetCleanSettings toolSettings, bool? packageRequireLicenseAcceptance)
+        public static T SetPackageRequireLicenseAcceptance<T>(this T toolSettings, bool? packageRequireLicenseAcceptance) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = packageRequireLicenseAcceptance;
@@ -11513,7 +11513,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetPackageRequireLicenseAcceptance(this DotNetCleanSettings toolSettings)
+        public static T ResetPackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageRequireLicenseAcceptance");
@@ -11524,7 +11524,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings EnablePackageRequireLicenseAcceptance(this DotNetCleanSettings toolSettings)
+        public static T EnablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = true;
@@ -11535,7 +11535,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings DisablePackageRequireLicenseAcceptance(this DotNetCleanSettings toolSettings)
+        public static T DisablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = false;
@@ -11546,7 +11546,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings TogglePackageRequireLicenseAcceptance(this DotNetCleanSettings toolSettings)
+        public static T TogglePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PackageRequireLicenseAcceptance");
@@ -11559,7 +11559,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetPackageLicenseUrl(this DotNetCleanSettings toolSettings, string packageLicenseUrl)
+        public static T SetPackageLicenseUrl<T>(this T toolSettings, string packageLicenseUrl) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageLicenseUrl"] = packageLicenseUrl;
@@ -11570,7 +11570,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetPackageLicenseUrl(this DotNetCleanSettings toolSettings)
+        public static T ResetPackageLicenseUrl<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageLicenseUrl");
@@ -11583,7 +11583,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetPackageProjectUrl(this DotNetCleanSettings toolSettings, string packageProjectUrl)
+        public static T SetPackageProjectUrl<T>(this T toolSettings, string packageProjectUrl) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageProjectUrl"] = packageProjectUrl;
@@ -11594,7 +11594,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetPackageProjectUrl(this DotNetCleanSettings toolSettings)
+        public static T ResetPackageProjectUrl<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageProjectUrl");
@@ -11607,7 +11607,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetPackageIconUrl(this DotNetCleanSettings toolSettings, string packageIconUrl)
+        public static T SetPackageIconUrl<T>(this T toolSettings, string packageIconUrl) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageIconUrl"] = packageIconUrl;
@@ -11618,7 +11618,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetPackageIconUrl(this DotNetCleanSettings toolSettings)
+        public static T ResetPackageIconUrl<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageIconUrl");
@@ -11631,7 +11631,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetPackageTags(this DotNetCleanSettings toolSettings, params string[] packageTags)
+        public static T SetPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -11642,7 +11642,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetPackageTags(this DotNetCleanSettings toolSettings, IEnumerable<string> packageTags)
+        public static T SetPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -11653,7 +11653,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings AddPackageTags(this DotNetCleanSettings toolSettings, params string[] packageTags)
+        public static T AddPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -11664,7 +11664,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings AddPackageTags(this DotNetCleanSettings toolSettings, IEnumerable<string> packageTags)
+        public static T AddPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -11675,7 +11675,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ClearPackageTags(this DotNetCleanSettings toolSettings)
+        public static T ClearPackageTags<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageTags");
@@ -11686,7 +11686,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings RemovePackageTags(this DotNetCleanSettings toolSettings, params string[] packageTags)
+        public static T RemovePackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -11697,7 +11697,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings RemovePackageTags(this DotNetCleanSettings toolSettings, IEnumerable<string> packageTags)
+        public static T RemovePackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -11710,7 +11710,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetPackageReleaseNotes(this DotNetCleanSettings toolSettings, string packageReleaseNotes)
+        public static T SetPackageReleaseNotes<T>(this T toolSettings, string packageReleaseNotes) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageReleaseNotes"] = packageReleaseNotes;
@@ -11721,7 +11721,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetPackageReleaseNotes(this DotNetCleanSettings toolSettings)
+        public static T ResetPackageReleaseNotes<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageReleaseNotes");
@@ -11734,7 +11734,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetRepositoryUrl(this DotNetCleanSettings toolSettings, string repositoryUrl)
+        public static T SetRepositoryUrl<T>(this T toolSettings, string repositoryUrl) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RepositoryUrl"] = repositoryUrl;
@@ -11745,7 +11745,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetRepositoryUrl(this DotNetCleanSettings toolSettings)
+        public static T ResetRepositoryUrl<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("RepositoryUrl");
@@ -11758,7 +11758,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetRepositoryType(this DotNetCleanSettings toolSettings, string repositoryType)
+        public static T SetRepositoryType<T>(this T toolSettings, string repositoryType) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RepositoryType"] = repositoryType;
@@ -11769,7 +11769,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetRepositoryType(this DotNetCleanSettings toolSettings)
+        public static T ResetRepositoryType<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("RepositoryType");
@@ -11782,7 +11782,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Format for packaging symbols.</p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings SetSymbolPackageFormat(this DotNetCleanSettings toolSettings, DotNetSymbolPackageFormat symbolPackageFormat)
+        public static T SetSymbolPackageFormat<T>(this T toolSettings, DotNetSymbolPackageFormat symbolPackageFormat) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
@@ -11793,7 +11793,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Format for packaging symbols.</p>
         /// </summary>
         [Pure]
-        public static DotNetCleanSettings ResetSymbolPackageFormat(this DotNetCleanSettings toolSettings)
+        public static T ResetSymbolPackageFormat<T>(this T toolSettings) where T : DotNetCleanSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
@@ -11817,7 +11817,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The project to publish, which defaults to the current directory if not specified.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetProject(this DotNetPublishSettings toolSettings, string project)
+        public static T SetProject<T>(this T toolSettings, string project) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = project;
@@ -11828,7 +11828,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The project to publish, which defaults to the current directory if not specified.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetProject(this DotNetPublishSettings toolSettings)
+        public static T ResetProject<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = null;
@@ -11841,7 +11841,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Defines the build configuration. The default value is <c>Debug</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetConfiguration(this DotNetPublishSettings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -11852,7 +11852,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Defines the build configuration. The default value is <c>Debug</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetConfiguration(this DotNetPublishSettings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -11865,7 +11865,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Publishes the application for the specified <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. You must specify the target framework in the project file.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetFramework(this DotNetPublishSettings toolSettings, string framework)
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = framework;
@@ -11876,7 +11876,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Publishes the application for the specified <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. You must specify the target framework in the project file.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetFramework(this DotNetPublishSettings toolSettings)
+        public static T ResetFramework<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = null;
@@ -11889,7 +11889,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies one or several <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/runtime-store">target manifests</a> to use to trim the set of packages published with the app. The manifest file is part of the output of the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-store"><c>dotnet store</c></a> command. To specify multiple manifests, add a <c>--manifest</c> option for each manifest. This option is available starting with .NET Core 2.0 SDK.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetManifest(this DotNetPublishSettings toolSettings, string manifest)
+        public static T SetManifest<T>(this T toolSettings, string manifest) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Manifest = manifest;
@@ -11900,7 +11900,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies one or several <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/runtime-store">target manifests</a> to use to trim the set of packages published with the app. The manifest file is part of the output of the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-store"><c>dotnet store</c></a> command. To specify multiple manifests, add a <c>--manifest</c> option for each manifest. This option is available starting with .NET Core 2.0 SDK.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetManifest(this DotNetPublishSettings toolSettings)
+        public static T ResetManifest<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Manifest = null;
@@ -11913,7 +11913,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore when running the command.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetNoRestore(this DotNetPublishSettings toolSettings, bool? noRestore)
+        public static T SetNoRestore<T>(this T toolSettings, bool? noRestore) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = noRestore;
@@ -11924,7 +11924,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore when running the command.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetNoRestore(this DotNetPublishSettings toolSettings)
+        public static T ResetNoRestore<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = null;
@@ -11935,7 +11935,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore when running the command.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings EnableNoRestore(this DotNetPublishSettings toolSettings)
+        public static T EnableNoRestore<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = true;
@@ -11946,7 +11946,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore when running the command.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings DisableNoRestore(this DotNetPublishSettings toolSettings)
+        public static T DisableNoRestore<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = false;
@@ -11957,7 +11957,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't perform an implicit restore when running the command.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ToggleNoRestore(this DotNetPublishSettings toolSettings)
+        public static T ToggleNoRestore<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = !toolSettings.NoRestore;
@@ -11970,7 +11970,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't build the project before publishing. It also implicitly sets the <c>--no-restore</c> flag.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetNoBuild(this DotNetPublishSettings toolSettings, bool? noBuild)
+        public static T SetNoBuild<T>(this T toolSettings, bool? noBuild) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = noBuild;
@@ -11981,7 +11981,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't build the project before publishing. It also implicitly sets the <c>--no-restore</c> flag.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetNoBuild(this DotNetPublishSettings toolSettings)
+        public static T ResetNoBuild<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = null;
@@ -11992,7 +11992,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't build the project before publishing. It also implicitly sets the <c>--no-restore</c> flag.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings EnableNoBuild(this DotNetPublishSettings toolSettings)
+        public static T EnableNoBuild<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = true;
@@ -12003,7 +12003,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't build the project before publishing. It also implicitly sets the <c>--no-restore</c> flag.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings DisableNoBuild(this DotNetPublishSettings toolSettings)
+        public static T DisableNoBuild<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = false;
@@ -12014,7 +12014,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't build the project before publishing. It also implicitly sets the <c>--no-restore</c> flag.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ToggleNoBuild(this DotNetPublishSettings toolSettings)
+        public static T ToggleNoBuild<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = !toolSettings.NoBuild;
@@ -12027,7 +12027,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the path for the output directory. If not specified, it defaults to <em>./bin/[configuration]/[framework]/</em> for a framework-dependent deployment or <em>./bin/[configuration]/[framework]/[runtime]</em> for a self-contained deployment.<para/>If a relative path is provided, the output directory generated is relative to the project file location, not to the current working directory.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetOutput(this DotNetPublishSettings toolSettings, string output)
+        public static T SetOutput<T>(this T toolSettings, string output) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -12038,7 +12038,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the path for the output directory. If not specified, it defaults to <em>./bin/[configuration]/[framework]/</em> for a framework-dependent deployment or <em>./bin/[configuration]/[framework]/[runtime]</em> for a self-contained deployment.<para/>If a relative path is provided, the output directory generated is relative to the project file location, not to the current working directory.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetOutput(this DotNetPublishSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -12051,7 +12051,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Publishes the .NET Core runtime with your application so the runtime doesn't need to be installed on the target machine. If a runtime identifier is specified, its default value is <c>true</c>. For more information about the different deployment types, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index">.NET Core application deployment</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetSelfContained(this DotNetPublishSettings toolSettings, bool? selfContained)
+        public static T SetSelfContained<T>(this T toolSettings, bool? selfContained) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SelfContained = selfContained;
@@ -12062,7 +12062,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Publishes the .NET Core runtime with your application so the runtime doesn't need to be installed on the target machine. If a runtime identifier is specified, its default value is <c>true</c>. For more information about the different deployment types, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index">.NET Core application deployment</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetSelfContained(this DotNetPublishSettings toolSettings)
+        public static T ResetSelfContained<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SelfContained = null;
@@ -12073,7 +12073,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Publishes the .NET Core runtime with your application so the runtime doesn't need to be installed on the target machine. If a runtime identifier is specified, its default value is <c>true</c>. For more information about the different deployment types, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index">.NET Core application deployment</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings EnableSelfContained(this DotNetPublishSettings toolSettings)
+        public static T EnableSelfContained<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SelfContained = true;
@@ -12084,7 +12084,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Publishes the .NET Core runtime with your application so the runtime doesn't need to be installed on the target machine. If a runtime identifier is specified, its default value is <c>true</c>. For more information about the different deployment types, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index">.NET Core application deployment</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings DisableSelfContained(this DotNetPublishSettings toolSettings)
+        public static T DisableSelfContained<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SelfContained = false;
@@ -12095,7 +12095,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Publishes the .NET Core runtime with your application so the runtime doesn't need to be installed on the target machine. If a runtime identifier is specified, its default value is <c>true</c>. For more information about the different deployment types, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index">.NET Core application deployment</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ToggleSelfContained(this DotNetPublishSettings toolSettings)
+        public static T ToggleSelfContained<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SelfContained = !toolSettings.SelfContained;
@@ -12108,7 +12108,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Publishes the application for a given runtime. This is used when creating a <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index#self-contained-deployments-scd">self-contained deployment (SCD)</a>. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Default is to publish a <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index#framework-dependent-deployments-fdd">framework-dependent deployment (FDD)</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetRuntime(this DotNetPublishSettings toolSettings, string runtime)
+        public static T SetRuntime<T>(this T toolSettings, string runtime) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = runtime;
@@ -12119,7 +12119,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Publishes the application for a given runtime. This is used when creating a <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index#self-contained-deployments-scd">self-contained deployment (SCD)</a>. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Default is to publish a <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index#framework-dependent-deployments-fdd">framework-dependent deployment (FDD)</a>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetRuntime(this DotNetPublishSettings toolSettings)
+        public static T ResetRuntime<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = null;
@@ -12132,7 +12132,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetVerbosity(this DotNetPublishSettings toolSettings, DotNetVerbosity verbosity)
+        public static T SetVerbosity<T>(this T toolSettings, DotNetVerbosity verbosity) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = verbosity;
@@ -12143,7 +12143,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetVerbosity(this DotNetPublishSettings toolSettings)
+        public static T ResetVerbosity<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = null;
@@ -12156,7 +12156,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Defines the version suffix for an asterisk (<c>*</c>) in the version field of the project file. The format follows NuGet's version guidelines.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetVersionSuffix(this DotNetPublishSettings toolSettings, string versionSuffix)
+        public static T SetVersionSuffix<T>(this T toolSettings, string versionSuffix) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VersionSuffix = versionSuffix;
@@ -12167,7 +12167,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Defines the version suffix for an asterisk (<c>*</c>) in the version field of the project file. The format follows NuGet's version guidelines.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetVersionSuffix(this DotNetPublishSettings toolSettings)
+        public static T ResetVersionSuffix<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VersionSuffix = null;
@@ -12180,7 +12180,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetDisableParallel(this DotNetPublishSettings toolSettings, bool? disableParallel)
+        public static T SetDisableParallel<T>(this T toolSettings, bool? disableParallel) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = disableParallel;
@@ -12191,7 +12191,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetDisableParallel(this DotNetPublishSettings toolSettings)
+        public static T ResetDisableParallel<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = null;
@@ -12202,7 +12202,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings EnableDisableParallel(this DotNetPublishSettings toolSettings)
+        public static T EnableDisableParallel<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = true;
@@ -12213,7 +12213,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings DisableDisableParallel(this DotNetPublishSettings toolSettings)
+        public static T DisableDisableParallel<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = false;
@@ -12224,7 +12224,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables restoring multiple projects in parallel.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ToggleDisableParallel(this DotNetPublishSettings toolSettings)
+        public static T ToggleDisableParallel<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = !toolSettings.DisableParallel;
@@ -12237,7 +12237,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetForce(this DotNetPublishSettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -12248,7 +12248,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetForce(this DotNetPublishSettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -12259,7 +12259,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings EnableForce(this DotNetPublishSettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -12270,7 +12270,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings DisableForce(this DotNetPublishSettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -12281,7 +12281,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ToggleForce(this DotNetPublishSettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -12294,7 +12294,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetIgnoreFailedSources(this DotNetPublishSettings toolSettings, bool? ignoreFailedSources)
+        public static T SetIgnoreFailedSources<T>(this T toolSettings, bool? ignoreFailedSources) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = ignoreFailedSources;
@@ -12305,7 +12305,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetIgnoreFailedSources(this DotNetPublishSettings toolSettings)
+        public static T ResetIgnoreFailedSources<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = null;
@@ -12316,7 +12316,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings EnableIgnoreFailedSources(this DotNetPublishSettings toolSettings)
+        public static T EnableIgnoreFailedSources<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = true;
@@ -12327,7 +12327,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings DisableIgnoreFailedSources(this DotNetPublishSettings toolSettings)
+        public static T DisableIgnoreFailedSources<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = false;
@@ -12338,7 +12338,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Only warn about failed sources if there are packages meeting the version requirement.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ToggleIgnoreFailedSources(this DotNetPublishSettings toolSettings)
+        public static T ToggleIgnoreFailedSources<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = !toolSettings.IgnoreFailedSources;
@@ -12351,7 +12351,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetNoCache(this DotNetPublishSettings toolSettings, bool? noCache)
+        public static T SetNoCache<T>(this T toolSettings, bool? noCache) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = noCache;
@@ -12362,7 +12362,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetNoCache(this DotNetPublishSettings toolSettings)
+        public static T ResetNoCache<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = null;
@@ -12373,7 +12373,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings EnableNoCache(this DotNetPublishSettings toolSettings)
+        public static T EnableNoCache<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = true;
@@ -12384,7 +12384,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings DisableNoCache(this DotNetPublishSettings toolSettings)
+        public static T DisableNoCache<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = false;
@@ -12395,7 +12395,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies to not cache packages and HTTP requests.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ToggleNoCache(this DotNetPublishSettings toolSettings)
+        public static T ToggleNoCache<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = !toolSettings.NoCache;
@@ -12408,7 +12408,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetNoDependencies(this DotNetPublishSettings toolSettings, bool? noDependencies)
+        public static T SetNoDependencies<T>(this T toolSettings, bool? noDependencies) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = noDependencies;
@@ -12419,7 +12419,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetNoDependencies(this DotNetPublishSettings toolSettings)
+        public static T ResetNoDependencies<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = null;
@@ -12430,7 +12430,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings EnableNoDependencies(this DotNetPublishSettings toolSettings)
+        public static T EnableNoDependencies<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = true;
@@ -12441,7 +12441,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings DisableNoDependencies(this DotNetPublishSettings toolSettings)
+        public static T DisableNoDependencies<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = false;
@@ -12452,7 +12452,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ToggleNoDependencies(this DotNetPublishSettings toolSettings)
+        public static T ToggleNoDependencies<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = !toolSettings.NoDependencies;
@@ -12465,7 +12465,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the directory for restored packages.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetPackageDirectory(this DotNetPublishSettings toolSettings, string packageDirectory)
+        public static T SetPackageDirectory<T>(this T toolSettings, string packageDirectory) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageDirectory = packageDirectory;
@@ -12476,7 +12476,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the directory for restored packages.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetPackageDirectory(this DotNetPublishSettings toolSettings)
+        public static T ResetPackageDirectory<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageDirectory = null;
@@ -12489,7 +12489,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetSources(this DotNetPublishSettings toolSettings, params string[] sources)
+        public static T SetSources<T>(this T toolSettings, params string[] sources) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal = sources.ToList();
@@ -12500,7 +12500,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetSources(this DotNetPublishSettings toolSettings, IEnumerable<string> sources)
+        public static T SetSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal = sources.ToList();
@@ -12511,7 +12511,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings AddSources(this DotNetPublishSettings toolSettings, params string[] sources)
+        public static T AddSources<T>(this T toolSettings, params string[] sources) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.AddRange(sources);
@@ -12522,7 +12522,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings AddSources(this DotNetPublishSettings toolSettings, IEnumerable<string> sources)
+        public static T AddSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.AddRange(sources);
@@ -12533,7 +12533,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ClearSources(this DotNetPublishSettings toolSettings)
+        public static T ClearSources<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.Clear();
@@ -12544,7 +12544,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings RemoveSources(this DotNetPublishSettings toolSettings, params string[] sources)
+        public static T RemoveSources<T>(this T toolSettings, params string[] sources) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(sources);
@@ -12556,7 +12556,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings RemoveSources(this DotNetPublishSettings toolSettings, IEnumerable<string> sources)
+        public static T RemoveSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(sources);
@@ -12570,7 +12570,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetUseLockFile(this DotNetPublishSettings toolSettings, bool? useLockFile)
+        public static T SetUseLockFile<T>(this T toolSettings, bool? useLockFile) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = useLockFile;
@@ -12581,7 +12581,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetUseLockFile(this DotNetPublishSettings toolSettings)
+        public static T ResetUseLockFile<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = null;
@@ -12592,7 +12592,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings EnableUseLockFile(this DotNetPublishSettings toolSettings)
+        public static T EnableUseLockFile<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = true;
@@ -12603,7 +12603,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings DisableUseLockFile(this DotNetPublishSettings toolSettings)
+        public static T DisableUseLockFile<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = false;
@@ -12614,7 +12614,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Enables project lock file to be generated and used with restore.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ToggleUseLockFile(this DotNetPublishSettings toolSettings)
+        public static T ToggleUseLockFile<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseLockFile = !toolSettings.UseLockFile;
@@ -12627,7 +12627,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetLockedMode(this DotNetPublishSettings toolSettings, bool? lockedMode)
+        public static T SetLockedMode<T>(this T toolSettings, bool? lockedMode) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = lockedMode;
@@ -12638,7 +12638,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetLockedMode(this DotNetPublishSettings toolSettings)
+        public static T ResetLockedMode<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = null;
@@ -12649,7 +12649,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings EnableLockedMode(this DotNetPublishSettings toolSettings)
+        public static T EnableLockedMode<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = true;
@@ -12660,7 +12660,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings DisableLockedMode(this DotNetPublishSettings toolSettings)
+        public static T DisableLockedMode<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = false;
@@ -12671,7 +12671,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Don't allow updating project lock file.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ToggleLockedMode(this DotNetPublishSettings toolSettings)
+        public static T ToggleLockedMode<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockedMode = !toolSettings.LockedMode;
@@ -12684,7 +12684,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetLockFilePath(this DotNetPublishSettings toolSettings, string lockFilePath)
+        public static T SetLockFilePath<T>(this T toolSettings, string lockFilePath) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockFilePath = lockFilePath;
@@ -12695,7 +12695,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetLockFilePath(this DotNetPublishSettings toolSettings)
+        public static T ResetLockFilePath<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LockFilePath = null;
@@ -12708,7 +12708,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetForceEvaluate(this DotNetPublishSettings toolSettings, bool? forceEvaluate)
+        public static T SetForceEvaluate<T>(this T toolSettings, bool? forceEvaluate) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = forceEvaluate;
@@ -12719,7 +12719,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetForceEvaluate(this DotNetPublishSettings toolSettings)
+        public static T ResetForceEvaluate<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = null;
@@ -12730,7 +12730,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings EnableForceEvaluate(this DotNetPublishSettings toolSettings)
+        public static T EnableForceEvaluate<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = true;
@@ -12741,7 +12741,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings DisableForceEvaluate(this DotNetPublishSettings toolSettings)
+        public static T DisableForceEvaluate<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = false;
@@ -12752,7 +12752,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ToggleForceEvaluate(this DotNetPublishSettings toolSettings)
+        public static T ToggleForceEvaluate<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEvaluate = !toolSettings.ForceEvaluate;
@@ -12765,7 +12765,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetProperties(this DotNetPublishSettings toolSettings, IDictionary<string, object> properties)
+        public static T SetProperties<T>(this T toolSettings, IDictionary<string, object> properties) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -12776,7 +12776,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ClearProperties(this DotNetPublishSettings toolSettings)
+        public static T ClearProperties<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Clear();
@@ -12787,7 +12787,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings AddProperty(this DotNetPublishSettings toolSettings, string propertyKey, object propertyValue)
+        public static T AddProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
@@ -12798,7 +12798,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings RemoveProperty(this DotNetPublishSettings toolSettings, string propertyKey)
+        public static T RemoveProperty<T>(this T toolSettings, string propertyKey) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove(propertyKey);
@@ -12809,7 +12809,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetProperty(this DotNetPublishSettings toolSettings, string propertyKey, object propertyValue)
+        public static T SetProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal[propertyKey] = propertyValue;
@@ -12821,7 +12821,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetRunCodeAnalysis(this DotNetPublishSettings toolSettings, bool? runCodeAnalysis)
+        public static T SetRunCodeAnalysis<T>(this T toolSettings, bool? runCodeAnalysis) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RunCodeAnalysis"] = runCodeAnalysis;
@@ -12832,7 +12832,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetRunCodeAnalysis(this DotNetPublishSettings toolSettings)
+        public static T ResetRunCodeAnalysis<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("RunCodeAnalysis");
@@ -12843,7 +12843,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings EnableRunCodeAnalysis(this DotNetPublishSettings toolSettings)
+        public static T EnableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RunCodeAnalysis"] = true;
@@ -12854,7 +12854,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings DisableRunCodeAnalysis(this DotNetPublishSettings toolSettings)
+        public static T DisableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RunCodeAnalysis"] = false;
@@ -12865,7 +12865,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ToggleRunCodeAnalysis(this DotNetPublishSettings toolSettings)
+        public static T ToggleRunCodeAnalysis<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "RunCodeAnalysis");
@@ -12878,7 +12878,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetNoWarns(this DotNetPublishSettings toolSettings, params int[] noWarn)
+        public static T SetNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -12889,7 +12889,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetNoWarns(this DotNetPublishSettings toolSettings, IEnumerable<int> noWarn)
+        public static T SetNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -12900,7 +12900,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings AddNoWarns(this DotNetPublishSettings toolSettings, params int[] noWarn)
+        public static T AddNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -12911,7 +12911,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings AddNoWarns(this DotNetPublishSettings toolSettings, IEnumerable<int> noWarn)
+        public static T AddNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -12922,7 +12922,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ClearNoWarns(this DotNetPublishSettings toolSettings)
+        public static T ClearNoWarns<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("NoWarn");
@@ -12933,7 +12933,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings RemoveNoWarns(this DotNetPublishSettings toolSettings, params int[] noWarn)
+        public static T RemoveNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -12944,7 +12944,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings RemoveNoWarns(this DotNetPublishSettings toolSettings, IEnumerable<int> noWarn)
+        public static T RemoveNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
@@ -12957,7 +12957,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetWarningsAsErrors(this DotNetPublishSettings toolSettings, params int[] warningsAsErrors)
+        public static T SetWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -12968,7 +12968,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetWarningsAsErrors(this DotNetPublishSettings toolSettings, IEnumerable<int> warningsAsErrors)
+        public static T SetWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -12979,7 +12979,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings AddWarningsAsErrors(this DotNetPublishSettings toolSettings, params int[] warningsAsErrors)
+        public static T AddWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -12990,7 +12990,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings AddWarningsAsErrors(this DotNetPublishSettings toolSettings, IEnumerable<int> warningsAsErrors)
+        public static T AddWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -13001,7 +13001,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ClearWarningsAsErrors(this DotNetPublishSettings toolSettings)
+        public static T ClearWarningsAsErrors<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("WarningsAsErrors");
@@ -13012,7 +13012,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings RemoveWarningsAsErrors(this DotNetPublishSettings toolSettings, params int[] warningsAsErrors)
+        public static T RemoveWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -13023,7 +13023,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings RemoveWarningsAsErrors(this DotNetPublishSettings toolSettings, IEnumerable<int> warningsAsErrors)
+        public static T RemoveWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
@@ -13036,7 +13036,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetWarningLevel(this DotNetPublishSettings toolSettings, int? warningLevel)
+        public static T SetWarningLevel<T>(this T toolSettings, int? warningLevel) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["WarningLevel"] = warningLevel;
@@ -13047,7 +13047,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetWarningLevel(this DotNetPublishSettings toolSettings)
+        public static T ResetWarningLevel<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("WarningLevel");
@@ -13060,7 +13060,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetTreatWarningsAsErrors(this DotNetPublishSettings toolSettings, bool? treatWarningsAsErrors)
+        public static T SetTreatWarningsAsErrors<T>(this T toolSettings, bool? treatWarningsAsErrors) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = treatWarningsAsErrors;
@@ -13071,7 +13071,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetTreatWarningsAsErrors(this DotNetPublishSettings toolSettings)
+        public static T ResetTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("TreatWarningsAsErrors");
@@ -13082,7 +13082,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings EnableTreatWarningsAsErrors(this DotNetPublishSettings toolSettings)
+        public static T EnableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = true;
@@ -13093,7 +13093,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings DisableTreatWarningsAsErrors(this DotNetPublishSettings toolSettings)
+        public static T DisableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = false;
@@ -13104,7 +13104,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ToggleTreatWarningsAsErrors(this DotNetPublishSettings toolSettings)
+        public static T ToggleTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "TreatWarningsAsErrors");
@@ -13117,7 +13117,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetAssemblyVersion(this DotNetPublishSettings toolSettings, string assemblyVersion)
+        public static T SetAssemblyVersion<T>(this T toolSettings, string assemblyVersion) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["AssemblyVersion"] = assemblyVersion;
@@ -13128,7 +13128,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetAssemblyVersion(this DotNetPublishSettings toolSettings)
+        public static T ResetAssemblyVersion<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("AssemblyVersion");
@@ -13141,7 +13141,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetFileVersion(this DotNetPublishSettings toolSettings, string fileVersion)
+        public static T SetFileVersion<T>(this T toolSettings, string fileVersion) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["FileVersion"] = fileVersion;
@@ -13152,7 +13152,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetFileVersion(this DotNetPublishSettings toolSettings)
+        public static T ResetFileVersion<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("FileVersion");
@@ -13165,7 +13165,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetInformationalVersion(this DotNetPublishSettings toolSettings, string informationalVersion)
+        public static T SetInformationalVersion<T>(this T toolSettings, string informationalVersion) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["InformationalVersion"] = informationalVersion;
@@ -13176,7 +13176,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetInformationalVersion(this DotNetPublishSettings toolSettings)
+        public static T ResetInformationalVersion<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("InformationalVersion");
@@ -13189,7 +13189,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetPackageId(this DotNetPublishSettings toolSettings, string packageId)
+        public static T SetPackageId<T>(this T toolSettings, string packageId) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageId"] = packageId;
@@ -13200,7 +13200,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetPackageId(this DotNetPublishSettings toolSettings)
+        public static T ResetPackageId<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageId");
@@ -13213,7 +13213,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetVersion(this DotNetPublishSettings toolSettings, string version)
+        public static T SetVersion<T>(this T toolSettings, string version) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Version"] = version;
@@ -13224,7 +13224,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetVersion(this DotNetPublishSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Version");
@@ -13237,7 +13237,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetVersionPrefix(this DotNetPublishSettings toolSettings, string versionPrefix)
+        public static T SetVersionPrefix<T>(this T toolSettings, string versionPrefix) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["VersionPrefix"] = versionPrefix;
@@ -13248,7 +13248,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetVersionPrefix(this DotNetPublishSettings toolSettings)
+        public static T ResetVersionPrefix<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("VersionPrefix");
@@ -13261,7 +13261,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetAuthors(this DotNetPublishSettings toolSettings, params string[] authors)
+        public static T SetAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -13272,7 +13272,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetAuthors(this DotNetPublishSettings toolSettings, IEnumerable<string> authors)
+        public static T SetAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -13283,7 +13283,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings AddAuthors(this DotNetPublishSettings toolSettings, params string[] authors)
+        public static T AddAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -13294,7 +13294,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings AddAuthors(this DotNetPublishSettings toolSettings, IEnumerable<string> authors)
+        public static T AddAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -13305,7 +13305,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ClearAuthors(this DotNetPublishSettings toolSettings)
+        public static T ClearAuthors<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Authors");
@@ -13316,7 +13316,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings RemoveAuthors(this DotNetPublishSettings toolSettings, params string[] authors)
+        public static T RemoveAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -13327,7 +13327,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings RemoveAuthors(this DotNetPublishSettings toolSettings, IEnumerable<string> authors)
+        public static T RemoveAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
@@ -13340,7 +13340,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetTitle(this DotNetPublishSettings toolSettings, string title)
+        public static T SetTitle<T>(this T toolSettings, string title) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Title"] = title;
@@ -13351,7 +13351,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetTitle(this DotNetPublishSettings toolSettings)
+        public static T ResetTitle<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Title");
@@ -13364,7 +13364,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetDescription(this DotNetPublishSettings toolSettings, string description)
+        public static T SetDescription<T>(this T toolSettings, string description) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Description"] = description;
@@ -13375,7 +13375,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetDescription(this DotNetPublishSettings toolSettings)
+        public static T ResetDescription<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Description");
@@ -13388,7 +13388,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetCopyright(this DotNetPublishSettings toolSettings, string copyright)
+        public static T SetCopyright<T>(this T toolSettings, string copyright) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["Copyright"] = copyright;
@@ -13399,7 +13399,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetCopyright(this DotNetPublishSettings toolSettings)
+        public static T ResetCopyright<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("Copyright");
@@ -13412,7 +13412,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetPackageRequireLicenseAcceptance(this DotNetPublishSettings toolSettings, bool? packageRequireLicenseAcceptance)
+        public static T SetPackageRequireLicenseAcceptance<T>(this T toolSettings, bool? packageRequireLicenseAcceptance) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = packageRequireLicenseAcceptance;
@@ -13423,7 +13423,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetPackageRequireLicenseAcceptance(this DotNetPublishSettings toolSettings)
+        public static T ResetPackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageRequireLicenseAcceptance");
@@ -13434,7 +13434,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings EnablePackageRequireLicenseAcceptance(this DotNetPublishSettings toolSettings)
+        public static T EnablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = true;
@@ -13445,7 +13445,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings DisablePackageRequireLicenseAcceptance(this DotNetPublishSettings toolSettings)
+        public static T DisablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = false;
@@ -13456,7 +13456,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings TogglePackageRequireLicenseAcceptance(this DotNetPublishSettings toolSettings)
+        public static T TogglePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PackageRequireLicenseAcceptance");
@@ -13469,7 +13469,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetPackageLicenseUrl(this DotNetPublishSettings toolSettings, string packageLicenseUrl)
+        public static T SetPackageLicenseUrl<T>(this T toolSettings, string packageLicenseUrl) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageLicenseUrl"] = packageLicenseUrl;
@@ -13480,7 +13480,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetPackageLicenseUrl(this DotNetPublishSettings toolSettings)
+        public static T ResetPackageLicenseUrl<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageLicenseUrl");
@@ -13493,7 +13493,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetPackageProjectUrl(this DotNetPublishSettings toolSettings, string packageProjectUrl)
+        public static T SetPackageProjectUrl<T>(this T toolSettings, string packageProjectUrl) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageProjectUrl"] = packageProjectUrl;
@@ -13504,7 +13504,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetPackageProjectUrl(this DotNetPublishSettings toolSettings)
+        public static T ResetPackageProjectUrl<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageProjectUrl");
@@ -13517,7 +13517,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetPackageIconUrl(this DotNetPublishSettings toolSettings, string packageIconUrl)
+        public static T SetPackageIconUrl<T>(this T toolSettings, string packageIconUrl) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageIconUrl"] = packageIconUrl;
@@ -13528,7 +13528,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetPackageIconUrl(this DotNetPublishSettings toolSettings)
+        public static T ResetPackageIconUrl<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageIconUrl");
@@ -13541,7 +13541,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetPackageTags(this DotNetPublishSettings toolSettings, params string[] packageTags)
+        public static T SetPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -13552,7 +13552,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetPackageTags(this DotNetPublishSettings toolSettings, IEnumerable<string> packageTags)
+        public static T SetPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -13563,7 +13563,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings AddPackageTags(this DotNetPublishSettings toolSettings, params string[] packageTags)
+        public static T AddPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -13574,7 +13574,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings AddPackageTags(this DotNetPublishSettings toolSettings, IEnumerable<string> packageTags)
+        public static T AddPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -13585,7 +13585,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ClearPackageTags(this DotNetPublishSettings toolSettings)
+        public static T ClearPackageTags<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageTags");
@@ -13596,7 +13596,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings RemovePackageTags(this DotNetPublishSettings toolSettings, params string[] packageTags)
+        public static T RemovePackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -13607,7 +13607,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings RemovePackageTags(this DotNetPublishSettings toolSettings, IEnumerable<string> packageTags)
+        public static T RemovePackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
@@ -13620,7 +13620,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetPackageReleaseNotes(this DotNetPublishSettings toolSettings, string packageReleaseNotes)
+        public static T SetPackageReleaseNotes<T>(this T toolSettings, string packageReleaseNotes) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["PackageReleaseNotes"] = packageReleaseNotes;
@@ -13631,7 +13631,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetPackageReleaseNotes(this DotNetPublishSettings toolSettings)
+        public static T ResetPackageReleaseNotes<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageReleaseNotes");
@@ -13644,7 +13644,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetRepositoryUrl(this DotNetPublishSettings toolSettings, string repositoryUrl)
+        public static T SetRepositoryUrl<T>(this T toolSettings, string repositoryUrl) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RepositoryUrl"] = repositoryUrl;
@@ -13655,7 +13655,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetRepositoryUrl(this DotNetPublishSettings toolSettings)
+        public static T ResetRepositoryUrl<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("RepositoryUrl");
@@ -13668,7 +13668,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetRepositoryType(this DotNetPublishSettings toolSettings, string repositoryType)
+        public static T SetRepositoryType<T>(this T toolSettings, string repositoryType) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["RepositoryType"] = repositoryType;
@@ -13679,7 +13679,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetRepositoryType(this DotNetPublishSettings toolSettings)
+        public static T ResetRepositoryType<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("RepositoryType");
@@ -13692,7 +13692,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Format for packaging symbols.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings SetSymbolPackageFormat(this DotNetPublishSettings toolSettings, DotNetSymbolPackageFormat symbolPackageFormat)
+        public static T SetSymbolPackageFormat<T>(this T toolSettings, DotNetSymbolPackageFormat symbolPackageFormat) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
@@ -13703,7 +13703,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Format for packaging symbols.</p>
         /// </summary>
         [Pure]
-        public static DotNetPublishSettings ResetSymbolPackageFormat(this DotNetPublishSettings toolSettings)
+        public static T ResetSymbolPackageFormat<T>(this T toolSettings) where T : DotNetPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
@@ -13727,7 +13727,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Path of the package to push.</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings SetTargetPath(this DotNetNuGetPushSettings toolSettings, string targetPath)
+        public static T SetTargetPath<T>(this T toolSettings, string targetPath) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetPath = targetPath;
@@ -13738,7 +13738,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Path of the package to push.</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings ResetTargetPath(this DotNetNuGetPushSettings toolSettings)
+        public static T ResetTargetPath<T>(this T toolSettings) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetPath = null;
@@ -13751,7 +13751,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the server URL. This option is required unless <c>DefaultPushSource</c> config value is set in the NuGet config file.</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings SetSource(this DotNetNuGetPushSettings toolSettings, string source)
+        public static T SetSource<T>(this T toolSettings, string source) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Source = source;
@@ -13762,7 +13762,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the server URL. This option is required unless <c>DefaultPushSource</c> config value is set in the NuGet config file.</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings ResetSource(this DotNetNuGetPushSettings toolSettings)
+        public static T ResetSource<T>(this T toolSettings) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Source = null;
@@ -13775,7 +13775,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the symbol server URL.</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings SetSymbolSource(this DotNetNuGetPushSettings toolSettings, string symbolSource)
+        public static T SetSymbolSource<T>(this T toolSettings, string symbolSource) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SymbolSource = symbolSource;
@@ -13786,7 +13786,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the symbol server URL.</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings ResetSymbolSource(this DotNetNuGetPushSettings toolSettings)
+        public static T ResetSymbolSource<T>(this T toolSettings) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SymbolSource = null;
@@ -13799,7 +13799,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the timeout for pushing to a server in seconds. Defaults to 300 seconds (5 minutes). Specifying 0 (zero seconds) applies the default value.</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings SetTimeout(this DotNetNuGetPushSettings toolSettings, int? timeout)
+        public static T SetTimeout<T>(this T toolSettings, int? timeout) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = timeout;
@@ -13810,7 +13810,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the timeout for pushing to a server in seconds. Defaults to 300 seconds (5 minutes). Specifying 0 (zero seconds) applies the default value.</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings ResetTimeout(this DotNetNuGetPushSettings toolSettings)
+        public static T ResetTimeout<T>(this T toolSettings) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = null;
@@ -13823,7 +13823,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The API key for the server.</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings SetApiKey(this DotNetNuGetPushSettings toolSettings, string apiKey)
+        public static T SetApiKey<T>(this T toolSettings, string apiKey) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiKey = apiKey;
@@ -13834,7 +13834,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The API key for the server.</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings ResetApiKey(this DotNetNuGetPushSettings toolSettings)
+        public static T ResetApiKey<T>(this T toolSettings) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiKey = null;
@@ -13847,7 +13847,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The API key for the symbol server.</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings SetSymbolApiKey(this DotNetNuGetPushSettings toolSettings, string symbolApiKey)
+        public static T SetSymbolApiKey<T>(this T toolSettings, string symbolApiKey) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SymbolApiKey = symbolApiKey;
@@ -13858,7 +13858,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The API key for the symbol server.</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings ResetSymbolApiKey(this DotNetNuGetPushSettings toolSettings)
+        public static T ResetSymbolApiKey<T>(this T toolSettings) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SymbolApiKey = null;
@@ -13871,7 +13871,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables buffering when pushing to an HTTP(S) server to decrease memory usage.</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings SetDisableBuffering(this DotNetNuGetPushSettings toolSettings, bool? disableBuffering)
+        public static T SetDisableBuffering<T>(this T toolSettings, bool? disableBuffering) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableBuffering = disableBuffering;
@@ -13882,7 +13882,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables buffering when pushing to an HTTP(S) server to decrease memory usage.</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings ResetDisableBuffering(this DotNetNuGetPushSettings toolSettings)
+        public static T ResetDisableBuffering<T>(this T toolSettings) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableBuffering = null;
@@ -13893,7 +13893,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables buffering when pushing to an HTTP(S) server to decrease memory usage.</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings EnableDisableBuffering(this DotNetNuGetPushSettings toolSettings)
+        public static T EnableDisableBuffering<T>(this T toolSettings) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableBuffering = true;
@@ -13904,7 +13904,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables buffering when pushing to an HTTP(S) server to decrease memory usage.</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings DisableDisableBuffering(this DotNetNuGetPushSettings toolSettings)
+        public static T DisableDisableBuffering<T>(this T toolSettings) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableBuffering = false;
@@ -13915,7 +13915,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Disables buffering when pushing to an HTTP(S) server to decrease memory usage.</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings ToggleDisableBuffering(this DotNetNuGetPushSettings toolSettings)
+        public static T ToggleDisableBuffering<T>(this T toolSettings) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableBuffering = !toolSettings.DisableBuffering;
@@ -13928,7 +13928,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't push symbols (even if present).</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings SetNoSymbols(this DotNetNuGetPushSettings toolSettings, bool? noSymbols)
+        public static T SetNoSymbols<T>(this T toolSettings, bool? noSymbols) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoSymbols = noSymbols;
@@ -13939,7 +13939,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't push symbols (even if present).</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings ResetNoSymbols(this DotNetNuGetPushSettings toolSettings)
+        public static T ResetNoSymbols<T>(this T toolSettings) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoSymbols = null;
@@ -13950,7 +13950,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't push symbols (even if present).</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings EnableNoSymbols(this DotNetNuGetPushSettings toolSettings)
+        public static T EnableNoSymbols<T>(this T toolSettings) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoSymbols = true;
@@ -13961,7 +13961,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't push symbols (even if present).</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings DisableNoSymbols(this DotNetNuGetPushSettings toolSettings)
+        public static T DisableNoSymbols<T>(this T toolSettings) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoSymbols = false;
@@ -13972,7 +13972,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Doesn't push symbols (even if present).</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings ToggleNoSymbols(this DotNetNuGetPushSettings toolSettings)
+        public static T ToggleNoSymbols<T>(this T toolSettings) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoSymbols = !toolSettings.NoSymbols;
@@ -13985,7 +13985,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all logged output in English.</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings SetForceEnglishOutput(this DotNetNuGetPushSettings toolSettings, bool? forceEnglishOutput)
+        public static T SetForceEnglishOutput<T>(this T toolSettings, bool? forceEnglishOutput) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEnglishOutput = forceEnglishOutput;
@@ -13996,7 +13996,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all logged output in English.</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings ResetForceEnglishOutput(this DotNetNuGetPushSettings toolSettings)
+        public static T ResetForceEnglishOutput<T>(this T toolSettings) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEnglishOutput = null;
@@ -14007,7 +14007,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all logged output in English.</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings EnableForceEnglishOutput(this DotNetNuGetPushSettings toolSettings)
+        public static T EnableForceEnglishOutput<T>(this T toolSettings) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEnglishOutput = true;
@@ -14018,7 +14018,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all logged output in English.</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings DisableForceEnglishOutput(this DotNetNuGetPushSettings toolSettings)
+        public static T DisableForceEnglishOutput<T>(this T toolSettings) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEnglishOutput = false;
@@ -14029,7 +14029,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Forces all logged output in English.</p>
         /// </summary>
         [Pure]
-        public static DotNetNuGetPushSettings ToggleForceEnglishOutput(this DotNetNuGetPushSettings toolSettings)
+        public static T ToggleForceEnglishOutput<T>(this T toolSettings) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEnglishOutput = !toolSettings.ForceEnglishOutput;
@@ -14052,7 +14052,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The Name/ID of the NuGet package that contains the .NET Core Global Tool to install.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings SetPackageName(this DotNetToolInstallSettings toolSettings, string packageName)
+        public static T SetPackageName<T>(this T toolSettings, string packageName) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageName = packageName;
@@ -14063,7 +14063,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The Name/ID of the NuGet package that contains the .NET Core Global Tool to install.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings ResetPackageName(this DotNetToolInstallSettings toolSettings)
+        public static T ResetPackageName<T>(this T toolSettings) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageName = null;
@@ -14076,7 +14076,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Adds an additional NuGet package source to use during installation.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings SetSources(this DotNetToolInstallSettings toolSettings, params string[] sources)
+        public static T SetSources<T>(this T toolSettings, params string[] sources) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal = sources.ToList();
@@ -14087,7 +14087,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Adds an additional NuGet package source to use during installation.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings SetSources(this DotNetToolInstallSettings toolSettings, IEnumerable<string> sources)
+        public static T SetSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal = sources.ToList();
@@ -14098,7 +14098,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Adds an additional NuGet package source to use during installation.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings AddSources(this DotNetToolInstallSettings toolSettings, params string[] sources)
+        public static T AddSources<T>(this T toolSettings, params string[] sources) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.AddRange(sources);
@@ -14109,7 +14109,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Adds an additional NuGet package source to use during installation.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings AddSources(this DotNetToolInstallSettings toolSettings, IEnumerable<string> sources)
+        public static T AddSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.AddRange(sources);
@@ -14120,7 +14120,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Adds an additional NuGet package source to use during installation.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings ClearSources(this DotNetToolInstallSettings toolSettings)
+        public static T ClearSources<T>(this T toolSettings) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.Clear();
@@ -14131,7 +14131,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Adds an additional NuGet package source to use during installation.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings RemoveSources(this DotNetToolInstallSettings toolSettings, params string[] sources)
+        public static T RemoveSources<T>(this T toolSettings, params string[] sources) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(sources);
@@ -14143,7 +14143,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Adds an additional NuGet package source to use during installation.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings RemoveSources(this DotNetToolInstallSettings toolSettings, IEnumerable<string> sources)
+        public static T RemoveSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(sources);
@@ -14157,7 +14157,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the NuGet configuration (<em>nuget.config</em>) file to use.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings SetConfigFile(this DotNetToolInstallSettings toolSettings, string configFile)
+        public static T SetConfigFile<T>(this T toolSettings, string configFile) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigFile = configFile;
@@ -14168,7 +14168,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the NuGet configuration (<em>nuget.config</em>) file to use.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings ResetConfigFile(this DotNetToolInstallSettings toolSettings)
+        public static T ResetConfigFile<T>(this T toolSettings) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigFile = null;
@@ -14181,7 +14181,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a> to install the tool for. By default, the .NET Core SDK tries to choose the most appropriate target framework.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings SetFramework(this DotNetToolInstallSettings toolSettings, string framework)
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = framework;
@@ -14192,7 +14192,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a> to install the tool for. By default, the .NET Core SDK tries to choose the most appropriate target framework.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings ResetFramework(this DotNetToolInstallSettings toolSettings)
+        public static T ResetFramework<T>(this T toolSettings) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = null;
@@ -14205,7 +14205,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings SetGlobal(this DotNetToolInstallSettings toolSettings, bool? global)
+        public static T SetGlobal<T>(this T toolSettings, bool? global) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Global = global;
@@ -14216,7 +14216,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings ResetGlobal(this DotNetToolInstallSettings toolSettings)
+        public static T ResetGlobal<T>(this T toolSettings) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Global = null;
@@ -14227,7 +14227,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings EnableGlobal(this DotNetToolInstallSettings toolSettings)
+        public static T EnableGlobal<T>(this T toolSettings) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Global = true;
@@ -14238,7 +14238,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings DisableGlobal(this DotNetToolInstallSettings toolSettings)
+        public static T DisableGlobal<T>(this T toolSettings) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Global = false;
@@ -14249,7 +14249,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings ToggleGlobal(this DotNetToolInstallSettings toolSettings)
+        public static T ToggleGlobal<T>(this T toolSettings) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Global = !toolSettings.Global;
@@ -14262,7 +14262,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the location where to install the Global Tool. The path can be absolute or relative. If the path doesn't exist, the command tries to create it. Can't be combined with the <c>--global</c> option. If you don't specify this option, you must specify the <c>--global</c> option.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings SetToolInstallationPath(this DotNetToolInstallSettings toolSettings, string toolInstallationPath)
+        public static T SetToolInstallationPath<T>(this T toolSettings, string toolInstallationPath) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ToolInstallationPath = toolInstallationPath;
@@ -14273,7 +14273,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the location where to install the Global Tool. The path can be absolute or relative. If the path doesn't exist, the command tries to create it. Can't be combined with the <c>--global</c> option. If you don't specify this option, you must specify the <c>--global</c> option.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings ResetToolInstallationPath(this DotNetToolInstallSettings toolSettings)
+        public static T ResetToolInstallationPath<T>(this T toolSettings) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ToolInstallationPath = null;
@@ -14286,7 +14286,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings SetVerbosity(this DotNetToolInstallSettings toolSettings, DotNetVerbosity verbosity)
+        public static T SetVerbosity<T>(this T toolSettings, DotNetVerbosity verbosity) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = verbosity;
@@ -14297,7 +14297,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings ResetVerbosity(this DotNetToolInstallSettings toolSettings)
+        public static T ResetVerbosity<T>(this T toolSettings) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = null;
@@ -14310,7 +14310,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The version of the tool to install. By default, the latest stable package version is installed. Use this option to install preview or older versions of the tool.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings SetVersion(this DotNetToolInstallSettings toolSettings, string version)
+        public static T SetVersion<T>(this T toolSettings, string version) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = version;
@@ -14321,7 +14321,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The version of the tool to install. By default, the latest stable package version is installed. Use this option to install preview or older versions of the tool.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolInstallSettings ResetVersion(this DotNetToolInstallSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : DotNetToolInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = null;
@@ -14344,7 +14344,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The Name/ID of the NuGet package that contains the .NET Core Global Tool to uninstall. You can find the package name using the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-list">dotnet tool list</a> command.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUninstallSettings SetPackageName(this DotNetToolUninstallSettings toolSettings, string packageName)
+        public static T SetPackageName<T>(this T toolSettings, string packageName) where T : DotNetToolUninstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageName = packageName;
@@ -14355,7 +14355,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The Name/ID of the NuGet package that contains the .NET Core Global Tool to uninstall. You can find the package name using the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-list">dotnet tool list</a> command.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUninstallSettings ResetPackageName(this DotNetToolUninstallSettings toolSettings)
+        public static T ResetPackageName<T>(this T toolSettings) where T : DotNetToolUninstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageName = null;
@@ -14368,7 +14368,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies that the tool to be removed is from a user-wide installation. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUninstallSettings SetGlobal(this DotNetToolUninstallSettings toolSettings, bool? global)
+        public static T SetGlobal<T>(this T toolSettings, bool? global) where T : DotNetToolUninstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Global = global;
@@ -14379,7 +14379,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies that the tool to be removed is from a user-wide installation. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUninstallSettings ResetGlobal(this DotNetToolUninstallSettings toolSettings)
+        public static T ResetGlobal<T>(this T toolSettings) where T : DotNetToolUninstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Global = null;
@@ -14390,7 +14390,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies that the tool to be removed is from a user-wide installation. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUninstallSettings EnableGlobal(this DotNetToolUninstallSettings toolSettings)
+        public static T EnableGlobal<T>(this T toolSettings) where T : DotNetToolUninstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Global = true;
@@ -14401,7 +14401,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies that the tool to be removed is from a user-wide installation. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUninstallSettings DisableGlobal(this DotNetToolUninstallSettings toolSettings)
+        public static T DisableGlobal<T>(this T toolSettings) where T : DotNetToolUninstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Global = false;
@@ -14412,7 +14412,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies that the tool to be removed is from a user-wide installation. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUninstallSettings ToggleGlobal(this DotNetToolUninstallSettings toolSettings)
+        public static T ToggleGlobal<T>(this T toolSettings) where T : DotNetToolUninstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Global = !toolSettings.Global;
@@ -14425,7 +14425,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the location where to uninstall the Global Tool. The path can be absolute or relative. Can't be combined with the <c>--global</c> option. If you don't specify this option, you must specify the <c>--global</c> option.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUninstallSettings SetToolInstallationPath(this DotNetToolUninstallSettings toolSettings, string toolInstallationPath)
+        public static T SetToolInstallationPath<T>(this T toolSettings, string toolInstallationPath) where T : DotNetToolUninstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ToolInstallationPath = toolInstallationPath;
@@ -14436,7 +14436,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the location where to uninstall the Global Tool. The path can be absolute or relative. Can't be combined with the <c>--global</c> option. If you don't specify this option, you must specify the <c>--global</c> option.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUninstallSettings ResetToolInstallationPath(this DotNetToolUninstallSettings toolSettings)
+        public static T ResetToolInstallationPath<T>(this T toolSettings) where T : DotNetToolUninstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ToolInstallationPath = null;
@@ -14449,7 +14449,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUninstallSettings SetVerbosity(this DotNetToolUninstallSettings toolSettings, DotNetVerbosity verbosity)
+        public static T SetVerbosity<T>(this T toolSettings, DotNetVerbosity verbosity) where T : DotNetToolUninstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = verbosity;
@@ -14460,7 +14460,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUninstallSettings ResetVerbosity(this DotNetToolUninstallSettings toolSettings)
+        public static T ResetVerbosity<T>(this T toolSettings) where T : DotNetToolUninstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = null;
@@ -14483,7 +14483,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The Name/ID of the NuGet package that contains the .NET Core Global Tool to install.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUpdateSettings SetPackageName(this DotNetToolUpdateSettings toolSettings, string packageName)
+        public static T SetPackageName<T>(this T toolSettings, string packageName) where T : DotNetToolUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageName = packageName;
@@ -14494,7 +14494,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The Name/ID of the NuGet package that contains the .NET Core Global Tool to install.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUpdateSettings ResetPackageName(this DotNetToolUpdateSettings toolSettings)
+        public static T ResetPackageName<T>(this T toolSettings) where T : DotNetToolUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageName = null;
@@ -14507,7 +14507,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Adds an additional NuGet package source to use during installation.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUpdateSettings SetSources(this DotNetToolUpdateSettings toolSettings, params string[] sources)
+        public static T SetSources<T>(this T toolSettings, params string[] sources) where T : DotNetToolUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal = sources.ToList();
@@ -14518,7 +14518,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Adds an additional NuGet package source to use during installation.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUpdateSettings SetSources(this DotNetToolUpdateSettings toolSettings, IEnumerable<string> sources)
+        public static T SetSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetToolUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal = sources.ToList();
@@ -14529,7 +14529,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Adds an additional NuGet package source to use during installation.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUpdateSettings AddSources(this DotNetToolUpdateSettings toolSettings, params string[] sources)
+        public static T AddSources<T>(this T toolSettings, params string[] sources) where T : DotNetToolUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.AddRange(sources);
@@ -14540,7 +14540,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Adds an additional NuGet package source to use during installation.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUpdateSettings AddSources(this DotNetToolUpdateSettings toolSettings, IEnumerable<string> sources)
+        public static T AddSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetToolUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.AddRange(sources);
@@ -14551,7 +14551,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Adds an additional NuGet package source to use during installation.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUpdateSettings ClearSources(this DotNetToolUpdateSettings toolSettings)
+        public static T ClearSources<T>(this T toolSettings) where T : DotNetToolUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SourcesInternal.Clear();
@@ -14562,7 +14562,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Adds an additional NuGet package source to use during installation.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUpdateSettings RemoveSources(this DotNetToolUpdateSettings toolSettings, params string[] sources)
+        public static T RemoveSources<T>(this T toolSettings, params string[] sources) where T : DotNetToolUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(sources);
@@ -14574,7 +14574,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Adds an additional NuGet package source to use during installation.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUpdateSettings RemoveSources(this DotNetToolUpdateSettings toolSettings, IEnumerable<string> sources)
+        public static T RemoveSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetToolUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(sources);
@@ -14588,7 +14588,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the NuGet configuration (<em>nuget.config</em>) file to use.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUpdateSettings SetConfigFile(this DotNetToolUpdateSettings toolSettings, string configFile)
+        public static T SetConfigFile<T>(this T toolSettings, string configFile) where T : DotNetToolUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigFile = configFile;
@@ -14599,7 +14599,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the NuGet configuration (<em>nuget.config</em>) file to use.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUpdateSettings ResetConfigFile(this DotNetToolUpdateSettings toolSettings)
+        public static T ResetConfigFile<T>(this T toolSettings) where T : DotNetToolUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigFile = null;
@@ -14612,7 +14612,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a> to update the tool for.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUpdateSettings SetFramework(this DotNetToolUpdateSettings toolSettings, string framework)
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : DotNetToolUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = framework;
@@ -14623,7 +14623,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a> to update the tool for.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUpdateSettings ResetFramework(this DotNetToolUpdateSettings toolSettings)
+        public static T ResetFramework<T>(this T toolSettings) where T : DotNetToolUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = null;
@@ -14636,7 +14636,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUpdateSettings SetGlobal(this DotNetToolUpdateSettings toolSettings, bool? global)
+        public static T SetGlobal<T>(this T toolSettings, bool? global) where T : DotNetToolUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Global = global;
@@ -14647,7 +14647,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUpdateSettings ResetGlobal(this DotNetToolUpdateSettings toolSettings)
+        public static T ResetGlobal<T>(this T toolSettings) where T : DotNetToolUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Global = null;
@@ -14658,7 +14658,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUpdateSettings EnableGlobal(this DotNetToolUpdateSettings toolSettings)
+        public static T EnableGlobal<T>(this T toolSettings) where T : DotNetToolUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Global = true;
@@ -14669,7 +14669,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUpdateSettings DisableGlobal(this DotNetToolUpdateSettings toolSettings)
+        public static T DisableGlobal<T>(this T toolSettings) where T : DotNetToolUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Global = false;
@@ -14680,7 +14680,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUpdateSettings ToggleGlobal(this DotNetToolUpdateSettings toolSettings)
+        public static T ToggleGlobal<T>(this T toolSettings) where T : DotNetToolUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Global = !toolSettings.Global;
@@ -14693,7 +14693,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the location where the Global Tool is installed. The path can be absolute or relative. Can't be combined with the <c>--global</c> option. If you don't specify this option, you must specify the <c>--global</c> option.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUpdateSettings SetToolInstallationPath(this DotNetToolUpdateSettings toolSettings, string toolInstallationPath)
+        public static T SetToolInstallationPath<T>(this T toolSettings, string toolInstallationPath) where T : DotNetToolUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ToolInstallationPath = toolInstallationPath;
@@ -14704,7 +14704,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Specifies the location where the Global Tool is installed. The path can be absolute or relative. Can't be combined with the <c>--global</c> option. If you don't specify this option, you must specify the <c>--global</c> option.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUpdateSettings ResetToolInstallationPath(this DotNetToolUpdateSettings toolSettings)
+        public static T ResetToolInstallationPath<T>(this T toolSettings) where T : DotNetToolUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ToolInstallationPath = null;
@@ -14717,7 +14717,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUpdateSettings SetVerbosity(this DotNetToolUpdateSettings toolSettings, DotNetVerbosity verbosity)
+        public static T SetVerbosity<T>(this T toolSettings, DotNetVerbosity verbosity) where T : DotNetToolUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = verbosity;
@@ -14728,7 +14728,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetToolUpdateSettings ResetVerbosity(this DotNetToolUpdateSettings toolSettings)
+        public static T ResetVerbosity<T>(this T toolSettings) where T : DotNetToolUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = null;

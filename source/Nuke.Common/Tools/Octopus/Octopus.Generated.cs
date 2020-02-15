@@ -1179,7 +1179,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The ID of the package. E.g. <c>MyCompany.MyApp</c>.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings SetId(this OctopusPackSettings toolSettings, string id)
+        public static T SetId<T>(this T toolSettings, string id) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Id = id;
@@ -1190,7 +1190,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The ID of the package. E.g. <c>MyCompany.MyApp</c>.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings ResetId(this OctopusPackSettings toolSettings)
+        public static T ResetId<T>(this T toolSettings) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Id = null;
@@ -1203,7 +1203,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Package format. Options are: NuPkg, Zip. Defaults to NuPkg, though we recommend Zip going forward.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings SetFormat(this OctopusPackSettings toolSettings, OctopusPackFormat format)
+        public static T SetFormat<T>(this T toolSettings, OctopusPackFormat format) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Format = format;
@@ -1214,7 +1214,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Package format. Options are: NuPkg, Zip. Defaults to NuPkg, though we recommend Zip going forward.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings ResetFormat(this OctopusPackSettings toolSettings)
+        public static T ResetFormat<T>(this T toolSettings) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Format = null;
@@ -1227,7 +1227,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The version of the package; must be a valid SemVer. Defaults to a timestamp-based version.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings SetVersion(this OctopusPackSettings toolSettings, string version)
+        public static T SetVersion<T>(this T toolSettings, string version) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = version;
@@ -1238,7 +1238,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The version of the package; must be a valid SemVer. Defaults to a timestamp-based version.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings ResetVersion(this OctopusPackSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = null;
@@ -1251,7 +1251,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The folder into which the generated NUPKG file will be written. Defaults to <c>.</c>.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings SetOutputFolder(this OctopusPackSettings toolSettings, string outputFolder)
+        public static T SetOutputFolder<T>(this T toolSettings, string outputFolder) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFolder = outputFolder;
@@ -1262,7 +1262,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The folder into which the generated NUPKG file will be written. Defaults to <c>.</c>.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings ResetOutputFolder(this OctopusPackSettings toolSettings)
+        public static T ResetOutputFolder<T>(this T toolSettings) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFolder = null;
@@ -1275,7 +1275,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The root folder containing files and folders to pack. Defaults to <c>.</c>.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings SetBasePath(this OctopusPackSettings toolSettings, string basePath)
+        public static T SetBasePath<T>(this T toolSettings, string basePath) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BasePath = basePath;
@@ -1286,7 +1286,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The root folder containing files and folders to pack. Defaults to <c>.</c>.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings ResetBasePath(this OctopusPackSettings toolSettings)
+        public static T ResetBasePath<T>(this T toolSettings) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BasePath = null;
@@ -1299,7 +1299,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>List more detailed output. E.g. Which files are being added.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings SetVerbose(this OctopusPackSettings toolSettings, bool? verbose)
+        public static T SetVerbose<T>(this T toolSettings, bool? verbose) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = verbose;
@@ -1310,7 +1310,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>List more detailed output. E.g. Which files are being added.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings ResetVerbose(this OctopusPackSettings toolSettings)
+        public static T ResetVerbose<T>(this T toolSettings) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = null;
@@ -1321,7 +1321,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>List more detailed output. E.g. Which files are being added.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings EnableVerbose(this OctopusPackSettings toolSettings)
+        public static T EnableVerbose<T>(this T toolSettings) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = true;
@@ -1332,7 +1332,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>List more detailed output. E.g. Which files are being added.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings DisableVerbose(this OctopusPackSettings toolSettings)
+        public static T DisableVerbose<T>(this T toolSettings) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = false;
@@ -1343,7 +1343,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>List more detailed output. E.g. Which files are being added.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings ToggleVerbose(this OctopusPackSettings toolSettings)
+        public static T ToggleVerbose<T>(this T toolSettings) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = !toolSettings.Verbose;
@@ -1356,7 +1356,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Add an author to the package metadata. Defaults to the current user.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings SetAuthors(this OctopusPackSettings toolSettings, params string[] authors)
+        public static T SetAuthors<T>(this T toolSettings, params string[] authors) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AuthorsInternal = authors.ToList();
@@ -1367,7 +1367,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Add an author to the package metadata. Defaults to the current user.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings SetAuthors(this OctopusPackSettings toolSettings, IEnumerable<string> authors)
+        public static T SetAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AuthorsInternal = authors.ToList();
@@ -1378,7 +1378,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Add an author to the package metadata. Defaults to the current user.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings AddAuthors(this OctopusPackSettings toolSettings, params string[] authors)
+        public static T AddAuthors<T>(this T toolSettings, params string[] authors) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AuthorsInternal.AddRange(authors);
@@ -1389,7 +1389,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Add an author to the package metadata. Defaults to the current user.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings AddAuthors(this OctopusPackSettings toolSettings, IEnumerable<string> authors)
+        public static T AddAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AuthorsInternal.AddRange(authors);
@@ -1400,7 +1400,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Add an author to the package metadata. Defaults to the current user.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings ClearAuthors(this OctopusPackSettings toolSettings)
+        public static T ClearAuthors<T>(this T toolSettings) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AuthorsInternal.Clear();
@@ -1411,7 +1411,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Add an author to the package metadata. Defaults to the current user.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings RemoveAuthors(this OctopusPackSettings toolSettings, params string[] authors)
+        public static T RemoveAuthors<T>(this T toolSettings, params string[] authors) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(authors);
@@ -1423,7 +1423,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Add an author to the package metadata. Defaults to the current user.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings RemoveAuthors(this OctopusPackSettings toolSettings, IEnumerable<string> authors)
+        public static T RemoveAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(authors);
@@ -1437,7 +1437,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The title of the package.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings SetTitle(this OctopusPackSettings toolSettings, string title)
+        public static T SetTitle<T>(this T toolSettings, string title) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Title = title;
@@ -1448,7 +1448,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The title of the package.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings ResetTitle(this OctopusPackSettings toolSettings)
+        public static T ResetTitle<T>(this T toolSettings) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Title = null;
@@ -1461,7 +1461,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A description of the package. Defaults to a generic description.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings SetDescription(this OctopusPackSettings toolSettings, string description)
+        public static T SetDescription<T>(this T toolSettings, string description) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Description = description;
@@ -1472,7 +1472,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A description of the package. Defaults to a generic description.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings ResetDescription(this OctopusPackSettings toolSettings)
+        public static T ResetDescription<T>(this T toolSettings) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Description = null;
@@ -1485,7 +1485,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Release notes for this version of the package.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings SetReleaseNotes(this OctopusPackSettings toolSettings, string releaseNotes)
+        public static T SetReleaseNotes<T>(this T toolSettings, string releaseNotes) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseNotes = releaseNotes;
@@ -1496,7 +1496,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Release notes for this version of the package.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings ResetReleaseNotes(this OctopusPackSettings toolSettings)
+        public static T ResetReleaseNotes<T>(this T toolSettings) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseNotes = null;
@@ -1509,7 +1509,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A file containing release notes for this version of the package.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings SetReleaseNotesFile(this OctopusPackSettings toolSettings, string releaseNotesFile)
+        public static T SetReleaseNotesFile<T>(this T toolSettings, string releaseNotesFile) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseNotesFile = releaseNotesFile;
@@ -1520,7 +1520,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A file containing release notes for this version of the package.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings ResetReleaseNotesFile(this OctopusPackSettings toolSettings)
+        public static T ResetReleaseNotesFile<T>(this T toolSettings) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseNotesFile = null;
@@ -1533,7 +1533,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Add a file pattern to include, relative to the base path. E.g. <c>/bin/-*.dll</c> - if none are specified, defaults to <c>**</c>.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings SetInclude(this OctopusPackSettings toolSettings, string include)
+        public static T SetInclude<T>(this T toolSettings, string include) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Include = include;
@@ -1544,7 +1544,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Add a file pattern to include, relative to the base path. E.g. <c>/bin/-*.dll</c> - if none are specified, defaults to <c>**</c>.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings ResetInclude(this OctopusPackSettings toolSettings)
+        public static T ResetInclude<T>(this T toolSettings) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Include = null;
@@ -1557,7 +1557,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Allow an existing package file of the same ID/version to be overwritten.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings SetOverwrite(this OctopusPackSettings toolSettings, bool? overwrite)
+        public static T SetOverwrite<T>(this T toolSettings, bool? overwrite) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = overwrite;
@@ -1568,7 +1568,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Allow an existing package file of the same ID/version to be overwritten.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings ResetOverwrite(this OctopusPackSettings toolSettings)
+        public static T ResetOverwrite<T>(this T toolSettings) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = null;
@@ -1579,7 +1579,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Allow an existing package file of the same ID/version to be overwritten.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings EnableOverwrite(this OctopusPackSettings toolSettings)
+        public static T EnableOverwrite<T>(this T toolSettings) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = true;
@@ -1590,7 +1590,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Allow an existing package file of the same ID/version to be overwritten.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings DisableOverwrite(this OctopusPackSettings toolSettings)
+        public static T DisableOverwrite<T>(this T toolSettings) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = false;
@@ -1601,7 +1601,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Allow an existing package file of the same ID/version to be overwritten.</p>
         /// </summary>
         [Pure]
-        public static OctopusPackSettings ToggleOverwrite(this OctopusPackSettings toolSettings)
+        public static T ToggleOverwrite<T>(this T toolSettings) where T : OctopusPackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = !toolSettings.Overwrite;
@@ -1624,7 +1624,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Package file to push.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings SetPackage(this OctopusPushSettings toolSettings, params string[] package)
+        public static T SetPackage<T>(this T toolSettings, params string[] package) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageInternal = package.ToList();
@@ -1635,7 +1635,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Package file to push.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings SetPackage(this OctopusPushSettings toolSettings, IEnumerable<string> package)
+        public static T SetPackage<T>(this T toolSettings, IEnumerable<string> package) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageInternal = package.ToList();
@@ -1646,7 +1646,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Package file to push.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings AddPackage(this OctopusPushSettings toolSettings, params string[] package)
+        public static T AddPackage<T>(this T toolSettings, params string[] package) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageInternal.AddRange(package);
@@ -1657,7 +1657,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Package file to push.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings AddPackage(this OctopusPushSettings toolSettings, IEnumerable<string> package)
+        public static T AddPackage<T>(this T toolSettings, IEnumerable<string> package) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageInternal.AddRange(package);
@@ -1668,7 +1668,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Package file to push.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings ClearPackage(this OctopusPushSettings toolSettings)
+        public static T ClearPackage<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageInternal.Clear();
@@ -1679,7 +1679,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Package file to push.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings RemovePackage(this OctopusPushSettings toolSettings, params string[] package)
+        public static T RemovePackage<T>(this T toolSettings, params string[] package) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(package);
@@ -1691,7 +1691,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Package file to push.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings RemovePackage(this OctopusPushSettings toolSettings, IEnumerable<string> package)
+        public static T RemovePackage<T>(this T toolSettings, IEnumerable<string> package) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(package);
@@ -1705,7 +1705,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>If the package already exists in the repository, the default behavior is to reject the new package being pushed. You can pass this flag to overwrite the existing package.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings SetReplaceExisting(this OctopusPushSettings toolSettings, bool? replaceExisting)
+        public static T SetReplaceExisting<T>(this T toolSettings, bool? replaceExisting) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReplaceExisting = replaceExisting;
@@ -1716,7 +1716,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>If the package already exists in the repository, the default behavior is to reject the new package being pushed. You can pass this flag to overwrite the existing package.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings ResetReplaceExisting(this OctopusPushSettings toolSettings)
+        public static T ResetReplaceExisting<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReplaceExisting = null;
@@ -1727,7 +1727,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>If the package already exists in the repository, the default behavior is to reject the new package being pushed. You can pass this flag to overwrite the existing package.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings EnableReplaceExisting(this OctopusPushSettings toolSettings)
+        public static T EnableReplaceExisting<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReplaceExisting = true;
@@ -1738,7 +1738,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>If the package already exists in the repository, the default behavior is to reject the new package being pushed. You can pass this flag to overwrite the existing package.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings DisableReplaceExisting(this OctopusPushSettings toolSettings)
+        public static T DisableReplaceExisting<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReplaceExisting = false;
@@ -1749,7 +1749,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>If the package already exists in the repository, the default behavior is to reject the new package being pushed. You can pass this flag to overwrite the existing package.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings ToggleReplaceExisting(this OctopusPushSettings toolSettings)
+        public static T ToggleReplaceExisting<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReplaceExisting = !toolSettings.ReplaceExisting;
@@ -1762,7 +1762,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The base URL for your Octopus server - e.g., http://your-octopus/</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings SetServer(this OctopusPushSettings toolSettings, string server)
+        public static T SetServer<T>(this T toolSettings, string server) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Server = server;
@@ -1773,7 +1773,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The base URL for your Octopus server - e.g., http://your-octopus/</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings ResetServer(this OctopusPushSettings toolSettings)
+        public static T ResetServer<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Server = null;
@@ -1786,7 +1786,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Your API key. Get this from the user profile page. Your must provide an apiKey or username and password. If the guest account is enabled, a key of API-GUEST can be used.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings SetApiKey(this OctopusPushSettings toolSettings, string apiKey)
+        public static T SetApiKey<T>(this T toolSettings, string apiKey) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiKey = apiKey;
@@ -1797,7 +1797,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Your API key. Get this from the user profile page. Your must provide an apiKey or username and password. If the guest account is enabled, a key of API-GUEST can be used.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings ResetApiKey(this OctopusPushSettings toolSettings)
+        public static T ResetApiKey<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiKey = null;
@@ -1810,7 +1810,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Username to use when authenticating with the server. Your must provide an apiKey or username and password.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings SetUsername(this OctopusPushSettings toolSettings, string username)
+        public static T SetUsername<T>(this T toolSettings, string username) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = username;
@@ -1821,7 +1821,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Username to use when authenticating with the server. Your must provide an apiKey or username and password.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings ResetUsername(this OctopusPushSettings toolSettings)
+        public static T ResetUsername<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = null;
@@ -1834,7 +1834,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Password to use when authenticating with the server.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings SetPassword(this OctopusPushSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -1845,7 +1845,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Password to use when authenticating with the server.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings ResetPassword(this OctopusPushSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -1858,7 +1858,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Text file of default values, with one 'key = value' per line.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings SetConfigFile(this OctopusPushSettings toolSettings, string configFile)
+        public static T SetConfigFile<T>(this T toolSettings, string configFile) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigFile = configFile;
@@ -1869,7 +1869,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Text file of default values, with one 'key = value' per line.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings ResetConfigFile(this OctopusPushSettings toolSettings)
+        public static T ResetConfigFile<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigFile = null;
@@ -1882,7 +1882,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable debug logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings SetDebug(this OctopusPushSettings toolSettings, bool? debug)
+        public static T SetDebug<T>(this T toolSettings, bool? debug) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = debug;
@@ -1893,7 +1893,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable debug logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings ResetDebug(this OctopusPushSettings toolSettings)
+        public static T ResetDebug<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = null;
@@ -1904,7 +1904,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable debug logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings EnableDebug(this OctopusPushSettings toolSettings)
+        public static T EnableDebug<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = true;
@@ -1915,7 +1915,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable debug logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings DisableDebug(this OctopusPushSettings toolSettings)
+        public static T DisableDebug<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = false;
@@ -1926,7 +1926,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable debug logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings ToggleDebug(this OctopusPushSettings toolSettings)
+        public static T ToggleDebug<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = !toolSettings.Debug;
@@ -1939,7 +1939,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings SetIgnoreSslErrors(this OctopusPushSettings toolSettings, bool? ignoreSslErrors)
+        public static T SetIgnoreSslErrors<T>(this T toolSettings, bool? ignoreSslErrors) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreSslErrors = ignoreSslErrors;
@@ -1950,7 +1950,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings ResetIgnoreSslErrors(this OctopusPushSettings toolSettings)
+        public static T ResetIgnoreSslErrors<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreSslErrors = null;
@@ -1961,7 +1961,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings EnableIgnoreSslErrors(this OctopusPushSettings toolSettings)
+        public static T EnableIgnoreSslErrors<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreSslErrors = true;
@@ -1972,7 +1972,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings DisableIgnoreSslErrors(this OctopusPushSettings toolSettings)
+        public static T DisableIgnoreSslErrors<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreSslErrors = false;
@@ -1983,7 +1983,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings ToggleIgnoreSslErrors(this OctopusPushSettings toolSettings)
+        public static T ToggleIgnoreSslErrors<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreSslErrors = !toolSettings.IgnoreSslErrors;
@@ -1996,7 +1996,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable TeamCity or Team Foundation Build service messages when logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings SetEnableServiceMessages(this OctopusPushSettings toolSettings, bool? enableServiceMessages)
+        public static T SetEnableServiceMessages<T>(this T toolSettings, bool? enableServiceMessages) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableServiceMessages = enableServiceMessages;
@@ -2007,7 +2007,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable TeamCity or Team Foundation Build service messages when logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings ResetEnableServiceMessages(this OctopusPushSettings toolSettings)
+        public static T ResetEnableServiceMessages<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableServiceMessages = null;
@@ -2018,7 +2018,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable TeamCity or Team Foundation Build service messages when logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings EnableEnableServiceMessages(this OctopusPushSettings toolSettings)
+        public static T EnableEnableServiceMessages<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableServiceMessages = true;
@@ -2029,7 +2029,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable TeamCity or Team Foundation Build service messages when logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings DisableEnableServiceMessages(this OctopusPushSettings toolSettings)
+        public static T DisableEnableServiceMessages<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableServiceMessages = false;
@@ -2040,7 +2040,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable TeamCity or Team Foundation Build service messages when logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings ToggleEnableServiceMessages(this OctopusPushSettings toolSettings)
+        public static T ToggleEnableServiceMessages<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableServiceMessages = !toolSettings.EnableServiceMessages;
@@ -2053,7 +2053,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Timeout in seconds for network operations. Default is 600.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings SetTimeout(this OctopusPushSettings toolSettings, int? timeout)
+        public static T SetTimeout<T>(this T toolSettings, int? timeout) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = timeout;
@@ -2064,7 +2064,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Timeout in seconds for network operations. Default is 600.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings ResetTimeout(this OctopusPushSettings toolSettings)
+        public static T ResetTimeout<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = null;
@@ -2077,7 +2077,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The URI of the proxy to use, e.g., http://example.com:8080.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings SetProxy(this OctopusPushSettings toolSettings, string proxy)
+        public static T SetProxy<T>(this T toolSettings, string proxy) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Proxy = proxy;
@@ -2088,7 +2088,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The URI of the proxy to use, e.g., http://example.com:8080.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings ResetProxy(this OctopusPushSettings toolSettings)
+        public static T ResetProxy<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Proxy = null;
@@ -2101,7 +2101,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The username for the proxy.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings SetProxyUsername(this OctopusPushSettings toolSettings, string proxyUsername)
+        public static T SetProxyUsername<T>(this T toolSettings, string proxyUsername) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProxyUsername = proxyUsername;
@@ -2112,7 +2112,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The username for the proxy.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings ResetProxyUsername(this OctopusPushSettings toolSettings)
+        public static T ResetProxyUsername<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProxyUsername = null;
@@ -2125,7 +2125,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The password for the proxy. If both the username and password are omitted and proxyAddress is specified, the default credentials are used.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings SetProxyPassword(this OctopusPushSettings toolSettings, string proxyPassword)
+        public static T SetProxyPassword<T>(this T toolSettings, string proxyPassword) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProxyPassword = proxyPassword;
@@ -2136,7 +2136,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The password for the proxy. If both the username and password are omitted and proxyAddress is specified, the default credentials are used.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings ResetProxyPassword(this OctopusPushSettings toolSettings)
+        public static T ResetProxyPassword<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProxyPassword = null;
@@ -2149,7 +2149,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The name of a space within which this command will be executed. The default space will be used if it is omitted.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings SetSpace(this OctopusPushSettings toolSettings, string space)
+        public static T SetSpace<T>(this T toolSettings, string space) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Space = space;
@@ -2160,7 +2160,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The name of a space within which this command will be executed. The default space will be used if it is omitted.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings ResetSpace(this OctopusPushSettings toolSettings)
+        public static T ResetSpace<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Space = null;
@@ -2173,7 +2173,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings SetLogLevel(this OctopusPushSettings toolSettings, string logLevel)
+        public static T SetLogLevel<T>(this T toolSettings, string logLevel) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogLevel = logLevel;
@@ -2184,7 +2184,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.</p>
         /// </summary>
         [Pure]
-        public static OctopusPushSettings ResetLogLevel(this OctopusPushSettings toolSettings)
+        public static T ResetLogLevel<T>(this T toolSettings) where T : OctopusPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogLevel = null;
@@ -2207,7 +2207,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Name of the project.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetProject(this OctopusCreateReleaseSettings toolSettings, string project)
+        public static T SetProject<T>(this T toolSettings, string project) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = project;
@@ -2218,7 +2218,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Name of the project.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetProject(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetProject<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = null;
@@ -2231,7 +2231,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Default version number of all packages to use for this release.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetDefaultPackageVersion(this OctopusCreateReleaseSettings toolSettings, string defaultPackageVersion)
+        public static T SetDefaultPackageVersion<T>(this T toolSettings, string defaultPackageVersion) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DefaultPackageVersion = defaultPackageVersion;
@@ -2242,7 +2242,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Default version number of all packages to use for this release.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetDefaultPackageVersion(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetDefaultPackageVersion<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DefaultPackageVersion = null;
@@ -2255,7 +2255,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Release number to use for the new release.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetVersion(this OctopusCreateReleaseSettings toolSettings, string version)
+        public static T SetVersion<T>(this T toolSettings, string version) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = version;
@@ -2266,7 +2266,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Release number to use for the new release.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetVersion(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = null;
@@ -2279,7 +2279,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Channel to use for the new release. Omit this argument to automatically select the best channel.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetChannel(this OctopusCreateReleaseSettings toolSettings, string channel)
+        public static T SetChannel<T>(this T toolSettings, string channel) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Channel = channel;
@@ -2290,7 +2290,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Channel to use for the new release. Omit this argument to automatically select the best channel.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetChannel(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetChannel<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Channel = null;
@@ -2303,7 +2303,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Version number to use for a step or package in the release. Format: <c>--package=StepNameOrPackageId:Version</c>.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetPackageVersions(this OctopusCreateReleaseSettings toolSettings, IDictionary<string, string> packageVersions)
+        public static T SetPackageVersions<T>(this T toolSettings, IDictionary<string, string> packageVersions) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageVersionsInternal = packageVersions.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -2314,7 +2314,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Version number to use for a step or package in the release. Format: <c>--package=StepNameOrPackageId:Version</c>.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ClearPackageVersions(this OctopusCreateReleaseSettings toolSettings)
+        public static T ClearPackageVersions<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageVersionsInternal.Clear();
@@ -2325,7 +2325,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Version number to use for a step or package in the release. Format: <c>--package=StepNameOrPackageId:Version</c>.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings AddPackageVersion(this OctopusCreateReleaseSettings toolSettings, string packageVersionKey, string packageVersionValue)
+        public static T AddPackageVersion<T>(this T toolSettings, string packageVersionKey, string packageVersionValue) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageVersionsInternal.Add(packageVersionKey, packageVersionValue);
@@ -2336,7 +2336,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Version number to use for a step or package in the release. Format: <c>--package=StepNameOrPackageId:Version</c>.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings RemovePackageVersion(this OctopusCreateReleaseSettings toolSettings, string packageVersionKey)
+        public static T RemovePackageVersion<T>(this T toolSettings, string packageVersionKey) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageVersionsInternal.Remove(packageVersionKey);
@@ -2347,7 +2347,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Version number to use for a step or package in the release. Format: <c>--package=StepNameOrPackageId:Version</c>.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetPackageVersion(this OctopusCreateReleaseSettings toolSettings, string packageVersionKey, string packageVersionValue)
+        public static T SetPackageVersion<T>(this T toolSettings, string packageVersionKey, string packageVersionValue) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackageVersionsInternal[packageVersionKey] = packageVersionValue;
@@ -2360,7 +2360,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A folder containing NuGet packages from which we should get versions.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetPackagesFolder(this OctopusCreateReleaseSettings toolSettings, string packagesFolder)
+        public static T SetPackagesFolder<T>(this T toolSettings, string packagesFolder) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackagesFolder = packagesFolder;
@@ -2371,7 +2371,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A folder containing NuGet packages from which we should get versions.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetPackagesFolder(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetPackagesFolder<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackagesFolder = null;
@@ -2384,7 +2384,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Release Notes for the new release. Styling with Markdown is supported.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetReleaseNotes(this OctopusCreateReleaseSettings toolSettings, string releaseNotes)
+        public static T SetReleaseNotes<T>(this T toolSettings, string releaseNotes) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseNotes = releaseNotes;
@@ -2395,7 +2395,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Release Notes for the new release. Styling with Markdown is supported.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetReleaseNotes(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetReleaseNotes<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseNotes = null;
@@ -2408,7 +2408,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Path to a file that contains Release Notes for the new release. Supports Markdown files.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetReleaseNotesFile(this OctopusCreateReleaseSettings toolSettings, string releaseNotesFile)
+        public static T SetReleaseNotesFile<T>(this T toolSettings, string releaseNotesFile) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseNotesFile = releaseNotesFile;
@@ -2419,7 +2419,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Path to a file that contains Release Notes for the new release. Supports Markdown files.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetReleaseNotesFile(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetReleaseNotesFile<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReleaseNotesFile = null;
@@ -2432,7 +2432,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Don't create this release if there is already one with the same version number.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetIgnoreExisting(this OctopusCreateReleaseSettings toolSettings, bool? ignoreExisting)
+        public static T SetIgnoreExisting<T>(this T toolSettings, bool? ignoreExisting) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreExisting = ignoreExisting;
@@ -2443,7 +2443,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Don't create this release if there is already one with the same version number.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetIgnoreExisting(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetIgnoreExisting<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreExisting = null;
@@ -2454,7 +2454,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Don't create this release if there is already one with the same version number.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings EnableIgnoreExisting(this OctopusCreateReleaseSettings toolSettings)
+        public static T EnableIgnoreExisting<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreExisting = true;
@@ -2465,7 +2465,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Don't create this release if there is already one with the same version number.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings DisableIgnoreExisting(this OctopusCreateReleaseSettings toolSettings)
+        public static T DisableIgnoreExisting<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreExisting = false;
@@ -2476,7 +2476,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Don't create this release if there is already one with the same version number.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ToggleIgnoreExisting(this OctopusCreateReleaseSettings toolSettings)
+        public static T ToggleIgnoreExisting<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreExisting = !toolSettings.IgnoreExisting;
@@ -2489,7 +2489,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Create the release ignoring any version rules specified by the channel.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetIgnoreChannelRules(this OctopusCreateReleaseSettings toolSettings, bool? ignoreChannelRules)
+        public static T SetIgnoreChannelRules<T>(this T toolSettings, bool? ignoreChannelRules) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreChannelRules = ignoreChannelRules;
@@ -2500,7 +2500,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Create the release ignoring any version rules specified by the channel.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetIgnoreChannelRules(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetIgnoreChannelRules<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreChannelRules = null;
@@ -2511,7 +2511,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Create the release ignoring any version rules specified by the channel.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings EnableIgnoreChannelRules(this OctopusCreateReleaseSettings toolSettings)
+        public static T EnableIgnoreChannelRules<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreChannelRules = true;
@@ -2522,7 +2522,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Create the release ignoring any version rules specified by the channel.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings DisableIgnoreChannelRules(this OctopusCreateReleaseSettings toolSettings)
+        public static T DisableIgnoreChannelRules<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreChannelRules = false;
@@ -2533,7 +2533,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Create the release ignoring any version rules specified by the channel.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ToggleIgnoreChannelRules(this OctopusCreateReleaseSettings toolSettings)
+        public static T ToggleIgnoreChannelRules<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreChannelRules = !toolSettings.IgnoreChannelRules;
@@ -2546,7 +2546,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Pre-release for latest version of all packages to use for this release.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetPackagePrerelease(this OctopusCreateReleaseSettings toolSettings, string packagePrerelease)
+        public static T SetPackagePrerelease<T>(this T toolSettings, string packagePrerelease) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackagePrerelease = packagePrerelease;
@@ -2557,7 +2557,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Pre-release for latest version of all packages to use for this release.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetPackagePrerelease(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetPackagePrerelease<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackagePrerelease = null;
@@ -2570,7 +2570,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Perform a dry run but don't actually create/deploy release.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetWhatIf(this OctopusCreateReleaseSettings toolSettings, bool? whatIf)
+        public static T SetWhatIf<T>(this T toolSettings, bool? whatIf) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WhatIf = whatIf;
@@ -2581,7 +2581,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Perform a dry run but don't actually create/deploy release.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetWhatIf(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetWhatIf<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WhatIf = null;
@@ -2592,7 +2592,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Perform a dry run but don't actually create/deploy release.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings EnableWhatIf(this OctopusCreateReleaseSettings toolSettings)
+        public static T EnableWhatIf<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WhatIf = true;
@@ -2603,7 +2603,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Perform a dry run but don't actually create/deploy release.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings DisableWhatIf(this OctopusCreateReleaseSettings toolSettings)
+        public static T DisableWhatIf<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WhatIf = false;
@@ -2614,7 +2614,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Perform a dry run but don't actually create/deploy release.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ToggleWhatIf(this OctopusCreateReleaseSettings toolSettings)
+        public static T ToggleWhatIf<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WhatIf = !toolSettings.WhatIf;
@@ -2627,7 +2627,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Show progress of the deployment.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetProgress(this OctopusCreateReleaseSettings toolSettings, bool? progress)
+        public static T SetProgress<T>(this T toolSettings, bool? progress) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Progress = progress;
@@ -2638,7 +2638,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Show progress of the deployment.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetProgress(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetProgress<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Progress = null;
@@ -2649,7 +2649,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Show progress of the deployment.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings EnableProgress(this OctopusCreateReleaseSettings toolSettings)
+        public static T EnableProgress<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Progress = true;
@@ -2660,7 +2660,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Show progress of the deployment.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings DisableProgress(this OctopusCreateReleaseSettings toolSettings)
+        public static T DisableProgress<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Progress = false;
@@ -2671,7 +2671,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Show progress of the deployment.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ToggleProgress(this OctopusCreateReleaseSettings toolSettings)
+        public static T ToggleProgress<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Progress = !toolSettings.Progress;
@@ -2684,7 +2684,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to force downloading of already installed packages (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetForcePackageDownload(this OctopusCreateReleaseSettings toolSettings, bool? forcePackageDownload)
+        public static T SetForcePackageDownload<T>(this T toolSettings, bool? forcePackageDownload) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForcePackageDownload = forcePackageDownload;
@@ -2695,7 +2695,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to force downloading of already installed packages (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetForcePackageDownload(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetForcePackageDownload<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForcePackageDownload = null;
@@ -2706,7 +2706,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to force downloading of already installed packages (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings EnableForcePackageDownload(this OctopusCreateReleaseSettings toolSettings)
+        public static T EnableForcePackageDownload<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForcePackageDownload = true;
@@ -2717,7 +2717,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to force downloading of already installed packages (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings DisableForcePackageDownload(this OctopusCreateReleaseSettings toolSettings)
+        public static T DisableForcePackageDownload<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForcePackageDownload = false;
@@ -2728,7 +2728,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to force downloading of already installed packages (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ToggleForcePackageDownload(this OctopusCreateReleaseSettings toolSettings)
+        public static T ToggleForcePackageDownload<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForcePackageDownload = !toolSettings.ForcePackageDownload;
@@ -2741,7 +2741,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to wait synchronously for deployment to finish.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetWaitForDeployment(this OctopusCreateReleaseSettings toolSettings, bool? waitForDeployment)
+        public static T SetWaitForDeployment<T>(this T toolSettings, bool? waitForDeployment) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WaitForDeployment = waitForDeployment;
@@ -2752,7 +2752,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to wait synchronously for deployment to finish.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetWaitForDeployment(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetWaitForDeployment<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WaitForDeployment = null;
@@ -2763,7 +2763,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to wait synchronously for deployment to finish.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings EnableWaitForDeployment(this OctopusCreateReleaseSettings toolSettings)
+        public static T EnableWaitForDeployment<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WaitForDeployment = true;
@@ -2774,7 +2774,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to wait synchronously for deployment to finish.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings DisableWaitForDeployment(this OctopusCreateReleaseSettings toolSettings)
+        public static T DisableWaitForDeployment<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WaitForDeployment = false;
@@ -2785,7 +2785,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to wait synchronously for deployment to finish.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ToggleWaitForDeployment(this OctopusCreateReleaseSettings toolSettings)
+        public static T ToggleWaitForDeployment<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WaitForDeployment = !toolSettings.WaitForDeployment;
@@ -2798,7 +2798,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Specifies maximum time (timespan format) that the console session will wait for the deployment to finish(default 00:10:00). This will not stop the deployment. Requires <c>--waitfordeployment</c> parameter set.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetDeploymentTimeout(this OctopusCreateReleaseSettings toolSettings, string deploymentTimeout)
+        public static T SetDeploymentTimeout<T>(this T toolSettings, string deploymentTimeout) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeploymentTimeout = deploymentTimeout;
@@ -2809,7 +2809,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Specifies maximum time (timespan format) that the console session will wait for the deployment to finish(default 00:10:00). This will not stop the deployment. Requires <c>--waitfordeployment</c> parameter set.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetDeploymentTimeout(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetDeploymentTimeout<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeploymentTimeout = null;
@@ -2822,7 +2822,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to cancel the deployment if the deployment timeout is reached (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetCancelOnTimeout(this OctopusCreateReleaseSettings toolSettings, bool? cancelOnTimeout)
+        public static T SetCancelOnTimeout<T>(this T toolSettings, bool? cancelOnTimeout) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CancelOnTimeout = cancelOnTimeout;
@@ -2833,7 +2833,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to cancel the deployment if the deployment timeout is reached (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetCancelOnTimeout(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetCancelOnTimeout<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CancelOnTimeout = null;
@@ -2844,7 +2844,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to cancel the deployment if the deployment timeout is reached (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings EnableCancelOnTimeout(this OctopusCreateReleaseSettings toolSettings)
+        public static T EnableCancelOnTimeout<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CancelOnTimeout = true;
@@ -2855,7 +2855,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to cancel the deployment if the deployment timeout is reached (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings DisableCancelOnTimeout(this OctopusCreateReleaseSettings toolSettings)
+        public static T DisableCancelOnTimeout<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CancelOnTimeout = false;
@@ -2866,7 +2866,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to cancel the deployment if the deployment timeout is reached (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ToggleCancelOnTimeout(this OctopusCreateReleaseSettings toolSettings)
+        public static T ToggleCancelOnTimeout<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CancelOnTimeout = !toolSettings.CancelOnTimeout;
@@ -2879,7 +2879,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Specifies how much time (timespan format) should elapse between deployment status checks (default 00:00:10).</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetDeploymentCheckSleepCycle(this OctopusCreateReleaseSettings toolSettings, string deploymentCheckSleepCycle)
+        public static T SetDeploymentCheckSleepCycle<T>(this T toolSettings, string deploymentCheckSleepCycle) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeploymentCheckSleepCycle = deploymentCheckSleepCycle;
@@ -2890,7 +2890,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Specifies how much time (timespan format) should elapse between deployment status checks (default 00:00:10).</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetDeploymentCheckSleepCycle(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetDeploymentCheckSleepCycle<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeploymentCheckSleepCycle = null;
@@ -2903,7 +2903,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to use Guided Failure mode. (True or False. If not specified, will use default setting from environment).</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetGuidedFailure(this OctopusCreateReleaseSettings toolSettings, bool? guidedFailure)
+        public static T SetGuidedFailure<T>(this T toolSettings, bool? guidedFailure) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GuidedFailure = guidedFailure;
@@ -2914,7 +2914,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to use Guided Failure mode. (True or False. If not specified, will use default setting from environment).</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetGuidedFailure(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetGuidedFailure<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GuidedFailure = null;
@@ -2925,7 +2925,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to use Guided Failure mode. (True or False. If not specified, will use default setting from environment).</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings EnableGuidedFailure(this OctopusCreateReleaseSettings toolSettings)
+        public static T EnableGuidedFailure<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GuidedFailure = true;
@@ -2936,7 +2936,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to use Guided Failure mode. (True or False. If not specified, will use default setting from environment).</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings DisableGuidedFailure(this OctopusCreateReleaseSettings toolSettings)
+        public static T DisableGuidedFailure<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GuidedFailure = false;
@@ -2947,7 +2947,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to use Guided Failure mode. (True or False. If not specified, will use default setting from environment).</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ToggleGuidedFailure(this OctopusCreateReleaseSettings toolSettings)
+        public static T ToggleGuidedFailure<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GuidedFailure = !toolSettings.GuidedFailure;
@@ -2960,7 +2960,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetSpecificMachines(this OctopusCreateReleaseSettings toolSettings, params string[] specificMachines)
+        public static T SetSpecificMachines<T>(this T toolSettings, params string[] specificMachines) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SpecificMachinesInternal = specificMachines.ToList();
@@ -2971,7 +2971,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetSpecificMachines(this OctopusCreateReleaseSettings toolSettings, IEnumerable<string> specificMachines)
+        public static T SetSpecificMachines<T>(this T toolSettings, IEnumerable<string> specificMachines) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SpecificMachinesInternal = specificMachines.ToList();
@@ -2982,7 +2982,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings AddSpecificMachines(this OctopusCreateReleaseSettings toolSettings, params string[] specificMachines)
+        public static T AddSpecificMachines<T>(this T toolSettings, params string[] specificMachines) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SpecificMachinesInternal.AddRange(specificMachines);
@@ -2993,7 +2993,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings AddSpecificMachines(this OctopusCreateReleaseSettings toolSettings, IEnumerable<string> specificMachines)
+        public static T AddSpecificMachines<T>(this T toolSettings, IEnumerable<string> specificMachines) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SpecificMachinesInternal.AddRange(specificMachines);
@@ -3004,7 +3004,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ClearSpecificMachines(this OctopusCreateReleaseSettings toolSettings)
+        public static T ClearSpecificMachines<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SpecificMachinesInternal.Clear();
@@ -3015,7 +3015,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings RemoveSpecificMachines(this OctopusCreateReleaseSettings toolSettings, params string[] specificMachines)
+        public static T RemoveSpecificMachines<T>(this T toolSettings, params string[] specificMachines) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(specificMachines);
@@ -3027,7 +3027,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings RemoveSpecificMachines(this OctopusCreateReleaseSettings toolSettings, IEnumerable<string> specificMachines)
+        public static T RemoveSpecificMachines<T>(this T toolSettings, IEnumerable<string> specificMachines) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(specificMachines);
@@ -3041,7 +3041,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>If a project is configured to skip packages with already-installed versions, override this setting to force re-deployment (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetForce(this OctopusCreateReleaseSettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -3052,7 +3052,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>If a project is configured to skip packages with already-installed versions, override this setting to force re-deployment (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetForce(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -3063,7 +3063,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>If a project is configured to skip packages with already-installed versions, override this setting to force re-deployment (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings EnableForce(this OctopusCreateReleaseSettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -3074,7 +3074,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>If a project is configured to skip packages with already-installed versions, override this setting to force re-deployment (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings DisableForce(this OctopusCreateReleaseSettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -3085,7 +3085,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>If a project is configured to skip packages with already-installed versions, override this setting to force re-deployment (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ToggleForce(this OctopusCreateReleaseSettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -3098,7 +3098,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Skip a step by name.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetSkip(this OctopusCreateReleaseSettings toolSettings, params string[] skip)
+        public static T SetSkip<T>(this T toolSettings, params string[] skip) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipInternal = skip.ToList();
@@ -3109,7 +3109,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Skip a step by name.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetSkip(this OctopusCreateReleaseSettings toolSettings, IEnumerable<string> skip)
+        public static T SetSkip<T>(this T toolSettings, IEnumerable<string> skip) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipInternal = skip.ToList();
@@ -3120,7 +3120,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Skip a step by name.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings AddSkip(this OctopusCreateReleaseSettings toolSettings, params string[] skip)
+        public static T AddSkip<T>(this T toolSettings, params string[] skip) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipInternal.AddRange(skip);
@@ -3131,7 +3131,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Skip a step by name.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings AddSkip(this OctopusCreateReleaseSettings toolSettings, IEnumerable<string> skip)
+        public static T AddSkip<T>(this T toolSettings, IEnumerable<string> skip) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipInternal.AddRange(skip);
@@ -3142,7 +3142,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Skip a step by name.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ClearSkip(this OctopusCreateReleaseSettings toolSettings)
+        public static T ClearSkip<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipInternal.Clear();
@@ -3153,7 +3153,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Skip a step by name.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings RemoveSkip(this OctopusCreateReleaseSettings toolSettings, params string[] skip)
+        public static T RemoveSkip<T>(this T toolSettings, params string[] skip) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(skip);
@@ -3165,7 +3165,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Skip a step by name.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings RemoveSkip(this OctopusCreateReleaseSettings toolSettings, IEnumerable<string> skip)
+        public static T RemoveSkip<T>(this T toolSettings, IEnumerable<string> skip) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(skip);
@@ -3179,7 +3179,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Don't print the raw log of failed tasks.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetNoRawLog(this OctopusCreateReleaseSettings toolSettings, bool? noRawLog)
+        public static T SetNoRawLog<T>(this T toolSettings, bool? noRawLog) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRawLog = noRawLog;
@@ -3190,7 +3190,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Don't print the raw log of failed tasks.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetNoRawLog(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetNoRawLog<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRawLog = null;
@@ -3201,7 +3201,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Don't print the raw log of failed tasks.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings EnableNoRawLog(this OctopusCreateReleaseSettings toolSettings)
+        public static T EnableNoRawLog<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRawLog = true;
@@ -3212,7 +3212,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Don't print the raw log of failed tasks.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings DisableNoRawLog(this OctopusCreateReleaseSettings toolSettings)
+        public static T DisableNoRawLog<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRawLog = false;
@@ -3223,7 +3223,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Don't print the raw log of failed tasks.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ToggleNoRawLog(this OctopusCreateReleaseSettings toolSettings)
+        public static T ToggleNoRawLog<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRawLog = !toolSettings.NoRawLog;
@@ -3236,7 +3236,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Redirect the raw log of failed tasks to a file.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetRawLogFile(this OctopusCreateReleaseSettings toolSettings, string rawLogFile)
+        public static T SetRawLogFile<T>(this T toolSettings, string rawLogFile) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RawLogFile = rawLogFile;
@@ -3247,7 +3247,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Redirect the raw log of failed tasks to a file.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetRawLogFile(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetRawLogFile<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RawLogFile = null;
@@ -3260,7 +3260,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Values for any prompted variables in the format Label:Value. For JSON values, embedded quotation marks should be escaped with a backslash.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetVariables(this OctopusCreateReleaseSettings toolSettings, IDictionary<string, string> variables)
+        public static T SetVariables<T>(this T toolSettings, IDictionary<string, string> variables) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VariablesInternal = variables.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -3271,7 +3271,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Values for any prompted variables in the format Label:Value. For JSON values, embedded quotation marks should be escaped with a backslash.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ClearVariables(this OctopusCreateReleaseSettings toolSettings)
+        public static T ClearVariables<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VariablesInternal.Clear();
@@ -3282,7 +3282,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Values for any prompted variables in the format Label:Value. For JSON values, embedded quotation marks should be escaped with a backslash.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings AddVariable(this OctopusCreateReleaseSettings toolSettings, string variableKey, string variableValue)
+        public static T AddVariable<T>(this T toolSettings, string variableKey, string variableValue) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VariablesInternal.Add(variableKey, variableValue);
@@ -3293,7 +3293,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Values for any prompted variables in the format Label:Value. For JSON values, embedded quotation marks should be escaped with a backslash.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings RemoveVariable(this OctopusCreateReleaseSettings toolSettings, string variableKey)
+        public static T RemoveVariable<T>(this T toolSettings, string variableKey) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VariablesInternal.Remove(variableKey);
@@ -3304,7 +3304,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Values for any prompted variables in the format Label:Value. For JSON values, embedded quotation marks should be escaped with a backslash.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetVariable(this OctopusCreateReleaseSettings toolSettings, string variableKey, string variableValue)
+        public static T SetVariable<T>(this T toolSettings, string variableKey, string variableValue) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VariablesInternal[variableKey] = variableValue;
@@ -3317,7 +3317,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Time at which deployment should start (scheduled deployment), specified as any valid DateTimeOffset format, and assuming the time zone is the current local time zone.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetDeployAt(this OctopusCreateReleaseSettings toolSettings, string deployAt)
+        public static T SetDeployAt<T>(this T toolSettings, string deployAt) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeployAt = deployAt;
@@ -3328,7 +3328,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Time at which deployment should start (scheduled deployment), specified as any valid DateTimeOffset format, and assuming the time zone is the current local time zone.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetDeployAt(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetDeployAt<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeployAt = null;
@@ -3341,7 +3341,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Environment to automatically deploy to, e.g., <c>Production</c>.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetDeployTo(this OctopusCreateReleaseSettings toolSettings, string deployTo)
+        public static T SetDeployTo<T>(this T toolSettings, string deployTo) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeployTo = deployTo;
@@ -3352,7 +3352,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Environment to automatically deploy to, e.g., <c>Production</c>.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetDeployTo(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetDeployTo<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeployTo = null;
@@ -3365,7 +3365,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A tenant the deployment will be performed for; specify this argument multiple times to add multiple tenants or use <c>*</c> wildcard to deploy to tenants able to deploy.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetTenant(this OctopusCreateReleaseSettings toolSettings, string tenant)
+        public static T SetTenant<T>(this T toolSettings, string tenant) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tenant = tenant;
@@ -3376,7 +3376,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A tenant the deployment will be performed for; specify this argument multiple times to add multiple tenants or use <c>*</c> wildcard to deploy to tenants able to deploy.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetTenant(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetTenant<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tenant = null;
@@ -3389,7 +3389,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A tenant tag used to match tenants that the deployment will be performed for; specify this argument multiple times to add multiple tenant tags.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetTenantTag(this OctopusCreateReleaseSettings toolSettings, string tenantTag)
+        public static T SetTenantTag<T>(this T toolSettings, string tenantTag) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TenantTag = tenantTag;
@@ -3400,7 +3400,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A tenant tag used to match tenants that the deployment will be performed for; specify this argument multiple times to add multiple tenant tags.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetTenantTag(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetTenantTag<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TenantTag = null;
@@ -3413,7 +3413,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The base URL for your Octopus server - e.g., http://your-octopus/</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetServer(this OctopusCreateReleaseSettings toolSettings, string server)
+        public static T SetServer<T>(this T toolSettings, string server) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Server = server;
@@ -3424,7 +3424,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The base URL for your Octopus server - e.g., http://your-octopus/</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetServer(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetServer<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Server = null;
@@ -3437,7 +3437,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Your API key. Get this from the user profile page. Your must provide an apiKey or username and password. If the guest account is enabled, a key of API-GUEST can be used.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetApiKey(this OctopusCreateReleaseSettings toolSettings, string apiKey)
+        public static T SetApiKey<T>(this T toolSettings, string apiKey) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiKey = apiKey;
@@ -3448,7 +3448,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Your API key. Get this from the user profile page. Your must provide an apiKey or username and password. If the guest account is enabled, a key of API-GUEST can be used.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetApiKey(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetApiKey<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiKey = null;
@@ -3461,7 +3461,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Username to use when authenticating with the server. Your must provide an apiKey or username and password.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetUsername(this OctopusCreateReleaseSettings toolSettings, string username)
+        public static T SetUsername<T>(this T toolSettings, string username) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = username;
@@ -3472,7 +3472,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Username to use when authenticating with the server. Your must provide an apiKey or username and password.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetUsername(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetUsername<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = null;
@@ -3485,7 +3485,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Password to use when authenticating with the server.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetPassword(this OctopusCreateReleaseSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -3496,7 +3496,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Password to use when authenticating with the server.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetPassword(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -3509,7 +3509,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Text file of default values, with one 'key = value' per line.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetConfigFile(this OctopusCreateReleaseSettings toolSettings, string configFile)
+        public static T SetConfigFile<T>(this T toolSettings, string configFile) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigFile = configFile;
@@ -3520,7 +3520,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Text file of default values, with one 'key = value' per line.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetConfigFile(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetConfigFile<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigFile = null;
@@ -3533,7 +3533,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable debug logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetDebug(this OctopusCreateReleaseSettings toolSettings, bool? debug)
+        public static T SetDebug<T>(this T toolSettings, bool? debug) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = debug;
@@ -3544,7 +3544,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable debug logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetDebug(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetDebug<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = null;
@@ -3555,7 +3555,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable debug logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings EnableDebug(this OctopusCreateReleaseSettings toolSettings)
+        public static T EnableDebug<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = true;
@@ -3566,7 +3566,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable debug logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings DisableDebug(this OctopusCreateReleaseSettings toolSettings)
+        public static T DisableDebug<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = false;
@@ -3577,7 +3577,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable debug logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ToggleDebug(this OctopusCreateReleaseSettings toolSettings)
+        public static T ToggleDebug<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = !toolSettings.Debug;
@@ -3590,7 +3590,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetIgnoreSslErrors(this OctopusCreateReleaseSettings toolSettings, bool? ignoreSslErrors)
+        public static T SetIgnoreSslErrors<T>(this T toolSettings, bool? ignoreSslErrors) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreSslErrors = ignoreSslErrors;
@@ -3601,7 +3601,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetIgnoreSslErrors(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetIgnoreSslErrors<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreSslErrors = null;
@@ -3612,7 +3612,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings EnableIgnoreSslErrors(this OctopusCreateReleaseSettings toolSettings)
+        public static T EnableIgnoreSslErrors<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreSslErrors = true;
@@ -3623,7 +3623,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings DisableIgnoreSslErrors(this OctopusCreateReleaseSettings toolSettings)
+        public static T DisableIgnoreSslErrors<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreSslErrors = false;
@@ -3634,7 +3634,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ToggleIgnoreSslErrors(this OctopusCreateReleaseSettings toolSettings)
+        public static T ToggleIgnoreSslErrors<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreSslErrors = !toolSettings.IgnoreSslErrors;
@@ -3647,7 +3647,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable TeamCity or Team Foundation Build service messages when logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetEnableServiceMessages(this OctopusCreateReleaseSettings toolSettings, bool? enableServiceMessages)
+        public static T SetEnableServiceMessages<T>(this T toolSettings, bool? enableServiceMessages) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableServiceMessages = enableServiceMessages;
@@ -3658,7 +3658,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable TeamCity or Team Foundation Build service messages when logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetEnableServiceMessages(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetEnableServiceMessages<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableServiceMessages = null;
@@ -3669,7 +3669,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable TeamCity or Team Foundation Build service messages when logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings EnableEnableServiceMessages(this OctopusCreateReleaseSettings toolSettings)
+        public static T EnableEnableServiceMessages<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableServiceMessages = true;
@@ -3680,7 +3680,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable TeamCity or Team Foundation Build service messages when logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings DisableEnableServiceMessages(this OctopusCreateReleaseSettings toolSettings)
+        public static T DisableEnableServiceMessages<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableServiceMessages = false;
@@ -3691,7 +3691,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable TeamCity or Team Foundation Build service messages when logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ToggleEnableServiceMessages(this OctopusCreateReleaseSettings toolSettings)
+        public static T ToggleEnableServiceMessages<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableServiceMessages = !toolSettings.EnableServiceMessages;
@@ -3704,7 +3704,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Timeout in seconds for network operations. Default is 600.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetTimeout(this OctopusCreateReleaseSettings toolSettings, int? timeout)
+        public static T SetTimeout<T>(this T toolSettings, int? timeout) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = timeout;
@@ -3715,7 +3715,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Timeout in seconds for network operations. Default is 600.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetTimeout(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetTimeout<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = null;
@@ -3728,7 +3728,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The URI of the proxy to use, e.g., http://example.com:8080.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetProxy(this OctopusCreateReleaseSettings toolSettings, string proxy)
+        public static T SetProxy<T>(this T toolSettings, string proxy) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Proxy = proxy;
@@ -3739,7 +3739,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The URI of the proxy to use, e.g., http://example.com:8080.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetProxy(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetProxy<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Proxy = null;
@@ -3752,7 +3752,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The username for the proxy.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetProxyUsername(this OctopusCreateReleaseSettings toolSettings, string proxyUsername)
+        public static T SetProxyUsername<T>(this T toolSettings, string proxyUsername) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProxyUsername = proxyUsername;
@@ -3763,7 +3763,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The username for the proxy.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetProxyUsername(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetProxyUsername<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProxyUsername = null;
@@ -3776,7 +3776,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The password for the proxy. If both the username and password are omitted and proxyAddress is specified, the default credentials are used.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetProxyPassword(this OctopusCreateReleaseSettings toolSettings, string proxyPassword)
+        public static T SetProxyPassword<T>(this T toolSettings, string proxyPassword) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProxyPassword = proxyPassword;
@@ -3787,7 +3787,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The password for the proxy. If both the username and password are omitted and proxyAddress is specified, the default credentials are used.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetProxyPassword(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetProxyPassword<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProxyPassword = null;
@@ -3800,7 +3800,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The name of a space within which this command will be executed. The default space will be used if it is omitted.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetSpace(this OctopusCreateReleaseSettings toolSettings, string space)
+        public static T SetSpace<T>(this T toolSettings, string space) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Space = space;
@@ -3811,7 +3811,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The name of a space within which this command will be executed. The default space will be used if it is omitted.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetSpace(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetSpace<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Space = null;
@@ -3824,7 +3824,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetLogLevel(this OctopusCreateReleaseSettings toolSettings, string logLevel)
+        public static T SetLogLevel<T>(this T toolSettings, string logLevel) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogLevel = logLevel;
@@ -3835,7 +3835,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.</p>
         /// </summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetLogLevel(this OctopusCreateReleaseSettings toolSettings)
+        public static T ResetLogLevel<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogLevel = null;
@@ -3858,7 +3858,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Show progress of the deployment.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetProgress(this OctopusDeployReleaseSettings toolSettings, bool? progress)
+        public static T SetProgress<T>(this T toolSettings, bool? progress) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Progress = progress;
@@ -3869,7 +3869,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Show progress of the deployment.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetProgress(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetProgress<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Progress = null;
@@ -3880,7 +3880,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Show progress of the deployment.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings EnableProgress(this OctopusDeployReleaseSettings toolSettings)
+        public static T EnableProgress<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Progress = true;
@@ -3891,7 +3891,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Show progress of the deployment.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings DisableProgress(this OctopusDeployReleaseSettings toolSettings)
+        public static T DisableProgress<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Progress = false;
@@ -3902,7 +3902,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Show progress of the deployment.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ToggleProgress(this OctopusDeployReleaseSettings toolSettings)
+        public static T ToggleProgress<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Progress = !toolSettings.Progress;
@@ -3915,7 +3915,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to force downloading of already installed packages (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetForcePackageDownload(this OctopusDeployReleaseSettings toolSettings, bool? forcePackageDownload)
+        public static T SetForcePackageDownload<T>(this T toolSettings, bool? forcePackageDownload) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForcePackageDownload = forcePackageDownload;
@@ -3926,7 +3926,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to force downloading of already installed packages (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetForcePackageDownload(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetForcePackageDownload<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForcePackageDownload = null;
@@ -3937,7 +3937,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to force downloading of already installed packages (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings EnableForcePackageDownload(this OctopusDeployReleaseSettings toolSettings)
+        public static T EnableForcePackageDownload<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForcePackageDownload = true;
@@ -3948,7 +3948,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to force downloading of already installed packages (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings DisableForcePackageDownload(this OctopusDeployReleaseSettings toolSettings)
+        public static T DisableForcePackageDownload<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForcePackageDownload = false;
@@ -3959,7 +3959,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to force downloading of already installed packages (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ToggleForcePackageDownload(this OctopusDeployReleaseSettings toolSettings)
+        public static T ToggleForcePackageDownload<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForcePackageDownload = !toolSettings.ForcePackageDownload;
@@ -3972,7 +3972,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to wait synchronously for deployment to finish.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetWaitForDepployment(this OctopusDeployReleaseSettings toolSettings, bool? waitForDepployment)
+        public static T SetWaitForDepployment<T>(this T toolSettings, bool? waitForDepployment) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WaitForDepployment = waitForDepployment;
@@ -3983,7 +3983,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to wait synchronously for deployment to finish.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetWaitForDepployment(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetWaitForDepployment<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WaitForDepployment = null;
@@ -3994,7 +3994,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to wait synchronously for deployment to finish.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings EnableWaitForDepployment(this OctopusDeployReleaseSettings toolSettings)
+        public static T EnableWaitForDepployment<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WaitForDepployment = true;
@@ -4005,7 +4005,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to wait synchronously for deployment to finish.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings DisableWaitForDepployment(this OctopusDeployReleaseSettings toolSettings)
+        public static T DisableWaitForDepployment<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WaitForDepployment = false;
@@ -4016,7 +4016,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to wait synchronously for deployment to finish.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ToggleWaitForDepployment(this OctopusDeployReleaseSettings toolSettings)
+        public static T ToggleWaitForDepployment<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WaitForDepployment = !toolSettings.WaitForDepployment;
@@ -4029,7 +4029,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Specifies maximum time (timespan format) that the console session will wait for the deployment to finish(default 00:10:00). This will not stop the deployment. Requires <c>WaitForDeployment</c> parameter set.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetDeploymentTimeout(this OctopusDeployReleaseSettings toolSettings, string deploymentTimeout)
+        public static T SetDeploymentTimeout<T>(this T toolSettings, string deploymentTimeout) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeploymentTimeout = deploymentTimeout;
@@ -4040,7 +4040,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Specifies maximum time (timespan format) that the console session will wait for the deployment to finish(default 00:10:00). This will not stop the deployment. Requires <c>WaitForDeployment</c> parameter set.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetDeploymentTimeout(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetDeploymentTimeout<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeploymentTimeout = null;
@@ -4053,7 +4053,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to cancel the deployment if the deployment timeout is reached (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetCancelOnTimeout(this OctopusDeployReleaseSettings toolSettings, bool? cancelOnTimeout)
+        public static T SetCancelOnTimeout<T>(this T toolSettings, bool? cancelOnTimeout) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CancelOnTimeout = cancelOnTimeout;
@@ -4064,7 +4064,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to cancel the deployment if the deployment timeout is reached (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetCancelOnTimeout(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetCancelOnTimeout<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CancelOnTimeout = null;
@@ -4075,7 +4075,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to cancel the deployment if the deployment timeout is reached (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings EnableCancelOnTimeout(this OctopusDeployReleaseSettings toolSettings)
+        public static T EnableCancelOnTimeout<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CancelOnTimeout = true;
@@ -4086,7 +4086,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to cancel the deployment if the deployment timeout is reached (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings DisableCancelOnTimeout(this OctopusDeployReleaseSettings toolSettings)
+        public static T DisableCancelOnTimeout<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CancelOnTimeout = false;
@@ -4097,7 +4097,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to cancel the deployment if the deployment timeout is reached (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ToggleCancelOnTimeout(this OctopusDeployReleaseSettings toolSettings)
+        public static T ToggleCancelOnTimeout<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CancelOnTimeout = !toolSettings.CancelOnTimeout;
@@ -4110,7 +4110,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Specifies how much time (timespan format) should elapse between deployment status checks (default 00:00:10).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetDeploymentCheckSleepCycle(this OctopusDeployReleaseSettings toolSettings, string deploymentCheckSleepCycle)
+        public static T SetDeploymentCheckSleepCycle<T>(this T toolSettings, string deploymentCheckSleepCycle) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeploymentCheckSleepCycle = deploymentCheckSleepCycle;
@@ -4121,7 +4121,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Specifies how much time (timespan format) should elapse between deployment status checks (default 00:00:10).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetDeploymentCheckSleepCycle(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetDeploymentCheckSleepCycle<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeploymentCheckSleepCycle = null;
@@ -4134,7 +4134,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to use Guided Failure mode. (True or False. If not specified, will use default setting from environment).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetGuidedFailure(this OctopusDeployReleaseSettings toolSettings, bool? guidedFailure)
+        public static T SetGuidedFailure<T>(this T toolSettings, bool? guidedFailure) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GuidedFailure = guidedFailure;
@@ -4145,7 +4145,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to use Guided Failure mode. (True or False. If not specified, will use default setting from environment).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetGuidedFailure(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetGuidedFailure<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GuidedFailure = null;
@@ -4156,7 +4156,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to use Guided Failure mode. (True or False. If not specified, will use default setting from environment).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings EnableGuidedFailure(this OctopusDeployReleaseSettings toolSettings)
+        public static T EnableGuidedFailure<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GuidedFailure = true;
@@ -4167,7 +4167,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to use Guided Failure mode. (True or False. If not specified, will use default setting from environment).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings DisableGuidedFailure(this OctopusDeployReleaseSettings toolSettings)
+        public static T DisableGuidedFailure<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GuidedFailure = false;
@@ -4178,7 +4178,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Whether to use Guided Failure mode. (True or False. If not specified, will use default setting from environment).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ToggleGuidedFailure(this OctopusDeployReleaseSettings toolSettings)
+        public static T ToggleGuidedFailure<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GuidedFailure = !toolSettings.GuidedFailure;
@@ -4191,7 +4191,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetSpecificMachines(this OctopusDeployReleaseSettings toolSettings, params string[] specificMachines)
+        public static T SetSpecificMachines<T>(this T toolSettings, params string[] specificMachines) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SpecificMachinesInternal = specificMachines.ToList();
@@ -4202,7 +4202,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetSpecificMachines(this OctopusDeployReleaseSettings toolSettings, IEnumerable<string> specificMachines)
+        public static T SetSpecificMachines<T>(this T toolSettings, IEnumerable<string> specificMachines) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SpecificMachinesInternal = specificMachines.ToList();
@@ -4213,7 +4213,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings AddSpecificMachines(this OctopusDeployReleaseSettings toolSettings, params string[] specificMachines)
+        public static T AddSpecificMachines<T>(this T toolSettings, params string[] specificMachines) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SpecificMachinesInternal.AddRange(specificMachines);
@@ -4224,7 +4224,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings AddSpecificMachines(this OctopusDeployReleaseSettings toolSettings, IEnumerable<string> specificMachines)
+        public static T AddSpecificMachines<T>(this T toolSettings, IEnumerable<string> specificMachines) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SpecificMachinesInternal.AddRange(specificMachines);
@@ -4235,7 +4235,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ClearSpecificMachines(this OctopusDeployReleaseSettings toolSettings)
+        public static T ClearSpecificMachines<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SpecificMachinesInternal.Clear();
@@ -4246,7 +4246,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings RemoveSpecificMachines(this OctopusDeployReleaseSettings toolSettings, params string[] specificMachines)
+        public static T RemoveSpecificMachines<T>(this T toolSettings, params string[] specificMachines) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(specificMachines);
@@ -4258,7 +4258,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings RemoveSpecificMachines(this OctopusDeployReleaseSettings toolSettings, IEnumerable<string> specificMachines)
+        public static T RemoveSpecificMachines<T>(this T toolSettings, IEnumerable<string> specificMachines) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(specificMachines);
@@ -4272,7 +4272,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>If a project is configured to skip packages with already-installed versions, override this setting to force re-deployment (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetForce(this OctopusDeployReleaseSettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -4283,7 +4283,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>If a project is configured to skip packages with already-installed versions, override this setting to force re-deployment (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetForce(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -4294,7 +4294,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>If a project is configured to skip packages with already-installed versions, override this setting to force re-deployment (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings EnableForce(this OctopusDeployReleaseSettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -4305,7 +4305,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>If a project is configured to skip packages with already-installed versions, override this setting to force re-deployment (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings DisableForce(this OctopusDeployReleaseSettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -4316,7 +4316,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>If a project is configured to skip packages with already-installed versions, override this setting to force re-deployment (flag, default false).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ToggleForce(this OctopusDeployReleaseSettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -4329,7 +4329,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Skip a step by name.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetSkip(this OctopusDeployReleaseSettings toolSettings, params string[] skip)
+        public static T SetSkip<T>(this T toolSettings, params string[] skip) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipInternal = skip.ToList();
@@ -4340,7 +4340,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Skip a step by name.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetSkip(this OctopusDeployReleaseSettings toolSettings, IEnumerable<string> skip)
+        public static T SetSkip<T>(this T toolSettings, IEnumerable<string> skip) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipInternal = skip.ToList();
@@ -4351,7 +4351,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Skip a step by name.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings AddSkip(this OctopusDeployReleaseSettings toolSettings, params string[] skip)
+        public static T AddSkip<T>(this T toolSettings, params string[] skip) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipInternal.AddRange(skip);
@@ -4362,7 +4362,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Skip a step by name.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings AddSkip(this OctopusDeployReleaseSettings toolSettings, IEnumerable<string> skip)
+        public static T AddSkip<T>(this T toolSettings, IEnumerable<string> skip) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipInternal.AddRange(skip);
@@ -4373,7 +4373,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Skip a step by name.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ClearSkip(this OctopusDeployReleaseSettings toolSettings)
+        public static T ClearSkip<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipInternal.Clear();
@@ -4384,7 +4384,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Skip a step by name.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings RemoveSkip(this OctopusDeployReleaseSettings toolSettings, params string[] skip)
+        public static T RemoveSkip<T>(this T toolSettings, params string[] skip) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(skip);
@@ -4396,7 +4396,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Skip a step by name.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings RemoveSkip(this OctopusDeployReleaseSettings toolSettings, IEnumerable<string> skip)
+        public static T RemoveSkip<T>(this T toolSettings, IEnumerable<string> skip) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(skip);
@@ -4410,7 +4410,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Don't print the raw log of failed tasks.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetNoRawLog(this OctopusDeployReleaseSettings toolSettings, bool? noRawLog)
+        public static T SetNoRawLog<T>(this T toolSettings, bool? noRawLog) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRawLog = noRawLog;
@@ -4421,7 +4421,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Don't print the raw log of failed tasks.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetNoRawLog(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetNoRawLog<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRawLog = null;
@@ -4432,7 +4432,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Don't print the raw log of failed tasks.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings EnableNoRawLog(this OctopusDeployReleaseSettings toolSettings)
+        public static T EnableNoRawLog<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRawLog = true;
@@ -4443,7 +4443,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Don't print the raw log of failed tasks.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings DisableNoRawLog(this OctopusDeployReleaseSettings toolSettings)
+        public static T DisableNoRawLog<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRawLog = false;
@@ -4454,7 +4454,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Don't print the raw log of failed tasks.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ToggleNoRawLog(this OctopusDeployReleaseSettings toolSettings)
+        public static T ToggleNoRawLog<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRawLog = !toolSettings.NoRawLog;
@@ -4467,7 +4467,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Redirect the raw log of failed tasks to a file.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetRawLogFile(this OctopusDeployReleaseSettings toolSettings, string rawLogFile)
+        public static T SetRawLogFile<T>(this T toolSettings, string rawLogFile) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RawLogFile = rawLogFile;
@@ -4478,7 +4478,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Redirect the raw log of failed tasks to a file.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetRawLogFile(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetRawLogFile<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RawLogFile = null;
@@ -4491,7 +4491,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Values for any prompted variables. For JSON values, embedded quotation marks should be escaped with a backslash. </p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetVariables(this OctopusDeployReleaseSettings toolSettings, IDictionary<string, string> variables)
+        public static T SetVariables<T>(this T toolSettings, IDictionary<string, string> variables) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VariablesInternal = variables.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -4502,7 +4502,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Values for any prompted variables. For JSON values, embedded quotation marks should be escaped with a backslash. </p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ClearVariables(this OctopusDeployReleaseSettings toolSettings)
+        public static T ClearVariables<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VariablesInternal.Clear();
@@ -4513,7 +4513,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Values for any prompted variables. For JSON values, embedded quotation marks should be escaped with a backslash. </p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings AddVariable(this OctopusDeployReleaseSettings toolSettings, string variableKey, string variableValue)
+        public static T AddVariable<T>(this T toolSettings, string variableKey, string variableValue) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VariablesInternal.Add(variableKey, variableValue);
@@ -4524,7 +4524,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Values for any prompted variables. For JSON values, embedded quotation marks should be escaped with a backslash. </p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings RemoveVariable(this OctopusDeployReleaseSettings toolSettings, string variableKey)
+        public static T RemoveVariable<T>(this T toolSettings, string variableKey) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VariablesInternal.Remove(variableKey);
@@ -4535,7 +4535,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Values for any prompted variables. For JSON values, embedded quotation marks should be escaped with a backslash. </p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetVariable(this OctopusDeployReleaseSettings toolSettings, string variableKey, string variableValue)
+        public static T SetVariable<T>(this T toolSettings, string variableKey, string variableValue) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VariablesInternal[variableKey] = variableValue;
@@ -4548,7 +4548,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Time at which deployment should start (scheduled deployment), specified as any valid DateTimeOffset format, and assuming the time zone is the current local time zone.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetDeployAt(this OctopusDeployReleaseSettings toolSettings, string deployAt)
+        public static T SetDeployAt<T>(this T toolSettings, string deployAt) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeployAt = deployAt;
@@ -4559,7 +4559,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Time at which deployment should start (scheduled deployment), specified as any valid DateTimeOffset format, and assuming the time zone is the current local time zone.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetDeployAt(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetDeployAt<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeployAt = null;
@@ -4572,7 +4572,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Create a deployment for this tenant; specify this argument multiple times to add multiple tenants or use <c>*</c> wildcard to deploy to all tenants who are ready for this release (according to lifecycle).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetTenant(this OctopusDeployReleaseSettings toolSettings, string tenant)
+        public static T SetTenant<T>(this T toolSettings, string tenant) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tenant = tenant;
@@ -4583,7 +4583,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Create a deployment for this tenant; specify this argument multiple times to add multiple tenants or use <c>*</c> wildcard to deploy to all tenants who are ready for this release (according to lifecycle).</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetTenant(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetTenant<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tenant = null;
@@ -4596,7 +4596,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Create a deployment for tenants matching this tag; specify this argument multiple times to build a query/filter with multiple tags, just like you can in the user interface.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetTenantTag(this OctopusDeployReleaseSettings toolSettings, string tenantTag)
+        public static T SetTenantTag<T>(this T toolSettings, string tenantTag) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TenantTag = tenantTag;
@@ -4607,7 +4607,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Create a deployment for tenants matching this tag; specify this argument multiple times to build a query/filter with multiple tags, just like you can in the user interface.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetTenantTag(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetTenantTag<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TenantTag = null;
@@ -4620,7 +4620,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Name of the project.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetProject(this OctopusDeployReleaseSettings toolSettings, string project)
+        public static T SetProject<T>(this T toolSettings, string project) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = project;
@@ -4631,7 +4631,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Name of the project.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetProject(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetProject<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = null;
@@ -4644,7 +4644,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Environment to deploy to, e.g. <c>Production</c>.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetDeployTo(this OctopusDeployReleaseSettings toolSettings, string deployTo)
+        public static T SetDeployTo<T>(this T toolSettings, string deployTo) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeployTo = deployTo;
@@ -4655,7 +4655,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Environment to deploy to, e.g. <c>Production</c>.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetDeployTo(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetDeployTo<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeployTo = null;
@@ -4668,7 +4668,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Version number of the release to deploy. Or specify 'latest' for the latest release.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetVersion(this OctopusDeployReleaseSettings toolSettings, string version)
+        public static T SetVersion<T>(this T toolSettings, string version) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = version;
@@ -4679,7 +4679,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Version number of the release to deploy. Or specify 'latest' for the latest release.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetVersion(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = null;
@@ -4692,7 +4692,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Channel to use when getting the release to deploy</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetChannel(this OctopusDeployReleaseSettings toolSettings, string channel)
+        public static T SetChannel<T>(this T toolSettings, string channel) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Channel = channel;
@@ -4703,7 +4703,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Channel to use when getting the release to deploy</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetChannel(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetChannel<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Channel = null;
@@ -4716,7 +4716,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Overwrite the variable snapshot for the release by re-importing the variables from the project</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetUpdateVariables(this OctopusDeployReleaseSettings toolSettings, bool? updateVariables)
+        public static T SetUpdateVariables<T>(this T toolSettings, bool? updateVariables) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UpdateVariables = updateVariables;
@@ -4727,7 +4727,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Overwrite the variable snapshot for the release by re-importing the variables from the project</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetUpdateVariables(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetUpdateVariables<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UpdateVariables = null;
@@ -4738,7 +4738,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Overwrite the variable snapshot for the release by re-importing the variables from the project</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings EnableUpdateVariables(this OctopusDeployReleaseSettings toolSettings)
+        public static T EnableUpdateVariables<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UpdateVariables = true;
@@ -4749,7 +4749,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Overwrite the variable snapshot for the release by re-importing the variables from the project</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings DisableUpdateVariables(this OctopusDeployReleaseSettings toolSettings)
+        public static T DisableUpdateVariables<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UpdateVariables = false;
@@ -4760,7 +4760,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Overwrite the variable snapshot for the release by re-importing the variables from the project</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ToggleUpdateVariables(this OctopusDeployReleaseSettings toolSettings)
+        public static T ToggleUpdateVariables<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UpdateVariables = !toolSettings.UpdateVariables;
@@ -4773,7 +4773,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The base URL for your Octopus server - e.g., http://your-octopus/</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetServer(this OctopusDeployReleaseSettings toolSettings, string server)
+        public static T SetServer<T>(this T toolSettings, string server) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Server = server;
@@ -4784,7 +4784,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The base URL for your Octopus server - e.g., http://your-octopus/</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetServer(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetServer<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Server = null;
@@ -4797,7 +4797,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Your API key. Get this from the user profile page. Your must provide an apiKey or username and password. If the guest account is enabled, a key of API-GUEST can be used.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetApiKey(this OctopusDeployReleaseSettings toolSettings, string apiKey)
+        public static T SetApiKey<T>(this T toolSettings, string apiKey) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiKey = apiKey;
@@ -4808,7 +4808,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Your API key. Get this from the user profile page. Your must provide an apiKey or username and password. If the guest account is enabled, a key of API-GUEST can be used.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetApiKey(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetApiKey<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiKey = null;
@@ -4821,7 +4821,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Username to use when authenticating with the server. Your must provide an apiKey or username and password.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetUsername(this OctopusDeployReleaseSettings toolSettings, string username)
+        public static T SetUsername<T>(this T toolSettings, string username) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = username;
@@ -4832,7 +4832,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Username to use when authenticating with the server. Your must provide an apiKey or username and password.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetUsername(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetUsername<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = null;
@@ -4845,7 +4845,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Password to use when authenticating with the server.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetPassword(this OctopusDeployReleaseSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -4856,7 +4856,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Password to use when authenticating with the server.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetPassword(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -4869,7 +4869,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Text file of default values, with one 'key = value' per line.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetConfigFile(this OctopusDeployReleaseSettings toolSettings, string configFile)
+        public static T SetConfigFile<T>(this T toolSettings, string configFile) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigFile = configFile;
@@ -4880,7 +4880,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Text file of default values, with one 'key = value' per line.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetConfigFile(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetConfigFile<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigFile = null;
@@ -4893,7 +4893,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable debug logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetDebug(this OctopusDeployReleaseSettings toolSettings, bool? debug)
+        public static T SetDebug<T>(this T toolSettings, bool? debug) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = debug;
@@ -4904,7 +4904,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable debug logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetDebug(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetDebug<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = null;
@@ -4915,7 +4915,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable debug logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings EnableDebug(this OctopusDeployReleaseSettings toolSettings)
+        public static T EnableDebug<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = true;
@@ -4926,7 +4926,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable debug logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings DisableDebug(this OctopusDeployReleaseSettings toolSettings)
+        public static T DisableDebug<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = false;
@@ -4937,7 +4937,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable debug logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ToggleDebug(this OctopusDeployReleaseSettings toolSettings)
+        public static T ToggleDebug<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = !toolSettings.Debug;
@@ -4950,7 +4950,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetIgnoreSslErrors(this OctopusDeployReleaseSettings toolSettings, bool? ignoreSslErrors)
+        public static T SetIgnoreSslErrors<T>(this T toolSettings, bool? ignoreSslErrors) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreSslErrors = ignoreSslErrors;
@@ -4961,7 +4961,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetIgnoreSslErrors(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetIgnoreSslErrors<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreSslErrors = null;
@@ -4972,7 +4972,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings EnableIgnoreSslErrors(this OctopusDeployReleaseSettings toolSettings)
+        public static T EnableIgnoreSslErrors<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreSslErrors = true;
@@ -4983,7 +4983,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings DisableIgnoreSslErrors(this OctopusDeployReleaseSettings toolSettings)
+        public static T DisableIgnoreSslErrors<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreSslErrors = false;
@@ -4994,7 +4994,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ToggleIgnoreSslErrors(this OctopusDeployReleaseSettings toolSettings)
+        public static T ToggleIgnoreSslErrors<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreSslErrors = !toolSettings.IgnoreSslErrors;
@@ -5007,7 +5007,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable TeamCity or Team Foundation Build service messages when logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetEnableServiceMessages(this OctopusDeployReleaseSettings toolSettings, bool? enableServiceMessages)
+        public static T SetEnableServiceMessages<T>(this T toolSettings, bool? enableServiceMessages) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableServiceMessages = enableServiceMessages;
@@ -5018,7 +5018,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable TeamCity or Team Foundation Build service messages when logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetEnableServiceMessages(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetEnableServiceMessages<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableServiceMessages = null;
@@ -5029,7 +5029,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable TeamCity or Team Foundation Build service messages when logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings EnableEnableServiceMessages(this OctopusDeployReleaseSettings toolSettings)
+        public static T EnableEnableServiceMessages<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableServiceMessages = true;
@@ -5040,7 +5040,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable TeamCity or Team Foundation Build service messages when logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings DisableEnableServiceMessages(this OctopusDeployReleaseSettings toolSettings)
+        public static T DisableEnableServiceMessages<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableServiceMessages = false;
@@ -5051,7 +5051,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Enable TeamCity or Team Foundation Build service messages when logging.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ToggleEnableServiceMessages(this OctopusDeployReleaseSettings toolSettings)
+        public static T ToggleEnableServiceMessages<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableServiceMessages = !toolSettings.EnableServiceMessages;
@@ -5064,7 +5064,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Timeout in seconds for network operations. Default is 600.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetTimeout(this OctopusDeployReleaseSettings toolSettings, int? timeout)
+        public static T SetTimeout<T>(this T toolSettings, int? timeout) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = timeout;
@@ -5075,7 +5075,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Timeout in seconds for network operations. Default is 600.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetTimeout(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetTimeout<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = null;
@@ -5088,7 +5088,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The URI of the proxy to use, e.g., http://example.com:8080.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetProxy(this OctopusDeployReleaseSettings toolSettings, string proxy)
+        public static T SetProxy<T>(this T toolSettings, string proxy) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Proxy = proxy;
@@ -5099,7 +5099,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The URI of the proxy to use, e.g., http://example.com:8080.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetProxy(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetProxy<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Proxy = null;
@@ -5112,7 +5112,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The username for the proxy.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetProxyUsername(this OctopusDeployReleaseSettings toolSettings, string proxyUsername)
+        public static T SetProxyUsername<T>(this T toolSettings, string proxyUsername) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProxyUsername = proxyUsername;
@@ -5123,7 +5123,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The username for the proxy.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetProxyUsername(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetProxyUsername<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProxyUsername = null;
@@ -5136,7 +5136,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The password for the proxy. If both the username and password are omitted and proxyAddress is specified, the default credentials are used.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetProxyPassword(this OctopusDeployReleaseSettings toolSettings, string proxyPassword)
+        public static T SetProxyPassword<T>(this T toolSettings, string proxyPassword) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProxyPassword = proxyPassword;
@@ -5147,7 +5147,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The password for the proxy. If both the username and password are omitted and proxyAddress is specified, the default credentials are used.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetProxyPassword(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetProxyPassword<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProxyPassword = null;
@@ -5160,7 +5160,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The name of a space within which this command will be executed. The default space will be used if it is omitted.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetSpace(this OctopusDeployReleaseSettings toolSettings, string space)
+        public static T SetSpace<T>(this T toolSettings, string space) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Space = space;
@@ -5171,7 +5171,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The name of a space within which this command will be executed. The default space will be used if it is omitted.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetSpace(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetSpace<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Space = null;
@@ -5184,7 +5184,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings SetLogLevel(this OctopusDeployReleaseSettings toolSettings, string logLevel)
+        public static T SetLogLevel<T>(this T toolSettings, string logLevel) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogLevel = logLevel;
@@ -5195,7 +5195,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.</p>
         /// </summary>
         [Pure]
-        public static OctopusDeployReleaseSettings ResetLogLevel(this OctopusDeployReleaseSettings toolSettings)
+        public static T ResetLogLevel<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogLevel = null;

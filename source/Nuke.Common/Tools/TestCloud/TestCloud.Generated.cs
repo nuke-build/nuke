@@ -222,7 +222,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>The path to the folder holding the test assemblies.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings SetAssemblyDirectory(this TestCloudSettings toolSettings, string assemblyDirectory)
+        public static T SetAssemblyDirectory<T>(this T toolSettings, string assemblyDirectory) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AssemblyDirectory = assemblyDirectory;
@@ -233,7 +233,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>The path to the folder holding the test assemblies.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings ResetAssemblyDirectory(this TestCloudSettings toolSettings)
+        public static T ResetAssemblyDirectory<T>(this T toolSettings) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AssemblyDirectory = null;
@@ -246,7 +246,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>The device ID that was provided in the Test Cloud Upload dialog.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings SetDevices(this TestCloudSettings toolSettings, string devices)
+        public static T SetDevices<T>(this T toolSettings, string devices) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devices = devices;
@@ -257,7 +257,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>The device ID that was provided in the Test Cloud Upload dialog.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings ResetDevices(this TestCloudSettings toolSettings)
+        public static T ResetDevices<T>(this T toolSettings) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Devices = null;
@@ -270,7 +270,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>The e-mail address of the team member submitting the tests.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings SetUserEmail(this TestCloudSettings toolSettings, string userEmail)
+        public static T SetUserEmail<T>(this T toolSettings, string userEmail) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UserEmail = userEmail;
@@ -281,7 +281,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>The e-mail address of the team member submitting the tests.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings ResetUserEmail(this TestCloudSettings toolSettings)
+        public static T ResetUserEmail<T>(this T toolSettings) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UserEmail = null;
@@ -294,7 +294,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>The filename to which test results are exported, formatted as NUnit results XML. Optional.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings SetNunitResultsFile(this TestCloudSettings toolSettings, string nunitResultsFile)
+        public static T SetNunitResultsFile<T>(this T toolSettings, string nunitResultsFile) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NunitResultsFile = nunitResultsFile;
@@ -305,7 +305,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>The filename to which test results are exported, formatted as NUnit results XML. Optional.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings ResetNunitResultsFile(this TestCloudSettings toolSettings)
+        public static T ResetNunitResultsFile<T>(this T toolSettings) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NunitResultsFile = null;
@@ -318,7 +318,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Android only. Supply a signing information file that will be used to sign the Test Server APK. See the section below for more details. Optional.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings SetSignInfoFile(this TestCloudSettings toolSettings, string signInfoFile)
+        public static T SetSignInfoFile<T>(this T toolSettings, string signInfoFile) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SignInfoFile = signInfoFile;
@@ -329,7 +329,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Android only. Supply a signing information file that will be used to sign the Test Server APK. See the section below for more details. Optional.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings ResetSignInfoFile(this TestCloudSettings toolSettings)
+        public static T ResetSignInfoFile<T>(this T toolSettings) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SignInfoFile = null;
@@ -342,7 +342,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>iOS only. Will upload the dSYM files along with the application and tests. This allows for more detail in the log files. Optional.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings SetDsymFile(this TestCloudSettings toolSettings, string dsymFile)
+        public static T SetDsymFile<T>(this T toolSettings, string dsymFile) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DsymFile = dsymFile;
@@ -353,7 +353,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>iOS only. Will upload the dSYM files along with the application and tests. This allows for more detail in the log files. Optional.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings ResetDsymFile(this TestCloudSettings toolSettings)
+        public static T ResetDsymFile<T>(this T toolSettings) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DsymFile = null;
@@ -366,7 +366,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>NUnit fixture / namespace to run. (Can be used multiple times).</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings SetFixtures(this TestCloudSettings toolSettings, params string[] fixtures)
+        public static T SetFixtures<T>(this T toolSettings, params string[] fixtures) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FixturesInternal = fixtures.ToList();
@@ -377,7 +377,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>NUnit fixture / namespace to run. (Can be used multiple times).</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings SetFixtures(this TestCloudSettings toolSettings, IEnumerable<string> fixtures)
+        public static T SetFixtures<T>(this T toolSettings, IEnumerable<string> fixtures) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FixturesInternal = fixtures.ToList();
@@ -388,7 +388,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>NUnit fixture / namespace to run. (Can be used multiple times).</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings AddFixtures(this TestCloudSettings toolSettings, params string[] fixtures)
+        public static T AddFixtures<T>(this T toolSettings, params string[] fixtures) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FixturesInternal.AddRange(fixtures);
@@ -399,7 +399,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>NUnit fixture / namespace to run. (Can be used multiple times).</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings AddFixtures(this TestCloudSettings toolSettings, IEnumerable<string> fixtures)
+        public static T AddFixtures<T>(this T toolSettings, IEnumerable<string> fixtures) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FixturesInternal.AddRange(fixtures);
@@ -410,7 +410,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>NUnit fixture / namespace to run. (Can be used multiple times).</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings ClearFixtures(this TestCloudSettings toolSettings)
+        public static T ClearFixtures<T>(this T toolSettings) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FixturesInternal.Clear();
@@ -421,7 +421,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>NUnit fixture / namespace to run. (Can be used multiple times).</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings RemoveFixtures(this TestCloudSettings toolSettings, params string[] fixtures)
+        public static T RemoveFixtures<T>(this T toolSettings, params string[] fixtures) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(fixtures);
@@ -433,7 +433,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>NUnit fixture / namespace to run. (Can be used multiple times).</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings RemoveFixtures(this TestCloudSettings toolSettings, IEnumerable<string> fixtures)
+        public static T RemoveFixtures<T>(this T toolSettings, IEnumerable<string> fixtures) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(fixtures);
@@ -447,7 +447,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Identifies the NUnit test categories that should only be included in the test run.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings SetIncludeCategories(this TestCloudSettings toolSettings, params string[] includeCategories)
+        public static T SetIncludeCategories<T>(this T toolSettings, params string[] includeCategories) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeCategoriesInternal = includeCategories.ToList();
@@ -458,7 +458,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Identifies the NUnit test categories that should only be included in the test run.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings SetIncludeCategories(this TestCloudSettings toolSettings, IEnumerable<string> includeCategories)
+        public static T SetIncludeCategories<T>(this T toolSettings, IEnumerable<string> includeCategories) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeCategoriesInternal = includeCategories.ToList();
@@ -469,7 +469,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Identifies the NUnit test categories that should only be included in the test run.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings AddIncludeCategories(this TestCloudSettings toolSettings, params string[] includeCategories)
+        public static T AddIncludeCategories<T>(this T toolSettings, params string[] includeCategories) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeCategoriesInternal.AddRange(includeCategories);
@@ -480,7 +480,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Identifies the NUnit test categories that should only be included in the test run.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings AddIncludeCategories(this TestCloudSettings toolSettings, IEnumerable<string> includeCategories)
+        public static T AddIncludeCategories<T>(this T toolSettings, IEnumerable<string> includeCategories) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeCategoriesInternal.AddRange(includeCategories);
@@ -491,7 +491,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Identifies the NUnit test categories that should only be included in the test run.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings ClearIncludeCategories(this TestCloudSettings toolSettings)
+        public static T ClearIncludeCategories<T>(this T toolSettings) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeCategoriesInternal.Clear();
@@ -502,7 +502,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Identifies the NUnit test categories that should only be included in the test run.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings RemoveIncludeCategories(this TestCloudSettings toolSettings, params string[] includeCategories)
+        public static T RemoveIncludeCategories<T>(this T toolSettings, params string[] includeCategories) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(includeCategories);
@@ -514,7 +514,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Identifies the NUnit test categories that should only be included in the test run.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings RemoveIncludeCategories(this TestCloudSettings toolSettings, IEnumerable<string> includeCategories)
+        public static T RemoveIncludeCategories<T>(this T toolSettings, IEnumerable<string> includeCategories) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(includeCategories);
@@ -528,7 +528,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Identifies the NUnit test categories that should be excluded from the test run.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings SetExcludeCategories(this TestCloudSettings toolSettings, params string[] excludeCategories)
+        public static T SetExcludeCategories<T>(this T toolSettings, params string[] excludeCategories) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeCategoriesInternal = excludeCategories.ToList();
@@ -539,7 +539,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Identifies the NUnit test categories that should be excluded from the test run.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings SetExcludeCategories(this TestCloudSettings toolSettings, IEnumerable<string> excludeCategories)
+        public static T SetExcludeCategories<T>(this T toolSettings, IEnumerable<string> excludeCategories) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeCategoriesInternal = excludeCategories.ToList();
@@ -550,7 +550,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Identifies the NUnit test categories that should be excluded from the test run.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings AddExcludeCategories(this TestCloudSettings toolSettings, params string[] excludeCategories)
+        public static T AddExcludeCategories<T>(this T toolSettings, params string[] excludeCategories) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeCategoriesInternal.AddRange(excludeCategories);
@@ -561,7 +561,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Identifies the NUnit test categories that should be excluded from the test run.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings AddExcludeCategories(this TestCloudSettings toolSettings, IEnumerable<string> excludeCategories)
+        public static T AddExcludeCategories<T>(this T toolSettings, IEnumerable<string> excludeCategories) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeCategoriesInternal.AddRange(excludeCategories);
@@ -572,7 +572,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Identifies the NUnit test categories that should be excluded from the test run.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings ClearExcludeCategories(this TestCloudSettings toolSettings)
+        public static T ClearExcludeCategories<T>(this T toolSettings) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeCategoriesInternal.Clear();
@@ -583,7 +583,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Identifies the NUnit test categories that should be excluded from the test run.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings RemoveExcludeCategories(this TestCloudSettings toolSettings, params string[] excludeCategories)
+        public static T RemoveExcludeCategories<T>(this T toolSettings, params string[] excludeCategories) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(excludeCategories);
@@ -595,7 +595,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Identifies the NUnit test categories that should be excluded from the test run.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings RemoveExcludeCategories(this TestCloudSettings toolSettings, IEnumerable<string> excludeCategories)
+        public static T RemoveExcludeCategories<T>(this T toolSettings, IEnumerable<string> excludeCategories) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(excludeCategories);
@@ -609,7 +609,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Run tests in parallel by method.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings SetTestChunk(this TestCloudSettings toolSettings, bool? testChunk)
+        public static T SetTestChunk<T>(this T toolSettings, bool? testChunk) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestChunk = testChunk;
@@ -620,7 +620,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Run tests in parallel by method.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings ResetTestChunk(this TestCloudSettings toolSettings)
+        public static T ResetTestChunk<T>(this T toolSettings) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestChunk = null;
@@ -631,7 +631,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Run tests in parallel by method.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings EnableTestChunk(this TestCloudSettings toolSettings)
+        public static T EnableTestChunk<T>(this T toolSettings) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestChunk = true;
@@ -642,7 +642,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Run tests in parallel by method.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings DisableTestChunk(this TestCloudSettings toolSettings)
+        public static T DisableTestChunk<T>(this T toolSettings) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestChunk = false;
@@ -653,7 +653,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Run tests in parallel by method.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings ToggleTestChunk(this TestCloudSettings toolSettings)
+        public static T ToggleTestChunk<T>(this T toolSettings) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestChunk = !toolSettings.TestChunk;
@@ -666,7 +666,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Run tests in parallel by fixture.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings SetFixtureChunk(this TestCloudSettings toolSettings, bool? fixtureChunk)
+        public static T SetFixtureChunk<T>(this T toolSettings, bool? fixtureChunk) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FixtureChunk = fixtureChunk;
@@ -677,7 +677,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Run tests in parallel by fixture.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings ResetFixtureChunk(this TestCloudSettings toolSettings)
+        public static T ResetFixtureChunk<T>(this T toolSettings) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FixtureChunk = null;
@@ -688,7 +688,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Run tests in parallel by fixture.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings EnableFixtureChunk(this TestCloudSettings toolSettings)
+        public static T EnableFixtureChunk<T>(this T toolSettings) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FixtureChunk = true;
@@ -699,7 +699,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Run tests in parallel by fixture.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings DisableFixtureChunk(this TestCloudSettings toolSettings)
+        public static T DisableFixtureChunk<T>(this T toolSettings) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FixtureChunk = false;
@@ -710,7 +710,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Run tests in parallel by fixture.</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings ToggleFixtureChunk(this TestCloudSettings toolSettings)
+        public static T ToggleFixtureChunk<T>(this T toolSettings) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FixtureChunk = !toolSettings.FixtureChunk;
@@ -723,7 +723,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Uploads file or directory along with assemblies. (Can be used multiple times).</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings SetDataPaths(this TestCloudSettings toolSettings, params string[] dataPaths)
+        public static T SetDataPaths<T>(this T toolSettings, params string[] dataPaths) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DataPathsInternal = dataPaths.ToList();
@@ -734,7 +734,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Uploads file or directory along with assemblies. (Can be used multiple times).</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings SetDataPaths(this TestCloudSettings toolSettings, IEnumerable<string> dataPaths)
+        public static T SetDataPaths<T>(this T toolSettings, IEnumerable<string> dataPaths) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DataPathsInternal = dataPaths.ToList();
@@ -745,7 +745,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Uploads file or directory along with assemblies. (Can be used multiple times).</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings AddDataPaths(this TestCloudSettings toolSettings, params string[] dataPaths)
+        public static T AddDataPaths<T>(this T toolSettings, params string[] dataPaths) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DataPathsInternal.AddRange(dataPaths);
@@ -756,7 +756,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Uploads file or directory along with assemblies. (Can be used multiple times).</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings AddDataPaths(this TestCloudSettings toolSettings, IEnumerable<string> dataPaths)
+        public static T AddDataPaths<T>(this T toolSettings, IEnumerable<string> dataPaths) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DataPathsInternal.AddRange(dataPaths);
@@ -767,7 +767,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Uploads file or directory along with assemblies. (Can be used multiple times).</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings ClearDataPaths(this TestCloudSettings toolSettings)
+        public static T ClearDataPaths<T>(this T toolSettings) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DataPathsInternal.Clear();
@@ -778,7 +778,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Uploads file or directory along with assemblies. (Can be used multiple times).</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings RemoveDataPaths(this TestCloudSettings toolSettings, params string[] dataPaths)
+        public static T RemoveDataPaths<T>(this T toolSettings, params string[] dataPaths) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(dataPaths);
@@ -790,7 +790,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Uploads file or directory along with assemblies. (Can be used multiple times).</p>
         /// </summary>
         [Pure]
-        public static TestCloudSettings RemoveDataPaths(this TestCloudSettings toolSettings, IEnumerable<string> dataPaths)
+        public static T RemoveDataPaths<T>(this T toolSettings, IEnumerable<string> dataPaths) where T : TestCloudSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(dataPaths);

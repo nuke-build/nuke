@@ -185,7 +185,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p><em>Sets <see cref="SlackMessage.Channel"/></em></p>
         /// </summary>
         [Pure]
-        public static SlackMessage SetChannel(this SlackMessage toolSettings, string channel)
+        public static T SetChannel<T>(this T toolSettings, string channel) where T : SlackMessage
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Channel = channel;
@@ -195,7 +195,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p><em>Resets <see cref="SlackMessage.Channel"/></em></p>
         /// </summary>
         [Pure]
-        public static SlackMessage ResetChannel(this SlackMessage toolSettings)
+        public static T ResetChannel<T>(this T toolSettings) where T : SlackMessage
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Channel = null;
@@ -207,7 +207,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p><em>Sets <see cref="SlackMessage.Username"/></em></p>
         /// </summary>
         [Pure]
-        public static SlackMessage SetUsername(this SlackMessage toolSettings, string username)
+        public static T SetUsername<T>(this T toolSettings, string username) where T : SlackMessage
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = username;
@@ -217,7 +217,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p><em>Resets <see cref="SlackMessage.Username"/></em></p>
         /// </summary>
         [Pure]
-        public static SlackMessage ResetUsername(this SlackMessage toolSettings)
+        public static T ResetUsername<T>(this T toolSettings) where T : SlackMessage
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = null;
@@ -230,7 +230,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Slack messages may be formatted using a simple markup language similar to <a href="https://daringfireball.net/projects/markdown/">Markdown</a>. Supported formatting includes: <c>```pre```</c>, <c>`code`</c>, <c>_italic_</c>, <c>*bold*</c>, and even <c>~strike~</c>.; full details are available on our <a href="https://slack.zendesk.com/hc/en-us/articles/202288908-how-can-i-add-formatting-to-my-messages-?sid=zd-up-t0288d531-u0a5kka1k">help site</a>.</p>
         /// </summary>
         [Pure]
-        public static SlackMessage SetText(this SlackMessage toolSettings, string text)
+        public static T SetText<T>(this T toolSettings, string text) where T : SlackMessage
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Text = text;
@@ -241,7 +241,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Slack messages may be formatted using a simple markup language similar to <a href="https://daringfireball.net/projects/markdown/">Markdown</a>. Supported formatting includes: <c>```pre```</c>, <c>`code`</c>, <c>_italic_</c>, <c>*bold*</c>, and even <c>~strike~</c>.; full details are available on our <a href="https://slack.zendesk.com/hc/en-us/articles/202288908-how-can-i-add-formatting-to-my-messages-?sid=zd-up-t0288d531-u0a5kka1k">help site</a>.</p>
         /// </summary>
         [Pure]
-        public static SlackMessage ResetText(this SlackMessage toolSettings)
+        public static T ResetText<T>(this T toolSettings) where T : SlackMessage
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Text = null;
@@ -254,7 +254,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>By default bot message text will be formatted. To disable formatting on a non-user message, set the <c>mrkdwn</c> property to <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static SlackMessage SetMarkdown(this SlackMessage toolSettings, bool? markdown)
+        public static T SetMarkdown<T>(this T toolSettings, bool? markdown) where T : SlackMessage
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Markdown = markdown;
@@ -265,7 +265,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>By default bot message text will be formatted. To disable formatting on a non-user message, set the <c>mrkdwn</c> property to <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static SlackMessage ResetMarkdown(this SlackMessage toolSettings)
+        public static T ResetMarkdown<T>(this T toolSettings) where T : SlackMessage
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Markdown = null;
@@ -276,7 +276,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>By default bot message text will be formatted. To disable formatting on a non-user message, set the <c>mrkdwn</c> property to <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static SlackMessage EnableMarkdown(this SlackMessage toolSettings)
+        public static T EnableMarkdown<T>(this T toolSettings) where T : SlackMessage
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Markdown = true;
@@ -287,7 +287,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>By default bot message text will be formatted. To disable formatting on a non-user message, set the <c>mrkdwn</c> property to <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static SlackMessage DisableMarkdown(this SlackMessage toolSettings)
+        public static T DisableMarkdown<T>(this T toolSettings) where T : SlackMessage
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Markdown = false;
@@ -298,7 +298,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>By default bot message text will be formatted. To disable formatting on a non-user message, set the <c>mrkdwn</c> property to <c>false</c>.</p>
         /// </summary>
         [Pure]
-        public static SlackMessage ToggleMarkdown(this SlackMessage toolSettings)
+        public static T ToggleMarkdown<T>(this T toolSettings) where T : SlackMessage
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Markdown = !toolSettings.Markdown;
@@ -310,7 +310,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p><em>Sets <see cref="SlackMessage.Emoji"/></em></p>
         /// </summary>
         [Pure]
-        public static SlackMessage SetEmoji(this SlackMessage toolSettings, string emoji)
+        public static T SetEmoji<T>(this T toolSettings, string emoji) where T : SlackMessage
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Emoji = emoji;
@@ -320,7 +320,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p><em>Resets <see cref="SlackMessage.Emoji"/></em></p>
         /// </summary>
         [Pure]
-        public static SlackMessage ResetEmoji(this SlackMessage toolSettings)
+        public static T ResetEmoji<T>(this T toolSettings) where T : SlackMessage
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Emoji = null;
@@ -332,7 +332,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p><em>Sets <see cref="SlackMessage.Icon"/></em></p>
         /// </summary>
         [Pure]
-        public static SlackMessage SetIcon(this SlackMessage toolSettings, string icon)
+        public static T SetIcon<T>(this T toolSettings, string icon) where T : SlackMessage
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Icon = icon;
@@ -342,7 +342,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p><em>Resets <see cref="SlackMessage.Icon"/></em></p>
         /// </summary>
         [Pure]
-        public static SlackMessage ResetIcon(this SlackMessage toolSettings)
+        public static T ResetIcon<T>(this T toolSettings) where T : SlackMessage
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Icon = null;
@@ -355,7 +355,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Attachments let you add more context to a message, making them more useful and effective.</p>
         /// </summary>
         [Pure]
-        public static SlackMessage SetAttachments(this SlackMessage toolSettings, params SlackMessageAttachment[] attachments)
+        public static T SetAttachments<T>(this T toolSettings, params SlackMessageAttachment[] attachments) where T : SlackMessage
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AttachmentsInternal = attachments.ToList();
@@ -366,7 +366,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Attachments let you add more context to a message, making them more useful and effective.</p>
         /// </summary>
         [Pure]
-        public static SlackMessage SetAttachments(this SlackMessage toolSettings, IEnumerable<SlackMessageAttachment> attachments)
+        public static T SetAttachments<T>(this T toolSettings, IEnumerable<SlackMessageAttachment> attachments) where T : SlackMessage
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AttachmentsInternal = attachments.ToList();
@@ -377,7 +377,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Attachments let you add more context to a message, making them more useful and effective.</p>
         /// </summary>
         [Pure]
-        public static SlackMessage AddAttachments(this SlackMessage toolSettings, params SlackMessageAttachment[] attachments)
+        public static T AddAttachments<T>(this T toolSettings, params SlackMessageAttachment[] attachments) where T : SlackMessage
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AttachmentsInternal.AddRange(attachments);
@@ -388,7 +388,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Attachments let you add more context to a message, making them more useful and effective.</p>
         /// </summary>
         [Pure]
-        public static SlackMessage AddAttachments(this SlackMessage toolSettings, IEnumerable<SlackMessageAttachment> attachments)
+        public static T AddAttachments<T>(this T toolSettings, IEnumerable<SlackMessageAttachment> attachments) where T : SlackMessage
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AttachmentsInternal.AddRange(attachments);
@@ -399,7 +399,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Attachments let you add more context to a message, making them more useful and effective.</p>
         /// </summary>
         [Pure]
-        public static SlackMessage ClearAttachments(this SlackMessage toolSettings)
+        public static T ClearAttachments<T>(this T toolSettings) where T : SlackMessage
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AttachmentsInternal.Clear();
@@ -410,7 +410,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Attachments let you add more context to a message, making them more useful and effective.</p>
         /// </summary>
         [Pure]
-        public static SlackMessage RemoveAttachments(this SlackMessage toolSettings, params SlackMessageAttachment[] attachments)
+        public static T RemoveAttachments<T>(this T toolSettings, params SlackMessageAttachment[] attachments) where T : SlackMessage
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<SlackMessageAttachment>(attachments);
@@ -422,7 +422,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Attachments let you add more context to a message, making them more useful and effective.</p>
         /// </summary>
         [Pure]
-        public static SlackMessage RemoveAttachments(this SlackMessage toolSettings, IEnumerable<SlackMessageAttachment> attachments)
+        public static T RemoveAttachments<T>(this T toolSettings, IEnumerable<SlackMessageAttachment> attachments) where T : SlackMessage
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<SlackMessageAttachment>(attachments);
@@ -446,7 +446,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>The title is displayed as larger, bold text near the top of a message attachment.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment SetTitle(this SlackMessageAttachment toolSettings, string title)
+        public static T SetTitle<T>(this T toolSettings, string title) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Title = title;
@@ -457,7 +457,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>The title is displayed as larger, bold text near the top of a message attachment.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment ResetTitle(this SlackMessageAttachment toolSettings)
+        public static T ResetTitle<T>(this T toolSettings) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Title = null;
@@ -470,7 +470,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Hyperlink used for the title.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment SetTitleLink(this SlackMessageAttachment toolSettings, string titleLink)
+        public static T SetTitleLink<T>(this T toolSettings, string titleLink) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TitleLink = titleLink;
@@ -481,7 +481,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Hyperlink used for the title.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment ResetTitleLink(this SlackMessageAttachment toolSettings)
+        public static T ResetTitleLink<T>(this T toolSettings) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TitleLink = null;
@@ -494,7 +494,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>This is optional text that appears above the message attachment block.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment SetPreText(this SlackMessageAttachment toolSettings, string preText)
+        public static T SetPreText<T>(this T toolSettings, string preText) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PreText = preText;
@@ -505,7 +505,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>This is optional text that appears above the message attachment block.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment ResetPreText(this SlackMessageAttachment toolSettings)
+        public static T ResetPreText<T>(this T toolSettings) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PreText = null;
@@ -518,7 +518,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>This is the main text in a message attachment, and can contain <a href="https://api.slack.com/docs/message-formatting">standard message markup</a>. The content will automatically collapse if it contains <b>700+ characters</b> or <b>5+ linebreaks</b>, and will display a "Show more..." link to expand the content. Links posted in the <c>text</c> field will not unfurl.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment SetText(this SlackMessageAttachment toolSettings, string text)
+        public static T SetText<T>(this T toolSettings, string text) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Text = text;
@@ -529,7 +529,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>This is the main text in a message attachment, and can contain <a href="https://api.slack.com/docs/message-formatting">standard message markup</a>. The content will automatically collapse if it contains <b>700+ characters</b> or <b>5+ linebreaks</b>, and will display a "Show more..." link to expand the content. Links posted in the <c>text</c> field will not unfurl.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment ResetText(this SlackMessageAttachment toolSettings)
+        public static T ResetText<T>(this T toolSettings) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Text = null;
@@ -542,7 +542,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>By default bot message attachments will not be formatted. To enable formatting on attachment fields, set the mrkdwn_in array on each attachment to the list of fields to process.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment SetMarkdownIn(this SlackMessageAttachment toolSettings, params string[] markdownIn)
+        public static T SetMarkdownIn<T>(this T toolSettings, params string[] markdownIn) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MarkdownInInternal = markdownIn.ToList();
@@ -553,7 +553,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>By default bot message attachments will not be formatted. To enable formatting on attachment fields, set the mrkdwn_in array on each attachment to the list of fields to process.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment SetMarkdownIn(this SlackMessageAttachment toolSettings, IEnumerable<string> markdownIn)
+        public static T SetMarkdownIn<T>(this T toolSettings, IEnumerable<string> markdownIn) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MarkdownInInternal = markdownIn.ToList();
@@ -564,7 +564,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>By default bot message attachments will not be formatted. To enable formatting on attachment fields, set the mrkdwn_in array on each attachment to the list of fields to process.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment AddMarkdownIn(this SlackMessageAttachment toolSettings, params string[] markdownIn)
+        public static T AddMarkdownIn<T>(this T toolSettings, params string[] markdownIn) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MarkdownInInternal.AddRange(markdownIn);
@@ -575,7 +575,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>By default bot message attachments will not be formatted. To enable formatting on attachment fields, set the mrkdwn_in array on each attachment to the list of fields to process.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment AddMarkdownIn(this SlackMessageAttachment toolSettings, IEnumerable<string> markdownIn)
+        public static T AddMarkdownIn<T>(this T toolSettings, IEnumerable<string> markdownIn) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MarkdownInInternal.AddRange(markdownIn);
@@ -586,7 +586,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>By default bot message attachments will not be formatted. To enable formatting on attachment fields, set the mrkdwn_in array on each attachment to the list of fields to process.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment ClearMarkdownIn(this SlackMessageAttachment toolSettings)
+        public static T ClearMarkdownIn<T>(this T toolSettings) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MarkdownInInternal.Clear();
@@ -597,7 +597,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>By default bot message attachments will not be formatted. To enable formatting on attachment fields, set the mrkdwn_in array on each attachment to the list of fields to process.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment RemoveMarkdownIn(this SlackMessageAttachment toolSettings, params string[] markdownIn)
+        public static T RemoveMarkdownIn<T>(this T toolSettings, params string[] markdownIn) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(markdownIn);
@@ -609,7 +609,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>By default bot message attachments will not be formatted. To enable formatting on attachment fields, set the mrkdwn_in array on each attachment to the list of fields to process.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment RemoveMarkdownIn(this SlackMessageAttachment toolSettings, IEnumerable<string> markdownIn)
+        public static T RemoveMarkdownIn<T>(this T toolSettings, IEnumerable<string> markdownIn) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(markdownIn);
@@ -623,7 +623,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>A plain-text summary of the attachment. This text will be used in clients that don't show formatted text (eg. IRC, mobile notifications) and should not contain any markup.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment SetFallback(this SlackMessageAttachment toolSettings, string fallback)
+        public static T SetFallback<T>(this T toolSettings, string fallback) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Fallback = fallback;
@@ -634,7 +634,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>A plain-text summary of the attachment. This text will be used in clients that don't show formatted text (eg. IRC, mobile notifications) and should not contain any markup.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment ResetFallback(this SlackMessageAttachment toolSettings)
+        public static T ResetFallback<T>(this T toolSettings) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Fallback = null;
@@ -647,7 +647,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Like traffic signals, color-coding messages can quickly communicate intent and help separate them from the flow of other messages in the timeline.<para/>An optional value that can either be one of good, warning, danger, or any hex color code (eg. #439FE0). This value is used to color the border along the left side of the message attachment.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment SetColor(this SlackMessageAttachment toolSettings, string color)
+        public static T SetColor<T>(this T toolSettings, string color) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Color = color;
@@ -658,7 +658,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Like traffic signals, color-coding messages can quickly communicate intent and help separate them from the flow of other messages in the timeline.<para/>An optional value that can either be one of good, warning, danger, or any hex color code (eg. #439FE0). This value is used to color the border along the left side of the message attachment.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment ResetColor(this SlackMessageAttachment toolSettings)
+        public static T ResetColor<T>(this T toolSettings) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Color = null;
@@ -671,7 +671,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Small text used to display the author's name.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment SetAuthorName(this SlackMessageAttachment toolSettings, string authorName)
+        public static T SetAuthorName<T>(this T toolSettings, string authorName) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AuthorName = authorName;
@@ -682,7 +682,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Small text used to display the author's name.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment ResetAuthorName(this SlackMessageAttachment toolSettings)
+        public static T ResetAuthorName<T>(this T toolSettings) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AuthorName = null;
@@ -695,7 +695,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>A valid URL that will hyperlink the <c>author_name</c> text mentioned above. Will only work if <c>author_name</c> is present.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment SetAuthorLink(this SlackMessageAttachment toolSettings, string authorLink)
+        public static T SetAuthorLink<T>(this T toolSettings, string authorLink) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AuthorLink = authorLink;
@@ -706,7 +706,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>A valid URL that will hyperlink the <c>author_name</c> text mentioned above. Will only work if <c>author_name</c> is present.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment ResetAuthorLink(this SlackMessageAttachment toolSettings)
+        public static T ResetAuthorLink<T>(this T toolSettings) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AuthorLink = null;
@@ -719,7 +719,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>A valid URL that displays a small 16x16px image to the left of the <c>author_name</c> text. Will only work if <c>author_name</c> is present.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment SetAuthorIcon(this SlackMessageAttachment toolSettings, string authorIcon)
+        public static T SetAuthorIcon<T>(this T toolSettings, string authorIcon) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AuthorIcon = authorIcon;
@@ -730,7 +730,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>A valid URL that displays a small 16x16px image to the left of the <c>author_name</c> text. Will only work if <c>author_name</c> is present.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment ResetAuthorIcon(this SlackMessageAttachment toolSettings)
+        public static T ResetAuthorIcon<T>(this T toolSettings) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AuthorIcon = null;
@@ -743,7 +743,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>A valid URL to an image file that will be displayed inside a message attachment. We currently support the following formats: GIF, JPEG, PNG, and BMP.<para/>Large images will be resized to a maximum width of 360px or a maximum height of 500px, while still maintaining the original aspect ratio.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment SetImageUrl(this SlackMessageAttachment toolSettings, string imageUrl)
+        public static T SetImageUrl<T>(this T toolSettings, string imageUrl) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ImageUrl = imageUrl;
@@ -754,7 +754,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>A valid URL to an image file that will be displayed inside a message attachment. We currently support the following formats: GIF, JPEG, PNG, and BMP.<para/>Large images will be resized to a maximum width of 360px or a maximum height of 500px, while still maintaining the original aspect ratio.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment ResetImageUrl(this SlackMessageAttachment toolSettings)
+        public static T ResetImageUrl<T>(this T toolSettings) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ImageUrl = null;
@@ -767,7 +767,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>A valid URL to an image file that will be displayed as a thumbnail on the right side of a message attachment. We currently support the following formats: GIF, JPEG, PNG, and BMP.<para/>The thumbnail's longest dimension will be scaled down to 75px while maintaining the aspect ratio of the image. The filesize of the image must also be less than 500 KB.<para/>For best results, please use images that are already 75px by 75px.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment SetThumbUrl(this SlackMessageAttachment toolSettings, string thumbUrl)
+        public static T SetThumbUrl<T>(this T toolSettings, string thumbUrl) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ThumbUrl = thumbUrl;
@@ -778,7 +778,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>A valid URL to an image file that will be displayed as a thumbnail on the right side of a message attachment. We currently support the following formats: GIF, JPEG, PNG, and BMP.<para/>The thumbnail's longest dimension will be scaled down to 75px while maintaining the aspect ratio of the image. The filesize of the image must also be less than 500 KB.<para/>For best results, please use images that are already 75px by 75px.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment ResetThumbUrl(this SlackMessageAttachment toolSettings)
+        public static T ResetThumbUrl<T>(this T toolSettings) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ThumbUrl = null;
@@ -791,7 +791,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Add some brief text to help contextualize and identify an attachment. Limited to 300 characters, and may be truncated further when displayed to users in environments with limited screen real estate.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment SetFooter(this SlackMessageAttachment toolSettings, string footer)
+        public static T SetFooter<T>(this T toolSettings, string footer) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Footer = footer;
@@ -802,7 +802,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Add some brief text to help contextualize and identify an attachment. Limited to 300 characters, and may be truncated further when displayed to users in environments with limited screen real estate.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment ResetFooter(this SlackMessageAttachment toolSettings)
+        public static T ResetFooter<T>(this T toolSettings) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Footer = null;
@@ -815,7 +815,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>To render a small icon beside your <c>footer</c> text, provide a publicly accessible URL string in the <c>footer_icon</c> field. You must also provide a <c>footer</c> for the field to be recognized.<para/>We'll render what you provide at 16px by 16px. It's best to use an image that is similarly sized.<para/>Example: <c>https://platform.slack-edge.com/img/default_application_icon.png</c></p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment SetFooterIcon(this SlackMessageAttachment toolSettings, string footerIcon)
+        public static T SetFooterIcon<T>(this T toolSettings, string footerIcon) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FooterIcon = footerIcon;
@@ -826,7 +826,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>To render a small icon beside your <c>footer</c> text, provide a publicly accessible URL string in the <c>footer_icon</c> field. You must also provide a <c>footer</c> for the field to be recognized.<para/>We'll render what you provide at 16px by 16px. It's best to use an image that is similarly sized.<para/>Example: <c>https://platform.slack-edge.com/img/default_application_icon.png</c></p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment ResetFooterIcon(this SlackMessageAttachment toolSettings)
+        public static T ResetFooterIcon<T>(this T toolSettings) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FooterIcon = null;
@@ -839,7 +839,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Does your attachment relate to something happening at a specific time?<para/>By providing the <c>ts</c> field with an integer value in "<a href="https://en.wikipedia.org/wiki/Unix_time">epoch time</a>", the attachment will display an additional timestamp value as part of the attachment's footer.<para/>Use <c>ts</c> when referencing articles or happenings. Your message will have its own timestamp when published.<para/>Example: Providing <c>123456789</c> would result in a rendered timestamp of <em>Nov 29th, 1973</em>.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment SetTimestamp(this SlackMessageAttachment toolSettings, string timestamp)
+        public static T SetTimestamp<T>(this T toolSettings, string timestamp) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timestamp = timestamp;
@@ -850,7 +850,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Does your attachment relate to something happening at a specific time?<para/>By providing the <c>ts</c> field with an integer value in "<a href="https://en.wikipedia.org/wiki/Unix_time">epoch time</a>", the attachment will display an additional timestamp value as part of the attachment's footer.<para/>Use <c>ts</c> when referencing articles or happenings. Your message will have its own timestamp when published.<para/>Example: Providing <c>123456789</c> would result in a rendered timestamp of <em>Nov 29th, 1973</em>.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment ResetTimestamp(this SlackMessageAttachment toolSettings)
+        public static T ResetTimestamp<T>(this T toolSettings) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timestamp = null;
@@ -863,7 +863,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Fields get displayed in a table-like way.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment SetFields(this SlackMessageAttachment toolSettings, params SlackMessageField[] fields)
+        public static T SetFields<T>(this T toolSettings, params SlackMessageField[] fields) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FieldsInternal = fields.ToList();
@@ -874,7 +874,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Fields get displayed in a table-like way.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment SetFields(this SlackMessageAttachment toolSettings, IEnumerable<SlackMessageField> fields)
+        public static T SetFields<T>(this T toolSettings, IEnumerable<SlackMessageField> fields) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FieldsInternal = fields.ToList();
@@ -885,7 +885,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Fields get displayed in a table-like way.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment AddFields(this SlackMessageAttachment toolSettings, params SlackMessageField[] fields)
+        public static T AddFields<T>(this T toolSettings, params SlackMessageField[] fields) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FieldsInternal.AddRange(fields);
@@ -896,7 +896,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Fields get displayed in a table-like way.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment AddFields(this SlackMessageAttachment toolSettings, IEnumerable<SlackMessageField> fields)
+        public static T AddFields<T>(this T toolSettings, IEnumerable<SlackMessageField> fields) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FieldsInternal.AddRange(fields);
@@ -907,7 +907,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Fields get displayed in a table-like way.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment ClearFields(this SlackMessageAttachment toolSettings)
+        public static T ClearFields<T>(this T toolSettings) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FieldsInternal.Clear();
@@ -918,7 +918,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Fields get displayed in a table-like way.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment RemoveFields(this SlackMessageAttachment toolSettings, params SlackMessageField[] fields)
+        public static T RemoveFields<T>(this T toolSettings, params SlackMessageField[] fields) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<SlackMessageField>(fields);
@@ -930,7 +930,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Fields get displayed in a table-like way.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageAttachment RemoveFields(this SlackMessageAttachment toolSettings, IEnumerable<SlackMessageField> fields)
+        public static T RemoveFields<T>(this T toolSettings, IEnumerable<SlackMessageField> fields) where T : SlackMessageAttachment
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<SlackMessageField>(fields);
@@ -954,7 +954,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Shown as a bold heading above the <c>value</c> text. It cannot contain markup and will be escaped for you.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageField SetTitle(this SlackMessageField toolSettings, string title)
+        public static T SetTitle<T>(this T toolSettings, string title) where T : SlackMessageField
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Title = title;
@@ -965,7 +965,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>Shown as a bold heading above the <c>value</c> text. It cannot contain markup and will be escaped for you.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageField ResetTitle(this SlackMessageField toolSettings)
+        public static T ResetTitle<T>(this T toolSettings) where T : SlackMessageField
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Title = null;
@@ -978,7 +978,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>The text value of the field. It may contain <a href="https://api.slack.com/docs/message-formatting">standard message markup</a> and must be escaped as normal. May be multi-line.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageField SetValue(this SlackMessageField toolSettings, string value)
+        public static T SetValue<T>(this T toolSettings, string value) where T : SlackMessageField
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Value = value;
@@ -989,7 +989,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>The text value of the field. It may contain <a href="https://api.slack.com/docs/message-formatting">standard message markup</a> and must be escaped as normal. May be multi-line.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageField ResetValue(this SlackMessageField toolSettings)
+        public static T ResetValue<T>(this T toolSettings) where T : SlackMessageField
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Value = null;
@@ -1002,7 +1002,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>An optional flag indicating whether the <c>value</c> is short enough to be displayed side-by-side with other values.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageField SetShort(this SlackMessageField toolSettings, bool? @short)
+        public static T SetShort<T>(this T toolSettings, bool? @short) where T : SlackMessageField
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Short = @short;
@@ -1013,7 +1013,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>An optional flag indicating whether the <c>value</c> is short enough to be displayed side-by-side with other values.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageField ResetShort(this SlackMessageField toolSettings)
+        public static T ResetShort<T>(this T toolSettings) where T : SlackMessageField
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Short = null;
@@ -1024,7 +1024,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>An optional flag indicating whether the <c>value</c> is short enough to be displayed side-by-side with other values.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageField EnableShort(this SlackMessageField toolSettings)
+        public static T EnableShort<T>(this T toolSettings) where T : SlackMessageField
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Short = true;
@@ -1035,7 +1035,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>An optional flag indicating whether the <c>value</c> is short enough to be displayed side-by-side with other values.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageField DisableShort(this SlackMessageField toolSettings)
+        public static T DisableShort<T>(this T toolSettings) where T : SlackMessageField
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Short = false;
@@ -1046,7 +1046,7 @@ namespace Nuke.Common.Tools.Slack
         ///   <p>An optional flag indicating whether the <c>value</c> is short enough to be displayed side-by-side with other values.</p>
         /// </summary>
         [Pure]
-        public static SlackMessageField ToggleShort(this SlackMessageField toolSettings)
+        public static T ToggleShort<T>(this T toolSettings) where T : SlackMessageField
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Short = !toolSettings.Short;

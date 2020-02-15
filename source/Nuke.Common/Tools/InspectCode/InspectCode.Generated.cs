@@ -218,7 +218,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Target path.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings SetTargetPath(this InspectCodeSettings toolSettings, string targetPath)
+        public static T SetTargetPath<T>(this T toolSettings, string targetPath) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetPath = targetPath;
@@ -229,7 +229,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Target path.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings ResetTargetPath(this InspectCodeSettings toolSettings)
+        public static T ResetTargetPath<T>(this T toolSettings) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetPath = null;
@@ -242,7 +242,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Lets you set the output file. By default, the output file is saved in the <em>%TEMP%</em> directory.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings SetOutput(this InspectCodeSettings toolSettings, string output)
+        public static T SetOutput<T>(this T toolSettings, string output) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -253,7 +253,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Lets you set the output file. By default, the output file is saved in the <em>%TEMP%</em> directory.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings ResetOutput(this InspectCodeSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -266,7 +266,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Disables solution-wide analysis.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings SetNoSwea(this InspectCodeSettings toolSettings, bool? noSwea)
+        public static T SetNoSwea<T>(this T toolSettings, bool? noSwea) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoSwea = noSwea;
@@ -277,7 +277,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Disables solution-wide analysis.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings ResetNoSwea(this InspectCodeSettings toolSettings)
+        public static T ResetNoSwea<T>(this T toolSettings) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoSwea = null;
@@ -288,7 +288,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Disables solution-wide analysis.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings EnableNoSwea(this InspectCodeSettings toolSettings)
+        public static T EnableNoSwea<T>(this T toolSettings) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoSwea = true;
@@ -299,7 +299,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Disables solution-wide analysis.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings DisableNoSwea(this InspectCodeSettings toolSettings)
+        public static T DisableNoSwea<T>(this T toolSettings) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoSwea = false;
@@ -310,7 +310,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Disables solution-wide analysis.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings ToggleNoSwea(this InspectCodeSettings toolSettings)
+        public static T ToggleNoSwea<T>(this T toolSettings) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoSwea = !toolSettings.NoSwea;
@@ -323,7 +323,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Specifies an additional .DotSettings file used for inspection settings.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings SetProfile(this InspectCodeSettings toolSettings, string profile)
+        public static T SetProfile<T>(this T toolSettings, string profile) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Profile = profile;
@@ -334,7 +334,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Specifies an additional .DotSettings file used for inspection settings.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings ResetProfile(this InspectCodeSettings toolSettings)
+        public static T ResetProfile<T>(this T toolSettings) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Profile = null;
@@ -347,7 +347,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Allows analyzing particular project(s) instead of the whole solution. After this parameter, you can type a project name or a wildcard that matches several projects within your solution. For example, <c>--project=*Billing</c></p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings SetProject(this InspectCodeSettings toolSettings, string project)
+        public static T SetProject<T>(this T toolSettings, string project) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = project;
@@ -358,7 +358,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Allows analyzing particular project(s) instead of the whole solution. After this parameter, you can type a project name or a wildcard that matches several projects within your solution. For example, <c>--project=*Billing</c></p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings ResetProject(this InspectCodeSettings toolSettings)
+        public static T ResetProject<T>(this T toolSettings) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = null;
@@ -371,7 +371,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings SetDisableSettingsLayers(this InspectCodeSettings toolSettings, params InspectCodeSettingsLayers[] disableSettingsLayers)
+        public static T SetDisableSettingsLayers<T>(this T toolSettings, params InspectCodeSettingsLayers[] disableSettingsLayers) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableSettingsLayersInternal = disableSettingsLayers.ToList();
@@ -382,7 +382,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings SetDisableSettingsLayers(this InspectCodeSettings toolSettings, IEnumerable<InspectCodeSettingsLayers> disableSettingsLayers)
+        public static T SetDisableSettingsLayers<T>(this T toolSettings, IEnumerable<InspectCodeSettingsLayers> disableSettingsLayers) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableSettingsLayersInternal = disableSettingsLayers.ToList();
@@ -393,7 +393,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings AddDisableSettingsLayers(this InspectCodeSettings toolSettings, params InspectCodeSettingsLayers[] disableSettingsLayers)
+        public static T AddDisableSettingsLayers<T>(this T toolSettings, params InspectCodeSettingsLayers[] disableSettingsLayers) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableSettingsLayersInternal.AddRange(disableSettingsLayers);
@@ -404,7 +404,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings AddDisableSettingsLayers(this InspectCodeSettings toolSettings, IEnumerable<InspectCodeSettingsLayers> disableSettingsLayers)
+        public static T AddDisableSettingsLayers<T>(this T toolSettings, IEnumerable<InspectCodeSettingsLayers> disableSettingsLayers) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableSettingsLayersInternal.AddRange(disableSettingsLayers);
@@ -415,7 +415,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings ClearDisableSettingsLayers(this InspectCodeSettings toolSettings)
+        public static T ClearDisableSettingsLayers<T>(this T toolSettings) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableSettingsLayersInternal.Clear();
@@ -426,7 +426,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings RemoveDisableSettingsLayers(this InspectCodeSettings toolSettings, params InspectCodeSettingsLayers[] disableSettingsLayers)
+        public static T RemoveDisableSettingsLayers<T>(this T toolSettings, params InspectCodeSettingsLayers[] disableSettingsLayers) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<InspectCodeSettingsLayers>(disableSettingsLayers);
@@ -438,7 +438,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings RemoveDisableSettingsLayers(this InspectCodeSettings toolSettings, IEnumerable<InspectCodeSettingsLayers> disableSettingsLayers)
+        public static T RemoveDisableSettingsLayers<T>(this T toolSettings, IEnumerable<InspectCodeSettingsLayers> disableSettingsLayers) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<InspectCodeSettingsLayers>(disableSettingsLayers);
@@ -452,7 +452,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings SetNoBuiltinSettings(this InspectCodeSettings toolSettings, bool? noBuiltinSettings)
+        public static T SetNoBuiltinSettings<T>(this T toolSettings, bool? noBuiltinSettings) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuiltinSettings = noBuiltinSettings;
@@ -463,7 +463,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings ResetNoBuiltinSettings(this InspectCodeSettings toolSettings)
+        public static T ResetNoBuiltinSettings<T>(this T toolSettings) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuiltinSettings = null;
@@ -474,7 +474,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings EnableNoBuiltinSettings(this InspectCodeSettings toolSettings)
+        public static T EnableNoBuiltinSettings<T>(this T toolSettings) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuiltinSettings = true;
@@ -485,7 +485,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings DisableNoBuiltinSettings(this InspectCodeSettings toolSettings)
+        public static T DisableNoBuiltinSettings<T>(this T toolSettings) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuiltinSettings = false;
@@ -496,7 +496,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings ToggleNoBuiltinSettings(this InspectCodeSettings toolSettings)
+        public static T ToggleNoBuiltinSettings<T>(this T toolSettings) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuiltinSettings = !toolSettings.NoBuiltinSettings;
@@ -509,7 +509,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Lets you specify a custom location for the data that InspectCode caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings SetCachesHome(this InspectCodeSettings toolSettings, string cachesHome)
+        public static T SetCachesHome<T>(this T toolSettings, string cachesHome) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CachesHome = cachesHome;
@@ -520,7 +520,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Lets you specify a custom location for the data that InspectCode caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings ResetCachesHome(this InspectCodeSettings toolSettings)
+        public static T ResetCachesHome<T>(this T toolSettings) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CachesHome = null;
@@ -533,7 +533,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Allows adding ReSharper plugins that will get included during code analysis. To add a plugin, specify its ID and version. Available plugins are listed in the <a href="https://resharper-plugins.jetbrains.com/">Plugin Repository</a>. The ID can be grabbed from the download URL. Using <c>InspectCodePluginLatest</c> or <c>null</c> will download the latest version.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings SetPlugins(this InspectCodeSettings toolSettings, IDictionary<string, string> plugins)
+        public static T SetPlugins<T>(this T toolSettings, IDictionary<string, string> plugins) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PluginsInternal = plugins.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -544,7 +544,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Allows adding ReSharper plugins that will get included during code analysis. To add a plugin, specify its ID and version. Available plugins are listed in the <a href="https://resharper-plugins.jetbrains.com/">Plugin Repository</a>. The ID can be grabbed from the download URL. Using <c>InspectCodePluginLatest</c> or <c>null</c> will download the latest version.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings ClearPlugins(this InspectCodeSettings toolSettings)
+        public static T ClearPlugins<T>(this T toolSettings) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PluginsInternal.Clear();
@@ -555,7 +555,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Allows adding ReSharper plugins that will get included during code analysis. To add a plugin, specify its ID and version. Available plugins are listed in the <a href="https://resharper-plugins.jetbrains.com/">Plugin Repository</a>. The ID can be grabbed from the download URL. Using <c>InspectCodePluginLatest</c> or <c>null</c> will download the latest version.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings AddPlugin(this InspectCodeSettings toolSettings, string pluginKey, string pluginValue)
+        public static T AddPlugin<T>(this T toolSettings, string pluginKey, string pluginValue) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PluginsInternal.Add(pluginKey, pluginValue);
@@ -566,7 +566,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Allows adding ReSharper plugins that will get included during code analysis. To add a plugin, specify its ID and version. Available plugins are listed in the <a href="https://resharper-plugins.jetbrains.com/">Plugin Repository</a>. The ID can be grabbed from the download URL. Using <c>InspectCodePluginLatest</c> or <c>null</c> will download the latest version.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings RemovePlugin(this InspectCodeSettings toolSettings, string pluginKey)
+        public static T RemovePlugin<T>(this T toolSettings, string pluginKey) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PluginsInternal.Remove(pluginKey);
@@ -577,7 +577,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Allows adding ReSharper plugins that will get included during code analysis. To add a plugin, specify its ID and version. Available plugins are listed in the <a href="https://resharper-plugins.jetbrains.com/">Plugin Repository</a>. The ID can be grabbed from the download URL. Using <c>InspectCodePluginLatest</c> or <c>null</c> will download the latest version.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings SetPlugin(this InspectCodeSettings toolSettings, string pluginKey, string pluginValue)
+        public static T SetPlugin<T>(this T toolSettings, string pluginKey, string pluginValue) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PluginsInternal[pluginKey] = pluginValue;
@@ -590,7 +590,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings SetProperties(this InspectCodeSettings toolSettings, IDictionary<string, string> properties)
+        public static T SetProperties<T>(this T toolSettings, IDictionary<string, string> properties) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -601,7 +601,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings ClearProperties(this InspectCodeSettings toolSettings)
+        public static T ClearProperties<T>(this T toolSettings) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Clear();
@@ -612,7 +612,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings AddProperty(this InspectCodeSettings toolSettings, string propertyKey, string propertyValue)
+        public static T AddProperty<T>(this T toolSettings, string propertyKey, string propertyValue) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
@@ -623,7 +623,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings RemoveProperty(this InspectCodeSettings toolSettings, string propertyKey)
+        public static T RemoveProperty<T>(this T toolSettings, string propertyKey) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove(propertyKey);
@@ -634,7 +634,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings SetProperty(this InspectCodeSettings toolSettings, string propertyKey, string propertyValue)
+        public static T SetProperty<T>(this T toolSettings, string propertyKey, string propertyValue) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal[propertyKey] = propertyValue;
@@ -647,7 +647,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings SetDumpIssuesTypes(this InspectCodeSettings toolSettings, bool? dumpIssuesTypes)
+        public static T SetDumpIssuesTypes<T>(this T toolSettings, bool? dumpIssuesTypes) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DumpIssuesTypes = dumpIssuesTypes;
@@ -658,7 +658,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings ResetDumpIssuesTypes(this InspectCodeSettings toolSettings)
+        public static T ResetDumpIssuesTypes<T>(this T toolSettings) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DumpIssuesTypes = null;
@@ -669,7 +669,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings EnableDumpIssuesTypes(this InspectCodeSettings toolSettings)
+        public static T EnableDumpIssuesTypes<T>(this T toolSettings) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DumpIssuesTypes = true;
@@ -680,7 +680,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings DisableDumpIssuesTypes(this InspectCodeSettings toolSettings)
+        public static T DisableDumpIssuesTypes<T>(this T toolSettings) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DumpIssuesTypes = false;
@@ -691,7 +691,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings ToggleDumpIssuesTypes(this InspectCodeSettings toolSettings)
+        public static T ToggleDumpIssuesTypes<T>(this T toolSettings) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DumpIssuesTypes = !toolSettings.DumpIssuesTypes;
@@ -704,7 +704,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Explicitly specified MsBuild Toolset version (12.0, 14.0, 15.0). For example, <c>--toolset=12.0</c>.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings SetToolset(this InspectCodeSettings toolSettings, InspectCodeMSBuildToolset toolset)
+        public static T SetToolset<T>(this T toolSettings, InspectCodeMSBuildToolset toolset) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Toolset = toolset;
@@ -715,7 +715,7 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>Explicitly specified MsBuild Toolset version (12.0, 14.0, 15.0). For example, <c>--toolset=12.0</c>.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings ResetToolset(this InspectCodeSettings toolSettings)
+        public static T ResetToolset<T>(this T toolSettings) where T : InspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Toolset = null;
