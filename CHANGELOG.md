@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed extension methods for settings with base type
+- Fixed `SonarScannerTasks` to have `Framework` property
+- Fixed generation of `shell-completion.yml` to exclude unlisted targets for invocation
 
 ## [0.24.1] / 2020-02-07
 - Fixed `NuGetPackageResolver` to include dependencies during tool path resolution
