@@ -1,0 +1,237 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://github.com/AArnott/Nerdbank.GitVersioning/blob/master/doc/nbgv-cli.md"
+  ],
+  "name": "NerdbankGitVersioning",
+  "officialUrl": "https://github.com/AArnott/Nerdbank.GitVersioning",
+  "packageId": "nbgv",
+  "packageExecutable": "nbgv.dll",
+  "tasks": [
+    {
+      "help": "Prepares a project to have version stamps applied using Nerdbank.GitVersioning",
+      "postfix": "Install",
+      "definiteArgument": "install",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Path",
+            "type": "string",
+            "format": "-p {value}",
+            "help": "The path to the directory that should contain the version.json file. The default is the root of the git repo."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "-v {value}",
+            "help": "The initial version to set. The default is '1.0-beta'."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Gets the version information for a project",
+      "postfix": "GetVersion",
+      "returnType": "NerdbankGitVersioning",
+      "definiteArgument": "get-version",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Project",
+            "type": "string",
+            "format": "-p {value}",
+            "help": "The path to the project or project directory. The default is the current directory."
+          },
+          {
+            "name": "Format",
+            "type": "Format",
+            "format": "-f {value}",
+            "help": "The initial version to set. The default is '1.0-beta'."
+          },
+          {
+            "name": "Variable",
+            "type": "string",
+            "format": "-v {value}",
+            "help": "The name of just one version property to print to stdout. When specified, the output is always in raw text. Useful in scripts."
+          },
+          {
+            "name": "CommitIsh",
+            "type": "string",
+            "format": "{value}",
+            "help": "The name of just one version property to print to stdout. When specified, the output is always in raw text. Useful in scripts."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Updates the version stamp that is applied to a project.",
+      "postfix": "SetVersion",
+      "definiteArgument": "set-version",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Project",
+            "type": "string",
+            "format": "-p {value}",
+            "help": "The path to the project or project directory. The default is the root directory of the repo that spans the current directory, or an existing version.json file, if applicable."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "{value}",
+            "help": "The version to set"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Creates a git tag to mark a version",
+      "postfix": "Tag",
+      "definiteArgument": "tag",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Project",
+            "type": "string",
+            "format": "-p {value}",
+            "help": "The path to the project or project directory. The default is the root directory of the repo that spans the current directory, or an existing version.json file, if applicable."
+          },
+          {
+            "name": "VersionOrRef",
+            "type": "string",
+            "format": "{value}",
+            "help": "The a.b.c[.d] version or git ref to be tagged. If not specified, HEAD is used."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Gets the commit(s) that match a given version",
+      "postfix": "GetCommits",
+      "definiteArgument": "get-commits",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Project",
+            "type": "string",
+            "format": "-p {value}",
+            "help": "The path to the project or project directory. The default is the root directory of the repo that spans the current directory, or an existing version.json file, if applicable."
+          },
+          {
+            "name": "Quite",
+            "type": "bool",
+            "format": "-q",
+            "help": "Use minimal output"
+          },
+          {
+            "name": "VersionOrRef",
+            "type": "string",
+            "format": "{value}",
+            "help": "The a.b.c[.d] version to find"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Communicates with the ambient cloud build to set the build number and/or other cloud build variables.",
+      "postfix": "Cloud",
+      "definiteArgument": "cloud",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Project",
+            "type": "string",
+            "format": "-p {value}",
+            "help": "The path to the project or project directory used to calculate the version. The default is the current directory. Ignored if the -v option is specified."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "-v {value}",
+            "help": "The string to use for the cloud build number. If not specified, the computed version will be used."
+          },
+          {
+            "name": "CISystem",
+            "type": "CISystem",
+            "format": "-s {value}",
+            "help": "Force activation for a particular CI system. If not specified, auto-detection will be used"
+          },
+          {
+            "name": "AllVars",
+            "type": "bool",
+            "format": "-a",
+            "help": "Defines ALL version variables as cloud build variables, with a \"NBGV_\" prefix."
+          },
+          {
+            "name": "CommonVars",
+            "type": "bool",
+            "format": "-c",
+            "help": "Defines a few common version variables as cloud build variables, with a \"Git\" prefix (e.g. GitBuildVersion, GitBuildVersionSimple, GitAssemblyInformationalVersion)"
+          },
+          {
+            "name": "DefineVariable",
+            "type": "Dictionary<string,string>",
+            "format": "-d {value}",
+            "itemFormat": "{key}={value}",
+            "help": "Additional cloud build variables to define."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Prepares a release by creating a release branch for the current version and adjusting the version on the current branch",
+      "postfix": "PrepareRelease",
+      "definiteArgument": "prepare-release",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Project",
+            "type": "string",
+            "format": "-p {value}",
+            "help": "The path to the project or project directory. The default is the current directory."
+          },
+          {
+            "name": "NextVersion",
+            "type": "string",
+            "format": "--nextVersion {value}",
+            "help": " The version to set for the current branch. If omitted, the next version is determined automatically by incrementing the current version"
+          },
+          {
+            "name": "VersionOrRef",
+            "type": "string",
+            "format": "--versionIncrement {value}",
+            "help": "Overrides the 'versionIncrement' setting set in version.json for determining the next version of the current branch"
+          },
+          {
+            "name": "Tag",
+            "type": "string",
+            "format": "{value}",
+            "help": "The prerelease tag to apply on the release branch (if any). If not specified, any existing prerelease tag will be removed. The preceding hyphen may be omitted"
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "Format",
+      "values": [
+        "Text",
+        "Json"
+      ]
+    },
+    {
+      "name": "CISystem",
+      "values": [
+        "AppVeyor",
+        "VisualStudioTeamServices",
+        "GitHubActions",
+        "TeamCity",
+        "AtlassianBamboo",
+        "Jenkins",
+        "GitLab",
+        "Travis"
+      ]
+    }
+  ]
+}
