@@ -35,6 +35,7 @@ Skip:
 - GenerateTools
 - Hotfix
 - Install
+- Milestone
 - Pack
 - Publish
 - References
@@ -47,7 +48,6 @@ Source:
 Target:
 - Analysis
 - Announce
-- Changelog
 - CheckoutExternalRepositories
 - Clean
 - Compile

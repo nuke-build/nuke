@@ -21,6 +21,7 @@ partial class Build
     [Parameter] readonly bool AutoStash = true;
 
     Target Milestone => _ => _
+        .Unlisted()
         .OnlyWhenStatic(() => GitRepository.IsOnReleaseBranch() || GitRepository.IsOnHotfixBranch())
         .Executes(async () =>
         {
@@ -31,6 +32,7 @@ partial class Build
         });
 
     Target Changelog => _ => _
+        .Unlisted()
         .DependsOn(Milestone)
         .OnlyWhenStatic(() => GitRepository.IsOnReleaseBranch() || GitRepository.IsOnHotfixBranch())
         .Executes(() =>
