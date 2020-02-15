@@ -72,12 +72,14 @@ partial class Build
 
     void Checkout(string branch, string start)
     {
-        if (AutoStash)
+        var hasCleanWorkingCopy = GitHasCleanWorkingCopy();
+
+        if (!hasCleanWorkingCopy && AutoStash)
             Git("stash");
 
         Git($"checkout -b {branch} {start}");
 
-        if (AutoStash)
+        if (!hasCleanWorkingCopy && AutoStash)
             Git("stash apply");
     }
 }
