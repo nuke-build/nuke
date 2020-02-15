@@ -31,7 +31,7 @@ namespace Nuke.Common.Tools.SonarScanner
         /// </summary>
         public static string SonarScannerPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("SONARSCANNER_EXE") ??
-            ToolPathResolver.GetPackageExecutable("dotnet-sonarscanner|MSBuild.SonarQube.Runner.Tool", "SonarScanner.MSBuild.dll|SonarScanner.MSBuild.exe");
+            GetToolPath();
         public static Action<OutputType, string> SonarScannerLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.</p>
@@ -224,7 +224,7 @@ namespace Nuke.Common.Tools.SonarScanner
         /// <summary>
         ///   Path to the SonarScanner executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? SonarScannerTasks.SonarScannerPath;
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         public override Action<OutputType, string> CustomLogger => SonarScannerTasks.SonarScannerLogger;
         /// <summary>
         ///   Specifies the key of the analyzed project in SonarQube.
@@ -342,6 +342,7 @@ namespace Nuke.Common.Tools.SonarScanner
         /// </summary>
         public virtual IReadOnlyList<string> DuplicationExclusions => DuplicationExclusionsInternal.AsReadOnly();
         internal List<string> DuplicationExclusionsInternal { get; set; } = new List<string>();
+        public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -388,7 +389,7 @@ namespace Nuke.Common.Tools.SonarScanner
         /// <summary>
         ///   Path to the SonarScanner executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? SonarScannerTasks.SonarScannerPath;
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         public override Action<OutputType, string> CustomLogger => SonarScannerTasks.SonarScannerLogger;
         /// <summary>
         ///   Specifies the username or access token to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added on the end step.
@@ -398,6 +399,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   Specifies the password for the SonarQube username in the `sonar.login` argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.
         /// </summary>
         public virtual string Password { get; internal set; }
+        public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -1757,6 +1759,28 @@ namespace Nuke.Common.Tools.SonarScanner
             return toolSettings;
         }
         #endregion
+        #region Framework
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.Framework"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = framework;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SonarScannerBeginSettings.Framework"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T ResetFramework<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = null;
+            return toolSettings;
+        }
+        #endregion
     }
     #endregion
     #region SonarScannerEndSettingsExtensions
@@ -1812,6 +1836,28 @@ namespace Nuke.Common.Tools.SonarScanner
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Framework
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerEndSettings.Framework"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : SonarScannerEndSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = framework;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SonarScannerEndSettings.Framework"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T ResetFramework<T>(this T toolSettings) where T : SonarScannerEndSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = null;
             return toolSettings;
         }
         #endregion
