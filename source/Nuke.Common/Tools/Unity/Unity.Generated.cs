@@ -867,7 +867,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a username into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings SetUsername(this UnityCreateManualActivationFileSettings toolSettings, string username)
+        public static T SetUsername<T>(this T toolSettings, string username) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = username;
@@ -878,7 +878,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a username into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings ResetUsername(this UnityCreateManualActivationFileSettings toolSettings)
+        public static T ResetUsername<T>(this T toolSettings) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = null;
@@ -891,7 +891,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a password into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings SetPassword(this UnityCreateManualActivationFileSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -902,7 +902,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a password into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings ResetPassword(this UnityCreateManualActivationFileSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -915,7 +915,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Editor.log</a> for info.</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings SetSerial(this UnityCreateManualActivationFileSettings toolSettings, string serial)
+        public static T SetSerial<T>(this T toolSettings, string serial) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serial = serial;
@@ -926,7 +926,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Editor.log</a> for info.</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings ResetSerial(this UnityCreateManualActivationFileSettings toolSettings)
+        public static T ResetSerial<T>(this T toolSettings) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serial = null;
@@ -939,7 +939,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings SetBatchMode(this UnityCreateManualActivationFileSettings toolSettings, bool? batchMode)
+        public static T SetBatchMode<T>(this T toolSettings, bool? batchMode) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BatchMode = batchMode;
@@ -950,7 +950,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings ResetBatchMode(this UnityCreateManualActivationFileSettings toolSettings)
+        public static T ResetBatchMode<T>(this T toolSettings) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BatchMode = null;
@@ -961,7 +961,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings EnableBatchMode(this UnityCreateManualActivationFileSettings toolSettings)
+        public static T EnableBatchMode<T>(this T toolSettings) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BatchMode = true;
@@ -972,7 +972,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings DisableBatchMode(this UnityCreateManualActivationFileSettings toolSettings)
+        public static T DisableBatchMode<T>(this T toolSettings) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BatchMode = false;
@@ -983,7 +983,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings ToggleBatchMode(this UnityCreateManualActivationFileSettings toolSettings)
+        public static T ToggleBatchMode<T>(this T toolSettings) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BatchMode = !toolSettings.BatchMode;
@@ -996,7 +996,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Don't display a crash dialog.</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings SetSilentCrashes(this UnityCreateManualActivationFileSettings toolSettings, bool? silentCrashes)
+        public static T SetSilentCrashes<T>(this T toolSettings, bool? silentCrashes) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SilentCrashes = silentCrashes;
@@ -1007,7 +1007,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Don't display a crash dialog.</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings ResetSilentCrashes(this UnityCreateManualActivationFileSettings toolSettings)
+        public static T ResetSilentCrashes<T>(this T toolSettings) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SilentCrashes = null;
@@ -1018,7 +1018,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Don't display a crash dialog.</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings EnableSilentCrashes(this UnityCreateManualActivationFileSettings toolSettings)
+        public static T EnableSilentCrashes<T>(this T toolSettings) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SilentCrashes = true;
@@ -1029,7 +1029,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Don't display a crash dialog.</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings DisableSilentCrashes(this UnityCreateManualActivationFileSettings toolSettings)
+        public static T DisableSilentCrashes<T>(this T toolSettings) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SilentCrashes = false;
@@ -1040,7 +1040,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Don't display a crash dialog.</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings ToggleSilentCrashes(this UnityCreateManualActivationFileSettings toolSettings)
+        public static T ToggleSilentCrashes<T>(this T toolSettings) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SilentCrashes = !toolSettings.SilentCrashes;
@@ -1053,7 +1053,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings SetNoGraphics(this UnityCreateManualActivationFileSettings toolSettings, bool? noGraphics)
+        public static T SetNoGraphics<T>(this T toolSettings, bool? noGraphics) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoGraphics = noGraphics;
@@ -1064,7 +1064,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings ResetNoGraphics(this UnityCreateManualActivationFileSettings toolSettings)
+        public static T ResetNoGraphics<T>(this T toolSettings) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoGraphics = null;
@@ -1075,7 +1075,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings EnableNoGraphics(this UnityCreateManualActivationFileSettings toolSettings)
+        public static T EnableNoGraphics<T>(this T toolSettings) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoGraphics = true;
@@ -1086,7 +1086,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings DisableNoGraphics(this UnityCreateManualActivationFileSettings toolSettings)
+        public static T DisableNoGraphics<T>(this T toolSettings) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoGraphics = false;
@@ -1097,7 +1097,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings ToggleNoGraphics(this UnityCreateManualActivationFileSettings toolSettings)
+        public static T ToggleNoGraphics<T>(this T toolSettings) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoGraphics = !toolSettings.NoGraphics;
@@ -1110,7 +1110,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings SetQuit(this UnityCreateManualActivationFileSettings toolSettings, bool? quit)
+        public static T SetQuit<T>(this T toolSettings, bool? quit) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quit = quit;
@@ -1121,7 +1121,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings ResetQuit(this UnityCreateManualActivationFileSettings toolSettings)
+        public static T ResetQuit<T>(this T toolSettings) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quit = null;
@@ -1132,7 +1132,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings EnableQuit(this UnityCreateManualActivationFileSettings toolSettings)
+        public static T EnableQuit<T>(this T toolSettings) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quit = true;
@@ -1143,7 +1143,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings DisableQuit(this UnityCreateManualActivationFileSettings toolSettings)
+        public static T DisableQuit<T>(this T toolSettings) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quit = false;
@@ -1154,7 +1154,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).</p>
         /// </summary>
         [Pure]
-        public static UnityCreateManualActivationFileSettings ToggleQuit(this UnityCreateManualActivationFileSettings toolSettings)
+        public static T ToggleQuit<T>(this T toolSettings) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quit = !toolSettings.Quit;
@@ -1177,7 +1177,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>The path to the license file.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings SetLicenseFile(this UnityManualLicenseFileSettings toolSettings, string licenseFile)
+        public static T SetLicenseFile<T>(this T toolSettings, string licenseFile) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LicenseFile = licenseFile;
@@ -1188,7 +1188,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>The path to the license file.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings ResetLicenseFile(this UnityManualLicenseFileSettings toolSettings)
+        public static T ResetLicenseFile<T>(this T toolSettings) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LicenseFile = null;
@@ -1201,7 +1201,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a username into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings SetUsername(this UnityManualLicenseFileSettings toolSettings, string username)
+        public static T SetUsername<T>(this T toolSettings, string username) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = username;
@@ -1212,7 +1212,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a username into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings ResetUsername(this UnityManualLicenseFileSettings toolSettings)
+        public static T ResetUsername<T>(this T toolSettings) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = null;
@@ -1225,7 +1225,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a password into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings SetPassword(this UnityManualLicenseFileSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -1236,7 +1236,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a password into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings ResetPassword(this UnityManualLicenseFileSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -1249,7 +1249,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Editor.log</a> for info.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings SetSerial(this UnityManualLicenseFileSettings toolSettings, string serial)
+        public static T SetSerial<T>(this T toolSettings, string serial) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serial = serial;
@@ -1260,7 +1260,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Editor.log</a> for info.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings ResetSerial(this UnityManualLicenseFileSettings toolSettings)
+        public static T ResetSerial<T>(this T toolSettings) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serial = null;
@@ -1273,7 +1273,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings SetBatchMode(this UnityManualLicenseFileSettings toolSettings, bool? batchMode)
+        public static T SetBatchMode<T>(this T toolSettings, bool? batchMode) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BatchMode = batchMode;
@@ -1284,7 +1284,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings ResetBatchMode(this UnityManualLicenseFileSettings toolSettings)
+        public static T ResetBatchMode<T>(this T toolSettings) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BatchMode = null;
@@ -1295,7 +1295,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings EnableBatchMode(this UnityManualLicenseFileSettings toolSettings)
+        public static T EnableBatchMode<T>(this T toolSettings) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BatchMode = true;
@@ -1306,7 +1306,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings DisableBatchMode(this UnityManualLicenseFileSettings toolSettings)
+        public static T DisableBatchMode<T>(this T toolSettings) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BatchMode = false;
@@ -1317,7 +1317,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings ToggleBatchMode(this UnityManualLicenseFileSettings toolSettings)
+        public static T ToggleBatchMode<T>(this T toolSettings) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BatchMode = !toolSettings.BatchMode;
@@ -1330,7 +1330,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Don't display a crash dialog.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings SetSilentCrashes(this UnityManualLicenseFileSettings toolSettings, bool? silentCrashes)
+        public static T SetSilentCrashes<T>(this T toolSettings, bool? silentCrashes) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SilentCrashes = silentCrashes;
@@ -1341,7 +1341,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Don't display a crash dialog.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings ResetSilentCrashes(this UnityManualLicenseFileSettings toolSettings)
+        public static T ResetSilentCrashes<T>(this T toolSettings) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SilentCrashes = null;
@@ -1352,7 +1352,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Don't display a crash dialog.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings EnableSilentCrashes(this UnityManualLicenseFileSettings toolSettings)
+        public static T EnableSilentCrashes<T>(this T toolSettings) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SilentCrashes = true;
@@ -1363,7 +1363,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Don't display a crash dialog.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings DisableSilentCrashes(this UnityManualLicenseFileSettings toolSettings)
+        public static T DisableSilentCrashes<T>(this T toolSettings) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SilentCrashes = false;
@@ -1374,7 +1374,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Don't display a crash dialog.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings ToggleSilentCrashes(this UnityManualLicenseFileSettings toolSettings)
+        public static T ToggleSilentCrashes<T>(this T toolSettings) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SilentCrashes = !toolSettings.SilentCrashes;
@@ -1387,7 +1387,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings SetNoGraphics(this UnityManualLicenseFileSettings toolSettings, bool? noGraphics)
+        public static T SetNoGraphics<T>(this T toolSettings, bool? noGraphics) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoGraphics = noGraphics;
@@ -1398,7 +1398,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings ResetNoGraphics(this UnityManualLicenseFileSettings toolSettings)
+        public static T ResetNoGraphics<T>(this T toolSettings) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoGraphics = null;
@@ -1409,7 +1409,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings EnableNoGraphics(this UnityManualLicenseFileSettings toolSettings)
+        public static T EnableNoGraphics<T>(this T toolSettings) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoGraphics = true;
@@ -1420,7 +1420,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings DisableNoGraphics(this UnityManualLicenseFileSettings toolSettings)
+        public static T DisableNoGraphics<T>(this T toolSettings) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoGraphics = false;
@@ -1431,7 +1431,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings ToggleNoGraphics(this UnityManualLicenseFileSettings toolSettings)
+        public static T ToggleNoGraphics<T>(this T toolSettings) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoGraphics = !toolSettings.NoGraphics;
@@ -1444,7 +1444,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings SetQuit(this UnityManualLicenseFileSettings toolSettings, bool? quit)
+        public static T SetQuit<T>(this T toolSettings, bool? quit) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quit = quit;
@@ -1455,7 +1455,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings ResetQuit(this UnityManualLicenseFileSettings toolSettings)
+        public static T ResetQuit<T>(this T toolSettings) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quit = null;
@@ -1466,7 +1466,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings EnableQuit(this UnityManualLicenseFileSettings toolSettings)
+        public static T EnableQuit<T>(this T toolSettings) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quit = true;
@@ -1477,7 +1477,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings DisableQuit(this UnityManualLicenseFileSettings toolSettings)
+        public static T DisableQuit<T>(this T toolSettings) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quit = false;
@@ -1488,7 +1488,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).</p>
         /// </summary>
         [Pure]
-        public static UnityManualLicenseFileSettings ToggleQuit(this UnityManualLicenseFileSettings toolSettings)
+        public static T ToggleQuit<T>(this T toolSettings) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quit = !toolSettings.Quit;
@@ -1511,7 +1511,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Force an update of the project in the <a href="https://docs.unity3d.com/Manual/AssetServer.html">Asset Server</a> given by <c>IP:port</c>. The port is optional, and if not given it is assumed to be the standard one (10733). It is advisable to use this command in conjunction with the <c>-projectPath</c> argument to ensure you are working with the correct project. If no project name is given, then the last project opened by Unity is used. If no project exists at the path given by <c>-projectPath</c>, then one is created automatically.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetAssetServerUpdate(this UnitySettings toolSettings, string assetServerUpdate)
+        public static T SetAssetServerUpdate<T>(this T toolSettings, string assetServerUpdate) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AssetServerUpdate = assetServerUpdate;
@@ -1522,7 +1522,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Force an update of the project in the <a href="https://docs.unity3d.com/Manual/AssetServer.html">Asset Server</a> given by <c>IP:port</c>. The port is optional, and if not given it is assumed to be the standard one (10733). It is advisable to use this command in conjunction with the <c>-projectPath</c> argument to ensure you are working with the correct project. If no project name is given, then the last project opened by Unity is used. If no project exists at the path given by <c>-projectPath</c>, then one is created automatically.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetAssetServerUpdate(this UnitySettings toolSettings)
+        public static T ResetAssetServerUpdate<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AssetServerUpdate = null;
@@ -1535,7 +1535,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Build a 32-bit standalone Linux player (for example, <c>-buildLinux32Player path/to/your/build</c>).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetBuildLinux32Player(this UnitySettings toolSettings, string buildLinux32Player)
+        public static T SetBuildLinux32Player<T>(this T toolSettings, string buildLinux32Player) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildLinux32Player = buildLinux32Player;
@@ -1546,7 +1546,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Build a 32-bit standalone Linux player (for example, <c>-buildLinux32Player path/to/your/build</c>).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetBuildLinux32Player(this UnitySettings toolSettings)
+        public static T ResetBuildLinux32Player<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildLinux32Player = null;
@@ -1559,7 +1559,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Build a 64-bit standalone Linux player (for example, <c>-buildLinux64Player path/to/your/build</c>).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetBuildLinux64Player(this UnitySettings toolSettings, string buildLinux64Player)
+        public static T SetBuildLinux64Player<T>(this T toolSettings, string buildLinux64Player) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildLinux64Player = buildLinux64Player;
@@ -1570,7 +1570,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Build a 64-bit standalone Linux player (for example, <c>-buildLinux64Player path/to/your/build</c>).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetBuildLinux64Player(this UnitySettings toolSettings)
+        public static T ResetBuildLinux64Player<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildLinux64Player = null;
@@ -1583,7 +1583,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Build a combined 32-bit and 64-bit standalone Linux player (for example, <c>-buildLinuxUniversalPlayer path/to/your/build</c>).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetBuildLinuxUniversalPlayer(this UnitySettings toolSettings, string buildLinuxUniversalPlayer)
+        public static T SetBuildLinuxUniversalPlayer<T>(this T toolSettings, string buildLinuxUniversalPlayer) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildLinuxUniversalPlayer = buildLinuxUniversalPlayer;
@@ -1594,7 +1594,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Build a combined 32-bit and 64-bit standalone Linux player (for example, <c>-buildLinuxUniversalPlayer path/to/your/build</c>).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetBuildLinuxUniversalPlayer(this UnitySettings toolSettings)
+        public static T ResetBuildLinuxUniversalPlayer<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildLinuxUniversalPlayer = null;
@@ -1607,7 +1607,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Build a 32-bit standalone Mac OSX player (for example, <c>-buildOSXPlayer path/to/your/build.app</c>).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetBuildOSXPlayer(this UnitySettings toolSettings, string buildOSXPlayer)
+        public static T SetBuildOSXPlayer<T>(this T toolSettings, string buildOSXPlayer) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildOSXPlayer = buildOSXPlayer;
@@ -1618,7 +1618,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Build a 32-bit standalone Mac OSX player (for example, <c>-buildOSXPlayer path/to/your/build.app</c>).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetBuildOSXPlayer(this UnitySettings toolSettings)
+        public static T ResetBuildOSXPlayer<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildOSXPlayer = null;
@@ -1631,7 +1631,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Build a 64-bit standalone Mac OSX player (for example, <c>-buildOSX64Player path/to/your/build.app</c>).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetBuildOSX64Player(this UnitySettings toolSettings, string buildOSX64Player)
+        public static T SetBuildOSX64Player<T>(this T toolSettings, string buildOSX64Player) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildOSX64Player = buildOSX64Player;
@@ -1642,7 +1642,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Build a 64-bit standalone Mac OSX player (for example, <c>-buildOSX64Player path/to/your/build.app</c>).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetBuildOSX64Player(this UnitySettings toolSettings)
+        public static T ResetBuildOSX64Player<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildOSX64Player = null;
@@ -1655,7 +1655,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Build a combined 32-bit and 64-bit standalone Mac OSX player (for example, <c>-buildOSXUniversalPlayer path/to/your/build.app</c>).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetBuildOSXUniversalPlayer(this UnitySettings toolSettings, string buildOSXUniversalPlayer)
+        public static T SetBuildOSXUniversalPlayer<T>(this T toolSettings, string buildOSXUniversalPlayer) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildOSXUniversalPlayer = buildOSXUniversalPlayer;
@@ -1666,7 +1666,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Build a combined 32-bit and 64-bit standalone Mac OSX player (for example, <c>-buildOSXUniversalPlayer path/to/your/build.app</c>).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetBuildOSXUniversalPlayer(this UnitySettings toolSettings)
+        public static T ResetBuildOSXUniversalPlayer<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildOSXUniversalPlayer = null;
@@ -1679,7 +1679,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Allows the selection of an active build target before a project is loaded.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetBuildTarget(this UnitySettings toolSettings, string buildTarget)
+        public static T SetBuildTarget<T>(this T toolSettings, string buildTarget) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildTarget = buildTarget;
@@ -1690,7 +1690,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Allows the selection of an active build target before a project is loaded.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetBuildTarget(this UnitySettings toolSettings)
+        public static T ResetBuildTarget<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildTarget = null;
@@ -1703,7 +1703,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Build a 32-bit standalone Windows player (for example, <c>-buildWindowsPlayer path/to/your/build.exe</c>).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetBuildWindowsPlayer(this UnitySettings toolSettings, string buildWindowsPlayer)
+        public static T SetBuildWindowsPlayer<T>(this T toolSettings, string buildWindowsPlayer) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildWindowsPlayer = buildWindowsPlayer;
@@ -1714,7 +1714,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Build a 32-bit standalone Windows player (for example, <c>-buildWindowsPlayer path/to/your/build.exe</c>).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetBuildWindowsPlayer(this UnitySettings toolSettings)
+        public static T ResetBuildWindowsPlayer<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildWindowsPlayer = null;
@@ -1727,7 +1727,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Build a 64-bit standalone Windows player (for example, <c>-buildWindows64Player path/to/your/build.exe</c>).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetBuildWindows64Player(this UnitySettings toolSettings, string buildWindows64Player)
+        public static T SetBuildWindows64Player<T>(this T toolSettings, string buildWindows64Player) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildWindows64Player = buildWindows64Player;
@@ -1738,7 +1738,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Build a 64-bit standalone Windows player (for example, <c>-buildWindows64Player path/to/your/build.exe</c>).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetBuildWindows64Player(this UnitySettings toolSettings)
+        public static T ResetBuildWindows64Player<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BuildWindows64Player = null;
@@ -1751,7 +1751,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Create an empty project at the given path.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetCreateProject(this UnitySettings toolSettings, string createProject)
+        public static T SetCreateProject<T>(this T toolSettings, string createProject) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CreateProject = createProject;
@@ -1762,7 +1762,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Create an empty project at the given path.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetCreateProject(this UnitySettings toolSettings)
+        public static T ResetCreateProject<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CreateProject = null;
@@ -1775,7 +1775,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Execute the static method as soon as Unity is started, the project is open and after the optional Asset server update has been performed. This can be used to do tasks such as continous integration, performing Unit Tests, making builds or preparing data. To return an error from the command line process, either throw an exception which causes Unity to exit with return code <b>1</b>, or call <a href="https:/docs.unity3d.com/ScriptReference/EditorApplication.Exit.html">EditorApplication.Exit</a> with a non-zero return code.To use <b>ExecuteMethod</b>, you need to place the enclosing script in an Editor folder. The method to be executed must be defined as <c>static</c>.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetExecuteMethod(this UnitySettings toolSettings, string executeMethod)
+        public static T SetExecuteMethod<T>(this T toolSettings, string executeMethod) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExecuteMethod = executeMethod;
@@ -1786,7 +1786,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Execute the static method as soon as Unity is started, the project is open and after the optional Asset server update has been performed. This can be used to do tasks such as continous integration, performing Unit Tests, making builds or preparing data. To return an error from the command line process, either throw an exception which causes Unity to exit with return code <b>1</b>, or call <a href="https:/docs.unity3d.com/ScriptReference/EditorApplication.Exit.html">EditorApplication.Exit</a> with a non-zero return code.To use <b>ExecuteMethod</b>, you need to place the enclosing script in an Editor folder. The method to be executed must be defined as <c>static</c>.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetExecuteMethod(this UnitySettings toolSettings)
+        public static T ResetExecuteMethod<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExecuteMethod = null;
@@ -1799,7 +1799,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(Windows only) Make the Editor use Direct3D 11 for rendering. Normally the graphics API depends on player settings (typically defaults to D3D11).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetForceD3d11(this UnitySettings toolSettings, bool? forceD3d11)
+        public static T SetForceD3d11<T>(this T toolSettings, bool? forceD3d11) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceD3d11 = forceD3d11;
@@ -1810,7 +1810,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(Windows only) Make the Editor use Direct3D 11 for rendering. Normally the graphics API depends on player settings (typically defaults to D3D11).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetForceD3d11(this UnitySettings toolSettings)
+        public static T ResetForceD3d11<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceD3d11 = null;
@@ -1821,7 +1821,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(Windows only) Make the Editor use Direct3D 11 for rendering. Normally the graphics API depends on player settings (typically defaults to D3D11).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings EnableForceD3d11(this UnitySettings toolSettings)
+        public static T EnableForceD3d11<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceD3d11 = true;
@@ -1832,7 +1832,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(Windows only) Make the Editor use Direct3D 11 for rendering. Normally the graphics API depends on player settings (typically defaults to D3D11).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings DisableForceD3d11(this UnitySettings toolSettings)
+        public static T DisableForceD3d11<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceD3d11 = false;
@@ -1843,7 +1843,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(Windows only) Make the Editor use Direct3D 11 for rendering. Normally the graphics API depends on player settings (typically defaults to D3D11).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ToggleForceD3d11(this UnitySettings toolSettings)
+        public static T ToggleForceD3d11<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceD3d11 = !toolSettings.ForceD3d11;
@@ -1856,7 +1856,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(macOS only) When using Metal, make the Editor use a particular GPU device by passing it the index of that GPU.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetForceDeviceIndex(this UnitySettings toolSettings, bool? forceDeviceIndex)
+        public static T SetForceDeviceIndex<T>(this T toolSettings, bool? forceDeviceIndex) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceDeviceIndex = forceDeviceIndex;
@@ -1867,7 +1867,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(macOS only) When using Metal, make the Editor use a particular GPU device by passing it the index of that GPU.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetForceDeviceIndex(this UnitySettings toolSettings)
+        public static T ResetForceDeviceIndex<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceDeviceIndex = null;
@@ -1878,7 +1878,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(macOS only) When using Metal, make the Editor use a particular GPU device by passing it the index of that GPU.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings EnableForceDeviceIndex(this UnitySettings toolSettings)
+        public static T EnableForceDeviceIndex<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceDeviceIndex = true;
@@ -1889,7 +1889,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(macOS only) When using Metal, make the Editor use a particular GPU device by passing it the index of that GPU.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings DisableForceDeviceIndex(this UnitySettings toolSettings)
+        public static T DisableForceDeviceIndex<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceDeviceIndex = false;
@@ -1900,7 +1900,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(macOS only) When using Metal, make the Editor use a particular GPU device by passing it the index of that GPU.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ToggleForceDeviceIndex(this UnitySettings toolSettings)
+        public static T ToggleForceDeviceIndex<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceDeviceIndex = !toolSettings.ForceDeviceIndex;
@@ -1913,7 +1913,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(macOS only) Make the Editor use Metal as the default graphics API.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetForceGfxMetal(this UnitySettings toolSettings, bool? forceGfxMetal)
+        public static T SetForceGfxMetal<T>(this T toolSettings, bool? forceGfxMetal) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceGfxMetal = forceGfxMetal;
@@ -1924,7 +1924,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(macOS only) Make the Editor use Metal as the default graphics API.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetForceGfxMetal(this UnitySettings toolSettings)
+        public static T ResetForceGfxMetal<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceGfxMetal = null;
@@ -1935,7 +1935,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(macOS only) Make the Editor use Metal as the default graphics API.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings EnableForceGfxMetal(this UnitySettings toolSettings)
+        public static T EnableForceGfxMetal<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceGfxMetal = true;
@@ -1946,7 +1946,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(macOS only) Make the Editor use Metal as the default graphics API.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings DisableForceGfxMetal(this UnitySettings toolSettings)
+        public static T DisableForceGfxMetal<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceGfxMetal = false;
@@ -1957,7 +1957,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(macOS only) Make the Editor use Metal as the default graphics API.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ToggleForceGfxMetal(this UnitySettings toolSettings)
+        public static T ToggleForceGfxMetal<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceGfxMetal = !toolSettings.ForceGfxMetal;
@@ -1970,7 +1970,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(Windows only) Make the Editor use OpenGL 3/4 core profile for rendering. The Editor tries to use the best OpenGL version available and all OpenGL extensions exposed by the OpenGL drivers. If the platform isn't supported, Direct3D is used.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetForceGLCore(this UnitySettings toolSettings, bool? forceGLCore)
+        public static T SetForceGLCore<T>(this T toolSettings, bool? forceGLCore) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceGLCore = forceGLCore;
@@ -1981,7 +1981,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(Windows only) Make the Editor use OpenGL 3/4 core profile for rendering. The Editor tries to use the best OpenGL version available and all OpenGL extensions exposed by the OpenGL drivers. If the platform isn't supported, Direct3D is used.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetForceGLCore(this UnitySettings toolSettings)
+        public static T ResetForceGLCore<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceGLCore = null;
@@ -1992,7 +1992,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(Windows only) Make the Editor use OpenGL 3/4 core profile for rendering. The Editor tries to use the best OpenGL version available and all OpenGL extensions exposed by the OpenGL drivers. If the platform isn't supported, Direct3D is used.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings EnableForceGLCore(this UnitySettings toolSettings)
+        public static T EnableForceGLCore<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceGLCore = true;
@@ -2003,7 +2003,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(Windows only) Make the Editor use OpenGL 3/4 core profile for rendering. The Editor tries to use the best OpenGL version available and all OpenGL extensions exposed by the OpenGL drivers. If the platform isn't supported, Direct3D is used.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings DisableForceGLCore(this UnitySettings toolSettings)
+        public static T DisableForceGLCore<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceGLCore = false;
@@ -2014,7 +2014,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(Windows only) Make the Editor use OpenGL 3/4 core profile for rendering. The Editor tries to use the best OpenGL version available and all OpenGL extensions exposed by the OpenGL drivers. If the platform isn't supported, Direct3D is used.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ToggleForceGLCore(this UnitySettings toolSettings)
+        public static T ToggleForceGLCore<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceGLCore = !toolSettings.ForceGLCore;
@@ -2027,7 +2027,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(Windows only) Similar to <c>-force-glcore</c>, but requests a specific OpenGL context version. Accepted values for XY: 32, 33, 40, 41, 42, 43, 44 or 45.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetForceGLCoreXY(this UnitySettings toolSettings, UnityGLCore forceGLCoreXY)
+        public static T SetForceGLCoreXY<T>(this T toolSettings, UnityGLCore forceGLCoreXY) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceGLCoreXY = forceGLCoreXY;
@@ -2038,7 +2038,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(Windows only) Similar to <c>-force-glcore</c>, but requests a specific OpenGL context version. Accepted values for XY: 32, 33, 40, 41, 42, 43, 44 or 45.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetForceGLCoreXY(this UnitySettings toolSettings)
+        public static T ResetForceGLCoreXY<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceGLCoreXY = null;
@@ -2051,7 +2051,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(Windows only) Make the Editor use OpenGL for Embedded Systems for rendering. The Editor tries to use the best OpenGL ES version available, and all OpenGL ES extensions exposed by the OpenGL drivers.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetForceGLES(this UnitySettings toolSettings, bool? forceGLES)
+        public static T SetForceGLES<T>(this T toolSettings, bool? forceGLES) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceGLES = forceGLES;
@@ -2062,7 +2062,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(Windows only) Make the Editor use OpenGL for Embedded Systems for rendering. The Editor tries to use the best OpenGL ES version available, and all OpenGL ES extensions exposed by the OpenGL drivers.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetForceGLES(this UnitySettings toolSettings)
+        public static T ResetForceGLES<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceGLES = null;
@@ -2073,7 +2073,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(Windows only) Make the Editor use OpenGL for Embedded Systems for rendering. The Editor tries to use the best OpenGL ES version available, and all OpenGL ES extensions exposed by the OpenGL drivers.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings EnableForceGLES(this UnitySettings toolSettings)
+        public static T EnableForceGLES<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceGLES = true;
@@ -2084,7 +2084,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(Windows only) Make the Editor use OpenGL for Embedded Systems for rendering. The Editor tries to use the best OpenGL ES version available, and all OpenGL ES extensions exposed by the OpenGL drivers.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings DisableForceGLES(this UnitySettings toolSettings)
+        public static T DisableForceGLES<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceGLES = false;
@@ -2095,7 +2095,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(Windows only) Make the Editor use OpenGL for Embedded Systems for rendering. The Editor tries to use the best OpenGL ES version available, and all OpenGL ES extensions exposed by the OpenGL drivers.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ToggleForceGLES(this UnitySettings toolSettings)
+        public static T ToggleForceGLES<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceGLES = !toolSettings.ForceGLES;
@@ -2108,7 +2108,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(Windows only) Similar to <c>-force-gles</c>, but requests a specific OpenGL ES context version. Accepted values for XY: 30, 31 or 32.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetForceGLESXY(this UnitySettings toolSettings, UnityGLES forceGLESXY)
+        public static T SetForceGLESXY<T>(this T toolSettings, UnityGLES forceGLESXY) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceGLESXY = forceGLESXY;
@@ -2119,7 +2119,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(Windows only) Similar to <c>-force-gles</c>, but requests a specific OpenGL ES context version. Accepted values for XY: 30, 31 or 32.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetForceGLESXY(this UnitySettings toolSettings)
+        public static T ResetForceGLESXY<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceGLESXY = null;
@@ -2132,7 +2132,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2017.3+) (Windows only) Used with <c>-force-glcoreXY</c> to prevent checking for additional OpenGL extensions, allowing it to run between platforms with the same code paths.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetForceClamped(this UnitySettings toolSettings, bool? forceClamped)
+        public static T SetForceClamped<T>(this T toolSettings, bool? forceClamped) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceClamped = forceClamped;
@@ -2143,7 +2143,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2017.3+) (Windows only) Used with <c>-force-glcoreXY</c> to prevent checking for additional OpenGL extensions, allowing it to run between platforms with the same code paths.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetForceClamped(this UnitySettings toolSettings)
+        public static T ResetForceClamped<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceClamped = null;
@@ -2154,7 +2154,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2017.3+) (Windows only) Used with <c>-force-glcoreXY</c> to prevent checking for additional OpenGL extensions, allowing it to run between platforms with the same code paths.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings EnableForceClamped(this UnitySettings toolSettings)
+        public static T EnableForceClamped<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceClamped = true;
@@ -2165,7 +2165,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2017.3+) (Windows only) Used with <c>-force-glcoreXY</c> to prevent checking for additional OpenGL extensions, allowing it to run between platforms with the same code paths.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings DisableForceClamped(this UnitySettings toolSettings)
+        public static T DisableForceClamped<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceClamped = false;
@@ -2176,7 +2176,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2017.3+) (Windows only) Used with <c>-force-glcoreXY</c> to prevent checking for additional OpenGL extensions, allowing it to run between platforms with the same code paths.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ToggleForceClamped(this UnitySettings toolSettings)
+        public static T ToggleForceClamped<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceClamped = !toolSettings.ForceClamped;
@@ -2189,7 +2189,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(macOS only) When using Metal, make the Editor use a low power device.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetForceLowPowerDevice(this UnitySettings toolSettings, bool? forceLowPowerDevice)
+        public static T SetForceLowPowerDevice<T>(this T toolSettings, bool? forceLowPowerDevice) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceLowPowerDevice = forceLowPowerDevice;
@@ -2200,7 +2200,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(macOS only) When using Metal, make the Editor use a low power device.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetForceLowPowerDevice(this UnitySettings toolSettings)
+        public static T ResetForceLowPowerDevice<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceLowPowerDevice = null;
@@ -2211,7 +2211,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(macOS only) When using Metal, make the Editor use a low power device.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings EnableForceLowPowerDevice(this UnitySettings toolSettings)
+        public static T EnableForceLowPowerDevice<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceLowPowerDevice = true;
@@ -2222,7 +2222,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(macOS only) When using Metal, make the Editor use a low power device.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings DisableForceLowPowerDevice(this UnitySettings toolSettings)
+        public static T DisableForceLowPowerDevice<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceLowPowerDevice = false;
@@ -2233,7 +2233,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(macOS only) When using Metal, make the Editor use a low power device.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ToggleForceLowPowerDevice(this UnitySettings toolSettings)
+        public static T ToggleForceLowPowerDevice<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceLowPowerDevice = !toolSettings.ForceLowPowerDevice;
@@ -2246,7 +2246,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Import the given <a href="https://docs.unity3d.com/Manual/HOWTO-exportpackage.html">package</a>. No import dialog is shown.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetImportPackage(this UnitySettings toolSettings, string importPackage)
+        public static T SetImportPackage<T>(this T toolSettings, string importPackage) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ImportPackage = importPackage;
@@ -2257,7 +2257,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Import the given <a href="https://docs.unity3d.com/Manual/HOWTO-exportpackage.html">package</a>. No import dialog is shown.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetImportPackage(this UnitySettings toolSettings)
+        public static T ResetImportPackage<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ImportPackage = null;
@@ -2270,7 +2270,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2018.1+) Sets the default texture compression to the desired format before importing a texture or building the project. This is so you don’t have to import the texture again with the format you want. The available formats are dxt, pvrtc, atc, etc, etc2, and astc. Note that this is only supported on Android.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetDefaultPlatformTextureFormat(this UnitySettings toolSettings, string defaultPlatformTextureFormat)
+        public static T SetDefaultPlatformTextureFormat<T>(this T toolSettings, string defaultPlatformTextureFormat) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DefaultPlatformTextureFormat = defaultPlatformTextureFormat;
@@ -2281,7 +2281,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2018.1+) Sets the default texture compression to the desired format before importing a texture or building the project. This is so you don’t have to import the texture again with the format you want. The available formats are dxt, pvrtc, atc, etc, etc2, and astc. Note that this is only supported on Android.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetDefaultPlatformTextureFormat(this UnitySettings toolSettings)
+        public static T ResetDefaultPlatformTextureFormat<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DefaultPlatformTextureFormat = null;
@@ -2294,7 +2294,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Specify a space-separated list of assembly names as parameters for Unity to ignore on automatic updates. The space-separated list of assembly names is optional: Pass the command line options without any assembly names to ignore all assemblies.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetDisableAssemblyUpdater(this UnitySettings toolSettings, params string[] disableAssemblyUpdater)
+        public static T SetDisableAssemblyUpdater<T>(this T toolSettings, params string[] disableAssemblyUpdater) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableAssemblyUpdaterInternal = disableAssemblyUpdater.ToList();
@@ -2305,7 +2305,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Specify a space-separated list of assembly names as parameters for Unity to ignore on automatic updates. The space-separated list of assembly names is optional: Pass the command line options without any assembly names to ignore all assemblies.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetDisableAssemblyUpdater(this UnitySettings toolSettings, IEnumerable<string> disableAssemblyUpdater)
+        public static T SetDisableAssemblyUpdater<T>(this T toolSettings, IEnumerable<string> disableAssemblyUpdater) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableAssemblyUpdaterInternal = disableAssemblyUpdater.ToList();
@@ -2316,7 +2316,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Specify a space-separated list of assembly names as parameters for Unity to ignore on automatic updates. The space-separated list of assembly names is optional: Pass the command line options without any assembly names to ignore all assemblies.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings AddDisableAssemblyUpdater(this UnitySettings toolSettings, params string[] disableAssemblyUpdater)
+        public static T AddDisableAssemblyUpdater<T>(this T toolSettings, params string[] disableAssemblyUpdater) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableAssemblyUpdaterInternal.AddRange(disableAssemblyUpdater);
@@ -2327,7 +2327,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Specify a space-separated list of assembly names as parameters for Unity to ignore on automatic updates. The space-separated list of assembly names is optional: Pass the command line options without any assembly names to ignore all assemblies.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings AddDisableAssemblyUpdater(this UnitySettings toolSettings, IEnumerable<string> disableAssemblyUpdater)
+        public static T AddDisableAssemblyUpdater<T>(this T toolSettings, IEnumerable<string> disableAssemblyUpdater) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableAssemblyUpdaterInternal.AddRange(disableAssemblyUpdater);
@@ -2338,7 +2338,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Specify a space-separated list of assembly names as parameters for Unity to ignore on automatic updates. The space-separated list of assembly names is optional: Pass the command line options without any assembly names to ignore all assemblies.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ClearDisableAssemblyUpdater(this UnitySettings toolSettings)
+        public static T ClearDisableAssemblyUpdater<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableAssemblyUpdaterInternal.Clear();
@@ -2349,7 +2349,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Specify a space-separated list of assembly names as parameters for Unity to ignore on automatic updates. The space-separated list of assembly names is optional: Pass the command line options without any assembly names to ignore all assemblies.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings RemoveDisableAssemblyUpdater(this UnitySettings toolSettings, params string[] disableAssemblyUpdater)
+        public static T RemoveDisableAssemblyUpdater<T>(this T toolSettings, params string[] disableAssemblyUpdater) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(disableAssemblyUpdater);
@@ -2361,7 +2361,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Specify a space-separated list of assembly names as parameters for Unity to ignore on automatic updates. The space-separated list of assembly names is optional: Pass the command line options without any assembly names to ignore all assemblies.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings RemoveDisableAssemblyUpdater(this UnitySettings toolSettings, IEnumerable<string> disableAssemblyUpdater)
+        public static T RemoveDisableAssemblyUpdater<T>(this T toolSettings, IEnumerable<string> disableAssemblyUpdater) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(disableAssemblyUpdater);
@@ -2375,7 +2375,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2018.1+) Connect to the Cache Server given by <c>IP:port</c> on startup, overriding any configuration stored in the Editor Preferences. Use this to connect multiple instances of Unity to different Cache Servers.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetCacheServerIPAddress(this UnitySettings toolSettings, string cacheServerIPAddress)
+        public static T SetCacheServerIPAddress<T>(this T toolSettings, string cacheServerIPAddress) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CacheServerIPAddress = cacheServerIPAddress;
@@ -2386,7 +2386,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2018.1+) Connect to the Cache Server given by <c>IP:port</c> on startup, overriding any configuration stored in the Editor Preferences. Use this to connect multiple instances of Unity to different Cache Servers.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetCacheServerIPAddress(this UnitySettings toolSettings)
+        public static T ResetCacheServerIPAddress<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CacheServerIPAddress = null;
@@ -2399,7 +2399,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2018.1+) Disables the Unity Package Manager.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetNoUpm(this UnitySettings toolSettings, bool? noUpm)
+        public static T SetNoUpm<T>(this T toolSettings, bool? noUpm) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoUpm = noUpm;
@@ -2410,7 +2410,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2018.1+) Disables the Unity Package Manager.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetNoUpm(this UnitySettings toolSettings)
+        public static T ResetNoUpm<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoUpm = null;
@@ -2421,7 +2421,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2018.1+) Disables the Unity Package Manager.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings EnableNoUpm(this UnitySettings toolSettings)
+        public static T EnableNoUpm<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoUpm = true;
@@ -2432,7 +2432,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2018.1+) Disables the Unity Package Manager.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings DisableNoUpm(this UnitySettings toolSettings)
+        public static T DisableNoUpm<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoUpm = false;
@@ -2443,7 +2443,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2018.1+) Disables the Unity Package Manager.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ToggleNoUpm(this UnitySettings toolSettings)
+        public static T ToggleNoUpm<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoUpm = !toolSettings.NoUpm;
@@ -2456,7 +2456,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2017.2+) Use this command line option to specify that APIUpdater should run when Unity is launched in batch mode. Omitting this command line argument when launching Unity in batch mode results in APIUpdater not running which can lead to compiler errors. Note that in versions prior to 2017.2 there’s no way to not run APIUpdater when Unity is launched in batch mode.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetAcceptApiUpdate(this UnitySettings toolSettings, bool? acceptApiUpdate)
+        public static T SetAcceptApiUpdate<T>(this T toolSettings, bool? acceptApiUpdate) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AcceptApiUpdate = acceptApiUpdate;
@@ -2467,7 +2467,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2017.2+) Use this command line option to specify that APIUpdater should run when Unity is launched in batch mode. Omitting this command line argument when launching Unity in batch mode results in APIUpdater not running which can lead to compiler errors. Note that in versions prior to 2017.2 there’s no way to not run APIUpdater when Unity is launched in batch mode.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetAcceptApiUpdate(this UnitySettings toolSettings)
+        public static T ResetAcceptApiUpdate<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AcceptApiUpdate = null;
@@ -2478,7 +2478,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2017.2+) Use this command line option to specify that APIUpdater should run when Unity is launched in batch mode. Omitting this command line argument when launching Unity in batch mode results in APIUpdater not running which can lead to compiler errors. Note that in versions prior to 2017.2 there’s no way to not run APIUpdater when Unity is launched in batch mode.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings EnableAcceptApiUpdate(this UnitySettings toolSettings)
+        public static T EnableAcceptApiUpdate<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AcceptApiUpdate = true;
@@ -2489,7 +2489,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2017.2+) Use this command line option to specify that APIUpdater should run when Unity is launched in batch mode. Omitting this command line argument when launching Unity in batch mode results in APIUpdater not running which can lead to compiler errors. Note that in versions prior to 2017.2 there’s no way to not run APIUpdater when Unity is launched in batch mode.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings DisableAcceptApiUpdate(this UnitySettings toolSettings)
+        public static T DisableAcceptApiUpdate<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AcceptApiUpdate = false;
@@ -2500,7 +2500,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2017.2+) Use this command line option to specify that APIUpdater should run when Unity is launched in batch mode. Omitting this command line argument when launching Unity in batch mode results in APIUpdater not running which can lead to compiler errors. Note that in versions prior to 2017.2 there’s no way to not run APIUpdater when Unity is launched in batch mode.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ToggleAcceptApiUpdate(this UnitySettings toolSettings)
+        public static T ToggleAcceptApiUpdate<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AcceptApiUpdate = !toolSettings.AcceptApiUpdate;
@@ -2513,7 +2513,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Editor tests from the project. This argument requires the <c>projectPath</c>, and it’s good practice to run it with <c>batchmode</c> argument. <c>quit</c> is not required, because the Editor automatically closes down after the run is finished.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetRunEditorTests(this UnitySettings toolSettings, bool? runEditorTests)
+        public static T SetRunEditorTests<T>(this T toolSettings, bool? runEditorTests) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RunEditorTests = runEditorTests;
@@ -2524,7 +2524,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Editor tests from the project. This argument requires the <c>projectPath</c>, and it’s good practice to run it with <c>batchmode</c> argument. <c>quit</c> is not required, because the Editor automatically closes down after the run is finished.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetRunEditorTests(this UnitySettings toolSettings)
+        public static T ResetRunEditorTests<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RunEditorTests = null;
@@ -2535,7 +2535,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Editor tests from the project. This argument requires the <c>projectPath</c>, and it’s good practice to run it with <c>batchmode</c> argument. <c>quit</c> is not required, because the Editor automatically closes down after the run is finished.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings EnableRunEditorTests(this UnitySettings toolSettings)
+        public static T EnableRunEditorTests<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RunEditorTests = true;
@@ -2546,7 +2546,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Editor tests from the project. This argument requires the <c>projectPath</c>, and it’s good practice to run it with <c>batchmode</c> argument. <c>quit</c> is not required, because the Editor automatically closes down after the run is finished.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings DisableRunEditorTests(this UnitySettings toolSettings)
+        public static T DisableRunEditorTests<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RunEditorTests = false;
@@ -2557,7 +2557,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Editor tests from the project. This argument requires the <c>projectPath</c>, and it’s good practice to run it with <c>batchmode</c> argument. <c>quit</c> is not required, because the Editor automatically closes down after the run is finished.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ToggleRunEditorTests(this UnitySettings toolSettings)
+        public static T ToggleRunEditorTests<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RunEditorTests = !toolSettings.RunEditorTests;
@@ -2570,7 +2570,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Filter editor tests by categories.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetEditorTestsCategories(this UnitySettings toolSettings, params string[] editorTestsCategories)
+        public static T SetEditorTestsCategories<T>(this T toolSettings, params string[] editorTestsCategories) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EditorTestsCategoriesInternal = editorTestsCategories.ToList();
@@ -2581,7 +2581,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Filter editor tests by categories.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetEditorTestsCategories(this UnitySettings toolSettings, IEnumerable<string> editorTestsCategories)
+        public static T SetEditorTestsCategories<T>(this T toolSettings, IEnumerable<string> editorTestsCategories) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EditorTestsCategoriesInternal = editorTestsCategories.ToList();
@@ -2592,7 +2592,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Filter editor tests by categories.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings AddEditorTestsCategories(this UnitySettings toolSettings, params string[] editorTestsCategories)
+        public static T AddEditorTestsCategories<T>(this T toolSettings, params string[] editorTestsCategories) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EditorTestsCategoriesInternal.AddRange(editorTestsCategories);
@@ -2603,7 +2603,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Filter editor tests by categories.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings AddEditorTestsCategories(this UnitySettings toolSettings, IEnumerable<string> editorTestsCategories)
+        public static T AddEditorTestsCategories<T>(this T toolSettings, IEnumerable<string> editorTestsCategories) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EditorTestsCategoriesInternal.AddRange(editorTestsCategories);
@@ -2614,7 +2614,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Filter editor tests by categories.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ClearEditorTestsCategories(this UnitySettings toolSettings)
+        public static T ClearEditorTestsCategories<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EditorTestsCategoriesInternal.Clear();
@@ -2625,7 +2625,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Filter editor tests by categories.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings RemoveEditorTestsCategories(this UnitySettings toolSettings, params string[] editorTestsCategories)
+        public static T RemoveEditorTestsCategories<T>(this T toolSettings, params string[] editorTestsCategories) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(editorTestsCategories);
@@ -2637,7 +2637,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Filter editor tests by categories.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings RemoveEditorTestsCategories(this UnitySettings toolSettings, IEnumerable<string> editorTestsCategories)
+        public static T RemoveEditorTestsCategories<T>(this T toolSettings, IEnumerable<string> editorTestsCategories) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(editorTestsCategories);
@@ -2651,7 +2651,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Filter editor tests by names.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetEditorTestsFilter(this UnitySettings toolSettings, params string[] editorTestsFilter)
+        public static T SetEditorTestsFilter<T>(this T toolSettings, params string[] editorTestsFilter) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EditorTestsFilterInternal = editorTestsFilter.ToList();
@@ -2662,7 +2662,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Filter editor tests by names.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetEditorTestsFilter(this UnitySettings toolSettings, IEnumerable<string> editorTestsFilter)
+        public static T SetEditorTestsFilter<T>(this T toolSettings, IEnumerable<string> editorTestsFilter) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EditorTestsFilterInternal = editorTestsFilter.ToList();
@@ -2673,7 +2673,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Filter editor tests by names.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings AddEditorTestsFilter(this UnitySettings toolSettings, params string[] editorTestsFilter)
+        public static T AddEditorTestsFilter<T>(this T toolSettings, params string[] editorTestsFilter) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EditorTestsFilterInternal.AddRange(editorTestsFilter);
@@ -2684,7 +2684,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Filter editor tests by names.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings AddEditorTestsFilter(this UnitySettings toolSettings, IEnumerable<string> editorTestsFilter)
+        public static T AddEditorTestsFilter<T>(this T toolSettings, IEnumerable<string> editorTestsFilter) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EditorTestsFilterInternal.AddRange(editorTestsFilter);
@@ -2695,7 +2695,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Filter editor tests by names.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ClearEditorTestsFilter(this UnitySettings toolSettings)
+        public static T ClearEditorTestsFilter<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EditorTestsFilterInternal.Clear();
@@ -2706,7 +2706,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Filter editor tests by names.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings RemoveEditorTestsFilter(this UnitySettings toolSettings, params string[] editorTestsFilter)
+        public static T RemoveEditorTestsFilter<T>(this T toolSettings, params string[] editorTestsFilter) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(editorTestsFilter);
@@ -2718,7 +2718,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Filter editor tests by names.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings RemoveEditorTestsFilter(this UnitySettings toolSettings, IEnumerable<string> editorTestsFilter)
+        public static T RemoveEditorTestsFilter<T>(this T toolSettings, IEnumerable<string> editorTestsFilter) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(editorTestsFilter);
@@ -2732,7 +2732,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Path where the result file should be placed. If the path is a folder, a default file name is used. If not specified, the results are placed in the project's root folder.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetEditorTestsResultFile(this UnitySettings toolSettings, string editorTestsResultFile)
+        public static T SetEditorTestsResultFile<T>(this T toolSettings, string editorTestsResultFile) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EditorTestsResultFile = editorTestsResultFile;
@@ -2743,7 +2743,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Path where the result file should be placed. If the path is a folder, a default file name is used. If not specified, the results are placed in the project's root folder.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetEditorTestsResultFile(this UnitySettings toolSettings)
+        public static T ResetEditorTestsResultFile<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EditorTestsResultFile = null;
@@ -2756,7 +2756,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Export a package, given a path (or set of given paths).<c>-exportPackage &lt;exportAssetPath&gt; &lt;exportFileName&gt;</c> In this example exportAssetPath is a folder (relative to to the Unity project root) to export from the Unity project, and exportFileName is the package name. Currently, this option only exports whole folders at a time. You normally need to use this command with the -projectPath argument.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetExportPackage(this UnitySettings toolSettings, params string[] exportPackage)
+        public static T SetExportPackage<T>(this T toolSettings, params string[] exportPackage) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportPackageInternal = exportPackage.ToList();
@@ -2767,7 +2767,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Export a package, given a path (or set of given paths).<c>-exportPackage &lt;exportAssetPath&gt; &lt;exportFileName&gt;</c> In this example exportAssetPath is a folder (relative to to the Unity project root) to export from the Unity project, and exportFileName is the package name. Currently, this option only exports whole folders at a time. You normally need to use this command with the -projectPath argument.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetExportPackage(this UnitySettings toolSettings, IEnumerable<string> exportPackage)
+        public static T SetExportPackage<T>(this T toolSettings, IEnumerable<string> exportPackage) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportPackageInternal = exportPackage.ToList();
@@ -2778,7 +2778,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Export a package, given a path (or set of given paths).<c>-exportPackage &lt;exportAssetPath&gt; &lt;exportFileName&gt;</c> In this example exportAssetPath is a folder (relative to to the Unity project root) to export from the Unity project, and exportFileName is the package name. Currently, this option only exports whole folders at a time. You normally need to use this command with the -projectPath argument.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings AddExportPackage(this UnitySettings toolSettings, params string[] exportPackage)
+        public static T AddExportPackage<T>(this T toolSettings, params string[] exportPackage) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportPackageInternal.AddRange(exportPackage);
@@ -2789,7 +2789,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Export a package, given a path (or set of given paths).<c>-exportPackage &lt;exportAssetPath&gt; &lt;exportFileName&gt;</c> In this example exportAssetPath is a folder (relative to to the Unity project root) to export from the Unity project, and exportFileName is the package name. Currently, this option only exports whole folders at a time. You normally need to use this command with the -projectPath argument.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings AddExportPackage(this UnitySettings toolSettings, IEnumerable<string> exportPackage)
+        public static T AddExportPackage<T>(this T toolSettings, IEnumerable<string> exportPackage) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportPackageInternal.AddRange(exportPackage);
@@ -2800,7 +2800,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Export a package, given a path (or set of given paths).<c>-exportPackage &lt;exportAssetPath&gt; &lt;exportFileName&gt;</c> In this example exportAssetPath is a folder (relative to to the Unity project root) to export from the Unity project, and exportFileName is the package name. Currently, this option only exports whole folders at a time. You normally need to use this command with the -projectPath argument.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ClearExportPackage(this UnitySettings toolSettings)
+        public static T ClearExportPackage<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportPackageInternal.Clear();
@@ -2811,7 +2811,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Export a package, given a path (or set of given paths).<c>-exportPackage &lt;exportAssetPath&gt; &lt;exportFileName&gt;</c> In this example exportAssetPath is a folder (relative to to the Unity project root) to export from the Unity project, and exportFileName is the package name. Currently, this option only exports whole folders at a time. You normally need to use this command with the -projectPath argument.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings RemoveExportPackage(this UnitySettings toolSettings, params string[] exportPackage)
+        public static T RemoveExportPackage<T>(this T toolSettings, params string[] exportPackage) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(exportPackage);
@@ -2823,7 +2823,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Export a package, given a path (or set of given paths).<c>-exportPackage &lt;exportAssetPath&gt; &lt;exportFileName&gt;</c> In this example exportAssetPath is a folder (relative to to the Unity project root) to export from the Unity project, and exportFileName is the package name. Currently, this option only exports whole folders at a time. You normally need to use this command with the -projectPath argument.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings RemoveExportPackage(this UnitySettings toolSettings, IEnumerable<string> exportPackage)
+        public static T RemoveExportPackage<T>(this T toolSettings, IEnumerable<string> exportPackage) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(exportPackage);
@@ -2837,7 +2837,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Custom parameters. To pass parameters, add them to the command line and retrieve them inside the function using <c>System.Environment.GetCommandLineArgs</c>. </p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetCustomArguments(this UnitySettings toolSettings, params string[] customArguments)
+        public static T SetCustomArguments<T>(this T toolSettings, params string[] customArguments) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CustomArgumentsInternal = customArguments.ToList();
@@ -2848,7 +2848,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Custom parameters. To pass parameters, add them to the command line and retrieve them inside the function using <c>System.Environment.GetCommandLineArgs</c>. </p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetCustomArguments(this UnitySettings toolSettings, IEnumerable<string> customArguments)
+        public static T SetCustomArguments<T>(this T toolSettings, IEnumerable<string> customArguments) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CustomArgumentsInternal = customArguments.ToList();
@@ -2859,7 +2859,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Custom parameters. To pass parameters, add them to the command line and retrieve them inside the function using <c>System.Environment.GetCommandLineArgs</c>. </p>
         /// </summary>
         [Pure]
-        public static UnitySettings AddCustomArguments(this UnitySettings toolSettings, params string[] customArguments)
+        public static T AddCustomArguments<T>(this T toolSettings, params string[] customArguments) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CustomArgumentsInternal.AddRange(customArguments);
@@ -2870,7 +2870,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Custom parameters. To pass parameters, add them to the command line and retrieve them inside the function using <c>System.Environment.GetCommandLineArgs</c>. </p>
         /// </summary>
         [Pure]
-        public static UnitySettings AddCustomArguments(this UnitySettings toolSettings, IEnumerable<string> customArguments)
+        public static T AddCustomArguments<T>(this T toolSettings, IEnumerable<string> customArguments) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CustomArgumentsInternal.AddRange(customArguments);
@@ -2881,7 +2881,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Custom parameters. To pass parameters, add them to the command line and retrieve them inside the function using <c>System.Environment.GetCommandLineArgs</c>. </p>
         /// </summary>
         [Pure]
-        public static UnitySettings ClearCustomArguments(this UnitySettings toolSettings)
+        public static T ClearCustomArguments<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CustomArgumentsInternal.Clear();
@@ -2892,7 +2892,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Custom parameters. To pass parameters, add them to the command line and retrieve them inside the function using <c>System.Environment.GetCommandLineArgs</c>. </p>
         /// </summary>
         [Pure]
-        public static UnitySettings RemoveCustomArguments(this UnitySettings toolSettings, params string[] customArguments)
+        public static T RemoveCustomArguments<T>(this T toolSettings, params string[] customArguments) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(customArguments);
@@ -2904,7 +2904,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Custom parameters. To pass parameters, add them to the command line and retrieve them inside the function using <c>System.Environment.GetCommandLineArgs</c>. </p>
         /// </summary>
         [Pure]
-        public static UnitySettings RemoveCustomArguments(this UnitySettings toolSettings, IEnumerable<string> customArguments)
+        public static T RemoveCustomArguments<T>(this T toolSettings, IEnumerable<string> customArguments) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(customArguments);
@@ -2918,7 +2918,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Detailed debugging feature. StackTraceLogging allows you to allow detailed logging.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetStackTraceLogType(this UnitySettings toolSettings, UnityStackTraceLogType stackTraceLogType)
+        public static T SetStackTraceLogType<T>(this T toolSettings, UnityStackTraceLogType stackTraceLogType) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StackTraceLogType = stackTraceLogType;
@@ -2929,7 +2929,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Detailed debugging feature. StackTraceLogging allows you to allow detailed logging.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetStackTraceLogType(this UnitySettings toolSettings)
+        public static T ResetStackTraceLogType<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StackTraceLogType = null;
@@ -2942,7 +2942,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Specify the path of the unity project.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetProjectPath(this UnitySettings toolSettings, string projectPath)
+        public static T SetProjectPath<T>(this T toolSettings, string projectPath) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProjectPath = projectPath;
@@ -2953,7 +2953,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Specify the path of the unity project.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetProjectPath(this UnitySettings toolSettings)
+        public static T ResetProjectPath<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProjectPath = null;
@@ -2966,7 +2966,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a username into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetUsername(this UnitySettings toolSettings, string username)
+        public static T SetUsername<T>(this T toolSettings, string username) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = username;
@@ -2977,7 +2977,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a username into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetUsername(this UnitySettings toolSettings)
+        public static T ResetUsername<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = null;
@@ -2990,7 +2990,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a password into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetPassword(this UnitySettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -3001,7 +3001,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a password into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetPassword(this UnitySettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -3014,7 +3014,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Editor.log</a> for info.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetSerial(this UnitySettings toolSettings, string serial)
+        public static T SetSerial<T>(this T toolSettings, string serial) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serial = serial;
@@ -3025,7 +3025,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Editor.log</a> for info.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetSerial(this UnitySettings toolSettings)
+        public static T ResetSerial<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serial = null;
@@ -3038,7 +3038,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetBatchMode(this UnitySettings toolSettings, bool? batchMode)
+        public static T SetBatchMode<T>(this T toolSettings, bool? batchMode) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BatchMode = batchMode;
@@ -3049,7 +3049,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetBatchMode(this UnitySettings toolSettings)
+        public static T ResetBatchMode<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BatchMode = null;
@@ -3060,7 +3060,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings EnableBatchMode(this UnitySettings toolSettings)
+        public static T EnableBatchMode<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BatchMode = true;
@@ -3071,7 +3071,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings DisableBatchMode(this UnitySettings toolSettings)
+        public static T DisableBatchMode<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BatchMode = false;
@@ -3082,7 +3082,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ToggleBatchMode(this UnitySettings toolSettings)
+        public static T ToggleBatchMode<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BatchMode = !toolSettings.BatchMode;
@@ -3095,7 +3095,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Don't display a crash dialog.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetSilentCrashes(this UnitySettings toolSettings, bool? silentCrashes)
+        public static T SetSilentCrashes<T>(this T toolSettings, bool? silentCrashes) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SilentCrashes = silentCrashes;
@@ -3106,7 +3106,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Don't display a crash dialog.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetSilentCrashes(this UnitySettings toolSettings)
+        public static T ResetSilentCrashes<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SilentCrashes = null;
@@ -3117,7 +3117,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Don't display a crash dialog.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings EnableSilentCrashes(this UnitySettings toolSettings)
+        public static T EnableSilentCrashes<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SilentCrashes = true;
@@ -3128,7 +3128,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Don't display a crash dialog.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings DisableSilentCrashes(this UnitySettings toolSettings)
+        public static T DisableSilentCrashes<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SilentCrashes = false;
@@ -3139,7 +3139,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Don't display a crash dialog.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ToggleSilentCrashes(this UnitySettings toolSettings)
+        public static T ToggleSilentCrashes<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SilentCrashes = !toolSettings.SilentCrashes;
@@ -3152,7 +3152,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetNoGraphics(this UnitySettings toolSettings, bool? noGraphics)
+        public static T SetNoGraphics<T>(this T toolSettings, bool? noGraphics) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoGraphics = noGraphics;
@@ -3163,7 +3163,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetNoGraphics(this UnitySettings toolSettings)
+        public static T ResetNoGraphics<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoGraphics = null;
@@ -3174,7 +3174,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings EnableNoGraphics(this UnitySettings toolSettings)
+        public static T EnableNoGraphics<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoGraphics = true;
@@ -3185,7 +3185,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings DisableNoGraphics(this UnitySettings toolSettings)
+        public static T DisableNoGraphics<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoGraphics = false;
@@ -3196,7 +3196,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ToggleNoGraphics(this UnitySettings toolSettings)
+        public static T ToggleNoGraphics<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoGraphics = !toolSettings.NoGraphics;
@@ -3209,7 +3209,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings SetQuit(this UnitySettings toolSettings, bool? quit)
+        public static T SetQuit<T>(this T toolSettings, bool? quit) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quit = quit;
@@ -3220,7 +3220,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ResetQuit(this UnitySettings toolSettings)
+        public static T ResetQuit<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quit = null;
@@ -3231,7 +3231,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings EnableQuit(this UnitySettings toolSettings)
+        public static T EnableQuit<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quit = true;
@@ -3242,7 +3242,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings DisableQuit(this UnitySettings toolSettings)
+        public static T DisableQuit<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quit = false;
@@ -3253,7 +3253,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).</p>
         /// </summary>
         [Pure]
-        public static UnitySettings ToggleQuit(this UnitySettings toolSettings)
+        public static T ToggleQuit<T>(this T toolSettings) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quit = !toolSettings.Quit;
@@ -3276,7 +3276,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a username into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings SetUsername(this UnityReturnLicenseSettings toolSettings, string username)
+        public static T SetUsername<T>(this T toolSettings, string username) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = username;
@@ -3287,7 +3287,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a username into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings ResetUsername(this UnityReturnLicenseSettings toolSettings)
+        public static T ResetUsername<T>(this T toolSettings) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Username = null;
@@ -3300,7 +3300,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a password into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings SetPassword(this UnityReturnLicenseSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -3311,7 +3311,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a password into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings ResetPassword(this UnityReturnLicenseSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -3324,7 +3324,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Editor.log</a> for info.</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings SetSerial(this UnityReturnLicenseSettings toolSettings, string serial)
+        public static T SetSerial<T>(this T toolSettings, string serial) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serial = serial;
@@ -3335,7 +3335,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Editor.log</a> for info.</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings ResetSerial(this UnityReturnLicenseSettings toolSettings)
+        public static T ResetSerial<T>(this T toolSettings) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serial = null;
@@ -3348,7 +3348,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings SetBatchMode(this UnityReturnLicenseSettings toolSettings, bool? batchMode)
+        public static T SetBatchMode<T>(this T toolSettings, bool? batchMode) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BatchMode = batchMode;
@@ -3359,7 +3359,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings ResetBatchMode(this UnityReturnLicenseSettings toolSettings)
+        public static T ResetBatchMode<T>(this T toolSettings) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BatchMode = null;
@@ -3370,7 +3370,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings EnableBatchMode(this UnityReturnLicenseSettings toolSettings)
+        public static T EnableBatchMode<T>(this T toolSettings) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BatchMode = true;
@@ -3381,7 +3381,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings DisableBatchMode(this UnityReturnLicenseSettings toolSettings)
+        public static T DisableBatchMode<T>(this T toolSettings) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BatchMode = false;
@@ -3392,7 +3392,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings ToggleBatchMode(this UnityReturnLicenseSettings toolSettings)
+        public static T ToggleBatchMode<T>(this T toolSettings) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BatchMode = !toolSettings.BatchMode;
@@ -3405,7 +3405,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Don't display a crash dialog.</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings SetSilentCrashes(this UnityReturnLicenseSettings toolSettings, bool? silentCrashes)
+        public static T SetSilentCrashes<T>(this T toolSettings, bool? silentCrashes) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SilentCrashes = silentCrashes;
@@ -3416,7 +3416,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Don't display a crash dialog.</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings ResetSilentCrashes(this UnityReturnLicenseSettings toolSettings)
+        public static T ResetSilentCrashes<T>(this T toolSettings) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SilentCrashes = null;
@@ -3427,7 +3427,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Don't display a crash dialog.</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings EnableSilentCrashes(this UnityReturnLicenseSettings toolSettings)
+        public static T EnableSilentCrashes<T>(this T toolSettings) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SilentCrashes = true;
@@ -3438,7 +3438,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Don't display a crash dialog.</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings DisableSilentCrashes(this UnityReturnLicenseSettings toolSettings)
+        public static T DisableSilentCrashes<T>(this T toolSettings) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SilentCrashes = false;
@@ -3449,7 +3449,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Don't display a crash dialog.</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings ToggleSilentCrashes(this UnityReturnLicenseSettings toolSettings)
+        public static T ToggleSilentCrashes<T>(this T toolSettings) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SilentCrashes = !toolSettings.SilentCrashes;
@@ -3462,7 +3462,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings SetNoGraphics(this UnityReturnLicenseSettings toolSettings, bool? noGraphics)
+        public static T SetNoGraphics<T>(this T toolSettings, bool? noGraphics) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoGraphics = noGraphics;
@@ -3473,7 +3473,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings ResetNoGraphics(this UnityReturnLicenseSettings toolSettings)
+        public static T ResetNoGraphics<T>(this T toolSettings) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoGraphics = null;
@@ -3484,7 +3484,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings EnableNoGraphics(this UnityReturnLicenseSettings toolSettings)
+        public static T EnableNoGraphics<T>(this T toolSettings) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoGraphics = true;
@@ -3495,7 +3495,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings DisableNoGraphics(this UnityReturnLicenseSettings toolSettings)
+        public static T DisableNoGraphics<T>(this T toolSettings) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoGraphics = false;
@@ -3506,7 +3506,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings ToggleNoGraphics(this UnityReturnLicenseSettings toolSettings)
+        public static T ToggleNoGraphics<T>(this T toolSettings) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoGraphics = !toolSettings.NoGraphics;
@@ -3519,7 +3519,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings SetQuit(this UnityReturnLicenseSettings toolSettings, bool? quit)
+        public static T SetQuit<T>(this T toolSettings, bool? quit) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quit = quit;
@@ -3530,7 +3530,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings ResetQuit(this UnityReturnLicenseSettings toolSettings)
+        public static T ResetQuit<T>(this T toolSettings) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quit = null;
@@ -3541,7 +3541,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings EnableQuit(this UnityReturnLicenseSettings toolSettings)
+        public static T EnableQuit<T>(this T toolSettings) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quit = true;
@@ -3552,7 +3552,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings DisableQuit(this UnityReturnLicenseSettings toolSettings)
+        public static T DisableQuit<T>(this T toolSettings) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quit = false;
@@ -3563,7 +3563,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).</p>
         /// </summary>
         [Pure]
-        public static UnityReturnLicenseSettings ToggleQuit(this UnityReturnLicenseSettings toolSettings)
+        public static T ToggleQuit<T>(this T toolSettings) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quit = !toolSettings.Quit;
@@ -3586,7 +3586,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Specify where the Editor or Windows/Linux/OSX standalone log file are written.</p>
         /// </summary>
         [Pure]
-        public static UnityBaseSettings SetLogFile(this UnityBaseSettings toolSettings, string logFile)
+        public static T SetLogFile<T>(this T toolSettings, string logFile) where T : UnityBaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = logFile;
@@ -3597,7 +3597,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Specify where the Editor or Windows/Linux/OSX standalone log file are written.</p>
         /// </summary>
         [Pure]
-        public static UnityBaseSettings ResetLogFile(this UnityBaseSettings toolSettings)
+        public static T ResetLogFile<T>(this T toolSettings) where T : UnityBaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = null;
@@ -3610,7 +3610,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(experimental) If set to true only warnings and errors will be printed to the output.</p>
         /// </summary>
         [Pure]
-        public static UnityBaseSettings SetMinimalOutput(this UnityBaseSettings toolSettings, bool? minimalOutput)
+        public static T SetMinimalOutput<T>(this T toolSettings, bool? minimalOutput) where T : UnityBaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MinimalOutput = minimalOutput;
@@ -3621,7 +3621,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(experimental) If set to true only warnings and errors will be printed to the output.</p>
         /// </summary>
         [Pure]
-        public static UnityBaseSettings ResetMinimalOutput(this UnityBaseSettings toolSettings)
+        public static T ResetMinimalOutput<T>(this T toolSettings) where T : UnityBaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MinimalOutput = null;
@@ -3632,7 +3632,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(experimental) If set to true only warnings and errors will be printed to the output.</p>
         /// </summary>
         [Pure]
-        public static UnityBaseSettings EnableMinimalOutput(this UnityBaseSettings toolSettings)
+        public static T EnableMinimalOutput<T>(this T toolSettings) where T : UnityBaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MinimalOutput = true;
@@ -3643,7 +3643,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(experimental) If set to true only warnings and errors will be printed to the output.</p>
         /// </summary>
         [Pure]
-        public static UnityBaseSettings DisableMinimalOutput(this UnityBaseSettings toolSettings)
+        public static T DisableMinimalOutput<T>(this T toolSettings) where T : UnityBaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MinimalOutput = false;
@@ -3654,7 +3654,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(experimental) If set to true only warnings and errors will be printed to the output.</p>
         /// </summary>
         [Pure]
-        public static UnityBaseSettings ToggleMinimalOutput(this UnityBaseSettings toolSettings)
+        public static T ToggleMinimalOutput<T>(this T toolSettings) where T : UnityBaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MinimalOutput = !toolSettings.MinimalOutput;
@@ -3667,7 +3667,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Define exit codes which will not fail the build.</p>
         /// </summary>
         [Pure]
-        public static UnityBaseSettings SetStableExitCodes(this UnityBaseSettings toolSettings, params int[] stableExitCodes)
+        public static T SetStableExitCodes<T>(this T toolSettings, params int[] stableExitCodes) where T : UnityBaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StableExitCodesInternal = stableExitCodes.ToList();
@@ -3678,7 +3678,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Define exit codes which will not fail the build.</p>
         /// </summary>
         [Pure]
-        public static UnityBaseSettings SetStableExitCodes(this UnityBaseSettings toolSettings, IEnumerable<int> stableExitCodes)
+        public static T SetStableExitCodes<T>(this T toolSettings, IEnumerable<int> stableExitCodes) where T : UnityBaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StableExitCodesInternal = stableExitCodes.ToList();
@@ -3689,7 +3689,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Define exit codes which will not fail the build.</p>
         /// </summary>
         [Pure]
-        public static UnityBaseSettings AddStableExitCodes(this UnityBaseSettings toolSettings, params int[] stableExitCodes)
+        public static T AddStableExitCodes<T>(this T toolSettings, params int[] stableExitCodes) where T : UnityBaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StableExitCodesInternal.AddRange(stableExitCodes);
@@ -3700,7 +3700,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Define exit codes which will not fail the build.</p>
         /// </summary>
         [Pure]
-        public static UnityBaseSettings AddStableExitCodes(this UnityBaseSettings toolSettings, IEnumerable<int> stableExitCodes)
+        public static T AddStableExitCodes<T>(this T toolSettings, IEnumerable<int> stableExitCodes) where T : UnityBaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StableExitCodesInternal.AddRange(stableExitCodes);
@@ -3711,7 +3711,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Define exit codes which will not fail the build.</p>
         /// </summary>
         [Pure]
-        public static UnityBaseSettings ClearStableExitCodes(this UnityBaseSettings toolSettings)
+        public static T ClearStableExitCodes<T>(this T toolSettings) where T : UnityBaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StableExitCodesInternal.Clear();
@@ -3722,7 +3722,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Define exit codes which will not fail the build.</p>
         /// </summary>
         [Pure]
-        public static UnityBaseSettings RemoveStableExitCodes(this UnityBaseSettings toolSettings, params int[] stableExitCodes)
+        public static T RemoveStableExitCodes<T>(this T toolSettings, params int[] stableExitCodes) where T : UnityBaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<int>(stableExitCodes);
@@ -3734,7 +3734,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Define exit codes which will not fail the build.</p>
         /// </summary>
         [Pure]
-        public static UnityBaseSettings RemoveStableExitCodes(this UnityBaseSettings toolSettings, IEnumerable<int> stableExitCodes)
+        public static T RemoveStableExitCodes<T>(this T toolSettings, IEnumerable<int> stableExitCodes) where T : UnityBaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<int>(stableExitCodes);
@@ -3748,7 +3748,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Defines the Unity version to use. The version must be installed via Unity Hub.</p>
         /// </summary>
         [Pure]
-        public static UnityBaseSettings SetHubVersion(this UnityBaseSettings toolSettings, string hubVersion)
+        public static T SetHubVersion<T>(this T toolSettings, string hubVersion) where T : UnityBaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HubVersion = hubVersion;
@@ -3759,7 +3759,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Defines the Unity version to use. The version must be installed via Unity Hub.</p>
         /// </summary>
         [Pure]
-        public static UnityBaseSettings ResetHubVersion(this UnityBaseSettings toolSettings)
+        public static T ResetHubVersion<T>(this T toolSettings) where T : UnityBaseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HubVersion = null;

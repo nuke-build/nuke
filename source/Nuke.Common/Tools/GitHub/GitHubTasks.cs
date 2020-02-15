@@ -68,6 +68,47 @@ namespace Nuke.Common.Tools.GitHub
             return milestones.FirstOrDefault(x => x.Title == name);
         }
 
+        public static async Task TryCreateGitHubMilestone(this GitRepository repository, string title)
+        {
+            try
+            {
+                await repository.CreateGitHubMilestone(title);
+            }
+            catch
+            {
+                // ignored
+            }
+        }
+
+        public static async Task CreateGitHubMilestone(this GitRepository repository, string title)
+        {
+            ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
+
+            await GitHubClient.Issue.Milestone.Create(
+                repository.GetGitHubOwner(),
+                repository.GetGitHubName(),
+                new NewMilestone(title));
+        }
+
+        public static async Task CloseGitHubMilestone(this GitRepository repository, string title, bool enableIssueChecks = true)
+        {
+            ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
+
+            var milestone = (await repository.GetGitHubMilestone(title)).NotNull("milestone != null");
+
+            if (enableIssueChecks)
+            {
+                ControlFlow.Assert(milestone.OpenIssues == 0, "milestone.OpenIssues == 0");
+                ControlFlow.Assert(milestone.ClosedIssues != 0, "milestone.ClosedIssues != 0");
+            }
+
+            await GitHubClient.Issue.Milestone.Update(
+                repository.GetGitHubOwner(),
+                repository.GetGitHubName(),
+                milestone.Number,
+                new MilestoneUpdate { State = ItemState.Closed });
+        }
+
         public static bool IsGitHubRepository(this GitRepository repository)
         {
             return repository != null && repository.Endpoint.EqualsOrdinalIgnoreCase("github.com");

@@ -376,7 +376,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>List of packages to be installed.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings SetPackages(this NpmInstallSettings toolSettings, params string[] packages)
+        public static T SetPackages<T>(this T toolSettings, params string[] packages) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackagesInternal = packages.ToList();
@@ -387,7 +387,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>List of packages to be installed.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings SetPackages(this NpmInstallSettings toolSettings, IEnumerable<string> packages)
+        public static T SetPackages<T>(this T toolSettings, IEnumerable<string> packages) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackagesInternal = packages.ToList();
@@ -398,7 +398,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>List of packages to be installed.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings AddPackages(this NpmInstallSettings toolSettings, params string[] packages)
+        public static T AddPackages<T>(this T toolSettings, params string[] packages) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackagesInternal.AddRange(packages);
@@ -409,7 +409,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>List of packages to be installed.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings AddPackages(this NpmInstallSettings toolSettings, IEnumerable<string> packages)
+        public static T AddPackages<T>(this T toolSettings, IEnumerable<string> packages) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackagesInternal.AddRange(packages);
@@ -420,7 +420,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>List of packages to be installed.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ClearPackages(this NpmInstallSettings toolSettings)
+        public static T ClearPackages<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PackagesInternal.Clear();
@@ -431,7 +431,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>List of packages to be installed.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings RemovePackages(this NpmInstallSettings toolSettings, params string[] packages)
+        public static T RemovePackages<T>(this T toolSettings, params string[] packages) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(packages);
@@ -443,7 +443,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>List of packages to be installed.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings RemovePackages(this NpmInstallSettings toolSettings, IEnumerable<string> packages)
+        public static T RemovePackages<T>(this T toolSettings, IEnumerable<string> packages) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(packages);
@@ -457,7 +457,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to not install modules listed in devDependencies.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings SetProduction(this NpmInstallSettings toolSettings, bool? production)
+        public static T SetProduction<T>(this T toolSettings, bool? production) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Production = production;
@@ -468,7 +468,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to not install modules listed in devDependencies.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ResetProduction(this NpmInstallSettings toolSettings)
+        public static T ResetProduction<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Production = null;
@@ -479,7 +479,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to not install modules listed in devDependencies.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings EnableProduction(this NpmInstallSettings toolSettings)
+        public static T EnableProduction<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Production = true;
@@ -490,7 +490,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to not install modules listed in devDependencies.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings DisableProduction(this NpmInstallSettings toolSettings)
+        public static T DisableProduction<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Production = false;
@@ -501,7 +501,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to not install modules listed in devDependencies.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ToggleProduction(this NpmInstallSettings toolSettings)
+        public static T ToggleProduction<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Production = !toolSettings.Production;
@@ -514,7 +514,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Forces npm to fetch remote resources even if a local copy exists on disk.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings SetForce(this NpmInstallSettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -525,7 +525,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Forces npm to fetch remote resources even if a local copy exists on disk.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ResetForce(this NpmInstallSettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -536,7 +536,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Forces npm to fetch remote resources even if a local copy exists on disk.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings EnableForce(this NpmInstallSettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -547,7 +547,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Forces npm to fetch remote resources even if a local copy exists on disk.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings DisableForce(this NpmInstallSettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -558,7 +558,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Forces npm to fetch remote resources even if a local copy exists on disk.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ToggleForce(this NpmInstallSettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -571,7 +571,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to install the package globally rather than locally. See <a href="https://docs.npmjs.com/files/folders">npm-folders</a>.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings SetGlobal(this NpmInstallSettings toolSettings, bool? global)
+        public static T SetGlobal<T>(this T toolSettings, bool? global) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Global = global;
@@ -582,7 +582,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to install the package globally rather than locally. See <a href="https://docs.npmjs.com/files/folders">npm-folders</a>.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ResetGlobal(this NpmInstallSettings toolSettings)
+        public static T ResetGlobal<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Global = null;
@@ -593,7 +593,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to install the package globally rather than locally. See <a href="https://docs.npmjs.com/files/folders">npm-folders</a>.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings EnableGlobal(this NpmInstallSettings toolSettings)
+        public static T EnableGlobal<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Global = true;
@@ -604,7 +604,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to install the package globally rather than locally. See <a href="https://docs.npmjs.com/files/folders">npm-folders</a>.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings DisableGlobal(this NpmInstallSettings toolSettings)
+        public static T DisableGlobal<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Global = false;
@@ -615,7 +615,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to install the package globally rather than locally. See <a href="https://docs.npmjs.com/files/folders">npm-folders</a>.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ToggleGlobal(this NpmInstallSettings toolSettings)
+        public static T ToggleGlobal<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Global = !toolSettings.Global;
@@ -628,7 +628,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to install the package into your local <c>node_modules</c> folder with the same layout it uses with the global <c>node_modules</c> folder. Only your direct dependencies will show in <c>node_modules</c> and everything they depend on will be flattened in their <c>node_modules</c> folders. This obviously will eliminate some deduping.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings SetGlobalStyle(this NpmInstallSettings toolSettings, bool? globalStyle)
+        public static T SetGlobalStyle<T>(this T toolSettings, bool? globalStyle) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalStyle = globalStyle;
@@ -639,7 +639,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to install the package into your local <c>node_modules</c> folder with the same layout it uses with the global <c>node_modules</c> folder. Only your direct dependencies will show in <c>node_modules</c> and everything they depend on will be flattened in their <c>node_modules</c> folders. This obviously will eliminate some deduping.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ResetGlobalStyle(this NpmInstallSettings toolSettings)
+        public static T ResetGlobalStyle<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalStyle = null;
@@ -650,7 +650,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to install the package into your local <c>node_modules</c> folder with the same layout it uses with the global <c>node_modules</c> folder. Only your direct dependencies will show in <c>node_modules</c> and everything they depend on will be flattened in their <c>node_modules</c> folders. This obviously will eliminate some deduping.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings EnableGlobalStyle(this NpmInstallSettings toolSettings)
+        public static T EnableGlobalStyle<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalStyle = true;
@@ -661,7 +661,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to install the package into your local <c>node_modules</c> folder with the same layout it uses with the global <c>node_modules</c> folder. Only your direct dependencies will show in <c>node_modules</c> and everything they depend on will be flattened in their <c>node_modules</c> folders. This obviously will eliminate some deduping.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings DisableGlobalStyle(this NpmInstallSettings toolSettings)
+        public static T DisableGlobalStyle<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalStyle = false;
@@ -672,7 +672,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to install the package into your local <c>node_modules</c> folder with the same layout it uses with the global <c>node_modules</c> folder. Only your direct dependencies will show in <c>node_modules</c> and everything they depend on will be flattened in their <c>node_modules</c> folders. This obviously will eliminate some deduping.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ToggleGlobalStyle(this NpmInstallSettings toolSettings)
+        public static T ToggleGlobalStyle<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GlobalStyle = !toolSettings.GlobalStyle;
@@ -685,7 +685,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to not execute any scripts defined in the package.json. See <a href="https://docs.npmjs.com/misc/scripts">npm-scripts</a>.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings SetIgnoreScripts(this NpmInstallSettings toolSettings, bool? ignoreScripts)
+        public static T SetIgnoreScripts<T>(this T toolSettings, bool? ignoreScripts) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreScripts = ignoreScripts;
@@ -696,7 +696,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to not execute any scripts defined in the package.json. See <a href="https://docs.npmjs.com/misc/scripts">npm-scripts</a>.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ResetIgnoreScripts(this NpmInstallSettings toolSettings)
+        public static T ResetIgnoreScripts<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreScripts = null;
@@ -707,7 +707,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to not execute any scripts defined in the package.json. See <a href="https://docs.npmjs.com/misc/scripts">npm-scripts</a>.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings EnableIgnoreScripts(this NpmInstallSettings toolSettings)
+        public static T EnableIgnoreScripts<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreScripts = true;
@@ -718,7 +718,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to not execute any scripts defined in the package.json. See <a href="https://docs.npmjs.com/misc/scripts">npm-scripts</a>.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings DisableIgnoreScripts(this NpmInstallSettings toolSettings)
+        public static T DisableIgnoreScripts<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreScripts = false;
@@ -729,7 +729,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to not execute any scripts defined in the package.json. See <a href="https://docs.npmjs.com/misc/scripts">npm-scripts</a>.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ToggleIgnoreScripts(this NpmInstallSettings toolSettings)
+        public static T ToggleIgnoreScripts<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreScripts = !toolSettings.IgnoreScripts;
@@ -742,7 +742,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to install the package such that versions of npm prior to 1.4, such as the one included with node 0.8, can install the package. This eliminates all automatic deduping.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings SetLegacyBundling(this NpmInstallSettings toolSettings, bool? legacyBundling)
+        public static T SetLegacyBundling<T>(this T toolSettings, bool? legacyBundling) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LegacyBundling = legacyBundling;
@@ -753,7 +753,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to install the package such that versions of npm prior to 1.4, such as the one included with node 0.8, can install the package. This eliminates all automatic deduping.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ResetLegacyBundling(this NpmInstallSettings toolSettings)
+        public static T ResetLegacyBundling<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LegacyBundling = null;
@@ -764,7 +764,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to install the package such that versions of npm prior to 1.4, such as the one included with node 0.8, can install the package. This eliminates all automatic deduping.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings EnableLegacyBundling(this NpmInstallSettings toolSettings)
+        public static T EnableLegacyBundling<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LegacyBundling = true;
@@ -775,7 +775,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to install the package such that versions of npm prior to 1.4, such as the one included with node 0.8, can install the package. This eliminates all automatic deduping.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings DisableLegacyBundling(this NpmInstallSettings toolSettings)
+        public static T DisableLegacyBundling<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LegacyBundling = false;
@@ -786,7 +786,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes npm to install the package such that versions of npm prior to 1.4, such as the one included with node 0.8, can install the package. This eliminates all automatic deduping.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ToggleLegacyBundling(this NpmInstallSettings toolSettings)
+        public static T ToggleLegacyBundling<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LegacyBundling = !toolSettings.LegacyBundling;
@@ -799,7 +799,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Cause npm to link global installs into the local space in some cases.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings SetLink(this NpmInstallSettings toolSettings, bool? link)
+        public static T SetLink<T>(this T toolSettings, bool? link) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Link = link;
@@ -810,7 +810,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Cause npm to link global installs into the local space in some cases.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ResetLink(this NpmInstallSettings toolSettings)
+        public static T ResetLink<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Link = null;
@@ -821,7 +821,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Cause npm to link global installs into the local space in some cases.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings EnableLink(this NpmInstallSettings toolSettings)
+        public static T EnableLink<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Link = true;
@@ -832,7 +832,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Cause npm to link global installs into the local space in some cases.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings DisableLink(this NpmInstallSettings toolSettings)
+        public static T DisableLink<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Link = false;
@@ -843,7 +843,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Cause npm to link global installs into the local space in some cases.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ToggleLink(this NpmInstallSettings toolSettings)
+        public static T ToggleLink<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Link = !toolSettings.Link;
@@ -856,7 +856,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Prevents npm from creating symlinks for any binaries the package might contain.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings SetNoBinLinks(this NpmInstallSettings toolSettings, bool? noBinLinks)
+        public static T SetNoBinLinks<T>(this T toolSettings, bool? noBinLinks) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBinLinks = noBinLinks;
@@ -867,7 +867,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Prevents npm from creating symlinks for any binaries the package might contain.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ResetNoBinLinks(this NpmInstallSettings toolSettings)
+        public static T ResetNoBinLinks<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBinLinks = null;
@@ -878,7 +878,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Prevents npm from creating symlinks for any binaries the package might contain.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings EnableNoBinLinks(this NpmInstallSettings toolSettings)
+        public static T EnableNoBinLinks<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBinLinks = true;
@@ -889,7 +889,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Prevents npm from creating symlinks for any binaries the package might contain.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings DisableNoBinLinks(this NpmInstallSettings toolSettings)
+        public static T DisableNoBinLinks<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBinLinks = false;
@@ -900,7 +900,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Prevents npm from creating symlinks for any binaries the package might contain.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ToggleNoBinLinks(this NpmInstallSettings toolSettings)
+        public static T ToggleNoBinLinks<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBinLinks = !toolSettings.NoBinLinks;
@@ -913,7 +913,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Prevents optional dependencies from being installed.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings SetNoOptional(this NpmInstallSettings toolSettings, bool? noOptional)
+        public static T SetNoOptional<T>(this T toolSettings, bool? noOptional) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoOptional = noOptional;
@@ -924,7 +924,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Prevents optional dependencies from being installed.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ResetNoOptional(this NpmInstallSettings toolSettings)
+        public static T ResetNoOptional<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoOptional = null;
@@ -935,7 +935,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Prevents optional dependencies from being installed.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings EnableNoOptional(this NpmInstallSettings toolSettings)
+        public static T EnableNoOptional<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoOptional = true;
@@ -946,7 +946,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Prevents optional dependencies from being installed.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings DisableNoOptional(this NpmInstallSettings toolSettings)
+        public static T DisableNoOptional<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoOptional = false;
@@ -957,7 +957,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Prevents optional dependencies from being installed.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ToggleNoOptional(this NpmInstallSettings toolSettings)
+        public static T ToggleNoOptional<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoOptional = !toolSettings.NoOptional;
@@ -970,7 +970,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Ignores an available shrinkwrap file and use the package.json instead.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings SetNoShrinkWrap(this NpmInstallSettings toolSettings, bool? noShrinkWrap)
+        public static T SetNoShrinkWrap<T>(this T toolSettings, bool? noShrinkWrap) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoShrinkWrap = noShrinkWrap;
@@ -981,7 +981,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Ignores an available shrinkwrap file and use the package.json instead.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ResetNoShrinkWrap(this NpmInstallSettings toolSettings)
+        public static T ResetNoShrinkWrap<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoShrinkWrap = null;
@@ -992,7 +992,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Ignores an available shrinkwrap file and use the package.json instead.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings EnableNoShrinkWrap(this NpmInstallSettings toolSettings)
+        public static T EnableNoShrinkWrap<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoShrinkWrap = true;
@@ -1003,7 +1003,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Ignores an available shrinkwrap file and use the package.json instead.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings DisableNoShrinkWrap(this NpmInstallSettings toolSettings)
+        public static T DisableNoShrinkWrap<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoShrinkWrap = false;
@@ -1014,7 +1014,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Ignores an available shrinkwrap file and use the package.json instead.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ToggleNoShrinkWrap(this NpmInstallSettings toolSettings)
+        public static T ToggleNoShrinkWrap<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoShrinkWrap = !toolSettings.NoShrinkWrap;
@@ -1027,7 +1027,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Allows npm to find the node source code so that npm can compile native modules.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings SetNodeDir(this NpmInstallSettings toolSettings, string nodeDir)
+        public static T SetNodeDir<T>(this T toolSettings, string nodeDir) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NodeDir = nodeDir;
@@ -1038,7 +1038,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Allows npm to find the node source code so that npm can compile native modules.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ResetNodeDir(this NpmInstallSettings toolSettings)
+        public static T ResetNodeDir<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NodeDir = null;
@@ -1051,7 +1051,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes either only <c>devDependencies</c> or only non-<c>devDependencies</c> to be installed regardless of the <c>NODE_ENV</c>.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings SetOnly(this NpmInstallSettings toolSettings, NpmOnlyMode only)
+        public static T SetOnly<T>(this T toolSettings, NpmOnlyMode only) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Only = only;
@@ -1062,7 +1062,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Causes either only <c>devDependencies</c> or only non-<c>devDependencies</c> to be installed regardless of the <c>NODE_ENV</c>.</p>
         /// </summary>
         [Pure]
-        public static NpmInstallSettings ResetOnly(this NpmInstallSettings toolSettings)
+        public static T ResetOnly<T>(this T toolSettings) where T : NpmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Only = null;
@@ -1085,7 +1085,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>The command to be executed.</p>
         /// </summary>
         [Pure]
-        public static NpmRunSettings SetCommand(this NpmRunSettings toolSettings, string command)
+        public static T SetCommand<T>(this T toolSettings, string command) where T : NpmRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Command = command;
@@ -1096,7 +1096,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>The command to be executed.</p>
         /// </summary>
         [Pure]
-        public static NpmRunSettings ResetCommand(this NpmRunSettings toolSettings)
+        public static T ResetCommand<T>(this T toolSettings) where T : NpmRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Command = null;
@@ -1109,7 +1109,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Arguments passed to the script.</p>
         /// </summary>
         [Pure]
-        public static NpmRunSettings SetArguments(this NpmRunSettings toolSettings, params string[] arguments)
+        public static T SetArguments<T>(this T toolSettings, params string[] arguments) where T : NpmRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ArgumentsInternal = arguments.ToList();
@@ -1120,7 +1120,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Arguments passed to the script.</p>
         /// </summary>
         [Pure]
-        public static NpmRunSettings SetArguments(this NpmRunSettings toolSettings, IEnumerable<string> arguments)
+        public static T SetArguments<T>(this T toolSettings, IEnumerable<string> arguments) where T : NpmRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ArgumentsInternal = arguments.ToList();
@@ -1131,7 +1131,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Arguments passed to the script.</p>
         /// </summary>
         [Pure]
-        public static NpmRunSettings AddArguments(this NpmRunSettings toolSettings, params string[] arguments)
+        public static T AddArguments<T>(this T toolSettings, params string[] arguments) where T : NpmRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ArgumentsInternal.AddRange(arguments);
@@ -1142,7 +1142,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Arguments passed to the script.</p>
         /// </summary>
         [Pure]
-        public static NpmRunSettings AddArguments(this NpmRunSettings toolSettings, IEnumerable<string> arguments)
+        public static T AddArguments<T>(this T toolSettings, IEnumerable<string> arguments) where T : NpmRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ArgumentsInternal.AddRange(arguments);
@@ -1153,7 +1153,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Arguments passed to the script.</p>
         /// </summary>
         [Pure]
-        public static NpmRunSettings ClearArguments(this NpmRunSettings toolSettings)
+        public static T ClearArguments<T>(this T toolSettings) where T : NpmRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ArgumentsInternal.Clear();
@@ -1164,7 +1164,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Arguments passed to the script.</p>
         /// </summary>
         [Pure]
-        public static NpmRunSettings RemoveArguments(this NpmRunSettings toolSettings, params string[] arguments)
+        public static T RemoveArguments<T>(this T toolSettings, params string[] arguments) where T : NpmRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(arguments);
@@ -1176,7 +1176,7 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Arguments passed to the script.</p>
         /// </summary>
         [Pure]
-        public static NpmRunSettings RemoveArguments(this NpmRunSettings toolSettings, IEnumerable<string> arguments)
+        public static T RemoveArguments<T>(this T toolSettings, IEnumerable<string> arguments) where T : NpmRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(arguments);

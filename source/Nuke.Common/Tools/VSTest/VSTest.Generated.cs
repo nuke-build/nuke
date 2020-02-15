@@ -268,7 +268,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests from the specified files. Separate multiple test file names with spaces.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings SetTestAssemblies(this VSTestSettings toolSettings, params string[] testAssemblies)
+        public static T SetTestAssemblies<T>(this T toolSettings, params string[] testAssemblies) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestAssembliesInternal = testAssemblies.ToList();
@@ -279,7 +279,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests from the specified files. Separate multiple test file names with spaces.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings SetTestAssemblies(this VSTestSettings toolSettings, IEnumerable<string> testAssemblies)
+        public static T SetTestAssemblies<T>(this T toolSettings, IEnumerable<string> testAssemblies) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestAssembliesInternal = testAssemblies.ToList();
@@ -290,7 +290,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests from the specified files. Separate multiple test file names with spaces.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings AddTestAssemblies(this VSTestSettings toolSettings, params string[] testAssemblies)
+        public static T AddTestAssemblies<T>(this T toolSettings, params string[] testAssemblies) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestAssembliesInternal.AddRange(testAssemblies);
@@ -301,7 +301,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests from the specified files. Separate multiple test file names with spaces.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings AddTestAssemblies(this VSTestSettings toolSettings, IEnumerable<string> testAssemblies)
+        public static T AddTestAssemblies<T>(this T toolSettings, IEnumerable<string> testAssemblies) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestAssembliesInternal.AddRange(testAssemblies);
@@ -312,7 +312,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests from the specified files. Separate multiple test file names with spaces.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ClearTestAssemblies(this VSTestSettings toolSettings)
+        public static T ClearTestAssemblies<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestAssembliesInternal.Clear();
@@ -323,7 +323,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests from the specified files. Separate multiple test file names with spaces.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings RemoveTestAssemblies(this VSTestSettings toolSettings, params string[] testAssemblies)
+        public static T RemoveTestAssemblies<T>(this T toolSettings, params string[] testAssemblies) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(testAssemblies);
@@ -335,7 +335,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests from the specified files. Separate multiple test file names with spaces.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings RemoveTestAssemblies(this VSTestSettings toolSettings, IEnumerable<string> testAssemblies)
+        public static T RemoveTestAssemblies<T>(this T toolSettings, IEnumerable<string> testAssemblies) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(testAssemblies);
@@ -349,7 +349,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests with additional settings such as data collectors.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings SetSettingsFile(this VSTestSettings toolSettings, string settingsFile)
+        public static T SetSettingsFile<T>(this T toolSettings, string settingsFile) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SettingsFile = settingsFile;
@@ -360,7 +360,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests with additional settings such as data collectors.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ResetSettingsFile(this VSTestSettings toolSettings)
+        public static T ResetSettingsFile<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SettingsFile = null;
@@ -373,7 +373,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests with names that match the provided values. To provide multiple values, separate them by commas.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings SetTests(this VSTestSettings toolSettings, params string[] tests)
+        public static T SetTests<T>(this T toolSettings, params string[] tests) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestsInternal = tests.ToList();
@@ -384,7 +384,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests with names that match the provided values. To provide multiple values, separate them by commas.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings SetTests(this VSTestSettings toolSettings, IEnumerable<string> tests)
+        public static T SetTests<T>(this T toolSettings, IEnumerable<string> tests) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestsInternal = tests.ToList();
@@ -395,7 +395,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests with names that match the provided values. To provide multiple values, separate them by commas.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings AddTests(this VSTestSettings toolSettings, params string[] tests)
+        public static T AddTests<T>(this T toolSettings, params string[] tests) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestsInternal.AddRange(tests);
@@ -406,7 +406,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests with names that match the provided values. To provide multiple values, separate them by commas.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings AddTests(this VSTestSettings toolSettings, IEnumerable<string> tests)
+        public static T AddTests<T>(this T toolSettings, IEnumerable<string> tests) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestsInternal.AddRange(tests);
@@ -417,7 +417,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests with names that match the provided values. To provide multiple values, separate them by commas.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ClearTests(this VSTestSettings toolSettings)
+        public static T ClearTests<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestsInternal.Clear();
@@ -428,7 +428,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests with names that match the provided values. To provide multiple values, separate them by commas.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings RemoveTests(this VSTestSettings toolSettings, params string[] tests)
+        public static T RemoveTests<T>(this T toolSettings, params string[] tests) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(tests);
@@ -440,7 +440,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests with names that match the provided values. To provide multiple values, separate them by commas.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings RemoveTests(this VSTestSettings toolSettings, IEnumerable<string> tests)
+        public static T RemoveTests<T>(this T toolSettings, IEnumerable<string> tests) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(tests);
@@ -454,7 +454,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Specifies that the tests be executed in parallel. By default up to all available cores on the machine may be used. The number of cores to use can be configured by using a settings file.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings SetParallel(this VSTestSettings toolSettings, bool? parallel)
+        public static T SetParallel<T>(this T toolSettings, bool? parallel) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Parallel = parallel;
@@ -465,7 +465,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Specifies that the tests be executed in parallel. By default up to all available cores on the machine may be used. The number of cores to use can be configured by using a settings file.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ResetParallel(this VSTestSettings toolSettings)
+        public static T ResetParallel<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Parallel = null;
@@ -476,7 +476,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Specifies that the tests be executed in parallel. By default up to all available cores on the machine may be used. The number of cores to use can be configured by using a settings file.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings EnableParallel(this VSTestSettings toolSettings)
+        public static T EnableParallel<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Parallel = true;
@@ -487,7 +487,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Specifies that the tests be executed in parallel. By default up to all available cores on the machine may be used. The number of cores to use can be configured by using a settings file.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings DisableParallel(this VSTestSettings toolSettings)
+        public static T DisableParallel<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Parallel = false;
@@ -498,7 +498,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Specifies that the tests be executed in parallel. By default up to all available cores on the machine may be used. The number of cores to use can be configured by using a settings file.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ToggleParallel(this VSTestSettings toolSettings)
+        public static T ToggleParallel<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Parallel = !toolSettings.Parallel;
@@ -511,7 +511,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Enables data diagnostic adapter CodeCoverage in the test run.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings SetEnableCodeCoverage(this VSTestSettings toolSettings, bool? enableCodeCoverage)
+        public static T SetEnableCodeCoverage<T>(this T toolSettings, bool? enableCodeCoverage) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableCodeCoverage = enableCodeCoverage;
@@ -522,7 +522,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Enables data diagnostic adapter CodeCoverage in the test run.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ResetEnableCodeCoverage(this VSTestSettings toolSettings)
+        public static T ResetEnableCodeCoverage<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableCodeCoverage = null;
@@ -533,7 +533,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Enables data diagnostic adapter CodeCoverage in the test run.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings EnableEnableCodeCoverage(this VSTestSettings toolSettings)
+        public static T EnableEnableCodeCoverage<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableCodeCoverage = true;
@@ -544,7 +544,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Enables data diagnostic adapter CodeCoverage in the test run.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings DisableEnableCodeCoverage(this VSTestSettings toolSettings)
+        public static T DisableEnableCodeCoverage<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableCodeCoverage = false;
@@ -555,7 +555,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Enables data diagnostic adapter CodeCoverage in the test run.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ToggleEnableCodeCoverage(this VSTestSettings toolSettings)
+        public static T ToggleEnableCodeCoverage<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnableCodeCoverage = !toolSettings.EnableCodeCoverage;
@@ -568,7 +568,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Runs the tests in an isolated process.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings SetInIsolation(this VSTestSettings toolSettings, bool? inIsolation)
+        public static T SetInIsolation<T>(this T toolSettings, bool? inIsolation) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InIsolation = inIsolation;
@@ -579,7 +579,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Runs the tests in an isolated process.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ResetInIsolation(this VSTestSettings toolSettings)
+        public static T ResetInIsolation<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InIsolation = null;
@@ -590,7 +590,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Runs the tests in an isolated process.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings EnableInIsolation(this VSTestSettings toolSettings)
+        public static T EnableInIsolation<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InIsolation = true;
@@ -601,7 +601,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Runs the tests in an isolated process.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings DisableInIsolation(this VSTestSettings toolSettings)
+        public static T DisableInIsolation<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InIsolation = false;
@@ -612,7 +612,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Runs the tests in an isolated process.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ToggleInIsolation(this VSTestSettings toolSettings)
+        public static T ToggleInIsolation<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InIsolation = !toolSettings.InIsolation;
@@ -625,7 +625,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>This makes vstest.console.exe process use or skip the VSIX extensions installed (if any) in the test run.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings SetUseVsixExtensions(this VSTestSettings toolSettings, bool? useVsixExtensions)
+        public static T SetUseVsixExtensions<T>(this T toolSettings, bool? useVsixExtensions) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseVsixExtensions = useVsixExtensions;
@@ -636,7 +636,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>This makes vstest.console.exe process use or skip the VSIX extensions installed (if any) in the test run.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ResetUseVsixExtensions(this VSTestSettings toolSettings)
+        public static T ResetUseVsixExtensions<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseVsixExtensions = null;
@@ -647,7 +647,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>This makes vstest.console.exe process use or skip the VSIX extensions installed (if any) in the test run.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings EnableUseVsixExtensions(this VSTestSettings toolSettings)
+        public static T EnableUseVsixExtensions<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseVsixExtensions = true;
@@ -658,7 +658,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>This makes vstest.console.exe process use or skip the VSIX extensions installed (if any) in the test run.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings DisableUseVsixExtensions(this VSTestSettings toolSettings)
+        public static T DisableUseVsixExtensions<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseVsixExtensions = false;
@@ -669,7 +669,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>This makes vstest.console.exe process use or skip the VSIX extensions installed (if any) in the test run.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ToggleUseVsixExtensions(this VSTestSettings toolSettings)
+        public static T ToggleUseVsixExtensions<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseVsixExtensions = !toolSettings.UseVsixExtensions;
@@ -682,7 +682,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Forces the vstest.console.exe process to use custom test adapters from a specified path (if any) in the test run.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings SetTestAdapterPath(this VSTestSettings toolSettings, string testAdapterPath)
+        public static T SetTestAdapterPath<T>(this T toolSettings, string testAdapterPath) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestAdapterPath = testAdapterPath;
@@ -693,7 +693,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Forces the vstest.console.exe process to use custom test adapters from a specified path (if any) in the test run.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ResetTestAdapterPath(this VSTestSettings toolSettings)
+        public static T ResetTestAdapterPath<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestAdapterPath = null;
@@ -706,7 +706,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Target platform architecture to be used for test execution.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings SetPlatform(this VSTestSettings toolSettings, VsTestPlatform platform)
+        public static T SetPlatform<T>(this T toolSettings, VsTestPlatform platform) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Platform = platform;
@@ -717,7 +717,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Target platform architecture to be used for test execution.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ResetPlatform(this VSTestSettings toolSettings)
+        public static T ResetPlatform<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Platform = null;
@@ -730,7 +730,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Target .NET Framework version to be used for test execution.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings SetFramework(this VSTestSettings toolSettings, VsTestFramework framework)
+        public static T SetFramework<T>(this T toolSettings, VsTestFramework framework) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = framework;
@@ -741,7 +741,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Target .NET Framework version to be used for test execution.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ResetFramework(this VSTestSettings toolSettings)
+        public static T ResetFramework<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = null;
@@ -754,7 +754,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings SetTestCaseFilters(this VSTestSettings toolSettings, params string[] testCaseFilters)
+        public static T SetTestCaseFilters<T>(this T toolSettings, params string[] testCaseFilters) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestCaseFiltersInternal = testCaseFilters.ToList();
@@ -765,7 +765,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings SetTestCaseFilters(this VSTestSettings toolSettings, IEnumerable<string> testCaseFilters)
+        public static T SetTestCaseFilters<T>(this T toolSettings, IEnumerable<string> testCaseFilters) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestCaseFiltersInternal = testCaseFilters.ToList();
@@ -776,7 +776,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings AddTestCaseFilters(this VSTestSettings toolSettings, params string[] testCaseFilters)
+        public static T AddTestCaseFilters<T>(this T toolSettings, params string[] testCaseFilters) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestCaseFiltersInternal.AddRange(testCaseFilters);
@@ -787,7 +787,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings AddTestCaseFilters(this VSTestSettings toolSettings, IEnumerable<string> testCaseFilters)
+        public static T AddTestCaseFilters<T>(this T toolSettings, IEnumerable<string> testCaseFilters) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestCaseFiltersInternal.AddRange(testCaseFilters);
@@ -798,7 +798,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ClearTestCaseFilters(this VSTestSettings toolSettings)
+        public static T ClearTestCaseFilters<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestCaseFiltersInternal.Clear();
@@ -809,7 +809,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings RemoveTestCaseFilters(this VSTestSettings toolSettings, params string[] testCaseFilters)
+        public static T RemoveTestCaseFilters<T>(this T toolSettings, params string[] testCaseFilters) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(testCaseFilters);
@@ -821,7 +821,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings RemoveTestCaseFilters(this VSTestSettings toolSettings, IEnumerable<string> testCaseFilters)
+        public static T RemoveTestCaseFilters<T>(this T toolSettings, IEnumerable<string> testCaseFilters) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(testCaseFilters);
@@ -835,7 +835,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Specify a logger for test results. Example: To log results into a Visual Studio Test Results File (TRX) use <c>/Logger:trx</c>.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings SetLogger(this VSTestSettings toolSettings, string logger)
+        public static T SetLogger<T>(this T toolSettings, string logger) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Logger = logger;
@@ -846,7 +846,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Specify a logger for test results. Example: To log results into a Visual Studio Test Results File (TRX) use <c>/Logger:trx</c>.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ResetLogger(this VSTestSettings toolSettings)
+        public static T ResetLogger<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Logger = null;
@@ -859,7 +859,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Lists discovered tests from the given test container.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings SetListTests(this VSTestSettings toolSettings, string listTests)
+        public static T SetListTests<T>(this T toolSettings, string listTests) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListTests = listTests;
@@ -870,7 +870,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Lists discovered tests from the given test container.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ResetListTests(this VSTestSettings toolSettings)
+        public static T ResetListTests<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListTests = null;
@@ -883,7 +883,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Lists installed test discoverers.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings SetListDiscoverers(this VSTestSettings toolSettings, bool? listDiscoverers)
+        public static T SetListDiscoverers<T>(this T toolSettings, bool? listDiscoverers) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListDiscoverers = listDiscoverers;
@@ -894,7 +894,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Lists installed test discoverers.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ResetListDiscoverers(this VSTestSettings toolSettings)
+        public static T ResetListDiscoverers<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListDiscoverers = null;
@@ -905,7 +905,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Lists installed test discoverers.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings EnableListDiscoverers(this VSTestSettings toolSettings)
+        public static T EnableListDiscoverers<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListDiscoverers = true;
@@ -916,7 +916,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Lists installed test discoverers.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings DisableListDiscoverers(this VSTestSettings toolSettings)
+        public static T DisableListDiscoverers<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListDiscoverers = false;
@@ -927,7 +927,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Lists installed test discoverers.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ToggleListDiscoverers(this VSTestSettings toolSettings)
+        public static T ToggleListDiscoverers<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListDiscoverers = !toolSettings.ListDiscoverers;
@@ -940,7 +940,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Lists installed test executors.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings SetListExecutors(this VSTestSettings toolSettings, bool? listExecutors)
+        public static T SetListExecutors<T>(this T toolSettings, bool? listExecutors) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListExecutors = listExecutors;
@@ -951,7 +951,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Lists installed test executors.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ResetListExecutors(this VSTestSettings toolSettings)
+        public static T ResetListExecutors<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListExecutors = null;
@@ -962,7 +962,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Lists installed test executors.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings EnableListExecutors(this VSTestSettings toolSettings)
+        public static T EnableListExecutors<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListExecutors = true;
@@ -973,7 +973,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Lists installed test executors.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings DisableListExecutors(this VSTestSettings toolSettings)
+        public static T DisableListExecutors<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListExecutors = false;
@@ -984,7 +984,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Lists installed test executors.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ToggleListExecutors(this VSTestSettings toolSettings)
+        public static T ToggleListExecutors<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListExecutors = !toolSettings.ListExecutors;
@@ -997,7 +997,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Lists installed test loggers.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings SetListLoggers(this VSTestSettings toolSettings, bool? listLoggers)
+        public static T SetListLoggers<T>(this T toolSettings, bool? listLoggers) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListLoggers = listLoggers;
@@ -1008,7 +1008,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Lists installed test loggers.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ResetListLoggers(this VSTestSettings toolSettings)
+        public static T ResetListLoggers<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListLoggers = null;
@@ -1019,7 +1019,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Lists installed test loggers.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings EnableListLoggers(this VSTestSettings toolSettings)
+        public static T EnableListLoggers<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListLoggers = true;
@@ -1030,7 +1030,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Lists installed test loggers.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings DisableListLoggers(this VSTestSettings toolSettings)
+        public static T DisableListLoggers<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListLoggers = false;
@@ -1041,7 +1041,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Lists installed test loggers.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ToggleListLoggers(this VSTestSettings toolSettings)
+        public static T ToggleListLoggers<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListLoggers = !toolSettings.ListLoggers;
@@ -1054,7 +1054,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Lists installed test settings providers.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings SetListSettingsProviders(this VSTestSettings toolSettings, bool? listSettingsProviders)
+        public static T SetListSettingsProviders<T>(this T toolSettings, bool? listSettingsProviders) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListSettingsProviders = listSettingsProviders;
@@ -1065,7 +1065,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Lists installed test settings providers.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ResetListSettingsProviders(this VSTestSettings toolSettings)
+        public static T ResetListSettingsProviders<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListSettingsProviders = null;
@@ -1076,7 +1076,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Lists installed test settings providers.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings EnableListSettingsProviders(this VSTestSettings toolSettings)
+        public static T EnableListSettingsProviders<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListSettingsProviders = true;
@@ -1087,7 +1087,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Lists installed test settings providers.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings DisableListSettingsProviders(this VSTestSettings toolSettings)
+        public static T DisableListSettingsProviders<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListSettingsProviders = false;
@@ -1098,7 +1098,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Lists installed test settings providers.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ToggleListSettingsProviders(this VSTestSettings toolSettings)
+        public static T ToggleListSettingsProviders<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListSettingsProviders = !toolSettings.ListSettingsProviders;
@@ -1111,7 +1111,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Writes diagnostic trace logs to the specified file.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings SetDiagnosticsFile(this VSTestSettings toolSettings, string diagnosticsFile)
+        public static T SetDiagnosticsFile<T>(this T toolSettings, string diagnosticsFile) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiagnosticsFile = diagnosticsFile;
@@ -1122,7 +1122,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>Writes diagnostic trace logs to the specified file.</p>
         /// </summary>
         [Pure]
-        public static VSTestSettings ResetDiagnosticsFile(this VSTestSettings toolSettings)
+        public static T ResetDiagnosticsFile<T>(this T toolSettings) where T : VSTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiagnosticsFile = null;

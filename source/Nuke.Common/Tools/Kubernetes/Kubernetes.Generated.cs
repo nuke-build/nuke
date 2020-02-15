@@ -6043,7 +6043,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Limit to resources in the specified API group.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings SetApiGroup(this KubernetesApiResourcesSettings toolSettings, string apiGroup)
+        public static T SetApiGroup<T>(this T toolSettings, string apiGroup) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiGroup = apiGroup;
@@ -6054,7 +6054,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Limit to resources in the specified API group.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings ResetApiGroup(this KubernetesApiResourcesSettings toolSettings)
+        public static T ResetApiGroup<T>(this T toolSettings) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiGroup = null;
@@ -6067,7 +6067,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Use the cached list of resources if available.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings SetCached(this KubernetesApiResourcesSettings toolSettings, bool? cached)
+        public static T SetCached<T>(this T toolSettings, bool? cached) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cached = cached;
@@ -6078,7 +6078,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Use the cached list of resources if available.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings ResetCached(this KubernetesApiResourcesSettings toolSettings)
+        public static T ResetCached<T>(this T toolSettings) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cached = null;
@@ -6089,7 +6089,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Use the cached list of resources if available.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings EnableCached(this KubernetesApiResourcesSettings toolSettings)
+        public static T EnableCached<T>(this T toolSettings) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cached = true;
@@ -6100,7 +6100,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Use the cached list of resources if available.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings DisableCached(this KubernetesApiResourcesSettings toolSettings)
+        public static T DisableCached<T>(this T toolSettings) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cached = false;
@@ -6111,7 +6111,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Use the cached list of resources if available.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings ToggleCached(this KubernetesApiResourcesSettings toolSettings)
+        public static T ToggleCached<T>(this T toolSettings) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cached = !toolSettings.Cached;
@@ -6124,7 +6124,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If false, non-namespaced resources will be returned, otherwise returning namespaced resources by default.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings SetNamespaced(this KubernetesApiResourcesSettings toolSettings, bool? namespaced)
+        public static T SetNamespaced<T>(this T toolSettings, bool? namespaced) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Namespaced = namespaced;
@@ -6135,7 +6135,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If false, non-namespaced resources will be returned, otherwise returning namespaced resources by default.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings ResetNamespaced(this KubernetesApiResourcesSettings toolSettings)
+        public static T ResetNamespaced<T>(this T toolSettings) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Namespaced = null;
@@ -6146,7 +6146,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If false, non-namespaced resources will be returned, otherwise returning namespaced resources by default.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings EnableNamespaced(this KubernetesApiResourcesSettings toolSettings)
+        public static T EnableNamespaced<T>(this T toolSettings) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Namespaced = true;
@@ -6157,7 +6157,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If false, non-namespaced resources will be returned, otherwise returning namespaced resources by default.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings DisableNamespaced(this KubernetesApiResourcesSettings toolSettings)
+        public static T DisableNamespaced<T>(this T toolSettings) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Namespaced = false;
@@ -6168,7 +6168,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If false, non-namespaced resources will be returned, otherwise returning namespaced resources by default.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings ToggleNamespaced(this KubernetesApiResourcesSettings toolSettings)
+        public static T ToggleNamespaced<T>(this T toolSettings) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Namespaced = !toolSettings.Namespaced;
@@ -6181,7 +6181,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>When using the default or custom-column output format, don't print headers (default print headers).</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings SetNoHeaders(this KubernetesApiResourcesSettings toolSettings, bool? noHeaders)
+        public static T SetNoHeaders<T>(this T toolSettings, bool? noHeaders) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHeaders = noHeaders;
@@ -6192,7 +6192,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>When using the default or custom-column output format, don't print headers (default print headers).</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings ResetNoHeaders(this KubernetesApiResourcesSettings toolSettings)
+        public static T ResetNoHeaders<T>(this T toolSettings) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHeaders = null;
@@ -6203,7 +6203,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>When using the default or custom-column output format, don't print headers (default print headers).</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings EnableNoHeaders(this KubernetesApiResourcesSettings toolSettings)
+        public static T EnableNoHeaders<T>(this T toolSettings) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHeaders = true;
@@ -6214,7 +6214,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>When using the default or custom-column output format, don't print headers (default print headers).</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings DisableNoHeaders(this KubernetesApiResourcesSettings toolSettings)
+        public static T DisableNoHeaders<T>(this T toolSettings) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHeaders = false;
@@ -6225,7 +6225,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>When using the default or custom-column output format, don't print headers (default print headers).</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings ToggleNoHeaders(this KubernetesApiResourcesSettings toolSettings)
+        public static T ToggleNoHeaders<T>(this T toolSettings) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHeaders = !toolSettings.NoHeaders;
@@ -6238,7 +6238,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: wide|name.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings SetOutput(this KubernetesApiResourcesSettings toolSettings, KubernetesApiResourcesOutput output)
+        public static T SetOutput<T>(this T toolSettings, KubernetesApiResourcesOutput output) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -6249,7 +6249,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: wide|name.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings ResetOutput(this KubernetesApiResourcesSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -6262,7 +6262,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Limit to resources that support the specified verbs.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings SetVerbs(this KubernetesApiResourcesSettings toolSettings, params string[] verbs)
+        public static T SetVerbs<T>(this T toolSettings, params string[] verbs) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VerbsInternal = verbs.ToList();
@@ -6273,7 +6273,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Limit to resources that support the specified verbs.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings SetVerbs(this KubernetesApiResourcesSettings toolSettings, IEnumerable<string> verbs)
+        public static T SetVerbs<T>(this T toolSettings, IEnumerable<string> verbs) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VerbsInternal = verbs.ToList();
@@ -6284,7 +6284,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Limit to resources that support the specified verbs.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings AddVerbs(this KubernetesApiResourcesSettings toolSettings, params string[] verbs)
+        public static T AddVerbs<T>(this T toolSettings, params string[] verbs) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VerbsInternal.AddRange(verbs);
@@ -6295,7 +6295,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Limit to resources that support the specified verbs.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings AddVerbs(this KubernetesApiResourcesSettings toolSettings, IEnumerable<string> verbs)
+        public static T AddVerbs<T>(this T toolSettings, IEnumerable<string> verbs) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VerbsInternal.AddRange(verbs);
@@ -6306,7 +6306,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Limit to resources that support the specified verbs.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings ClearVerbs(this KubernetesApiResourcesSettings toolSettings)
+        public static T ClearVerbs<T>(this T toolSettings) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VerbsInternal.Clear();
@@ -6317,7 +6317,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Limit to resources that support the specified verbs.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings RemoveVerbs(this KubernetesApiResourcesSettings toolSettings, params string[] verbs)
+        public static T RemoveVerbs<T>(this T toolSettings, params string[] verbs) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(verbs);
@@ -6329,7 +6329,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Limit to resources that support the specified verbs.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApiResourcesSettings RemoveVerbs(this KubernetesApiResourcesSettings toolSettings, IEnumerable<string> verbs)
+        public static T RemoveVerbs<T>(this T toolSettings, IEnumerable<string> verbs) where T : KubernetesApiResourcesSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(verbs);
@@ -6353,7 +6353,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Continue even if there are pods using emptyDir (local data that will be deleted when the node is drained).</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings SetDeleteLocalData(this KubernetesDrainSettings toolSettings, bool? deleteLocalData)
+        public static T SetDeleteLocalData<T>(this T toolSettings, bool? deleteLocalData) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeleteLocalData = deleteLocalData;
@@ -6364,7 +6364,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Continue even if there are pods using emptyDir (local data that will be deleted when the node is drained).</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings ResetDeleteLocalData(this KubernetesDrainSettings toolSettings)
+        public static T ResetDeleteLocalData<T>(this T toolSettings) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeleteLocalData = null;
@@ -6375,7 +6375,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Continue even if there are pods using emptyDir (local data that will be deleted when the node is drained).</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings EnableDeleteLocalData(this KubernetesDrainSettings toolSettings)
+        public static T EnableDeleteLocalData<T>(this T toolSettings) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeleteLocalData = true;
@@ -6386,7 +6386,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Continue even if there are pods using emptyDir (local data that will be deleted when the node is drained).</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings DisableDeleteLocalData(this KubernetesDrainSettings toolSettings)
+        public static T DisableDeleteLocalData<T>(this T toolSettings) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeleteLocalData = false;
@@ -6397,7 +6397,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Continue even if there are pods using emptyDir (local data that will be deleted when the node is drained).</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings ToggleDeleteLocalData(this KubernetesDrainSettings toolSettings)
+        public static T ToggleDeleteLocalData<T>(this T toolSettings) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeleteLocalData = !toolSettings.DeleteLocalData;
@@ -6410,7 +6410,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings SetDryRun(this KubernetesDrainSettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -6421,7 +6421,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings ResetDryRun(this KubernetesDrainSettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -6432,7 +6432,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings EnableDryRun(this KubernetesDrainSettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -6443,7 +6443,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings DisableDryRun(this KubernetesDrainSettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -6454,7 +6454,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings ToggleDryRun(this KubernetesDrainSettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -6467,7 +6467,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Continue even if there are pods not managed by a ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings SetForce(this KubernetesDrainSettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -6478,7 +6478,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Continue even if there are pods not managed by a ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings ResetForce(this KubernetesDrainSettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -6489,7 +6489,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Continue even if there are pods not managed by a ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings EnableForce(this KubernetesDrainSettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -6500,7 +6500,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Continue even if there are pods not managed by a ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings DisableForce(this KubernetesDrainSettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -6511,7 +6511,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Continue even if there are pods not managed by a ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings ToggleForce(this KubernetesDrainSettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -6524,7 +6524,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Period of time in seconds given to each pod to terminate gracefully. If negative, the default value specified in the pod will be used.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings SetGracePeriod(this KubernetesDrainSettings toolSettings, int? gracePeriod)
+        public static T SetGracePeriod<T>(this T toolSettings, int? gracePeriod) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GracePeriod = gracePeriod;
@@ -6535,7 +6535,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Period of time in seconds given to each pod to terminate gracefully. If negative, the default value specified in the pod will be used.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings ResetGracePeriod(this KubernetesDrainSettings toolSettings)
+        public static T ResetGracePeriod<T>(this T toolSettings) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GracePeriod = null;
@@ -6548,7 +6548,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Ignore DaemonSet-managed pods.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings SetIgnoreDaemonsets(this KubernetesDrainSettings toolSettings, bool? ignoreDaemonsets)
+        public static T SetIgnoreDaemonsets<T>(this T toolSettings, bool? ignoreDaemonsets) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreDaemonsets = ignoreDaemonsets;
@@ -6559,7 +6559,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Ignore DaemonSet-managed pods.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings ResetIgnoreDaemonsets(this KubernetesDrainSettings toolSettings)
+        public static T ResetIgnoreDaemonsets<T>(this T toolSettings) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreDaemonsets = null;
@@ -6570,7 +6570,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Ignore DaemonSet-managed pods.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings EnableIgnoreDaemonsets(this KubernetesDrainSettings toolSettings)
+        public static T EnableIgnoreDaemonsets<T>(this T toolSettings) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreDaemonsets = true;
@@ -6581,7 +6581,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Ignore DaemonSet-managed pods.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings DisableIgnoreDaemonsets(this KubernetesDrainSettings toolSettings)
+        public static T DisableIgnoreDaemonsets<T>(this T toolSettings) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreDaemonsets = false;
@@ -6592,7 +6592,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Ignore DaemonSet-managed pods.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings ToggleIgnoreDaemonsets(this KubernetesDrainSettings toolSettings)
+        public static T ToggleIgnoreDaemonsets<T>(this T toolSettings) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreDaemonsets = !toolSettings.IgnoreDaemonsets;
@@ -6605,7 +6605,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Label selector to filter pods on the node.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings SetPodSelector(this KubernetesDrainSettings toolSettings, string podSelector)
+        public static T SetPodSelector<T>(this T toolSettings, string podSelector) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PodSelector = podSelector;
@@ -6616,7 +6616,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Label selector to filter pods on the node.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings ResetPodSelector(this KubernetesDrainSettings toolSettings)
+        public static T ResetPodSelector<T>(this T toolSettings) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PodSelector = null;
@@ -6629,7 +6629,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings SetSelector(this KubernetesDrainSettings toolSettings, string selector)
+        public static T SetSelector<T>(this T toolSettings, string selector) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = selector;
@@ -6640,7 +6640,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings ResetSelector(this KubernetesDrainSettings toolSettings)
+        public static T ResetSelector<T>(this T toolSettings) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = null;
@@ -6653,7 +6653,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time to wait before giving up, zero means infinite.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings SetTimeout(this KubernetesDrainSettings toolSettings, TimeSpan? timeout)
+        public static T SetTimeout<T>(this T toolSettings, TimeSpan? timeout) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = timeout;
@@ -6664,7 +6664,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time to wait before giving up, zero means infinite.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDrainSettings ResetTimeout(this KubernetesDrainSettings toolSettings)
+        public static T ResetTimeout<T>(this T toolSettings) where T : KubernetesDrainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = null;
@@ -6687,7 +6687,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetName(this KubernetesRunSettings toolSettings, string name)
+        public static T SetName<T>(this T toolSettings, string name) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = name;
@@ -6698,7 +6698,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetName(this KubernetesRunSettings toolSettings)
+        public static T ResetName<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = null;
@@ -6711,7 +6711,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetAllowMissingTemplateKeys(this KubernetesRunSettings toolSettings, bool? allowMissingTemplateKeys)
+        public static T SetAllowMissingTemplateKeys<T>(this T toolSettings, bool? allowMissingTemplateKeys) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = allowMissingTemplateKeys;
@@ -6722,7 +6722,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetAllowMissingTemplateKeys(this KubernetesRunSettings toolSettings)
+        public static T ResetAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = null;
@@ -6733,7 +6733,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings EnableAllowMissingTemplateKeys(this KubernetesRunSettings toolSettings)
+        public static T EnableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = true;
@@ -6744,7 +6744,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings DisableAllowMissingTemplateKeys(this KubernetesRunSettings toolSettings)
+        public static T DisableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = false;
@@ -6755,7 +6755,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ToggleAllowMissingTemplateKeys(this KubernetesRunSettings toolSettings)
+        public static T ToggleAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = !toolSettings.AllowMissingTemplateKeys;
@@ -6768,7 +6768,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for the Pod to start running, and then attach to the Pod as if 'kubectl attach ...' were called.  Default false, unless '-i/--stdin' is set, in which case the default is true. With '--restart=Never' the exit code of the container process is returned.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetAttach(this KubernetesRunSettings toolSettings, bool? attach)
+        public static T SetAttach<T>(this T toolSettings, bool? attach) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Attach = attach;
@@ -6779,7 +6779,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for the Pod to start running, and then attach to the Pod as if 'kubectl attach ...' were called.  Default false, unless '-i/--stdin' is set, in which case the default is true. With '--restart=Never' the exit code of the container process is returned.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetAttach(this KubernetesRunSettings toolSettings)
+        public static T ResetAttach<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Attach = null;
@@ -6790,7 +6790,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for the Pod to start running, and then attach to the Pod as if 'kubectl attach ...' were called.  Default false, unless '-i/--stdin' is set, in which case the default is true. With '--restart=Never' the exit code of the container process is returned.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings EnableAttach(this KubernetesRunSettings toolSettings)
+        public static T EnableAttach<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Attach = true;
@@ -6801,7 +6801,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for the Pod to start running, and then attach to the Pod as if 'kubectl attach ...' were called.  Default false, unless '-i/--stdin' is set, in which case the default is true. With '--restart=Never' the exit code of the container process is returned.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings DisableAttach(this KubernetesRunSettings toolSettings)
+        public static T DisableAttach<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Attach = false;
@@ -6812,7 +6812,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for the Pod to start running, and then attach to the Pod as if 'kubectl attach ...' were called.  Default false, unless '-i/--stdin' is set, in which case the default is true. With '--restart=Never' the exit code of the container process is returned.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ToggleAttach(this KubernetesRunSettings toolSettings)
+        public static T ToggleAttach<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Attach = !toolSettings.Attach;
@@ -6825,7 +6825,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetCascade(this KubernetesRunSettings toolSettings, bool? cascade)
+        public static T SetCascade<T>(this T toolSettings, bool? cascade) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = cascade;
@@ -6836,7 +6836,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetCascade(this KubernetesRunSettings toolSettings)
+        public static T ResetCascade<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = null;
@@ -6847,7 +6847,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings EnableCascade(this KubernetesRunSettings toolSettings)
+        public static T EnableCascade<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = true;
@@ -6858,7 +6858,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings DisableCascade(this KubernetesRunSettings toolSettings)
+        public static T DisableCascade<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = false;
@@ -6869,7 +6869,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ToggleCascade(this KubernetesRunSettings toolSettings)
+        public static T ToggleCascade<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = !toolSettings.Cascade;
@@ -6882,7 +6882,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true and extra arguments are present, use them as the 'command' field in the container, rather than the 'args' field which is the default.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetCommand(this KubernetesRunSettings toolSettings, bool? command)
+        public static T SetCommand<T>(this T toolSettings, bool? command) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Command = command;
@@ -6893,7 +6893,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true and extra arguments are present, use them as the 'command' field in the container, rather than the 'args' field which is the default.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetCommand(this KubernetesRunSettings toolSettings)
+        public static T ResetCommand<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Command = null;
@@ -6904,7 +6904,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true and extra arguments are present, use them as the 'command' field in the container, rather than the 'args' field which is the default.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings EnableCommand(this KubernetesRunSettings toolSettings)
+        public static T EnableCommand<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Command = true;
@@ -6915,7 +6915,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true and extra arguments are present, use them as the 'command' field in the container, rather than the 'args' field which is the default.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings DisableCommand(this KubernetesRunSettings toolSettings)
+        public static T DisableCommand<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Command = false;
@@ -6926,7 +6926,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true and extra arguments are present, use them as the 'command' field in the container, rather than the 'args' field which is the default.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ToggleCommand(this KubernetesRunSettings toolSettings)
+        public static T ToggleCommand<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Command = !toolSettings.Command;
@@ -6939,7 +6939,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetDryRun(this KubernetesRunSettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -6950,7 +6950,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetDryRun(this KubernetesRunSettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -6961,7 +6961,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings EnableDryRun(this KubernetesRunSettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -6972,7 +6972,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings DisableDryRun(this KubernetesRunSettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -6983,7 +6983,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ToggleDryRun(this KubernetesRunSettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -6996,7 +6996,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Environment variables to set in the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetEnv(this KubernetesRunSettings toolSettings, params string[] env)
+        public static T SetEnv<T>(this T toolSettings, params string[] env) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnvInternal = env.ToList();
@@ -7007,7 +7007,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Environment variables to set in the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetEnv(this KubernetesRunSettings toolSettings, IEnumerable<string> env)
+        public static T SetEnv<T>(this T toolSettings, IEnumerable<string> env) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnvInternal = env.ToList();
@@ -7018,7 +7018,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Environment variables to set in the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings AddEnv(this KubernetesRunSettings toolSettings, params string[] env)
+        public static T AddEnv<T>(this T toolSettings, params string[] env) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnvInternal.AddRange(env);
@@ -7029,7 +7029,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Environment variables to set in the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings AddEnv(this KubernetesRunSettings toolSettings, IEnumerable<string> env)
+        public static T AddEnv<T>(this T toolSettings, IEnumerable<string> env) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnvInternal.AddRange(env);
@@ -7040,7 +7040,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Environment variables to set in the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ClearEnv(this KubernetesRunSettings toolSettings)
+        public static T ClearEnv<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnvInternal.Clear();
@@ -7051,7 +7051,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Environment variables to set in the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings RemoveEnv(this KubernetesRunSettings toolSettings, params string[] env)
+        public static T RemoveEnv<T>(this T toolSettings, params string[] env) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(env);
@@ -7063,7 +7063,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Environment variables to set in the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings RemoveEnv(this KubernetesRunSettings toolSettings, IEnumerable<string> env)
+        public static T RemoveEnv<T>(this T toolSettings, IEnumerable<string> env) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(env);
@@ -7077,7 +7077,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, a public, external service is created for the container(s) which are run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetExpose(this KubernetesRunSettings toolSettings, bool? expose)
+        public static T SetExpose<T>(this T toolSettings, bool? expose) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Expose = expose;
@@ -7088,7 +7088,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, a public, external service is created for the container(s) which are run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetExpose(this KubernetesRunSettings toolSettings)
+        public static T ResetExpose<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Expose = null;
@@ -7099,7 +7099,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, a public, external service is created for the container(s) which are run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings EnableExpose(this KubernetesRunSettings toolSettings)
+        public static T EnableExpose<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Expose = true;
@@ -7110,7 +7110,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, a public, external service is created for the container(s) which are run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings DisableExpose(this KubernetesRunSettings toolSettings)
+        public static T DisableExpose<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Expose = false;
@@ -7121,7 +7121,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, a public, external service is created for the container(s) which are run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ToggleExpose(this KubernetesRunSettings toolSettings)
+        public static T ToggleExpose<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Expose = !toolSettings.Expose;
@@ -7134,7 +7134,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>to use to replace the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetFilename(this KubernetesRunSettings toolSettings, params string[] filename)
+        public static T SetFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -7145,7 +7145,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>to use to replace the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetFilename(this KubernetesRunSettings toolSettings, IEnumerable<string> filename)
+        public static T SetFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -7156,7 +7156,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>to use to replace the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings AddFilename(this KubernetesRunSettings toolSettings, params string[] filename)
+        public static T AddFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -7167,7 +7167,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>to use to replace the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings AddFilename(this KubernetesRunSettings toolSettings, IEnumerable<string> filename)
+        public static T AddFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -7178,7 +7178,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>to use to replace the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ClearFilename(this KubernetesRunSettings toolSettings)
+        public static T ClearFilename<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.Clear();
@@ -7189,7 +7189,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>to use to replace the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings RemoveFilename(this KubernetesRunSettings toolSettings, params string[] filename)
+        public static T RemoveFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -7201,7 +7201,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>to use to replace the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings RemoveFilename(this KubernetesRunSettings toolSettings, IEnumerable<string> filename)
+        public static T RemoveFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -7215,7 +7215,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetForce(this KubernetesRunSettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -7226,7 +7226,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetForce(this KubernetesRunSettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -7237,7 +7237,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings EnableForce(this KubernetesRunSettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -7248,7 +7248,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings DisableForce(this KubernetesRunSettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -7259,7 +7259,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ToggleForce(this KubernetesRunSettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -7272,7 +7272,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the API generator to use, see http://kubernetes.io/docs/user-guide/kubectl-conventions/#generators for a list.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetGenerator(this KubernetesRunSettings toolSettings, string generator)
+        public static T SetGenerator<T>(this T toolSettings, string generator) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Generator = generator;
@@ -7283,7 +7283,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the API generator to use, see http://kubernetes.io/docs/user-guide/kubectl-conventions/#generators for a list.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetGenerator(this KubernetesRunSettings toolSettings)
+        public static T ResetGenerator<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Generator = null;
@@ -7296,7 +7296,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion).</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetGracePeriod(this KubernetesRunSettings toolSettings, int? gracePeriod)
+        public static T SetGracePeriod<T>(this T toolSettings, int? gracePeriod) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GracePeriod = gracePeriod;
@@ -7307,7 +7307,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion).</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetGracePeriod(this KubernetesRunSettings toolSettings)
+        public static T ResetGracePeriod<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GracePeriod = null;
@@ -7320,7 +7320,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The host port mapping for the container port. To demonstrate a single-machine container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetHostport(this KubernetesRunSettings toolSettings, int? hostport)
+        public static T SetHostport<T>(this T toolSettings, int? hostport) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Hostport = hostport;
@@ -7331,7 +7331,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The host port mapping for the container port. To demonstrate a single-machine container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetHostport(this KubernetesRunSettings toolSettings)
+        public static T ResetHostport<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Hostport = null;
@@ -7344,7 +7344,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The image for the container to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetImage(this KubernetesRunSettings toolSettings, string image)
+        public static T SetImage<T>(this T toolSettings, string image) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Image = image;
@@ -7355,7 +7355,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The image for the container to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetImage(this KubernetesRunSettings toolSettings)
+        public static T ResetImage<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Image = null;
@@ -7368,7 +7368,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The image pull policy for the container. If left empty, this value will not be specified by the client and defaulted by the server.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetImagePullPolicy(this KubernetesRunSettings toolSettings, string imagePullPolicy)
+        public static T SetImagePullPolicy<T>(this T toolSettings, string imagePullPolicy) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ImagePullPolicy = imagePullPolicy;
@@ -7379,7 +7379,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The image pull policy for the container. If left empty, this value will not be specified by the client and defaulted by the server.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetImagePullPolicy(this KubernetesRunSettings toolSettings)
+        public static T ResetImagePullPolicy<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ImagePullPolicy = null;
@@ -7392,7 +7392,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Comma separated labels to apply to the pod(s). Will override previous values.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetLabels(this KubernetesRunSettings toolSettings, string labels)
+        public static T SetLabels<T>(this T toolSettings, string labels) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Labels = labels;
@@ -7403,7 +7403,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Comma separated labels to apply to the pod(s). Will override previous values.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetLabels(this KubernetesRunSettings toolSettings)
+        public static T ResetLabels<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Labels = null;
@@ -7416,7 +7416,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If the pod is started in interactive mode or with stdin, leave stdin open after the first attach completes. By default, stdin will be closed after the first attach completes.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetLeaveStdinOpen(this KubernetesRunSettings toolSettings, bool? leaveStdinOpen)
+        public static T SetLeaveStdinOpen<T>(this T toolSettings, bool? leaveStdinOpen) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LeaveStdinOpen = leaveStdinOpen;
@@ -7427,7 +7427,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If the pod is started in interactive mode or with stdin, leave stdin open after the first attach completes. By default, stdin will be closed after the first attach completes.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetLeaveStdinOpen(this KubernetesRunSettings toolSettings)
+        public static T ResetLeaveStdinOpen<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LeaveStdinOpen = null;
@@ -7438,7 +7438,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If the pod is started in interactive mode or with stdin, leave stdin open after the first attach completes. By default, stdin will be closed after the first attach completes.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings EnableLeaveStdinOpen(this KubernetesRunSettings toolSettings)
+        public static T EnableLeaveStdinOpen<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LeaveStdinOpen = true;
@@ -7449,7 +7449,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If the pod is started in interactive mode or with stdin, leave stdin open after the first attach completes. By default, stdin will be closed after the first attach completes.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings DisableLeaveStdinOpen(this KubernetesRunSettings toolSettings)
+        public static T DisableLeaveStdinOpen<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LeaveStdinOpen = false;
@@ -7460,7 +7460,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If the pod is started in interactive mode or with stdin, leave stdin open after the first attach completes. By default, stdin will be closed after the first attach completes.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ToggleLeaveStdinOpen(this KubernetesRunSettings toolSettings)
+        public static T ToggleLeaveStdinOpen<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LeaveStdinOpen = !toolSettings.LeaveStdinOpen;
@@ -7473,7 +7473,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The resource requirement limits for this container.  For example, 'cpu=200m,memory=512Mi'.  Note that server side components may assign limits depending on the server configuration, such as limit ranges.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetLimits(this KubernetesRunSettings toolSettings, string limits)
+        public static T SetLimits<T>(this T toolSettings, string limits) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Limits = limits;
@@ -7484,7 +7484,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The resource requirement limits for this container.  For example, 'cpu=200m,memory=512Mi'.  Note that server side components may assign limits depending on the server configuration, such as limit ranges.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetLimits(this KubernetesRunSettings toolSettings)
+        public static T ResetLimits<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Limits = null;
@@ -7497,7 +7497,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|templatefile|template|go-template|go-template-file|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetOutput(this KubernetesRunSettings toolSettings, KubernetesRunOutput output)
+        public static T SetOutput<T>(this T toolSettings, KubernetesRunOutput output) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -7508,7 +7508,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|templatefile|template|go-template|go-template-file|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetOutput(this KubernetesRunSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -7521,7 +7521,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>An inline JSON override for the generated object. If this is non-empty, it is used to override the generated object. Requires that the object supply a valid apiVersion field.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetOverrides(this KubernetesRunSettings toolSettings, string overrides)
+        public static T SetOverrides<T>(this T toolSettings, string overrides) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overrides = overrides;
@@ -7532,7 +7532,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>An inline JSON override for the generated object. If this is non-empty, it is used to override the generated object. Requires that the object supply a valid apiVersion field.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetOverrides(this KubernetesRunSettings toolSettings)
+        public static T ResetOverrides<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overrides = null;
@@ -7545,7 +7545,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetPodRunningTimeout(this KubernetesRunSettings toolSettings, TimeSpan? podRunningTimeout)
+        public static T SetPodRunningTimeout<T>(this T toolSettings, TimeSpan? podRunningTimeout) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PodRunningTimeout = podRunningTimeout;
@@ -7556,7 +7556,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetPodRunningTimeout(this KubernetesRunSettings toolSettings)
+        public static T ResetPodRunningTimeout<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PodRunningTimeout = null;
@@ -7569,7 +7569,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The port that this container exposes.  If --expose is true, this is also the port used by the service that is created.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetPort(this KubernetesRunSettings toolSettings, string port)
+        public static T SetPort<T>(this T toolSettings, string port) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Port = port;
@@ -7580,7 +7580,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The port that this container exposes.  If --expose is true, this is also the port used by the service that is created.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetPort(this KubernetesRunSettings toolSettings)
+        public static T ResetPort<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Port = null;
@@ -7593,7 +7593,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, suppress prompt messages.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetQuiet(this KubernetesRunSettings toolSettings, bool? quiet)
+        public static T SetQuiet<T>(this T toolSettings, bool? quiet) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = quiet;
@@ -7604,7 +7604,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, suppress prompt messages.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetQuiet(this KubernetesRunSettings toolSettings)
+        public static T ResetQuiet<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = null;
@@ -7615,7 +7615,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, suppress prompt messages.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings EnableQuiet(this KubernetesRunSettings toolSettings)
+        public static T EnableQuiet<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = true;
@@ -7626,7 +7626,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, suppress prompt messages.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings DisableQuiet(this KubernetesRunSettings toolSettings)
+        public static T DisableQuiet<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = false;
@@ -7637,7 +7637,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, suppress prompt messages.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ToggleQuiet(this KubernetesRunSettings toolSettings)
+        public static T ToggleQuiet<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = !toolSettings.Quiet;
@@ -7650,7 +7650,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetRecord(this KubernetesRunSettings toolSettings, bool? record)
+        public static T SetRecord<T>(this T toolSettings, bool? record) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = record;
@@ -7661,7 +7661,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetRecord(this KubernetesRunSettings toolSettings)
+        public static T ResetRecord<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = null;
@@ -7672,7 +7672,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings EnableRecord(this KubernetesRunSettings toolSettings)
+        public static T EnableRecord<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = true;
@@ -7683,7 +7683,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings DisableRecord(this KubernetesRunSettings toolSettings)
+        public static T DisableRecord<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = false;
@@ -7694,7 +7694,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ToggleRecord(this KubernetesRunSettings toolSettings)
+        public static T ToggleRecord<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = !toolSettings.Record;
@@ -7707,7 +7707,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetRecursive(this KubernetesRunSettings toolSettings, bool? recursive)
+        public static T SetRecursive<T>(this T toolSettings, bool? recursive) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = recursive;
@@ -7718,7 +7718,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetRecursive(this KubernetesRunSettings toolSettings)
+        public static T ResetRecursive<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = null;
@@ -7729,7 +7729,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings EnableRecursive(this KubernetesRunSettings toolSettings)
+        public static T EnableRecursive<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = true;
@@ -7740,7 +7740,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings DisableRecursive(this KubernetesRunSettings toolSettings)
+        public static T DisableRecursive<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = false;
@@ -7751,7 +7751,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ToggleRecursive(this KubernetesRunSettings toolSettings)
+        public static T ToggleRecursive<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = !toolSettings.Recursive;
@@ -7764,7 +7764,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Number of replicas to create for this container. Default is 1.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetReplicas(this KubernetesRunSettings toolSettings, int? replicas)
+        public static T SetReplicas<T>(this T toolSettings, int? replicas) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Replicas = replicas;
@@ -7775,7 +7775,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Number of replicas to create for this container. Default is 1.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetReplicas(this KubernetesRunSettings toolSettings)
+        public static T ResetReplicas<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Replicas = null;
@@ -7788,7 +7788,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The resource requirement requests for this container.  For example, 'cpu=100m,memory=256Mi'.  Note that server side components may assign requests depending on the server configuration, such as limit ranges.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetRequests(this KubernetesRunSettings toolSettings, string requests)
+        public static T SetRequests<T>(this T toolSettings, string requests) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Requests = requests;
@@ -7799,7 +7799,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The resource requirement requests for this container.  For example, 'cpu=100m,memory=256Mi'.  Note that server side components may assign requests depending on the server configuration, such as limit ranges.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetRequests(this KubernetesRunSettings toolSettings)
+        public static T ResetRequests<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Requests = null;
@@ -7812,7 +7812,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The restart policy for this Pod.  Legal values [Always, OnFailure, Never].  If set to 'Always' a deployment is created, if set to 'OnFailure' a job is created, if set to 'Never', a regular pod is created. For the latter two --replicas must be 1.  Default 'Always', for CronJobs `Never`.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetRestart(this KubernetesRunSettings toolSettings, string restart)
+        public static T SetRestart<T>(this T toolSettings, string restart) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Restart = restart;
@@ -7823,7 +7823,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The restart policy for this Pod.  Legal values [Always, OnFailure, Never].  If set to 'Always' a deployment is created, if set to 'OnFailure' a job is created, if set to 'Never', a regular pod is created. For the latter two --replicas must be 1.  Default 'Always', for CronJobs `Never`.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetRestart(this KubernetesRunSettings toolSettings)
+        public static T ResetRestart<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Restart = null;
@@ -7836,7 +7836,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, delete resources created in this command for attached containers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetRm(this KubernetesRunSettings toolSettings, bool? rm)
+        public static T SetRm<T>(this T toolSettings, bool? rm) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Rm = rm;
@@ -7847,7 +7847,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, delete resources created in this command for attached containers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetRm(this KubernetesRunSettings toolSettings)
+        public static T ResetRm<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Rm = null;
@@ -7858,7 +7858,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, delete resources created in this command for attached containers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings EnableRm(this KubernetesRunSettings toolSettings)
+        public static T EnableRm<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Rm = true;
@@ -7869,7 +7869,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, delete resources created in this command for attached containers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings DisableRm(this KubernetesRunSettings toolSettings)
+        public static T DisableRm<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Rm = false;
@@ -7880,7 +7880,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, delete resources created in this command for attached containers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ToggleRm(this KubernetesRunSettings toolSettings)
+        public static T ToggleRm<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Rm = !toolSettings.Rm;
@@ -7893,7 +7893,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetSaveConfig(this KubernetesRunSettings toolSettings, bool? saveConfig)
+        public static T SetSaveConfig<T>(this T toolSettings, bool? saveConfig) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = saveConfig;
@@ -7904,7 +7904,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetSaveConfig(this KubernetesRunSettings toolSettings)
+        public static T ResetSaveConfig<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = null;
@@ -7915,7 +7915,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings EnableSaveConfig(this KubernetesRunSettings toolSettings)
+        public static T EnableSaveConfig<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = true;
@@ -7926,7 +7926,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings DisableSaveConfig(this KubernetesRunSettings toolSettings)
+        public static T DisableSaveConfig<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = false;
@@ -7937,7 +7937,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ToggleSaveConfig(this KubernetesRunSettings toolSettings)
+        public static T ToggleSaveConfig<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = !toolSettings.SaveConfig;
@@ -7950,7 +7950,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>A schedule in the Cron format the job should be run with.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetSchedule(this KubernetesRunSettings toolSettings, string schedule)
+        public static T SetSchedule<T>(this T toolSettings, string schedule) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Schedule = schedule;
@@ -7961,7 +7961,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>A schedule in the Cron format the job should be run with.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetSchedule(this KubernetesRunSettings toolSettings)
+        public static T ResetSchedule<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Schedule = null;
@@ -7974,7 +7974,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the generator to use for creating a service.  Only used if --expose is true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetServiceGenerator(this KubernetesRunSettings toolSettings, string serviceGenerator)
+        public static T SetServiceGenerator<T>(this T toolSettings, string serviceGenerator) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceGenerator = serviceGenerator;
@@ -7985,7 +7985,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the generator to use for creating a service.  Only used if --expose is true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetServiceGenerator(this KubernetesRunSettings toolSettings)
+        public static T ResetServiceGenerator<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceGenerator = null;
@@ -7998,7 +7998,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>An inline JSON override for the generated service object. If this is non-empty, it is used to override the generated object. Requires that the object supply a valid apiVersion field.  Only used if --expose is true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetServiceOverrides(this KubernetesRunSettings toolSettings, string serviceOverrides)
+        public static T SetServiceOverrides<T>(this T toolSettings, string serviceOverrides) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceOverrides = serviceOverrides;
@@ -8009,7 +8009,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>An inline JSON override for the generated service object. If this is non-empty, it is used to override the generated object. Requires that the object supply a valid apiVersion field.  Only used if --expose is true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetServiceOverrides(this KubernetesRunSettings toolSettings)
+        public static T ResetServiceOverrides<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceOverrides = null;
@@ -8022,7 +8022,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Service account to set in the pod spec.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetServiceaccount(this KubernetesRunSettings toolSettings, string serviceaccount)
+        public static T SetServiceaccount<T>(this T toolSettings, string serviceaccount) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serviceaccount = serviceaccount;
@@ -8033,7 +8033,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Service account to set in the pod spec.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetServiceaccount(this KubernetesRunSettings toolSettings)
+        public static T ResetServiceaccount<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serviceaccount = null;
@@ -8046,7 +8046,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Keep stdin open on the container(s) in the pod, even if nothing is attached.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetStdin(this KubernetesRunSettings toolSettings, bool? stdin)
+        public static T SetStdin<T>(this T toolSettings, bool? stdin) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stdin = stdin;
@@ -8057,7 +8057,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Keep stdin open on the container(s) in the pod, even if nothing is attached.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetStdin(this KubernetesRunSettings toolSettings)
+        public static T ResetStdin<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stdin = null;
@@ -8068,7 +8068,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Keep stdin open on the container(s) in the pod, even if nothing is attached.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings EnableStdin(this KubernetesRunSettings toolSettings)
+        public static T EnableStdin<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stdin = true;
@@ -8079,7 +8079,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Keep stdin open on the container(s) in the pod, even if nothing is attached.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings DisableStdin(this KubernetesRunSettings toolSettings)
+        public static T DisableStdin<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stdin = false;
@@ -8090,7 +8090,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Keep stdin open on the container(s) in the pod, even if nothing is attached.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ToggleStdin(this KubernetesRunSettings toolSettings)
+        public static T ToggleStdin<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stdin = !toolSettings.Stdin;
@@ -8103,7 +8103,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetTemplate(this KubernetesRunSettings toolSettings, string template)
+        public static T SetTemplate<T>(this T toolSettings, string template) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = template;
@@ -8114,7 +8114,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetTemplate(this KubernetesRunSettings toolSettings)
+        public static T ResetTemplate<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = null;
@@ -8127,7 +8127,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetTimeout(this KubernetesRunSettings toolSettings, TimeSpan? timeout)
+        public static T SetTimeout<T>(this T toolSettings, TimeSpan? timeout) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = timeout;
@@ -8138,7 +8138,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetTimeout(this KubernetesRunSettings toolSettings)
+        public static T ResetTimeout<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = null;
@@ -8151,7 +8151,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Allocated a TTY for each container in the pod.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetTty(this KubernetesRunSettings toolSettings, bool? tty)
+        public static T SetTty<T>(this T toolSettings, bool? tty) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tty = tty;
@@ -8162,7 +8162,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Allocated a TTY for each container in the pod.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetTty(this KubernetesRunSettings toolSettings)
+        public static T ResetTty<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tty = null;
@@ -8173,7 +8173,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Allocated a TTY for each container in the pod.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings EnableTty(this KubernetesRunSettings toolSettings)
+        public static T EnableTty<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tty = true;
@@ -8184,7 +8184,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Allocated a TTY for each container in the pod.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings DisableTty(this KubernetesRunSettings toolSettings)
+        public static T DisableTty<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tty = false;
@@ -8195,7 +8195,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Allocated a TTY for each container in the pod.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ToggleTty(this KubernetesRunSettings toolSettings)
+        public static T ToggleTty<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tty = !toolSettings.Tty;
@@ -8208,7 +8208,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings SetWait(this KubernetesRunSettings toolSettings, bool? wait)
+        public static T SetWait<T>(this T toolSettings, bool? wait) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = wait;
@@ -8219,7 +8219,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ResetWait(this KubernetesRunSettings toolSettings)
+        public static T ResetWait<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = null;
@@ -8230,7 +8230,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings EnableWait(this KubernetesRunSettings toolSettings)
+        public static T EnableWait<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = true;
@@ -8241,7 +8241,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings DisableWait(this KubernetesRunSettings toolSettings)
+        public static T DisableWait<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = false;
@@ -8252,7 +8252,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunSettings ToggleWait(this KubernetesRunSettings toolSettings)
+        public static T ToggleWait<T>(this T toolSettings) where T : KubernetesRunSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = !toolSettings.Wait;
@@ -8275,7 +8275,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetTypeName(this KubernetesGetSettings toolSettings, params string[] typeName)
+        public static T SetTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal = typeName.ToList();
@@ -8286,7 +8286,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetTypeName(this KubernetesGetSettings toolSettings, IEnumerable<string> typeName)
+        public static T SetTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal = typeName.ToList();
@@ -8297,7 +8297,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings AddTypeName(this KubernetesGetSettings toolSettings, params string[] typeName)
+        public static T AddTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.AddRange(typeName);
@@ -8308,7 +8308,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings AddTypeName(this KubernetesGetSettings toolSettings, IEnumerable<string> typeName)
+        public static T AddTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.AddRange(typeName);
@@ -8319,7 +8319,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ClearTypeName(this KubernetesGetSettings toolSettings)
+        public static T ClearTypeName<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.Clear();
@@ -8330,7 +8330,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings RemoveTypeName(this KubernetesGetSettings toolSettings, params string[] typeName)
+        public static T RemoveTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(typeName);
@@ -8342,7 +8342,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings RemoveTypeName(this KubernetesGetSettings toolSettings, IEnumerable<string> typeName)
+        public static T RemoveTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(typeName);
@@ -8356,7 +8356,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetAllNamespaces(this KubernetesGetSettings toolSettings, bool? allNamespaces)
+        public static T SetAllNamespaces<T>(this T toolSettings, bool? allNamespaces) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllNamespaces = allNamespaces;
@@ -8367,7 +8367,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ResetAllNamespaces(this KubernetesGetSettings toolSettings)
+        public static T ResetAllNamespaces<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllNamespaces = null;
@@ -8378,7 +8378,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings EnableAllNamespaces(this KubernetesGetSettings toolSettings)
+        public static T EnableAllNamespaces<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllNamespaces = true;
@@ -8389,7 +8389,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings DisableAllNamespaces(this KubernetesGetSettings toolSettings)
+        public static T DisableAllNamespaces<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllNamespaces = false;
@@ -8400,7 +8400,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ToggleAllNamespaces(this KubernetesGetSettings toolSettings)
+        public static T ToggleAllNamespaces<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllNamespaces = !toolSettings.AllNamespaces;
@@ -8413,7 +8413,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetAllowMissingTemplateKeys(this KubernetesGetSettings toolSettings, bool? allowMissingTemplateKeys)
+        public static T SetAllowMissingTemplateKeys<T>(this T toolSettings, bool? allowMissingTemplateKeys) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = allowMissingTemplateKeys;
@@ -8424,7 +8424,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ResetAllowMissingTemplateKeys(this KubernetesGetSettings toolSettings)
+        public static T ResetAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = null;
@@ -8435,7 +8435,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings EnableAllowMissingTemplateKeys(this KubernetesGetSettings toolSettings)
+        public static T EnableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = true;
@@ -8446,7 +8446,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings DisableAllowMissingTemplateKeys(this KubernetesGetSettings toolSettings)
+        public static T DisableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = false;
@@ -8457,7 +8457,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ToggleAllowMissingTemplateKeys(this KubernetesGetSettings toolSettings)
+        public static T ToggleAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = !toolSettings.AllowMissingTemplateKeys;
@@ -8470,7 +8470,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Return large lists in chunks rather than all at once. Pass 0 to disable. This flag is beta and may change in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetChunkSize(this KubernetesGetSettings toolSettings, long? chunkSize)
+        public static T SetChunkSize<T>(this T toolSettings, long? chunkSize) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ChunkSize = chunkSize;
@@ -8481,7 +8481,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Return large lists in chunks rather than all at once. Pass 0 to disable. This flag is beta and may change in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ResetChunkSize(this KubernetesGetSettings toolSettings)
+        public static T ResetChunkSize<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ChunkSize = null;
@@ -8494,7 +8494,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use 'export' for the resources.  Exported resources are stripped of cluster-specific information.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetExport(this KubernetesGetSettings toolSettings, bool? export)
+        public static T SetExport<T>(this T toolSettings, bool? export) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Export = export;
@@ -8505,7 +8505,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use 'export' for the resources.  Exported resources are stripped of cluster-specific information.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ResetExport(this KubernetesGetSettings toolSettings)
+        public static T ResetExport<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Export = null;
@@ -8516,7 +8516,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use 'export' for the resources.  Exported resources are stripped of cluster-specific information.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings EnableExport(this KubernetesGetSettings toolSettings)
+        public static T EnableExport<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Export = true;
@@ -8527,7 +8527,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use 'export' for the resources.  Exported resources are stripped of cluster-specific information.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings DisableExport(this KubernetesGetSettings toolSettings)
+        public static T DisableExport<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Export = false;
@@ -8538,7 +8538,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use 'export' for the resources.  Exported resources are stripped of cluster-specific information.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ToggleExport(this KubernetesGetSettings toolSettings)
+        public static T ToggleExport<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Export = !toolSettings.Export;
@@ -8551,7 +8551,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetFieldSelector(this KubernetesGetSettings toolSettings, string fieldSelector)
+        public static T SetFieldSelector<T>(this T toolSettings, string fieldSelector) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FieldSelector = fieldSelector;
@@ -8562,7 +8562,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ResetFieldSelector(this KubernetesGetSettings toolSettings)
+        public static T ResetFieldSelector<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FieldSelector = null;
@@ -8575,7 +8575,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to get from a server.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetFilename(this KubernetesGetSettings toolSettings, params string[] filename)
+        public static T SetFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -8586,7 +8586,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to get from a server.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetFilename(this KubernetesGetSettings toolSettings, IEnumerable<string> filename)
+        public static T SetFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -8597,7 +8597,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to get from a server.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings AddFilename(this KubernetesGetSettings toolSettings, params string[] filename)
+        public static T AddFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -8608,7 +8608,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to get from a server.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings AddFilename(this KubernetesGetSettings toolSettings, IEnumerable<string> filename)
+        public static T AddFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -8619,7 +8619,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to get from a server.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ClearFilename(this KubernetesGetSettings toolSettings)
+        public static T ClearFilename<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.Clear();
@@ -8630,7 +8630,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to get from a server.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings RemoveFilename(this KubernetesGetSettings toolSettings, params string[] filename)
+        public static T RemoveFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -8642,7 +8642,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to get from a server.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings RemoveFilename(this KubernetesGetSettings toolSettings, IEnumerable<string> filename)
+        public static T RemoveFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -8656,7 +8656,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If the requested object does not exist the command will return exit code 0.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetIgnoreNotFound(this KubernetesGetSettings toolSettings, bool? ignoreNotFound)
+        public static T SetIgnoreNotFound<T>(this T toolSettings, bool? ignoreNotFound) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreNotFound = ignoreNotFound;
@@ -8667,7 +8667,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If the requested object does not exist the command will return exit code 0.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ResetIgnoreNotFound(this KubernetesGetSettings toolSettings)
+        public static T ResetIgnoreNotFound<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreNotFound = null;
@@ -8678,7 +8678,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If the requested object does not exist the command will return exit code 0.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings EnableIgnoreNotFound(this KubernetesGetSettings toolSettings)
+        public static T EnableIgnoreNotFound<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreNotFound = true;
@@ -8689,7 +8689,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If the requested object does not exist the command will return exit code 0.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings DisableIgnoreNotFound(this KubernetesGetSettings toolSettings)
+        public static T DisableIgnoreNotFound<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreNotFound = false;
@@ -8700,7 +8700,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If the requested object does not exist the command will return exit code 0.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ToggleIgnoreNotFound(this KubernetesGetSettings toolSettings)
+        public static T ToggleIgnoreNotFound<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreNotFound = !toolSettings.IgnoreNotFound;
@@ -8713,7 +8713,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetIncludeUninitialized(this KubernetesGetSettings toolSettings, bool? includeUninitialized)
+        public static T SetIncludeUninitialized<T>(this T toolSettings, bool? includeUninitialized) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = includeUninitialized;
@@ -8724,7 +8724,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ResetIncludeUninitialized(this KubernetesGetSettings toolSettings)
+        public static T ResetIncludeUninitialized<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = null;
@@ -8735,7 +8735,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings EnableIncludeUninitialized(this KubernetesGetSettings toolSettings)
+        public static T EnableIncludeUninitialized<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = true;
@@ -8746,7 +8746,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings DisableIncludeUninitialized(this KubernetesGetSettings toolSettings)
+        public static T DisableIncludeUninitialized<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = false;
@@ -8757,7 +8757,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ToggleIncludeUninitialized(this KubernetesGetSettings toolSettings)
+        public static T ToggleIncludeUninitialized<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = !toolSettings.IncludeUninitialized;
@@ -8770,7 +8770,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Accepts a comma separated list of labels that are going to be presented as columns. Names are case-sensitive. You can also use multiple flag options like -L label1 -L label2...</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetLabelColumns(this KubernetesGetSettings toolSettings, params string[] labelColumns)
+        public static T SetLabelColumns<T>(this T toolSettings, params string[] labelColumns) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LabelColumnsInternal = labelColumns.ToList();
@@ -8781,7 +8781,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Accepts a comma separated list of labels that are going to be presented as columns. Names are case-sensitive. You can also use multiple flag options like -L label1 -L label2...</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetLabelColumns(this KubernetesGetSettings toolSettings, IEnumerable<string> labelColumns)
+        public static T SetLabelColumns<T>(this T toolSettings, IEnumerable<string> labelColumns) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LabelColumnsInternal = labelColumns.ToList();
@@ -8792,7 +8792,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Accepts a comma separated list of labels that are going to be presented as columns. Names are case-sensitive. You can also use multiple flag options like -L label1 -L label2...</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings AddLabelColumns(this KubernetesGetSettings toolSettings, params string[] labelColumns)
+        public static T AddLabelColumns<T>(this T toolSettings, params string[] labelColumns) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LabelColumnsInternal.AddRange(labelColumns);
@@ -8803,7 +8803,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Accepts a comma separated list of labels that are going to be presented as columns. Names are case-sensitive. You can also use multiple flag options like -L label1 -L label2...</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings AddLabelColumns(this KubernetesGetSettings toolSettings, IEnumerable<string> labelColumns)
+        public static T AddLabelColumns<T>(this T toolSettings, IEnumerable<string> labelColumns) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LabelColumnsInternal.AddRange(labelColumns);
@@ -8814,7 +8814,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Accepts a comma separated list of labels that are going to be presented as columns. Names are case-sensitive. You can also use multiple flag options like -L label1 -L label2...</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ClearLabelColumns(this KubernetesGetSettings toolSettings)
+        public static T ClearLabelColumns<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LabelColumnsInternal.Clear();
@@ -8825,7 +8825,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Accepts a comma separated list of labels that are going to be presented as columns. Names are case-sensitive. You can also use multiple flag options like -L label1 -L label2...</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings RemoveLabelColumns(this KubernetesGetSettings toolSettings, params string[] labelColumns)
+        public static T RemoveLabelColumns<T>(this T toolSettings, params string[] labelColumns) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(labelColumns);
@@ -8837,7 +8837,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Accepts a comma separated list of labels that are going to be presented as columns. Names are case-sensitive. You can also use multiple flag options like -L label1 -L label2...</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings RemoveLabelColumns(this KubernetesGetSettings toolSettings, IEnumerable<string> labelColumns)
+        public static T RemoveLabelColumns<T>(this T toolSettings, IEnumerable<string> labelColumns) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(labelColumns);
@@ -8851,7 +8851,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>When using the default or custom-column output format, don't print headers (default print headers).</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetNoHeaders(this KubernetesGetSettings toolSettings, bool? noHeaders)
+        public static T SetNoHeaders<T>(this T toolSettings, bool? noHeaders) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHeaders = noHeaders;
@@ -8862,7 +8862,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>When using the default or custom-column output format, don't print headers (default print headers).</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ResetNoHeaders(this KubernetesGetSettings toolSettings)
+        public static T ResetNoHeaders<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHeaders = null;
@@ -8873,7 +8873,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>When using the default or custom-column output format, don't print headers (default print headers).</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings EnableNoHeaders(this KubernetesGetSettings toolSettings)
+        public static T EnableNoHeaders<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHeaders = true;
@@ -8884,7 +8884,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>When using the default or custom-column output format, don't print headers (default print headers).</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings DisableNoHeaders(this KubernetesGetSettings toolSettings)
+        public static T DisableNoHeaders<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHeaders = false;
@@ -8895,7 +8895,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>When using the default or custom-column output format, don't print headers (default print headers).</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ToggleNoHeaders(this KubernetesGetSettings toolSettings)
+        public static T ToggleNoHeaders<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoHeaders = !toolSettings.NoHeaders;
@@ -8908,7 +8908,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|wide|name|custom-columns=...|custom-columns-file=...|go-template=...|go-template-file=...|jsonpath=...|jsonpath-file=... See custom columns [http://kubernetes.io/docs/user-guide/kubectl-overview/#custom-columns], golang template [http://golang.org/pkg/text/template/#pkg-overview] and jsonpath template [http://kubernetes.io/docs/user-guide/jsonpath].</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetOutput(this KubernetesGetSettings toolSettings, KubernetesGetOutput output)
+        public static T SetOutput<T>(this T toolSettings, KubernetesGetOutput output) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -8919,7 +8919,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|wide|name|custom-columns=...|custom-columns-file=...|go-template=...|go-template-file=...|jsonpath=...|jsonpath-file=... See custom columns [http://kubernetes.io/docs/user-guide/kubectl-overview/#custom-columns], golang template [http://golang.org/pkg/text/template/#pkg-overview] and jsonpath template [http://kubernetes.io/docs/user-guide/jsonpath].</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ResetOutput(this KubernetesGetSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -8932,7 +8932,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Raw URI to request from the server.  Uses the transport specified by the kubeconfig file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetRaw(this KubernetesGetSettings toolSettings, string raw)
+        public static T SetRaw<T>(this T toolSettings, string raw) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Raw = raw;
@@ -8943,7 +8943,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Raw URI to request from the server.  Uses the transport specified by the kubeconfig file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ResetRaw(this KubernetesGetSettings toolSettings)
+        public static T ResetRaw<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Raw = null;
@@ -8956,7 +8956,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetRecursive(this KubernetesGetSettings toolSettings, bool? recursive)
+        public static T SetRecursive<T>(this T toolSettings, bool? recursive) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = recursive;
@@ -8967,7 +8967,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ResetRecursive(this KubernetesGetSettings toolSettings)
+        public static T ResetRecursive<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = null;
@@ -8978,7 +8978,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings EnableRecursive(this KubernetesGetSettings toolSettings)
+        public static T EnableRecursive<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = true;
@@ -8989,7 +8989,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings DisableRecursive(this KubernetesGetSettings toolSettings)
+        public static T DisableRecursive<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = false;
@@ -9000,7 +9000,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ToggleRecursive(this KubernetesGetSettings toolSettings)
+        public static T ToggleRecursive<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = !toolSettings.Recursive;
@@ -9013,7 +9013,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetSelector(this KubernetesGetSettings toolSettings, string selector)
+        public static T SetSelector<T>(this T toolSettings, string selector) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = selector;
@@ -9024,7 +9024,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ResetSelector(this KubernetesGetSettings toolSettings)
+        public static T ResetSelector<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = null;
@@ -9037,7 +9037,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, have the server return the appropriate table output. Supports extension APIs and CRDs.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetServerPrint(this KubernetesGetSettings toolSettings, bool? serverPrint)
+        public static T SetServerPrint<T>(this T toolSettings, bool? serverPrint) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServerPrint = serverPrint;
@@ -9048,7 +9048,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, have the server return the appropriate table output. Supports extension APIs and CRDs.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ResetServerPrint(this KubernetesGetSettings toolSettings)
+        public static T ResetServerPrint<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServerPrint = null;
@@ -9059,7 +9059,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, have the server return the appropriate table output. Supports extension APIs and CRDs.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings EnableServerPrint(this KubernetesGetSettings toolSettings)
+        public static T EnableServerPrint<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServerPrint = true;
@@ -9070,7 +9070,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, have the server return the appropriate table output. Supports extension APIs and CRDs.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings DisableServerPrint(this KubernetesGetSettings toolSettings)
+        public static T DisableServerPrint<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServerPrint = false;
@@ -9081,7 +9081,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, have the server return the appropriate table output. Supports extension APIs and CRDs.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ToggleServerPrint(this KubernetesGetSettings toolSettings)
+        public static T ToggleServerPrint<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServerPrint = !toolSettings.ServerPrint;
@@ -9094,7 +9094,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>When printing, show all resources (default show all pods including terminated one.).</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetShowAll(this KubernetesGetSettings toolSettings, bool? showAll)
+        public static T SetShowAll<T>(this T toolSettings, bool? showAll) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowAll = showAll;
@@ -9105,7 +9105,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>When printing, show all resources (default show all pods including terminated one.).</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ResetShowAll(this KubernetesGetSettings toolSettings)
+        public static T ResetShowAll<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowAll = null;
@@ -9116,7 +9116,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>When printing, show all resources (default show all pods including terminated one.).</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings EnableShowAll(this KubernetesGetSettings toolSettings)
+        public static T EnableShowAll<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowAll = true;
@@ -9127,7 +9127,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>When printing, show all resources (default show all pods including terminated one.).</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings DisableShowAll(this KubernetesGetSettings toolSettings)
+        public static T DisableShowAll<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowAll = false;
@@ -9138,7 +9138,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>When printing, show all resources (default show all pods including terminated one.).</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ToggleShowAll(this KubernetesGetSettings toolSettings)
+        public static T ToggleShowAll<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowAll = !toolSettings.ShowAll;
@@ -9151,7 +9151,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If present, list the resource type for the requested object(s).</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetShowKind(this KubernetesGetSettings toolSettings, bool? showKind)
+        public static T SetShowKind<T>(this T toolSettings, bool? showKind) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowKind = showKind;
@@ -9162,7 +9162,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If present, list the resource type for the requested object(s).</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ResetShowKind(this KubernetesGetSettings toolSettings)
+        public static T ResetShowKind<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowKind = null;
@@ -9173,7 +9173,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If present, list the resource type for the requested object(s).</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings EnableShowKind(this KubernetesGetSettings toolSettings)
+        public static T EnableShowKind<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowKind = true;
@@ -9184,7 +9184,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If present, list the resource type for the requested object(s).</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings DisableShowKind(this KubernetesGetSettings toolSettings)
+        public static T DisableShowKind<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowKind = false;
@@ -9195,7 +9195,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If present, list the resource type for the requested object(s).</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ToggleShowKind(this KubernetesGetSettings toolSettings)
+        public static T ToggleShowKind<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowKind = !toolSettings.ShowKind;
@@ -9208,7 +9208,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>When printing, show all labels as the last column (default hide labels column).</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetShowLabels(this KubernetesGetSettings toolSettings, bool? showLabels)
+        public static T SetShowLabels<T>(this T toolSettings, bool? showLabels) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowLabels = showLabels;
@@ -9219,7 +9219,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>When printing, show all labels as the last column (default hide labels column).</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ResetShowLabels(this KubernetesGetSettings toolSettings)
+        public static T ResetShowLabels<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowLabels = null;
@@ -9230,7 +9230,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>When printing, show all labels as the last column (default hide labels column).</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings EnableShowLabels(this KubernetesGetSettings toolSettings)
+        public static T EnableShowLabels<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowLabels = true;
@@ -9241,7 +9241,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>When printing, show all labels as the last column (default hide labels column).</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings DisableShowLabels(this KubernetesGetSettings toolSettings)
+        public static T DisableShowLabels<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowLabels = false;
@@ -9252,7 +9252,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>When printing, show all labels as the last column (default hide labels column).</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ToggleShowLabels(this KubernetesGetSettings toolSettings)
+        public static T ToggleShowLabels<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowLabels = !toolSettings.ShowLabels;
@@ -9265,7 +9265,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If non-empty, sort list types using this field specification.  The field specification is expressed as a JSONPath expression (e.g. '{.metadata.name}'). The field in the API resource specified by this JSONPath expression must be an integer or a string.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetSortBy(this KubernetesGetSettings toolSettings, string sortBy)
+        public static T SetSortBy<T>(this T toolSettings, string sortBy) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SortBy = sortBy;
@@ -9276,7 +9276,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If non-empty, sort list types using this field specification.  The field specification is expressed as a JSONPath expression (e.g. '{.metadata.name}'). The field in the API resource specified by this JSONPath expression must be an integer or a string.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ResetSortBy(this KubernetesGetSettings toolSettings)
+        public static T ResetSortBy<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SortBy = null;
@@ -9289,7 +9289,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetTemplate(this KubernetesGetSettings toolSettings, string template)
+        public static T SetTemplate<T>(this T toolSettings, string template) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = template;
@@ -9300,7 +9300,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ResetTemplate(this KubernetesGetSettings toolSettings)
+        public static T ResetTemplate<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = null;
@@ -9313,7 +9313,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use x-kubernetes-print-column metadata (if present) from the OpenAPI schema for displaying a resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetUseOpenapiPrintColumns(this KubernetesGetSettings toolSettings, bool? useOpenapiPrintColumns)
+        public static T SetUseOpenapiPrintColumns<T>(this T toolSettings, bool? useOpenapiPrintColumns) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseOpenapiPrintColumns = useOpenapiPrintColumns;
@@ -9324,7 +9324,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use x-kubernetes-print-column metadata (if present) from the OpenAPI schema for displaying a resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ResetUseOpenapiPrintColumns(this KubernetesGetSettings toolSettings)
+        public static T ResetUseOpenapiPrintColumns<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseOpenapiPrintColumns = null;
@@ -9335,7 +9335,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use x-kubernetes-print-column metadata (if present) from the OpenAPI schema for displaying a resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings EnableUseOpenapiPrintColumns(this KubernetesGetSettings toolSettings)
+        public static T EnableUseOpenapiPrintColumns<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseOpenapiPrintColumns = true;
@@ -9346,7 +9346,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use x-kubernetes-print-column metadata (if present) from the OpenAPI schema for displaying a resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings DisableUseOpenapiPrintColumns(this KubernetesGetSettings toolSettings)
+        public static T DisableUseOpenapiPrintColumns<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseOpenapiPrintColumns = false;
@@ -9357,7 +9357,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use x-kubernetes-print-column metadata (if present) from the OpenAPI schema for displaying a resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ToggleUseOpenapiPrintColumns(this KubernetesGetSettings toolSettings)
+        public static T ToggleUseOpenapiPrintColumns<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseOpenapiPrintColumns = !toolSettings.UseOpenapiPrintColumns;
@@ -9370,7 +9370,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>After listing/getting the requested object, watch for changes. Uninitialized objects are excluded if no object name is provided.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetWatch(this KubernetesGetSettings toolSettings, bool? watch)
+        public static T SetWatch<T>(this T toolSettings, bool? watch) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Watch = watch;
@@ -9381,7 +9381,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>After listing/getting the requested object, watch for changes. Uninitialized objects are excluded if no object name is provided.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ResetWatch(this KubernetesGetSettings toolSettings)
+        public static T ResetWatch<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Watch = null;
@@ -9392,7 +9392,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>After listing/getting the requested object, watch for changes. Uninitialized objects are excluded if no object name is provided.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings EnableWatch(this KubernetesGetSettings toolSettings)
+        public static T EnableWatch<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Watch = true;
@@ -9403,7 +9403,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>After listing/getting the requested object, watch for changes. Uninitialized objects are excluded if no object name is provided.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings DisableWatch(this KubernetesGetSettings toolSettings)
+        public static T DisableWatch<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Watch = false;
@@ -9414,7 +9414,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>After listing/getting the requested object, watch for changes. Uninitialized objects are excluded if no object name is provided.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ToggleWatch(this KubernetesGetSettings toolSettings)
+        public static T ToggleWatch<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Watch = !toolSettings.Watch;
@@ -9427,7 +9427,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Watch for changes to the requested object(s), without listing/getting first.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings SetWatchOnly(this KubernetesGetSettings toolSettings, bool? watchOnly)
+        public static T SetWatchOnly<T>(this T toolSettings, bool? watchOnly) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WatchOnly = watchOnly;
@@ -9438,7 +9438,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Watch for changes to the requested object(s), without listing/getting first.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ResetWatchOnly(this KubernetesGetSettings toolSettings)
+        public static T ResetWatchOnly<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WatchOnly = null;
@@ -9449,7 +9449,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Watch for changes to the requested object(s), without listing/getting first.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings EnableWatchOnly(this KubernetesGetSettings toolSettings)
+        public static T EnableWatchOnly<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WatchOnly = true;
@@ -9460,7 +9460,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Watch for changes to the requested object(s), without listing/getting first.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings DisableWatchOnly(this KubernetesGetSettings toolSettings)
+        public static T DisableWatchOnly<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WatchOnly = false;
@@ -9471,7 +9471,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Watch for changes to the requested object(s), without listing/getting first.</p>
         /// </summary>
         [Pure]
-        public static KubernetesGetSettings ToggleWatchOnly(this KubernetesGetSettings toolSettings)
+        public static T ToggleWatchOnly<T>(this T toolSettings) where T : KubernetesGetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WatchOnly = !toolSettings.WatchOnly;
@@ -9494,7 +9494,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Client version only (no server required).</p>
         /// </summary>
         [Pure]
-        public static KubernetesVersionSettings SetClient(this KubernetesVersionSettings toolSettings, bool? client)
+        public static T SetClient<T>(this T toolSettings, bool? client) where T : KubernetesVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Client = client;
@@ -9505,7 +9505,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Client version only (no server required).</p>
         /// </summary>
         [Pure]
-        public static KubernetesVersionSettings ResetClient(this KubernetesVersionSettings toolSettings)
+        public static T ResetClient<T>(this T toolSettings) where T : KubernetesVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Client = null;
@@ -9516,7 +9516,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Client version only (no server required).</p>
         /// </summary>
         [Pure]
-        public static KubernetesVersionSettings EnableClient(this KubernetesVersionSettings toolSettings)
+        public static T EnableClient<T>(this T toolSettings) where T : KubernetesVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Client = true;
@@ -9527,7 +9527,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Client version only (no server required).</p>
         /// </summary>
         [Pure]
-        public static KubernetesVersionSettings DisableClient(this KubernetesVersionSettings toolSettings)
+        public static T DisableClient<T>(this T toolSettings) where T : KubernetesVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Client = false;
@@ -9538,7 +9538,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Client version only (no server required).</p>
         /// </summary>
         [Pure]
-        public static KubernetesVersionSettings ToggleClient(this KubernetesVersionSettings toolSettings)
+        public static T ToggleClient<T>(this T toolSettings) where T : KubernetesVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Client = !toolSettings.Client;
@@ -9551,7 +9551,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>One of 'yaml' or 'json'.</p>
         /// </summary>
         [Pure]
-        public static KubernetesVersionSettings SetOutput(this KubernetesVersionSettings toolSettings, string output)
+        public static T SetOutput<T>(this T toolSettings, string output) where T : KubernetesVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -9562,7 +9562,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>One of 'yaml' or 'json'.</p>
         /// </summary>
         [Pure]
-        public static KubernetesVersionSettings ResetOutput(this KubernetesVersionSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : KubernetesVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -9575,7 +9575,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Print just the version number.</p>
         /// </summary>
         [Pure]
-        public static KubernetesVersionSettings SetShort(this KubernetesVersionSettings toolSettings, bool? @short)
+        public static T SetShort<T>(this T toolSettings, bool? @short) where T : KubernetesVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Short = @short;
@@ -9586,7 +9586,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Print just the version number.</p>
         /// </summary>
         [Pure]
-        public static KubernetesVersionSettings ResetShort(this KubernetesVersionSettings toolSettings)
+        public static T ResetShort<T>(this T toolSettings) where T : KubernetesVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Short = null;
@@ -9597,7 +9597,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Print just the version number.</p>
         /// </summary>
         [Pure]
-        public static KubernetesVersionSettings EnableShort(this KubernetesVersionSettings toolSettings)
+        public static T EnableShort<T>(this T toolSettings) where T : KubernetesVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Short = true;
@@ -9608,7 +9608,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Print just the version number.</p>
         /// </summary>
         [Pure]
-        public static KubernetesVersionSettings DisableShort(this KubernetesVersionSettings toolSettings)
+        public static T DisableShort<T>(this T toolSettings) where T : KubernetesVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Short = false;
@@ -9619,7 +9619,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Print just the version number.</p>
         /// </summary>
         [Pure]
-        public static KubernetesVersionSettings ToggleShort(this KubernetesVersionSettings toolSettings)
+        public static T ToggleShort<T>(this T toolSettings) where T : KubernetesVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Short = !toolSettings.Short;
@@ -9662,7 +9662,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the pod.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExecSettings SetPodName(this KubernetesExecSettings toolSettings, string podName)
+        public static T SetPodName<T>(this T toolSettings, string podName) where T : KubernetesExecSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PodName = podName;
@@ -9673,7 +9673,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the pod.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExecSettings ResetPodName(this KubernetesExecSettings toolSettings)
+        public static T ResetPodName<T>(this T toolSettings) where T : KubernetesExecSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PodName = null;
@@ -9686,7 +9686,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Container name. If omitted, the first container in the pod will be chosen.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExecSettings SetContainer(this KubernetesExecSettings toolSettings, string container)
+        public static T SetContainer<T>(this T toolSettings, string container) where T : KubernetesExecSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Container = container;
@@ -9697,7 +9697,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Container name. If omitted, the first container in the pod will be chosen.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExecSettings ResetContainer(this KubernetesExecSettings toolSettings)
+        public static T ResetContainer<T>(this T toolSettings) where T : KubernetesExecSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Container = null;
@@ -9710,7 +9710,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Pod name.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExecSettings SetPod(this KubernetesExecSettings toolSettings, string pod)
+        public static T SetPod<T>(this T toolSettings, string pod) where T : KubernetesExecSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Pod = pod;
@@ -9721,7 +9721,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Pod name.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExecSettings ResetPod(this KubernetesExecSettings toolSettings)
+        public static T ResetPod<T>(this T toolSettings) where T : KubernetesExecSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Pod = null;
@@ -9734,7 +9734,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Pass stdin to the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExecSettings SetStdin(this KubernetesExecSettings toolSettings, bool? stdin)
+        public static T SetStdin<T>(this T toolSettings, bool? stdin) where T : KubernetesExecSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stdin = stdin;
@@ -9745,7 +9745,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Pass stdin to the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExecSettings ResetStdin(this KubernetesExecSettings toolSettings)
+        public static T ResetStdin<T>(this T toolSettings) where T : KubernetesExecSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stdin = null;
@@ -9756,7 +9756,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Pass stdin to the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExecSettings EnableStdin(this KubernetesExecSettings toolSettings)
+        public static T EnableStdin<T>(this T toolSettings) where T : KubernetesExecSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stdin = true;
@@ -9767,7 +9767,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Pass stdin to the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExecSettings DisableStdin(this KubernetesExecSettings toolSettings)
+        public static T DisableStdin<T>(this T toolSettings) where T : KubernetesExecSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stdin = false;
@@ -9778,7 +9778,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Pass stdin to the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExecSettings ToggleStdin(this KubernetesExecSettings toolSettings)
+        public static T ToggleStdin<T>(this T toolSettings) where T : KubernetesExecSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stdin = !toolSettings.Stdin;
@@ -9791,7 +9791,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Stdin is a TTY.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExecSettings SetTty(this KubernetesExecSettings toolSettings, bool? tty)
+        public static T SetTty<T>(this T toolSettings, bool? tty) where T : KubernetesExecSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tty = tty;
@@ -9802,7 +9802,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Stdin is a TTY.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExecSettings ResetTty(this KubernetesExecSettings toolSettings)
+        public static T ResetTty<T>(this T toolSettings) where T : KubernetesExecSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tty = null;
@@ -9813,7 +9813,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Stdin is a TTY.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExecSettings EnableTty(this KubernetesExecSettings toolSettings)
+        public static T EnableTty<T>(this T toolSettings) where T : KubernetesExecSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tty = true;
@@ -9824,7 +9824,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Stdin is a TTY.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExecSettings DisableTty(this KubernetesExecSettings toolSettings)
+        public static T DisableTty<T>(this T toolSettings) where T : KubernetesExecSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tty = false;
@@ -9835,7 +9835,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Stdin is a TTY.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExecSettings ToggleTty(this KubernetesExecSettings toolSettings)
+        public static T ToggleTty<T>(this T toolSettings) where T : KubernetesExecSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tty = !toolSettings.Tty;
@@ -9858,7 +9858,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings SetAllowMissingTemplateKeys(this KubernetesRollingUpdateSettings toolSettings, bool? allowMissingTemplateKeys)
+        public static T SetAllowMissingTemplateKeys<T>(this T toolSettings, bool? allowMissingTemplateKeys) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = allowMissingTemplateKeys;
@@ -9869,7 +9869,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings ResetAllowMissingTemplateKeys(this KubernetesRollingUpdateSettings toolSettings)
+        public static T ResetAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = null;
@@ -9880,7 +9880,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings EnableAllowMissingTemplateKeys(this KubernetesRollingUpdateSettings toolSettings)
+        public static T EnableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = true;
@@ -9891,7 +9891,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings DisableAllowMissingTemplateKeys(this KubernetesRollingUpdateSettings toolSettings)
+        public static T DisableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = false;
@@ -9902,7 +9902,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings ToggleAllowMissingTemplateKeys(this KubernetesRollingUpdateSettings toolSettings)
+        public static T ToggleAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = !toolSettings.AllowMissingTemplateKeys;
@@ -9915,7 +9915,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Container name which will have its image upgraded. Only relevant when --image is specified, ignored otherwise. Required when using --image on a multi-container pod.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings SetContainer(this KubernetesRollingUpdateSettings toolSettings, string container)
+        public static T SetContainer<T>(this T toolSettings, string container) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Container = container;
@@ -9926,7 +9926,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Container name which will have its image upgraded. Only relevant when --image is specified, ignored otherwise. Required when using --image on a multi-container pod.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings ResetContainer(this KubernetesRollingUpdateSettings toolSettings)
+        public static T ResetContainer<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Container = null;
@@ -9939,7 +9939,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The key to use to differentiate between two different controllers, default 'deployment'.  Only relevant when --image is specified, ignored otherwise.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings SetDeploymentLabelKey(this KubernetesRollingUpdateSettings toolSettings, string deploymentLabelKey)
+        public static T SetDeploymentLabelKey<T>(this T toolSettings, string deploymentLabelKey) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeploymentLabelKey = deploymentLabelKey;
@@ -9950,7 +9950,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The key to use to differentiate between two different controllers, default 'deployment'.  Only relevant when --image is specified, ignored otherwise.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings ResetDeploymentLabelKey(this KubernetesRollingUpdateSettings toolSettings)
+        public static T ResetDeploymentLabelKey<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DeploymentLabelKey = null;
@@ -9963,7 +9963,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings SetDryRun(this KubernetesRollingUpdateSettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -9974,7 +9974,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings ResetDryRun(this KubernetesRollingUpdateSettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -9985,7 +9985,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings EnableDryRun(this KubernetesRollingUpdateSettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -9996,7 +9996,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings DisableDryRun(this KubernetesRollingUpdateSettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -10007,7 +10007,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings ToggleDryRun(this KubernetesRollingUpdateSettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -10020,7 +10020,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename or URL to file to use to create the new replication controller.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings SetFilename(this KubernetesRollingUpdateSettings toolSettings, params string[] filename)
+        public static T SetFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -10031,7 +10031,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename or URL to file to use to create the new replication controller.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings SetFilename(this KubernetesRollingUpdateSettings toolSettings, IEnumerable<string> filename)
+        public static T SetFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -10042,7 +10042,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename or URL to file to use to create the new replication controller.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings AddFilename(this KubernetesRollingUpdateSettings toolSettings, params string[] filename)
+        public static T AddFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -10053,7 +10053,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename or URL to file to use to create the new replication controller.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings AddFilename(this KubernetesRollingUpdateSettings toolSettings, IEnumerable<string> filename)
+        public static T AddFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -10064,7 +10064,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename or URL to file to use to create the new replication controller.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings ClearFilename(this KubernetesRollingUpdateSettings toolSettings)
+        public static T ClearFilename<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.Clear();
@@ -10075,7 +10075,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename or URL to file to use to create the new replication controller.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings RemoveFilename(this KubernetesRollingUpdateSettings toolSettings, params string[] filename)
+        public static T RemoveFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -10087,7 +10087,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename or URL to file to use to create the new replication controller.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings RemoveFilename(this KubernetesRollingUpdateSettings toolSettings, IEnumerable<string> filename)
+        public static T RemoveFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -10101,7 +10101,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Image to use for upgrading the replication controller. Must be distinct from the existing image (either new image or new image tag).  Can not be used with --filename/-f.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings SetImage(this KubernetesRollingUpdateSettings toolSettings, string image)
+        public static T SetImage<T>(this T toolSettings, string image) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Image = image;
@@ -10112,7 +10112,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Image to use for upgrading the replication controller. Must be distinct from the existing image (either new image or new image tag).  Can not be used with --filename/-f.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings ResetImage(this KubernetesRollingUpdateSettings toolSettings)
+        public static T ResetImage<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Image = null;
@@ -10125,7 +10125,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Explicit policy for when to pull container images. Required when --image is same as existing image, ignored otherwise.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings SetImagePullPolicy(this KubernetesRollingUpdateSettings toolSettings, string imagePullPolicy)
+        public static T SetImagePullPolicy<T>(this T toolSettings, string imagePullPolicy) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ImagePullPolicy = imagePullPolicy;
@@ -10136,7 +10136,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Explicit policy for when to pull container images. Required when --image is same as existing image, ignored otherwise.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings ResetImagePullPolicy(this KubernetesRollingUpdateSettings toolSettings)
+        public static T ResetImagePullPolicy<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ImagePullPolicy = null;
@@ -10149,7 +10149,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|go-template-file|templatefile|template|go-template|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings SetOutput(this KubernetesRollingUpdateSettings toolSettings, KubernetesRollingUpdateOutput output)
+        public static T SetOutput<T>(this T toolSettings, KubernetesRollingUpdateOutput output) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -10160,7 +10160,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|go-template-file|templatefile|template|go-template|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings ResetOutput(this KubernetesRollingUpdateSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -10173,7 +10173,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Time delay between polling for replication controller status after the update. Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings SetPollInterval(this KubernetesRollingUpdateSettings toolSettings, TimeSpan? pollInterval)
+        public static T SetPollInterval<T>(this T toolSettings, TimeSpan? pollInterval) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PollInterval = pollInterval;
@@ -10184,7 +10184,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Time delay between polling for replication controller status after the update. Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings ResetPollInterval(this KubernetesRollingUpdateSettings toolSettings)
+        public static T ResetPollInterval<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PollInterval = null;
@@ -10197,7 +10197,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, this is a request to abort an existing rollout that is partially rolled out. It effectively reverses current and next and runs a rollout.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings SetRollback(this KubernetesRollingUpdateSettings toolSettings, bool? rollback)
+        public static T SetRollback<T>(this T toolSettings, bool? rollback) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Rollback = rollback;
@@ -10208,7 +10208,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, this is a request to abort an existing rollout that is partially rolled out. It effectively reverses current and next and runs a rollout.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings ResetRollback(this KubernetesRollingUpdateSettings toolSettings)
+        public static T ResetRollback<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Rollback = null;
@@ -10219,7 +10219,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, this is a request to abort an existing rollout that is partially rolled out. It effectively reverses current and next and runs a rollout.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings EnableRollback(this KubernetesRollingUpdateSettings toolSettings)
+        public static T EnableRollback<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Rollback = true;
@@ -10230,7 +10230,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, this is a request to abort an existing rollout that is partially rolled out. It effectively reverses current and next and runs a rollout.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings DisableRollback(this KubernetesRollingUpdateSettings toolSettings)
+        public static T DisableRollback<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Rollback = false;
@@ -10241,7 +10241,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, this is a request to abort an existing rollout that is partially rolled out. It effectively reverses current and next and runs a rollout.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings ToggleRollback(this KubernetesRollingUpdateSettings toolSettings)
+        public static T ToggleRollback<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Rollback = !toolSettings.Rollback;
@@ -10254,7 +10254,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings SetTemplate(this KubernetesRollingUpdateSettings toolSettings, string template)
+        public static T SetTemplate<T>(this T toolSettings, string template) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = template;
@@ -10265,7 +10265,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings ResetTemplate(this KubernetesRollingUpdateSettings toolSettings)
+        public static T ResetTemplate<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = null;
@@ -10278,7 +10278,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Max time to wait for a replication controller to update before giving up. Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings SetTimeout(this KubernetesRollingUpdateSettings toolSettings, TimeSpan? timeout)
+        public static T SetTimeout<T>(this T toolSettings, TimeSpan? timeout) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = timeout;
@@ -10289,7 +10289,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Max time to wait for a replication controller to update before giving up. Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings ResetTimeout(this KubernetesRollingUpdateSettings toolSettings)
+        public static T ResetTimeout<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = null;
@@ -10302,7 +10302,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Time to wait between updating pods. Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings SetUpdatePeriod(this KubernetesRollingUpdateSettings toolSettings, TimeSpan? updatePeriod)
+        public static T SetUpdatePeriod<T>(this T toolSettings, TimeSpan? updatePeriod) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UpdatePeriod = updatePeriod;
@@ -10313,7 +10313,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Time to wait between updating pods. Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings ResetUpdatePeriod(this KubernetesRollingUpdateSettings toolSettings)
+        public static T ResetUpdatePeriod<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UpdatePeriod = null;
@@ -10326,7 +10326,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings SetValidate(this KubernetesRollingUpdateSettings toolSettings, bool? validate)
+        public static T SetValidate<T>(this T toolSettings, bool? validate) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = validate;
@@ -10337,7 +10337,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings ResetValidate(this KubernetesRollingUpdateSettings toolSettings)
+        public static T ResetValidate<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = null;
@@ -10348,7 +10348,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings EnableValidate(this KubernetesRollingUpdateSettings toolSettings)
+        public static T EnableValidate<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = true;
@@ -10359,7 +10359,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings DisableValidate(this KubernetesRollingUpdateSettings toolSettings)
+        public static T DisableValidate<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = false;
@@ -10370,7 +10370,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRollingUpdateSettings ToggleValidate(this KubernetesRollingUpdateSettings toolSettings)
+        public static T ToggleValidate<T>(this T toolSettings) where T : KubernetesRollingUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = !toolSettings.Validate;
@@ -10393,7 +10393,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings SetTypeName(this KubernetesLabelSettings toolSettings, params string[] typeName)
+        public static T SetTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal = typeName.ToList();
@@ -10404,7 +10404,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings SetTypeName(this KubernetesLabelSettings toolSettings, IEnumerable<string> typeName)
+        public static T SetTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal = typeName.ToList();
@@ -10415,7 +10415,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings AddTypeName(this KubernetesLabelSettings toolSettings, params string[] typeName)
+        public static T AddTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.AddRange(typeName);
@@ -10426,7 +10426,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings AddTypeName(this KubernetesLabelSettings toolSettings, IEnumerable<string> typeName)
+        public static T AddTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.AddRange(typeName);
@@ -10437,7 +10437,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ClearTypeName(this KubernetesLabelSettings toolSettings)
+        public static T ClearTypeName<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.Clear();
@@ -10448,7 +10448,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings RemoveTypeName(this KubernetesLabelSettings toolSettings, params string[] typeName)
+        public static T RemoveTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(typeName);
@@ -10460,7 +10460,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings RemoveTypeName(this KubernetesLabelSettings toolSettings, IEnumerable<string> typeName)
+        public static T RemoveTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(typeName);
@@ -10474,7 +10474,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The Labels to set.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings SetLabels(this KubernetesLabelSettings toolSettings, IDictionary<string, string> labels)
+        public static T SetLabels<T>(this T toolSettings, IDictionary<string, string> labels) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LabelsInternal = labels.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -10485,7 +10485,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The Labels to set.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ClearLabels(this KubernetesLabelSettings toolSettings)
+        public static T ClearLabels<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LabelsInternal.Clear();
@@ -10496,7 +10496,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The Labels to set.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings AddLabel(this KubernetesLabelSettings toolSettings, string labelKey, string labelValue)
+        public static T AddLabel<T>(this T toolSettings, string labelKey, string labelValue) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LabelsInternal.Add(labelKey, labelValue);
@@ -10507,7 +10507,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The Labels to set.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings RemoveLabel(this KubernetesLabelSettings toolSettings, string labelKey)
+        public static T RemoveLabel<T>(this T toolSettings, string labelKey) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LabelsInternal.Remove(labelKey);
@@ -10518,7 +10518,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The Labels to set.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings SetLabel(this KubernetesLabelSettings toolSettings, string labelKey, string labelValue)
+        public static T SetLabel<T>(this T toolSettings, string labelKey, string labelValue) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LabelsInternal[labelKey] = labelValue;
@@ -10531,7 +10531,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all resources, including uninitialized ones, in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings SetAll(this KubernetesLabelSettings toolSettings, bool? all)
+        public static T SetAll<T>(this T toolSettings, bool? all) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = all;
@@ -10542,7 +10542,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all resources, including uninitialized ones, in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ResetAll(this KubernetesLabelSettings toolSettings)
+        public static T ResetAll<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = null;
@@ -10553,7 +10553,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all resources, including uninitialized ones, in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings EnableAll(this KubernetesLabelSettings toolSettings)
+        public static T EnableAll<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = true;
@@ -10564,7 +10564,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all resources, including uninitialized ones, in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings DisableAll(this KubernetesLabelSettings toolSettings)
+        public static T DisableAll<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = false;
@@ -10575,7 +10575,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all resources, including uninitialized ones, in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ToggleAll(this KubernetesLabelSettings toolSettings)
+        public static T ToggleAll<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = !toolSettings.All;
@@ -10588,7 +10588,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings SetAllowMissingTemplateKeys(this KubernetesLabelSettings toolSettings, bool? allowMissingTemplateKeys)
+        public static T SetAllowMissingTemplateKeys<T>(this T toolSettings, bool? allowMissingTemplateKeys) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = allowMissingTemplateKeys;
@@ -10599,7 +10599,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ResetAllowMissingTemplateKeys(this KubernetesLabelSettings toolSettings)
+        public static T ResetAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = null;
@@ -10610,7 +10610,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings EnableAllowMissingTemplateKeys(this KubernetesLabelSettings toolSettings)
+        public static T EnableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = true;
@@ -10621,7 +10621,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings DisableAllowMissingTemplateKeys(this KubernetesLabelSettings toolSettings)
+        public static T DisableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = false;
@@ -10632,7 +10632,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ToggleAllowMissingTemplateKeys(this KubernetesLabelSettings toolSettings)
+        public static T ToggleAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = !toolSettings.AllowMissingTemplateKeys;
@@ -10645,7 +10645,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings SetDryRun(this KubernetesLabelSettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -10656,7 +10656,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ResetDryRun(this KubernetesLabelSettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -10667,7 +10667,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings EnableDryRun(this KubernetesLabelSettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -10678,7 +10678,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings DisableDryRun(this KubernetesLabelSettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -10689,7 +10689,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ToggleDryRun(this KubernetesLabelSettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -10702,7 +10702,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings SetFieldSelector(this KubernetesLabelSettings toolSettings, string fieldSelector)
+        public static T SetFieldSelector<T>(this T toolSettings, string fieldSelector) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FieldSelector = fieldSelector;
@@ -10713,7 +10713,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ResetFieldSelector(this KubernetesLabelSettings toolSettings)
+        public static T ResetFieldSelector<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FieldSelector = null;
@@ -10726,7 +10726,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to update the labels.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings SetFilename(this KubernetesLabelSettings toolSettings, params string[] filename)
+        public static T SetFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -10737,7 +10737,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to update the labels.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings SetFilename(this KubernetesLabelSettings toolSettings, IEnumerable<string> filename)
+        public static T SetFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -10748,7 +10748,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to update the labels.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings AddFilename(this KubernetesLabelSettings toolSettings, params string[] filename)
+        public static T AddFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -10759,7 +10759,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to update the labels.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings AddFilename(this KubernetesLabelSettings toolSettings, IEnumerable<string> filename)
+        public static T AddFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -10770,7 +10770,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to update the labels.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ClearFilename(this KubernetesLabelSettings toolSettings)
+        public static T ClearFilename<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.Clear();
@@ -10781,7 +10781,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to update the labels.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings RemoveFilename(this KubernetesLabelSettings toolSettings, params string[] filename)
+        public static T RemoveFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -10793,7 +10793,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to update the labels.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings RemoveFilename(this KubernetesLabelSettings toolSettings, IEnumerable<string> filename)
+        public static T RemoveFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -10807,7 +10807,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings SetIncludeUninitialized(this KubernetesLabelSettings toolSettings, bool? includeUninitialized)
+        public static T SetIncludeUninitialized<T>(this T toolSettings, bool? includeUninitialized) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = includeUninitialized;
@@ -10818,7 +10818,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ResetIncludeUninitialized(this KubernetesLabelSettings toolSettings)
+        public static T ResetIncludeUninitialized<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = null;
@@ -10829,7 +10829,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings EnableIncludeUninitialized(this KubernetesLabelSettings toolSettings)
+        public static T EnableIncludeUninitialized<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = true;
@@ -10840,7 +10840,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings DisableIncludeUninitialized(this KubernetesLabelSettings toolSettings)
+        public static T DisableIncludeUninitialized<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = false;
@@ -10851,7 +10851,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ToggleIncludeUninitialized(this KubernetesLabelSettings toolSettings)
+        public static T ToggleIncludeUninitialized<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = !toolSettings.IncludeUninitialized;
@@ -10864,7 +10864,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, display the labels for a given resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings SetList(this KubernetesLabelSettings toolSettings, bool? list)
+        public static T SetList<T>(this T toolSettings, bool? list) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.List = list;
@@ -10875,7 +10875,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, display the labels for a given resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ResetList(this KubernetesLabelSettings toolSettings)
+        public static T ResetList<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.List = null;
@@ -10886,7 +10886,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, display the labels for a given resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings EnableList(this KubernetesLabelSettings toolSettings)
+        public static T EnableList<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.List = true;
@@ -10897,7 +10897,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, display the labels for a given resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings DisableList(this KubernetesLabelSettings toolSettings)
+        public static T DisableList<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.List = false;
@@ -10908,7 +10908,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, display the labels for a given resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ToggleList(this KubernetesLabelSettings toolSettings)
+        public static T ToggleList<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.List = !toolSettings.List;
@@ -10921,7 +10921,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, label will NOT contact api-server but run locally.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings SetLocal(this KubernetesLabelSettings toolSettings, bool? local)
+        public static T SetLocal<T>(this T toolSettings, bool? local) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Local = local;
@@ -10932,7 +10932,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, label will NOT contact api-server but run locally.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ResetLocal(this KubernetesLabelSettings toolSettings)
+        public static T ResetLocal<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Local = null;
@@ -10943,7 +10943,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, label will NOT contact api-server but run locally.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings EnableLocal(this KubernetesLabelSettings toolSettings)
+        public static T EnableLocal<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Local = true;
@@ -10954,7 +10954,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, label will NOT contact api-server but run locally.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings DisableLocal(this KubernetesLabelSettings toolSettings)
+        public static T DisableLocal<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Local = false;
@@ -10965,7 +10965,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, label will NOT contact api-server but run locally.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ToggleLocal(this KubernetesLabelSettings toolSettings)
+        public static T ToggleLocal<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Local = !toolSettings.Local;
@@ -10978,7 +10978,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings SetOutput(this KubernetesLabelSettings toolSettings, KubernetesLabelOutput output)
+        public static T SetOutput<T>(this T toolSettings, KubernetesLabelOutput output) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -10989,7 +10989,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ResetOutput(this KubernetesLabelSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -11002,7 +11002,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, allow labels to be overwritten, otherwise reject label updates that overwrite existing labels.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings SetOverwrite(this KubernetesLabelSettings toolSettings, bool? overwrite)
+        public static T SetOverwrite<T>(this T toolSettings, bool? overwrite) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = overwrite;
@@ -11013,7 +11013,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, allow labels to be overwritten, otherwise reject label updates that overwrite existing labels.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ResetOverwrite(this KubernetesLabelSettings toolSettings)
+        public static T ResetOverwrite<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = null;
@@ -11024,7 +11024,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, allow labels to be overwritten, otherwise reject label updates that overwrite existing labels.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings EnableOverwrite(this KubernetesLabelSettings toolSettings)
+        public static T EnableOverwrite<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = true;
@@ -11035,7 +11035,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, allow labels to be overwritten, otherwise reject label updates that overwrite existing labels.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings DisableOverwrite(this KubernetesLabelSettings toolSettings)
+        public static T DisableOverwrite<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = false;
@@ -11046,7 +11046,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, allow labels to be overwritten, otherwise reject label updates that overwrite existing labels.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ToggleOverwrite(this KubernetesLabelSettings toolSettings)
+        public static T ToggleOverwrite<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = !toolSettings.Overwrite;
@@ -11059,7 +11059,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings SetRecord(this KubernetesLabelSettings toolSettings, bool? record)
+        public static T SetRecord<T>(this T toolSettings, bool? record) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = record;
@@ -11070,7 +11070,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ResetRecord(this KubernetesLabelSettings toolSettings)
+        public static T ResetRecord<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = null;
@@ -11081,7 +11081,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings EnableRecord(this KubernetesLabelSettings toolSettings)
+        public static T EnableRecord<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = true;
@@ -11092,7 +11092,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings DisableRecord(this KubernetesLabelSettings toolSettings)
+        public static T DisableRecord<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = false;
@@ -11103,7 +11103,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ToggleRecord(this KubernetesLabelSettings toolSettings)
+        public static T ToggleRecord<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = !toolSettings.Record;
@@ -11116,7 +11116,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings SetRecursive(this KubernetesLabelSettings toolSettings, bool? recursive)
+        public static T SetRecursive<T>(this T toolSettings, bool? recursive) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = recursive;
@@ -11127,7 +11127,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ResetRecursive(this KubernetesLabelSettings toolSettings)
+        public static T ResetRecursive<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = null;
@@ -11138,7 +11138,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings EnableRecursive(this KubernetesLabelSettings toolSettings)
+        public static T EnableRecursive<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = true;
@@ -11149,7 +11149,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings DisableRecursive(this KubernetesLabelSettings toolSettings)
+        public static T DisableRecursive<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = false;
@@ -11160,7 +11160,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ToggleRecursive(this KubernetesLabelSettings toolSettings)
+        public static T ToggleRecursive<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = !toolSettings.Recursive;
@@ -11173,7 +11173,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If non-empty, the labels update will only succeed if this is the current resource-version for the object. Only valid when specifying a single resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings SetResourceVersion(this KubernetesLabelSettings toolSettings, string resourceVersion)
+        public static T SetResourceVersion<T>(this T toolSettings, string resourceVersion) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResourceVersion = resourceVersion;
@@ -11184,7 +11184,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If non-empty, the labels update will only succeed if this is the current resource-version for the object. Only valid when specifying a single resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ResetResourceVersion(this KubernetesLabelSettings toolSettings)
+        public static T ResetResourceVersion<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResourceVersion = null;
@@ -11197,7 +11197,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on, not including uninitialized ones, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings SetSelector(this KubernetesLabelSettings toolSettings, string selector)
+        public static T SetSelector<T>(this T toolSettings, string selector) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = selector;
@@ -11208,7 +11208,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on, not including uninitialized ones, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ResetSelector(this KubernetesLabelSettings toolSettings)
+        public static T ResetSelector<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = null;
@@ -11221,7 +11221,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings SetTemplate(this KubernetesLabelSettings toolSettings, string template)
+        public static T SetTemplate<T>(this T toolSettings, string template) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = template;
@@ -11232,7 +11232,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesLabelSettings ResetTemplate(this KubernetesLabelSettings toolSettings)
+        public static T ResetTemplate<T>(this T toolSettings) where T : KubernetesLabelSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = null;
@@ -11255,7 +11255,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings SetTypeName(this KubernetesAnnotateSettings toolSettings, params string[] typeName)
+        public static T SetTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal = typeName.ToList();
@@ -11266,7 +11266,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings SetTypeName(this KubernetesAnnotateSettings toolSettings, IEnumerable<string> typeName)
+        public static T SetTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal = typeName.ToList();
@@ -11277,7 +11277,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings AddTypeName(this KubernetesAnnotateSettings toolSettings, params string[] typeName)
+        public static T AddTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.AddRange(typeName);
@@ -11288,7 +11288,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings AddTypeName(this KubernetesAnnotateSettings toolSettings, IEnumerable<string> typeName)
+        public static T AddTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.AddRange(typeName);
@@ -11299,7 +11299,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ClearTypeName(this KubernetesAnnotateSettings toolSettings)
+        public static T ClearTypeName<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.Clear();
@@ -11310,7 +11310,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings RemoveTypeName(this KubernetesAnnotateSettings toolSettings, params string[] typeName)
+        public static T RemoveTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(typeName);
@@ -11322,7 +11322,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings RemoveTypeName(this KubernetesAnnotateSettings toolSettings, IEnumerable<string> typeName)
+        public static T RemoveTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(typeName);
@@ -11336,7 +11336,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The annotations to set on the ressource</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings SetAnnotations(this KubernetesAnnotateSettings toolSettings, IDictionary<string, string> annotations)
+        public static T SetAnnotations<T>(this T toolSettings, IDictionary<string, string> annotations) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AnnotationsInternal = annotations.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -11347,7 +11347,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The annotations to set on the ressource</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ClearAnnotations(this KubernetesAnnotateSettings toolSettings)
+        public static T ClearAnnotations<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AnnotationsInternal.Clear();
@@ -11358,7 +11358,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The annotations to set on the ressource</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings AddAnnotation(this KubernetesAnnotateSettings toolSettings, string annotationKey, string annotationValue)
+        public static T AddAnnotation<T>(this T toolSettings, string annotationKey, string annotationValue) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AnnotationsInternal.Add(annotationKey, annotationValue);
@@ -11369,7 +11369,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The annotations to set on the ressource</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings RemoveAnnotation(this KubernetesAnnotateSettings toolSettings, string annotationKey)
+        public static T RemoveAnnotation<T>(this T toolSettings, string annotationKey) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AnnotationsInternal.Remove(annotationKey);
@@ -11380,7 +11380,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The annotations to set on the ressource</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings SetAnnotation(this KubernetesAnnotateSettings toolSettings, string annotationKey, string annotationValue)
+        public static T SetAnnotation<T>(this T toolSettings, string annotationKey, string annotationValue) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AnnotationsInternal[annotationKey] = annotationValue;
@@ -11393,7 +11393,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all resources, including uninitialized ones, in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings SetAll(this KubernetesAnnotateSettings toolSettings, bool? all)
+        public static T SetAll<T>(this T toolSettings, bool? all) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = all;
@@ -11404,7 +11404,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all resources, including uninitialized ones, in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ResetAll(this KubernetesAnnotateSettings toolSettings)
+        public static T ResetAll<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = null;
@@ -11415,7 +11415,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all resources, including uninitialized ones, in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings EnableAll(this KubernetesAnnotateSettings toolSettings)
+        public static T EnableAll<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = true;
@@ -11426,7 +11426,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all resources, including uninitialized ones, in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings DisableAll(this KubernetesAnnotateSettings toolSettings)
+        public static T DisableAll<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = false;
@@ -11437,7 +11437,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all resources, including uninitialized ones, in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ToggleAll(this KubernetesAnnotateSettings toolSettings)
+        public static T ToggleAll<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = !toolSettings.All;
@@ -11450,7 +11450,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings SetAllowMissingTemplateKeys(this KubernetesAnnotateSettings toolSettings, bool? allowMissingTemplateKeys)
+        public static T SetAllowMissingTemplateKeys<T>(this T toolSettings, bool? allowMissingTemplateKeys) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = allowMissingTemplateKeys;
@@ -11461,7 +11461,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ResetAllowMissingTemplateKeys(this KubernetesAnnotateSettings toolSettings)
+        public static T ResetAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = null;
@@ -11472,7 +11472,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings EnableAllowMissingTemplateKeys(this KubernetesAnnotateSettings toolSettings)
+        public static T EnableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = true;
@@ -11483,7 +11483,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings DisableAllowMissingTemplateKeys(this KubernetesAnnotateSettings toolSettings)
+        public static T DisableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = false;
@@ -11494,7 +11494,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ToggleAllowMissingTemplateKeys(this KubernetesAnnotateSettings toolSettings)
+        public static T ToggleAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = !toolSettings.AllowMissingTemplateKeys;
@@ -11507,7 +11507,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings SetDryRun(this KubernetesAnnotateSettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -11518,7 +11518,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ResetDryRun(this KubernetesAnnotateSettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -11529,7 +11529,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings EnableDryRun(this KubernetesAnnotateSettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -11540,7 +11540,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings DisableDryRun(this KubernetesAnnotateSettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -11551,7 +11551,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ToggleDryRun(this KubernetesAnnotateSettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -11564,7 +11564,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings SetFieldSelector(this KubernetesAnnotateSettings toolSettings, string fieldSelector)
+        public static T SetFieldSelector<T>(this T toolSettings, string fieldSelector) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FieldSelector = fieldSelector;
@@ -11575,7 +11575,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ResetFieldSelector(this KubernetesAnnotateSettings toolSettings)
+        public static T ResetFieldSelector<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FieldSelector = null;
@@ -11588,7 +11588,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to update the annotation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings SetFilename(this KubernetesAnnotateSettings toolSettings, params string[] filename)
+        public static T SetFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -11599,7 +11599,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to update the annotation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings SetFilename(this KubernetesAnnotateSettings toolSettings, IEnumerable<string> filename)
+        public static T SetFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -11610,7 +11610,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to update the annotation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings AddFilename(this KubernetesAnnotateSettings toolSettings, params string[] filename)
+        public static T AddFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -11621,7 +11621,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to update the annotation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings AddFilename(this KubernetesAnnotateSettings toolSettings, IEnumerable<string> filename)
+        public static T AddFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -11632,7 +11632,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to update the annotation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ClearFilename(this KubernetesAnnotateSettings toolSettings)
+        public static T ClearFilename<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.Clear();
@@ -11643,7 +11643,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to update the annotation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings RemoveFilename(this KubernetesAnnotateSettings toolSettings, params string[] filename)
+        public static T RemoveFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -11655,7 +11655,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to update the annotation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings RemoveFilename(this KubernetesAnnotateSettings toolSettings, IEnumerable<string> filename)
+        public static T RemoveFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -11669,7 +11669,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings SetIncludeUninitialized(this KubernetesAnnotateSettings toolSettings, bool? includeUninitialized)
+        public static T SetIncludeUninitialized<T>(this T toolSettings, bool? includeUninitialized) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = includeUninitialized;
@@ -11680,7 +11680,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ResetIncludeUninitialized(this KubernetesAnnotateSettings toolSettings)
+        public static T ResetIncludeUninitialized<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = null;
@@ -11691,7 +11691,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings EnableIncludeUninitialized(this KubernetesAnnotateSettings toolSettings)
+        public static T EnableIncludeUninitialized<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = true;
@@ -11702,7 +11702,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings DisableIncludeUninitialized(this KubernetesAnnotateSettings toolSettings)
+        public static T DisableIncludeUninitialized<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = false;
@@ -11713,7 +11713,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ToggleIncludeUninitialized(this KubernetesAnnotateSettings toolSettings)
+        public static T ToggleIncludeUninitialized<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = !toolSettings.IncludeUninitialized;
@@ -11726,7 +11726,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, annotation will NOT contact api-server but run locally.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings SetLocal(this KubernetesAnnotateSettings toolSettings, bool? local)
+        public static T SetLocal<T>(this T toolSettings, bool? local) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Local = local;
@@ -11737,7 +11737,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, annotation will NOT contact api-server but run locally.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ResetLocal(this KubernetesAnnotateSettings toolSettings)
+        public static T ResetLocal<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Local = null;
@@ -11748,7 +11748,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, annotation will NOT contact api-server but run locally.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings EnableLocal(this KubernetesAnnotateSettings toolSettings)
+        public static T EnableLocal<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Local = true;
@@ -11759,7 +11759,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, annotation will NOT contact api-server but run locally.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings DisableLocal(this KubernetesAnnotateSettings toolSettings)
+        public static T DisableLocal<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Local = false;
@@ -11770,7 +11770,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, annotation will NOT contact api-server but run locally.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ToggleLocal(this KubernetesAnnotateSettings toolSettings)
+        public static T ToggleLocal<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Local = !toolSettings.Local;
@@ -11783,7 +11783,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|templatefile|template|go-template|go-template-file|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings SetOutput(this KubernetesAnnotateSettings toolSettings, KubernetesAnnotateOutput output)
+        public static T SetOutput<T>(this T toolSettings, KubernetesAnnotateOutput output) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -11794,7 +11794,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|templatefile|template|go-template|go-template-file|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ResetOutput(this KubernetesAnnotateSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -11807,7 +11807,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, allow annotations to be overwritten, otherwise reject annotation updates that overwrite existing annotations.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings SetOverwrite(this KubernetesAnnotateSettings toolSettings, bool? overwrite)
+        public static T SetOverwrite<T>(this T toolSettings, bool? overwrite) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = overwrite;
@@ -11818,7 +11818,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, allow annotations to be overwritten, otherwise reject annotation updates that overwrite existing annotations.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ResetOverwrite(this KubernetesAnnotateSettings toolSettings)
+        public static T ResetOverwrite<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = null;
@@ -11829,7 +11829,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, allow annotations to be overwritten, otherwise reject annotation updates that overwrite existing annotations.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings EnableOverwrite(this KubernetesAnnotateSettings toolSettings)
+        public static T EnableOverwrite<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = true;
@@ -11840,7 +11840,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, allow annotations to be overwritten, otherwise reject annotation updates that overwrite existing annotations.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings DisableOverwrite(this KubernetesAnnotateSettings toolSettings)
+        public static T DisableOverwrite<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = false;
@@ -11851,7 +11851,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, allow annotations to be overwritten, otherwise reject annotation updates that overwrite existing annotations.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ToggleOverwrite(this KubernetesAnnotateSettings toolSettings)
+        public static T ToggleOverwrite<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = !toolSettings.Overwrite;
@@ -11864,7 +11864,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings SetRecord(this KubernetesAnnotateSettings toolSettings, bool? record)
+        public static T SetRecord<T>(this T toolSettings, bool? record) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = record;
@@ -11875,7 +11875,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ResetRecord(this KubernetesAnnotateSettings toolSettings)
+        public static T ResetRecord<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = null;
@@ -11886,7 +11886,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings EnableRecord(this KubernetesAnnotateSettings toolSettings)
+        public static T EnableRecord<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = true;
@@ -11897,7 +11897,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings DisableRecord(this KubernetesAnnotateSettings toolSettings)
+        public static T DisableRecord<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = false;
@@ -11908,7 +11908,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ToggleRecord(this KubernetesAnnotateSettings toolSettings)
+        public static T ToggleRecord<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = !toolSettings.Record;
@@ -11921,7 +11921,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings SetRecursive(this KubernetesAnnotateSettings toolSettings, bool? recursive)
+        public static T SetRecursive<T>(this T toolSettings, bool? recursive) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = recursive;
@@ -11932,7 +11932,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ResetRecursive(this KubernetesAnnotateSettings toolSettings)
+        public static T ResetRecursive<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = null;
@@ -11943,7 +11943,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings EnableRecursive(this KubernetesAnnotateSettings toolSettings)
+        public static T EnableRecursive<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = true;
@@ -11954,7 +11954,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings DisableRecursive(this KubernetesAnnotateSettings toolSettings)
+        public static T DisableRecursive<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = false;
@@ -11965,7 +11965,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ToggleRecursive(this KubernetesAnnotateSettings toolSettings)
+        public static T ToggleRecursive<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = !toolSettings.Recursive;
@@ -11978,7 +11978,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If non-empty, the annotation update will only succeed if this is the current resource-version for the object. Only valid when specifying a single resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings SetResourceVersion(this KubernetesAnnotateSettings toolSettings, string resourceVersion)
+        public static T SetResourceVersion<T>(this T toolSettings, string resourceVersion) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResourceVersion = resourceVersion;
@@ -11989,7 +11989,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If non-empty, the annotation update will only succeed if this is the current resource-version for the object. Only valid when specifying a single resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ResetResourceVersion(this KubernetesAnnotateSettings toolSettings)
+        public static T ResetResourceVersion<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResourceVersion = null;
@@ -12002,7 +12002,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on, not including uninitialized ones, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings SetSelector(this KubernetesAnnotateSettings toolSettings, string selector)
+        public static T SetSelector<T>(this T toolSettings, string selector) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = selector;
@@ -12013,7 +12013,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on, not including uninitialized ones, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ResetSelector(this KubernetesAnnotateSettings toolSettings)
+        public static T ResetSelector<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = null;
@@ -12026,7 +12026,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings SetTemplate(this KubernetesAnnotateSettings toolSettings, string template)
+        public static T SetTemplate<T>(this T toolSettings, string template) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = template;
@@ -12037,7 +12037,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesAnnotateSettings ResetTemplate(this KubernetesAnnotateSettings toolSettings)
+        public static T ResetTemplate<T>(this T toolSettings) where T : KubernetesAnnotateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = null;
@@ -12060,7 +12060,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Delete all resources, including uninitialized ones, in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings SetAll(this KubernetesDeleteSettings toolSettings, bool? all)
+        public static T SetAll<T>(this T toolSettings, bool? all) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = all;
@@ -12071,7 +12071,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Delete all resources, including uninitialized ones, in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings ResetAll(this KubernetesDeleteSettings toolSettings)
+        public static T ResetAll<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = null;
@@ -12082,7 +12082,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Delete all resources, including uninitialized ones, in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings EnableAll(this KubernetesDeleteSettings toolSettings)
+        public static T EnableAll<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = true;
@@ -12093,7 +12093,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Delete all resources, including uninitialized ones, in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings DisableAll(this KubernetesDeleteSettings toolSettings)
+        public static T DisableAll<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = false;
@@ -12104,7 +12104,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Delete all resources, including uninitialized ones, in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings ToggleAll(this KubernetesDeleteSettings toolSettings)
+        public static T ToggleAll<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = !toolSettings.All;
@@ -12117,7 +12117,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings SetCascade(this KubernetesDeleteSettings toolSettings, bool? cascade)
+        public static T SetCascade<T>(this T toolSettings, bool? cascade) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = cascade;
@@ -12128,7 +12128,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings ResetCascade(this KubernetesDeleteSettings toolSettings)
+        public static T ResetCascade<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = null;
@@ -12139,7 +12139,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings EnableCascade(this KubernetesDeleteSettings toolSettings)
+        public static T EnableCascade<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = true;
@@ -12150,7 +12150,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings DisableCascade(this KubernetesDeleteSettings toolSettings)
+        public static T DisableCascade<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = false;
@@ -12161,7 +12161,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings ToggleCascade(this KubernetesDeleteSettings toolSettings)
+        public static T ToggleCascade<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = !toolSettings.Cascade;
@@ -12174,7 +12174,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings SetFieldSelector(this KubernetesDeleteSettings toolSettings, string fieldSelector)
+        public static T SetFieldSelector<T>(this T toolSettings, string fieldSelector) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FieldSelector = fieldSelector;
@@ -12185,7 +12185,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings ResetFieldSelector(this KubernetesDeleteSettings toolSettings)
+        public static T ResetFieldSelector<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FieldSelector = null;
@@ -12198,7 +12198,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>containing the resource to delete.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings SetFilename(this KubernetesDeleteSettings toolSettings, params string[] filename)
+        public static T SetFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -12209,7 +12209,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>containing the resource to delete.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings SetFilename(this KubernetesDeleteSettings toolSettings, IEnumerable<string> filename)
+        public static T SetFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -12220,7 +12220,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>containing the resource to delete.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings AddFilename(this KubernetesDeleteSettings toolSettings, params string[] filename)
+        public static T AddFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -12231,7 +12231,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>containing the resource to delete.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings AddFilename(this KubernetesDeleteSettings toolSettings, IEnumerable<string> filename)
+        public static T AddFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -12242,7 +12242,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>containing the resource to delete.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings ClearFilename(this KubernetesDeleteSettings toolSettings)
+        public static T ClearFilename<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.Clear();
@@ -12253,7 +12253,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>containing the resource to delete.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings RemoveFilename(this KubernetesDeleteSettings toolSettings, params string[] filename)
+        public static T RemoveFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -12265,7 +12265,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>containing the resource to delete.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings RemoveFilename(this KubernetesDeleteSettings toolSettings, IEnumerable<string> filename)
+        public static T RemoveFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -12279,7 +12279,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings SetForce(this KubernetesDeleteSettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -12290,7 +12290,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings ResetForce(this KubernetesDeleteSettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -12301,7 +12301,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings EnableForce(this KubernetesDeleteSettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -12312,7 +12312,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings DisableForce(this KubernetesDeleteSettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -12323,7 +12323,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings ToggleForce(this KubernetesDeleteSettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -12336,7 +12336,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion).</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings SetGracePeriod(this KubernetesDeleteSettings toolSettings, int? gracePeriod)
+        public static T SetGracePeriod<T>(this T toolSettings, int? gracePeriod) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GracePeriod = gracePeriod;
@@ -12347,7 +12347,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion).</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings ResetGracePeriod(this KubernetesDeleteSettings toolSettings)
+        public static T ResetGracePeriod<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GracePeriod = null;
@@ -12360,7 +12360,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Treat "resource not found" as a successful delete. Defaults to "true" when --all is specified.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings SetIgnoreNotFound(this KubernetesDeleteSettings toolSettings, bool? ignoreNotFound)
+        public static T SetIgnoreNotFound<T>(this T toolSettings, bool? ignoreNotFound) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreNotFound = ignoreNotFound;
@@ -12371,7 +12371,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Treat "resource not found" as a successful delete. Defaults to "true" when --all is specified.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings ResetIgnoreNotFound(this KubernetesDeleteSettings toolSettings)
+        public static T ResetIgnoreNotFound<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreNotFound = null;
@@ -12382,7 +12382,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Treat "resource not found" as a successful delete. Defaults to "true" when --all is specified.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings EnableIgnoreNotFound(this KubernetesDeleteSettings toolSettings)
+        public static T EnableIgnoreNotFound<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreNotFound = true;
@@ -12393,7 +12393,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Treat "resource not found" as a successful delete. Defaults to "true" when --all is specified.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings DisableIgnoreNotFound(this KubernetesDeleteSettings toolSettings)
+        public static T DisableIgnoreNotFound<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreNotFound = false;
@@ -12404,7 +12404,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Treat "resource not found" as a successful delete. Defaults to "true" when --all is specified.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings ToggleIgnoreNotFound(this KubernetesDeleteSettings toolSettings)
+        public static T ToggleIgnoreNotFound<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreNotFound = !toolSettings.IgnoreNotFound;
@@ -12417,7 +12417,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings SetIncludeUninitialized(this KubernetesDeleteSettings toolSettings, bool? includeUninitialized)
+        public static T SetIncludeUninitialized<T>(this T toolSettings, bool? includeUninitialized) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = includeUninitialized;
@@ -12428,7 +12428,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings ResetIncludeUninitialized(this KubernetesDeleteSettings toolSettings)
+        public static T ResetIncludeUninitialized<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = null;
@@ -12439,7 +12439,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings EnableIncludeUninitialized(this KubernetesDeleteSettings toolSettings)
+        public static T EnableIncludeUninitialized<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = true;
@@ -12450,7 +12450,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings DisableIncludeUninitialized(this KubernetesDeleteSettings toolSettings)
+        public static T DisableIncludeUninitialized<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = false;
@@ -12461,7 +12461,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings ToggleIncludeUninitialized(this KubernetesDeleteSettings toolSettings)
+        public static T ToggleIncludeUninitialized<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = !toolSettings.IncludeUninitialized;
@@ -12474,7 +12474,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, resources are signaled for immediate shutdown (same as --grace-period=1).</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings SetNow(this KubernetesDeleteSettings toolSettings, bool? now)
+        public static T SetNow<T>(this T toolSettings, bool? now) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Now = now;
@@ -12485,7 +12485,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, resources are signaled for immediate shutdown (same as --grace-period=1).</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings ResetNow(this KubernetesDeleteSettings toolSettings)
+        public static T ResetNow<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Now = null;
@@ -12496,7 +12496,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, resources are signaled for immediate shutdown (same as --grace-period=1).</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings EnableNow(this KubernetesDeleteSettings toolSettings)
+        public static T EnableNow<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Now = true;
@@ -12507,7 +12507,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, resources are signaled for immediate shutdown (same as --grace-period=1).</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings DisableNow(this KubernetesDeleteSettings toolSettings)
+        public static T DisableNow<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Now = false;
@@ -12518,7 +12518,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, resources are signaled for immediate shutdown (same as --grace-period=1).</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings ToggleNow(this KubernetesDeleteSettings toolSettings)
+        public static T ToggleNow<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Now = !toolSettings.Now;
@@ -12531,7 +12531,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output mode. Use "-o name" for shorter output (resource/name).</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings SetOutput(this KubernetesDeleteSettings toolSettings, string output)
+        public static T SetOutput<T>(this T toolSettings, string output) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -12542,7 +12542,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output mode. Use "-o name" for shorter output (resource/name).</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings ResetOutput(this KubernetesDeleteSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -12555,7 +12555,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings SetRecursive(this KubernetesDeleteSettings toolSettings, bool? recursive)
+        public static T SetRecursive<T>(this T toolSettings, bool? recursive) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = recursive;
@@ -12566,7 +12566,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings ResetRecursive(this KubernetesDeleteSettings toolSettings)
+        public static T ResetRecursive<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = null;
@@ -12577,7 +12577,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings EnableRecursive(this KubernetesDeleteSettings toolSettings)
+        public static T EnableRecursive<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = true;
@@ -12588,7 +12588,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings DisableRecursive(this KubernetesDeleteSettings toolSettings)
+        public static T DisableRecursive<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = false;
@@ -12599,7 +12599,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings ToggleRecursive(this KubernetesDeleteSettings toolSettings)
+        public static T ToggleRecursive<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = !toolSettings.Recursive;
@@ -12612,7 +12612,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on, not including uninitialized ones.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings SetSelector(this KubernetesDeleteSettings toolSettings, string selector)
+        public static T SetSelector<T>(this T toolSettings, string selector) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = selector;
@@ -12623,7 +12623,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on, not including uninitialized ones.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings ResetSelector(this KubernetesDeleteSettings toolSettings)
+        public static T ResetSelector<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = null;
@@ -12636,7 +12636,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings SetTimeout(this KubernetesDeleteSettings toolSettings, TimeSpan? timeout)
+        public static T SetTimeout<T>(this T toolSettings, TimeSpan? timeout) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = timeout;
@@ -12647,7 +12647,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings ResetTimeout(this KubernetesDeleteSettings toolSettings)
+        public static T ResetTimeout<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = null;
@@ -12660,7 +12660,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings SetWait(this KubernetesDeleteSettings toolSettings, bool? wait)
+        public static T SetWait<T>(this T toolSettings, bool? wait) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = wait;
@@ -12671,7 +12671,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings ResetWait(this KubernetesDeleteSettings toolSettings)
+        public static T ResetWait<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = null;
@@ -12682,7 +12682,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings EnableWait(this KubernetesDeleteSettings toolSettings)
+        public static T EnableWait<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = true;
@@ -12693,7 +12693,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings DisableWait(this KubernetesDeleteSettings toolSettings)
+        public static T DisableWait<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = false;
@@ -12704,7 +12704,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDeleteSettings ToggleWait(this KubernetesDeleteSettings toolSettings)
+        public static T ToggleWait<T>(this T toolSettings) where T : KubernetesDeleteSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = !toolSettings.Wait;
@@ -12727,7 +12727,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetAllowMissingTemplateKeys(this KubernetesExposeSettings toolSettings, bool? allowMissingTemplateKeys)
+        public static T SetAllowMissingTemplateKeys<T>(this T toolSettings, bool? allowMissingTemplateKeys) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = allowMissingTemplateKeys;
@@ -12738,7 +12738,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ResetAllowMissingTemplateKeys(this KubernetesExposeSettings toolSettings)
+        public static T ResetAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = null;
@@ -12749,7 +12749,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings EnableAllowMissingTemplateKeys(this KubernetesExposeSettings toolSettings)
+        public static T EnableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = true;
@@ -12760,7 +12760,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings DisableAllowMissingTemplateKeys(this KubernetesExposeSettings toolSettings)
+        public static T DisableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = false;
@@ -12771,7 +12771,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ToggleAllowMissingTemplateKeys(this KubernetesExposeSettings toolSettings)
+        public static T ToggleAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = !toolSettings.AllowMissingTemplateKeys;
@@ -12784,7 +12784,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>ClusterIP to be assigned to the service. Leave empty to auto-allocate, or set to 'None' to create a headless service.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetClusterIp(this KubernetesExposeSettings toolSettings, string clusterIp)
+        public static T SetClusterIp<T>(this T toolSettings, string clusterIp) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClusterIp = clusterIp;
@@ -12795,7 +12795,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>ClusterIP to be assigned to the service. Leave empty to auto-allocate, or set to 'None' to create a headless service.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ResetClusterIp(this KubernetesExposeSettings toolSettings)
+        public static T ResetClusterIp<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClusterIp = null;
@@ -12808,7 +12808,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Synonym for --target-port.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetContainerPort(this KubernetesExposeSettings toolSettings, string containerPort)
+        public static T SetContainerPort<T>(this T toolSettings, string containerPort) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContainerPort = containerPort;
@@ -12819,7 +12819,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Synonym for --target-port.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ResetContainerPort(this KubernetesExposeSettings toolSettings)
+        public static T ResetContainerPort<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContainerPort = null;
@@ -12832,7 +12832,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetDryRun(this KubernetesExposeSettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -12843,7 +12843,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ResetDryRun(this KubernetesExposeSettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -12854,7 +12854,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings EnableDryRun(this KubernetesExposeSettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -12865,7 +12865,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings DisableDryRun(this KubernetesExposeSettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -12876,7 +12876,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ToggleDryRun(this KubernetesExposeSettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -12889,7 +12889,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Additional external IP address (not managed by Kubernetes) to accept for the service. If this IP is routed to a node, the service can be accessed by this IP in addition to its generated service IP.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetExternalIp(this KubernetesExposeSettings toolSettings, string externalIp)
+        public static T SetExternalIp<T>(this T toolSettings, string externalIp) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExternalIp = externalIp;
@@ -12900,7 +12900,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Additional external IP address (not managed by Kubernetes) to accept for the service. If this IP is routed to a node, the service can be accessed by this IP in addition to its generated service IP.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ResetExternalIp(this KubernetesExposeSettings toolSettings)
+        public static T ResetExternalIp<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExternalIp = null;
@@ -12913,7 +12913,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to expose a service.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetFilename(this KubernetesExposeSettings toolSettings, params string[] filename)
+        public static T SetFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -12924,7 +12924,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to expose a service.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetFilename(this KubernetesExposeSettings toolSettings, IEnumerable<string> filename)
+        public static T SetFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -12935,7 +12935,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to expose a service.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings AddFilename(this KubernetesExposeSettings toolSettings, params string[] filename)
+        public static T AddFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -12946,7 +12946,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to expose a service.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings AddFilename(this KubernetesExposeSettings toolSettings, IEnumerable<string> filename)
+        public static T AddFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -12957,7 +12957,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to expose a service.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ClearFilename(this KubernetesExposeSettings toolSettings)
+        public static T ClearFilename<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.Clear();
@@ -12968,7 +12968,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to expose a service.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings RemoveFilename(this KubernetesExposeSettings toolSettings, params string[] filename)
+        public static T RemoveFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -12980,7 +12980,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to expose a service.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings RemoveFilename(this KubernetesExposeSettings toolSettings, IEnumerable<string> filename)
+        public static T RemoveFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -12994,7 +12994,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the API generator to use. There are 2 generators: 'service/v1' and 'service/v2'. The only difference between them is that service port in v1 is named 'default', while it is left unnamed in v2. Default is 'service/v2'.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetGenerator(this KubernetesExposeSettings toolSettings, string generator)
+        public static T SetGenerator<T>(this T toolSettings, string generator) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Generator = generator;
@@ -13005,7 +13005,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the API generator to use. There are 2 generators: 'service/v1' and 'service/v2'. The only difference between them is that service port in v1 is named 'default', while it is left unnamed in v2. Default is 'service/v2'.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ResetGenerator(this KubernetesExposeSettings toolSettings)
+        public static T ResetGenerator<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Generator = null;
@@ -13018,7 +13018,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Labels to apply to the service created by this call.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetLabels(this KubernetesExposeSettings toolSettings, string labels)
+        public static T SetLabels<T>(this T toolSettings, string labels) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Labels = labels;
@@ -13029,7 +13029,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Labels to apply to the service created by this call.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ResetLabels(this KubernetesExposeSettings toolSettings)
+        public static T ResetLabels<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Labels = null;
@@ -13042,7 +13042,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>IP to assign to the LoadBalancer. If empty, an ephemeral IP will be created and used (cloud-provider specific).</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetLoadBalancerIp(this KubernetesExposeSettings toolSettings, string loadBalancerIp)
+        public static T SetLoadBalancerIp<T>(this T toolSettings, string loadBalancerIp) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LoadBalancerIp = loadBalancerIp;
@@ -13053,7 +13053,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>IP to assign to the LoadBalancer. If empty, an ephemeral IP will be created and used (cloud-provider specific).</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ResetLoadBalancerIp(this KubernetesExposeSettings toolSettings)
+        public static T ResetLoadBalancerIp<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LoadBalancerIp = null;
@@ -13066,7 +13066,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name for the newly created object.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetName(this KubernetesExposeSettings toolSettings, string name)
+        public static T SetName<T>(this T toolSettings, string name) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = name;
@@ -13077,7 +13077,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name for the newly created object.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ResetName(this KubernetesExposeSettings toolSettings)
+        public static T ResetName<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = null;
@@ -13090,7 +13090,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetOutput(this KubernetesExposeSettings toolSettings, KubernetesExposeOutput output)
+        public static T SetOutput<T>(this T toolSettings, KubernetesExposeOutput output) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -13101,7 +13101,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ResetOutput(this KubernetesExposeSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -13114,7 +13114,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>An inline JSON override for the generated object. If this is non-empty, it is used to override the generated object. Requires that the object supply a valid apiVersion field.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetOverrides(this KubernetesExposeSettings toolSettings, string overrides)
+        public static T SetOverrides<T>(this T toolSettings, string overrides) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overrides = overrides;
@@ -13125,7 +13125,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>An inline JSON override for the generated object. If this is non-empty, it is used to override the generated object. Requires that the object supply a valid apiVersion field.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ResetOverrides(this KubernetesExposeSettings toolSettings)
+        public static T ResetOverrides<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overrides = null;
@@ -13138,7 +13138,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The port that the service should serve on. Copied from the resource being exposed, if unspecified.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetPort(this KubernetesExposeSettings toolSettings, string port)
+        public static T SetPort<T>(this T toolSettings, string port) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Port = port;
@@ -13149,7 +13149,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The port that the service should serve on. Copied from the resource being exposed, if unspecified.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ResetPort(this KubernetesExposeSettings toolSettings)
+        public static T ResetPort<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Port = null;
@@ -13162,7 +13162,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The network protocol for the service to be created. Default is 'TCP'.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetProtocol(this KubernetesExposeSettings toolSettings, string protocol)
+        public static T SetProtocol<T>(this T toolSettings, string protocol) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Protocol = protocol;
@@ -13173,7 +13173,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The network protocol for the service to be created. Default is 'TCP'.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ResetProtocol(this KubernetesExposeSettings toolSettings)
+        public static T ResetProtocol<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Protocol = null;
@@ -13186,7 +13186,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetRecord(this KubernetesExposeSettings toolSettings, bool? record)
+        public static T SetRecord<T>(this T toolSettings, bool? record) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = record;
@@ -13197,7 +13197,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ResetRecord(this KubernetesExposeSettings toolSettings)
+        public static T ResetRecord<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = null;
@@ -13208,7 +13208,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings EnableRecord(this KubernetesExposeSettings toolSettings)
+        public static T EnableRecord<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = true;
@@ -13219,7 +13219,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings DisableRecord(this KubernetesExposeSettings toolSettings)
+        public static T DisableRecord<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = false;
@@ -13230,7 +13230,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ToggleRecord(this KubernetesExposeSettings toolSettings)
+        public static T ToggleRecord<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = !toolSettings.Record;
@@ -13243,7 +13243,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetRecursive(this KubernetesExposeSettings toolSettings, bool? recursive)
+        public static T SetRecursive<T>(this T toolSettings, bool? recursive) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = recursive;
@@ -13254,7 +13254,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ResetRecursive(this KubernetesExposeSettings toolSettings)
+        public static T ResetRecursive<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = null;
@@ -13265,7 +13265,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings EnableRecursive(this KubernetesExposeSettings toolSettings)
+        public static T EnableRecursive<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = true;
@@ -13276,7 +13276,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings DisableRecursive(this KubernetesExposeSettings toolSettings)
+        public static T DisableRecursive<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = false;
@@ -13287,7 +13287,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ToggleRecursive(this KubernetesExposeSettings toolSettings)
+        public static T ToggleRecursive<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = !toolSettings.Recursive;
@@ -13300,7 +13300,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetSaveConfig(this KubernetesExposeSettings toolSettings, bool? saveConfig)
+        public static T SetSaveConfig<T>(this T toolSettings, bool? saveConfig) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = saveConfig;
@@ -13311,7 +13311,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ResetSaveConfig(this KubernetesExposeSettings toolSettings)
+        public static T ResetSaveConfig<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = null;
@@ -13322,7 +13322,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings EnableSaveConfig(this KubernetesExposeSettings toolSettings)
+        public static T EnableSaveConfig<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = true;
@@ -13333,7 +13333,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings DisableSaveConfig(this KubernetesExposeSettings toolSettings)
+        public static T DisableSaveConfig<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = false;
@@ -13344,7 +13344,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ToggleSaveConfig(this KubernetesExposeSettings toolSettings)
+        public static T ToggleSaveConfig<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = !toolSettings.SaveConfig;
@@ -13357,7 +13357,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>A label selector to use for this service. Only equality-based selector requirements are supported. If empty (the default) infer the selector from the replication controller or replica set.).</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetSelector(this KubernetesExposeSettings toolSettings, string selector)
+        public static T SetSelector<T>(this T toolSettings, string selector) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = selector;
@@ -13368,7 +13368,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>A label selector to use for this service. Only equality-based selector requirements are supported. If empty (the default) infer the selector from the replication controller or replica set.).</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ResetSelector(this KubernetesExposeSettings toolSettings)
+        public static T ResetSelector<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = null;
@@ -13381,7 +13381,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If non-empty, set the session affinity for the service to this; legal values: 'None', 'ClientIP'.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetSessionAffinity(this KubernetesExposeSettings toolSettings, string sessionAffinity)
+        public static T SetSessionAffinity<T>(this T toolSettings, string sessionAffinity) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SessionAffinity = sessionAffinity;
@@ -13392,7 +13392,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If non-empty, set the session affinity for the service to this; legal values: 'None', 'ClientIP'.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ResetSessionAffinity(this KubernetesExposeSettings toolSettings)
+        public static T ResetSessionAffinity<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SessionAffinity = null;
@@ -13405,7 +13405,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Name or number for the port on the container that the service should direct traffic to. Optional.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetTargetPort(this KubernetesExposeSettings toolSettings, string targetPort)
+        public static T SetTargetPort<T>(this T toolSettings, string targetPort) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetPort = targetPort;
@@ -13416,7 +13416,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Name or number for the port on the container that the service should direct traffic to. Optional.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ResetTargetPort(this KubernetesExposeSettings toolSettings)
+        public static T ResetTargetPort<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetPort = null;
@@ -13429,7 +13429,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetTemplate(this KubernetesExposeSettings toolSettings, string template)
+        public static T SetTemplate<T>(this T toolSettings, string template) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = template;
@@ -13440,7 +13440,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ResetTemplate(this KubernetesExposeSettings toolSettings)
+        public static T ResetTemplate<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = null;
@@ -13453,7 +13453,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Type for this service: ClusterIP, NodePort, LoadBalancer, or ExternalName. Default is 'ClusterIP'.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings SetType(this KubernetesExposeSettings toolSettings, string type)
+        public static T SetType<T>(this T toolSettings, string type) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Type = type;
@@ -13464,7 +13464,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Type for this service: ClusterIP, NodePort, LoadBalancer, or ExternalName. Default is 'ClusterIP'.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExposeSettings ResetType(this KubernetesExposeSettings toolSettings)
+        public static T ResetType<T>(this T toolSettings) where T : KubernetesExposeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Type = null;
@@ -13497,7 +13497,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the pod.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAttachSettings SetPod(this KubernetesAttachSettings toolSettings, params string[] pod)
+        public static T SetPod<T>(this T toolSettings, params string[] pod) where T : KubernetesAttachSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PodInternal = pod.ToList();
@@ -13508,7 +13508,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the pod.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAttachSettings SetPod(this KubernetesAttachSettings toolSettings, IEnumerable<string> pod)
+        public static T SetPod<T>(this T toolSettings, IEnumerable<string> pod) where T : KubernetesAttachSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PodInternal = pod.ToList();
@@ -13519,7 +13519,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the pod.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAttachSettings AddPod(this KubernetesAttachSettings toolSettings, params string[] pod)
+        public static T AddPod<T>(this T toolSettings, params string[] pod) where T : KubernetesAttachSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PodInternal.AddRange(pod);
@@ -13530,7 +13530,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the pod.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAttachSettings AddPod(this KubernetesAttachSettings toolSettings, IEnumerable<string> pod)
+        public static T AddPod<T>(this T toolSettings, IEnumerable<string> pod) where T : KubernetesAttachSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PodInternal.AddRange(pod);
@@ -13541,7 +13541,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the pod.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAttachSettings ClearPod(this KubernetesAttachSettings toolSettings)
+        public static T ClearPod<T>(this T toolSettings) where T : KubernetesAttachSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PodInternal.Clear();
@@ -13552,7 +13552,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the pod.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAttachSettings RemovePod(this KubernetesAttachSettings toolSettings, params string[] pod)
+        public static T RemovePod<T>(this T toolSettings, params string[] pod) where T : KubernetesAttachSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(pod);
@@ -13564,7 +13564,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the pod.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAttachSettings RemovePod(this KubernetesAttachSettings toolSettings, IEnumerable<string> pod)
+        public static T RemovePod<T>(this T toolSettings, IEnumerable<string> pod) where T : KubernetesAttachSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(pod);
@@ -13578,7 +13578,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Container name. If omitted, the first container in the pod will be chosen.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAttachSettings SetContainer(this KubernetesAttachSettings toolSettings, string container)
+        public static T SetContainer<T>(this T toolSettings, string container) where T : KubernetesAttachSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Container = container;
@@ -13589,7 +13589,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Container name. If omitted, the first container in the pod will be chosen.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAttachSettings ResetContainer(this KubernetesAttachSettings toolSettings)
+        public static T ResetContainer<T>(this T toolSettings) where T : KubernetesAttachSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Container = null;
@@ -13602,7 +13602,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAttachSettings SetPodRunningTimeout(this KubernetesAttachSettings toolSettings, TimeSpan? podRunningTimeout)
+        public static T SetPodRunningTimeout<T>(this T toolSettings, TimeSpan? podRunningTimeout) where T : KubernetesAttachSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PodRunningTimeout = podRunningTimeout;
@@ -13613,7 +13613,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAttachSettings ResetPodRunningTimeout(this KubernetesAttachSettings toolSettings)
+        public static T ResetPodRunningTimeout<T>(this T toolSettings) where T : KubernetesAttachSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PodRunningTimeout = null;
@@ -13626,7 +13626,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Pass stdin to the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAttachSettings SetStdin(this KubernetesAttachSettings toolSettings, bool? stdin)
+        public static T SetStdin<T>(this T toolSettings, bool? stdin) where T : KubernetesAttachSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stdin = stdin;
@@ -13637,7 +13637,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Pass stdin to the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAttachSettings ResetStdin(this KubernetesAttachSettings toolSettings)
+        public static T ResetStdin<T>(this T toolSettings) where T : KubernetesAttachSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stdin = null;
@@ -13648,7 +13648,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Pass stdin to the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAttachSettings EnableStdin(this KubernetesAttachSettings toolSettings)
+        public static T EnableStdin<T>(this T toolSettings) where T : KubernetesAttachSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stdin = true;
@@ -13659,7 +13659,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Pass stdin to the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAttachSettings DisableStdin(this KubernetesAttachSettings toolSettings)
+        public static T DisableStdin<T>(this T toolSettings) where T : KubernetesAttachSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stdin = false;
@@ -13670,7 +13670,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Pass stdin to the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAttachSettings ToggleStdin(this KubernetesAttachSettings toolSettings)
+        public static T ToggleStdin<T>(this T toolSettings) where T : KubernetesAttachSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stdin = !toolSettings.Stdin;
@@ -13683,7 +13683,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Stdin is a TTY.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAttachSettings SetTty(this KubernetesAttachSettings toolSettings, bool? tty)
+        public static T SetTty<T>(this T toolSettings, bool? tty) where T : KubernetesAttachSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tty = tty;
@@ -13694,7 +13694,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Stdin is a TTY.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAttachSettings ResetTty(this KubernetesAttachSettings toolSettings)
+        public static T ResetTty<T>(this T toolSettings) where T : KubernetesAttachSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tty = null;
@@ -13705,7 +13705,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Stdin is a TTY.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAttachSettings EnableTty(this KubernetesAttachSettings toolSettings)
+        public static T EnableTty<T>(this T toolSettings) where T : KubernetesAttachSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tty = true;
@@ -13716,7 +13716,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Stdin is a TTY.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAttachSettings DisableTty(this KubernetesAttachSettings toolSettings)
+        public static T DisableTty<T>(this T toolSettings) where T : KubernetesAttachSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tty = false;
@@ -13727,7 +13727,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Stdin is a TTY.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAttachSettings ToggleTty(this KubernetesAttachSettings toolSettings)
+        public static T ToggleTty<T>(this T toolSettings) where T : KubernetesAttachSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tty = !toolSettings.Tty;
@@ -13750,7 +13750,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Regular expression for hosts that the proxy should accept.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings SetAcceptHosts(this KubernetesProxySettings toolSettings, string acceptHosts)
+        public static T SetAcceptHosts<T>(this T toolSettings, string acceptHosts) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AcceptHosts = acceptHosts;
@@ -13761,7 +13761,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Regular expression for hosts that the proxy should accept.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings ResetAcceptHosts(this KubernetesProxySettings toolSettings)
+        public static T ResetAcceptHosts<T>(this T toolSettings) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AcceptHosts = null;
@@ -13774,7 +13774,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Regular expression for paths that the proxy should accept.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings SetAcceptPaths(this KubernetesProxySettings toolSettings, string acceptPaths)
+        public static T SetAcceptPaths<T>(this T toolSettings, string acceptPaths) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AcceptPaths = acceptPaths;
@@ -13785,7 +13785,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Regular expression for paths that the proxy should accept.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings ResetAcceptPaths(this KubernetesProxySettings toolSettings)
+        public static T ResetAcceptPaths<T>(this T toolSettings) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AcceptPaths = null;
@@ -13798,7 +13798,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The IP address on which to serve on.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings SetAddress(this KubernetesProxySettings toolSettings, string address)
+        public static T SetAddress<T>(this T toolSettings, string address) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Address = address;
@@ -13809,7 +13809,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The IP address on which to serve on.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings ResetAddress(this KubernetesProxySettings toolSettings)
+        public static T ResetAddress<T>(this T toolSettings) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Address = null;
@@ -13822,7 +13822,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Prefix to serve the proxied API under.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings SetApiPrefix(this KubernetesProxySettings toolSettings, string apiPrefix)
+        public static T SetApiPrefix<T>(this T toolSettings, string apiPrefix) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiPrefix = apiPrefix;
@@ -13833,7 +13833,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Prefix to serve the proxied API under.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings ResetApiPrefix(this KubernetesProxySettings toolSettings)
+        public static T ResetApiPrefix<T>(this T toolSettings) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiPrefix = null;
@@ -13846,7 +13846,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, disable request filtering in the proxy. This is dangerous, and can leave you vulnerable to XSRF attacks, when used with an accessible port.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings SetDisableFilter(this KubernetesProxySettings toolSettings, bool? disableFilter)
+        public static T SetDisableFilter<T>(this T toolSettings, bool? disableFilter) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableFilter = disableFilter;
@@ -13857,7 +13857,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, disable request filtering in the proxy. This is dangerous, and can leave you vulnerable to XSRF attacks, when used with an accessible port.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings ResetDisableFilter(this KubernetesProxySettings toolSettings)
+        public static T ResetDisableFilter<T>(this T toolSettings) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableFilter = null;
@@ -13868,7 +13868,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, disable request filtering in the proxy. This is dangerous, and can leave you vulnerable to XSRF attacks, when used with an accessible port.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings EnableDisableFilter(this KubernetesProxySettings toolSettings)
+        public static T EnableDisableFilter<T>(this T toolSettings) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableFilter = true;
@@ -13879,7 +13879,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, disable request filtering in the proxy. This is dangerous, and can leave you vulnerable to XSRF attacks, when used with an accessible port.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings DisableDisableFilter(this KubernetesProxySettings toolSettings)
+        public static T DisableDisableFilter<T>(this T toolSettings) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableFilter = false;
@@ -13890,7 +13890,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, disable request filtering in the proxy. This is dangerous, and can leave you vulnerable to XSRF attacks, when used with an accessible port.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings ToggleDisableFilter(this KubernetesProxySettings toolSettings)
+        public static T ToggleDisableFilter<T>(this T toolSettings) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableFilter = !toolSettings.DisableFilter;
@@ -13903,7 +13903,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The port on which to run the proxy. Set to 0 to pick a random port.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings SetPort(this KubernetesProxySettings toolSettings, int? port)
+        public static T SetPort<T>(this T toolSettings, int? port) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Port = port;
@@ -13914,7 +13914,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The port on which to run the proxy. Set to 0 to pick a random port.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings ResetPort(this KubernetesProxySettings toolSettings)
+        public static T ResetPort<T>(this T toolSettings) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Port = null;
@@ -13927,7 +13927,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Regular expression for HTTP methods that the proxy should reject (example --reject-methods='POST,PUT,PATCH'). .</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings SetRejectMethods(this KubernetesProxySettings toolSettings, string rejectMethods)
+        public static T SetRejectMethods<T>(this T toolSettings, string rejectMethods) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RejectMethods = rejectMethods;
@@ -13938,7 +13938,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Regular expression for HTTP methods that the proxy should reject (example --reject-methods='POST,PUT,PATCH'). .</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings ResetRejectMethods(this KubernetesProxySettings toolSettings)
+        public static T ResetRejectMethods<T>(this T toolSettings) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RejectMethods = null;
@@ -13951,7 +13951,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Regular expression for paths that the proxy should reject. Paths specified here will be rejected even accepted by --accept-paths.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings SetRejectPaths(this KubernetesProxySettings toolSettings, string rejectPaths)
+        public static T SetRejectPaths<T>(this T toolSettings, string rejectPaths) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RejectPaths = rejectPaths;
@@ -13962,7 +13962,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Regular expression for paths that the proxy should reject. Paths specified here will be rejected even accepted by --accept-paths.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings ResetRejectPaths(this KubernetesProxySettings toolSettings)
+        public static T ResetRejectPaths<T>(this T toolSettings) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RejectPaths = null;
@@ -13975,7 +13975,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Unix socket on which to run the proxy.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings SetUnixSocket(this KubernetesProxySettings toolSettings, string unixSocket)
+        public static T SetUnixSocket<T>(this T toolSettings, string unixSocket) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UnixSocket = unixSocket;
@@ -13986,7 +13986,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Unix socket on which to run the proxy.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings ResetUnixSocket(this KubernetesProxySettings toolSettings)
+        public static T ResetUnixSocket<T>(this T toolSettings) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UnixSocket = null;
@@ -13999,7 +13999,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Also serve static files from the given directory under the specified prefix.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings SetWww(this KubernetesProxySettings toolSettings, string www)
+        public static T SetWww<T>(this T toolSettings, string www) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Www = www;
@@ -14010,7 +14010,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Also serve static files from the given directory under the specified prefix.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings ResetWww(this KubernetesProxySettings toolSettings)
+        public static T ResetWww<T>(this T toolSettings) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Www = null;
@@ -14023,7 +14023,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Prefix to serve static files under, if static file directory is specified.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings SetWwwPrefix(this KubernetesProxySettings toolSettings, string wwwPrefix)
+        public static T SetWwwPrefix<T>(this T toolSettings, string wwwPrefix) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WwwPrefix = wwwPrefix;
@@ -14034,7 +14034,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Prefix to serve static files under, if static file directory is specified.</p>
         /// </summary>
         [Pure]
-        public static KubernetesProxySettings ResetWwwPrefix(this KubernetesProxySettings toolSettings)
+        public static T ResetWwwPrefix<T>(this T toolSettings) where T : KubernetesProxySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WwwPrefix = null;
@@ -14087,7 +14087,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings SetTypeName(this KubernetesPatchSettings toolSettings, params string[] typeName)
+        public static T SetTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal = typeName.ToList();
@@ -14098,7 +14098,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings SetTypeName(this KubernetesPatchSettings toolSettings, IEnumerable<string> typeName)
+        public static T SetTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal = typeName.ToList();
@@ -14109,7 +14109,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings AddTypeName(this KubernetesPatchSettings toolSettings, params string[] typeName)
+        public static T AddTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.AddRange(typeName);
@@ -14120,7 +14120,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings AddTypeName(this KubernetesPatchSettings toolSettings, IEnumerable<string> typeName)
+        public static T AddTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.AddRange(typeName);
@@ -14131,7 +14131,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings ClearTypeName(this KubernetesPatchSettings toolSettings)
+        public static T ClearTypeName<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.Clear();
@@ -14142,7 +14142,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings RemoveTypeName(this KubernetesPatchSettings toolSettings, params string[] typeName)
+        public static T RemoveTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(typeName);
@@ -14154,7 +14154,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings RemoveTypeName(this KubernetesPatchSettings toolSettings, IEnumerable<string> typeName)
+        public static T RemoveTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(typeName);
@@ -14168,7 +14168,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings SetAllowMissingTemplateKeys(this KubernetesPatchSettings toolSettings, bool? allowMissingTemplateKeys)
+        public static T SetAllowMissingTemplateKeys<T>(this T toolSettings, bool? allowMissingTemplateKeys) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = allowMissingTemplateKeys;
@@ -14179,7 +14179,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings ResetAllowMissingTemplateKeys(this KubernetesPatchSettings toolSettings)
+        public static T ResetAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = null;
@@ -14190,7 +14190,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings EnableAllowMissingTemplateKeys(this KubernetesPatchSettings toolSettings)
+        public static T EnableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = true;
@@ -14201,7 +14201,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings DisableAllowMissingTemplateKeys(this KubernetesPatchSettings toolSettings)
+        public static T DisableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = false;
@@ -14212,7 +14212,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings ToggleAllowMissingTemplateKeys(this KubernetesPatchSettings toolSettings)
+        public static T ToggleAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = !toolSettings.AllowMissingTemplateKeys;
@@ -14225,7 +14225,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings SetDryRun(this KubernetesPatchSettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -14236,7 +14236,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings ResetDryRun(this KubernetesPatchSettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -14247,7 +14247,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings EnableDryRun(this KubernetesPatchSettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -14258,7 +14258,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings DisableDryRun(this KubernetesPatchSettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -14269,7 +14269,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings ToggleDryRun(this KubernetesPatchSettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -14282,7 +14282,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to update.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings SetFilename(this KubernetesPatchSettings toolSettings, params string[] filename)
+        public static T SetFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -14293,7 +14293,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to update.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings SetFilename(this KubernetesPatchSettings toolSettings, IEnumerable<string> filename)
+        public static T SetFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -14304,7 +14304,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to update.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings AddFilename(this KubernetesPatchSettings toolSettings, params string[] filename)
+        public static T AddFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -14315,7 +14315,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to update.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings AddFilename(this KubernetesPatchSettings toolSettings, IEnumerable<string> filename)
+        public static T AddFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -14326,7 +14326,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to update.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings ClearFilename(this KubernetesPatchSettings toolSettings)
+        public static T ClearFilename<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.Clear();
@@ -14337,7 +14337,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to update.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings RemoveFilename(this KubernetesPatchSettings toolSettings, params string[] filename)
+        public static T RemoveFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -14349,7 +14349,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to update.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings RemoveFilename(this KubernetesPatchSettings toolSettings, IEnumerable<string> filename)
+        public static T RemoveFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -14363,7 +14363,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, patch will operate on the content of the file, not the server-side resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings SetLocal(this KubernetesPatchSettings toolSettings, bool? local)
+        public static T SetLocal<T>(this T toolSettings, bool? local) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Local = local;
@@ -14374,7 +14374,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, patch will operate on the content of the file, not the server-side resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings ResetLocal(this KubernetesPatchSettings toolSettings)
+        public static T ResetLocal<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Local = null;
@@ -14385,7 +14385,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, patch will operate on the content of the file, not the server-side resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings EnableLocal(this KubernetesPatchSettings toolSettings)
+        public static T EnableLocal<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Local = true;
@@ -14396,7 +14396,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, patch will operate on the content of the file, not the server-side resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings DisableLocal(this KubernetesPatchSettings toolSettings)
+        public static T DisableLocal<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Local = false;
@@ -14407,7 +14407,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, patch will operate on the content of the file, not the server-side resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings ToggleLocal(this KubernetesPatchSettings toolSettings)
+        public static T ToggleLocal<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Local = !toolSettings.Local;
@@ -14420,7 +14420,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings SetOutput(this KubernetesPatchSettings toolSettings, KubernetesPatchOutput output)
+        public static T SetOutput<T>(this T toolSettings, KubernetesPatchOutput output) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -14431,7 +14431,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings ResetOutput(this KubernetesPatchSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -14444,7 +14444,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The patch to be applied to the resource JSON file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings SetPatch(this KubernetesPatchSettings toolSettings, string patch)
+        public static T SetPatch<T>(this T toolSettings, string patch) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Patch = patch;
@@ -14455,7 +14455,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The patch to be applied to the resource JSON file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings ResetPatch(this KubernetesPatchSettings toolSettings)
+        public static T ResetPatch<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Patch = null;
@@ -14468,7 +14468,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings SetRecord(this KubernetesPatchSettings toolSettings, bool? record)
+        public static T SetRecord<T>(this T toolSettings, bool? record) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = record;
@@ -14479,7 +14479,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings ResetRecord(this KubernetesPatchSettings toolSettings)
+        public static T ResetRecord<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = null;
@@ -14490,7 +14490,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings EnableRecord(this KubernetesPatchSettings toolSettings)
+        public static T EnableRecord<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = true;
@@ -14501,7 +14501,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings DisableRecord(this KubernetesPatchSettings toolSettings)
+        public static T DisableRecord<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = false;
@@ -14512,7 +14512,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings ToggleRecord(this KubernetesPatchSettings toolSettings)
+        public static T ToggleRecord<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = !toolSettings.Record;
@@ -14525,7 +14525,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings SetRecursive(this KubernetesPatchSettings toolSettings, bool? recursive)
+        public static T SetRecursive<T>(this T toolSettings, bool? recursive) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = recursive;
@@ -14536,7 +14536,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings ResetRecursive(this KubernetesPatchSettings toolSettings)
+        public static T ResetRecursive<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = null;
@@ -14547,7 +14547,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings EnableRecursive(this KubernetesPatchSettings toolSettings)
+        public static T EnableRecursive<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = true;
@@ -14558,7 +14558,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings DisableRecursive(this KubernetesPatchSettings toolSettings)
+        public static T DisableRecursive<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = false;
@@ -14569,7 +14569,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings ToggleRecursive(this KubernetesPatchSettings toolSettings)
+        public static T ToggleRecursive<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = !toolSettings.Recursive;
@@ -14582,7 +14582,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings SetTemplate(this KubernetesPatchSettings toolSettings, string template)
+        public static T SetTemplate<T>(this T toolSettings, string template) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = template;
@@ -14593,7 +14593,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings ResetTemplate(this KubernetesPatchSettings toolSettings)
+        public static T ResetTemplate<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = null;
@@ -14606,7 +14606,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type of patch being provided; one of [json merge strategic].</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings SetType(this KubernetesPatchSettings toolSettings, KubernetesPatchType type)
+        public static T SetType<T>(this T toolSettings, KubernetesPatchType type) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Type = type;
@@ -14617,7 +14617,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type of patch being provided; one of [json merge strategic].</p>
         /// </summary>
         [Pure]
-        public static KubernetesPatchSettings ResetType(this KubernetesPatchSettings toolSettings)
+        public static T ResetType<T>(this T toolSettings) where T : KubernetesPatchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Type = null;
@@ -14640,7 +14640,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings SetAllowMissingTemplateKeys(this KubernetesReplaceSettings toolSettings, bool? allowMissingTemplateKeys)
+        public static T SetAllowMissingTemplateKeys<T>(this T toolSettings, bool? allowMissingTemplateKeys) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = allowMissingTemplateKeys;
@@ -14651,7 +14651,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings ResetAllowMissingTemplateKeys(this KubernetesReplaceSettings toolSettings)
+        public static T ResetAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = null;
@@ -14662,7 +14662,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings EnableAllowMissingTemplateKeys(this KubernetesReplaceSettings toolSettings)
+        public static T EnableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = true;
@@ -14673,7 +14673,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings DisableAllowMissingTemplateKeys(this KubernetesReplaceSettings toolSettings)
+        public static T DisableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = false;
@@ -14684,7 +14684,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings ToggleAllowMissingTemplateKeys(this KubernetesReplaceSettings toolSettings)
+        public static T ToggleAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = !toolSettings.AllowMissingTemplateKeys;
@@ -14697,7 +14697,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings SetCascade(this KubernetesReplaceSettings toolSettings, bool? cascade)
+        public static T SetCascade<T>(this T toolSettings, bool? cascade) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = cascade;
@@ -14708,7 +14708,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings ResetCascade(this KubernetesReplaceSettings toolSettings)
+        public static T ResetCascade<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = null;
@@ -14719,7 +14719,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings EnableCascade(this KubernetesReplaceSettings toolSettings)
+        public static T EnableCascade<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = true;
@@ -14730,7 +14730,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings DisableCascade(this KubernetesReplaceSettings toolSettings)
+        public static T DisableCascade<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = false;
@@ -14741,7 +14741,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings ToggleCascade(this KubernetesReplaceSettings toolSettings)
+        public static T ToggleCascade<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = !toolSettings.Cascade;
@@ -14754,7 +14754,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>to use to replace the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings SetFilename(this KubernetesReplaceSettings toolSettings, params string[] filename)
+        public static T SetFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -14765,7 +14765,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>to use to replace the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings SetFilename(this KubernetesReplaceSettings toolSettings, IEnumerable<string> filename)
+        public static T SetFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -14776,7 +14776,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>to use to replace the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings AddFilename(this KubernetesReplaceSettings toolSettings, params string[] filename)
+        public static T AddFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -14787,7 +14787,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>to use to replace the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings AddFilename(this KubernetesReplaceSettings toolSettings, IEnumerable<string> filename)
+        public static T AddFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -14798,7 +14798,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>to use to replace the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings ClearFilename(this KubernetesReplaceSettings toolSettings)
+        public static T ClearFilename<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.Clear();
@@ -14809,7 +14809,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>to use to replace the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings RemoveFilename(this KubernetesReplaceSettings toolSettings, params string[] filename)
+        public static T RemoveFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -14821,7 +14821,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>to use to replace the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings RemoveFilename(this KubernetesReplaceSettings toolSettings, IEnumerable<string> filename)
+        public static T RemoveFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -14835,7 +14835,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings SetForce(this KubernetesReplaceSettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -14846,7 +14846,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings ResetForce(this KubernetesReplaceSettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -14857,7 +14857,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings EnableForce(this KubernetesReplaceSettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -14868,7 +14868,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings DisableForce(this KubernetesReplaceSettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -14879,7 +14879,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings ToggleForce(this KubernetesReplaceSettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -14892,7 +14892,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion).</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings SetGracePeriod(this KubernetesReplaceSettings toolSettings, int? gracePeriod)
+        public static T SetGracePeriod<T>(this T toolSettings, int? gracePeriod) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GracePeriod = gracePeriod;
@@ -14903,7 +14903,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion).</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings ResetGracePeriod(this KubernetesReplaceSettings toolSettings)
+        public static T ResetGracePeriod<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GracePeriod = null;
@@ -14916,7 +14916,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings SetOutput(this KubernetesReplaceSettings toolSettings, KubernetesReplaceOutput output)
+        public static T SetOutput<T>(this T toolSettings, KubernetesReplaceOutput output) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -14927,7 +14927,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings ResetOutput(this KubernetesReplaceSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -14940,7 +14940,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings SetRecursive(this KubernetesReplaceSettings toolSettings, bool? recursive)
+        public static T SetRecursive<T>(this T toolSettings, bool? recursive) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = recursive;
@@ -14951,7 +14951,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings ResetRecursive(this KubernetesReplaceSettings toolSettings)
+        public static T ResetRecursive<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = null;
@@ -14962,7 +14962,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings EnableRecursive(this KubernetesReplaceSettings toolSettings)
+        public static T EnableRecursive<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = true;
@@ -14973,7 +14973,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings DisableRecursive(this KubernetesReplaceSettings toolSettings)
+        public static T DisableRecursive<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = false;
@@ -14984,7 +14984,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings ToggleRecursive(this KubernetesReplaceSettings toolSettings)
+        public static T ToggleRecursive<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = !toolSettings.Recursive;
@@ -14997,7 +14997,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings SetSaveConfig(this KubernetesReplaceSettings toolSettings, bool? saveConfig)
+        public static T SetSaveConfig<T>(this T toolSettings, bool? saveConfig) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = saveConfig;
@@ -15008,7 +15008,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings ResetSaveConfig(this KubernetesReplaceSettings toolSettings)
+        public static T ResetSaveConfig<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = null;
@@ -15019,7 +15019,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings EnableSaveConfig(this KubernetesReplaceSettings toolSettings)
+        public static T EnableSaveConfig<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = true;
@@ -15030,7 +15030,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings DisableSaveConfig(this KubernetesReplaceSettings toolSettings)
+        public static T DisableSaveConfig<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = false;
@@ -15041,7 +15041,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings ToggleSaveConfig(this KubernetesReplaceSettings toolSettings)
+        public static T ToggleSaveConfig<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = !toolSettings.SaveConfig;
@@ -15054,7 +15054,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings SetTemplate(this KubernetesReplaceSettings toolSettings, string template)
+        public static T SetTemplate<T>(this T toolSettings, string template) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = template;
@@ -15065,7 +15065,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings ResetTemplate(this KubernetesReplaceSettings toolSettings)
+        public static T ResetTemplate<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = null;
@@ -15078,7 +15078,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings SetTimeout(this KubernetesReplaceSettings toolSettings, TimeSpan? timeout)
+        public static T SetTimeout<T>(this T toolSettings, TimeSpan? timeout) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = timeout;
@@ -15089,7 +15089,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings ResetTimeout(this KubernetesReplaceSettings toolSettings)
+        public static T ResetTimeout<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = null;
@@ -15102,7 +15102,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings SetValidate(this KubernetesReplaceSettings toolSettings, bool? validate)
+        public static T SetValidate<T>(this T toolSettings, bool? validate) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = validate;
@@ -15113,7 +15113,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings ResetValidate(this KubernetesReplaceSettings toolSettings)
+        public static T ResetValidate<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = null;
@@ -15124,7 +15124,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings EnableValidate(this KubernetesReplaceSettings toolSettings)
+        public static T EnableValidate<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = true;
@@ -15135,7 +15135,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings DisableValidate(this KubernetesReplaceSettings toolSettings)
+        public static T DisableValidate<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = false;
@@ -15146,7 +15146,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings ToggleValidate(this KubernetesReplaceSettings toolSettings)
+        public static T ToggleValidate<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = !toolSettings.Validate;
@@ -15159,7 +15159,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings SetWait(this KubernetesReplaceSettings toolSettings, bool? wait)
+        public static T SetWait<T>(this T toolSettings, bool? wait) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = wait;
@@ -15170,7 +15170,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings ResetWait(this KubernetesReplaceSettings toolSettings)
+        public static T ResetWait<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = null;
@@ -15181,7 +15181,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings EnableWait(this KubernetesReplaceSettings toolSettings)
+        public static T EnableWait<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = true;
@@ -15192,7 +15192,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings DisableWait(this KubernetesReplaceSettings toolSettings)
+        public static T DisableWait<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = false;
@@ -15203,7 +15203,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesReplaceSettings ToggleWait(this KubernetesReplaceSettings toolSettings)
+        public static T ToggleWait<T>(this T toolSettings) where T : KubernetesReplaceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = !toolSettings.Wait;
@@ -15226,7 +15226,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings SetTypeName(this KubernetesTaintSettings toolSettings, params string[] typeName)
+        public static T SetTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal = typeName.ToList();
@@ -15237,7 +15237,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings SetTypeName(this KubernetesTaintSettings toolSettings, IEnumerable<string> typeName)
+        public static T SetTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal = typeName.ToList();
@@ -15248,7 +15248,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings AddTypeName(this KubernetesTaintSettings toolSettings, params string[] typeName)
+        public static T AddTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.AddRange(typeName);
@@ -15259,7 +15259,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings AddTypeName(this KubernetesTaintSettings toolSettings, IEnumerable<string> typeName)
+        public static T AddTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.AddRange(typeName);
@@ -15270,7 +15270,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings ClearTypeName(this KubernetesTaintSettings toolSettings)
+        public static T ClearTypeName<T>(this T toolSettings) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.Clear();
@@ -15281,7 +15281,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings RemoveTypeName(this KubernetesTaintSettings toolSettings, params string[] typeName)
+        public static T RemoveTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(typeName);
@@ -15293,7 +15293,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings RemoveTypeName(this KubernetesTaintSettings toolSettings, IEnumerable<string> typeName)
+        public static T RemoveTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(typeName);
@@ -15307,7 +15307,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The taint effects to set.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings SetTaintEffects(this KubernetesTaintSettings toolSettings, IDictionary<string, string> taintEffects)
+        public static T SetTaintEffects<T>(this T toolSettings, IDictionary<string, string> taintEffects) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TaintEffectsInternal = taintEffects.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -15318,7 +15318,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The taint effects to set.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings ClearTaintEffects(this KubernetesTaintSettings toolSettings)
+        public static T ClearTaintEffects<T>(this T toolSettings) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TaintEffectsInternal.Clear();
@@ -15329,7 +15329,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The taint effects to set.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings AddTaintEffect(this KubernetesTaintSettings toolSettings, string taintEffectKey, string taintEffectValue)
+        public static T AddTaintEffect<T>(this T toolSettings, string taintEffectKey, string taintEffectValue) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TaintEffectsInternal.Add(taintEffectKey, taintEffectValue);
@@ -15340,7 +15340,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The taint effects to set.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings RemoveTaintEffect(this KubernetesTaintSettings toolSettings, string taintEffectKey)
+        public static T RemoveTaintEffect<T>(this T toolSettings, string taintEffectKey) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TaintEffectsInternal.Remove(taintEffectKey);
@@ -15351,7 +15351,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The taint effects to set.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings SetTaintEffect(this KubernetesTaintSettings toolSettings, string taintEffectKey, string taintEffectValue)
+        public static T SetTaintEffect<T>(this T toolSettings, string taintEffectKey, string taintEffectValue) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TaintEffectsInternal[taintEffectKey] = taintEffectValue;
@@ -15364,7 +15364,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all nodes in the cluster.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings SetAll(this KubernetesTaintSettings toolSettings, bool? all)
+        public static T SetAll<T>(this T toolSettings, bool? all) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = all;
@@ -15375,7 +15375,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all nodes in the cluster.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings ResetAll(this KubernetesTaintSettings toolSettings)
+        public static T ResetAll<T>(this T toolSettings) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = null;
@@ -15386,7 +15386,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all nodes in the cluster.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings EnableAll(this KubernetesTaintSettings toolSettings)
+        public static T EnableAll<T>(this T toolSettings) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = true;
@@ -15397,7 +15397,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all nodes in the cluster.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings DisableAll(this KubernetesTaintSettings toolSettings)
+        public static T DisableAll<T>(this T toolSettings) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = false;
@@ -15408,7 +15408,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all nodes in the cluster.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings ToggleAll(this KubernetesTaintSettings toolSettings)
+        public static T ToggleAll<T>(this T toolSettings) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = !toolSettings.All;
@@ -15421,7 +15421,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings SetAllowMissingTemplateKeys(this KubernetesTaintSettings toolSettings, bool? allowMissingTemplateKeys)
+        public static T SetAllowMissingTemplateKeys<T>(this T toolSettings, bool? allowMissingTemplateKeys) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = allowMissingTemplateKeys;
@@ -15432,7 +15432,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings ResetAllowMissingTemplateKeys(this KubernetesTaintSettings toolSettings)
+        public static T ResetAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = null;
@@ -15443,7 +15443,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings EnableAllowMissingTemplateKeys(this KubernetesTaintSettings toolSettings)
+        public static T EnableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = true;
@@ -15454,7 +15454,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings DisableAllowMissingTemplateKeys(this KubernetesTaintSettings toolSettings)
+        public static T DisableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = false;
@@ -15465,7 +15465,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings ToggleAllowMissingTemplateKeys(this KubernetesTaintSettings toolSettings)
+        public static T ToggleAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = !toolSettings.AllowMissingTemplateKeys;
@@ -15478,7 +15478,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings SetOutput(this KubernetesTaintSettings toolSettings, KubernetesTaintOutput output)
+        public static T SetOutput<T>(this T toolSettings, KubernetesTaintOutput output) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -15489,7 +15489,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings ResetOutput(this KubernetesTaintSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -15502,7 +15502,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, allow taints to be overwritten, otherwise reject taint updates that overwrite existing taints.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings SetOverwrite(this KubernetesTaintSettings toolSettings, bool? overwrite)
+        public static T SetOverwrite<T>(this T toolSettings, bool? overwrite) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = overwrite;
@@ -15513,7 +15513,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, allow taints to be overwritten, otherwise reject taint updates that overwrite existing taints.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings ResetOverwrite(this KubernetesTaintSettings toolSettings)
+        public static T ResetOverwrite<T>(this T toolSettings) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = null;
@@ -15524,7 +15524,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, allow taints to be overwritten, otherwise reject taint updates that overwrite existing taints.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings EnableOverwrite(this KubernetesTaintSettings toolSettings)
+        public static T EnableOverwrite<T>(this T toolSettings) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = true;
@@ -15535,7 +15535,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, allow taints to be overwritten, otherwise reject taint updates that overwrite existing taints.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings DisableOverwrite(this KubernetesTaintSettings toolSettings)
+        public static T DisableOverwrite<T>(this T toolSettings) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = false;
@@ -15546,7 +15546,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, allow taints to be overwritten, otherwise reject taint updates that overwrite existing taints.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings ToggleOverwrite(this KubernetesTaintSettings toolSettings)
+        public static T ToggleOverwrite<T>(this T toolSettings) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = !toolSettings.Overwrite;
@@ -15559,7 +15559,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings SetSelector(this KubernetesTaintSettings toolSettings, string selector)
+        public static T SetSelector<T>(this T toolSettings, string selector) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = selector;
@@ -15570,7 +15570,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings ResetSelector(this KubernetesTaintSettings toolSettings)
+        public static T ResetSelector<T>(this T toolSettings) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = null;
@@ -15583,7 +15583,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings SetTemplate(this KubernetesTaintSettings toolSettings, string template)
+        public static T SetTemplate<T>(this T toolSettings, string template) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = template;
@@ -15594,7 +15594,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings ResetTemplate(this KubernetesTaintSettings toolSettings)
+        public static T ResetTemplate<T>(this T toolSettings) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = null;
@@ -15607,7 +15607,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings SetValidate(this KubernetesTaintSettings toolSettings, bool? validate)
+        public static T SetValidate<T>(this T toolSettings, bool? validate) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = validate;
@@ -15618,7 +15618,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings ResetValidate(this KubernetesTaintSettings toolSettings)
+        public static T ResetValidate<T>(this T toolSettings) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = null;
@@ -15629,7 +15629,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings EnableValidate(this KubernetesTaintSettings toolSettings)
+        public static T EnableValidate<T>(this T toolSettings) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = true;
@@ -15640,7 +15640,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings DisableValidate(this KubernetesTaintSettings toolSettings)
+        public static T DisableValidate<T>(this T toolSettings) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = false;
@@ -15651,7 +15651,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesTaintSettings ToggleValidate(this KubernetesTaintSettings toolSettings)
+        public static T ToggleValidate<T>(this T toolSettings) where T : KubernetesTaintSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = !toolSettings.Validate;
@@ -15674,7 +15674,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings SetTypeName(this KubernetesDescribeSettings toolSettings, params string[] typeName)
+        public static T SetTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal = typeName.ToList();
@@ -15685,7 +15685,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings SetTypeName(this KubernetesDescribeSettings toolSettings, IEnumerable<string> typeName)
+        public static T SetTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal = typeName.ToList();
@@ -15696,7 +15696,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings AddTypeName(this KubernetesDescribeSettings toolSettings, params string[] typeName)
+        public static T AddTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.AddRange(typeName);
@@ -15707,7 +15707,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings AddTypeName(this KubernetesDescribeSettings toolSettings, IEnumerable<string> typeName)
+        public static T AddTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.AddRange(typeName);
@@ -15718,7 +15718,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings ClearTypeName(this KubernetesDescribeSettings toolSettings)
+        public static T ClearTypeName<T>(this T toolSettings) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.Clear();
@@ -15729,7 +15729,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings RemoveTypeName(this KubernetesDescribeSettings toolSettings, params string[] typeName)
+        public static T RemoveTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(typeName);
@@ -15741,7 +15741,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings RemoveTypeName(this KubernetesDescribeSettings toolSettings, IEnumerable<string> typeName)
+        public static T RemoveTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(typeName);
@@ -15755,7 +15755,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings SetAllNamespaces(this KubernetesDescribeSettings toolSettings, bool? allNamespaces)
+        public static T SetAllNamespaces<T>(this T toolSettings, bool? allNamespaces) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllNamespaces = allNamespaces;
@@ -15766,7 +15766,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings ResetAllNamespaces(this KubernetesDescribeSettings toolSettings)
+        public static T ResetAllNamespaces<T>(this T toolSettings) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllNamespaces = null;
@@ -15777,7 +15777,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings EnableAllNamespaces(this KubernetesDescribeSettings toolSettings)
+        public static T EnableAllNamespaces<T>(this T toolSettings) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllNamespaces = true;
@@ -15788,7 +15788,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings DisableAllNamespaces(this KubernetesDescribeSettings toolSettings)
+        public static T DisableAllNamespaces<T>(this T toolSettings) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllNamespaces = false;
@@ -15799,7 +15799,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings ToggleAllNamespaces(this KubernetesDescribeSettings toolSettings)
+        public static T ToggleAllNamespaces<T>(this T toolSettings) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllNamespaces = !toolSettings.AllNamespaces;
@@ -15812,7 +15812,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files containing the resource to describe.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings SetFilename(this KubernetesDescribeSettings toolSettings, params string[] filename)
+        public static T SetFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -15823,7 +15823,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files containing the resource to describe.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings SetFilename(this KubernetesDescribeSettings toolSettings, IEnumerable<string> filename)
+        public static T SetFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -15834,7 +15834,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files containing the resource to describe.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings AddFilename(this KubernetesDescribeSettings toolSettings, params string[] filename)
+        public static T AddFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -15845,7 +15845,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files containing the resource to describe.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings AddFilename(this KubernetesDescribeSettings toolSettings, IEnumerable<string> filename)
+        public static T AddFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -15856,7 +15856,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files containing the resource to describe.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings ClearFilename(this KubernetesDescribeSettings toolSettings)
+        public static T ClearFilename<T>(this T toolSettings) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.Clear();
@@ -15867,7 +15867,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files containing the resource to describe.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings RemoveFilename(this KubernetesDescribeSettings toolSettings, params string[] filename)
+        public static T RemoveFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -15879,7 +15879,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files containing the resource to describe.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings RemoveFilename(this KubernetesDescribeSettings toolSettings, IEnumerable<string> filename)
+        public static T RemoveFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -15893,7 +15893,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings SetIncludeUninitialized(this KubernetesDescribeSettings toolSettings, bool? includeUninitialized)
+        public static T SetIncludeUninitialized<T>(this T toolSettings, bool? includeUninitialized) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = includeUninitialized;
@@ -15904,7 +15904,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings ResetIncludeUninitialized(this KubernetesDescribeSettings toolSettings)
+        public static T ResetIncludeUninitialized<T>(this T toolSettings) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = null;
@@ -15915,7 +15915,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings EnableIncludeUninitialized(this KubernetesDescribeSettings toolSettings)
+        public static T EnableIncludeUninitialized<T>(this T toolSettings) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = true;
@@ -15926,7 +15926,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings DisableIncludeUninitialized(this KubernetesDescribeSettings toolSettings)
+        public static T DisableIncludeUninitialized<T>(this T toolSettings) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = false;
@@ -15937,7 +15937,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings ToggleIncludeUninitialized(this KubernetesDescribeSettings toolSettings)
+        public static T ToggleIncludeUninitialized<T>(this T toolSettings) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = !toolSettings.IncludeUninitialized;
@@ -15950,7 +15950,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings SetRecursive(this KubernetesDescribeSettings toolSettings, bool? recursive)
+        public static T SetRecursive<T>(this T toolSettings, bool? recursive) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = recursive;
@@ -15961,7 +15961,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings ResetRecursive(this KubernetesDescribeSettings toolSettings)
+        public static T ResetRecursive<T>(this T toolSettings) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = null;
@@ -15972,7 +15972,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings EnableRecursive(this KubernetesDescribeSettings toolSettings)
+        public static T EnableRecursive<T>(this T toolSettings) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = true;
@@ -15983,7 +15983,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings DisableRecursive(this KubernetesDescribeSettings toolSettings)
+        public static T DisableRecursive<T>(this T toolSettings) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = false;
@@ -15994,7 +15994,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings ToggleRecursive(this KubernetesDescribeSettings toolSettings)
+        public static T ToggleRecursive<T>(this T toolSettings) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = !toolSettings.Recursive;
@@ -16007,7 +16007,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings SetSelector(this KubernetesDescribeSettings toolSettings, string selector)
+        public static T SetSelector<T>(this T toolSettings, string selector) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = selector;
@@ -16018,7 +16018,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings ResetSelector(this KubernetesDescribeSettings toolSettings)
+        public static T ResetSelector<T>(this T toolSettings) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = null;
@@ -16031,7 +16031,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, display events related to the described object.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings SetShowEvents(this KubernetesDescribeSettings toolSettings, bool? showEvents)
+        public static T SetShowEvents<T>(this T toolSettings, bool? showEvents) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowEvents = showEvents;
@@ -16042,7 +16042,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, display events related to the described object.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings ResetShowEvents(this KubernetesDescribeSettings toolSettings)
+        public static T ResetShowEvents<T>(this T toolSettings) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowEvents = null;
@@ -16053,7 +16053,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, display events related to the described object.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings EnableShowEvents(this KubernetesDescribeSettings toolSettings)
+        public static T EnableShowEvents<T>(this T toolSettings) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowEvents = true;
@@ -16064,7 +16064,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, display events related to the described object.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings DisableShowEvents(this KubernetesDescribeSettings toolSettings)
+        public static T DisableShowEvents<T>(this T toolSettings) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowEvents = false;
@@ -16075,7 +16075,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, display events related to the described object.</p>
         /// </summary>
         [Pure]
-        public static KubernetesDescribeSettings ToggleShowEvents(this KubernetesDescribeSettings toolSettings)
+        public static T ToggleShowEvents<T>(this T toolSettings) where T : KubernetesDescribeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ShowEvents = !toolSettings.ShowEvents;
@@ -16098,7 +16098,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesSetSettings SetSubcommand(this KubernetesSetSettings toolSettings, params string[] subcommand)
+        public static T SetSubcommand<T>(this T toolSettings, params string[] subcommand) where T : KubernetesSetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SubcommandInternal = subcommand.ToList();
@@ -16109,7 +16109,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesSetSettings SetSubcommand(this KubernetesSetSettings toolSettings, IEnumerable<string> subcommand)
+        public static T SetSubcommand<T>(this T toolSettings, IEnumerable<string> subcommand) where T : KubernetesSetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SubcommandInternal = subcommand.ToList();
@@ -16120,7 +16120,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesSetSettings AddSubcommand(this KubernetesSetSettings toolSettings, params string[] subcommand)
+        public static T AddSubcommand<T>(this T toolSettings, params string[] subcommand) where T : KubernetesSetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SubcommandInternal.AddRange(subcommand);
@@ -16131,7 +16131,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesSetSettings AddSubcommand(this KubernetesSetSettings toolSettings, IEnumerable<string> subcommand)
+        public static T AddSubcommand<T>(this T toolSettings, IEnumerable<string> subcommand) where T : KubernetesSetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SubcommandInternal.AddRange(subcommand);
@@ -16142,7 +16142,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesSetSettings ClearSubcommand(this KubernetesSetSettings toolSettings)
+        public static T ClearSubcommand<T>(this T toolSettings) where T : KubernetesSetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SubcommandInternal.Clear();
@@ -16153,7 +16153,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesSetSettings RemoveSubcommand(this KubernetesSetSettings toolSettings, params string[] subcommand)
+        public static T RemoveSubcommand<T>(this T toolSettings, params string[] subcommand) where T : KubernetesSetSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(subcommand);
@@ -16165,7 +16165,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesSetSettings RemoveSubcommand(this KubernetesSetSettings toolSettings, IEnumerable<string> subcommand)
+        public static T RemoveSubcommand<T>(this T toolSettings, IEnumerable<string> subcommand) where T : KubernetesSetSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(subcommand);
@@ -16189,7 +16189,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAuthSettings SetSubcommand(this KubernetesAuthSettings toolSettings, string subcommand)
+        public static T SetSubcommand<T>(this T toolSettings, string subcommand) where T : KubernetesAuthSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Subcommand = subcommand;
@@ -16200,7 +16200,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAuthSettings ResetSubcommand(this KubernetesAuthSettings toolSettings)
+        public static T ResetSubcommand<T>(this T toolSettings) where T : KubernetesAuthSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Subcommand = null;
@@ -16223,7 +16223,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCertificateSettings SetSubcommand(this KubernetesCertificateSettings toolSettings, params string[] subcommand)
+        public static T SetSubcommand<T>(this T toolSettings, params string[] subcommand) where T : KubernetesCertificateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SubcommandInternal = subcommand.ToList();
@@ -16234,7 +16234,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCertificateSettings SetSubcommand(this KubernetesCertificateSettings toolSettings, IEnumerable<string> subcommand)
+        public static T SetSubcommand<T>(this T toolSettings, IEnumerable<string> subcommand) where T : KubernetesCertificateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SubcommandInternal = subcommand.ToList();
@@ -16245,7 +16245,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCertificateSettings AddSubcommand(this KubernetesCertificateSettings toolSettings, params string[] subcommand)
+        public static T AddSubcommand<T>(this T toolSettings, params string[] subcommand) where T : KubernetesCertificateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SubcommandInternal.AddRange(subcommand);
@@ -16256,7 +16256,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCertificateSettings AddSubcommand(this KubernetesCertificateSettings toolSettings, IEnumerable<string> subcommand)
+        public static T AddSubcommand<T>(this T toolSettings, IEnumerable<string> subcommand) where T : KubernetesCertificateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SubcommandInternal.AddRange(subcommand);
@@ -16267,7 +16267,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCertificateSettings ClearSubcommand(this KubernetesCertificateSettings toolSettings)
+        public static T ClearSubcommand<T>(this T toolSettings) where T : KubernetesCertificateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SubcommandInternal.Clear();
@@ -16278,7 +16278,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCertificateSettings RemoveSubcommand(this KubernetesCertificateSettings toolSettings, params string[] subcommand)
+        public static T RemoveSubcommand<T>(this T toolSettings, params string[] subcommand) where T : KubernetesCertificateSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(subcommand);
@@ -16290,7 +16290,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCertificateSettings RemoveSubcommand(this KubernetesCertificateSettings toolSettings, IEnumerable<string> subcommand)
+        public static T RemoveSubcommand<T>(this T toolSettings, IEnumerable<string> subcommand) where T : KubernetesCertificateSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(subcommand);
@@ -16314,7 +16314,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRolloutSettings SetSubcommand(this KubernetesRolloutSettings toolSettings, params string[] subcommand)
+        public static T SetSubcommand<T>(this T toolSettings, params string[] subcommand) where T : KubernetesRolloutSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SubcommandInternal = subcommand.ToList();
@@ -16325,7 +16325,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRolloutSettings SetSubcommand(this KubernetesRolloutSettings toolSettings, IEnumerable<string> subcommand)
+        public static T SetSubcommand<T>(this T toolSettings, IEnumerable<string> subcommand) where T : KubernetesRolloutSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SubcommandInternal = subcommand.ToList();
@@ -16336,7 +16336,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRolloutSettings AddSubcommand(this KubernetesRolloutSettings toolSettings, params string[] subcommand)
+        public static T AddSubcommand<T>(this T toolSettings, params string[] subcommand) where T : KubernetesRolloutSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SubcommandInternal.AddRange(subcommand);
@@ -16347,7 +16347,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRolloutSettings AddSubcommand(this KubernetesRolloutSettings toolSettings, IEnumerable<string> subcommand)
+        public static T AddSubcommand<T>(this T toolSettings, IEnumerable<string> subcommand) where T : KubernetesRolloutSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SubcommandInternal.AddRange(subcommand);
@@ -16358,7 +16358,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRolloutSettings ClearSubcommand(this KubernetesRolloutSettings toolSettings)
+        public static T ClearSubcommand<T>(this T toolSettings) where T : KubernetesRolloutSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SubcommandInternal.Clear();
@@ -16369,7 +16369,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRolloutSettings RemoveSubcommand(this KubernetesRolloutSettings toolSettings, params string[] subcommand)
+        public static T RemoveSubcommand<T>(this T toolSettings, params string[] subcommand) where T : KubernetesRolloutSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(subcommand);
@@ -16381,7 +16381,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The subcommand to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRolloutSettings RemoveSubcommand(this KubernetesRolloutSettings toolSettings, IEnumerable<string> subcommand)
+        public static T RemoveSubcommand<T>(this T toolSettings, IEnumerable<string> subcommand) where T : KubernetesRolloutSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(subcommand);
@@ -16405,7 +16405,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all resources in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings SetAll(this KubernetesApplySettings toolSettings, bool? all)
+        public static T SetAll<T>(this T toolSettings, bool? all) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = all;
@@ -16416,7 +16416,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all resources in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ResetAll(this KubernetesApplySettings toolSettings)
+        public static T ResetAll<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = null;
@@ -16427,7 +16427,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all resources in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings EnableAll(this KubernetesApplySettings toolSettings)
+        public static T EnableAll<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = true;
@@ -16438,7 +16438,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all resources in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings DisableAll(this KubernetesApplySettings toolSettings)
+        public static T DisableAll<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = false;
@@ -16449,7 +16449,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all resources in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ToggleAll(this KubernetesApplySettings toolSettings)
+        public static T ToggleAll<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = !toolSettings.All;
@@ -16462,7 +16462,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings SetAllowMissingTemplateKeys(this KubernetesApplySettings toolSettings, bool? allowMissingTemplateKeys)
+        public static T SetAllowMissingTemplateKeys<T>(this T toolSettings, bool? allowMissingTemplateKeys) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = allowMissingTemplateKeys;
@@ -16473,7 +16473,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ResetAllowMissingTemplateKeys(this KubernetesApplySettings toolSettings)
+        public static T ResetAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = null;
@@ -16484,7 +16484,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings EnableAllowMissingTemplateKeys(this KubernetesApplySettings toolSettings)
+        public static T EnableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = true;
@@ -16495,7 +16495,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings DisableAllowMissingTemplateKeys(this KubernetesApplySettings toolSettings)
+        public static T DisableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = false;
@@ -16506,7 +16506,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ToggleAllowMissingTemplateKeys(this KubernetesApplySettings toolSettings)
+        public static T ToggleAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = !toolSettings.AllowMissingTemplateKeys;
@@ -16519,7 +16519,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings SetCascade(this KubernetesApplySettings toolSettings, bool? cascade)
+        public static T SetCascade<T>(this T toolSettings, bool? cascade) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = cascade;
@@ -16530,7 +16530,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ResetCascade(this KubernetesApplySettings toolSettings)
+        public static T ResetCascade<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = null;
@@ -16541,7 +16541,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings EnableCascade(this KubernetesApplySettings toolSettings)
+        public static T EnableCascade<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = true;
@@ -16552,7 +16552,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings DisableCascade(this KubernetesApplySettings toolSettings)
+        public static T DisableCascade<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = false;
@@ -16563,7 +16563,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ToggleCascade(this KubernetesApplySettings toolSettings)
+        public static T ToggleCascade<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = !toolSettings.Cascade;
@@ -16576,7 +16576,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings SetDryRun(this KubernetesApplySettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -16587,7 +16587,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ResetDryRun(this KubernetesApplySettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -16598,7 +16598,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings EnableDryRun(this KubernetesApplySettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -16609,7 +16609,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings DisableDryRun(this KubernetesApplySettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -16620,7 +16620,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ToggleDryRun(this KubernetesApplySettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -16633,7 +16633,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>that contains the configuration to apply.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings SetFilename(this KubernetesApplySettings toolSettings, params string[] filename)
+        public static T SetFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -16644,7 +16644,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>that contains the configuration to apply.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings SetFilename(this KubernetesApplySettings toolSettings, IEnumerable<string> filename)
+        public static T SetFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -16655,7 +16655,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>that contains the configuration to apply.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings AddFilename(this KubernetesApplySettings toolSettings, params string[] filename)
+        public static T AddFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -16666,7 +16666,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>that contains the configuration to apply.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings AddFilename(this KubernetesApplySettings toolSettings, IEnumerable<string> filename)
+        public static T AddFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -16677,7 +16677,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>that contains the configuration to apply.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ClearFilename(this KubernetesApplySettings toolSettings)
+        public static T ClearFilename<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.Clear();
@@ -16688,7 +16688,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>that contains the configuration to apply.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings RemoveFilename(this KubernetesApplySettings toolSettings, params string[] filename)
+        public static T RemoveFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -16700,7 +16700,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>that contains the configuration to apply.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings RemoveFilename(this KubernetesApplySettings toolSettings, IEnumerable<string> filename)
+        public static T RemoveFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -16714,7 +16714,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings SetForce(this KubernetesApplySettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -16725,7 +16725,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ResetForce(this KubernetesApplySettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -16736,7 +16736,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings EnableForce(this KubernetesApplySettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -16747,7 +16747,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings DisableForce(this KubernetesApplySettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -16758,7 +16758,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ToggleForce(this KubernetesApplySettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -16771,7 +16771,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion).</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings SetGracePeriod(this KubernetesApplySettings toolSettings, int? gracePeriod)
+        public static T SetGracePeriod<T>(this T toolSettings, int? gracePeriod) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GracePeriod = gracePeriod;
@@ -16782,7 +16782,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion).</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ResetGracePeriod(this KubernetesApplySettings toolSettings)
+        public static T ResetGracePeriod<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GracePeriod = null;
@@ -16795,7 +16795,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings SetIncludeUninitialized(this KubernetesApplySettings toolSettings, bool? includeUninitialized)
+        public static T SetIncludeUninitialized<T>(this T toolSettings, bool? includeUninitialized) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = includeUninitialized;
@@ -16806,7 +16806,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ResetIncludeUninitialized(this KubernetesApplySettings toolSettings)
+        public static T ResetIncludeUninitialized<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = null;
@@ -16817,7 +16817,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings EnableIncludeUninitialized(this KubernetesApplySettings toolSettings)
+        public static T EnableIncludeUninitialized<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = true;
@@ -16828,7 +16828,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings DisableIncludeUninitialized(this KubernetesApplySettings toolSettings)
+        public static T DisableIncludeUninitialized<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = false;
@@ -16839,7 +16839,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ToggleIncludeUninitialized(this KubernetesApplySettings toolSettings)
+        public static T ToggleIncludeUninitialized<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = !toolSettings.IncludeUninitialized;
@@ -16852,7 +16852,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use openapi to calculate diff when the openapi presents and the resource can be found in the openapi spec. Otherwise, fall back to use baked-in types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings SetOpenapiPatch(this KubernetesApplySettings toolSettings, bool? openapiPatch)
+        public static T SetOpenapiPatch<T>(this T toolSettings, bool? openapiPatch) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OpenapiPatch = openapiPatch;
@@ -16863,7 +16863,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use openapi to calculate diff when the openapi presents and the resource can be found in the openapi spec. Otherwise, fall back to use baked-in types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ResetOpenapiPatch(this KubernetesApplySettings toolSettings)
+        public static T ResetOpenapiPatch<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OpenapiPatch = null;
@@ -16874,7 +16874,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use openapi to calculate diff when the openapi presents and the resource can be found in the openapi spec. Otherwise, fall back to use baked-in types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings EnableOpenapiPatch(this KubernetesApplySettings toolSettings)
+        public static T EnableOpenapiPatch<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OpenapiPatch = true;
@@ -16885,7 +16885,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use openapi to calculate diff when the openapi presents and the resource can be found in the openapi spec. Otherwise, fall back to use baked-in types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings DisableOpenapiPatch(this KubernetesApplySettings toolSettings)
+        public static T DisableOpenapiPatch<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OpenapiPatch = false;
@@ -16896,7 +16896,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use openapi to calculate diff when the openapi presents and the resource can be found in the openapi spec. Otherwise, fall back to use baked-in types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ToggleOpenapiPatch(this KubernetesApplySettings toolSettings)
+        public static T ToggleOpenapiPatch<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OpenapiPatch = !toolSettings.OpenapiPatch;
@@ -16909,7 +16909,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings SetOutput(this KubernetesApplySettings toolSettings, KubernetesApplyOutput output)
+        public static T SetOutput<T>(this T toolSettings, KubernetesApplyOutput output) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -16920,7 +16920,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ResetOutput(this KubernetesApplySettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -16933,7 +16933,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Automatically resolve conflicts between the modified and live configuration by using values from the modified configuration.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings SetOverwrite(this KubernetesApplySettings toolSettings, bool? overwrite)
+        public static T SetOverwrite<T>(this T toolSettings, bool? overwrite) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = overwrite;
@@ -16944,7 +16944,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Automatically resolve conflicts between the modified and live configuration by using values from the modified configuration.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ResetOverwrite(this KubernetesApplySettings toolSettings)
+        public static T ResetOverwrite<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = null;
@@ -16955,7 +16955,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Automatically resolve conflicts between the modified and live configuration by using values from the modified configuration.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings EnableOverwrite(this KubernetesApplySettings toolSettings)
+        public static T EnableOverwrite<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = true;
@@ -16966,7 +16966,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Automatically resolve conflicts between the modified and live configuration by using values from the modified configuration.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings DisableOverwrite(this KubernetesApplySettings toolSettings)
+        public static T DisableOverwrite<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = false;
@@ -16977,7 +16977,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Automatically resolve conflicts between the modified and live configuration by using values from the modified configuration.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ToggleOverwrite(this KubernetesApplySettings toolSettings)
+        public static T ToggleOverwrite<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = !toolSettings.Overwrite;
@@ -16990,7 +16990,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Automatically delete resource objects, including the uninitialized ones, that do not appear in the configs and are created by either apply or create --save-config. Should be used with either -l or --all.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings SetPrune(this KubernetesApplySettings toolSettings, bool? prune)
+        public static T SetPrune<T>(this T toolSettings, bool? prune) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Prune = prune;
@@ -17001,7 +17001,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Automatically delete resource objects, including the uninitialized ones, that do not appear in the configs and are created by either apply or create --save-config. Should be used with either -l or --all.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ResetPrune(this KubernetesApplySettings toolSettings)
+        public static T ResetPrune<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Prune = null;
@@ -17012,7 +17012,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Automatically delete resource objects, including the uninitialized ones, that do not appear in the configs and are created by either apply or create --save-config. Should be used with either -l or --all.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings EnablePrune(this KubernetesApplySettings toolSettings)
+        public static T EnablePrune<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Prune = true;
@@ -17023,7 +17023,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Automatically delete resource objects, including the uninitialized ones, that do not appear in the configs and are created by either apply or create --save-config. Should be used with either -l or --all.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings DisablePrune(this KubernetesApplySettings toolSettings)
+        public static T DisablePrune<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Prune = false;
@@ -17034,7 +17034,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Automatically delete resource objects, including the uninitialized ones, that do not appear in the configs and are created by either apply or create --save-config. Should be used with either -l or --all.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings TogglePrune(this KubernetesApplySettings toolSettings)
+        public static T TogglePrune<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Prune = !toolSettings.Prune;
@@ -17047,7 +17047,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Overwrite the default whitelist with &lt;group/version/kind&gt; for --prune.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings SetPruneWhitelist(this KubernetesApplySettings toolSettings, params string[] pruneWhitelist)
+        public static T SetPruneWhitelist<T>(this T toolSettings, params string[] pruneWhitelist) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PruneWhitelistInternal = pruneWhitelist.ToList();
@@ -17058,7 +17058,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Overwrite the default whitelist with &lt;group/version/kind&gt; for --prune.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings SetPruneWhitelist(this KubernetesApplySettings toolSettings, IEnumerable<string> pruneWhitelist)
+        public static T SetPruneWhitelist<T>(this T toolSettings, IEnumerable<string> pruneWhitelist) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PruneWhitelistInternal = pruneWhitelist.ToList();
@@ -17069,7 +17069,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Overwrite the default whitelist with &lt;group/version/kind&gt; for --prune.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings AddPruneWhitelist(this KubernetesApplySettings toolSettings, params string[] pruneWhitelist)
+        public static T AddPruneWhitelist<T>(this T toolSettings, params string[] pruneWhitelist) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PruneWhitelistInternal.AddRange(pruneWhitelist);
@@ -17080,7 +17080,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Overwrite the default whitelist with &lt;group/version/kind&gt; for --prune.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings AddPruneWhitelist(this KubernetesApplySettings toolSettings, IEnumerable<string> pruneWhitelist)
+        public static T AddPruneWhitelist<T>(this T toolSettings, IEnumerable<string> pruneWhitelist) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PruneWhitelistInternal.AddRange(pruneWhitelist);
@@ -17091,7 +17091,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Overwrite the default whitelist with &lt;group/version/kind&gt; for --prune.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ClearPruneWhitelist(this KubernetesApplySettings toolSettings)
+        public static T ClearPruneWhitelist<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PruneWhitelistInternal.Clear();
@@ -17102,7 +17102,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Overwrite the default whitelist with &lt;group/version/kind&gt; for --prune.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings RemovePruneWhitelist(this KubernetesApplySettings toolSettings, params string[] pruneWhitelist)
+        public static T RemovePruneWhitelist<T>(this T toolSettings, params string[] pruneWhitelist) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(pruneWhitelist);
@@ -17114,7 +17114,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Overwrite the default whitelist with &lt;group/version/kind&gt; for --prune.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings RemovePruneWhitelist(this KubernetesApplySettings toolSettings, IEnumerable<string> pruneWhitelist)
+        public static T RemovePruneWhitelist<T>(this T toolSettings, IEnumerable<string> pruneWhitelist) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(pruneWhitelist);
@@ -17128,7 +17128,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings SetRecord(this KubernetesApplySettings toolSettings, bool? record)
+        public static T SetRecord<T>(this T toolSettings, bool? record) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = record;
@@ -17139,7 +17139,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ResetRecord(this KubernetesApplySettings toolSettings)
+        public static T ResetRecord<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = null;
@@ -17150,7 +17150,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings EnableRecord(this KubernetesApplySettings toolSettings)
+        public static T EnableRecord<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = true;
@@ -17161,7 +17161,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings DisableRecord(this KubernetesApplySettings toolSettings)
+        public static T DisableRecord<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = false;
@@ -17172,7 +17172,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ToggleRecord(this KubernetesApplySettings toolSettings)
+        public static T ToggleRecord<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = !toolSettings.Record;
@@ -17185,7 +17185,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings SetRecursive(this KubernetesApplySettings toolSettings, bool? recursive)
+        public static T SetRecursive<T>(this T toolSettings, bool? recursive) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = recursive;
@@ -17196,7 +17196,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ResetRecursive(this KubernetesApplySettings toolSettings)
+        public static T ResetRecursive<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = null;
@@ -17207,7 +17207,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings EnableRecursive(this KubernetesApplySettings toolSettings)
+        public static T EnableRecursive<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = true;
@@ -17218,7 +17218,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings DisableRecursive(this KubernetesApplySettings toolSettings)
+        public static T DisableRecursive<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = false;
@@ -17229,7 +17229,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ToggleRecursive(this KubernetesApplySettings toolSettings)
+        public static T ToggleRecursive<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = !toolSettings.Recursive;
@@ -17242,7 +17242,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings SetSelector(this KubernetesApplySettings toolSettings, string selector)
+        public static T SetSelector<T>(this T toolSettings, string selector) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = selector;
@@ -17253,7 +17253,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ResetSelector(this KubernetesApplySettings toolSettings)
+        public static T ResetSelector<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = null;
@@ -17266,7 +17266,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings SetTemplate(this KubernetesApplySettings toolSettings, string template)
+        public static T SetTemplate<T>(this T toolSettings, string template) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = template;
@@ -17277,7 +17277,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ResetTemplate(this KubernetesApplySettings toolSettings)
+        public static T ResetTemplate<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = null;
@@ -17290,7 +17290,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings SetTimeout(this KubernetesApplySettings toolSettings, TimeSpan? timeout)
+        public static T SetTimeout<T>(this T toolSettings, TimeSpan? timeout) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = timeout;
@@ -17301,7 +17301,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ResetTimeout(this KubernetesApplySettings toolSettings)
+        public static T ResetTimeout<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = null;
@@ -17314,7 +17314,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings SetValidate(this KubernetesApplySettings toolSettings, bool? validate)
+        public static T SetValidate<T>(this T toolSettings, bool? validate) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = validate;
@@ -17325,7 +17325,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ResetValidate(this KubernetesApplySettings toolSettings)
+        public static T ResetValidate<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = null;
@@ -17336,7 +17336,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings EnableValidate(this KubernetesApplySettings toolSettings)
+        public static T EnableValidate<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = true;
@@ -17347,7 +17347,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings DisableValidate(this KubernetesApplySettings toolSettings)
+        public static T DisableValidate<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = false;
@@ -17358,7 +17358,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ToggleValidate(this KubernetesApplySettings toolSettings)
+        public static T ToggleValidate<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = !toolSettings.Validate;
@@ -17371,7 +17371,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings SetWait(this KubernetesApplySettings toolSettings, bool? wait)
+        public static T SetWait<T>(this T toolSettings, bool? wait) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = wait;
@@ -17382,7 +17382,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ResetWait(this KubernetesApplySettings toolSettings)
+        public static T ResetWait<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = null;
@@ -17393,7 +17393,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings EnableWait(this KubernetesApplySettings toolSettings)
+        public static T EnableWait<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = true;
@@ -17404,7 +17404,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings DisableWait(this KubernetesApplySettings toolSettings)
+        public static T DisableWait<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = false;
@@ -17415,7 +17415,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesApplySettings ToggleWait(this KubernetesApplySettings toolSettings)
+        public static T ToggleWait<T>(this T toolSettings) where T : KubernetesApplySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = !toolSettings.Wait;
@@ -17438,7 +17438,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The namne of the Node.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCordonSettings SetNode(this KubernetesCordonSettings toolSettings, string node)
+        public static T SetNode<T>(this T toolSettings, string node) where T : KubernetesCordonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Node = node;
@@ -17449,7 +17449,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The namne of the Node.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCordonSettings ResetNode(this KubernetesCordonSettings toolSettings)
+        public static T ResetNode<T>(this T toolSettings) where T : KubernetesCordonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Node = null;
@@ -17462,7 +17462,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCordonSettings SetDryRun(this KubernetesCordonSettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : KubernetesCordonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -17473,7 +17473,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCordonSettings ResetDryRun(this KubernetesCordonSettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : KubernetesCordonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -17484,7 +17484,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCordonSettings EnableDryRun(this KubernetesCordonSettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : KubernetesCordonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -17495,7 +17495,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCordonSettings DisableDryRun(this KubernetesCordonSettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : KubernetesCordonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -17506,7 +17506,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCordonSettings ToggleDryRun(this KubernetesCordonSettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : KubernetesCordonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -17519,7 +17519,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCordonSettings SetSelector(this KubernetesCordonSettings toolSettings, string selector)
+        public static T SetSelector<T>(this T toolSettings, string selector) where T : KubernetesCordonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = selector;
@@ -17530,7 +17530,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCordonSettings ResetSelector(this KubernetesCordonSettings toolSettings)
+        public static T ResetSelector<T>(this T toolSettings) where T : KubernetesCordonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = null;
@@ -17553,7 +17553,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The file specification of the source. '[namespace/]pod-name:/file/path'. for a remote file '/file/path' for a local file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCpSettings SetSrcFileSpec(this KubernetesCpSettings toolSettings, string srcFileSpec)
+        public static T SetSrcFileSpec<T>(this T toolSettings, string srcFileSpec) where T : KubernetesCpSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SrcFileSpec = srcFileSpec;
@@ -17564,7 +17564,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The file specification of the source. '[namespace/]pod-name:/file/path'. for a remote file '/file/path' for a local file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCpSettings ResetSrcFileSpec(this KubernetesCpSettings toolSettings)
+        public static T ResetSrcFileSpec<T>(this T toolSettings) where T : KubernetesCpSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SrcFileSpec = null;
@@ -17577,7 +17577,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The file specification of the destination. '[namespace/]pod-name:/file/path'. for a remote file '/file/path' for a local file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCpSettings SetDestFileSpec(this KubernetesCpSettings toolSettings, string destFileSpec)
+        public static T SetDestFileSpec<T>(this T toolSettings, string destFileSpec) where T : KubernetesCpSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DestFileSpec = destFileSpec;
@@ -17588,7 +17588,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The file specification of the destination. '[namespace/]pod-name:/file/path'. for a remote file '/file/path' for a local file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCpSettings ResetDestFileSpec(this KubernetesCpSettings toolSettings)
+        public static T ResetDestFileSpec<T>(this T toolSettings) where T : KubernetesCpSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DestFileSpec = null;
@@ -17601,7 +17601,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Container name. If omitted, the first container in the pod will be chosen.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCpSettings SetContainer(this KubernetesCpSettings toolSettings, string container)
+        public static T SetContainer<T>(this T toolSettings, string container) where T : KubernetesCpSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Container = container;
@@ -17612,7 +17612,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Container name. If omitted, the first container in the pod will be chosen.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCpSettings ResetContainer(this KubernetesCpSettings toolSettings)
+        public static T ResetContainer<T>(this T toolSettings) where T : KubernetesCpSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Container = null;
@@ -17645,7 +17645,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the node.</p>
         /// </summary>
         [Pure]
-        public static KubernetesUncordonSettings SetNode(this KubernetesUncordonSettings toolSettings, string node)
+        public static T SetNode<T>(this T toolSettings, string node) where T : KubernetesUncordonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Node = node;
@@ -17656,7 +17656,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the node.</p>
         /// </summary>
         [Pure]
-        public static KubernetesUncordonSettings ResetNode(this KubernetesUncordonSettings toolSettings)
+        public static T ResetNode<T>(this T toolSettings) where T : KubernetesUncordonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Node = null;
@@ -17669,7 +17669,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesUncordonSettings SetDryRun(this KubernetesUncordonSettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : KubernetesUncordonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -17680,7 +17680,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesUncordonSettings ResetDryRun(this KubernetesUncordonSettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : KubernetesUncordonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -17691,7 +17691,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesUncordonSettings EnableDryRun(this KubernetesUncordonSettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : KubernetesUncordonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -17702,7 +17702,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesUncordonSettings DisableDryRun(this KubernetesUncordonSettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : KubernetesUncordonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -17713,7 +17713,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesUncordonSettings ToggleDryRun(this KubernetesUncordonSettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : KubernetesUncordonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -17726,7 +17726,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on.</p>
         /// </summary>
         [Pure]
-        public static KubernetesUncordonSettings SetSelector(this KubernetesUncordonSettings toolSettings, string selector)
+        public static T SetSelector<T>(this T toolSettings, string selector) where T : KubernetesUncordonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = selector;
@@ -17737,7 +17737,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on.</p>
         /// </summary>
         [Pure]
-        public static KubernetesUncordonSettings ResetSelector(this KubernetesUncordonSettings toolSettings)
+        public static T ResetSelector<T>(this T toolSettings) where T : KubernetesUncordonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = null;
@@ -17760,7 +17760,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings SetAllowMissingTemplateKeys(this KubernetesAutoscaleSettings toolSettings, bool? allowMissingTemplateKeys)
+        public static T SetAllowMissingTemplateKeys<T>(this T toolSettings, bool? allowMissingTemplateKeys) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = allowMissingTemplateKeys;
@@ -17771,7 +17771,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings ResetAllowMissingTemplateKeys(this KubernetesAutoscaleSettings toolSettings)
+        public static T ResetAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = null;
@@ -17782,7 +17782,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings EnableAllowMissingTemplateKeys(this KubernetesAutoscaleSettings toolSettings)
+        public static T EnableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = true;
@@ -17793,7 +17793,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings DisableAllowMissingTemplateKeys(this KubernetesAutoscaleSettings toolSettings)
+        public static T DisableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = false;
@@ -17804,7 +17804,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings ToggleAllowMissingTemplateKeys(this KubernetesAutoscaleSettings toolSettings)
+        public static T ToggleAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = !toolSettings.AllowMissingTemplateKeys;
@@ -17817,7 +17817,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The target average CPU utilization (represented as a percent of requested CPU) over all the pods. If it's not specified or negative, a default autoscaling policy will be used.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings SetCpuPercent(this KubernetesAutoscaleSettings toolSettings, int? cpuPercent)
+        public static T SetCpuPercent<T>(this T toolSettings, int? cpuPercent) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuPercent = cpuPercent;
@@ -17828,7 +17828,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The target average CPU utilization (represented as a percent of requested CPU) over all the pods. If it's not specified or negative, a default autoscaling policy will be used.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings ResetCpuPercent(this KubernetesAutoscaleSettings toolSettings)
+        public static T ResetCpuPercent<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CpuPercent = null;
@@ -17841,7 +17841,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings SetDryRun(this KubernetesAutoscaleSettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -17852,7 +17852,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings ResetDryRun(this KubernetesAutoscaleSettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -17863,7 +17863,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings EnableDryRun(this KubernetesAutoscaleSettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -17874,7 +17874,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings DisableDryRun(this KubernetesAutoscaleSettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -17885,7 +17885,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings ToggleDryRun(this KubernetesAutoscaleSettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -17898,7 +17898,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to autoscale.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings SetFilename(this KubernetesAutoscaleSettings toolSettings, params string[] filename)
+        public static T SetFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -17909,7 +17909,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to autoscale.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings SetFilename(this KubernetesAutoscaleSettings toolSettings, IEnumerable<string> filename)
+        public static T SetFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -17920,7 +17920,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to autoscale.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings AddFilename(this KubernetesAutoscaleSettings toolSettings, params string[] filename)
+        public static T AddFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -17931,7 +17931,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to autoscale.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings AddFilename(this KubernetesAutoscaleSettings toolSettings, IEnumerable<string> filename)
+        public static T AddFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -17942,7 +17942,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to autoscale.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings ClearFilename(this KubernetesAutoscaleSettings toolSettings)
+        public static T ClearFilename<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.Clear();
@@ -17953,7 +17953,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to autoscale.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings RemoveFilename(this KubernetesAutoscaleSettings toolSettings, params string[] filename)
+        public static T RemoveFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -17965,7 +17965,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to autoscale.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings RemoveFilename(this KubernetesAutoscaleSettings toolSettings, IEnumerable<string> filename)
+        public static T RemoveFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -17979,7 +17979,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the API generator to use. Currently there is only 1 generator.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings SetGenerator(this KubernetesAutoscaleSettings toolSettings, string generator)
+        public static T SetGenerator<T>(this T toolSettings, string generator) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Generator = generator;
@@ -17990,7 +17990,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the API generator to use. Currently there is only 1 generator.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings ResetGenerator(this KubernetesAutoscaleSettings toolSettings)
+        public static T ResetGenerator<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Generator = null;
@@ -18003,7 +18003,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The upper limit for the number of pods that can be set by the autoscaler. Required.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings SetMax(this KubernetesAutoscaleSettings toolSettings, int? max)
+        public static T SetMax<T>(this T toolSettings, int? max) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Max = max;
@@ -18014,7 +18014,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The upper limit for the number of pods that can be set by the autoscaler. Required.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings ResetMax(this KubernetesAutoscaleSettings toolSettings)
+        public static T ResetMax<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Max = null;
@@ -18027,7 +18027,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The lower limit for the number of pods that can be set by the autoscaler. If it's not specified or negative, the server will apply a default value.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings SetMin(this KubernetesAutoscaleSettings toolSettings, int? min)
+        public static T SetMin<T>(this T toolSettings, int? min) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Min = min;
@@ -18038,7 +18038,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The lower limit for the number of pods that can be set by the autoscaler. If it's not specified or negative, the server will apply a default value.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings ResetMin(this KubernetesAutoscaleSettings toolSettings)
+        public static T ResetMin<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Min = null;
@@ -18051,7 +18051,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name for the newly created object. If not specified, the name of the input resource will be used.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings SetName(this KubernetesAutoscaleSettings toolSettings, string name)
+        public static T SetName<T>(this T toolSettings, string name) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = name;
@@ -18062,7 +18062,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name for the newly created object. If not specified, the name of the input resource will be used.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings ResetName(this KubernetesAutoscaleSettings toolSettings)
+        public static T ResetName<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = null;
@@ -18075,7 +18075,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings SetOutput(this KubernetesAutoscaleSettings toolSettings, KubernetesAutoscaleOutput output)
+        public static T SetOutput<T>(this T toolSettings, KubernetesAutoscaleOutput output) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -18086,7 +18086,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings ResetOutput(this KubernetesAutoscaleSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -18099,7 +18099,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings SetRecord(this KubernetesAutoscaleSettings toolSettings, bool? record)
+        public static T SetRecord<T>(this T toolSettings, bool? record) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = record;
@@ -18110,7 +18110,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings ResetRecord(this KubernetesAutoscaleSettings toolSettings)
+        public static T ResetRecord<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = null;
@@ -18121,7 +18121,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings EnableRecord(this KubernetesAutoscaleSettings toolSettings)
+        public static T EnableRecord<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = true;
@@ -18132,7 +18132,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings DisableRecord(this KubernetesAutoscaleSettings toolSettings)
+        public static T DisableRecord<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = false;
@@ -18143,7 +18143,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings ToggleRecord(this KubernetesAutoscaleSettings toolSettings)
+        public static T ToggleRecord<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = !toolSettings.Record;
@@ -18156,7 +18156,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings SetRecursive(this KubernetesAutoscaleSettings toolSettings, bool? recursive)
+        public static T SetRecursive<T>(this T toolSettings, bool? recursive) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = recursive;
@@ -18167,7 +18167,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings ResetRecursive(this KubernetesAutoscaleSettings toolSettings)
+        public static T ResetRecursive<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = null;
@@ -18178,7 +18178,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings EnableRecursive(this KubernetesAutoscaleSettings toolSettings)
+        public static T EnableRecursive<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = true;
@@ -18189,7 +18189,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings DisableRecursive(this KubernetesAutoscaleSettings toolSettings)
+        public static T DisableRecursive<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = false;
@@ -18200,7 +18200,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings ToggleRecursive(this KubernetesAutoscaleSettings toolSettings)
+        public static T ToggleRecursive<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = !toolSettings.Recursive;
@@ -18213,7 +18213,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings SetSaveConfig(this KubernetesAutoscaleSettings toolSettings, bool? saveConfig)
+        public static T SetSaveConfig<T>(this T toolSettings, bool? saveConfig) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = saveConfig;
@@ -18224,7 +18224,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings ResetSaveConfig(this KubernetesAutoscaleSettings toolSettings)
+        public static T ResetSaveConfig<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = null;
@@ -18235,7 +18235,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings EnableSaveConfig(this KubernetesAutoscaleSettings toolSettings)
+        public static T EnableSaveConfig<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = true;
@@ -18246,7 +18246,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings DisableSaveConfig(this KubernetesAutoscaleSettings toolSettings)
+        public static T DisableSaveConfig<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = false;
@@ -18257,7 +18257,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings ToggleSaveConfig(this KubernetesAutoscaleSettings toolSettings)
+        public static T ToggleSaveConfig<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = !toolSettings.SaveConfig;
@@ -18270,7 +18270,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings SetTemplate(this KubernetesAutoscaleSettings toolSettings, string template)
+        public static T SetTemplate<T>(this T toolSettings, string template) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = template;
@@ -18281,7 +18281,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesAutoscaleSettings ResetTemplate(this KubernetesAutoscaleSettings toolSettings)
+        public static T ResetTemplate<T>(this T toolSettings) where T : KubernetesAutoscaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = null;
@@ -18304,7 +18304,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the plugin.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPluginSettings SetName(this KubernetesPluginSettings toolSettings, string name)
+        public static T SetName<T>(this T toolSettings, string name) where T : KubernetesPluginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = name;
@@ -18315,7 +18315,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the plugin.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPluginSettings ResetName(this KubernetesPluginSettings toolSettings)
+        public static T ResetName<T>(this T toolSettings) where T : KubernetesPluginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = null;
@@ -18348,7 +18348,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings SetAllNamespaces(this KubernetesWaitSettings toolSettings, bool? allNamespaces)
+        public static T SetAllNamespaces<T>(this T toolSettings, bool? allNamespaces) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllNamespaces = allNamespaces;
@@ -18359,7 +18359,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings ResetAllNamespaces(this KubernetesWaitSettings toolSettings)
+        public static T ResetAllNamespaces<T>(this T toolSettings) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllNamespaces = null;
@@ -18370,7 +18370,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings EnableAllNamespaces(this KubernetesWaitSettings toolSettings)
+        public static T EnableAllNamespaces<T>(this T toolSettings) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllNamespaces = true;
@@ -18381,7 +18381,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings DisableAllNamespaces(this KubernetesWaitSettings toolSettings)
+        public static T DisableAllNamespaces<T>(this T toolSettings) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllNamespaces = false;
@@ -18392,7 +18392,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings ToggleAllNamespaces(this KubernetesWaitSettings toolSettings)
+        public static T ToggleAllNamespaces<T>(this T toolSettings) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllNamespaces = !toolSettings.AllNamespaces;
@@ -18405,7 +18405,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings SetAllowMissingTemplateKeys(this KubernetesWaitSettings toolSettings, bool? allowMissingTemplateKeys)
+        public static T SetAllowMissingTemplateKeys<T>(this T toolSettings, bool? allowMissingTemplateKeys) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = allowMissingTemplateKeys;
@@ -18416,7 +18416,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings ResetAllowMissingTemplateKeys(this KubernetesWaitSettings toolSettings)
+        public static T ResetAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = null;
@@ -18427,7 +18427,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings EnableAllowMissingTemplateKeys(this KubernetesWaitSettings toolSettings)
+        public static T EnableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = true;
@@ -18438,7 +18438,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings DisableAllowMissingTemplateKeys(this KubernetesWaitSettings toolSettings)
+        public static T DisableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = false;
@@ -18449,7 +18449,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings ToggleAllowMissingTemplateKeys(this KubernetesWaitSettings toolSettings)
+        public static T ToggleAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = !toolSettings.AllowMissingTemplateKeys;
@@ -18462,7 +18462,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>identifying the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings SetFilename(this KubernetesWaitSettings toolSettings, params string[] filename)
+        public static T SetFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -18473,7 +18473,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>identifying the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings SetFilename(this KubernetesWaitSettings toolSettings, IEnumerable<string> filename)
+        public static T SetFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -18484,7 +18484,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>identifying the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings AddFilename(this KubernetesWaitSettings toolSettings, params string[] filename)
+        public static T AddFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -18495,7 +18495,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>identifying the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings AddFilename(this KubernetesWaitSettings toolSettings, IEnumerable<string> filename)
+        public static T AddFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -18506,7 +18506,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>identifying the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings ClearFilename(this KubernetesWaitSettings toolSettings)
+        public static T ClearFilename<T>(this T toolSettings) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.Clear();
@@ -18517,7 +18517,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>identifying the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings RemoveFilename(this KubernetesWaitSettings toolSettings, params string[] filename)
+        public static T RemoveFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -18529,7 +18529,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>identifying the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings RemoveFilename(this KubernetesWaitSettings toolSettings, IEnumerable<string> filename)
+        public static T RemoveFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -18543,7 +18543,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The condition to wait on: [delete|condition=condition-name].</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings SetFor(this KubernetesWaitSettings toolSettings, string @for)
+        public static T SetFor<T>(this T toolSettings, string @for) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.For = @for;
@@ -18554,7 +18554,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The condition to wait on: [delete|condition=condition-name].</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings ResetFor(this KubernetesWaitSettings toolSettings)
+        public static T ResetFor<T>(this T toolSettings) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.For = null;
@@ -18567,7 +18567,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings SetOutput(this KubernetesWaitSettings toolSettings, KubernetesWaitOutput output)
+        public static T SetOutput<T>(this T toolSettings, KubernetesWaitOutput output) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -18578,7 +18578,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings ResetOutput(this KubernetesWaitSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -18591,7 +18591,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings SetRecursive(this KubernetesWaitSettings toolSettings, bool? recursive)
+        public static T SetRecursive<T>(this T toolSettings, bool? recursive) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = recursive;
@@ -18602,7 +18602,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings ResetRecursive(this KubernetesWaitSettings toolSettings)
+        public static T ResetRecursive<T>(this T toolSettings) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = null;
@@ -18613,7 +18613,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings EnableRecursive(this KubernetesWaitSettings toolSettings)
+        public static T EnableRecursive<T>(this T toolSettings) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = true;
@@ -18624,7 +18624,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings DisableRecursive(this KubernetesWaitSettings toolSettings)
+        public static T DisableRecursive<T>(this T toolSettings) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = false;
@@ -18635,7 +18635,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings ToggleRecursive(this KubernetesWaitSettings toolSettings)
+        public static T ToggleRecursive<T>(this T toolSettings) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = !toolSettings.Recursive;
@@ -18648,7 +18648,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings SetSelector(this KubernetesWaitSettings toolSettings, string selector)
+        public static T SetSelector<T>(this T toolSettings, string selector) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = selector;
@@ -18659,7 +18659,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings ResetSelector(this KubernetesWaitSettings toolSettings)
+        public static T ResetSelector<T>(this T toolSettings) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = null;
@@ -18672,7 +18672,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings SetTemplate(this KubernetesWaitSettings toolSettings, string template)
+        public static T SetTemplate<T>(this T toolSettings, string template) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = template;
@@ -18683,7 +18683,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings ResetTemplate(this KubernetesWaitSettings toolSettings)
+        public static T ResetTemplate<T>(this T toolSettings) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = null;
@@ -18696,7 +18696,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time to wait before giving up.  Zero means check once and don't wait, negative means wait for a week.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings SetTimeout(this KubernetesWaitSettings toolSettings, TimeSpan? timeout)
+        public static T SetTimeout<T>(this T toolSettings, TimeSpan? timeout) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = timeout;
@@ -18707,7 +18707,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time to wait before giving up.  Zero means check once and don't wait, negative means wait for a week.</p>
         /// </summary>
         [Pure]
-        public static KubernetesWaitSettings ResetTimeout(this KubernetesWaitSettings toolSettings)
+        public static T ResetTimeout<T>(this T toolSettings) where T : KubernetesWaitSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = null;
@@ -18730,7 +18730,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings SetAllowMissingTemplateKeys(this KubernetesConvertSettings toolSettings, bool? allowMissingTemplateKeys)
+        public static T SetAllowMissingTemplateKeys<T>(this T toolSettings, bool? allowMissingTemplateKeys) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = allowMissingTemplateKeys;
@@ -18741,7 +18741,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings ResetAllowMissingTemplateKeys(this KubernetesConvertSettings toolSettings)
+        public static T ResetAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = null;
@@ -18752,7 +18752,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings EnableAllowMissingTemplateKeys(this KubernetesConvertSettings toolSettings)
+        public static T EnableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = true;
@@ -18763,7 +18763,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings DisableAllowMissingTemplateKeys(this KubernetesConvertSettings toolSettings)
+        public static T DisableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = false;
@@ -18774,7 +18774,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings ToggleAllowMissingTemplateKeys(this KubernetesConvertSettings toolSettings)
+        public static T ToggleAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = !toolSettings.AllowMissingTemplateKeys;
@@ -18787,7 +18787,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files to need to get converted.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings SetFilename(this KubernetesConvertSettings toolSettings, params string[] filename)
+        public static T SetFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -18798,7 +18798,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files to need to get converted.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings SetFilename(this KubernetesConvertSettings toolSettings, IEnumerable<string> filename)
+        public static T SetFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -18809,7 +18809,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files to need to get converted.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings AddFilename(this KubernetesConvertSettings toolSettings, params string[] filename)
+        public static T AddFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -18820,7 +18820,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files to need to get converted.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings AddFilename(this KubernetesConvertSettings toolSettings, IEnumerable<string> filename)
+        public static T AddFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -18831,7 +18831,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files to need to get converted.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings ClearFilename(this KubernetesConvertSettings toolSettings)
+        public static T ClearFilename<T>(this T toolSettings) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.Clear();
@@ -18842,7 +18842,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files to need to get converted.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings RemoveFilename(this KubernetesConvertSettings toolSettings, params string[] filename)
+        public static T RemoveFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -18854,7 +18854,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files to need to get converted.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings RemoveFilename(this KubernetesConvertSettings toolSettings, IEnumerable<string> filename)
+        public static T RemoveFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -18868,7 +18868,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, convert will NOT try to contact api-server but run locally.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings SetLocal(this KubernetesConvertSettings toolSettings, bool? local)
+        public static T SetLocal<T>(this T toolSettings, bool? local) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Local = local;
@@ -18879,7 +18879,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, convert will NOT try to contact api-server but run locally.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings ResetLocal(this KubernetesConvertSettings toolSettings)
+        public static T ResetLocal<T>(this T toolSettings) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Local = null;
@@ -18890,7 +18890,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, convert will NOT try to contact api-server but run locally.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings EnableLocal(this KubernetesConvertSettings toolSettings)
+        public static T EnableLocal<T>(this T toolSettings) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Local = true;
@@ -18901,7 +18901,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, convert will NOT try to contact api-server but run locally.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings DisableLocal(this KubernetesConvertSettings toolSettings)
+        public static T DisableLocal<T>(this T toolSettings) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Local = false;
@@ -18912,7 +18912,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, convert will NOT try to contact api-server but run locally.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings ToggleLocal(this KubernetesConvertSettings toolSettings)
+        public static T ToggleLocal<T>(this T toolSettings) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Local = !toolSettings.Local;
@@ -18925,7 +18925,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|go-template|go-template-file|templatefile|template|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings SetOutput(this KubernetesConvertSettings toolSettings, KubernetesConvertOutput output)
+        public static T SetOutput<T>(this T toolSettings, KubernetesConvertOutput output) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -18936,7 +18936,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|go-template|go-template-file|templatefile|template|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings ResetOutput(this KubernetesConvertSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -18949,7 +18949,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output the formatted object with the given group version (for ex: 'extensions/v1beta1').).</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings SetOutputVersion(this KubernetesConvertSettings toolSettings, string outputVersion)
+        public static T SetOutputVersion<T>(this T toolSettings, string outputVersion) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputVersion = outputVersion;
@@ -18960,7 +18960,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output the formatted object with the given group version (for ex: 'extensions/v1beta1').).</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings ResetOutputVersion(this KubernetesConvertSettings toolSettings)
+        public static T ResetOutputVersion<T>(this T toolSettings) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputVersion = null;
@@ -18973,7 +18973,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings SetRecursive(this KubernetesConvertSettings toolSettings, bool? recursive)
+        public static T SetRecursive<T>(this T toolSettings, bool? recursive) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = recursive;
@@ -18984,7 +18984,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings ResetRecursive(this KubernetesConvertSettings toolSettings)
+        public static T ResetRecursive<T>(this T toolSettings) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = null;
@@ -18995,7 +18995,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings EnableRecursive(this KubernetesConvertSettings toolSettings)
+        public static T EnableRecursive<T>(this T toolSettings) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = true;
@@ -19006,7 +19006,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings DisableRecursive(this KubernetesConvertSettings toolSettings)
+        public static T DisableRecursive<T>(this T toolSettings) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = false;
@@ -19017,7 +19017,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings ToggleRecursive(this KubernetesConvertSettings toolSettings)
+        public static T ToggleRecursive<T>(this T toolSettings) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = !toolSettings.Recursive;
@@ -19030,7 +19030,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings SetTemplate(this KubernetesConvertSettings toolSettings, string template)
+        public static T SetTemplate<T>(this T toolSettings, string template) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = template;
@@ -19041,7 +19041,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings ResetTemplate(this KubernetesConvertSettings toolSettings)
+        public static T ResetTemplate<T>(this T toolSettings) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = null;
@@ -19054,7 +19054,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings SetValidate(this KubernetesConvertSettings toolSettings, bool? validate)
+        public static T SetValidate<T>(this T toolSettings, bool? validate) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = validate;
@@ -19065,7 +19065,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings ResetValidate(this KubernetesConvertSettings toolSettings)
+        public static T ResetValidate<T>(this T toolSettings) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = null;
@@ -19076,7 +19076,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings EnableValidate(this KubernetesConvertSettings toolSettings)
+        public static T EnableValidate<T>(this T toolSettings) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = true;
@@ -19087,7 +19087,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings DisableValidate(this KubernetesConvertSettings toolSettings)
+        public static T DisableValidate<T>(this T toolSettings) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = false;
@@ -19098,7 +19098,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesConvertSettings ToggleValidate(this KubernetesConvertSettings toolSettings)
+        public static T ToggleValidate<T>(this T toolSettings) where T : KubernetesConvertSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = !toolSettings.Validate;
@@ -19121,7 +19121,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings SetAllowMissingTemplateKeys(this KubernetesCreateSettings toolSettings, bool? allowMissingTemplateKeys)
+        public static T SetAllowMissingTemplateKeys<T>(this T toolSettings, bool? allowMissingTemplateKeys) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = allowMissingTemplateKeys;
@@ -19132,7 +19132,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings ResetAllowMissingTemplateKeys(this KubernetesCreateSettings toolSettings)
+        public static T ResetAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = null;
@@ -19143,7 +19143,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings EnableAllowMissingTemplateKeys(this KubernetesCreateSettings toolSettings)
+        public static T EnableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = true;
@@ -19154,7 +19154,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings DisableAllowMissingTemplateKeys(this KubernetesCreateSettings toolSettings)
+        public static T DisableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = false;
@@ -19165,7 +19165,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings ToggleAllowMissingTemplateKeys(this KubernetesCreateSettings toolSettings)
+        public static T ToggleAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = !toolSettings.AllowMissingTemplateKeys;
@@ -19178,7 +19178,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings SetDryRun(this KubernetesCreateSettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -19189,7 +19189,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings ResetDryRun(this KubernetesCreateSettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -19200,7 +19200,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings EnableDryRun(this KubernetesCreateSettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -19211,7 +19211,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings DisableDryRun(this KubernetesCreateSettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -19222,7 +19222,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings ToggleDryRun(this KubernetesCreateSettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -19235,7 +19235,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Edit the API resource before creating.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings SetEdit(this KubernetesCreateSettings toolSettings, bool? edit)
+        public static T SetEdit<T>(this T toolSettings, bool? edit) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Edit = edit;
@@ -19246,7 +19246,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Edit the API resource before creating.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings ResetEdit(this KubernetesCreateSettings toolSettings)
+        public static T ResetEdit<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Edit = null;
@@ -19257,7 +19257,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Edit the API resource before creating.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings EnableEdit(this KubernetesCreateSettings toolSettings)
+        public static T EnableEdit<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Edit = true;
@@ -19268,7 +19268,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Edit the API resource before creating.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings DisableEdit(this KubernetesCreateSettings toolSettings)
+        public static T DisableEdit<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Edit = false;
@@ -19279,7 +19279,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Edit the API resource before creating.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings ToggleEdit(this KubernetesCreateSettings toolSettings)
+        public static T ToggleEdit<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Edit = !toolSettings.Edit;
@@ -19292,7 +19292,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files to use to create the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings SetFilename(this KubernetesCreateSettings toolSettings, params string[] filename)
+        public static T SetFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -19303,7 +19303,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files to use to create the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings SetFilename(this KubernetesCreateSettings toolSettings, IEnumerable<string> filename)
+        public static T SetFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -19314,7 +19314,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files to use to create the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings AddFilename(this KubernetesCreateSettings toolSettings, params string[] filename)
+        public static T AddFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -19325,7 +19325,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files to use to create the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings AddFilename(this KubernetesCreateSettings toolSettings, IEnumerable<string> filename)
+        public static T AddFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -19336,7 +19336,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files to use to create the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings ClearFilename(this KubernetesCreateSettings toolSettings)
+        public static T ClearFilename<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.Clear();
@@ -19347,7 +19347,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files to use to create the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings RemoveFilename(this KubernetesCreateSettings toolSettings, params string[] filename)
+        public static T RemoveFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -19359,7 +19359,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files to use to create the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings RemoveFilename(this KubernetesCreateSettings toolSettings, IEnumerable<string> filename)
+        public static T RemoveFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -19373,7 +19373,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings SetOutput(this KubernetesCreateSettings toolSettings, KubernetesCreateOutput output)
+        public static T SetOutput<T>(this T toolSettings, KubernetesCreateOutput output) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -19384,7 +19384,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings ResetOutput(this KubernetesCreateSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -19397,7 +19397,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Raw URI to POST to the server.  Uses the transport specified by the kubeconfig file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings SetRaw(this KubernetesCreateSettings toolSettings, string raw)
+        public static T SetRaw<T>(this T toolSettings, string raw) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Raw = raw;
@@ -19408,7 +19408,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Raw URI to POST to the server.  Uses the transport specified by the kubeconfig file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings ResetRaw(this KubernetesCreateSettings toolSettings)
+        public static T ResetRaw<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Raw = null;
@@ -19421,7 +19421,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings SetRecord(this KubernetesCreateSettings toolSettings, bool? record)
+        public static T SetRecord<T>(this T toolSettings, bool? record) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = record;
@@ -19432,7 +19432,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings ResetRecord(this KubernetesCreateSettings toolSettings)
+        public static T ResetRecord<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = null;
@@ -19443,7 +19443,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings EnableRecord(this KubernetesCreateSettings toolSettings)
+        public static T EnableRecord<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = true;
@@ -19454,7 +19454,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings DisableRecord(this KubernetesCreateSettings toolSettings)
+        public static T DisableRecord<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = false;
@@ -19465,7 +19465,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings ToggleRecord(this KubernetesCreateSettings toolSettings)
+        public static T ToggleRecord<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = !toolSettings.Record;
@@ -19478,7 +19478,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings SetRecursive(this KubernetesCreateSettings toolSettings, bool? recursive)
+        public static T SetRecursive<T>(this T toolSettings, bool? recursive) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = recursive;
@@ -19489,7 +19489,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings ResetRecursive(this KubernetesCreateSettings toolSettings)
+        public static T ResetRecursive<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = null;
@@ -19500,7 +19500,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings EnableRecursive(this KubernetesCreateSettings toolSettings)
+        public static T EnableRecursive<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = true;
@@ -19511,7 +19511,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings DisableRecursive(this KubernetesCreateSettings toolSettings)
+        public static T DisableRecursive<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = false;
@@ -19522,7 +19522,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings ToggleRecursive(this KubernetesCreateSettings toolSettings)
+        public static T ToggleRecursive<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = !toolSettings.Recursive;
@@ -19535,7 +19535,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings SetSaveConfig(this KubernetesCreateSettings toolSettings, bool? saveConfig)
+        public static T SetSaveConfig<T>(this T toolSettings, bool? saveConfig) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = saveConfig;
@@ -19546,7 +19546,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings ResetSaveConfig(this KubernetesCreateSettings toolSettings)
+        public static T ResetSaveConfig<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = null;
@@ -19557,7 +19557,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings EnableSaveConfig(this KubernetesCreateSettings toolSettings)
+        public static T EnableSaveConfig<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = true;
@@ -19568,7 +19568,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings DisableSaveConfig(this KubernetesCreateSettings toolSettings)
+        public static T DisableSaveConfig<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = false;
@@ -19579,7 +19579,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings ToggleSaveConfig(this KubernetesCreateSettings toolSettings)
+        public static T ToggleSaveConfig<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = !toolSettings.SaveConfig;
@@ -19592,7 +19592,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings SetSelector(this KubernetesCreateSettings toolSettings, string selector)
+        public static T SetSelector<T>(this T toolSettings, string selector) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = selector;
@@ -19603,7 +19603,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings ResetSelector(this KubernetesCreateSettings toolSettings)
+        public static T ResetSelector<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = null;
@@ -19616,7 +19616,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings SetTemplate(this KubernetesCreateSettings toolSettings, string template)
+        public static T SetTemplate<T>(this T toolSettings, string template) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = template;
@@ -19627,7 +19627,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings ResetTemplate(this KubernetesCreateSettings toolSettings)
+        public static T ResetTemplate<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = null;
@@ -19640,7 +19640,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings SetValidate(this KubernetesCreateSettings toolSettings, bool? validate)
+        public static T SetValidate<T>(this T toolSettings, bool? validate) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = validate;
@@ -19651,7 +19651,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings ResetValidate(this KubernetesCreateSettings toolSettings)
+        public static T ResetValidate<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = null;
@@ -19662,7 +19662,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings EnableValidate(this KubernetesCreateSettings toolSettings)
+        public static T EnableValidate<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = true;
@@ -19673,7 +19673,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings DisableValidate(this KubernetesCreateSettings toolSettings)
+        public static T DisableValidate<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = false;
@@ -19684,7 +19684,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings ToggleValidate(this KubernetesCreateSettings toolSettings)
+        public static T ToggleValidate<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = !toolSettings.Validate;
@@ -19697,7 +19697,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only relevant if --edit=true. Defaults to the line ending native to your platform.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings SetWindowsLineEndings(this KubernetesCreateSettings toolSettings, bool? windowsLineEndings)
+        public static T SetWindowsLineEndings<T>(this T toolSettings, bool? windowsLineEndings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WindowsLineEndings = windowsLineEndings;
@@ -19708,7 +19708,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only relevant if --edit=true. Defaults to the line ending native to your platform.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings ResetWindowsLineEndings(this KubernetesCreateSettings toolSettings)
+        public static T ResetWindowsLineEndings<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WindowsLineEndings = null;
@@ -19719,7 +19719,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only relevant if --edit=true. Defaults to the line ending native to your platform.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings EnableWindowsLineEndings(this KubernetesCreateSettings toolSettings)
+        public static T EnableWindowsLineEndings<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WindowsLineEndings = true;
@@ -19730,7 +19730,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only relevant if --edit=true. Defaults to the line ending native to your platform.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings DisableWindowsLineEndings(this KubernetesCreateSettings toolSettings)
+        public static T DisableWindowsLineEndings<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WindowsLineEndings = false;
@@ -19741,7 +19741,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only relevant if --edit=true. Defaults to the line ending native to your platform.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCreateSettings ToggleWindowsLineEndings(this KubernetesCreateSettings toolSettings)
+        public static T ToggleWindowsLineEndings<T>(this T toolSettings) where T : KubernetesCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WindowsLineEndings = !toolSettings.WindowsLineEndings;
@@ -19764,7 +19764,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPortForwardSettings SetTypeName(this KubernetesPortForwardSettings toolSettings, params string[] typeName)
+        public static T SetTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesPortForwardSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal = typeName.ToList();
@@ -19775,7 +19775,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPortForwardSettings SetTypeName(this KubernetesPortForwardSettings toolSettings, IEnumerable<string> typeName)
+        public static T SetTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesPortForwardSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal = typeName.ToList();
@@ -19786,7 +19786,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPortForwardSettings AddTypeName(this KubernetesPortForwardSettings toolSettings, params string[] typeName)
+        public static T AddTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesPortForwardSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.AddRange(typeName);
@@ -19797,7 +19797,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPortForwardSettings AddTypeName(this KubernetesPortForwardSettings toolSettings, IEnumerable<string> typeName)
+        public static T AddTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesPortForwardSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.AddRange(typeName);
@@ -19808,7 +19808,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPortForwardSettings ClearTypeName(this KubernetesPortForwardSettings toolSettings)
+        public static T ClearTypeName<T>(this T toolSettings) where T : KubernetesPortForwardSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.Clear();
@@ -19819,7 +19819,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPortForwardSettings RemoveTypeName(this KubernetesPortForwardSettings toolSettings, params string[] typeName)
+        public static T RemoveTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesPortForwardSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(typeName);
@@ -19831,7 +19831,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPortForwardSettings RemoveTypeName(this KubernetesPortForwardSettings toolSettings, IEnumerable<string> typeName)
+        public static T RemoveTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesPortForwardSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(typeName);
@@ -19845,7 +19845,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The port combinations to forward. In the Format 'srcPort:destPort'.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPortForwardSettings SetPorts(this KubernetesPortForwardSettings toolSettings, IDictionary<int, int> ports)
+        public static T SetPorts<T>(this T toolSettings, IDictionary<int, int> ports) where T : KubernetesPortForwardSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PortsInternal = ports.ToDictionary(x => x.Key, x => x.Value, EqualityComparer<int>.Default);
@@ -19856,7 +19856,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The port combinations to forward. In the Format 'srcPort:destPort'.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPortForwardSettings ClearPorts(this KubernetesPortForwardSettings toolSettings)
+        public static T ClearPorts<T>(this T toolSettings) where T : KubernetesPortForwardSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PortsInternal.Clear();
@@ -19867,7 +19867,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The port combinations to forward. In the Format 'srcPort:destPort'.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPortForwardSettings AddPort(this KubernetesPortForwardSettings toolSettings, int portKey, int portValue)
+        public static T AddPort<T>(this T toolSettings, int portKey, int portValue) where T : KubernetesPortForwardSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PortsInternal.Add(portKey, portValue);
@@ -19878,7 +19878,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The port combinations to forward. In the Format 'srcPort:destPort'.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPortForwardSettings RemovePort(this KubernetesPortForwardSettings toolSettings, int portKey)
+        public static T RemovePort<T>(this T toolSettings, int portKey) where T : KubernetesPortForwardSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PortsInternal.Remove(portKey);
@@ -19889,7 +19889,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The port combinations to forward. In the Format 'srcPort:destPort'.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPortForwardSettings SetPort(this KubernetesPortForwardSettings toolSettings, int portKey, int portValue)
+        public static T SetPort<T>(this T toolSettings, int portKey, int portValue) where T : KubernetesPortForwardSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PortsInternal[portKey] = portValue;
@@ -19902,7 +19902,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPortForwardSettings SetPodRunningTimeout(this KubernetesPortForwardSettings toolSettings, TimeSpan? podRunningTimeout)
+        public static T SetPodRunningTimeout<T>(this T toolSettings, TimeSpan? podRunningTimeout) where T : KubernetesPortForwardSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PodRunningTimeout = podRunningTimeout;
@@ -19913,7 +19913,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running.</p>
         /// </summary>
         [Pure]
-        public static KubernetesPortForwardSettings ResetPodRunningTimeout(this KubernetesPortForwardSettings toolSettings)
+        public static T ResetPodRunningTimeout<T>(this T toolSettings) where T : KubernetesPortForwardSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PodRunningTimeout = null;
@@ -19936,7 +19936,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetAllowMissingTemplateKeys(this KubernetesRunContainerSettings toolSettings, bool? allowMissingTemplateKeys)
+        public static T SetAllowMissingTemplateKeys<T>(this T toolSettings, bool? allowMissingTemplateKeys) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = allowMissingTemplateKeys;
@@ -19947,7 +19947,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetAllowMissingTemplateKeys(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = null;
@@ -19958,7 +19958,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings EnableAllowMissingTemplateKeys(this KubernetesRunContainerSettings toolSettings)
+        public static T EnableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = true;
@@ -19969,7 +19969,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings DisableAllowMissingTemplateKeys(this KubernetesRunContainerSettings toolSettings)
+        public static T DisableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = false;
@@ -19980,7 +19980,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ToggleAllowMissingTemplateKeys(this KubernetesRunContainerSettings toolSettings)
+        public static T ToggleAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = !toolSettings.AllowMissingTemplateKeys;
@@ -19993,7 +19993,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for the Pod to start running, and then attach to the Pod as if 'kubectl attach ...' were called.  Default false, unless '-i/--stdin' is set, in which case the default is true. With '--restart=Never' the exit code of the container process is returned.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetAttach(this KubernetesRunContainerSettings toolSettings, bool? attach)
+        public static T SetAttach<T>(this T toolSettings, bool? attach) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Attach = attach;
@@ -20004,7 +20004,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for the Pod to start running, and then attach to the Pod as if 'kubectl attach ...' were called.  Default false, unless '-i/--stdin' is set, in which case the default is true. With '--restart=Never' the exit code of the container process is returned.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetAttach(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetAttach<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Attach = null;
@@ -20015,7 +20015,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for the Pod to start running, and then attach to the Pod as if 'kubectl attach ...' were called.  Default false, unless '-i/--stdin' is set, in which case the default is true. With '--restart=Never' the exit code of the container process is returned.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings EnableAttach(this KubernetesRunContainerSettings toolSettings)
+        public static T EnableAttach<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Attach = true;
@@ -20026,7 +20026,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for the Pod to start running, and then attach to the Pod as if 'kubectl attach ...' were called.  Default false, unless '-i/--stdin' is set, in which case the default is true. With '--restart=Never' the exit code of the container process is returned.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings DisableAttach(this KubernetesRunContainerSettings toolSettings)
+        public static T DisableAttach<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Attach = false;
@@ -20037,7 +20037,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for the Pod to start running, and then attach to the Pod as if 'kubectl attach ...' were called.  Default false, unless '-i/--stdin' is set, in which case the default is true. With '--restart=Never' the exit code of the container process is returned.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ToggleAttach(this KubernetesRunContainerSettings toolSettings)
+        public static T ToggleAttach<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Attach = !toolSettings.Attach;
@@ -20050,7 +20050,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetCascade(this KubernetesRunContainerSettings toolSettings, bool? cascade)
+        public static T SetCascade<T>(this T toolSettings, bool? cascade) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = cascade;
@@ -20061,7 +20061,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetCascade(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetCascade<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = null;
@@ -20072,7 +20072,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings EnableCascade(this KubernetesRunContainerSettings toolSettings)
+        public static T EnableCascade<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = true;
@@ -20083,7 +20083,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings DisableCascade(this KubernetesRunContainerSettings toolSettings)
+        public static T DisableCascade<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = false;
@@ -20094,7 +20094,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ToggleCascade(this KubernetesRunContainerSettings toolSettings)
+        public static T ToggleCascade<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cascade = !toolSettings.Cascade;
@@ -20107,7 +20107,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true and extra arguments are present, use them as the 'command' field in the container, rather than the 'args' field which is the default.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetCommand(this KubernetesRunContainerSettings toolSettings, bool? command)
+        public static T SetCommand<T>(this T toolSettings, bool? command) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Command = command;
@@ -20118,7 +20118,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true and extra arguments are present, use them as the 'command' field in the container, rather than the 'args' field which is the default.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetCommand(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetCommand<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Command = null;
@@ -20129,7 +20129,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true and extra arguments are present, use them as the 'command' field in the container, rather than the 'args' field which is the default.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings EnableCommand(this KubernetesRunContainerSettings toolSettings)
+        public static T EnableCommand<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Command = true;
@@ -20140,7 +20140,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true and extra arguments are present, use them as the 'command' field in the container, rather than the 'args' field which is the default.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings DisableCommand(this KubernetesRunContainerSettings toolSettings)
+        public static T DisableCommand<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Command = false;
@@ -20151,7 +20151,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true and extra arguments are present, use them as the 'command' field in the container, rather than the 'args' field which is the default.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ToggleCommand(this KubernetesRunContainerSettings toolSettings)
+        public static T ToggleCommand<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Command = !toolSettings.Command;
@@ -20164,7 +20164,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetDryRun(this KubernetesRunContainerSettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -20175,7 +20175,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetDryRun(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -20186,7 +20186,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings EnableDryRun(this KubernetesRunContainerSettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -20197,7 +20197,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings DisableDryRun(this KubernetesRunContainerSettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -20208,7 +20208,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, only print the object that would be sent, without sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ToggleDryRun(this KubernetesRunContainerSettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -20221,7 +20221,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Environment variables to set in the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetEnv(this KubernetesRunContainerSettings toolSettings, params string[] env)
+        public static T SetEnv<T>(this T toolSettings, params string[] env) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnvInternal = env.ToList();
@@ -20232,7 +20232,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Environment variables to set in the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetEnv(this KubernetesRunContainerSettings toolSettings, IEnumerable<string> env)
+        public static T SetEnv<T>(this T toolSettings, IEnumerable<string> env) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnvInternal = env.ToList();
@@ -20243,7 +20243,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Environment variables to set in the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings AddEnv(this KubernetesRunContainerSettings toolSettings, params string[] env)
+        public static T AddEnv<T>(this T toolSettings, params string[] env) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnvInternal.AddRange(env);
@@ -20254,7 +20254,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Environment variables to set in the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings AddEnv(this KubernetesRunContainerSettings toolSettings, IEnumerable<string> env)
+        public static T AddEnv<T>(this T toolSettings, IEnumerable<string> env) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnvInternal.AddRange(env);
@@ -20265,7 +20265,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Environment variables to set in the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ClearEnv(this KubernetesRunContainerSettings toolSettings)
+        public static T ClearEnv<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.EnvInternal.Clear();
@@ -20276,7 +20276,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Environment variables to set in the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings RemoveEnv(this KubernetesRunContainerSettings toolSettings, params string[] env)
+        public static T RemoveEnv<T>(this T toolSettings, params string[] env) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(env);
@@ -20288,7 +20288,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Environment variables to set in the container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings RemoveEnv(this KubernetesRunContainerSettings toolSettings, IEnumerable<string> env)
+        public static T RemoveEnv<T>(this T toolSettings, IEnumerable<string> env) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(env);
@@ -20302,7 +20302,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, a public, external service is created for the container(s) which are run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetExpose(this KubernetesRunContainerSettings toolSettings, bool? expose)
+        public static T SetExpose<T>(this T toolSettings, bool? expose) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Expose = expose;
@@ -20313,7 +20313,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, a public, external service is created for the container(s) which are run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetExpose(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetExpose<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Expose = null;
@@ -20324,7 +20324,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, a public, external service is created for the container(s) which are run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings EnableExpose(this KubernetesRunContainerSettings toolSettings)
+        public static T EnableExpose<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Expose = true;
@@ -20335,7 +20335,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, a public, external service is created for the container(s) which are run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings DisableExpose(this KubernetesRunContainerSettings toolSettings)
+        public static T DisableExpose<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Expose = false;
@@ -20346,7 +20346,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, a public, external service is created for the container(s) which are run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ToggleExpose(this KubernetesRunContainerSettings toolSettings)
+        public static T ToggleExpose<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Expose = !toolSettings.Expose;
@@ -20359,7 +20359,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>to use to replace the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetFilename(this KubernetesRunContainerSettings toolSettings, params string[] filename)
+        public static T SetFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -20370,7 +20370,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>to use to replace the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetFilename(this KubernetesRunContainerSettings toolSettings, IEnumerable<string> filename)
+        public static T SetFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -20381,7 +20381,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>to use to replace the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings AddFilename(this KubernetesRunContainerSettings toolSettings, params string[] filename)
+        public static T AddFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -20392,7 +20392,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>to use to replace the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings AddFilename(this KubernetesRunContainerSettings toolSettings, IEnumerable<string> filename)
+        public static T AddFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -20403,7 +20403,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>to use to replace the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ClearFilename(this KubernetesRunContainerSettings toolSettings)
+        public static T ClearFilename<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.Clear();
@@ -20414,7 +20414,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>to use to replace the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings RemoveFilename(this KubernetesRunContainerSettings toolSettings, params string[] filename)
+        public static T RemoveFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -20426,7 +20426,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>to use to replace the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings RemoveFilename(this KubernetesRunContainerSettings toolSettings, IEnumerable<string> filename)
+        public static T RemoveFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -20440,7 +20440,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetForce(this KubernetesRunContainerSettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -20451,7 +20451,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetForce(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -20462,7 +20462,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings EnableForce(this KubernetesRunContainerSettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -20473,7 +20473,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings DisableForce(this KubernetesRunContainerSettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -20484,7 +20484,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ToggleForce(this KubernetesRunContainerSettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -20497,7 +20497,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the API generator to use, see http://kubernetes.io/docs/user-guide/kubectl-conventions/#generators for a list.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetGenerator(this KubernetesRunContainerSettings toolSettings, string generator)
+        public static T SetGenerator<T>(this T toolSettings, string generator) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Generator = generator;
@@ -20508,7 +20508,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the API generator to use, see http://kubernetes.io/docs/user-guide/kubectl-conventions/#generators for a list.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetGenerator(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetGenerator<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Generator = null;
@@ -20521,7 +20521,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion).</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetGracePeriod(this KubernetesRunContainerSettings toolSettings, int? gracePeriod)
+        public static T SetGracePeriod<T>(this T toolSettings, int? gracePeriod) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GracePeriod = gracePeriod;
@@ -20532,7 +20532,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion).</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetGracePeriod(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetGracePeriod<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GracePeriod = null;
@@ -20545,7 +20545,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The host port mapping for the container port. To demonstrate a single-machine container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetHostport(this KubernetesRunContainerSettings toolSettings, int? hostport)
+        public static T SetHostport<T>(this T toolSettings, int? hostport) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Hostport = hostport;
@@ -20556,7 +20556,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The host port mapping for the container port. To demonstrate a single-machine container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetHostport(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetHostport<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Hostport = null;
@@ -20569,7 +20569,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The image for the container to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetImage(this KubernetesRunContainerSettings toolSettings, string image)
+        public static T SetImage<T>(this T toolSettings, string image) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Image = image;
@@ -20580,7 +20580,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The image for the container to run.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetImage(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetImage<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Image = null;
@@ -20593,7 +20593,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The image pull policy for the container. If left empty, this value will not be specified by the client and defaulted by the server.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetImagePullPolicy(this KubernetesRunContainerSettings toolSettings, string imagePullPolicy)
+        public static T SetImagePullPolicy<T>(this T toolSettings, string imagePullPolicy) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ImagePullPolicy = imagePullPolicy;
@@ -20604,7 +20604,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The image pull policy for the container. If left empty, this value will not be specified by the client and defaulted by the server.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetImagePullPolicy(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetImagePullPolicy<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ImagePullPolicy = null;
@@ -20617,7 +20617,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Comma separated labels to apply to the pod(s). Will override previous values.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetLabels(this KubernetesRunContainerSettings toolSettings, string labels)
+        public static T SetLabels<T>(this T toolSettings, string labels) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Labels = labels;
@@ -20628,7 +20628,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Comma separated labels to apply to the pod(s). Will override previous values.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetLabels(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetLabels<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Labels = null;
@@ -20641,7 +20641,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If the pod is started in interactive mode or with stdin, leave stdin open after the first attach completes. By default, stdin will be closed after the first attach completes.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetLeaveStdinOpen(this KubernetesRunContainerSettings toolSettings, bool? leaveStdinOpen)
+        public static T SetLeaveStdinOpen<T>(this T toolSettings, bool? leaveStdinOpen) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LeaveStdinOpen = leaveStdinOpen;
@@ -20652,7 +20652,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If the pod is started in interactive mode or with stdin, leave stdin open after the first attach completes. By default, stdin will be closed after the first attach completes.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetLeaveStdinOpen(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetLeaveStdinOpen<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LeaveStdinOpen = null;
@@ -20663,7 +20663,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If the pod is started in interactive mode or with stdin, leave stdin open after the first attach completes. By default, stdin will be closed after the first attach completes.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings EnableLeaveStdinOpen(this KubernetesRunContainerSettings toolSettings)
+        public static T EnableLeaveStdinOpen<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LeaveStdinOpen = true;
@@ -20674,7 +20674,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If the pod is started in interactive mode or with stdin, leave stdin open after the first attach completes. By default, stdin will be closed after the first attach completes.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings DisableLeaveStdinOpen(this KubernetesRunContainerSettings toolSettings)
+        public static T DisableLeaveStdinOpen<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LeaveStdinOpen = false;
@@ -20685,7 +20685,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If the pod is started in interactive mode or with stdin, leave stdin open after the first attach completes. By default, stdin will be closed after the first attach completes.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ToggleLeaveStdinOpen(this KubernetesRunContainerSettings toolSettings)
+        public static T ToggleLeaveStdinOpen<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LeaveStdinOpen = !toolSettings.LeaveStdinOpen;
@@ -20698,7 +20698,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The resource requirement limits for this container.  For example, 'cpu=200m,memory=512Mi'.  Note that server side components may assign limits depending on the server configuration, such as limit ranges.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetLimits(this KubernetesRunContainerSettings toolSettings, string limits)
+        public static T SetLimits<T>(this T toolSettings, string limits) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Limits = limits;
@@ -20709,7 +20709,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The resource requirement limits for this container.  For example, 'cpu=200m,memory=512Mi'.  Note that server side components may assign limits depending on the server configuration, such as limit ranges.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetLimits(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetLimits<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Limits = null;
@@ -20722,7 +20722,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetOutput(this KubernetesRunContainerSettings toolSettings, KubernetesRunContainerOutput output)
+        public static T SetOutput<T>(this T toolSettings, KubernetesRunContainerOutput output) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -20733,7 +20733,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetOutput(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -20746,7 +20746,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>An inline JSON override for the generated object. If this is non-empty, it is used to override the generated object. Requires that the object supply a valid apiVersion field.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetOverrides(this KubernetesRunContainerSettings toolSettings, string overrides)
+        public static T SetOverrides<T>(this T toolSettings, string overrides) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overrides = overrides;
@@ -20757,7 +20757,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>An inline JSON override for the generated object. If this is non-empty, it is used to override the generated object. Requires that the object supply a valid apiVersion field.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetOverrides(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetOverrides<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overrides = null;
@@ -20770,7 +20770,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetPodRunningTimeout(this KubernetesRunContainerSettings toolSettings, TimeSpan? podRunningTimeout)
+        public static T SetPodRunningTimeout<T>(this T toolSettings, TimeSpan? podRunningTimeout) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PodRunningTimeout = podRunningTimeout;
@@ -20781,7 +20781,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetPodRunningTimeout(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetPodRunningTimeout<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PodRunningTimeout = null;
@@ -20794,7 +20794,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The port that this container exposes.  If --expose is true, this is also the port used by the service that is created.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetPort(this KubernetesRunContainerSettings toolSettings, string port)
+        public static T SetPort<T>(this T toolSettings, string port) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Port = port;
@@ -20805,7 +20805,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The port that this container exposes.  If --expose is true, this is also the port used by the service that is created.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetPort(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetPort<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Port = null;
@@ -20818,7 +20818,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, suppress prompt messages.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetQuiet(this KubernetesRunContainerSettings toolSettings, bool? quiet)
+        public static T SetQuiet<T>(this T toolSettings, bool? quiet) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = quiet;
@@ -20829,7 +20829,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, suppress prompt messages.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetQuiet(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetQuiet<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = null;
@@ -20840,7 +20840,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, suppress prompt messages.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings EnableQuiet(this KubernetesRunContainerSettings toolSettings)
+        public static T EnableQuiet<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = true;
@@ -20851,7 +20851,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, suppress prompt messages.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings DisableQuiet(this KubernetesRunContainerSettings toolSettings)
+        public static T DisableQuiet<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = false;
@@ -20862,7 +20862,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, suppress prompt messages.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ToggleQuiet(this KubernetesRunContainerSettings toolSettings)
+        public static T ToggleQuiet<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Quiet = !toolSettings.Quiet;
@@ -20875,7 +20875,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetRecord(this KubernetesRunContainerSettings toolSettings, bool? record)
+        public static T SetRecord<T>(this T toolSettings, bool? record) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = record;
@@ -20886,7 +20886,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetRecord(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetRecord<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = null;
@@ -20897,7 +20897,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings EnableRecord(this KubernetesRunContainerSettings toolSettings)
+        public static T EnableRecord<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = true;
@@ -20908,7 +20908,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings DisableRecord(this KubernetesRunContainerSettings toolSettings)
+        public static T DisableRecord<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = false;
@@ -20919,7 +20919,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ToggleRecord(this KubernetesRunContainerSettings toolSettings)
+        public static T ToggleRecord<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = !toolSettings.Record;
@@ -20932,7 +20932,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetRecursive(this KubernetesRunContainerSettings toolSettings, bool? recursive)
+        public static T SetRecursive<T>(this T toolSettings, bool? recursive) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = recursive;
@@ -20943,7 +20943,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetRecursive(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetRecursive<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = null;
@@ -20954,7 +20954,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings EnableRecursive(this KubernetesRunContainerSettings toolSettings)
+        public static T EnableRecursive<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = true;
@@ -20965,7 +20965,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings DisableRecursive(this KubernetesRunContainerSettings toolSettings)
+        public static T DisableRecursive<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = false;
@@ -20976,7 +20976,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ToggleRecursive(this KubernetesRunContainerSettings toolSettings)
+        public static T ToggleRecursive<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = !toolSettings.Recursive;
@@ -20989,7 +20989,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Number of replicas to create for this container. Default is 1.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetReplicas(this KubernetesRunContainerSettings toolSettings, int? replicas)
+        public static T SetReplicas<T>(this T toolSettings, int? replicas) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Replicas = replicas;
@@ -21000,7 +21000,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Number of replicas to create for this container. Default is 1.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetReplicas(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetReplicas<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Replicas = null;
@@ -21013,7 +21013,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The resource requirement requests for this container.  For example, 'cpu=100m,memory=256Mi'.  Note that server side components may assign requests depending on the server configuration, such as limit ranges.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetRequests(this KubernetesRunContainerSettings toolSettings, string requests)
+        public static T SetRequests<T>(this T toolSettings, string requests) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Requests = requests;
@@ -21024,7 +21024,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The resource requirement requests for this container.  For example, 'cpu=100m,memory=256Mi'.  Note that server side components may assign requests depending on the server configuration, such as limit ranges.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetRequests(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetRequests<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Requests = null;
@@ -21037,7 +21037,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The restart policy for this Pod.  Legal values [Always, OnFailure, Never].  If set to 'Always' a deployment is created, if set to 'OnFailure' a job is created, if set to 'Never', a regular pod is created. For the latter two --replicas must be 1.  Default 'Always', for CronJobs `Never`.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetRestart(this KubernetesRunContainerSettings toolSettings, string restart)
+        public static T SetRestart<T>(this T toolSettings, string restart) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Restart = restart;
@@ -21048,7 +21048,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The restart policy for this Pod.  Legal values [Always, OnFailure, Never].  If set to 'Always' a deployment is created, if set to 'OnFailure' a job is created, if set to 'Never', a regular pod is created. For the latter two --replicas must be 1.  Default 'Always', for CronJobs `Never`.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetRestart(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetRestart<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Restart = null;
@@ -21061,7 +21061,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, delete resources created in this command for attached containers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetRm(this KubernetesRunContainerSettings toolSettings, bool? rm)
+        public static T SetRm<T>(this T toolSettings, bool? rm) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Rm = rm;
@@ -21072,7 +21072,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, delete resources created in this command for attached containers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetRm(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetRm<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Rm = null;
@@ -21083,7 +21083,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, delete resources created in this command for attached containers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings EnableRm(this KubernetesRunContainerSettings toolSettings)
+        public static T EnableRm<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Rm = true;
@@ -21094,7 +21094,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, delete resources created in this command for attached containers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings DisableRm(this KubernetesRunContainerSettings toolSettings)
+        public static T DisableRm<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Rm = false;
@@ -21105,7 +21105,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, delete resources created in this command for attached containers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ToggleRm(this KubernetesRunContainerSettings toolSettings)
+        public static T ToggleRm<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Rm = !toolSettings.Rm;
@@ -21118,7 +21118,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetSaveConfig(this KubernetesRunContainerSettings toolSettings, bool? saveConfig)
+        public static T SetSaveConfig<T>(this T toolSettings, bool? saveConfig) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = saveConfig;
@@ -21129,7 +21129,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetSaveConfig(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetSaveConfig<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = null;
@@ -21140,7 +21140,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings EnableSaveConfig(this KubernetesRunContainerSettings toolSettings)
+        public static T EnableSaveConfig<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = true;
@@ -21151,7 +21151,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings DisableSaveConfig(this KubernetesRunContainerSettings toolSettings)
+        public static T DisableSaveConfig<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = false;
@@ -21162,7 +21162,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ToggleSaveConfig(this KubernetesRunContainerSettings toolSettings)
+        public static T ToggleSaveConfig<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = !toolSettings.SaveConfig;
@@ -21175,7 +21175,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>A schedule in the Cron format the job should be run with.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetSchedule(this KubernetesRunContainerSettings toolSettings, string schedule)
+        public static T SetSchedule<T>(this T toolSettings, string schedule) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Schedule = schedule;
@@ -21186,7 +21186,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>A schedule in the Cron format the job should be run with.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetSchedule(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetSchedule<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Schedule = null;
@@ -21199,7 +21199,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the generator to use for creating a service.  Only used if --expose is true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetServiceGenerator(this KubernetesRunContainerSettings toolSettings, string serviceGenerator)
+        public static T SetServiceGenerator<T>(this T toolSettings, string serviceGenerator) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceGenerator = serviceGenerator;
@@ -21210,7 +21210,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the generator to use for creating a service.  Only used if --expose is true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetServiceGenerator(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetServiceGenerator<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceGenerator = null;
@@ -21223,7 +21223,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>An inline JSON override for the generated service object. If this is non-empty, it is used to override the generated object. Requires that the object supply a valid apiVersion field.  Only used if --expose is true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetServiceOverrides(this KubernetesRunContainerSettings toolSettings, string serviceOverrides)
+        public static T SetServiceOverrides<T>(this T toolSettings, string serviceOverrides) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceOverrides = serviceOverrides;
@@ -21234,7 +21234,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>An inline JSON override for the generated service object. If this is non-empty, it is used to override the generated object. Requires that the object supply a valid apiVersion field.  Only used if --expose is true.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetServiceOverrides(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetServiceOverrides<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceOverrides = null;
@@ -21247,7 +21247,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Service account to set in the pod spec.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetServiceaccount(this KubernetesRunContainerSettings toolSettings, string serviceaccount)
+        public static T SetServiceaccount<T>(this T toolSettings, string serviceaccount) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serviceaccount = serviceaccount;
@@ -21258,7 +21258,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Service account to set in the pod spec.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetServiceaccount(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetServiceaccount<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serviceaccount = null;
@@ -21271,7 +21271,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Keep stdin open on the container(s) in the pod, even if nothing is attached.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetStdin(this KubernetesRunContainerSettings toolSettings, bool? stdin)
+        public static T SetStdin<T>(this T toolSettings, bool? stdin) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stdin = stdin;
@@ -21282,7 +21282,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Keep stdin open on the container(s) in the pod, even if nothing is attached.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetStdin(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetStdin<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stdin = null;
@@ -21293,7 +21293,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Keep stdin open on the container(s) in the pod, even if nothing is attached.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings EnableStdin(this KubernetesRunContainerSettings toolSettings)
+        public static T EnableStdin<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stdin = true;
@@ -21304,7 +21304,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Keep stdin open on the container(s) in the pod, even if nothing is attached.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings DisableStdin(this KubernetesRunContainerSettings toolSettings)
+        public static T DisableStdin<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stdin = false;
@@ -21315,7 +21315,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Keep stdin open on the container(s) in the pod, even if nothing is attached.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ToggleStdin(this KubernetesRunContainerSettings toolSettings)
+        public static T ToggleStdin<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stdin = !toolSettings.Stdin;
@@ -21328,7 +21328,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetTemplate(this KubernetesRunContainerSettings toolSettings, string template)
+        public static T SetTemplate<T>(this T toolSettings, string template) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = template;
@@ -21339,7 +21339,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetTemplate(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetTemplate<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = null;
@@ -21352,7 +21352,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetTimeout(this KubernetesRunContainerSettings toolSettings, TimeSpan? timeout)
+        public static T SetTimeout<T>(this T toolSettings, TimeSpan? timeout) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = timeout;
@@ -21363,7 +21363,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetTimeout(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetTimeout<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = null;
@@ -21376,7 +21376,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Allocated a TTY for each container in the pod.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetTty(this KubernetesRunContainerSettings toolSettings, bool? tty)
+        public static T SetTty<T>(this T toolSettings, bool? tty) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tty = tty;
@@ -21387,7 +21387,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Allocated a TTY for each container in the pod.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetTty(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetTty<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tty = null;
@@ -21398,7 +21398,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Allocated a TTY for each container in the pod.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings EnableTty(this KubernetesRunContainerSettings toolSettings)
+        public static T EnableTty<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tty = true;
@@ -21409,7 +21409,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Allocated a TTY for each container in the pod.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings DisableTty(this KubernetesRunContainerSettings toolSettings)
+        public static T DisableTty<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tty = false;
@@ -21420,7 +21420,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Allocated a TTY for each container in the pod.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ToggleTty(this KubernetesRunContainerSettings toolSettings)
+        public static T ToggleTty<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tty = !toolSettings.Tty;
@@ -21433,7 +21433,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings SetWait(this KubernetesRunContainerSettings toolSettings, bool? wait)
+        public static T SetWait<T>(this T toolSettings, bool? wait) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = wait;
@@ -21444,7 +21444,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ResetWait(this KubernetesRunContainerSettings toolSettings)
+        public static T ResetWait<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = null;
@@ -21455,7 +21455,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings EnableWait(this KubernetesRunContainerSettings toolSettings)
+        public static T EnableWait<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = true;
@@ -21466,7 +21466,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings DisableWait(this KubernetesRunContainerSettings toolSettings)
+        public static T DisableWait<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = false;
@@ -21477,7 +21477,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
         /// </summary>
         [Pure]
-        public static KubernetesRunContainerSettings ToggleWait(this KubernetesRunContainerSettings toolSettings)
+        public static T ToggleWait<T>(this T toolSettings) where T : KubernetesRunContainerSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = !toolSettings.Wait;
@@ -21500,7 +21500,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings SetTypeName(this KubernetesEditSettings toolSettings, params string[] typeName)
+        public static T SetTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal = typeName.ToList();
@@ -21511,7 +21511,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings SetTypeName(this KubernetesEditSettings toolSettings, IEnumerable<string> typeName)
+        public static T SetTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal = typeName.ToList();
@@ -21522,7 +21522,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings AddTypeName(this KubernetesEditSettings toolSettings, params string[] typeName)
+        public static T AddTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.AddRange(typeName);
@@ -21533,7 +21533,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings AddTypeName(this KubernetesEditSettings toolSettings, IEnumerable<string> typeName)
+        public static T AddTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.AddRange(typeName);
@@ -21544,7 +21544,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings ClearTypeName(this KubernetesEditSettings toolSettings)
+        public static T ClearTypeName<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.Clear();
@@ -21555,7 +21555,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings RemoveTypeName(this KubernetesEditSettings toolSettings, params string[] typeName)
+        public static T RemoveTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(typeName);
@@ -21567,7 +21567,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings RemoveTypeName(this KubernetesEditSettings toolSettings, IEnumerable<string> typeName)
+        public static T RemoveTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(typeName);
@@ -21581,7 +21581,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings SetAllowMissingTemplateKeys(this KubernetesEditSettings toolSettings, bool? allowMissingTemplateKeys)
+        public static T SetAllowMissingTemplateKeys<T>(this T toolSettings, bool? allowMissingTemplateKeys) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = allowMissingTemplateKeys;
@@ -21592,7 +21592,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings ResetAllowMissingTemplateKeys(this KubernetesEditSettings toolSettings)
+        public static T ResetAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = null;
@@ -21603,7 +21603,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings EnableAllowMissingTemplateKeys(this KubernetesEditSettings toolSettings)
+        public static T EnableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = true;
@@ -21614,7 +21614,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings DisableAllowMissingTemplateKeys(this KubernetesEditSettings toolSettings)
+        public static T DisableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = false;
@@ -21625,7 +21625,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings ToggleAllowMissingTemplateKeys(this KubernetesEditSettings toolSettings)
+        public static T ToggleAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = !toolSettings.AllowMissingTemplateKeys;
@@ -21638,7 +21638,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files to use to edit the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings SetFilename(this KubernetesEditSettings toolSettings, params string[] filename)
+        public static T SetFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -21649,7 +21649,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files to use to edit the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings SetFilename(this KubernetesEditSettings toolSettings, IEnumerable<string> filename)
+        public static T SetFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -21660,7 +21660,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files to use to edit the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings AddFilename(this KubernetesEditSettings toolSettings, params string[] filename)
+        public static T AddFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -21671,7 +21671,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files to use to edit the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings AddFilename(this KubernetesEditSettings toolSettings, IEnumerable<string> filename)
+        public static T AddFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -21682,7 +21682,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files to use to edit the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings ClearFilename(this KubernetesEditSettings toolSettings)
+        public static T ClearFilename<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.Clear();
@@ -21693,7 +21693,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files to use to edit the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings RemoveFilename(this KubernetesEditSettings toolSettings, params string[] filename)
+        public static T RemoveFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -21705,7 +21705,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files to use to edit the resource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings RemoveFilename(this KubernetesEditSettings toolSettings, IEnumerable<string> filename)
+        public static T RemoveFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -21719,7 +21719,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings SetIncludeUninitialized(this KubernetesEditSettings toolSettings, bool? includeUninitialized)
+        public static T SetIncludeUninitialized<T>(this T toolSettings, bool? includeUninitialized) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = includeUninitialized;
@@ -21730,7 +21730,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings ResetIncludeUninitialized(this KubernetesEditSettings toolSettings)
+        public static T ResetIncludeUninitialized<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = null;
@@ -21741,7 +21741,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings EnableIncludeUninitialized(this KubernetesEditSettings toolSettings)
+        public static T EnableIncludeUninitialized<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = true;
@@ -21752,7 +21752,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings DisableIncludeUninitialized(this KubernetesEditSettings toolSettings)
+        public static T DisableIncludeUninitialized<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = false;
@@ -21763,7 +21763,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings ToggleIncludeUninitialized(this KubernetesEditSettings toolSettings)
+        public static T ToggleIncludeUninitialized<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeUninitialized = !toolSettings.IncludeUninitialized;
@@ -21776,7 +21776,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings SetOutput(this KubernetesEditSettings toolSettings, KubernetesEditOutput output)
+        public static T SetOutput<T>(this T toolSettings, KubernetesEditOutput output) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -21787,7 +21787,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings ResetOutput(this KubernetesEditSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -21800,7 +21800,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output the patch if the resource is edited.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings SetOutputPatch(this KubernetesEditSettings toolSettings, bool? outputPatch)
+        public static T SetOutputPatch<T>(this T toolSettings, bool? outputPatch) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputPatch = outputPatch;
@@ -21811,7 +21811,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output the patch if the resource is edited.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings ResetOutputPatch(this KubernetesEditSettings toolSettings)
+        public static T ResetOutputPatch<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputPatch = null;
@@ -21822,7 +21822,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output the patch if the resource is edited.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings EnableOutputPatch(this KubernetesEditSettings toolSettings)
+        public static T EnableOutputPatch<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputPatch = true;
@@ -21833,7 +21833,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output the patch if the resource is edited.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings DisableOutputPatch(this KubernetesEditSettings toolSettings)
+        public static T DisableOutputPatch<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputPatch = false;
@@ -21844,7 +21844,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output the patch if the resource is edited.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings ToggleOutputPatch(this KubernetesEditSettings toolSettings)
+        public static T ToggleOutputPatch<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputPatch = !toolSettings.OutputPatch;
@@ -21857,7 +21857,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings SetRecord(this KubernetesEditSettings toolSettings, bool? record)
+        public static T SetRecord<T>(this T toolSettings, bool? record) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = record;
@@ -21868,7 +21868,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings ResetRecord(this KubernetesEditSettings toolSettings)
+        public static T ResetRecord<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = null;
@@ -21879,7 +21879,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings EnableRecord(this KubernetesEditSettings toolSettings)
+        public static T EnableRecord<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = true;
@@ -21890,7 +21890,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings DisableRecord(this KubernetesEditSettings toolSettings)
+        public static T DisableRecord<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = false;
@@ -21901,7 +21901,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings ToggleRecord(this KubernetesEditSettings toolSettings)
+        public static T ToggleRecord<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = !toolSettings.Record;
@@ -21914,7 +21914,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings SetRecursive(this KubernetesEditSettings toolSettings, bool? recursive)
+        public static T SetRecursive<T>(this T toolSettings, bool? recursive) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = recursive;
@@ -21925,7 +21925,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings ResetRecursive(this KubernetesEditSettings toolSettings)
+        public static T ResetRecursive<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = null;
@@ -21936,7 +21936,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings EnableRecursive(this KubernetesEditSettings toolSettings)
+        public static T EnableRecursive<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = true;
@@ -21947,7 +21947,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings DisableRecursive(this KubernetesEditSettings toolSettings)
+        public static T DisableRecursive<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = false;
@@ -21958,7 +21958,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings ToggleRecursive(this KubernetesEditSettings toolSettings)
+        public static T ToggleRecursive<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = !toolSettings.Recursive;
@@ -21971,7 +21971,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings SetSaveConfig(this KubernetesEditSettings toolSettings, bool? saveConfig)
+        public static T SetSaveConfig<T>(this T toolSettings, bool? saveConfig) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = saveConfig;
@@ -21982,7 +21982,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings ResetSaveConfig(this KubernetesEditSettings toolSettings)
+        public static T ResetSaveConfig<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = null;
@@ -21993,7 +21993,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings EnableSaveConfig(this KubernetesEditSettings toolSettings)
+        public static T EnableSaveConfig<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = true;
@@ -22004,7 +22004,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings DisableSaveConfig(this KubernetesEditSettings toolSettings)
+        public static T DisableSaveConfig<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = false;
@@ -22015,7 +22015,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings ToggleSaveConfig(this KubernetesEditSettings toolSettings)
+        public static T ToggleSaveConfig<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SaveConfig = !toolSettings.SaveConfig;
@@ -22028,7 +22028,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings SetTemplate(this KubernetesEditSettings toolSettings, string template)
+        public static T SetTemplate<T>(this T toolSettings, string template) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = template;
@@ -22039,7 +22039,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings ResetTemplate(this KubernetesEditSettings toolSettings)
+        public static T ResetTemplate<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = null;
@@ -22052,7 +22052,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings SetValidate(this KubernetesEditSettings toolSettings, bool? validate)
+        public static T SetValidate<T>(this T toolSettings, bool? validate) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = validate;
@@ -22063,7 +22063,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings ResetValidate(this KubernetesEditSettings toolSettings)
+        public static T ResetValidate<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = null;
@@ -22074,7 +22074,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings EnableValidate(this KubernetesEditSettings toolSettings)
+        public static T EnableValidate<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = true;
@@ -22085,7 +22085,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings DisableValidate(this KubernetesEditSettings toolSettings)
+        public static T DisableValidate<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = false;
@@ -22096,7 +22096,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, use a schema to validate the input before sending it.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings ToggleValidate(this KubernetesEditSettings toolSettings)
+        public static T ToggleValidate<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Validate = !toolSettings.Validate;
@@ -22109,7 +22109,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Defaults to the line ending native to your platform.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings SetWindowsLineEndings(this KubernetesEditSettings toolSettings, bool? windowsLineEndings)
+        public static T SetWindowsLineEndings<T>(this T toolSettings, bool? windowsLineEndings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WindowsLineEndings = windowsLineEndings;
@@ -22120,7 +22120,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Defaults to the line ending native to your platform.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings ResetWindowsLineEndings(this KubernetesEditSettings toolSettings)
+        public static T ResetWindowsLineEndings<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WindowsLineEndings = null;
@@ -22131,7 +22131,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Defaults to the line ending native to your platform.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings EnableWindowsLineEndings(this KubernetesEditSettings toolSettings)
+        public static T EnableWindowsLineEndings<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WindowsLineEndings = true;
@@ -22142,7 +22142,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Defaults to the line ending native to your platform.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings DisableWindowsLineEndings(this KubernetesEditSettings toolSettings)
+        public static T DisableWindowsLineEndings<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WindowsLineEndings = false;
@@ -22153,7 +22153,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Defaults to the line ending native to your platform.</p>
         /// </summary>
         [Pure]
-        public static KubernetesEditSettings ToggleWindowsLineEndings(this KubernetesEditSettings toolSettings)
+        public static T ToggleWindowsLineEndings<T>(this T toolSettings) where T : KubernetesEditSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.WindowsLineEndings = !toolSettings.WindowsLineEndings;
@@ -22176,7 +22176,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all resources in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings SetAll(this KubernetesScaleSettings toolSettings, bool? all)
+        public static T SetAll<T>(this T toolSettings, bool? all) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = all;
@@ -22187,7 +22187,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all resources in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings ResetAll(this KubernetesScaleSettings toolSettings)
+        public static T ResetAll<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = null;
@@ -22198,7 +22198,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all resources in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings EnableAll(this KubernetesScaleSettings toolSettings)
+        public static T EnableAll<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = true;
@@ -22209,7 +22209,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all resources in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings DisableAll(this KubernetesScaleSettings toolSettings)
+        public static T DisableAll<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = false;
@@ -22220,7 +22220,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Select all resources in the namespace of the specified resource types.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings ToggleAll(this KubernetesScaleSettings toolSettings)
+        public static T ToggleAll<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.All = !toolSettings.All;
@@ -22233,7 +22233,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings SetAllowMissingTemplateKeys(this KubernetesScaleSettings toolSettings, bool? allowMissingTemplateKeys)
+        public static T SetAllowMissingTemplateKeys<T>(this T toolSettings, bool? allowMissingTemplateKeys) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = allowMissingTemplateKeys;
@@ -22244,7 +22244,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings ResetAllowMissingTemplateKeys(this KubernetesScaleSettings toolSettings)
+        public static T ResetAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = null;
@@ -22255,7 +22255,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings EnableAllowMissingTemplateKeys(this KubernetesScaleSettings toolSettings)
+        public static T EnableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = true;
@@ -22266,7 +22266,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings DisableAllowMissingTemplateKeys(this KubernetesScaleSettings toolSettings)
+        public static T DisableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = false;
@@ -22277,7 +22277,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings ToggleAllowMissingTemplateKeys(this KubernetesScaleSettings toolSettings)
+        public static T ToggleAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMissingTemplateKeys = !toolSettings.AllowMissingTemplateKeys;
@@ -22290,7 +22290,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Precondition for current size. Requires that the current size of the resource match this value in order to scale.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings SetCurrentReplicas(this KubernetesScaleSettings toolSettings, int? currentReplicas)
+        public static T SetCurrentReplicas<T>(this T toolSettings, int? currentReplicas) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CurrentReplicas = currentReplicas;
@@ -22301,7 +22301,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Precondition for current size. Requires that the current size of the resource match this value in order to scale.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings ResetCurrentReplicas(this KubernetesScaleSettings toolSettings)
+        public static T ResetCurrentReplicas<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CurrentReplicas = null;
@@ -22314,7 +22314,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to set a new size.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings SetFilename(this KubernetesScaleSettings toolSettings, params string[] filename)
+        public static T SetFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -22325,7 +22325,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to set a new size.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings SetFilename(this KubernetesScaleSettings toolSettings, IEnumerable<string> filename)
+        public static T SetFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal = filename.ToList();
@@ -22336,7 +22336,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to set a new size.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings AddFilename(this KubernetesScaleSettings toolSettings, params string[] filename)
+        public static T AddFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -22347,7 +22347,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to set a new size.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings AddFilename(this KubernetesScaleSettings toolSettings, IEnumerable<string> filename)
+        public static T AddFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.AddRange(filename);
@@ -22358,7 +22358,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to set a new size.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings ClearFilename(this KubernetesScaleSettings toolSettings)
+        public static T ClearFilename<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FilenameInternal.Clear();
@@ -22369,7 +22369,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to set a new size.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings RemoveFilename(this KubernetesScaleSettings toolSettings, params string[] filename)
+        public static T RemoveFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -22381,7 +22381,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Filename, directory, or URL to files identifying the resource to set a new size.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings RemoveFilename(this KubernetesScaleSettings toolSettings, IEnumerable<string> filename)
+        public static T RemoveFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(filename);
@@ -22395,7 +22395,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings SetOutput(this KubernetesScaleSettings toolSettings, KubernetesScaleOutput output)
+        public static T SetOutput<T>(this T toolSettings, KubernetesScaleOutput output) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -22406,7 +22406,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings ResetOutput(this KubernetesScaleSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -22419,7 +22419,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings SetRecord(this KubernetesScaleSettings toolSettings, bool? record)
+        public static T SetRecord<T>(this T toolSettings, bool? record) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = record;
@@ -22430,7 +22430,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings ResetRecord(this KubernetesScaleSettings toolSettings)
+        public static T ResetRecord<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = null;
@@ -22441,7 +22441,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings EnableRecord(this KubernetesScaleSettings toolSettings)
+        public static T EnableRecord<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = true;
@@ -22452,7 +22452,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings DisableRecord(this KubernetesScaleSettings toolSettings)
+        public static T DisableRecord<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = false;
@@ -22463,7 +22463,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings ToggleRecord(this KubernetesScaleSettings toolSettings)
+        public static T ToggleRecord<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Record = !toolSettings.Record;
@@ -22476,7 +22476,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings SetRecursive(this KubernetesScaleSettings toolSettings, bool? recursive)
+        public static T SetRecursive<T>(this T toolSettings, bool? recursive) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = recursive;
@@ -22487,7 +22487,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings ResetRecursive(this KubernetesScaleSettings toolSettings)
+        public static T ResetRecursive<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = null;
@@ -22498,7 +22498,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings EnableRecursive(this KubernetesScaleSettings toolSettings)
+        public static T EnableRecursive<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = true;
@@ -22509,7 +22509,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings DisableRecursive(this KubernetesScaleSettings toolSettings)
+        public static T DisableRecursive<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = false;
@@ -22520,7 +22520,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings ToggleRecursive(this KubernetesScaleSettings toolSettings)
+        public static T ToggleRecursive<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = !toolSettings.Recursive;
@@ -22533,7 +22533,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The new desired number of replicas. Required.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings SetReplicas(this KubernetesScaleSettings toolSettings, int? replicas)
+        public static T SetReplicas<T>(this T toolSettings, int? replicas) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Replicas = replicas;
@@ -22544,7 +22544,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The new desired number of replicas. Required.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings ResetReplicas(this KubernetesScaleSettings toolSettings)
+        public static T ResetReplicas<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Replicas = null;
@@ -22557,7 +22557,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Precondition for resource version. Requires that the current resource version match this value in order to scale.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings SetResourceVersion(this KubernetesScaleSettings toolSettings, string resourceVersion)
+        public static T SetResourceVersion<T>(this T toolSettings, string resourceVersion) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResourceVersion = resourceVersion;
@@ -22568,7 +22568,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Precondition for resource version. Requires that the current resource version match this value in order to scale.</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings ResetResourceVersion(this KubernetesScaleSettings toolSettings)
+        public static T ResetResourceVersion<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResourceVersion = null;
@@ -22581,7 +22581,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings SetSelector(this KubernetesScaleSettings toolSettings, string selector)
+        public static T SetSelector<T>(this T toolSettings, string selector) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = selector;
@@ -22592,7 +22592,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings ResetSelector(this KubernetesScaleSettings toolSettings)
+        public static T ResetSelector<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = null;
@@ -22605,7 +22605,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings SetTemplate(this KubernetesScaleSettings toolSettings, string template)
+        public static T SetTemplate<T>(this T toolSettings, string template) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = template;
@@ -22616,7 +22616,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings ResetTemplate(this KubernetesScaleSettings toolSettings)
+        public static T ResetTemplate<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Template = null;
@@ -22629,7 +22629,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time to wait before giving up on a scale operation, zero means don't wait. Any other values should contain a corresponding time unit (e.g. 1s, 2m, 3h).</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings SetTimeout(this KubernetesScaleSettings toolSettings, TimeSpan? timeout)
+        public static T SetTimeout<T>(this T toolSettings, TimeSpan? timeout) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = timeout;
@@ -22640,7 +22640,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time to wait before giving up on a scale operation, zero means don't wait. Any other values should contain a corresponding time unit (e.g. 1s, 2m, 3h).</p>
         /// </summary>
         [Pure]
-        public static KubernetesScaleSettings ResetTimeout(this KubernetesScaleSettings toolSettings)
+        public static T ResetTimeout<T>(this T toolSettings) where T : KubernetesScaleSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timeout = null;
@@ -22663,7 +22663,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Get different explanations for particular API version.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExplainSettings SetApiVersion(this KubernetesExplainSettings toolSettings, string apiVersion)
+        public static T SetApiVersion<T>(this T toolSettings, string apiVersion) where T : KubernetesExplainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiVersion = apiVersion;
@@ -22674,7 +22674,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Get different explanations for particular API version.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExplainSettings ResetApiVersion(this KubernetesExplainSettings toolSettings)
+        public static T ResetApiVersion<T>(this T toolSettings) where T : KubernetesExplainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiVersion = null;
@@ -22687,7 +22687,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Print the fields of fields (Currently only 1 level deep).</p>
         /// </summary>
         [Pure]
-        public static KubernetesExplainSettings SetRecursive(this KubernetesExplainSettings toolSettings, bool? recursive)
+        public static T SetRecursive<T>(this T toolSettings, bool? recursive) where T : KubernetesExplainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = recursive;
@@ -22698,7 +22698,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Print the fields of fields (Currently only 1 level deep).</p>
         /// </summary>
         [Pure]
-        public static KubernetesExplainSettings ResetRecursive(this KubernetesExplainSettings toolSettings)
+        public static T ResetRecursive<T>(this T toolSettings) where T : KubernetesExplainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = null;
@@ -22709,7 +22709,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Print the fields of fields (Currently only 1 level deep).</p>
         /// </summary>
         [Pure]
-        public static KubernetesExplainSettings EnableRecursive(this KubernetesExplainSettings toolSettings)
+        public static T EnableRecursive<T>(this T toolSettings) where T : KubernetesExplainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = true;
@@ -22720,7 +22720,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Print the fields of fields (Currently only 1 level deep).</p>
         /// </summary>
         [Pure]
-        public static KubernetesExplainSettings DisableRecursive(this KubernetesExplainSettings toolSettings)
+        public static T DisableRecursive<T>(this T toolSettings) where T : KubernetesExplainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = false;
@@ -22731,7 +22731,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Print the fields of fields (Currently only 1 level deep).</p>
         /// </summary>
         [Pure]
-        public static KubernetesExplainSettings ToggleRecursive(this KubernetesExplainSettings toolSettings)
+        public static T ToggleRecursive<T>(this T toolSettings) where T : KubernetesExplainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Recursive = !toolSettings.Recursive;
@@ -22744,7 +22744,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExplainSettings SetResource(this KubernetesExplainSettings toolSettings, params string[] resource)
+        public static T SetResource<T>(this T toolSettings, params string[] resource) where T : KubernetesExplainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResourceInternal = resource.ToList();
@@ -22755,7 +22755,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExplainSettings SetResource(this KubernetesExplainSettings toolSettings, IEnumerable<string> resource)
+        public static T SetResource<T>(this T toolSettings, IEnumerable<string> resource) where T : KubernetesExplainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResourceInternal = resource.ToList();
@@ -22766,7 +22766,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExplainSettings AddResource(this KubernetesExplainSettings toolSettings, params string[] resource)
+        public static T AddResource<T>(this T toolSettings, params string[] resource) where T : KubernetesExplainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResourceInternal.AddRange(resource);
@@ -22777,7 +22777,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExplainSettings AddResource(this KubernetesExplainSettings toolSettings, IEnumerable<string> resource)
+        public static T AddResource<T>(this T toolSettings, IEnumerable<string> resource) where T : KubernetesExplainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResourceInternal.AddRange(resource);
@@ -22788,7 +22788,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExplainSettings ClearResource(this KubernetesExplainSettings toolSettings)
+        public static T ClearResource<T>(this T toolSettings) where T : KubernetesExplainSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResourceInternal.Clear();
@@ -22799,7 +22799,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExplainSettings RemoveResource(this KubernetesExplainSettings toolSettings, params string[] resource)
+        public static T RemoveResource<T>(this T toolSettings, params string[] resource) where T : KubernetesExplainSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(resource);
@@ -22811,7 +22811,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesExplainSettings RemoveResource(this KubernetesExplainSettings toolSettings, IEnumerable<string> resource)
+        public static T RemoveResource<T>(this T toolSettings, IEnumerable<string> resource) where T : KubernetesExplainSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(resource);
@@ -22835,7 +22835,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings SetTypeName(this KubernetesLogsSettings toolSettings, params string[] typeName)
+        public static T SetTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal = typeName.ToList();
@@ -22846,7 +22846,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings SetTypeName(this KubernetesLogsSettings toolSettings, IEnumerable<string> typeName)
+        public static T SetTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal = typeName.ToList();
@@ -22857,7 +22857,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings AddTypeName(this KubernetesLogsSettings toolSettings, params string[] typeName)
+        public static T AddTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.AddRange(typeName);
@@ -22868,7 +22868,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings AddTypeName(this KubernetesLogsSettings toolSettings, IEnumerable<string> typeName)
+        public static T AddTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.AddRange(typeName);
@@ -22879,7 +22879,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings ClearTypeName(this KubernetesLogsSettings toolSettings)
+        public static T ClearTypeName<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameInternal.Clear();
@@ -22890,7 +22890,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings RemoveTypeName(this KubernetesLogsSettings toolSettings, params string[] typeName)
+        public static T RemoveTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(typeName);
@@ -22902,7 +22902,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The type or/and name of the ressource.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings RemoveTypeName(this KubernetesLogsSettings toolSettings, IEnumerable<string> typeName)
+        public static T RemoveTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(typeName);
@@ -22916,7 +22916,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Get all containers's logs in the pod(s).</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings SetAllContainers(this KubernetesLogsSettings toolSettings, bool? allContainers)
+        public static T SetAllContainers<T>(this T toolSettings, bool? allContainers) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllContainers = allContainers;
@@ -22927,7 +22927,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Get all containers's logs in the pod(s).</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings ResetAllContainers(this KubernetesLogsSettings toolSettings)
+        public static T ResetAllContainers<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllContainers = null;
@@ -22938,7 +22938,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Get all containers's logs in the pod(s).</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings EnableAllContainers(this KubernetesLogsSettings toolSettings)
+        public static T EnableAllContainers<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllContainers = true;
@@ -22949,7 +22949,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Get all containers's logs in the pod(s).</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings DisableAllContainers(this KubernetesLogsSettings toolSettings)
+        public static T DisableAllContainers<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllContainers = false;
@@ -22960,7 +22960,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Get all containers's logs in the pod(s).</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings ToggleAllContainers(this KubernetesLogsSettings toolSettings)
+        public static T ToggleAllContainers<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllContainers = !toolSettings.AllContainers;
@@ -22973,7 +22973,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Print the logs of this container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings SetContainer(this KubernetesLogsSettings toolSettings, string container)
+        public static T SetContainer<T>(this T toolSettings, string container) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Container = container;
@@ -22984,7 +22984,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Print the logs of this container.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings ResetContainer(this KubernetesLogsSettings toolSettings)
+        public static T ResetContainer<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Container = null;
@@ -22997,7 +22997,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Specify if the logs should be streamed.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings SetFollow(this KubernetesLogsSettings toolSettings, bool? follow)
+        public static T SetFollow<T>(this T toolSettings, bool? follow) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Follow = follow;
@@ -23008,7 +23008,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Specify if the logs should be streamed.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings ResetFollow(this KubernetesLogsSettings toolSettings)
+        public static T ResetFollow<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Follow = null;
@@ -23019,7 +23019,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Specify if the logs should be streamed.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings EnableFollow(this KubernetesLogsSettings toolSettings)
+        public static T EnableFollow<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Follow = true;
@@ -23030,7 +23030,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Specify if the logs should be streamed.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings DisableFollow(this KubernetesLogsSettings toolSettings)
+        public static T DisableFollow<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Follow = false;
@@ -23041,7 +23041,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Specify if the logs should be streamed.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings ToggleFollow(this KubernetesLogsSettings toolSettings)
+        public static T ToggleFollow<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Follow = !toolSettings.Follow;
@@ -23054,7 +23054,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, prompt the user for input when required.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings SetInteractive(this KubernetesLogsSettings toolSettings, bool? interactive)
+        public static T SetInteractive<T>(this T toolSettings, bool? interactive) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Interactive = interactive;
@@ -23065,7 +23065,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, prompt the user for input when required.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings ResetInteractive(this KubernetesLogsSettings toolSettings)
+        public static T ResetInteractive<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Interactive = null;
@@ -23076,7 +23076,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, prompt the user for input when required.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings EnableInteractive(this KubernetesLogsSettings toolSettings)
+        public static T EnableInteractive<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Interactive = true;
@@ -23087,7 +23087,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, prompt the user for input when required.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings DisableInteractive(this KubernetesLogsSettings toolSettings)
+        public static T DisableInteractive<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Interactive = false;
@@ -23098,7 +23098,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, prompt the user for input when required.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings ToggleInteractive(this KubernetesLogsSettings toolSettings)
+        public static T ToggleInteractive<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Interactive = !toolSettings.Interactive;
@@ -23111,7 +23111,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Maximum bytes of logs to return. Defaults to no limit.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings SetLimitBytes(this KubernetesLogsSettings toolSettings, long? limitBytes)
+        public static T SetLimitBytes<T>(this T toolSettings, long? limitBytes) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LimitBytes = limitBytes;
@@ -23122,7 +23122,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Maximum bytes of logs to return. Defaults to no limit.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings ResetLimitBytes(this KubernetesLogsSettings toolSettings)
+        public static T ResetLimitBytes<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LimitBytes = null;
@@ -23135,7 +23135,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings SetPodRunningTimeout(this KubernetesLogsSettings toolSettings, TimeSpan? podRunningTimeout)
+        public static T SetPodRunningTimeout<T>(this T toolSettings, TimeSpan? podRunningTimeout) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PodRunningTimeout = podRunningTimeout;
@@ -23146,7 +23146,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings ResetPodRunningTimeout(this KubernetesLogsSettings toolSettings)
+        public static T ResetPodRunningTimeout<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PodRunningTimeout = null;
@@ -23159,7 +23159,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, print the logs for the previous instance of the container in a pod if it exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings SetPrevious(this KubernetesLogsSettings toolSettings, bool? previous)
+        public static T SetPrevious<T>(this T toolSettings, bool? previous) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Previous = previous;
@@ -23170,7 +23170,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, print the logs for the previous instance of the container in a pod if it exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings ResetPrevious(this KubernetesLogsSettings toolSettings)
+        public static T ResetPrevious<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Previous = null;
@@ -23181,7 +23181,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, print the logs for the previous instance of the container in a pod if it exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings EnablePrevious(this KubernetesLogsSettings toolSettings)
+        public static T EnablePrevious<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Previous = true;
@@ -23192,7 +23192,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, print the logs for the previous instance of the container in a pod if it exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings DisablePrevious(this KubernetesLogsSettings toolSettings)
+        public static T DisablePrevious<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Previous = false;
@@ -23203,7 +23203,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, print the logs for the previous instance of the container in a pod if it exists.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings TogglePrevious(this KubernetesLogsSettings toolSettings)
+        public static T TogglePrevious<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Previous = !toolSettings.Previous;
@@ -23216,7 +23216,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings SetSelector(this KubernetesLogsSettings toolSettings, string selector)
+        public static T SetSelector<T>(this T toolSettings, string selector) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = selector;
@@ -23227,7 +23227,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Selector (label query) to filter on.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings ResetSelector(this KubernetesLogsSettings toolSettings)
+        public static T ResetSelector<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Selector = null;
@@ -23240,7 +23240,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only return logs newer than a relative duration like 5s, 2m, or 3h. Defaults to all logs. Only one of since-time / since may be used.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings SetSince(this KubernetesLogsSettings toolSettings, TimeSpan? since)
+        public static T SetSince<T>(this T toolSettings, TimeSpan? since) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Since = since;
@@ -23251,7 +23251,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only return logs newer than a relative duration like 5s, 2m, or 3h. Defaults to all logs. Only one of since-time / since may be used.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings ResetSince(this KubernetesLogsSettings toolSettings)
+        public static T ResetSince<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Since = null;
@@ -23264,7 +23264,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only return logs after a specific date (RFC3339). Defaults to all logs. Only one of since-time / since may be used.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings SetSinceTime(this KubernetesLogsSettings toolSettings, string sinceTime)
+        public static T SetSinceTime<T>(this T toolSettings, string sinceTime) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SinceTime = sinceTime;
@@ -23275,7 +23275,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Only return logs after a specific date (RFC3339). Defaults to all logs. Only one of since-time / since may be used.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings ResetSinceTime(this KubernetesLogsSettings toolSettings)
+        public static T ResetSinceTime<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SinceTime = null;
@@ -23288,7 +23288,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Lines of recent log file to display. Defaults to -1 with no selector, showing all log lines otherwise 10, if a selector is provided.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings SetTail(this KubernetesLogsSettings toolSettings, long? tail)
+        public static T SetTail<T>(this T toolSettings, long? tail) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tail = tail;
@@ -23299,7 +23299,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Lines of recent log file to display. Defaults to -1 with no selector, showing all log lines otherwise 10, if a selector is provided.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings ResetTail(this KubernetesLogsSettings toolSettings)
+        public static T ResetTail<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Tail = null;
@@ -23312,7 +23312,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Include timestamps on each line in the log output.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings SetTimestamps(this KubernetesLogsSettings toolSettings, bool? timestamps)
+        public static T SetTimestamps<T>(this T toolSettings, bool? timestamps) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timestamps = timestamps;
@@ -23323,7 +23323,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Include timestamps on each line in the log output.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings ResetTimestamps(this KubernetesLogsSettings toolSettings)
+        public static T ResetTimestamps<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timestamps = null;
@@ -23334,7 +23334,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Include timestamps on each line in the log output.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings EnableTimestamps(this KubernetesLogsSettings toolSettings)
+        public static T EnableTimestamps<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timestamps = true;
@@ -23345,7 +23345,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Include timestamps on each line in the log output.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings DisableTimestamps(this KubernetesLogsSettings toolSettings)
+        public static T DisableTimestamps<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timestamps = false;
@@ -23356,7 +23356,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Include timestamps on each line in the log output.</p>
         /// </summary>
         [Pure]
-        public static KubernetesLogsSettings ToggleTimestamps(this KubernetesLogsSettings toolSettings)
+        public static T ToggleTimestamps<T>(this T toolSettings) where T : KubernetesLogsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Timestamps = !toolSettings.Timestamps;
@@ -23379,7 +23379,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>log to standard error as well as files.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetAlsologtostderr(this KubernetesCommonSettings toolSettings, bool? alsologtostderr)
+        public static T SetAlsologtostderr<T>(this T toolSettings, bool? alsologtostderr) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Alsologtostderr = alsologtostderr;
@@ -23390,7 +23390,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>log to standard error as well as files.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ResetAlsologtostderr(this KubernetesCommonSettings toolSettings)
+        public static T ResetAlsologtostderr<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Alsologtostderr = null;
@@ -23401,7 +23401,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>log to standard error as well as files.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings EnableAlsologtostderr(this KubernetesCommonSettings toolSettings)
+        public static T EnableAlsologtostderr<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Alsologtostderr = true;
@@ -23412,7 +23412,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>log to standard error as well as files.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings DisableAlsologtostderr(this KubernetesCommonSettings toolSettings)
+        public static T DisableAlsologtostderr<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Alsologtostderr = false;
@@ -23423,7 +23423,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>log to standard error as well as files.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ToggleAlsologtostderr(this KubernetesCommonSettings toolSettings)
+        public static T ToggleAlsologtostderr<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Alsologtostderr = !toolSettings.Alsologtostderr;
@@ -23436,7 +23436,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Username to impersonate for the operation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetAs(this KubernetesCommonSettings toolSettings, string @as)
+        public static T SetAs<T>(this T toolSettings, string @as) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.As = @as;
@@ -23447,7 +23447,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Username to impersonate for the operation.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ResetAs(this KubernetesCommonSettings toolSettings)
+        public static T ResetAs<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.As = null;
@@ -23460,7 +23460,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Group to impersonate for the operation, this flag can be repeated to specify multiple groups.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetAsGroup(this KubernetesCommonSettings toolSettings, params string[] asGroup)
+        public static T SetAsGroup<T>(this T toolSettings, params string[] asGroup) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AsGroupInternal = asGroup.ToList();
@@ -23471,7 +23471,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Group to impersonate for the operation, this flag can be repeated to specify multiple groups.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetAsGroup(this KubernetesCommonSettings toolSettings, IEnumerable<string> asGroup)
+        public static T SetAsGroup<T>(this T toolSettings, IEnumerable<string> asGroup) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AsGroupInternal = asGroup.ToList();
@@ -23482,7 +23482,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Group to impersonate for the operation, this flag can be repeated to specify multiple groups.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings AddAsGroup(this KubernetesCommonSettings toolSettings, params string[] asGroup)
+        public static T AddAsGroup<T>(this T toolSettings, params string[] asGroup) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AsGroupInternal.AddRange(asGroup);
@@ -23493,7 +23493,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Group to impersonate for the operation, this flag can be repeated to specify multiple groups.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings AddAsGroup(this KubernetesCommonSettings toolSettings, IEnumerable<string> asGroup)
+        public static T AddAsGroup<T>(this T toolSettings, IEnumerable<string> asGroup) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AsGroupInternal.AddRange(asGroup);
@@ -23504,7 +23504,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Group to impersonate for the operation, this flag can be repeated to specify multiple groups.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ClearAsGroup(this KubernetesCommonSettings toolSettings)
+        public static T ClearAsGroup<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AsGroupInternal.Clear();
@@ -23515,7 +23515,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Group to impersonate for the operation, this flag can be repeated to specify multiple groups.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings RemoveAsGroup(this KubernetesCommonSettings toolSettings, params string[] asGroup)
+        public static T RemoveAsGroup<T>(this T toolSettings, params string[] asGroup) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(asGroup);
@@ -23527,7 +23527,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Group to impersonate for the operation, this flag can be repeated to specify multiple groups.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings RemoveAsGroup(this KubernetesCommonSettings toolSettings, IEnumerable<string> asGroup)
+        public static T RemoveAsGroup<T>(this T toolSettings, IEnumerable<string> asGroup) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(asGroup);
@@ -23541,7 +23541,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Default HTTP cache directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetCacheDir(this KubernetesCommonSettings toolSettings, string cacheDir)
+        public static T SetCacheDir<T>(this T toolSettings, string cacheDir) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CacheDir = cacheDir;
@@ -23552,7 +23552,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Default HTTP cache directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ResetCacheDir(this KubernetesCommonSettings toolSettings)
+        public static T ResetCacheDir<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CacheDir = null;
@@ -23565,7 +23565,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Path to a cert file for the certificate authority.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetCertificateAuthority(this KubernetesCommonSettings toolSettings, string certificateAuthority)
+        public static T SetCertificateAuthority<T>(this T toolSettings, string certificateAuthority) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CertificateAuthority = certificateAuthority;
@@ -23576,7 +23576,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Path to a cert file for the certificate authority.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ResetCertificateAuthority(this KubernetesCommonSettings toolSettings)
+        public static T ResetCertificateAuthority<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CertificateAuthority = null;
@@ -23589,7 +23589,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Path to a client certificate file for TLS.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetClientCertificate(this KubernetesCommonSettings toolSettings, string clientCertificate)
+        public static T SetClientCertificate<T>(this T toolSettings, string clientCertificate) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClientCertificate = clientCertificate;
@@ -23600,7 +23600,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Path to a client certificate file for TLS.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ResetClientCertificate(this KubernetesCommonSettings toolSettings)
+        public static T ResetClientCertificate<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClientCertificate = null;
@@ -23613,7 +23613,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Path to a client key file for TLS.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetClientKey(this KubernetesCommonSettings toolSettings, string clientKey)
+        public static T SetClientKey<T>(this T toolSettings, string clientKey) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClientKey = clientKey;
@@ -23624,7 +23624,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Path to a client key file for TLS.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ResetClientKey(this KubernetesCommonSettings toolSettings)
+        public static T ResetClientKey<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ClientKey = null;
@@ -23637,7 +23637,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the kubeconfig cluster to use.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetCluster(this KubernetesCommonSettings toolSettings, string cluster)
+        public static T SetCluster<T>(this T toolSettings, string cluster) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cluster = cluster;
@@ -23648,7 +23648,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the kubeconfig cluster to use.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ResetCluster(this KubernetesCommonSettings toolSettings)
+        public static T ResetCluster<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Cluster = null;
@@ -23661,7 +23661,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the kubeconfig context to use.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetContext(this KubernetesCommonSettings toolSettings, string context)
+        public static T SetContext<T>(this T toolSettings, string context) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Context = context;
@@ -23672,7 +23672,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the kubeconfig context to use.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ResetContext(this KubernetesCommonSettings toolSettings)
+        public static T ResetContext<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Context = null;
@@ -23685,7 +23685,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the server's certificate will not be checked for validity. This will make your HTTPS connections insecure.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetInsecureSkipTlsVerify(this KubernetesCommonSettings toolSettings, bool? insecureSkipTlsVerify)
+        public static T SetInsecureSkipTlsVerify<T>(this T toolSettings, bool? insecureSkipTlsVerify) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InsecureSkipTlsVerify = insecureSkipTlsVerify;
@@ -23696,7 +23696,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the server's certificate will not be checked for validity. This will make your HTTPS connections insecure.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ResetInsecureSkipTlsVerify(this KubernetesCommonSettings toolSettings)
+        public static T ResetInsecureSkipTlsVerify<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InsecureSkipTlsVerify = null;
@@ -23707,7 +23707,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the server's certificate will not be checked for validity. This will make your HTTPS connections insecure.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings EnableInsecureSkipTlsVerify(this KubernetesCommonSettings toolSettings)
+        public static T EnableInsecureSkipTlsVerify<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InsecureSkipTlsVerify = true;
@@ -23718,7 +23718,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the server's certificate will not be checked for validity. This will make your HTTPS connections insecure.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings DisableInsecureSkipTlsVerify(this KubernetesCommonSettings toolSettings)
+        public static T DisableInsecureSkipTlsVerify<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InsecureSkipTlsVerify = false;
@@ -23729,7 +23729,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If true, the server's certificate will not be checked for validity. This will make your HTTPS connections insecure.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ToggleInsecureSkipTlsVerify(this KubernetesCommonSettings toolSettings)
+        public static T ToggleInsecureSkipTlsVerify<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InsecureSkipTlsVerify = !toolSettings.InsecureSkipTlsVerify;
@@ -23742,7 +23742,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Path to the kubeconfig file to use for CLI requests.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetKubeconfig(this KubernetesCommonSettings toolSettings, string kubeconfig)
+        public static T SetKubeconfig<T>(this T toolSettings, string kubeconfig) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Kubeconfig = kubeconfig;
@@ -23753,7 +23753,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Path to the kubeconfig file to use for CLI requests.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ResetKubeconfig(this KubernetesCommonSettings toolSettings)
+        public static T ResetKubeconfig<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Kubeconfig = null;
@@ -23766,7 +23766,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>when logging hits line file:N, emit a stack trace.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetLogBacktraceAt(this KubernetesCommonSettings toolSettings, string logBacktraceAt)
+        public static T SetLogBacktraceAt<T>(this T toolSettings, string logBacktraceAt) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogBacktraceAt = logBacktraceAt;
@@ -23777,7 +23777,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>when logging hits line file:N, emit a stack trace.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ResetLogBacktraceAt(this KubernetesCommonSettings toolSettings)
+        public static T ResetLogBacktraceAt<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogBacktraceAt = null;
@@ -23790,7 +23790,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If non-empty, write log files in this directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetLogDir(this KubernetesCommonSettings toolSettings, string logDir)
+        public static T SetLogDir<T>(this T toolSettings, string logDir) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogDir = logDir;
@@ -23801,7 +23801,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If non-empty, write log files in this directory.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ResetLogDir(this KubernetesCommonSettings toolSettings)
+        public static T ResetLogDir<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogDir = null;
@@ -23814,7 +23814,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>log to standard error instead of files.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetLogtostderr(this KubernetesCommonSettings toolSettings, bool? logtostderr)
+        public static T SetLogtostderr<T>(this T toolSettings, bool? logtostderr) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Logtostderr = logtostderr;
@@ -23825,7 +23825,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>log to standard error instead of files.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ResetLogtostderr(this KubernetesCommonSettings toolSettings)
+        public static T ResetLogtostderr<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Logtostderr = null;
@@ -23836,7 +23836,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>log to standard error instead of files.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings EnableLogtostderr(this KubernetesCommonSettings toolSettings)
+        public static T EnableLogtostderr<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Logtostderr = true;
@@ -23847,7 +23847,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>log to standard error instead of files.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings DisableLogtostderr(this KubernetesCommonSettings toolSettings)
+        public static T DisableLogtostderr<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Logtostderr = false;
@@ -23858,7 +23858,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>log to standard error instead of files.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ToggleLogtostderr(this KubernetesCommonSettings toolSettings)
+        public static T ToggleLogtostderr<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Logtostderr = !toolSettings.Logtostderr;
@@ -23871,7 +23871,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Require server version to match client version.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetMatchServerVersion(this KubernetesCommonSettings toolSettings, bool? matchServerVersion)
+        public static T SetMatchServerVersion<T>(this T toolSettings, bool? matchServerVersion) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MatchServerVersion = matchServerVersion;
@@ -23882,7 +23882,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Require server version to match client version.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ResetMatchServerVersion(this KubernetesCommonSettings toolSettings)
+        public static T ResetMatchServerVersion<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MatchServerVersion = null;
@@ -23893,7 +23893,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Require server version to match client version.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings EnableMatchServerVersion(this KubernetesCommonSettings toolSettings)
+        public static T EnableMatchServerVersion<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MatchServerVersion = true;
@@ -23904,7 +23904,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Require server version to match client version.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings DisableMatchServerVersion(this KubernetesCommonSettings toolSettings)
+        public static T DisableMatchServerVersion<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MatchServerVersion = false;
@@ -23915,7 +23915,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Require server version to match client version.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ToggleMatchServerVersion(this KubernetesCommonSettings toolSettings)
+        public static T ToggleMatchServerVersion<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MatchServerVersion = !toolSettings.MatchServerVersion;
@@ -23928,7 +23928,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If present, the namespace scope for this CLI request.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetNamespace(this KubernetesCommonSettings toolSettings, string @namespace)
+        public static T SetNamespace<T>(this T toolSettings, string @namespace) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Namespace = @namespace;
@@ -23939,7 +23939,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>If present, the namespace scope for this CLI request.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ResetNamespace(this KubernetesCommonSettings toolSettings)
+        public static T ResetNamespace<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Namespace = null;
@@ -23952,7 +23952,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time to wait before giving up on a single server request. Non-zero values should contain a corresponding time unit (e.g. 1s, 2m, 3h). A value of zero means don't timeout requests.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetRequestTimeout(this KubernetesCommonSettings toolSettings, string requestTimeout)
+        public static T SetRequestTimeout<T>(this T toolSettings, string requestTimeout) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RequestTimeout = requestTimeout;
@@ -23963,7 +23963,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The length of time to wait before giving up on a single server request. Non-zero values should contain a corresponding time unit (e.g. 1s, 2m, 3h). A value of zero means don't timeout requests.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ResetRequestTimeout(this KubernetesCommonSettings toolSettings)
+        public static T ResetRequestTimeout<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RequestTimeout = null;
@@ -23976,7 +23976,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The address and port of the Kubernetes API server.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetServer(this KubernetesCommonSettings toolSettings, string server)
+        public static T SetServer<T>(this T toolSettings, string server) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Server = server;
@@ -23987,7 +23987,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The address and port of the Kubernetes API server.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ResetServer(this KubernetesCommonSettings toolSettings)
+        public static T ResetServer<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Server = null;
@@ -24000,7 +24000,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>logs at or above this threshold go to stderr.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetStderrthreshold(this KubernetesCommonSettings toolSettings, int? stderrthreshold)
+        public static T SetStderrthreshold<T>(this T toolSettings, int? stderrthreshold) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stderrthreshold = stderrthreshold;
@@ -24011,7 +24011,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>logs at or above this threshold go to stderr.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ResetStderrthreshold(this KubernetesCommonSettings toolSettings)
+        public static T ResetStderrthreshold<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Stderrthreshold = null;
@@ -24024,7 +24024,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Bearer token for authentication to the API server.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetToken(this KubernetesCommonSettings toolSettings, string token)
+        public static T SetToken<T>(this T toolSettings, string token) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Token = token;
@@ -24035,7 +24035,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>Bearer token for authentication to the API server.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ResetToken(this KubernetesCommonSettings toolSettings)
+        public static T ResetToken<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Token = null;
@@ -24048,7 +24048,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the kubeconfig user to use.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetUser(this KubernetesCommonSettings toolSettings, string user)
+        public static T SetUser<T>(this T toolSettings, string user) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.User = user;
@@ -24059,7 +24059,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>The name of the kubeconfig user to use.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ResetUser(this KubernetesCommonSettings toolSettings)
+        public static T ResetUser<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.User = null;
@@ -24072,7 +24072,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>log level for V logs.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetV(this KubernetesCommonSettings toolSettings, int? v)
+        public static T SetV<T>(this T toolSettings, int? v) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.V = v;
@@ -24083,7 +24083,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>log level for V logs.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ResetV(this KubernetesCommonSettings toolSettings)
+        public static T ResetV<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.V = null;
@@ -24096,7 +24096,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>comma-separated list of pattern=N settings for file-filtered logging.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetVmodule(this KubernetesCommonSettings toolSettings, IDictionary<string, string> vmodule)
+        public static T SetVmodule<T>(this T toolSettings, IDictionary<string, string> vmodule) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VmoduleInternal = vmodule.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -24107,7 +24107,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>comma-separated list of pattern=N settings for file-filtered logging.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings ClearVmodule(this KubernetesCommonSettings toolSettings)
+        public static T ClearVmodule<T>(this T toolSettings) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VmoduleInternal.Clear();
@@ -24118,7 +24118,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>comma-separated list of pattern=N settings for file-filtered logging.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings AddVmodule(this KubernetesCommonSettings toolSettings, string vmoduleKey, string vmoduleValue)
+        public static T AddVmodule<T>(this T toolSettings, string vmoduleKey, string vmoduleValue) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VmoduleInternal.Add(vmoduleKey, vmoduleValue);
@@ -24129,7 +24129,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>comma-separated list of pattern=N settings for file-filtered logging.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings RemoveVmodule(this KubernetesCommonSettings toolSettings, string vmoduleKey)
+        public static T RemoveVmodule<T>(this T toolSettings, string vmoduleKey) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VmoduleInternal.Remove(vmoduleKey);
@@ -24140,7 +24140,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   <p>comma-separated list of pattern=N settings for file-filtered logging.</p>
         /// </summary>
         [Pure]
-        public static KubernetesCommonSettings SetVmodule(this KubernetesCommonSettings toolSettings, string vmoduleKey, string vmoduleValue)
+        public static T SetVmodule<T>(this T toolSettings, string vmoduleKey, string vmoduleValue) where T : KubernetesCommonSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VmoduleInternal[vmoduleKey] = vmoduleValue;

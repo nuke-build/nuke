@@ -1516,7 +1516,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't confirm.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings SetForce(this EntityFrameworkDatabaseDropSettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -1527,7 +1527,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't confirm.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings ResetForce(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -1538,7 +1538,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't confirm.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings EnableForce(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -1549,7 +1549,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't confirm.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings DisableForce(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -1560,7 +1560,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't confirm.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings ToggleForce(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -1573,7 +1573,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show which database would be dropped, but don't drop it.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings SetDryRun(this EntityFrameworkDatabaseDropSettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -1584,7 +1584,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show which database would be dropped, but don't drop it.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings ResetDryRun(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -1595,7 +1595,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show which database would be dropped, but don't drop it.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings EnableDryRun(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -1606,7 +1606,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show which database would be dropped, but don't drop it.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings DisableDryRun(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -1617,7 +1617,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show which database would be dropped, but don't drop it.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings ToggleDryRun(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -1630,7 +1630,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings SetJson(this EntityFrameworkDatabaseDropSettings toolSettings, bool? json)
+        public static T SetJson<T>(this T toolSettings, bool? json) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = json;
@@ -1641,7 +1641,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings ResetJson(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T ResetJson<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = null;
@@ -1652,7 +1652,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings EnableJson(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T EnableJson<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = true;
@@ -1663,7 +1663,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings DisableJson(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T DisableJson<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = false;
@@ -1674,7 +1674,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings ToggleJson(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T ToggleJson<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = !toolSettings.Json;
@@ -1687,7 +1687,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings SetContext(this EntityFrameworkDatabaseDropSettings toolSettings, string context)
+        public static T SetContext<T>(this T toolSettings, string context) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Context = context;
@@ -1698,7 +1698,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings ResetContext(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T ResetContext<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Context = null;
@@ -1711,7 +1711,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the target project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings SetProject(this EntityFrameworkDatabaseDropSettings toolSettings, string project)
+        public static T SetProject<T>(this T toolSettings, string project) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = project;
@@ -1722,7 +1722,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the target project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings ResetProject(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T ResetProject<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = null;
@@ -1735,7 +1735,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the startup project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings SetStartupProject(this EntityFrameworkDatabaseDropSettings toolSettings, string startupProject)
+        public static T SetStartupProject<T>(this T toolSettings, string startupProject) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StartupProject = startupProject;
@@ -1746,7 +1746,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the startup project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings ResetStartupProject(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T ResetStartupProject<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StartupProject = null;
@@ -1759,7 +1759,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings SetFramework(this EntityFrameworkDatabaseDropSettings toolSettings, string framework)
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = framework;
@@ -1770,7 +1770,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings ResetFramework(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T ResetFramework<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = null;
@@ -1783,7 +1783,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The build configuration, for example: <c>Debug</c> or <c>Release.</c></p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings SetConfiguration(this EntityFrameworkDatabaseDropSettings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -1794,7 +1794,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The build configuration, for example: <c>Debug</c> or <c>Release.</c></p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings ResetConfiguration(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -1807,7 +1807,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings SetRuntime(this EntityFrameworkDatabaseDropSettings toolSettings, string runtime)
+        public static T SetRuntime<T>(this T toolSettings, string runtime) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = runtime;
@@ -1818,7 +1818,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings ResetRuntime(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T ResetRuntime<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = null;
@@ -1831,7 +1831,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings SetNoColor(this EntityFrameworkDatabaseDropSettings toolSettings, bool? noColor)
+        public static T SetNoColor<T>(this T toolSettings, bool? noColor) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = noColor;
@@ -1842,7 +1842,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings ResetNoColor(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T ResetNoColor<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = null;
@@ -1853,7 +1853,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings EnableNoColor(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T EnableNoColor<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = true;
@@ -1864,7 +1864,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings DisableNoColor(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T DisableNoColor<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = false;
@@ -1875,7 +1875,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings ToggleNoColor(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T ToggleNoColor<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = !toolSettings.NoColor;
@@ -1888,7 +1888,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings SetPrefixOutput(this EntityFrameworkDatabaseDropSettings toolSettings, bool? prefixOutput)
+        public static T SetPrefixOutput<T>(this T toolSettings, bool? prefixOutput) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = prefixOutput;
@@ -1899,7 +1899,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings ResetPrefixOutput(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T ResetPrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = null;
@@ -1910,7 +1910,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings EnablePrefixOutput(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T EnablePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = true;
@@ -1921,7 +1921,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings DisablePrefixOutput(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T DisablePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = false;
@@ -1932,7 +1932,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings TogglePrefixOutput(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T TogglePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = !toolSettings.PrefixOutput;
@@ -1945,7 +1945,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings SetVerbose(this EntityFrameworkDatabaseDropSettings toolSettings, bool? verbose)
+        public static T SetVerbose<T>(this T toolSettings, bool? verbose) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = verbose;
@@ -1956,7 +1956,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings ResetVerbose(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T ResetVerbose<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = null;
@@ -1967,7 +1967,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings EnableVerbose(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T EnableVerbose<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = true;
@@ -1978,7 +1978,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings DisableVerbose(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T DisableVerbose<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = false;
@@ -1989,7 +1989,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseDropSettings ToggleVerbose(this EntityFrameworkDatabaseDropSettings toolSettings)
+        public static T ToggleVerbose<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = !toolSettings.Verbose;
@@ -2012,7 +2012,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The target migration. Migrations may be identified by name or by ID. The number 0 is a special case that means before the first migration and causes all migrations to be reverted. If no migration is specified, the command defaults to the last migration.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings SetMigration(this EntityFrameworkDatabaseUpdateSettings toolSettings, string migration)
+        public static T SetMigration<T>(this T toolSettings, string migration) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Migration = migration;
@@ -2023,7 +2023,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The target migration. Migrations may be identified by name or by ID. The number 0 is a special case that means before the first migration and causes all migrations to be reverted. If no migration is specified, the command defaults to the last migration.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings ResetMigration(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T ResetMigration<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Migration = null;
@@ -2036,7 +2036,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>This option shows which database would be dropped, but doesn't drop it.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings SetDryRun(this EntityFrameworkDatabaseUpdateSettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -2047,7 +2047,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>This option shows which database would be dropped, but doesn't drop it.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings ResetDryRun(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -2058,7 +2058,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>This option shows which database would be dropped, but doesn't drop it.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings EnableDryRun(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -2069,7 +2069,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>This option shows which database would be dropped, but doesn't drop it.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings DisableDryRun(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -2080,7 +2080,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>This option shows which database would be dropped, but doesn't drop it.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings ToggleDryRun(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -2093,7 +2093,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings SetJson(this EntityFrameworkDatabaseUpdateSettings toolSettings, bool? json)
+        public static T SetJson<T>(this T toolSettings, bool? json) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = json;
@@ -2104,7 +2104,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings ResetJson(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T ResetJson<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = null;
@@ -2115,7 +2115,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings EnableJson(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T EnableJson<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = true;
@@ -2126,7 +2126,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings DisableJson(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T DisableJson<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = false;
@@ -2137,7 +2137,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings ToggleJson(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T ToggleJson<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = !toolSettings.Json;
@@ -2150,7 +2150,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings SetContext(this EntityFrameworkDatabaseUpdateSettings toolSettings, string context)
+        public static T SetContext<T>(this T toolSettings, string context) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Context = context;
@@ -2161,7 +2161,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings ResetContext(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T ResetContext<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Context = null;
@@ -2174,7 +2174,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the target project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings SetProject(this EntityFrameworkDatabaseUpdateSettings toolSettings, string project)
+        public static T SetProject<T>(this T toolSettings, string project) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = project;
@@ -2185,7 +2185,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the target project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings ResetProject(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T ResetProject<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = null;
@@ -2198,7 +2198,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the startup project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings SetStartupProject(this EntityFrameworkDatabaseUpdateSettings toolSettings, string startupProject)
+        public static T SetStartupProject<T>(this T toolSettings, string startupProject) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StartupProject = startupProject;
@@ -2209,7 +2209,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the startup project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings ResetStartupProject(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T ResetStartupProject<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StartupProject = null;
@@ -2222,7 +2222,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings SetFramework(this EntityFrameworkDatabaseUpdateSettings toolSettings, string framework)
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = framework;
@@ -2233,7 +2233,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings ResetFramework(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T ResetFramework<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = null;
@@ -2246,7 +2246,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The build configuration, for example: <c>Debug</c> or <c>Release.</c></p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings SetConfiguration(this EntityFrameworkDatabaseUpdateSettings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -2257,7 +2257,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The build configuration, for example: <c>Debug</c> or <c>Release.</c></p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings ResetConfiguration(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -2270,7 +2270,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings SetRuntime(this EntityFrameworkDatabaseUpdateSettings toolSettings, string runtime)
+        public static T SetRuntime<T>(this T toolSettings, string runtime) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = runtime;
@@ -2281,7 +2281,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings ResetRuntime(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T ResetRuntime<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = null;
@@ -2294,7 +2294,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings SetNoColor(this EntityFrameworkDatabaseUpdateSettings toolSettings, bool? noColor)
+        public static T SetNoColor<T>(this T toolSettings, bool? noColor) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = noColor;
@@ -2305,7 +2305,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings ResetNoColor(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T ResetNoColor<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = null;
@@ -2316,7 +2316,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings EnableNoColor(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T EnableNoColor<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = true;
@@ -2327,7 +2327,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings DisableNoColor(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T DisableNoColor<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = false;
@@ -2338,7 +2338,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings ToggleNoColor(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T ToggleNoColor<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = !toolSettings.NoColor;
@@ -2351,7 +2351,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings SetPrefixOutput(this EntityFrameworkDatabaseUpdateSettings toolSettings, bool? prefixOutput)
+        public static T SetPrefixOutput<T>(this T toolSettings, bool? prefixOutput) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = prefixOutput;
@@ -2362,7 +2362,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings ResetPrefixOutput(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T ResetPrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = null;
@@ -2373,7 +2373,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings EnablePrefixOutput(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T EnablePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = true;
@@ -2384,7 +2384,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings DisablePrefixOutput(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T DisablePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = false;
@@ -2395,7 +2395,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings TogglePrefixOutput(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T TogglePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = !toolSettings.PrefixOutput;
@@ -2408,7 +2408,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings SetVerbose(this EntityFrameworkDatabaseUpdateSettings toolSettings, bool? verbose)
+        public static T SetVerbose<T>(this T toolSettings, bool? verbose) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = verbose;
@@ -2419,7 +2419,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings ResetVerbose(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T ResetVerbose<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = null;
@@ -2430,7 +2430,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings EnableVerbose(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T EnableVerbose<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = true;
@@ -2441,7 +2441,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings DisableVerbose(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T DisableVerbose<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = false;
@@ -2452,7 +2452,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDatabaseUpdateSettings ToggleVerbose(this EntityFrameworkDatabaseUpdateSettings toolSettings)
+        public static T ToggleVerbose<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = !toolSettings.Verbose;
@@ -2475,7 +2475,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings SetJson(this EntityFrameworkDbContextInfoSettings toolSettings, bool? json)
+        public static T SetJson<T>(this T toolSettings, bool? json) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = json;
@@ -2486,7 +2486,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings ResetJson(this EntityFrameworkDbContextInfoSettings toolSettings)
+        public static T ResetJson<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = null;
@@ -2497,7 +2497,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings EnableJson(this EntityFrameworkDbContextInfoSettings toolSettings)
+        public static T EnableJson<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = true;
@@ -2508,7 +2508,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings DisableJson(this EntityFrameworkDbContextInfoSettings toolSettings)
+        public static T DisableJson<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = false;
@@ -2519,7 +2519,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings ToggleJson(this EntityFrameworkDbContextInfoSettings toolSettings)
+        public static T ToggleJson<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = !toolSettings.Json;
@@ -2532,7 +2532,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings SetContext(this EntityFrameworkDbContextInfoSettings toolSettings, string context)
+        public static T SetContext<T>(this T toolSettings, string context) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Context = context;
@@ -2543,7 +2543,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings ResetContext(this EntityFrameworkDbContextInfoSettings toolSettings)
+        public static T ResetContext<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Context = null;
@@ -2556,7 +2556,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the target project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings SetProject(this EntityFrameworkDbContextInfoSettings toolSettings, string project)
+        public static T SetProject<T>(this T toolSettings, string project) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = project;
@@ -2567,7 +2567,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the target project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings ResetProject(this EntityFrameworkDbContextInfoSettings toolSettings)
+        public static T ResetProject<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = null;
@@ -2580,7 +2580,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the startup project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings SetStartupProject(this EntityFrameworkDbContextInfoSettings toolSettings, string startupProject)
+        public static T SetStartupProject<T>(this T toolSettings, string startupProject) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StartupProject = startupProject;
@@ -2591,7 +2591,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the startup project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings ResetStartupProject(this EntityFrameworkDbContextInfoSettings toolSettings)
+        public static T ResetStartupProject<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StartupProject = null;
@@ -2604,7 +2604,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings SetFramework(this EntityFrameworkDbContextInfoSettings toolSettings, string framework)
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = framework;
@@ -2615,7 +2615,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings ResetFramework(this EntityFrameworkDbContextInfoSettings toolSettings)
+        public static T ResetFramework<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = null;
@@ -2628,7 +2628,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The build configuration, for example: <c>Debug</c> or <c>Release.</c></p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings SetConfiguration(this EntityFrameworkDbContextInfoSettings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -2639,7 +2639,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The build configuration, for example: <c>Debug</c> or <c>Release.</c></p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings ResetConfiguration(this EntityFrameworkDbContextInfoSettings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -2652,7 +2652,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings SetRuntime(this EntityFrameworkDbContextInfoSettings toolSettings, string runtime)
+        public static T SetRuntime<T>(this T toolSettings, string runtime) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = runtime;
@@ -2663,7 +2663,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings ResetRuntime(this EntityFrameworkDbContextInfoSettings toolSettings)
+        public static T ResetRuntime<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = null;
@@ -2676,7 +2676,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings SetNoColor(this EntityFrameworkDbContextInfoSettings toolSettings, bool? noColor)
+        public static T SetNoColor<T>(this T toolSettings, bool? noColor) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = noColor;
@@ -2687,7 +2687,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings ResetNoColor(this EntityFrameworkDbContextInfoSettings toolSettings)
+        public static T ResetNoColor<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = null;
@@ -2698,7 +2698,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings EnableNoColor(this EntityFrameworkDbContextInfoSettings toolSettings)
+        public static T EnableNoColor<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = true;
@@ -2709,7 +2709,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings DisableNoColor(this EntityFrameworkDbContextInfoSettings toolSettings)
+        public static T DisableNoColor<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = false;
@@ -2720,7 +2720,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings ToggleNoColor(this EntityFrameworkDbContextInfoSettings toolSettings)
+        public static T ToggleNoColor<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = !toolSettings.NoColor;
@@ -2733,7 +2733,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings SetPrefixOutput(this EntityFrameworkDbContextInfoSettings toolSettings, bool? prefixOutput)
+        public static T SetPrefixOutput<T>(this T toolSettings, bool? prefixOutput) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = prefixOutput;
@@ -2744,7 +2744,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings ResetPrefixOutput(this EntityFrameworkDbContextInfoSettings toolSettings)
+        public static T ResetPrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = null;
@@ -2755,7 +2755,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings EnablePrefixOutput(this EntityFrameworkDbContextInfoSettings toolSettings)
+        public static T EnablePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = true;
@@ -2766,7 +2766,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings DisablePrefixOutput(this EntityFrameworkDbContextInfoSettings toolSettings)
+        public static T DisablePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = false;
@@ -2777,7 +2777,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings TogglePrefixOutput(this EntityFrameworkDbContextInfoSettings toolSettings)
+        public static T TogglePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = !toolSettings.PrefixOutput;
@@ -2790,7 +2790,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings SetVerbose(this EntityFrameworkDbContextInfoSettings toolSettings, bool? verbose)
+        public static T SetVerbose<T>(this T toolSettings, bool? verbose) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = verbose;
@@ -2801,7 +2801,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings ResetVerbose(this EntityFrameworkDbContextInfoSettings toolSettings)
+        public static T ResetVerbose<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = null;
@@ -2812,7 +2812,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings EnableVerbose(this EntityFrameworkDbContextInfoSettings toolSettings)
+        public static T EnableVerbose<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = true;
@@ -2823,7 +2823,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings DisableVerbose(this EntityFrameworkDbContextInfoSettings toolSettings)
+        public static T DisableVerbose<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = false;
@@ -2834,7 +2834,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextInfoSettings ToggleVerbose(this EntityFrameworkDbContextInfoSettings toolSettings)
+        public static T ToggleVerbose<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = !toolSettings.Verbose;
@@ -2857,7 +2857,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings SetJson(this EntityFrameworkDbContextListSettings toolSettings, bool? json)
+        public static T SetJson<T>(this T toolSettings, bool? json) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = json;
@@ -2868,7 +2868,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings ResetJson(this EntityFrameworkDbContextListSettings toolSettings)
+        public static T ResetJson<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = null;
@@ -2879,7 +2879,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings EnableJson(this EntityFrameworkDbContextListSettings toolSettings)
+        public static T EnableJson<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = true;
@@ -2890,7 +2890,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings DisableJson(this EntityFrameworkDbContextListSettings toolSettings)
+        public static T DisableJson<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = false;
@@ -2901,7 +2901,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings ToggleJson(this EntityFrameworkDbContextListSettings toolSettings)
+        public static T ToggleJson<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = !toolSettings.Json;
@@ -2914,7 +2914,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings SetContext(this EntityFrameworkDbContextListSettings toolSettings, string context)
+        public static T SetContext<T>(this T toolSettings, string context) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Context = context;
@@ -2925,7 +2925,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings ResetContext(this EntityFrameworkDbContextListSettings toolSettings)
+        public static T ResetContext<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Context = null;
@@ -2938,7 +2938,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the target project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings SetProject(this EntityFrameworkDbContextListSettings toolSettings, string project)
+        public static T SetProject<T>(this T toolSettings, string project) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = project;
@@ -2949,7 +2949,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the target project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings ResetProject(this EntityFrameworkDbContextListSettings toolSettings)
+        public static T ResetProject<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = null;
@@ -2962,7 +2962,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the startup project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings SetStartupProject(this EntityFrameworkDbContextListSettings toolSettings, string startupProject)
+        public static T SetStartupProject<T>(this T toolSettings, string startupProject) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StartupProject = startupProject;
@@ -2973,7 +2973,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the startup project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings ResetStartupProject(this EntityFrameworkDbContextListSettings toolSettings)
+        public static T ResetStartupProject<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StartupProject = null;
@@ -2986,7 +2986,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings SetFramework(this EntityFrameworkDbContextListSettings toolSettings, string framework)
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = framework;
@@ -2997,7 +2997,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings ResetFramework(this EntityFrameworkDbContextListSettings toolSettings)
+        public static T ResetFramework<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = null;
@@ -3010,7 +3010,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The build configuration, for example: <c>Debug</c> or <c>Release.</c></p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings SetConfiguration(this EntityFrameworkDbContextListSettings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -3021,7 +3021,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The build configuration, for example: <c>Debug</c> or <c>Release.</c></p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings ResetConfiguration(this EntityFrameworkDbContextListSettings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -3034,7 +3034,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings SetRuntime(this EntityFrameworkDbContextListSettings toolSettings, string runtime)
+        public static T SetRuntime<T>(this T toolSettings, string runtime) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = runtime;
@@ -3045,7 +3045,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings ResetRuntime(this EntityFrameworkDbContextListSettings toolSettings)
+        public static T ResetRuntime<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = null;
@@ -3058,7 +3058,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings SetNoColor(this EntityFrameworkDbContextListSettings toolSettings, bool? noColor)
+        public static T SetNoColor<T>(this T toolSettings, bool? noColor) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = noColor;
@@ -3069,7 +3069,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings ResetNoColor(this EntityFrameworkDbContextListSettings toolSettings)
+        public static T ResetNoColor<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = null;
@@ -3080,7 +3080,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings EnableNoColor(this EntityFrameworkDbContextListSettings toolSettings)
+        public static T EnableNoColor<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = true;
@@ -3091,7 +3091,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings DisableNoColor(this EntityFrameworkDbContextListSettings toolSettings)
+        public static T DisableNoColor<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = false;
@@ -3102,7 +3102,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings ToggleNoColor(this EntityFrameworkDbContextListSettings toolSettings)
+        public static T ToggleNoColor<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = !toolSettings.NoColor;
@@ -3115,7 +3115,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings SetPrefixOutput(this EntityFrameworkDbContextListSettings toolSettings, bool? prefixOutput)
+        public static T SetPrefixOutput<T>(this T toolSettings, bool? prefixOutput) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = prefixOutput;
@@ -3126,7 +3126,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings ResetPrefixOutput(this EntityFrameworkDbContextListSettings toolSettings)
+        public static T ResetPrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = null;
@@ -3137,7 +3137,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings EnablePrefixOutput(this EntityFrameworkDbContextListSettings toolSettings)
+        public static T EnablePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = true;
@@ -3148,7 +3148,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings DisablePrefixOutput(this EntityFrameworkDbContextListSettings toolSettings)
+        public static T DisablePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = false;
@@ -3159,7 +3159,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings TogglePrefixOutput(this EntityFrameworkDbContextListSettings toolSettings)
+        public static T TogglePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = !toolSettings.PrefixOutput;
@@ -3172,7 +3172,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings SetVerbose(this EntityFrameworkDbContextListSettings toolSettings, bool? verbose)
+        public static T SetVerbose<T>(this T toolSettings, bool? verbose) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = verbose;
@@ -3183,7 +3183,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings ResetVerbose(this EntityFrameworkDbContextListSettings toolSettings)
+        public static T ResetVerbose<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = null;
@@ -3194,7 +3194,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings EnableVerbose(this EntityFrameworkDbContextListSettings toolSettings)
+        public static T EnableVerbose<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = true;
@@ -3205,7 +3205,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings DisableVerbose(this EntityFrameworkDbContextListSettings toolSettings)
+        public static T DisableVerbose<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = false;
@@ -3216,7 +3216,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextListSettings ToggleVerbose(this EntityFrameworkDbContextListSettings toolSettings)
+        public static T ToggleVerbose<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = !toolSettings.Verbose;
@@ -3239,7 +3239,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The connection string to the database. For ASP.NET Core 2.x projects, the value can be <em>name=&lt;name of connection string&gt;</em>. In that case the name comes from the configuration sources that are set up for the project.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings SetConnection(this EntityFrameworkDbContextScaffoldSettings toolSettings, string connection)
+        public static T SetConnection<T>(this T toolSettings, string connection) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Connection = connection;
@@ -3250,7 +3250,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The connection string to the database. For ASP.NET Core 2.x projects, the value can be <em>name=&lt;name of connection string&gt;</em>. In that case the name comes from the configuration sources that are set up for the project.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ResetConnection(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ResetConnection<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Connection = null;
@@ -3263,7 +3263,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The provider to use. Typically this is the name of the NuGet package, for example: <c>Microsoft.EntityFrameworkCore.SqlServer.</c></p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings SetProvider(this EntityFrameworkDbContextScaffoldSettings toolSettings, string provider)
+        public static T SetProvider<T>(this T toolSettings, string provider) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Provider = provider;
@@ -3274,7 +3274,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The provider to use. Typically this is the name of the NuGet package, for example: <c>Microsoft.EntityFrameworkCore.SqlServer.</c></p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ResetProvider(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ResetProvider<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Provider = null;
@@ -3287,7 +3287,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Use attributes to configure the model (where possible). If this option is omitted, only the fluent API is used.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings SetDataAnnotations(this EntityFrameworkDbContextScaffoldSettings toolSettings, bool? dataAnnotations)
+        public static T SetDataAnnotations<T>(this T toolSettings, bool? dataAnnotations) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DataAnnotations = dataAnnotations;
@@ -3298,7 +3298,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Use attributes to configure the model (where possible). If this option is omitted, only the fluent API is used.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ResetDataAnnotations(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ResetDataAnnotations<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DataAnnotations = null;
@@ -3309,7 +3309,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Use attributes to configure the model (where possible). If this option is omitted, only the fluent API is used.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings EnableDataAnnotations(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T EnableDataAnnotations<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DataAnnotations = true;
@@ -3320,7 +3320,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Use attributes to configure the model (where possible). If this option is omitted, only the fluent API is used.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings DisableDataAnnotations(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T DisableDataAnnotations<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DataAnnotations = false;
@@ -3331,7 +3331,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Use attributes to configure the model (where possible). If this option is omitted, only the fluent API is used.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ToggleDataAnnotations(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ToggleDataAnnotations<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DataAnnotations = !toolSettings.DataAnnotations;
@@ -3344,7 +3344,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The name of the <c>DbContext</c> class to generate.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings SetContext(this EntityFrameworkDbContextScaffoldSettings toolSettings, string context)
+        public static T SetContext<T>(this T toolSettings, string context) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Context = context;
@@ -3355,7 +3355,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The name of the <c>DbContext</c> class to generate.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ResetContext(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ResetContext<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Context = null;
@@ -3368,7 +3368,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The directory to put the <c>DbContext</c> class file in. Paths are relative to the project directory. Namespaces are derived from the folder names.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings SetContextDirectory(this EntityFrameworkDbContextScaffoldSettings toolSettings, string contextDirectory)
+        public static T SetContextDirectory<T>(this T toolSettings, string contextDirectory) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContextDirectory = contextDirectory;
@@ -3379,7 +3379,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The directory to put the <c>DbContext</c> class file in. Paths are relative to the project directory. Namespaces are derived from the folder names.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ResetContextDirectory(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ResetContextDirectory<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ContextDirectory = null;
@@ -3392,7 +3392,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Overwrite existing files.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings SetForce(this EntityFrameworkDbContextScaffoldSettings toolSettings, bool? force)
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = force;
@@ -3403,7 +3403,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Overwrite existing files.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ResetForce(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ResetForce<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = null;
@@ -3414,7 +3414,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Overwrite existing files.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings EnableForce(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T EnableForce<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = true;
@@ -3425,7 +3425,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Overwrite existing files.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings DisableForce(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T DisableForce<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = false;
@@ -3436,7 +3436,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Overwrite existing files.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ToggleForce(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ToggleForce<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Force = !toolSettings.Force;
@@ -3449,7 +3449,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The directory to put entity class files in. Paths are relative to the project directory.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings SetOutputDirectory(this EntityFrameworkDbContextScaffoldSettings toolSettings, string outputDirectory)
+        public static T SetOutputDirectory<T>(this T toolSettings, string outputDirectory) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputDirectory = outputDirectory;
@@ -3460,7 +3460,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The directory to put entity class files in. Paths are relative to the project directory.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ResetOutputDirectory(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ResetOutputDirectory<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputDirectory = null;
@@ -3473,7 +3473,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The schemas of tables to generate entity types for. To specify multiple schemas, repeat <c>--schema</c> for each one. If this option is omitted, all schemas are included.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings SetSchemas(this EntityFrameworkDbContextScaffoldSettings toolSettings, params string[] schemas)
+        public static T SetSchemas<T>(this T toolSettings, params string[] schemas) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SchemasInternal = schemas.ToList();
@@ -3484,7 +3484,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The schemas of tables to generate entity types for. To specify multiple schemas, repeat <c>--schema</c> for each one. If this option is omitted, all schemas are included.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings SetSchemas(this EntityFrameworkDbContextScaffoldSettings toolSettings, IEnumerable<string> schemas)
+        public static T SetSchemas<T>(this T toolSettings, IEnumerable<string> schemas) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SchemasInternal = schemas.ToList();
@@ -3495,7 +3495,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The schemas of tables to generate entity types for. To specify multiple schemas, repeat <c>--schema</c> for each one. If this option is omitted, all schemas are included.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings AddSchemas(this EntityFrameworkDbContextScaffoldSettings toolSettings, params string[] schemas)
+        public static T AddSchemas<T>(this T toolSettings, params string[] schemas) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SchemasInternal.AddRange(schemas);
@@ -3506,7 +3506,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The schemas of tables to generate entity types for. To specify multiple schemas, repeat <c>--schema</c> for each one. If this option is omitted, all schemas are included.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings AddSchemas(this EntityFrameworkDbContextScaffoldSettings toolSettings, IEnumerable<string> schemas)
+        public static T AddSchemas<T>(this T toolSettings, IEnumerable<string> schemas) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SchemasInternal.AddRange(schemas);
@@ -3517,7 +3517,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The schemas of tables to generate entity types for. To specify multiple schemas, repeat <c>--schema</c> for each one. If this option is omitted, all schemas are included.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ClearSchemas(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ClearSchemas<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SchemasInternal.Clear();
@@ -3528,7 +3528,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The schemas of tables to generate entity types for. To specify multiple schemas, repeat <c>--schema</c> for each one. If this option is omitted, all schemas are included.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings RemoveSchemas(this EntityFrameworkDbContextScaffoldSettings toolSettings, params string[] schemas)
+        public static T RemoveSchemas<T>(this T toolSettings, params string[] schemas) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(schemas);
@@ -3540,7 +3540,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The schemas of tables to generate entity types for. To specify multiple schemas, repeat <c>--schema</c> for each one. If this option is omitted, all schemas are included.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings RemoveSchemas(this EntityFrameworkDbContextScaffoldSettings toolSettings, IEnumerable<string> schemas)
+        public static T RemoveSchemas<T>(this T toolSettings, IEnumerable<string> schemas) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(schemas);
@@ -3554,7 +3554,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The tables to generate entity types for. To specify multiple tables, repeat <c>-t</c> or <c>--table</c> for each one. If this option is omitted, all tables are included.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings SetTables(this EntityFrameworkDbContextScaffoldSettings toolSettings, params string[] tables)
+        public static T SetTables<T>(this T toolSettings, params string[] tables) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TablesInternal = tables.ToList();
@@ -3565,7 +3565,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The tables to generate entity types for. To specify multiple tables, repeat <c>-t</c> or <c>--table</c> for each one. If this option is omitted, all tables are included.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings SetTables(this EntityFrameworkDbContextScaffoldSettings toolSettings, IEnumerable<string> tables)
+        public static T SetTables<T>(this T toolSettings, IEnumerable<string> tables) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TablesInternal = tables.ToList();
@@ -3576,7 +3576,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The tables to generate entity types for. To specify multiple tables, repeat <c>-t</c> or <c>--table</c> for each one. If this option is omitted, all tables are included.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings AddTables(this EntityFrameworkDbContextScaffoldSettings toolSettings, params string[] tables)
+        public static T AddTables<T>(this T toolSettings, params string[] tables) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TablesInternal.AddRange(tables);
@@ -3587,7 +3587,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The tables to generate entity types for. To specify multiple tables, repeat <c>-t</c> or <c>--table</c> for each one. If this option is omitted, all tables are included.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings AddTables(this EntityFrameworkDbContextScaffoldSettings toolSettings, IEnumerable<string> tables)
+        public static T AddTables<T>(this T toolSettings, IEnumerable<string> tables) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TablesInternal.AddRange(tables);
@@ -3598,7 +3598,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The tables to generate entity types for. To specify multiple tables, repeat <c>-t</c> or <c>--table</c> for each one. If this option is omitted, all tables are included.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ClearTables(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ClearTables<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TablesInternal.Clear();
@@ -3609,7 +3609,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The tables to generate entity types for. To specify multiple tables, repeat <c>-t</c> or <c>--table</c> for each one. If this option is omitted, all tables are included.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings RemoveTables(this EntityFrameworkDbContextScaffoldSettings toolSettings, params string[] tables)
+        public static T RemoveTables<T>(this T toolSettings, params string[] tables) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(tables);
@@ -3621,7 +3621,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The tables to generate entity types for. To specify multiple tables, repeat <c>-t</c> or <c>--table</c> for each one. If this option is omitted, all tables are included.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings RemoveTables(this EntityFrameworkDbContextScaffoldSettings toolSettings, IEnumerable<string> tables)
+        public static T RemoveTables<T>(this T toolSettings, IEnumerable<string> tables) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(tables);
@@ -3635,7 +3635,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Use table and column names exactly as they appear in the database. If this option is omitted, database names are changed to more closely conform to C# name style conventions.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings SetUseDatabaseNames(this EntityFrameworkDbContextScaffoldSettings toolSettings, bool? useDatabaseNames)
+        public static T SetUseDatabaseNames<T>(this T toolSettings, bool? useDatabaseNames) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseDatabaseNames = useDatabaseNames;
@@ -3646,7 +3646,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Use table and column names exactly as they appear in the database. If this option is omitted, database names are changed to more closely conform to C# name style conventions.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ResetUseDatabaseNames(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ResetUseDatabaseNames<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseDatabaseNames = null;
@@ -3657,7 +3657,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Use table and column names exactly as they appear in the database. If this option is omitted, database names are changed to more closely conform to C# name style conventions.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings EnableUseDatabaseNames(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T EnableUseDatabaseNames<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseDatabaseNames = true;
@@ -3668,7 +3668,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Use table and column names exactly as they appear in the database. If this option is omitted, database names are changed to more closely conform to C# name style conventions.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings DisableUseDatabaseNames(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T DisableUseDatabaseNames<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseDatabaseNames = false;
@@ -3679,7 +3679,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Use table and column names exactly as they appear in the database. If this option is omitted, database names are changed to more closely conform to C# name style conventions.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ToggleUseDatabaseNames(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ToggleUseDatabaseNames<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UseDatabaseNames = !toolSettings.UseDatabaseNames;
@@ -3692,7 +3692,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings SetJson(this EntityFrameworkDbContextScaffoldSettings toolSettings, bool? json)
+        public static T SetJson<T>(this T toolSettings, bool? json) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = json;
@@ -3703,7 +3703,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ResetJson(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ResetJson<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = null;
@@ -3714,7 +3714,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings EnableJson(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T EnableJson<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = true;
@@ -3725,7 +3725,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings DisableJson(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T DisableJson<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = false;
@@ -3736,7 +3736,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ToggleJson(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ToggleJson<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = !toolSettings.Json;
@@ -3749,7 +3749,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the target project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings SetProject(this EntityFrameworkDbContextScaffoldSettings toolSettings, string project)
+        public static T SetProject<T>(this T toolSettings, string project) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = project;
@@ -3760,7 +3760,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the target project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ResetProject(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ResetProject<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = null;
@@ -3773,7 +3773,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the startup project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings SetStartupProject(this EntityFrameworkDbContextScaffoldSettings toolSettings, string startupProject)
+        public static T SetStartupProject<T>(this T toolSettings, string startupProject) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StartupProject = startupProject;
@@ -3784,7 +3784,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the startup project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ResetStartupProject(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ResetStartupProject<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StartupProject = null;
@@ -3797,7 +3797,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings SetFramework(this EntityFrameworkDbContextScaffoldSettings toolSettings, string framework)
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = framework;
@@ -3808,7 +3808,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ResetFramework(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ResetFramework<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = null;
@@ -3821,7 +3821,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The build configuration, for example: <c>Debug</c> or <c>Release.</c></p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings SetConfiguration(this EntityFrameworkDbContextScaffoldSettings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -3832,7 +3832,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The build configuration, for example: <c>Debug</c> or <c>Release.</c></p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ResetConfiguration(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -3845,7 +3845,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings SetRuntime(this EntityFrameworkDbContextScaffoldSettings toolSettings, string runtime)
+        public static T SetRuntime<T>(this T toolSettings, string runtime) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = runtime;
@@ -3856,7 +3856,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ResetRuntime(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ResetRuntime<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = null;
@@ -3869,7 +3869,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings SetNoColor(this EntityFrameworkDbContextScaffoldSettings toolSettings, bool? noColor)
+        public static T SetNoColor<T>(this T toolSettings, bool? noColor) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = noColor;
@@ -3880,7 +3880,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ResetNoColor(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ResetNoColor<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = null;
@@ -3891,7 +3891,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings EnableNoColor(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T EnableNoColor<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = true;
@@ -3902,7 +3902,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings DisableNoColor(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T DisableNoColor<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = false;
@@ -3913,7 +3913,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ToggleNoColor(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ToggleNoColor<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = !toolSettings.NoColor;
@@ -3926,7 +3926,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings SetPrefixOutput(this EntityFrameworkDbContextScaffoldSettings toolSettings, bool? prefixOutput)
+        public static T SetPrefixOutput<T>(this T toolSettings, bool? prefixOutput) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = prefixOutput;
@@ -3937,7 +3937,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ResetPrefixOutput(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ResetPrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = null;
@@ -3948,7 +3948,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings EnablePrefixOutput(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T EnablePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = true;
@@ -3959,7 +3959,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings DisablePrefixOutput(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T DisablePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = false;
@@ -3970,7 +3970,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings TogglePrefixOutput(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T TogglePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = !toolSettings.PrefixOutput;
@@ -3983,7 +3983,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings SetVerbose(this EntityFrameworkDbContextScaffoldSettings toolSettings, bool? verbose)
+        public static T SetVerbose<T>(this T toolSettings, bool? verbose) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = verbose;
@@ -3994,7 +3994,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ResetVerbose(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ResetVerbose<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = null;
@@ -4005,7 +4005,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings EnableVerbose(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T EnableVerbose<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = true;
@@ -4016,7 +4016,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings DisableVerbose(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T DisableVerbose<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = false;
@@ -4027,7 +4027,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ToggleVerbose(this EntityFrameworkDbContextScaffoldSettings toolSettings)
+        public static T ToggleVerbose<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = !toolSettings.Verbose;
@@ -4050,7 +4050,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The name of the migration.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings SetName(this EntityFrameworkMigrationsAddSettings toolSettings, string name)
+        public static T SetName<T>(this T toolSettings, string name) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = name;
@@ -4061,7 +4061,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The name of the migration.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings ResetName(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T ResetName<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = null;
@@ -4074,7 +4074,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The directory (and sub-namespace) to use. Paths are relative to the project directory. Defaults to 'Migrations'.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings SetOutputDirectory(this EntityFrameworkMigrationsAddSettings toolSettings, string outputDirectory)
+        public static T SetOutputDirectory<T>(this T toolSettings, string outputDirectory) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputDirectory = outputDirectory;
@@ -4085,7 +4085,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The directory (and sub-namespace) to use. Paths are relative to the project directory. Defaults to 'Migrations'.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings ResetOutputDirectory(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T ResetOutputDirectory<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputDirectory = null;
@@ -4098,7 +4098,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings SetJson(this EntityFrameworkMigrationsAddSettings toolSettings, bool? json)
+        public static T SetJson<T>(this T toolSettings, bool? json) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = json;
@@ -4109,7 +4109,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings ResetJson(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T ResetJson<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = null;
@@ -4120,7 +4120,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings EnableJson(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T EnableJson<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = true;
@@ -4131,7 +4131,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings DisableJson(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T DisableJson<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = false;
@@ -4142,7 +4142,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings ToggleJson(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T ToggleJson<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = !toolSettings.Json;
@@ -4155,7 +4155,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings SetContext(this EntityFrameworkMigrationsAddSettings toolSettings, string context)
+        public static T SetContext<T>(this T toolSettings, string context) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Context = context;
@@ -4166,7 +4166,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings ResetContext(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T ResetContext<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Context = null;
@@ -4179,7 +4179,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the target project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings SetProject(this EntityFrameworkMigrationsAddSettings toolSettings, string project)
+        public static T SetProject<T>(this T toolSettings, string project) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = project;
@@ -4190,7 +4190,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the target project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings ResetProject(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T ResetProject<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = null;
@@ -4203,7 +4203,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the startup project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings SetStartupProject(this EntityFrameworkMigrationsAddSettings toolSettings, string startupProject)
+        public static T SetStartupProject<T>(this T toolSettings, string startupProject) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StartupProject = startupProject;
@@ -4214,7 +4214,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the startup project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings ResetStartupProject(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T ResetStartupProject<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StartupProject = null;
@@ -4227,7 +4227,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings SetFramework(this EntityFrameworkMigrationsAddSettings toolSettings, string framework)
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = framework;
@@ -4238,7 +4238,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings ResetFramework(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T ResetFramework<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = null;
@@ -4251,7 +4251,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The build configuration, for example: <c>Debug</c> or <c>Release.</c></p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings SetConfiguration(this EntityFrameworkMigrationsAddSettings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -4262,7 +4262,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The build configuration, for example: <c>Debug</c> or <c>Release.</c></p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings ResetConfiguration(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -4275,7 +4275,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings SetRuntime(this EntityFrameworkMigrationsAddSettings toolSettings, string runtime)
+        public static T SetRuntime<T>(this T toolSettings, string runtime) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = runtime;
@@ -4286,7 +4286,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings ResetRuntime(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T ResetRuntime<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = null;
@@ -4299,7 +4299,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings SetNoColor(this EntityFrameworkMigrationsAddSettings toolSettings, bool? noColor)
+        public static T SetNoColor<T>(this T toolSettings, bool? noColor) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = noColor;
@@ -4310,7 +4310,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings ResetNoColor(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T ResetNoColor<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = null;
@@ -4321,7 +4321,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings EnableNoColor(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T EnableNoColor<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = true;
@@ -4332,7 +4332,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings DisableNoColor(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T DisableNoColor<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = false;
@@ -4343,7 +4343,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings ToggleNoColor(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T ToggleNoColor<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = !toolSettings.NoColor;
@@ -4356,7 +4356,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings SetPrefixOutput(this EntityFrameworkMigrationsAddSettings toolSettings, bool? prefixOutput)
+        public static T SetPrefixOutput<T>(this T toolSettings, bool? prefixOutput) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = prefixOutput;
@@ -4367,7 +4367,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings ResetPrefixOutput(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T ResetPrefixOutput<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = null;
@@ -4378,7 +4378,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings EnablePrefixOutput(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T EnablePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = true;
@@ -4389,7 +4389,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings DisablePrefixOutput(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T DisablePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = false;
@@ -4400,7 +4400,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings TogglePrefixOutput(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T TogglePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = !toolSettings.PrefixOutput;
@@ -4413,7 +4413,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings SetVerbose(this EntityFrameworkMigrationsAddSettings toolSettings, bool? verbose)
+        public static T SetVerbose<T>(this T toolSettings, bool? verbose) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = verbose;
@@ -4424,7 +4424,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings ResetVerbose(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T ResetVerbose<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = null;
@@ -4435,7 +4435,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings EnableVerbose(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T EnableVerbose<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = true;
@@ -4446,7 +4446,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings DisableVerbose(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T DisableVerbose<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = false;
@@ -4457,7 +4457,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsAddSettings ToggleVerbose(this EntityFrameworkMigrationsAddSettings toolSettings)
+        public static T ToggleVerbose<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = !toolSettings.Verbose;
@@ -4480,7 +4480,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings SetJson(this EntityFrameworkMigrationsListSettings toolSettings, bool? json)
+        public static T SetJson<T>(this T toolSettings, bool? json) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = json;
@@ -4491,7 +4491,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings ResetJson(this EntityFrameworkMigrationsListSettings toolSettings)
+        public static T ResetJson<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = null;
@@ -4502,7 +4502,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings EnableJson(this EntityFrameworkMigrationsListSettings toolSettings)
+        public static T EnableJson<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = true;
@@ -4513,7 +4513,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings DisableJson(this EntityFrameworkMigrationsListSettings toolSettings)
+        public static T DisableJson<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = false;
@@ -4524,7 +4524,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings ToggleJson(this EntityFrameworkMigrationsListSettings toolSettings)
+        public static T ToggleJson<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = !toolSettings.Json;
@@ -4537,7 +4537,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings SetContext(this EntityFrameworkMigrationsListSettings toolSettings, string context)
+        public static T SetContext<T>(this T toolSettings, string context) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Context = context;
@@ -4548,7 +4548,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings ResetContext(this EntityFrameworkMigrationsListSettings toolSettings)
+        public static T ResetContext<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Context = null;
@@ -4561,7 +4561,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the target project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings SetProject(this EntityFrameworkMigrationsListSettings toolSettings, string project)
+        public static T SetProject<T>(this T toolSettings, string project) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = project;
@@ -4572,7 +4572,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the target project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings ResetProject(this EntityFrameworkMigrationsListSettings toolSettings)
+        public static T ResetProject<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = null;
@@ -4585,7 +4585,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the startup project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings SetStartupProject(this EntityFrameworkMigrationsListSettings toolSettings, string startupProject)
+        public static T SetStartupProject<T>(this T toolSettings, string startupProject) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StartupProject = startupProject;
@@ -4596,7 +4596,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the startup project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings ResetStartupProject(this EntityFrameworkMigrationsListSettings toolSettings)
+        public static T ResetStartupProject<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StartupProject = null;
@@ -4609,7 +4609,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings SetFramework(this EntityFrameworkMigrationsListSettings toolSettings, string framework)
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = framework;
@@ -4620,7 +4620,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings ResetFramework(this EntityFrameworkMigrationsListSettings toolSettings)
+        public static T ResetFramework<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = null;
@@ -4633,7 +4633,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The build configuration, for example: <c>Debug</c> or <c>Release.</c></p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings SetConfiguration(this EntityFrameworkMigrationsListSettings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -4644,7 +4644,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The build configuration, for example: <c>Debug</c> or <c>Release.</c></p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings ResetConfiguration(this EntityFrameworkMigrationsListSettings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -4657,7 +4657,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings SetRuntime(this EntityFrameworkMigrationsListSettings toolSettings, string runtime)
+        public static T SetRuntime<T>(this T toolSettings, string runtime) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = runtime;
@@ -4668,7 +4668,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings ResetRuntime(this EntityFrameworkMigrationsListSettings toolSettings)
+        public static T ResetRuntime<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = null;
@@ -4681,7 +4681,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings SetNoColor(this EntityFrameworkMigrationsListSettings toolSettings, bool? noColor)
+        public static T SetNoColor<T>(this T toolSettings, bool? noColor) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = noColor;
@@ -4692,7 +4692,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings ResetNoColor(this EntityFrameworkMigrationsListSettings toolSettings)
+        public static T ResetNoColor<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = null;
@@ -4703,7 +4703,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings EnableNoColor(this EntityFrameworkMigrationsListSettings toolSettings)
+        public static T EnableNoColor<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = true;
@@ -4714,7 +4714,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings DisableNoColor(this EntityFrameworkMigrationsListSettings toolSettings)
+        public static T DisableNoColor<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = false;
@@ -4725,7 +4725,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings ToggleNoColor(this EntityFrameworkMigrationsListSettings toolSettings)
+        public static T ToggleNoColor<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = !toolSettings.NoColor;
@@ -4738,7 +4738,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings SetPrefixOutput(this EntityFrameworkMigrationsListSettings toolSettings, bool? prefixOutput)
+        public static T SetPrefixOutput<T>(this T toolSettings, bool? prefixOutput) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = prefixOutput;
@@ -4749,7 +4749,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings ResetPrefixOutput(this EntityFrameworkMigrationsListSettings toolSettings)
+        public static T ResetPrefixOutput<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = null;
@@ -4760,7 +4760,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings EnablePrefixOutput(this EntityFrameworkMigrationsListSettings toolSettings)
+        public static T EnablePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = true;
@@ -4771,7 +4771,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings DisablePrefixOutput(this EntityFrameworkMigrationsListSettings toolSettings)
+        public static T DisablePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = false;
@@ -4782,7 +4782,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings TogglePrefixOutput(this EntityFrameworkMigrationsListSettings toolSettings)
+        public static T TogglePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = !toolSettings.PrefixOutput;
@@ -4795,7 +4795,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings SetVerbose(this EntityFrameworkMigrationsListSettings toolSettings, bool? verbose)
+        public static T SetVerbose<T>(this T toolSettings, bool? verbose) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = verbose;
@@ -4806,7 +4806,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings ResetVerbose(this EntityFrameworkMigrationsListSettings toolSettings)
+        public static T ResetVerbose<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = null;
@@ -4817,7 +4817,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings EnableVerbose(this EntityFrameworkMigrationsListSettings toolSettings)
+        public static T EnableVerbose<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = true;
@@ -4828,7 +4828,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings DisableVerbose(this EntityFrameworkMigrationsListSettings toolSettings)
+        public static T DisableVerbose<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = false;
@@ -4839,7 +4839,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsListSettings ToggleVerbose(this EntityFrameworkMigrationsListSettings toolSettings)
+        public static T ToggleVerbose<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = !toolSettings.Verbose;
@@ -4862,7 +4862,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The directory (and sub-namespace) to use. Paths are relative to the project directory. Defaults to 'Migrations'.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings SetOutputDirectory(this EntityFrameworkMigrationsRemoveSettings toolSettings, string outputDirectory)
+        public static T SetOutputDirectory<T>(this T toolSettings, string outputDirectory) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputDirectory = outputDirectory;
@@ -4873,7 +4873,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The directory (and sub-namespace) to use. Paths are relative to the project directory. Defaults to 'Migrations'.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings ResetOutputDirectory(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T ResetOutputDirectory<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputDirectory = null;
@@ -4886,7 +4886,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings SetJson(this EntityFrameworkMigrationsRemoveSettings toolSettings, bool? json)
+        public static T SetJson<T>(this T toolSettings, bool? json) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = json;
@@ -4897,7 +4897,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings ResetJson(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T ResetJson<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = null;
@@ -4908,7 +4908,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings EnableJson(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T EnableJson<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = true;
@@ -4919,7 +4919,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings DisableJson(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T DisableJson<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = false;
@@ -4930,7 +4930,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings ToggleJson(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T ToggleJson<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = !toolSettings.Json;
@@ -4943,7 +4943,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings SetContext(this EntityFrameworkMigrationsRemoveSettings toolSettings, string context)
+        public static T SetContext<T>(this T toolSettings, string context) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Context = context;
@@ -4954,7 +4954,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings ResetContext(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T ResetContext<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Context = null;
@@ -4967,7 +4967,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the target project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings SetProject(this EntityFrameworkMigrationsRemoveSettings toolSettings, string project)
+        public static T SetProject<T>(this T toolSettings, string project) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = project;
@@ -4978,7 +4978,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the target project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings ResetProject(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T ResetProject<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = null;
@@ -4991,7 +4991,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the startup project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings SetStartupProject(this EntityFrameworkMigrationsRemoveSettings toolSettings, string startupProject)
+        public static T SetStartupProject<T>(this T toolSettings, string startupProject) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StartupProject = startupProject;
@@ -5002,7 +5002,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the startup project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings ResetStartupProject(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T ResetStartupProject<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StartupProject = null;
@@ -5015,7 +5015,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings SetFramework(this EntityFrameworkMigrationsRemoveSettings toolSettings, string framework)
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = framework;
@@ -5026,7 +5026,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings ResetFramework(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T ResetFramework<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = null;
@@ -5039,7 +5039,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The build configuration, for example: <c>Debug</c> or <c>Release.</c></p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings SetConfiguration(this EntityFrameworkMigrationsRemoveSettings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -5050,7 +5050,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The build configuration, for example: <c>Debug</c> or <c>Release.</c></p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings ResetConfiguration(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -5063,7 +5063,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings SetRuntime(this EntityFrameworkMigrationsRemoveSettings toolSettings, string runtime)
+        public static T SetRuntime<T>(this T toolSettings, string runtime) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = runtime;
@@ -5074,7 +5074,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings ResetRuntime(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T ResetRuntime<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = null;
@@ -5087,7 +5087,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings SetNoColor(this EntityFrameworkMigrationsRemoveSettings toolSettings, bool? noColor)
+        public static T SetNoColor<T>(this T toolSettings, bool? noColor) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = noColor;
@@ -5098,7 +5098,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings ResetNoColor(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T ResetNoColor<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = null;
@@ -5109,7 +5109,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings EnableNoColor(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T EnableNoColor<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = true;
@@ -5120,7 +5120,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings DisableNoColor(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T DisableNoColor<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = false;
@@ -5131,7 +5131,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings ToggleNoColor(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T ToggleNoColor<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = !toolSettings.NoColor;
@@ -5144,7 +5144,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings SetPrefixOutput(this EntityFrameworkMigrationsRemoveSettings toolSettings, bool? prefixOutput)
+        public static T SetPrefixOutput<T>(this T toolSettings, bool? prefixOutput) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = prefixOutput;
@@ -5155,7 +5155,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings ResetPrefixOutput(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T ResetPrefixOutput<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = null;
@@ -5166,7 +5166,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings EnablePrefixOutput(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T EnablePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = true;
@@ -5177,7 +5177,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings DisablePrefixOutput(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T DisablePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = false;
@@ -5188,7 +5188,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings TogglePrefixOutput(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T TogglePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = !toolSettings.PrefixOutput;
@@ -5201,7 +5201,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings SetVerbose(this EntityFrameworkMigrationsRemoveSettings toolSettings, bool? verbose)
+        public static T SetVerbose<T>(this T toolSettings, bool? verbose) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = verbose;
@@ -5212,7 +5212,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings ResetVerbose(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T ResetVerbose<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = null;
@@ -5223,7 +5223,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings EnableVerbose(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T EnableVerbose<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = true;
@@ -5234,7 +5234,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings DisableVerbose(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T DisableVerbose<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = false;
@@ -5245,7 +5245,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsRemoveSettings ToggleVerbose(this EntityFrameworkMigrationsRemoveSettings toolSettings)
+        public static T ToggleVerbose<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = !toolSettings.Verbose;
@@ -5268,7 +5268,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The starting migration. Migrations may be identified by name or by ID. The number 0 is a special case that means <em>before the first migration</em>. Defaults to 0.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings SetFrom(this EntityFrameworkMigrationsScriptSettings toolSettings, string from)
+        public static T SetFrom<T>(this T toolSettings, string from) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.From = from;
@@ -5279,7 +5279,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The starting migration. Migrations may be identified by name or by ID. The number 0 is a special case that means <em>before the first migration</em>. Defaults to 0.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings ResetFrom(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T ResetFrom<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.From = null;
@@ -5292,7 +5292,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The ending migration. Defaults to the last migration.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings SetTo(this EntityFrameworkMigrationsScriptSettings toolSettings, string to)
+        public static T SetTo<T>(this T toolSettings, string to) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.To = to;
@@ -5303,7 +5303,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The ending migration. Defaults to the last migration.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings ResetTo(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T ResetTo<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.To = null;
@@ -5316,7 +5316,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The file to write the script to.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings SetOutput(this EntityFrameworkMigrationsScriptSettings toolSettings, string output)
+        public static T SetOutput<T>(this T toolSettings, string output) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -5327,7 +5327,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The file to write the script to.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings ResetOutput(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -5340,7 +5340,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Generate a script that can be used on a database at any migration.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings SetIdempotent(this EntityFrameworkMigrationsScriptSettings toolSettings, bool? idempotent)
+        public static T SetIdempotent<T>(this T toolSettings, bool? idempotent) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Idempotent = idempotent;
@@ -5351,7 +5351,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Generate a script that can be used on a database at any migration.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings ResetIdempotent(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T ResetIdempotent<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Idempotent = null;
@@ -5362,7 +5362,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Generate a script that can be used on a database at any migration.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings EnableIdempotent(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T EnableIdempotent<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Idempotent = true;
@@ -5373,7 +5373,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Generate a script that can be used on a database at any migration.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings DisableIdempotent(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T DisableIdempotent<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Idempotent = false;
@@ -5384,7 +5384,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Generate a script that can be used on a database at any migration.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings ToggleIdempotent(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T ToggleIdempotent<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Idempotent = !toolSettings.Idempotent;
@@ -5397,7 +5397,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings SetJson(this EntityFrameworkMigrationsScriptSettings toolSettings, bool? json)
+        public static T SetJson<T>(this T toolSettings, bool? json) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = json;
@@ -5408,7 +5408,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings ResetJson(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T ResetJson<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = null;
@@ -5419,7 +5419,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings EnableJson(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T EnableJson<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = true;
@@ -5430,7 +5430,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings DisableJson(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T DisableJson<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = false;
@@ -5441,7 +5441,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show JSON output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings ToggleJson(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T ToggleJson<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = !toolSettings.Json;
@@ -5454,7 +5454,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings SetContext(this EntityFrameworkMigrationsScriptSettings toolSettings, string context)
+        public static T SetContext<T>(this T toolSettings, string context) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Context = context;
@@ -5465,7 +5465,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings ResetContext(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T ResetContext<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Context = null;
@@ -5478,7 +5478,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the target project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings SetProject(this EntityFrameworkMigrationsScriptSettings toolSettings, string project)
+        public static T SetProject<T>(this T toolSettings, string project) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = project;
@@ -5489,7 +5489,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the target project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings ResetProject(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T ResetProject<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Project = null;
@@ -5502,7 +5502,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the startup project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings SetStartupProject(this EntityFrameworkMigrationsScriptSettings toolSettings, string startupProject)
+        public static T SetStartupProject<T>(this T toolSettings, string startupProject) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StartupProject = startupProject;
@@ -5513,7 +5513,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Relative path to the project folder of the startup project. Default value is the current folder.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings ResetStartupProject(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T ResetStartupProject<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.StartupProject = null;
@@ -5526,7 +5526,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings SetFramework(this EntityFrameworkMigrationsScriptSettings toolSettings, string framework)
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = framework;
@@ -5537,7 +5537,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings ResetFramework(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T ResetFramework<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = null;
@@ -5550,7 +5550,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The build configuration, for example: <c>Debug</c> or <c>Release.</c></p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings SetConfiguration(this EntityFrameworkMigrationsScriptSettings toolSettings, string configuration)
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = configuration;
@@ -5561,7 +5561,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The build configuration, for example: <c>Debug</c> or <c>Release.</c></p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings ResetConfiguration(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T ResetConfiguration<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
@@ -5574,7 +5574,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings SetRuntime(this EntityFrameworkMigrationsScriptSettings toolSettings, string runtime)
+        public static T SetRuntime<T>(this T toolSettings, string runtime) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = runtime;
@@ -5585,7 +5585,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings ResetRuntime(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T ResetRuntime<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = null;
@@ -5598,7 +5598,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings SetNoColor(this EntityFrameworkMigrationsScriptSettings toolSettings, bool? noColor)
+        public static T SetNoColor<T>(this T toolSettings, bool? noColor) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = noColor;
@@ -5609,7 +5609,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings ResetNoColor(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T ResetNoColor<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = null;
@@ -5620,7 +5620,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings EnableNoColor(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T EnableNoColor<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = true;
@@ -5631,7 +5631,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings DisableNoColor(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T DisableNoColor<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = false;
@@ -5642,7 +5642,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Don't colorize output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings ToggleNoColor(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T ToggleNoColor<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoColor = !toolSettings.NoColor;
@@ -5655,7 +5655,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings SetPrefixOutput(this EntityFrameworkMigrationsScriptSettings toolSettings, bool? prefixOutput)
+        public static T SetPrefixOutput<T>(this T toolSettings, bool? prefixOutput) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = prefixOutput;
@@ -5666,7 +5666,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings ResetPrefixOutput(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T ResetPrefixOutput<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = null;
@@ -5677,7 +5677,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings EnablePrefixOutput(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T EnablePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = true;
@@ -5688,7 +5688,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings DisablePrefixOutput(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T DisablePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = false;
@@ -5699,7 +5699,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Prefix output with level.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings TogglePrefixOutput(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T TogglePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PrefixOutput = !toolSettings.PrefixOutput;
@@ -5712,7 +5712,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings SetVerbose(this EntityFrameworkMigrationsScriptSettings toolSettings, bool? verbose)
+        public static T SetVerbose<T>(this T toolSettings, bool? verbose) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = verbose;
@@ -5723,7 +5723,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings ResetVerbose(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T ResetVerbose<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = null;
@@ -5734,7 +5734,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings EnableVerbose(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T EnableVerbose<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = true;
@@ -5745,7 +5745,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings DisableVerbose(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T DisableVerbose<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = false;
@@ -5756,7 +5756,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>Show verbose output.</p>
         /// </summary>
         [Pure]
-        public static EntityFrameworkMigrationsScriptSettings ToggleVerbose(this EntityFrameworkMigrationsScriptSettings toolSettings)
+        public static T ToggleVerbose<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = !toolSettings.Verbose;

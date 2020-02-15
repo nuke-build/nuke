@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.24.2] / 2020-02-15
+- Fixed extension methods for settings with base type
+- Fixed `SonarScannerTasks` to have `Framework` property
+- Fixed generation of `shell-completion.yml` to exclude unlisted targets for invocation
+
 ## [0.24.1] / 2020-02-07
 - Fixed `NuGetPackageResolver` to include dependencies during tool path resolution
 - Fixed parsing of TeamCity environment variables
@@ -521,7 +526,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.24.1...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.24.2...HEAD
+[0.24.2]: https://github.com/nuke-build/nuke/compare/0.24.1...0.24.2
 [0.24.1]: https://github.com/nuke-build/nuke/compare/0.24.0...0.24.1
 [0.24.0]: https://github.com/nuke-build/nuke/compare/0.23.7...0.24.0
 [0.23.7]: https://github.com/nuke-build/nuke/compare/0.23.6...0.23.7

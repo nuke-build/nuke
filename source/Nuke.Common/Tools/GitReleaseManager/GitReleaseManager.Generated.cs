@@ -716,7 +716,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Paths to the files to include in the release.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerAddAssetsSettings SetAssetPaths(this GitReleaseManagerAddAssetsSettings toolSettings, params string[] assetPaths)
+        public static T SetAssetPaths<T>(this T toolSettings, params string[] assetPaths) where T : GitReleaseManagerAddAssetsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AssetPathsInternal = assetPaths.ToList();
@@ -727,7 +727,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Paths to the files to include in the release.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerAddAssetsSettings SetAssetPaths(this GitReleaseManagerAddAssetsSettings toolSettings, IEnumerable<string> assetPaths)
+        public static T SetAssetPaths<T>(this T toolSettings, IEnumerable<string> assetPaths) where T : GitReleaseManagerAddAssetsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AssetPathsInternal = assetPaths.ToList();
@@ -738,7 +738,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Paths to the files to include in the release.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerAddAssetsSettings AddAssetPaths(this GitReleaseManagerAddAssetsSettings toolSettings, params string[] assetPaths)
+        public static T AddAssetPaths<T>(this T toolSettings, params string[] assetPaths) where T : GitReleaseManagerAddAssetsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AssetPathsInternal.AddRange(assetPaths);
@@ -749,7 +749,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Paths to the files to include in the release.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerAddAssetsSettings AddAssetPaths(this GitReleaseManagerAddAssetsSettings toolSettings, IEnumerable<string> assetPaths)
+        public static T AddAssetPaths<T>(this T toolSettings, IEnumerable<string> assetPaths) where T : GitReleaseManagerAddAssetsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AssetPathsInternal.AddRange(assetPaths);
@@ -760,7 +760,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Paths to the files to include in the release.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerAddAssetsSettings ClearAssetPaths(this GitReleaseManagerAddAssetsSettings toolSettings)
+        public static T ClearAssetPaths<T>(this T toolSettings) where T : GitReleaseManagerAddAssetsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AssetPathsInternal.Clear();
@@ -771,7 +771,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Paths to the files to include in the release.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerAddAssetsSettings RemoveAssetPaths(this GitReleaseManagerAddAssetsSettings toolSettings, params string[] assetPaths)
+        public static T RemoveAssetPaths<T>(this T toolSettings, params string[] assetPaths) where T : GitReleaseManagerAddAssetsSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(assetPaths);
@@ -783,7 +783,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Paths to the files to include in the release.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerAddAssetsSettings RemoveAssetPaths(this GitReleaseManagerAddAssetsSettings toolSettings, IEnumerable<string> assetPaths)
+        public static T RemoveAssetPaths<T>(this T toolSettings, IEnumerable<string> assetPaths) where T : GitReleaseManagerAddAssetsSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(assetPaths);
@@ -797,7 +797,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The name of the release. Typically this is the generated SemVer Version Number.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerAddAssetsSettings SetTagName(this GitReleaseManagerAddAssetsSettings toolSettings, string tagName)
+        public static T SetTagName<T>(this T toolSettings, string tagName) where T : GitReleaseManagerAddAssetsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TagName = tagName;
@@ -808,7 +808,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The name of the release. Typically this is the generated SemVer Version Number.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerAddAssetsSettings ResetTagName(this GitReleaseManagerAddAssetsSettings toolSettings)
+        public static T ResetTagName<T>(this T toolSettings) where T : GitReleaseManagerAddAssetsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TagName = null;
@@ -821,7 +821,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The username to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerAddAssetsSettings SetUserName(this GitReleaseManagerAddAssetsSettings toolSettings, string userName)
+        public static T SetUserName<T>(this T toolSettings, string userName) where T : GitReleaseManagerAddAssetsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UserName = userName;
@@ -832,7 +832,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The username to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerAddAssetsSettings ResetUserName(this GitReleaseManagerAddAssetsSettings toolSettings)
+        public static T ResetUserName<T>(this T toolSettings) where T : GitReleaseManagerAddAssetsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UserName = null;
@@ -845,7 +845,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The password to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerAddAssetsSettings SetPassword(this GitReleaseManagerAddAssetsSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : GitReleaseManagerAddAssetsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -856,7 +856,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The password to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerAddAssetsSettings ResetPassword(this GitReleaseManagerAddAssetsSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : GitReleaseManagerAddAssetsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -869,7 +869,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The owner of the repository.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerAddAssetsSettings SetRepositoryOwner(this GitReleaseManagerAddAssetsSettings toolSettings, string repositoryOwner)
+        public static T SetRepositoryOwner<T>(this T toolSettings, string repositoryOwner) where T : GitReleaseManagerAddAssetsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryOwner = repositoryOwner;
@@ -880,7 +880,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The owner of the repository.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerAddAssetsSettings ResetRepositoryOwner(this GitReleaseManagerAddAssetsSettings toolSettings)
+        public static T ResetRepositoryOwner<T>(this T toolSettings) where T : GitReleaseManagerAddAssetsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryOwner = null;
@@ -893,7 +893,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The name of the repository.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerAddAssetsSettings SetRepositoryName(this GitReleaseManagerAddAssetsSettings toolSettings, string repositoryName)
+        public static T SetRepositoryName<T>(this T toolSettings, string repositoryName) where T : GitReleaseManagerAddAssetsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryName = repositoryName;
@@ -904,7 +904,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The name of the repository.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerAddAssetsSettings ResetRepositoryName(this GitReleaseManagerAddAssetsSettings toolSettings)
+        public static T ResetRepositoryName<T>(this T toolSettings) where T : GitReleaseManagerAddAssetsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryName = null;
@@ -917,7 +917,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The directory on which GitReleaseManager should be executed. Default is <em>current directory</em>.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerAddAssetsSettings SetTargetDirectory(this GitReleaseManagerAddAssetsSettings toolSettings, string targetDirectory)
+        public static T SetTargetDirectory<T>(this T toolSettings, string targetDirectory) where T : GitReleaseManagerAddAssetsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetDirectory = targetDirectory;
@@ -928,7 +928,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The directory on which GitReleaseManager should be executed. Default is <em>current directory</em>.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerAddAssetsSettings ResetTargetDirectory(this GitReleaseManagerAddAssetsSettings toolSettings)
+        public static T ResetTargetDirectory<T>(this T toolSettings) where T : GitReleaseManagerAddAssetsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetDirectory = null;
@@ -941,7 +941,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Path to where log file should be created. Defaults is <em>logging to console</em>.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerAddAssetsSettings SetLogFilePath(this GitReleaseManagerAddAssetsSettings toolSettings, string logFilePath)
+        public static T SetLogFilePath<T>(this T toolSettings, string logFilePath) where T : GitReleaseManagerAddAssetsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFilePath = logFilePath;
@@ -952,7 +952,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Path to where log file should be created. Defaults is <em>logging to console</em>.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerAddAssetsSettings ResetLogFilePath(this GitReleaseManagerAddAssetsSettings toolSettings)
+        public static T ResetLogFilePath<T>(this T toolSettings) where T : GitReleaseManagerAddAssetsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFilePath = null;
@@ -975,7 +975,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The milestone to use.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCloseSettings SetMilestone(this GitReleaseManagerCloseSettings toolSettings, string milestone)
+        public static T SetMilestone<T>(this T toolSettings, string milestone) where T : GitReleaseManagerCloseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Milestone = milestone;
@@ -986,7 +986,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The milestone to use.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCloseSettings ResetMilestone(this GitReleaseManagerCloseSettings toolSettings)
+        public static T ResetMilestone<T>(this T toolSettings) where T : GitReleaseManagerCloseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Milestone = null;
@@ -999,7 +999,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The username to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCloseSettings SetUserName(this GitReleaseManagerCloseSettings toolSettings, string userName)
+        public static T SetUserName<T>(this T toolSettings, string userName) where T : GitReleaseManagerCloseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UserName = userName;
@@ -1010,7 +1010,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The username to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCloseSettings ResetUserName(this GitReleaseManagerCloseSettings toolSettings)
+        public static T ResetUserName<T>(this T toolSettings) where T : GitReleaseManagerCloseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UserName = null;
@@ -1023,7 +1023,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The password to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCloseSettings SetPassword(this GitReleaseManagerCloseSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : GitReleaseManagerCloseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -1034,7 +1034,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The password to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCloseSettings ResetPassword(this GitReleaseManagerCloseSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : GitReleaseManagerCloseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -1047,7 +1047,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The owner of the repository.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCloseSettings SetRepositoryOwner(this GitReleaseManagerCloseSettings toolSettings, string repositoryOwner)
+        public static T SetRepositoryOwner<T>(this T toolSettings, string repositoryOwner) where T : GitReleaseManagerCloseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryOwner = repositoryOwner;
@@ -1058,7 +1058,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The owner of the repository.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCloseSettings ResetRepositoryOwner(this GitReleaseManagerCloseSettings toolSettings)
+        public static T ResetRepositoryOwner<T>(this T toolSettings) where T : GitReleaseManagerCloseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryOwner = null;
@@ -1071,7 +1071,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The name of the repository.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCloseSettings SetRepositoryName(this GitReleaseManagerCloseSettings toolSettings, string repositoryName)
+        public static T SetRepositoryName<T>(this T toolSettings, string repositoryName) where T : GitReleaseManagerCloseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryName = repositoryName;
@@ -1082,7 +1082,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The name of the repository.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCloseSettings ResetRepositoryName(this GitReleaseManagerCloseSettings toolSettings)
+        public static T ResetRepositoryName<T>(this T toolSettings) where T : GitReleaseManagerCloseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryName = null;
@@ -1095,7 +1095,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The directory on which GitReleaseManager should be executed. Default is <em>current directory</em>.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCloseSettings SetTargetDirectory(this GitReleaseManagerCloseSettings toolSettings, string targetDirectory)
+        public static T SetTargetDirectory<T>(this T toolSettings, string targetDirectory) where T : GitReleaseManagerCloseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetDirectory = targetDirectory;
@@ -1106,7 +1106,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The directory on which GitReleaseManager should be executed. Default is <em>current directory</em>.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCloseSettings ResetTargetDirectory(this GitReleaseManagerCloseSettings toolSettings)
+        public static T ResetTargetDirectory<T>(this T toolSettings) where T : GitReleaseManagerCloseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetDirectory = null;
@@ -1119,7 +1119,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Path to where log file should be created. Defaults is <em>logging to console</em>.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCloseSettings SetLogFilePath(this GitReleaseManagerCloseSettings toolSettings, string logFilePath)
+        public static T SetLogFilePath<T>(this T toolSettings, string logFilePath) where T : GitReleaseManagerCloseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFilePath = logFilePath;
@@ -1130,7 +1130,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Path to where log file should be created. Defaults is <em>logging to console</em>.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCloseSettings ResetLogFilePath(this GitReleaseManagerCloseSettings toolSettings)
+        public static T ResetLogFilePath<T>(this T toolSettings) where T : GitReleaseManagerCloseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFilePath = null;
@@ -1153,7 +1153,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Paths to the files to include in the release.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings SetAssetPaths(this GitReleaseManagerCreateSettings toolSettings, params string[] assetPaths)
+        public static T SetAssetPaths<T>(this T toolSettings, params string[] assetPaths) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AssetPathsInternal = assetPaths.ToList();
@@ -1164,7 +1164,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Paths to the files to include in the release.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings SetAssetPaths(this GitReleaseManagerCreateSettings toolSettings, IEnumerable<string> assetPaths)
+        public static T SetAssetPaths<T>(this T toolSettings, IEnumerable<string> assetPaths) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AssetPathsInternal = assetPaths.ToList();
@@ -1175,7 +1175,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Paths to the files to include in the release.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings AddAssetPaths(this GitReleaseManagerCreateSettings toolSettings, params string[] assetPaths)
+        public static T AddAssetPaths<T>(this T toolSettings, params string[] assetPaths) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AssetPathsInternal.AddRange(assetPaths);
@@ -1186,7 +1186,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Paths to the files to include in the release.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings AddAssetPaths(this GitReleaseManagerCreateSettings toolSettings, IEnumerable<string> assetPaths)
+        public static T AddAssetPaths<T>(this T toolSettings, IEnumerable<string> assetPaths) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AssetPathsInternal.AddRange(assetPaths);
@@ -1197,7 +1197,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Paths to the files to include in the release.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings ClearAssetPaths(this GitReleaseManagerCreateSettings toolSettings)
+        public static T ClearAssetPaths<T>(this T toolSettings) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AssetPathsInternal.Clear();
@@ -1208,7 +1208,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Paths to the files to include in the release.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings RemoveAssetPaths(this GitReleaseManagerCreateSettings toolSettings, params string[] assetPaths)
+        public static T RemoveAssetPaths<T>(this T toolSettings, params string[] assetPaths) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(assetPaths);
@@ -1220,7 +1220,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Paths to the files to include in the release.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings RemoveAssetPaths(this GitReleaseManagerCreateSettings toolSettings, IEnumerable<string> assetPaths)
+        public static T RemoveAssetPaths<T>(this T toolSettings, IEnumerable<string> assetPaths) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(assetPaths);
@@ -1234,7 +1234,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The commit to tag. Can be a branch or SHA. Defaults to repository's default branch.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings SetTargetCommitish(this GitReleaseManagerCreateSettings toolSettings, string targetCommitish)
+        public static T SetTargetCommitish<T>(this T toolSettings, string targetCommitish) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetCommitish = targetCommitish;
@@ -1245,7 +1245,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The commit to tag. Can be a branch or SHA. Defaults to repository's default branch.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings ResetTargetCommitish(this GitReleaseManagerCreateSettings toolSettings)
+        public static T ResetTargetCommitish<T>(this T toolSettings) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetCommitish = null;
@@ -1258,7 +1258,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The milestone to use.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings SetMilestone(this GitReleaseManagerCreateSettings toolSettings, string milestone)
+        public static T SetMilestone<T>(this T toolSettings, string milestone) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Milestone = milestone;
@@ -1269,7 +1269,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The milestone to use.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings ResetMilestone(this GitReleaseManagerCreateSettings toolSettings)
+        public static T ResetMilestone<T>(this T toolSettings) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Milestone = null;
@@ -1282,7 +1282,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The name of the release. Typically this is the generated SemVer Version Number.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings SetName(this GitReleaseManagerCreateSettings toolSettings, string name)
+        public static T SetName<T>(this T toolSettings, string name) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = name;
@@ -1293,7 +1293,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The name of the release. Typically this is the generated SemVer Version Number.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings ResetName(this GitReleaseManagerCreateSettings toolSettings)
+        public static T ResetName<T>(this T toolSettings) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Name = null;
@@ -1306,7 +1306,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The path to the file to be used as the content of the release notes.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings SetInputFilePath(this GitReleaseManagerCreateSettings toolSettings, string inputFilePath)
+        public static T SetInputFilePath<T>(this T toolSettings, string inputFilePath) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InputFilePath = inputFilePath;
@@ -1317,7 +1317,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The path to the file to be used as the content of the release notes.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings ResetInputFilePath(this GitReleaseManagerCreateSettings toolSettings)
+        public static T ResetInputFilePath<T>(this T toolSettings) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InputFilePath = null;
@@ -1330,7 +1330,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Creates the release as a pre-release.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings SetPrerelease(this GitReleaseManagerCreateSettings toolSettings, bool? prerelease)
+        public static T SetPrerelease<T>(this T toolSettings, bool? prerelease) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Prerelease = prerelease;
@@ -1341,7 +1341,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Creates the release as a pre-release.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings ResetPrerelease(this GitReleaseManagerCreateSettings toolSettings)
+        public static T ResetPrerelease<T>(this T toolSettings) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Prerelease = null;
@@ -1352,7 +1352,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Creates the release as a pre-release.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings EnablePrerelease(this GitReleaseManagerCreateSettings toolSettings)
+        public static T EnablePrerelease<T>(this T toolSettings) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Prerelease = true;
@@ -1363,7 +1363,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Creates the release as a pre-release.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings DisablePrerelease(this GitReleaseManagerCreateSettings toolSettings)
+        public static T DisablePrerelease<T>(this T toolSettings) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Prerelease = false;
@@ -1374,7 +1374,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Creates the release as a pre-release.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings TogglePrerelease(this GitReleaseManagerCreateSettings toolSettings)
+        public static T TogglePrerelease<T>(this T toolSettings) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Prerelease = !toolSettings.Prerelease;
@@ -1387,7 +1387,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The username to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings SetUserName(this GitReleaseManagerCreateSettings toolSettings, string userName)
+        public static T SetUserName<T>(this T toolSettings, string userName) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UserName = userName;
@@ -1398,7 +1398,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The username to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings ResetUserName(this GitReleaseManagerCreateSettings toolSettings)
+        public static T ResetUserName<T>(this T toolSettings) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UserName = null;
@@ -1411,7 +1411,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The password to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings SetPassword(this GitReleaseManagerCreateSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -1422,7 +1422,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The password to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings ResetPassword(this GitReleaseManagerCreateSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -1435,7 +1435,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The owner of the repository.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings SetRepositoryOwner(this GitReleaseManagerCreateSettings toolSettings, string repositoryOwner)
+        public static T SetRepositoryOwner<T>(this T toolSettings, string repositoryOwner) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryOwner = repositoryOwner;
@@ -1446,7 +1446,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The owner of the repository.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings ResetRepositoryOwner(this GitReleaseManagerCreateSettings toolSettings)
+        public static T ResetRepositoryOwner<T>(this T toolSettings) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryOwner = null;
@@ -1459,7 +1459,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The name of the repository.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings SetRepositoryName(this GitReleaseManagerCreateSettings toolSettings, string repositoryName)
+        public static T SetRepositoryName<T>(this T toolSettings, string repositoryName) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryName = repositoryName;
@@ -1470,7 +1470,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The name of the repository.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings ResetRepositoryName(this GitReleaseManagerCreateSettings toolSettings)
+        public static T ResetRepositoryName<T>(this T toolSettings) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryName = null;
@@ -1483,7 +1483,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The directory on which GitReleaseManager should be executed. Default is <em>current directory</em>.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings SetTargetDirectory(this GitReleaseManagerCreateSettings toolSettings, string targetDirectory)
+        public static T SetTargetDirectory<T>(this T toolSettings, string targetDirectory) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetDirectory = targetDirectory;
@@ -1494,7 +1494,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The directory on which GitReleaseManager should be executed. Default is <em>current directory</em>.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings ResetTargetDirectory(this GitReleaseManagerCreateSettings toolSettings)
+        public static T ResetTargetDirectory<T>(this T toolSettings) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetDirectory = null;
@@ -1507,7 +1507,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Path to where log file should be created. Defaults is <em>logging to console</em>.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings SetLogFilePath(this GitReleaseManagerCreateSettings toolSettings, string logFilePath)
+        public static T SetLogFilePath<T>(this T toolSettings, string logFilePath) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFilePath = logFilePath;
@@ -1518,7 +1518,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Path to where log file should be created. Defaults is <em>logging to console</em>.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerCreateSettings ResetLogFilePath(this GitReleaseManagerCreateSettings toolSettings)
+        public static T ResetLogFilePath<T>(this T toolSettings) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFilePath = null;
@@ -1541,7 +1541,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The name of the release. Typically this is the generated SemVer Version Number.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerExportSettings SetTagName(this GitReleaseManagerExportSettings toolSettings, string tagName)
+        public static T SetTagName<T>(this T toolSettings, string tagName) where T : GitReleaseManagerExportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TagName = tagName;
@@ -1552,7 +1552,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The name of the release. Typically this is the generated SemVer Version Number.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerExportSettings ResetTagName(this GitReleaseManagerExportSettings toolSettings)
+        public static T ResetTagName<T>(this T toolSettings) where T : GitReleaseManagerExportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TagName = null;
@@ -1565,7 +1565,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Path to the file export releases.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerExportSettings SetFileOutputPath(this GitReleaseManagerExportSettings toolSettings, string fileOutputPath)
+        public static T SetFileOutputPath<T>(this T toolSettings, string fileOutputPath) where T : GitReleaseManagerExportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileOutputPath = fileOutputPath;
@@ -1576,7 +1576,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Path to the file export releases.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerExportSettings ResetFileOutputPath(this GitReleaseManagerExportSettings toolSettings)
+        public static T ResetFileOutputPath<T>(this T toolSettings) where T : GitReleaseManagerExportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileOutputPath = null;
@@ -1589,7 +1589,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The username to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerExportSettings SetUserName(this GitReleaseManagerExportSettings toolSettings, string userName)
+        public static T SetUserName<T>(this T toolSettings, string userName) where T : GitReleaseManagerExportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UserName = userName;
@@ -1600,7 +1600,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The username to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerExportSettings ResetUserName(this GitReleaseManagerExportSettings toolSettings)
+        public static T ResetUserName<T>(this T toolSettings) where T : GitReleaseManagerExportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UserName = null;
@@ -1613,7 +1613,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The password to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerExportSettings SetPassword(this GitReleaseManagerExportSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : GitReleaseManagerExportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -1624,7 +1624,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The password to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerExportSettings ResetPassword(this GitReleaseManagerExportSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : GitReleaseManagerExportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -1637,7 +1637,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The owner of the repository.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerExportSettings SetRepositoryOwner(this GitReleaseManagerExportSettings toolSettings, string repositoryOwner)
+        public static T SetRepositoryOwner<T>(this T toolSettings, string repositoryOwner) where T : GitReleaseManagerExportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryOwner = repositoryOwner;
@@ -1648,7 +1648,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The owner of the repository.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerExportSettings ResetRepositoryOwner(this GitReleaseManagerExportSettings toolSettings)
+        public static T ResetRepositoryOwner<T>(this T toolSettings) where T : GitReleaseManagerExportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryOwner = null;
@@ -1661,7 +1661,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The name of the repository.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerExportSettings SetRepositoryName(this GitReleaseManagerExportSettings toolSettings, string repositoryName)
+        public static T SetRepositoryName<T>(this T toolSettings, string repositoryName) where T : GitReleaseManagerExportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryName = repositoryName;
@@ -1672,7 +1672,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The name of the repository.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerExportSettings ResetRepositoryName(this GitReleaseManagerExportSettings toolSettings)
+        public static T ResetRepositoryName<T>(this T toolSettings) where T : GitReleaseManagerExportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryName = null;
@@ -1685,7 +1685,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The directory on which GitReleaseManager should be executed. Default is <em>current directory</em>.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerExportSettings SetTargetDirectory(this GitReleaseManagerExportSettings toolSettings, string targetDirectory)
+        public static T SetTargetDirectory<T>(this T toolSettings, string targetDirectory) where T : GitReleaseManagerExportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetDirectory = targetDirectory;
@@ -1696,7 +1696,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The directory on which GitReleaseManager should be executed. Default is <em>current directory</em>.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerExportSettings ResetTargetDirectory(this GitReleaseManagerExportSettings toolSettings)
+        public static T ResetTargetDirectory<T>(this T toolSettings) where T : GitReleaseManagerExportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetDirectory = null;
@@ -1709,7 +1709,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Path to where log file should be created. Defaults is <em>logging to console</em>.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerExportSettings SetLogFilePath(this GitReleaseManagerExportSettings toolSettings, string logFilePath)
+        public static T SetLogFilePath<T>(this T toolSettings, string logFilePath) where T : GitReleaseManagerExportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFilePath = logFilePath;
@@ -1720,7 +1720,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Path to where log file should be created. Defaults is <em>logging to console</em>.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerExportSettings ResetLogFilePath(this GitReleaseManagerExportSettings toolSettings)
+        public static T ResetLogFilePath<T>(this T toolSettings) where T : GitReleaseManagerExportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFilePath = null;
@@ -1743,7 +1743,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The name of the release. Typically this is the generated SemVer Version Number.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerPublishSettings SetTagName(this GitReleaseManagerPublishSettings toolSettings, string tagName)
+        public static T SetTagName<T>(this T toolSettings, string tagName) where T : GitReleaseManagerPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TagName = tagName;
@@ -1754,7 +1754,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The name of the release. Typically this is the generated SemVer Version Number.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerPublishSettings ResetTagName(this GitReleaseManagerPublishSettings toolSettings)
+        public static T ResetTagName<T>(this T toolSettings) where T : GitReleaseManagerPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TagName = null;
@@ -1767,7 +1767,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The username to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerPublishSettings SetUserName(this GitReleaseManagerPublishSettings toolSettings, string userName)
+        public static T SetUserName<T>(this T toolSettings, string userName) where T : GitReleaseManagerPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UserName = userName;
@@ -1778,7 +1778,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The username to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerPublishSettings ResetUserName(this GitReleaseManagerPublishSettings toolSettings)
+        public static T ResetUserName<T>(this T toolSettings) where T : GitReleaseManagerPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UserName = null;
@@ -1791,7 +1791,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The password to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerPublishSettings SetPassword(this GitReleaseManagerPublishSettings toolSettings, string password)
+        public static T SetPassword<T>(this T toolSettings, string password) where T : GitReleaseManagerPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -1802,7 +1802,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The password to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerPublishSettings ResetPassword(this GitReleaseManagerPublishSettings toolSettings)
+        public static T ResetPassword<T>(this T toolSettings) where T : GitReleaseManagerPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
@@ -1815,7 +1815,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The owner of the repository.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerPublishSettings SetRepositoryOwner(this GitReleaseManagerPublishSettings toolSettings, string repositoryOwner)
+        public static T SetRepositoryOwner<T>(this T toolSettings, string repositoryOwner) where T : GitReleaseManagerPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryOwner = repositoryOwner;
@@ -1826,7 +1826,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The owner of the repository.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerPublishSettings ResetRepositoryOwner(this GitReleaseManagerPublishSettings toolSettings)
+        public static T ResetRepositoryOwner<T>(this T toolSettings) where T : GitReleaseManagerPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryOwner = null;
@@ -1839,7 +1839,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The name of the repository.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerPublishSettings SetRepositoryName(this GitReleaseManagerPublishSettings toolSettings, string repositoryName)
+        public static T SetRepositoryName<T>(this T toolSettings, string repositoryName) where T : GitReleaseManagerPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryName = repositoryName;
@@ -1850,7 +1850,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The name of the repository.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerPublishSettings ResetRepositoryName(this GitReleaseManagerPublishSettings toolSettings)
+        public static T ResetRepositoryName<T>(this T toolSettings) where T : GitReleaseManagerPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepositoryName = null;
@@ -1863,7 +1863,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The directory on which GitReleaseManager should be executed. Default is <em>current directory</em>.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerPublishSettings SetTargetDirectory(this GitReleaseManagerPublishSettings toolSettings, string targetDirectory)
+        public static T SetTargetDirectory<T>(this T toolSettings, string targetDirectory) where T : GitReleaseManagerPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetDirectory = targetDirectory;
@@ -1874,7 +1874,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The directory on which GitReleaseManager should be executed. Default is <em>current directory</em>.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerPublishSettings ResetTargetDirectory(this GitReleaseManagerPublishSettings toolSettings)
+        public static T ResetTargetDirectory<T>(this T toolSettings) where T : GitReleaseManagerPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetDirectory = null;
@@ -1887,7 +1887,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Path to where log file should be created. Defaults is <em>logging to console</em>.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerPublishSettings SetLogFilePath(this GitReleaseManagerPublishSettings toolSettings, string logFilePath)
+        public static T SetLogFilePath<T>(this T toolSettings, string logFilePath) where T : GitReleaseManagerPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFilePath = logFilePath;
@@ -1898,7 +1898,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Path to where log file should be created. Defaults is <em>logging to console</em>.</p>
         /// </summary>
         [Pure]
-        public static GitReleaseManagerPublishSettings ResetLogFilePath(this GitReleaseManagerPublishSettings toolSettings)
+        public static T ResetLogFilePath<T>(this T toolSettings) where T : GitReleaseManagerPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFilePath = null;

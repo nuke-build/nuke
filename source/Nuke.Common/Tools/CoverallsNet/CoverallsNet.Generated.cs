@@ -273,7 +273,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The coverage source file location.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings SetInput(this CoverallsNetSettings toolSettings, string input)
+        public static T SetInput<T>(this T toolSettings, string input) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Input = input;
@@ -284,7 +284,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The coverage source file location.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ResetInput(this CoverallsNetSettings toolSettings)
+        public static T ResetInput<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Input = null;
@@ -297,7 +297,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The coverage results json will be written to this file it provided.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings SetOutput(this CoverallsNetSettings toolSettings, string output)
+        public static T SetOutput<T>(this T toolSettings, string output) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -308,7 +308,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The coverage results json will be written to this file it provided.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ResetOutput(this CoverallsNetSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -321,7 +321,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>This flag will stop coverage results being posted to <a href="https://coveralls.io">coveralls.io</a>.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings SetDryRun(this CoverallsNetSettings toolSettings, bool? dryRun)
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = dryRun;
@@ -332,7 +332,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>This flag will stop coverage results being posted to <a href="https://coveralls.io">coveralls.io</a>.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ResetDryRun(this CoverallsNetSettings toolSettings)
+        public static T ResetDryRun<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = null;
@@ -343,7 +343,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>This flag will stop coverage results being posted to <a href="https://coveralls.io">coveralls.io</a>.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings EnableDryRun(this CoverallsNetSettings toolSettings)
+        public static T EnableDryRun<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = true;
@@ -354,7 +354,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>This flag will stop coverage results being posted to <a href="https://coveralls.io">coveralls.io</a>.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings DisableDryRun(this CoverallsNetSettings toolSettings)
+        public static T DisableDryRun<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = false;
@@ -365,7 +365,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>This flag will stop coverage results being posted to <a href="https://coveralls.io">coveralls.io</a>.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ToggleDryRun(this CoverallsNetSettings toolSettings)
+        public static T ToggleDryRun<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DryRun = !toolSettings.DryRun;
@@ -378,7 +378,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>This flag, when provided, will attempt to strip the current working directory from the beginning of the source file path.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings SetUserRelativePaths(this CoverallsNetSettings toolSettings, bool? userRelativePaths)
+        public static T SetUserRelativePaths<T>(this T toolSettings, bool? userRelativePaths) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UserRelativePaths = userRelativePaths;
@@ -389,7 +389,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>This flag, when provided, will attempt to strip the current working directory from the beginning of the source file path.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ResetUserRelativePaths(this CoverallsNetSettings toolSettings)
+        public static T ResetUserRelativePaths<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UserRelativePaths = null;
@@ -400,7 +400,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>This flag, when provided, will attempt to strip the current working directory from the beginning of the source file path.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings EnableUserRelativePaths(this CoverallsNetSettings toolSettings)
+        public static T EnableUserRelativePaths<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UserRelativePaths = true;
@@ -411,7 +411,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>This flag, when provided, will attempt to strip the current working directory from the beginning of the source file path.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings DisableUserRelativePaths(this CoverallsNetSettings toolSettings)
+        public static T DisableUserRelativePaths<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UserRelativePaths = false;
@@ -422,7 +422,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>This flag, when provided, will attempt to strip the current working directory from the beginning of the source file path.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ToggleUserRelativePaths(this CoverallsNetSettings toolSettings)
+        public static T ToggleUserRelativePaths<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UserRelativePaths = !toolSettings.UserRelativePaths;
@@ -435,7 +435,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>When useRelativePaths and a basePath is provided, this path is used instead of the current working directory.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings SetBasePath(this CoverallsNetSettings toolSettings, string basePath)
+        public static T SetBasePath<T>(this T toolSettings, string basePath) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BasePath = basePath;
@@ -446,7 +446,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>When useRelativePaths and a basePath is provided, this path is used instead of the current working directory.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ResetBasePath(this CoverallsNetSettings toolSettings)
+        public static T ResetBasePath<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BasePath = null;
@@ -459,7 +459,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Reads input as OpenCover data.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings SetOpenCover(this CoverallsNetSettings toolSettings, bool? openCover)
+        public static T SetOpenCover<T>(this T toolSettings, bool? openCover) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OpenCover = openCover;
@@ -470,7 +470,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Reads input as OpenCover data.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ResetOpenCover(this CoverallsNetSettings toolSettings)
+        public static T ResetOpenCover<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OpenCover = null;
@@ -481,7 +481,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Reads input as OpenCover data.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings EnableOpenCover(this CoverallsNetSettings toolSettings)
+        public static T EnableOpenCover<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OpenCover = true;
@@ -492,7 +492,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Reads input as OpenCover data.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings DisableOpenCover(this CoverallsNetSettings toolSettings)
+        public static T DisableOpenCover<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OpenCover = false;
@@ -503,7 +503,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Reads input as OpenCover data.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ToggleOpenCover(this CoverallsNetSettings toolSettings)
+        public static T ToggleOpenCover<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OpenCover = !toolSettings.OpenCover;
@@ -516,7 +516,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Reads input as the CodeCoverage.exe xml format.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings SetDynamicCodeCoverage(this CoverallsNetSettings toolSettings, bool? dynamicCodeCoverage)
+        public static T SetDynamicCodeCoverage<T>(this T toolSettings, bool? dynamicCodeCoverage) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DynamicCodeCoverage = dynamicCodeCoverage;
@@ -527,7 +527,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Reads input as the CodeCoverage.exe xml format.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ResetDynamicCodeCoverage(this CoverallsNetSettings toolSettings)
+        public static T ResetDynamicCodeCoverage<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DynamicCodeCoverage = null;
@@ -538,7 +538,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Reads input as the CodeCoverage.exe xml format.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings EnableDynamicCodeCoverage(this CoverallsNetSettings toolSettings)
+        public static T EnableDynamicCodeCoverage<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DynamicCodeCoverage = true;
@@ -549,7 +549,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Reads input as the CodeCoverage.exe xml format.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings DisableDynamicCodeCoverage(this CoverallsNetSettings toolSettings)
+        public static T DisableDynamicCodeCoverage<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DynamicCodeCoverage = false;
@@ -560,7 +560,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Reads input as the CodeCoverage.exe xml format.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ToggleDynamicCodeCoverage(this CoverallsNetSettings toolSettings)
+        public static T ToggleDynamicCodeCoverage<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DynamicCodeCoverage = !toolSettings.DynamicCodeCoverage;
@@ -573,7 +573,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Reads input as the Visual Studio Coverage Export xml format.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings SetExportCodeCoverage(this CoverallsNetSettings toolSettings, bool? exportCodeCoverage)
+        public static T SetExportCodeCoverage<T>(this T toolSettings, bool? exportCodeCoverage) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportCodeCoverage = exportCodeCoverage;
@@ -584,7 +584,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Reads input as the Visual Studio Coverage Export xml format.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ResetExportCodeCoverage(this CoverallsNetSettings toolSettings)
+        public static T ResetExportCodeCoverage<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportCodeCoverage = null;
@@ -595,7 +595,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Reads input as the Visual Studio Coverage Export xml format.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings EnableExportCodeCoverage(this CoverallsNetSettings toolSettings)
+        public static T EnableExportCodeCoverage<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportCodeCoverage = true;
@@ -606,7 +606,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Reads input as the Visual Studio Coverage Export xml format.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings DisableExportCodeCoverage(this CoverallsNetSettings toolSettings)
+        public static T DisableExportCodeCoverage<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportCodeCoverage = false;
@@ -617,7 +617,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Reads input as the Visual Studio Coverage Export xml format.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ToggleExportCodeCoverage(this CoverallsNetSettings toolSettings)
+        public static T ToggleExportCodeCoverage<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExportCodeCoverage = !toolSettings.ExportCodeCoverage;
@@ -630,7 +630,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Reads input as monocov results folder.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings SetMonocov(this CoverallsNetSettings toolSettings, bool? monocov)
+        public static T SetMonocov<T>(this T toolSettings, bool? monocov) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Monocov = monocov;
@@ -641,7 +641,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Reads input as monocov results folder.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ResetMonocov(this CoverallsNetSettings toolSettings)
+        public static T ResetMonocov<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Monocov = null;
@@ -652,7 +652,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Reads input as monocov results folder.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings EnableMonocov(this CoverallsNetSettings toolSettings)
+        public static T EnableMonocov<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Monocov = true;
@@ -663,7 +663,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Reads input as monocov results folder.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings DisableMonocov(this CoverallsNetSettings toolSettings)
+        public static T DisableMonocov<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Monocov = false;
@@ -674,7 +674,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Reads input as monocov results folder.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ToggleMonocov(this CoverallsNetSettings toolSettings)
+        public static T ToggleMonocov<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Monocov = !toolSettings.Monocov;
@@ -687,7 +687,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The coveralls.io repository token.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings SetRepoToken(this CoverallsNetSettings toolSettings, string repoToken)
+        public static T SetRepoToken<T>(this T toolSettings, string repoToken) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepoToken = repoToken;
@@ -698,7 +698,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The coveralls.io repository token.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ResetRepoToken(this CoverallsNetSettings toolSettings)
+        public static T ResetRepoToken<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepoToken = null;
@@ -711,7 +711,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The Environment Variable name where the coveralls.io repository token is available. Default is <c>COVERALLS_REPO_TOKEN</c>.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings SetRepoTokenVariable(this CoverallsNetSettings toolSettings, string repoTokenVariable)
+        public static T SetRepoTokenVariable<T>(this T toolSettings, string repoTokenVariable) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepoTokenVariable = repoTokenVariable;
@@ -722,7 +722,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The Environment Variable name where the coveralls.io repository token is available. Default is <c>COVERALLS_REPO_TOKEN</c>.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ResetRepoTokenVariable(this CoverallsNetSettings toolSettings)
+        public static T ResetRepoTokenVariable<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepoTokenVariable = null;
@@ -735,7 +735,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The git commit hash for the coverage report.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings SetCommitId(this CoverallsNetSettings toolSettings, string commitId)
+        public static T SetCommitId<T>(this T toolSettings, string commitId) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CommitId = commitId;
@@ -746,7 +746,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The git commit hash for the coverage report.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ResetCommitId(this CoverallsNetSettings toolSettings)
+        public static T ResetCommitId<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CommitId = null;
@@ -759,7 +759,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The git branch for the coverage report.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings SetCommitBranch(this CoverallsNetSettings toolSettings, string commitBranch)
+        public static T SetCommitBranch<T>(this T toolSettings, string commitBranch) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CommitBranch = commitBranch;
@@ -770,7 +770,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The git branch for the coverage report.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ResetCommitBranch(this CoverallsNetSettings toolSettings)
+        public static T ResetCommitBranch<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CommitBranch = null;
@@ -783,7 +783,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The git commit author for the coverage report.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings SetCommitAuthor(this CoverallsNetSettings toolSettings, string commitAuthor)
+        public static T SetCommitAuthor<T>(this T toolSettings, string commitAuthor) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CommitAuthor = commitAuthor;
@@ -794,7 +794,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The git commit author for the coverage report.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ResetCommitAuthor(this CoverallsNetSettings toolSettings)
+        public static T ResetCommitAuthor<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CommitAuthor = null;
@@ -807,7 +807,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The git commit author email for the coverage report.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings SetCommitEmail(this CoverallsNetSettings toolSettings, string commitEmail)
+        public static T SetCommitEmail<T>(this T toolSettings, string commitEmail) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CommitEmail = commitEmail;
@@ -818,7 +818,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The git commit author email for the coverage report.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ResetCommitEmail(this CoverallsNetSettings toolSettings)
+        public static T ResetCommitEmail<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CommitEmail = null;
@@ -831,7 +831,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The git commit message for the coverage report.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings SetCommitMessage(this CoverallsNetSettings toolSettings, string commitMessage)
+        public static T SetCommitMessage<T>(this T toolSettings, string commitMessage) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CommitMessage = commitMessage;
@@ -842,7 +842,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The git commit message for the coverage report.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ResetCommitMessage(this CoverallsNetSettings toolSettings)
+        public static T ResetCommitMessage<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CommitMessage = null;
@@ -855,7 +855,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The job Id to provide to coveralls.io. Default is <c>0</c>.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings SetJobId(this CoverallsNetSettings toolSettings, int? jobId)
+        public static T SetJobId<T>(this T toolSettings, int? jobId) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.JobId = jobId;
@@ -866,7 +866,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The job Id to provide to coveralls.io. Default is <c>0</c>.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ResetJobId(this CoverallsNetSettings toolSettings)
+        public static T ResetJobId<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.JobId = null;
@@ -879,7 +879,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The service-name for the coverage report. Default is <c>coveralls.net</c>.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings SetServiceName(this CoverallsNetSettings toolSettings, string serviceName)
+        public static T SetServiceName<T>(this T toolSettings, string serviceName) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceName = serviceName;
@@ -890,7 +890,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The service-name for the coverage report. Default is <c>coveralls.net</c>.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ResetServiceName(this CoverallsNetSettings toolSettings)
+        public static T ResetServiceName<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceName = null;
@@ -903,7 +903,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The github pull request id. Used for updating status on github PRs.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings SetPullRequest(this CoverallsNetSettings toolSettings, int? pullRequest)
+        public static T SetPullRequest<T>(this T toolSettings, int? pullRequest) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PullRequest = pullRequest;
@@ -914,7 +914,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The github pull request id. Used for updating status on github PRs.</p>
         /// </summary>
         [Pure]
-        public static CoverallsNetSettings ResetPullRequest(this CoverallsNetSettings toolSettings)
+        public static T ResetPullRequest<T>(this T toolSettings) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PullRequest = null;

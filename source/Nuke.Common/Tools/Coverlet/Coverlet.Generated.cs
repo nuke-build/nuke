@@ -223,7 +223,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Path to the test assembly.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings SetAssembly(this CoverletSettings toolSettings, string assembly)
+        public static T SetAssembly<T>(this T toolSettings, string assembly) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Assembly = assembly;
@@ -234,7 +234,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Path to the test assembly.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings ResetAssembly(this CoverletSettings toolSettings)
+        public static T ResetAssembly<T>(this T toolSettings) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Assembly = null;
@@ -247,7 +247,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Path to the test runner application.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings SetTarget(this CoverletSettings toolSettings, string target)
+        public static T SetTarget<T>(this T toolSettings, string target) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Target = target;
@@ -258,7 +258,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Path to the test runner application.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings ResetTarget(this CoverletSettings toolSettings)
+        public static T ResetTarget<T>(this T toolSettings) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Target = null;
@@ -271,7 +271,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Arguments to be passed to the test runner.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings SetTargetArgs(this CoverletSettings toolSettings, params string[] targetArgs)
+        public static T SetTargetArgs<T>(this T toolSettings, params string[] targetArgs) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetArgsInternal = targetArgs.ToList();
@@ -282,7 +282,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Arguments to be passed to the test runner.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings SetTargetArgs(this CoverletSettings toolSettings, IEnumerable<string> targetArgs)
+        public static T SetTargetArgs<T>(this T toolSettings, IEnumerable<string> targetArgs) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetArgsInternal = targetArgs.ToList();
@@ -293,7 +293,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Arguments to be passed to the test runner.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings AddTargetArgs(this CoverletSettings toolSettings, params string[] targetArgs)
+        public static T AddTargetArgs<T>(this T toolSettings, params string[] targetArgs) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetArgsInternal.AddRange(targetArgs);
@@ -304,7 +304,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Arguments to be passed to the test runner.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings AddTargetArgs(this CoverletSettings toolSettings, IEnumerable<string> targetArgs)
+        public static T AddTargetArgs<T>(this T toolSettings, IEnumerable<string> targetArgs) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetArgsInternal.AddRange(targetArgs);
@@ -315,7 +315,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Arguments to be passed to the test runner.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings ClearTargetArgs(this CoverletSettings toolSettings)
+        public static T ClearTargetArgs<T>(this T toolSettings) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetArgsInternal.Clear();
@@ -326,7 +326,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Arguments to be passed to the test runner.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings RemoveTargetArgs(this CoverletSettings toolSettings, params string[] targetArgs)
+        public static T RemoveTargetArgs<T>(this T toolSettings, params string[] targetArgs) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(targetArgs);
@@ -338,7 +338,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Arguments to be passed to the test runner.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings RemoveTargetArgs(this CoverletSettings toolSettings, IEnumerable<string> targetArgs)
+        public static T RemoveTargetArgs<T>(this T toolSettings, IEnumerable<string> targetArgs) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(targetArgs);
@@ -352,7 +352,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Output of the generated coverage report</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings SetOutput(this CoverletSettings toolSettings, string output)
+        public static T SetOutput<T>(this T toolSettings, string output) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = output;
@@ -363,7 +363,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Output of the generated coverage report</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings ResetOutput(this CoverletSettings toolSettings)
+        public static T ResetOutput<T>(this T toolSettings) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Output = null;
@@ -376,7 +376,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Format of the generated coverage report.Can be specified multiple times to output multiple formats in a single run.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings SetFormat(this CoverletSettings toolSettings, params CoverletOutputFormat[] format)
+        public static T SetFormat<T>(this T toolSettings, params CoverletOutputFormat[] format) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FormatInternal = format.ToList();
@@ -387,7 +387,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Format of the generated coverage report.Can be specified multiple times to output multiple formats in a single run.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings SetFormat(this CoverletSettings toolSettings, IEnumerable<CoverletOutputFormat> format)
+        public static T SetFormat<T>(this T toolSettings, IEnumerable<CoverletOutputFormat> format) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FormatInternal = format.ToList();
@@ -398,7 +398,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Format of the generated coverage report.Can be specified multiple times to output multiple formats in a single run.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings AddFormat(this CoverletSettings toolSettings, params CoverletOutputFormat[] format)
+        public static T AddFormat<T>(this T toolSettings, params CoverletOutputFormat[] format) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FormatInternal.AddRange(format);
@@ -409,7 +409,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Format of the generated coverage report.Can be specified multiple times to output multiple formats in a single run.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings AddFormat(this CoverletSettings toolSettings, IEnumerable<CoverletOutputFormat> format)
+        public static T AddFormat<T>(this T toolSettings, IEnumerable<CoverletOutputFormat> format) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FormatInternal.AddRange(format);
@@ -420,7 +420,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Format of the generated coverage report.Can be specified multiple times to output multiple formats in a single run.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings ClearFormat(this CoverletSettings toolSettings)
+        public static T ClearFormat<T>(this T toolSettings) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FormatInternal.Clear();
@@ -431,7 +431,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Format of the generated coverage report.Can be specified multiple times to output multiple formats in a single run.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings RemoveFormat(this CoverletSettings toolSettings, params CoverletOutputFormat[] format)
+        public static T RemoveFormat<T>(this T toolSettings, params CoverletOutputFormat[] format) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<CoverletOutputFormat>(format);
@@ -443,7 +443,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Format of the generated coverage report.Can be specified multiple times to output multiple formats in a single run.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings RemoveFormat(this CoverletSettings toolSettings, IEnumerable<CoverletOutputFormat> format)
+        public static T RemoveFormat<T>(this T toolSettings, IEnumerable<CoverletOutputFormat> format) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<CoverletOutputFormat>(format);
@@ -457,7 +457,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Exits with error if the coverage % is below value.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings SetThreshold(this CoverletSettings toolSettings, int? threshold)
+        public static T SetThreshold<T>(this T toolSettings, int? threshold) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Threshold = threshold;
@@ -468,7 +468,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Exits with error if the coverage % is below value.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings ResetThreshold(this CoverletSettings toolSettings)
+        public static T ResetThreshold<T>(this T toolSettings) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Threshold = null;
@@ -481,7 +481,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Coverage type to apply the threshold to.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings SetThresholdType(this CoverletSettings toolSettings, CoverletThresholdType thresholdType)
+        public static T SetThresholdType<T>(this T toolSettings, CoverletThresholdType thresholdType) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ThresholdType = thresholdType;
@@ -492,7 +492,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Coverage type to apply the threshold to.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings ResetThresholdType(this CoverletSettings toolSettings)
+        public static T ResetThresholdType<T>(this T toolSettings) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ThresholdType = null;
@@ -505,7 +505,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Filter expressions to exclude specific modules and types.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings SetExclude(this CoverletSettings toolSettings, params string[] exclude)
+        public static T SetExclude<T>(this T toolSettings, params string[] exclude) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeInternal = exclude.ToList();
@@ -516,7 +516,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Filter expressions to exclude specific modules and types.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings SetExclude(this CoverletSettings toolSettings, IEnumerable<string> exclude)
+        public static T SetExclude<T>(this T toolSettings, IEnumerable<string> exclude) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeInternal = exclude.ToList();
@@ -527,7 +527,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Filter expressions to exclude specific modules and types.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings AddExclude(this CoverletSettings toolSettings, params string[] exclude)
+        public static T AddExclude<T>(this T toolSettings, params string[] exclude) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeInternal.AddRange(exclude);
@@ -538,7 +538,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Filter expressions to exclude specific modules and types.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings AddExclude(this CoverletSettings toolSettings, IEnumerable<string> exclude)
+        public static T AddExclude<T>(this T toolSettings, IEnumerable<string> exclude) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeInternal.AddRange(exclude);
@@ -549,7 +549,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Filter expressions to exclude specific modules and types.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings ClearExclude(this CoverletSettings toolSettings)
+        public static T ClearExclude<T>(this T toolSettings) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeInternal.Clear();
@@ -560,7 +560,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Filter expressions to exclude specific modules and types.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings RemoveExclude(this CoverletSettings toolSettings, params string[] exclude)
+        public static T RemoveExclude<T>(this T toolSettings, params string[] exclude) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(exclude);
@@ -572,7 +572,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Filter expressions to exclude specific modules and types.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings RemoveExclude(this CoverletSettings toolSettings, IEnumerable<string> exclude)
+        public static T RemoveExclude<T>(this T toolSettings, IEnumerable<string> exclude) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(exclude);
@@ -586,7 +586,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Filter expressions to include specific modules and types.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings SetInclude(this CoverletSettings toolSettings, params string[] include)
+        public static T SetInclude<T>(this T toolSettings, params string[] include) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeInternal = include.ToList();
@@ -597,7 +597,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Filter expressions to include specific modules and types.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings SetInclude(this CoverletSettings toolSettings, IEnumerable<string> include)
+        public static T SetInclude<T>(this T toolSettings, IEnumerable<string> include) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeInternal = include.ToList();
@@ -608,7 +608,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Filter expressions to include specific modules and types.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings AddInclude(this CoverletSettings toolSettings, params string[] include)
+        public static T AddInclude<T>(this T toolSettings, params string[] include) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeInternal.AddRange(include);
@@ -619,7 +619,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Filter expressions to include specific modules and types.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings AddInclude(this CoverletSettings toolSettings, IEnumerable<string> include)
+        public static T AddInclude<T>(this T toolSettings, IEnumerable<string> include) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeInternal.AddRange(include);
@@ -630,7 +630,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Filter expressions to include specific modules and types.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings ClearInclude(this CoverletSettings toolSettings)
+        public static T ClearInclude<T>(this T toolSettings) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeInternal.Clear();
@@ -641,7 +641,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Filter expressions to include specific modules and types.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings RemoveInclude(this CoverletSettings toolSettings, params string[] include)
+        public static T RemoveInclude<T>(this T toolSettings, params string[] include) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(include);
@@ -653,7 +653,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Filter expressions to include specific modules and types.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings RemoveInclude(this CoverletSettings toolSettings, IEnumerable<string> include)
+        public static T RemoveInclude<T>(this T toolSettings, IEnumerable<string> include) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(include);
@@ -667,7 +667,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Glob patterns specifying source files to exclude.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings SetExcludeByFile(this CoverletSettings toolSettings, params string[] excludeByFile)
+        public static T SetExcludeByFile<T>(this T toolSettings, params string[] excludeByFile) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeByFileInternal = excludeByFile.ToList();
@@ -678,7 +678,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Glob patterns specifying source files to exclude.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings SetExcludeByFile(this CoverletSettings toolSettings, IEnumerable<string> excludeByFile)
+        public static T SetExcludeByFile<T>(this T toolSettings, IEnumerable<string> excludeByFile) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeByFileInternal = excludeByFile.ToList();
@@ -689,7 +689,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Glob patterns specifying source files to exclude.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings AddExcludeByFile(this CoverletSettings toolSettings, params string[] excludeByFile)
+        public static T AddExcludeByFile<T>(this T toolSettings, params string[] excludeByFile) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeByFileInternal.AddRange(excludeByFile);
@@ -700,7 +700,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Glob patterns specifying source files to exclude.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings AddExcludeByFile(this CoverletSettings toolSettings, IEnumerable<string> excludeByFile)
+        public static T AddExcludeByFile<T>(this T toolSettings, IEnumerable<string> excludeByFile) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeByFileInternal.AddRange(excludeByFile);
@@ -711,7 +711,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Glob patterns specifying source files to exclude.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings ClearExcludeByFile(this CoverletSettings toolSettings)
+        public static T ClearExcludeByFile<T>(this T toolSettings) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ExcludeByFileInternal.Clear();
@@ -722,7 +722,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Glob patterns specifying source files to exclude.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings RemoveExcludeByFile(this CoverletSettings toolSettings, params string[] excludeByFile)
+        public static T RemoveExcludeByFile<T>(this T toolSettings, params string[] excludeByFile) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(excludeByFile);
@@ -734,7 +734,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Glob patterns specifying source files to exclude.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings RemoveExcludeByFile(this CoverletSettings toolSettings, IEnumerable<string> excludeByFile)
+        public static T RemoveExcludeByFile<T>(this T toolSettings, IEnumerable<string> excludeByFile) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(excludeByFile);
@@ -748,7 +748,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Show version information.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings SetVersion(this CoverletSettings toolSettings, bool? version)
+        public static T SetVersion<T>(this T toolSettings, bool? version) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = version;
@@ -759,7 +759,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Show version information.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings ResetVersion(this CoverletSettings toolSettings)
+        public static T ResetVersion<T>(this T toolSettings) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = null;
@@ -770,7 +770,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Show version information.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings EnableVersion(this CoverletSettings toolSettings)
+        public static T EnableVersion<T>(this T toolSettings) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = true;
@@ -781,7 +781,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Show version information.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings DisableVersion(this CoverletSettings toolSettings)
+        public static T DisableVersion<T>(this T toolSettings) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = false;
@@ -792,7 +792,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Show version information.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings ToggleVersion(this CoverletSettings toolSettings)
+        public static T ToggleVersion<T>(this T toolSettings) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = !toolSettings.Version;
@@ -805,7 +805,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Path to existing coverage result to merge.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings SetMergeWith(this CoverletSettings toolSettings, string mergeWith)
+        public static T SetMergeWith<T>(this T toolSettings, string mergeWith) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MergeWith = mergeWith;
@@ -816,7 +816,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Path to existing coverage result to merge.</p>
         /// </summary>
         [Pure]
-        public static CoverletSettings ResetMergeWith(this CoverletSettings toolSettings)
+        public static T ResetMergeWith<T>(this T toolSettings) where T : CoverletSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MergeWith = null;
@@ -840,7 +840,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetCollectCoverage(this DotNetTestSettings toolSettings, bool? collectCoverage)
+        public static T SetCollectCoverage<T>(this T toolSettings, bool? collectCoverage) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["CollectCoverage"] = collectCoverage;
@@ -851,7 +851,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetCollectCoverage(this DotNetTestSettings toolSettings)
+        public static T ResetCollectCoverage<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("CollectCoverage");
@@ -862,7 +862,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings EnableCollectCoverage(this DotNetTestSettings toolSettings)
+        public static T EnableCollectCoverage<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["CollectCoverage"] = true;
@@ -873,7 +873,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings DisableCollectCoverage(this DotNetTestSettings toolSettings)
+        public static T DisableCollectCoverage<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["CollectCoverage"] = false;
@@ -884,7 +884,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ToggleCollectCoverage(this DotNetTestSettings toolSettings)
+        public static T ToggleCollectCoverage<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "CollectCoverage");
@@ -897,7 +897,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetCoverletOutputFormat(this DotNetTestSettings toolSettings, CoverletOutputFormat coverletOutputFormat)
+        public static T SetCoverletOutputFormat<T>(this T toolSettings, CoverletOutputFormat coverletOutputFormat) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["CoverletOutputFormat"] = coverletOutputFormat;
@@ -908,7 +908,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetCoverletOutputFormat(this DotNetTestSettings toolSettings)
+        public static T ResetCoverletOutputFormat<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("CoverletOutputFormat");
@@ -921,7 +921,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetExcludeByFile(this DotNetTestSettings toolSettings, string excludeByFile)
+        public static T SetExcludeByFile<T>(this T toolSettings, string excludeByFile) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["ExcludeByFile"] = excludeByFile;
@@ -932,7 +932,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetExcludeByFile(this DotNetTestSettings toolSettings)
+        public static T ResetExcludeByFile<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("ExcludeByFile");
@@ -945,7 +945,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetCoverletOutput(this DotNetTestSettings toolSettings, string coverletOutput)
+        public static T SetCoverletOutput<T>(this T toolSettings, string coverletOutput) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["CoverletOutput"] = coverletOutput;
@@ -956,7 +956,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetCoverletOutput(this DotNetTestSettings toolSettings)
+        public static T ResetCoverletOutput<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("CoverletOutput");
@@ -969,7 +969,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings SetUseSourceLink(this DotNetTestSettings toolSettings, bool? useSourceLink)
+        public static T SetUseSourceLink<T>(this T toolSettings, bool? useSourceLink) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["UseSourceLink"] = useSourceLink;
@@ -980,7 +980,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ResetUseSourceLink(this DotNetTestSettings toolSettings)
+        public static T ResetUseSourceLink<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("UseSourceLink");
@@ -991,7 +991,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings EnableUseSourceLink(this DotNetTestSettings toolSettings)
+        public static T EnableUseSourceLink<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["UseSourceLink"] = true;
@@ -1002,7 +1002,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings DisableUseSourceLink(this DotNetTestSettings toolSettings)
+        public static T DisableUseSourceLink<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal["UseSourceLink"] = false;
@@ -1013,7 +1013,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         [Pure]
-        public static DotNetTestSettings ToggleUseSourceLink(this DotNetTestSettings toolSettings)
+        public static T ToggleUseSourceLink<T>(this T toolSettings) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
             ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "UseSourceLink");
