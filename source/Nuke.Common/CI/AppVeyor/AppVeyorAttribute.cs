@@ -19,7 +19,7 @@ namespace Nuke.Common.CI.AppVeyor
     /// </summary>
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class AppVeyorAttribute : ConfigurationAttributeBase
+    public class AppVeyorAttribute : ConfigurationGeneratorAttributeBase
     {
         private readonly AppVeyorImage[] _images;
 
@@ -30,10 +30,10 @@ namespace Nuke.Common.CI.AppVeyor
 
         private string ConfigurationFile => NukeBuild.RootDirectory / "appveyor.yml";
 
-        protected override HostType HostType => HostType.AppVeyor;
-        protected override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
-        protected override IEnumerable<string> RelevantTargetNames => InvokedTargets;
-        protected override IEnumerable<string> IrrelevantTargetNames => new string[0];
+        public override HostType HostType => HostType.AppVeyor;
+        public override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
+        public override IEnumerable<string> RelevantTargetNames => InvokedTargets;
+        public override IEnumerable<string> IrrelevantTargetNames => new string[0];
 
         public AppVeyorService[] Services { get; set; } = new AppVeyorService[0];
         public string[] InvokedTargets { get; set; } = new string[0];
@@ -48,12 +48,12 @@ namespace Nuke.Common.CI.AppVeyor
         public string[] Init { get; set; } = new string[0];
         public string[] Cache { get; set; } = new string[0];
 
-        protected override CustomFileWriter CreateWriter()
+        public override CustomFileWriter CreateWriter()
         {
             return new CustomFileWriter(ConfigurationFile, indentationFactor: 2, "#");
         }
 
-        protected override ConfigurationEntity GetConfiguration(
+        public override ConfigurationEntity GetConfiguration(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {

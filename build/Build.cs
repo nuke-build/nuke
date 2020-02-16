@@ -41,6 +41,7 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
 [CheckBuildProjectConfigurations]
 [DotNetVerbosityMapping]
 [UnsetVisualStudioEnvironmentVariables]
+[ShutdownDotNetBuildServerOnFinish]
 [TeamCitySetDotCoverHomePath]
 [TeamCity(
     TeamCityAgentPlatform.Windows,

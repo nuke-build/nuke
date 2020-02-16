@@ -12,9 +12,9 @@ using Nuke.Common.Utilities.Collections;
 namespace Nuke.Common.CI
 {
     [PublicAPI]
-    public abstract class ChainedConfigurationAttributeBase : ConfigurationAttributeBase
+    public abstract class ChainedConfigurationAttributeBase : ConfigurationGeneratorAttributeBase
     {
-        protected override IEnumerable<string> IrrelevantTargetNames => NonEntryTargets.Concat(ExcludedTargets);
+        public override IEnumerable<string> IrrelevantTargetNames => NonEntryTargets.Concat(ExcludedTargets);
 
         public string[] NonEntryTargets { get; set; } = new string[0];
         public string[] ExcludedTargets { get; set; } = new string[0];

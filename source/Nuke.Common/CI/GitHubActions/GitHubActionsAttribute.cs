@@ -21,7 +21,7 @@ namespace Nuke.Common.CI.GitHubActions
     /// </summary>
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class GitHubActionsAttribute : ConfigurationAttributeBase
+    public class GitHubActionsAttribute : ConfigurationGeneratorAttributeBase
     {
         private readonly string _name;
         private readonly GitHubActionsImage[] _images;
@@ -37,10 +37,11 @@ namespace Nuke.Common.CI.GitHubActions
 
         private string ConfigurationFile => NukeBuild.RootDirectory / ".github" / "workflows" / $"{_name}.yml";
 
-        protected override HostType HostType => HostType.GitHubActions;
-        protected override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
-        protected override IEnumerable<string> RelevantTargetNames => InvokedTargets;
-        protected override IEnumerable<string> IrrelevantTargetNames => new string[0];
+        public override string IdPostfix => _name;
+        public override HostType HostType => HostType.GitHubActions;
+        public override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
+        public override IEnumerable<string> RelevantTargetNames => InvokedTargets;
+        public override IEnumerable<string> IrrelevantTargetNames => new string[0];
 
         public GitHubActionsTrigger[] On { get; set; } = new GitHubActionsTrigger[0];
         public string[] OnPushBranches { get; set; } = new string[0];
@@ -58,12 +59,12 @@ namespace Nuke.Common.CI.GitHubActions
 
         public string[] InvokedTargets { get; set; } = new string[0];
 
-        protected override CustomFileWriter CreateWriter()
+        public override CustomFileWriter CreateWriter()
         {
             return new CustomFileWriter(ConfigurationFile, indentationFactor: 2, commentPrefix: "#");
         }
 
-        protected override ConfigurationEntity GetConfiguration(
+        public override ConfigurationEntity GetConfiguration(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
