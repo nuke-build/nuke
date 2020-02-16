@@ -15,9 +15,9 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(NukeScriptDirectory) != ''">
-    <None Include="$(NukeScriptDirectory)\build.cmd" LinkBase="boot" />
-    <None Include="$(NukeScriptDirectory)\build.ps1" LinkBase="boot" />
-    <None Include="$(NukeScriptDirectory)\build.sh" LinkBase="boot" />
+    <None Include="$(NukeScriptDirectory)\build.cmd" LinkBase="boot" Condition="Exists('$(NukeScriptDirectory)\build.cmd')" />
+    <None Include="$(NukeScriptDirectory)\build.ps1" LinkBase="boot" Condition="Exists('$(NukeScriptDirectory)\build.ps1')" />
+    <None Include="$(NukeScriptDirectory)\build.sh" LinkBase="boot" Condition="Exists('$(NukeScriptDirectory)\build.sh')" />
   </ItemGroup>
 
   <ItemGroup Condition="$(NukeRootDirectory) != ''">
