@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Amazon.Extensions.Configuration.SystemsManager" Version="1.2.0" />
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.3.104.17" />
+    <PackageReference Include="AWSSDK.ECR" Version="3.3.103.9" />
+    <PackageReference Include="AWSSDK.ECS" Version="3.3.114" />
+    <PackageReference Include="AWSSDK.SecurityToken" Version="3.3.104.28" />
+    <PackageReference Include="JetBrains.dotCover.CommandLineTools" Version="2019.3.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="JetBrains.dotCover.DotNetCliTool" Version="2019.3.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>

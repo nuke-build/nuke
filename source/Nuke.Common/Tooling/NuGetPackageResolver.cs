@@ -24,6 +24,8 @@ namespace Nuke.Common.Tooling
         private const int c_defaultTimeout = 2000;
         private static Dictionary<string, InstalledPackage[]> s_candidatePackageCache = new Dictionary<string, InstalledPackage[]>();
 
+        public static bool EnableCache { get; set; } = true;
+        
         [ItemCanBeNull]
         public static async Task<string> GetLatestPackageVersion(string packageId, bool includePrereleases, int? timeout = null)
         {
@@ -200,7 +202,7 @@ namespace Nuke.Common.Tooling
         {
             var key = $"{packageId}-{packagesConfigFile}-{includePrereleases}";
 
-            if (s_candidatePackageCache.TryGetValue(key, out var candidatePackages))
+            if (EnableCache && s_candidatePackageCache.TryGetValue(key, out var candidatePackages))
             {
                 return candidatePackages;
             }
@@ -227,7 +229,10 @@ namespace Nuke.Common.Tooling
                 .OrderByDescending(x => x.Version)
                 .ToArray();
 
-            s_candidatePackageCache.Add(key, candidatePackages);
+            if (EnableCache)
+            {
+                s_candidatePackageCache.Add(key, candidatePackages);
+            }
 
             return candidatePackages;
         }
