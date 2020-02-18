@@ -22,6 +22,7 @@ namespace Nuke.Common.Tooling
     public static class NuGetPackageResolver
     {
         private const int c_defaultTimeout = 2000;
+        private static Dictionary<string, InstalledPackage[]> s_candidatePackageCache = new Dictionary<string, InstalledPackage[]>();
 
         [ItemCanBeNull]
         public static async Task<string> GetLatestPackageVersion(string packageId, bool includePrereleases, int? timeout = null)
@@ -185,6 +186,25 @@ namespace Nuke.Common.Tooling
             [CanBeNull] string packagesConfigFile,
             bool? includePrereleases = null)
         {
+            var candidatePackages = GetCandidatePackages(packageId, packagesConfigFile, includePrereleases);
+
+            return versionRange == null
+                ? candidatePackages.FirstOrDefault()
+                : candidatePackages.SingleOrDefault(x => x.Version == versionRange.FindBestMatch(candidatePackages.Select(y => y.Version)));
+        }
+
+        private static InstalledPackage[] GetCandidatePackages(
+            string packageId,
+            [CanBeNull] string packagesConfigFile,
+            bool? includePrereleases = null)
+        {
+            var key = $"{packageId}-{packagesConfigFile}-{includePrereleases}";
+
+            if (s_candidatePackageCache.TryGetValue(key, out var candidatePackages))
+            {
+                return candidatePackages;
+            }
+
             packageId = packageId.ToLowerInvariant();
             var packagesDirectory = GetPackagesDirectory(packagesConfigFile);
             if (packagesDirectory == null)
@@ -200,16 +220,16 @@ namespace Nuke.Common.Tooling
                     .SelectMany(x => x.GetFiles($"{packageId}*.nupkg")))
                 .Select(x => x.FullName);
 
-            var candidatePackages = packages.Select(x => new InstalledPackage(x))
+            candidatePackages = packages.Select(x => new InstalledPackage(x))
                 // packages can contain false positives due to present/missing version specification
                 .Where(x => x.Id.EqualsOrdinalIgnoreCase(packageId))
                 .Where(x => !x.Version.IsPrerelease || !includePrereleases.HasValue || includePrereleases.Value)
                 .OrderByDescending(x => x.Version)
-                .ToList();
+                .ToArray();
 
-            return versionRange == null
-                ? candidatePackages.FirstOrDefault()
-                : candidatePackages.SingleOrDefault(x => x.Version == versionRange.FindBestMatch(candidatePackages.Select(y => y.Version)));
+            s_candidatePackageCache.Add(key, candidatePackages);
+
+            return candidatePackages;
         }
 
         [CanBeNull]
