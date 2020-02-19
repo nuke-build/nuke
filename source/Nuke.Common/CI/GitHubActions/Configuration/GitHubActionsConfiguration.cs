@@ -2,8 +2,8 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-using System;
 using System.Linq;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -23,7 +23,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
             writer.WriteLine();
 
             if (ShortTriggers.Length > 0)
-                writer.WriteLine($"on: [{ShortTriggers.Select(x => x.ToString().ToLowerInvariant()).JoinComma()}]");
+                writer.WriteLine($"on: [{ShortTriggers.Select(x => x.GetValue().ToLowerInvariant()).JoinComma()}]");
             else
             {
                 writer.WriteLine("on:");
