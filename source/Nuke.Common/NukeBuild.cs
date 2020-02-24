@@ -12,6 +12,7 @@ using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.Bitrise;
 using Nuke.Common.CI.GitHubActions;
+using Nuke.Common.CI.Jenkins;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.CI.TravisCI;
 using Nuke.Common.Execution;
@@ -97,6 +98,7 @@ namespace Nuke.Common
                 HostType.AzurePipelines => new AzurePipelinesOutputSink(new AzurePipelines()),
                 HostType.GitHubActions => new GitHubActionsOutputSink(new GitHubActions()),
                 HostType.AppVeyor => new AppVeyorOutputSink(new AppVeyor()),
+                HostType.Jenkins => new JenkinsOutputSink(),
                 _ => OutputSink.Default
             };
 

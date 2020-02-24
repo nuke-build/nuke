@@ -45,7 +45,7 @@ namespace Nuke.Common.OutputSinks
                 });
         }
 
-        protected internal void WriteLogo()
+        protected internal virtual void WriteLogo()
         {
             Logger.Normal("███╗   ██╗██╗   ██╗██╗  ██╗███████╗");
             Logger.Normal("████╗  ██║██║   ██║██║ ██╔╝██╔════╝");
