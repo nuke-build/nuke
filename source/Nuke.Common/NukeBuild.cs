@@ -98,7 +98,6 @@ namespace Nuke.Common
                 HostType.AzurePipelines => new AzurePipelinesOutputSink(new AzurePipelines()),
                 HostType.GitHubActions => new GitHubActionsOutputSink(new GitHubActions()),
                 HostType.AppVeyor => new AppVeyorOutputSink(new AppVeyor()),
-                HostType.Jenkins => new JenkinsOutputSink(),
                 _ => OutputSink.Default
             };
 

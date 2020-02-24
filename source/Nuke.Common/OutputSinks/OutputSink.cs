@@ -38,12 +38,18 @@ namespace Nuke.Common.OutputSinks
                         .Split(new[] { EnvironmentInfo.NewLine }, StringSplitOptions.None);
 
                     Console.WriteLine();
-                    Console.WriteLine("╬" + new string(c: '═', text.Length + 5));
-                    formattedBlockText.ForEach(x => Console.WriteLine($"║ {x}"));
-                    Console.WriteLine("╬" + new string(c: '═', Math.Max(text.Length - 4, 2)));
+                    Console.WriteLine(CornerCharacter + new string(c: HorizontalEdgeCharacter, text.Length + 5));
+                    formattedBlockText.ForEach(x => Console.WriteLine($"{VerticalEdgeCharacter} {x}"));
+                    Console.WriteLine(CornerCharacter + new string(c: HorizontalEdgeCharacter, Math.Max(text.Length - 4, 2)));
                     Console.WriteLine();
                 });
         }
+
+        protected internal virtual char CornerCharacter { get; } = '╬';
+        protected internal virtual char HorizontalEdgeCharacter { get; } = '═';
+        protected internal virtual char SlimHorizontalEdgeCharacter { get; } = '─';
+        protected internal virtual char VerticalEdgeCharacter { get; } = '║';
+        protected internal virtual char PaddingCharacter { get; } = ' ';
 
         protected internal virtual void WriteLogo()
         {
@@ -92,18 +98,18 @@ namespace Nuke.Common.OutputSinks
             var totalDuration = build.ExecutionPlan.Aggregate(TimeSpan.Zero, (t, x) => t.Add(x.Duration));
 
             string CreateLine(string target, string executionStatus, string duration, string appendix = null)
-                => target.PadRight(firstColumn, paddingChar: ' ')
-                   + executionStatus.PadRight(secondColumn, paddingChar: ' ')
-                   + duration.PadLeft(thirdColumn, paddingChar: ' ')
+                => target.PadRight(firstColumn, paddingChar: PaddingCharacter)
+                   + executionStatus.PadRight(secondColumn, paddingChar: PaddingCharacter)
+                   + duration.PadLeft(thirdColumn, paddingChar: PaddingCharacter)
                    + (appendix != null ? $"   // {appendix}" : string.Empty);
 
             string ToMinutesAndSeconds(TimeSpan duration)
                 => $"{(int) duration.TotalMinutes}:{duration:ss}";
 
-            WriteNormal(new string(c: '═', count: allColumns));
+            WriteNormal(new string(c: HorizontalEdgeCharacter, count: allColumns));
             WriteInformation(CreateLine("Target", "Status", "Duration"));
             //WriteInformationInternal($"{{0,-{firstColumn}}}{{1,-{secondColumn}}}{{2,{thirdColumn}}}{{3,1}}", "Target", "Status", "Duration", "Test");
-            WriteNormal(new string(c: '─', count: allColumns));
+            WriteNormal(new string(c: SlimHorizontalEdgeCharacter, count: allColumns));
             foreach (var target in build.ExecutionPlan)
             {
                 var line = CreateLine(target.Name, target.Status.ToString(), ToMinutesAndSeconds(target.Duration), target.SkipReason);
@@ -125,9 +131,9 @@ namespace Nuke.Common.OutputSinks
                 }
             }
 
-            WriteNormal(new string(c: '─', count: allColumns));
+            WriteNormal(new string(c: SlimHorizontalEdgeCharacter, count: allColumns));
             WriteInformation(CreateLine("Total", "", ToMinutesAndSeconds(totalDuration)));
-            WriteNormal(new string(c: '═', count: allColumns));
+            WriteNormal(new string(c: HorizontalEdgeCharacter, count: allColumns));
         }
 
         protected virtual void WriteSevereMessages()
