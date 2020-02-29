@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.TravisCI
 {
@@ -21,7 +22,7 @@ namespace Nuke.Common.CI.TravisCI
 
         public static TravisCI Instance => NukeBuild.Host == HostType.Travis ? s_instance.Value : null;
 
-        internal static bool IsRunningTravis => Environment.GetEnvironmentVariable("TRAVIS") != null;
+        internal static bool IsRunningTravis => !Environment.GetEnvironmentVariable("TRAVIS").IsNullOrEmpty();
 
         internal TravisCI()
         {

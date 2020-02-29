@@ -32,7 +32,7 @@ namespace Nuke.Common.CI.TeamCity
 
         public static TeamCity Instance => NukeBuild.Host == HostType.TeamCity ? s_instance.Value : null;
 
-        internal static bool IsRunningTeamCity => Environment.GetEnvironmentVariable("TEAMCITY_VERSION") != null;
+        internal static bool IsRunningTeamCity => !Environment.GetEnvironmentVariable("TEAMCITY_VERSION").IsNullOrEmpty();
 
         public static T CreateRestClient<T>(string serverUrl, string username, string password)
         {
