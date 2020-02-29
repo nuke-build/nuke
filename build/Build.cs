@@ -68,6 +68,7 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
     SkipTags = true,
     InvokedTargets = new[] { nameof(Test), nameof(Pack) })]
 [AzurePipelines(
+    suffix: null,
     AzurePipelinesImage.UbuntuLatest,
     AzurePipelinesImage.WindowsLatest,
     AzurePipelinesImage.MacOsLatest,

@@ -19,14 +19,20 @@ namespace Nuke.Common.CI.AzurePipelines
     [PublicAPI]
     public class AzurePipelinesAttribute : ChainedConfigurationAttributeBase
     {
+        private readonly string _suffix;
         private readonly AzurePipelinesImage[] _images;
 
-        public AzurePipelinesAttribute(AzurePipelinesImage image, params AzurePipelinesImage[] images)
+        public AzurePipelinesAttribute(
+            [CanBeNull] string suffix,
+            AzurePipelinesImage image,
+            params AzurePipelinesImage[] images)
         {
+            _suffix = suffix;
             _images = new[] { image }.Concat(images).ToArray();
         }
 
-        private string ConfigurationFile => NukeBuild.RootDirectory / "azure-pipelines.yml";
+        private string ConfigurationFileName => _suffix != null ? $"azure-pipelines.{_suffix}.yml" : "azure-pipelines.yml";
+        private string ConfigurationFile => NukeBuild.RootDirectory / ConfigurationFileName;
 
         public override HostType HostType => HostType.AzurePipelines;
         public override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
