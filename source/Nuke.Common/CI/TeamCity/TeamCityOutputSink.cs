@@ -63,9 +63,9 @@ namespace Nuke.Common.CI.TeamCity
 
         protected override void ReportError(string text, string details = null)
         {
-            _teamCity.AddBuildProblem(text);
+            _teamCity.WriteError(text);
             if (details != null)
-                base.WriteError(details);
+                _teamCity.WriteError(details);
         }
     }
 }
