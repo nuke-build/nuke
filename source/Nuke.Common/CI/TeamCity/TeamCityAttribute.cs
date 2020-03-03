@@ -32,10 +32,10 @@ namespace Nuke.Common.CI.TeamCity
         private string SettingsFile => TeamcityDirectory / "settings.kts";
         private string PomFile => TeamcityDirectory / "pom.xml";
 
-        protected override HostType HostType => HostType.TeamCity;
-        protected override IEnumerable<string> GeneratedFiles => new[] { PomFile, SettingsFile };
+        public override HostType HostType => HostType.TeamCity;
+        public override IEnumerable<string> GeneratedFiles => new[] { PomFile, SettingsFile };
 
-        protected override IEnumerable<string> RelevantTargetNames => new string[0]
+        public override IEnumerable<string> RelevantTargetNames => new string[0]
             .Concat(VcsTriggeredTargets)
             .Concat(NightlyTriggeredTargets)
             .Concat(ManuallyTriggeredTargets);
@@ -57,22 +57,12 @@ namespace Nuke.Common.CI.TeamCity
 
         public string[] ManuallyTriggeredTargets { get; set; } = new string[0];
 
-        protected override void OnBuildFinishedInternal(NukeBuild build)
-        {
-            // serialize difference to start object
-
-            // var stateFile = NukeBuild.TemporaryDirectory / $"{TeamCity.Instance.BuildTypeId}.xml";
-            // FileSystemTasks.Touch(stateFile);
-            // FileSystemTasks.CopyFile(NukeBuild.TemporaryDirectory / "state.xml", stateFile, FileExistsPolicy.Overwrite);
-            // TeamCity.Instance.PublishArtifacts($"+:{stateFile} => .teamcity/states");
-        }
-
-        protected override CustomFileWriter CreateWriter()
+        public override CustomFileWriter CreateWriter()
         {
             return new CustomFileWriter(SettingsFile, indentationFactor: 4, commentPrefix: "//");
         }
 
-        protected override ConfigurationEntity GetConfiguration(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        public override ConfigurationEntity GetConfiguration(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             TextTasks.WriteAllLines(
                 PomFile,
@@ -83,6 +73,16 @@ namespace Nuke.Common.CI.TeamCity
                        Version = Version,
                        Project = GetProject(build, relevantTargets)
                    };
+        }
+
+        public override void SerializeState()
+        {
+            // serialize difference to start object
+
+            // var stateFile = NukeBuild.TemporaryDirectory / $"{TeamCity.Instance.BuildTypeId}.xml";
+            // FileSystemTasks.Touch(stateFile);
+            // FileSystemTasks.CopyFile(NukeBuild.TemporaryDirectory / "state.xml", stateFile, FileExistsPolicy.Overwrite);
+            // TeamCity.Instance.PublishArtifacts($"+:{stateFile} => .teamcity/states");
         }
 
         protected virtual TeamCityProject GetProject(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)

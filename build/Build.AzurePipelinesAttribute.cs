@@ -15,8 +15,11 @@ partial class Build
 {
     public class AzurePipelinesAttribute : Nuke.Common.CI.AzurePipelines.AzurePipelinesAttribute
     {
-        public AzurePipelinesAttribute(AzurePipelinesImage image, params AzurePipelinesImage[] images)
-            : base(image, images)
+        public AzurePipelinesAttribute(
+            string suffix,
+            AzurePipelinesImage image,
+            params AzurePipelinesImage[] images)
+            : base(suffix, image, images)
         {
         }
 

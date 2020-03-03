@@ -5,6 +5,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using Nuke.Common.CI;
 using Nuke.Common.IO;
 
 namespace Nuke.Common.Utilities
@@ -43,6 +44,11 @@ namespace Nuke.Common.Utilities
         public void WriteComment(string text = null)
         {
             WriteLine($"{_commentPrefix} {text}".TrimEnd());
+        }
+
+        public void Write(Action<CustomFileWriter> writer)
+        {
+            writer(this);
         }
 
         public IDisposable Indent()

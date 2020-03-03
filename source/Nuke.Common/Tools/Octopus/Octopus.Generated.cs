@@ -31,7 +31,7 @@ namespace Nuke.Common.Tools.Octopus
         /// </summary>
         public static string OctopusPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("OCTOPUS_EXE") ??
-            ToolPathResolver.GetPackageExecutable("OctopusTools", "Octo.exe");
+            GetToolPath();
         public static Action<OutputType, string> OctopusLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>Octopus Deploy is an automated deployment server, which you install yourself, much like you would install SQL Server, Team Foundation Server or JetBrains TeamCity. Octopus makes it easy to automate deployment of ASP.NET web applications and Windows Services into development, test and production environments.<para/>Along with the Octopus Deploy server, you'll also install a lightweight agent service on each of the machines that you plan to deploy to, for example your web and application servers. We call this the Tentacle agent; the idea being that one Octopus server controls many Tentacles, potentially a lot more than 8! With Octopus and Tentacle, you can easily deploy to your own servers, or cloud services from providers like Amazon Web Services or Microsoft Azure.</p>
@@ -545,7 +545,7 @@ namespace Nuke.Common.Tools.Octopus
         /// <summary>
         ///   Path to the Octopus executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? OctopusTasks.OctopusPath;
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         public override Action<OutputType, string> CustomLogger => OctopusTasks.OctopusLogger;
         /// <summary>
         ///   The ID of the package. E.g. <c>MyCompany.MyApp</c>.
@@ -600,6 +600,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   Allow an existing package file of the same ID/version to be overwritten.
         /// </summary>
         public virtual bool? Overwrite { get; internal set; }
+        public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -633,7 +634,7 @@ namespace Nuke.Common.Tools.Octopus
         /// <summary>
         ///   Path to the Octopus executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? OctopusTasks.OctopusPath;
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         public override Action<OutputType, string> CustomLogger => OctopusTasks.OctopusLogger;
         /// <summary>
         ///   Package file to push.
@@ -700,6 +701,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.
         /// </summary>
         public virtual string LogLevel { get; internal set; }
+        public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -736,7 +738,7 @@ namespace Nuke.Common.Tools.Octopus
         /// <summary>
         ///   Path to the Octopus executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? OctopusTasks.OctopusPath;
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         public override Action<OutputType, string> CustomLogger => OctopusTasks.OctopusLogger;
         /// <summary>
         ///   Name of the project.
@@ -914,6 +916,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.
         /// </summary>
         public virtual string LogLevel { get; internal set; }
+        public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -977,7 +980,7 @@ namespace Nuke.Common.Tools.Octopus
         /// <summary>
         ///   Path to the Octopus executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? OctopusTasks.OctopusPath;
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         public override Action<OutputType, string> CustomLogger => OctopusTasks.OctopusLogger;
         /// <summary>
         ///   Show progress of the deployment.
@@ -1122,6 +1125,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.
         /// </summary>
         public virtual string LogLevel { get; internal set; }
+        public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -1605,6 +1609,28 @@ namespace Nuke.Common.Tools.Octopus
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Overwrite = !toolSettings.Overwrite;
+            return toolSettings;
+        }
+        #endregion
+        #region Framework
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusPackSettings.Framework"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : OctopusPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = framework;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusPackSettings.Framework"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T ResetFramework<T>(this T toolSettings) where T : OctopusPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = null;
             return toolSettings;
         }
         #endregion
@@ -2188,6 +2214,28 @@ namespace Nuke.Common.Tools.Octopus
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogLevel = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Framework
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusPushSettings.Framework"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : OctopusPushSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = framework;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusPushSettings.Framework"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T ResetFramework<T>(this T toolSettings) where T : OctopusPushSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = null;
             return toolSettings;
         }
         #endregion
@@ -3842,6 +3890,28 @@ namespace Nuke.Common.Tools.Octopus
             return toolSettings;
         }
         #endregion
+        #region Framework
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusCreateReleaseSettings.Framework"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : OctopusCreateReleaseSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = framework;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusCreateReleaseSettings.Framework"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T ResetFramework<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = null;
+            return toolSettings;
+        }
+        #endregion
     }
     #endregion
     #region OctopusDeployReleaseSettingsExtensions
@@ -5199,6 +5269,28 @@ namespace Nuke.Common.Tools.Octopus
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogLevel = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Framework
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusDeployReleaseSettings.Framework"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : OctopusDeployReleaseSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = framework;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusDeployReleaseSettings.Framework"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T ResetFramework<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = null;
             return toolSettings;
         }
         #endregion

@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.Jenkins
 {
@@ -21,7 +22,7 @@ namespace Nuke.Common.CI.Jenkins
 
         public static Jenkins Instance => NukeBuild.Host == HostType.Jenkins ? s_instance.Value : null;
 
-        internal static bool IsRunningJenkins => Environment.GetEnvironmentVariable("JENKINS_HOME") != null;
+        internal static bool IsRunningJenkins => !Environment.GetEnvironmentVariable("JENKINS_HOME").IsNullOrEmpty();
 
         internal Jenkins()
         {

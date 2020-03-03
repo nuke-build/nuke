@@ -329,6 +329,102 @@ namespace Nuke.Common.Tools.NuGet
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>&lt;packageID&gt;</c> via <see cref="NuGetInstallSettings.PackageID"/></li>
+        ///     <li><c>-ConfigFile</c> via <see cref="NuGetInstallSettings.ConfigFile"/></li>
+        ///     <li><c>-DependencyVersion</c> via <see cref="NuGetInstallSettings.DependencyVersion"/></li>
+        ///     <li><c>-DisableParallelProcessing</c> via <see cref="NuGetInstallSettings.DisableParallelProcessing"/></li>
+        ///     <li><c>-ExcludeVersion</c> via <see cref="NuGetInstallSettings.ExcludeVersion"/></li>
+        ///     <li><c>-FallbackSource</c> via <see cref="NuGetInstallSettings.FallbackSource"/></li>
+        ///     <li><c>-ForceEnglishOutput</c> via <see cref="NuGetInstallSettings.ForceEnglishOutput"/></li>
+        ///     <li><c>-Framework</c> via <see cref="NuGetInstallSettings.Framework"/></li>
+        ///     <li><c>-NoCache</c> via <see cref="NuGetInstallSettings.NoCache"/></li>
+        ///     <li><c>-NonInteractive</c> via <see cref="NuGetInstallSettings.NonInteractive"/></li>
+        ///     <li><c>-OutputDirectory</c> via <see cref="NuGetInstallSettings.OutputDirectory"/></li>
+        ///     <li><c>-PackageSaveMode</c> via <see cref="NuGetInstallSettings.PackageSaveMode"/></li>
+        ///     <li><c>-PreRelease</c> via <see cref="NuGetInstallSettings.PreRelease"/></li>
+        ///     <li><c>-RequireConsent</c> via <see cref="NuGetInstallSettings.RequireConsent"/></li>
+        ///     <li><c>-SolutionDirectory</c> via <see cref="NuGetInstallSettings.SolutionDirectory"/></li>
+        ///     <li><c>-Source</c> via <see cref="NuGetInstallSettings.Source"/></li>
+        ///     <li><c>-Verbosity</c> via <see cref="NuGetInstallSettings.Verbosity"/></li>
+        ///     <li><c>-Version</c> via <see cref="NuGetInstallSettings.Version"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> NuGetInstall(NuGetInstallSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new NuGetInstallSettings();
+            var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary>
+        ///   <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;packageID&gt;</c> via <see cref="NuGetInstallSettings.PackageID"/></li>
+        ///     <li><c>-ConfigFile</c> via <see cref="NuGetInstallSettings.ConfigFile"/></li>
+        ///     <li><c>-DependencyVersion</c> via <see cref="NuGetInstallSettings.DependencyVersion"/></li>
+        ///     <li><c>-DisableParallelProcessing</c> via <see cref="NuGetInstallSettings.DisableParallelProcessing"/></li>
+        ///     <li><c>-ExcludeVersion</c> via <see cref="NuGetInstallSettings.ExcludeVersion"/></li>
+        ///     <li><c>-FallbackSource</c> via <see cref="NuGetInstallSettings.FallbackSource"/></li>
+        ///     <li><c>-ForceEnglishOutput</c> via <see cref="NuGetInstallSettings.ForceEnglishOutput"/></li>
+        ///     <li><c>-Framework</c> via <see cref="NuGetInstallSettings.Framework"/></li>
+        ///     <li><c>-NoCache</c> via <see cref="NuGetInstallSettings.NoCache"/></li>
+        ///     <li><c>-NonInteractive</c> via <see cref="NuGetInstallSettings.NonInteractive"/></li>
+        ///     <li><c>-OutputDirectory</c> via <see cref="NuGetInstallSettings.OutputDirectory"/></li>
+        ///     <li><c>-PackageSaveMode</c> via <see cref="NuGetInstallSettings.PackageSaveMode"/></li>
+        ///     <li><c>-PreRelease</c> via <see cref="NuGetInstallSettings.PreRelease"/></li>
+        ///     <li><c>-RequireConsent</c> via <see cref="NuGetInstallSettings.RequireConsent"/></li>
+        ///     <li><c>-SolutionDirectory</c> via <see cref="NuGetInstallSettings.SolutionDirectory"/></li>
+        ///     <li><c>-Source</c> via <see cref="NuGetInstallSettings.Source"/></li>
+        ///     <li><c>-Verbosity</c> via <see cref="NuGetInstallSettings.Verbosity"/></li>
+        ///     <li><c>-Version</c> via <see cref="NuGetInstallSettings.Version"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> NuGetInstall(Configure<NuGetInstallSettings> configurator)
+        {
+            return NuGetInstall(configurator(new NuGetInstallSettings()));
+        }
+        /// <summary>
+        ///   <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;packageID&gt;</c> via <see cref="NuGetInstallSettings.PackageID"/></li>
+        ///     <li><c>-ConfigFile</c> via <see cref="NuGetInstallSettings.ConfigFile"/></li>
+        ///     <li><c>-DependencyVersion</c> via <see cref="NuGetInstallSettings.DependencyVersion"/></li>
+        ///     <li><c>-DisableParallelProcessing</c> via <see cref="NuGetInstallSettings.DisableParallelProcessing"/></li>
+        ///     <li><c>-ExcludeVersion</c> via <see cref="NuGetInstallSettings.ExcludeVersion"/></li>
+        ///     <li><c>-FallbackSource</c> via <see cref="NuGetInstallSettings.FallbackSource"/></li>
+        ///     <li><c>-ForceEnglishOutput</c> via <see cref="NuGetInstallSettings.ForceEnglishOutput"/></li>
+        ///     <li><c>-Framework</c> via <see cref="NuGetInstallSettings.Framework"/></li>
+        ///     <li><c>-NoCache</c> via <see cref="NuGetInstallSettings.NoCache"/></li>
+        ///     <li><c>-NonInteractive</c> via <see cref="NuGetInstallSettings.NonInteractive"/></li>
+        ///     <li><c>-OutputDirectory</c> via <see cref="NuGetInstallSettings.OutputDirectory"/></li>
+        ///     <li><c>-PackageSaveMode</c> via <see cref="NuGetInstallSettings.PackageSaveMode"/></li>
+        ///     <li><c>-PreRelease</c> via <see cref="NuGetInstallSettings.PreRelease"/></li>
+        ///     <li><c>-RequireConsent</c> via <see cref="NuGetInstallSettings.RequireConsent"/></li>
+        ///     <li><c>-SolutionDirectory</c> via <see cref="NuGetInstallSettings.SolutionDirectory"/></li>
+        ///     <li><c>-Source</c> via <see cref="NuGetInstallSettings.Source"/></li>
+        ///     <li><c>-Verbosity</c> via <see cref="NuGetInstallSettings.Verbosity"/></li>
+        ///     <li><c>-Version</c> via <see cref="NuGetInstallSettings.Version"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(NuGetInstallSettings Settings, IReadOnlyCollection<Output> Output)> NuGetInstall(CombinatorialConfigure<NuGetInstallSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+        {
+            return configurator.Invoke(NuGetInstall, NuGetLogger, degreeOfParallelism, completeOnFailure);
+        }
+        /// <summary>
+        ///   <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
         ///     <li><c>-ConfigFile</c> via <see cref="NuGetSourcesAddSettings.ConfigFile"/></li>
         ///     <li><c>-ForceEnglishOutput</c> via <see cref="NuGetSourcesAddSettings.ForceEnglishOutput"/></li>
         ///     <li><c>-Name</c> via <see cref="NuGetSourcesAddSettings.Name"/></li>
@@ -1009,6 +1105,121 @@ namespace Nuke.Common.Tools.NuGet
               .Add("-RequireConsent", RequireConsent)
               .Add("-SolutionDirectory {value}", SolutionDirectory)
               .Add("-Source {value}", Source, separator: ';')
+              .Add("-Verbosity {value}", Verbosity);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
+    #region NuGetInstallSettings
+    /// <summary>
+    ///   Used within <see cref="NuGetTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class NuGetInstallSettings : ToolSettings
+    {
+        /// <summary>
+        ///   Path to the NuGet executable.
+        /// </summary>
+        public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
+        public override Action<OutputType, string> CustomLogger => NuGetTasks.NuGetLogger;
+        /// <summary>
+        ///   Name of the package to install.
+        /// </summary>
+        public virtual string PackageID { get; internal set; }
+        /// <summary>
+        ///   <em>(4.4+)</em> The version of the dependency packages to use, which can be one of the following: <ul><li><c>Lowest</c>: (default) the lowest version.</li> <li><c>HighestPatch</c>: the version with the lowest major, lowest minor, highest patch.</li> <li><c>HighestMinor</c>: the version with the lowest major, highest minor, highest patch.</li> <li><c>Highest</c>: the highest version.</li> <li><c>Ignore</c>: No dependency packages will be used.</li></ul>
+        /// </summary>
+        public virtual DependencyVersion DependencyVersion { get; internal set; }
+        /// <summary>
+        ///   Disables installing multiple packages in parallel.
+        /// </summary>
+        public virtual bool? DisableParallelProcessing { get; internal set; }
+        /// <summary>
+        ///   Installs the package to a folder named with only the package name and not the version number.
+        /// </summary>
+        public virtual bool? ExcludeVersion { get; internal set; }
+        /// <summary>
+        ///   <em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.
+        /// </summary>
+        public virtual IReadOnlyList<string> FallbackSource => FallbackSourceInternal.AsReadOnly();
+        internal List<string> FallbackSourceInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   <em>(4.4+)</em> Target framework used for selecting dependencies. Defaults to 'Any' if not specified.
+        /// </summary>
+        public virtual string Framework { get; internal set; }
+        /// <summary>
+        ///   Prevents NuGet from using cached packages. See <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders">Managing the global packages and cache folders</a>.
+        /// </summary>
+        public virtual bool? NoCache { get; internal set; }
+        /// <summary>
+        ///   Specifies the folder in which packages are installed. If no folder is specified, the current folder is used.
+        /// </summary>
+        public virtual string OutputDirectory { get; internal set; }
+        /// <summary>
+        ///   Specifies the types of files to save after package installation: one of <c>nuspec</c>, <c>nupkg</c>, or <c>nuspec;nupkg</c>.
+        /// </summary>
+        public virtual IReadOnlyList<PackageSaveMode> PackageSaveMode => PackageSaveModeInternal.AsReadOnly();
+        internal List<PackageSaveMode> PackageSaveModeInternal { get; set; } = new List<PackageSaveMode>();
+        /// <summary>
+        ///   Allows prerelease packages to be installed. This flag is not required when restoring packages with <c>packages.config</c>.
+        /// </summary>
+        public virtual bool? PreRelease { get; internal set; }
+        /// <summary>
+        ///   Verifies that restoring packages is enabled before downloading and installing the packages. For details, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore">Package Restore</a>.
+        /// </summary>
+        public virtual bool? RequireConsent { get; internal set; }
+        /// <summary>
+        ///   Specifies root folder of the solution for which to restore packages.
+        /// </summary>
+        public virtual string SolutionDirectory { get; internal set; }
+        /// <summary>
+        ///   Specifies the list of package sources (as URLs) to use for the restore. If omitted, the command uses the sources provided in configuration files, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Common NuGet configurations</a>.
+        /// </summary>
+        public virtual IReadOnlyList<string> Source => SourceInternal.AsReadOnly();
+        internal List<string> SourceInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Specifies the version of the package to install.
+        /// </summary>
+        public virtual string Version { get; internal set; }
+        /// <summary>
+        ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
+        /// </summary>
+        public virtual string ConfigFile { get; internal set; }
+        /// <summary>
+        ///   <em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.
+        /// </summary>
+        public virtual bool? ForceEnglishOutput { get; internal set; }
+        /// <summary>
+        ///   Suppresses prompts for user input or confirmations.
+        /// </summary>
+        public virtual bool? NonInteractive { get; internal set; }
+        /// <summary>
+        ///   Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.
+        /// </summary>
+        public virtual NuGetVerbosity Verbosity { get; internal set; }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("install")
+              .Add("{value}", PackageID)
+              .Add("-DependencyVersion {value}", DependencyVersion)
+              .Add("-DisableParallelProcessing", DisableParallelProcessing)
+              .Add("-ExcludeVersion", ExcludeVersion)
+              .Add("-FallbackSource {value}", FallbackSource, separator: ';')
+              .Add("-Framework {value}", Framework)
+              .Add("-NoCache", NoCache)
+              .Add("-OutputDirectory {value}", OutputDirectory)
+              .Add("-PackageSaveMode {value}", PackageSaveMode, separator: ';')
+              .Add("-PreRelease", PreRelease)
+              .Add("-RequireConsent", RequireConsent)
+              .Add("-SolutionDirectory {value}", SolutionDirectory)
+              .Add("-Source {value}", Source, separator: ';')
+              .Add("-Version {value}", Version)
+              .Add("-ConfigFile {value}", ConfigFile)
+              .Add("-ForceEnglishOutput", ForceEnglishOutput)
+              .Add("-NonInteractive", NonInteractive)
               .Add("-Verbosity {value}", Verbosity);
             return base.ConfigureArguments(arguments);
         }
@@ -3478,6 +3689,850 @@ namespace Nuke.Common.Tools.NuGet
         #endregion
     }
     #endregion
+    #region NuGetInstallSettingsExtensions
+    /// <summary>
+    ///   Used within <see cref="NuGetTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class NuGetInstallSettingsExtensions
+    {
+        #region PackageID
+        /// <summary>
+        ///   <p><em>Sets <see cref="NuGetInstallSettings.PackageID"/></em></p>
+        ///   <p>Name of the package to install.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPackageID<T>(this T toolSettings, string packageID) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageID = packageID;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="NuGetInstallSettings.PackageID"/></em></p>
+        ///   <p>Name of the package to install.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPackageID<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageID = null;
+            return toolSettings;
+        }
+        #endregion
+        #region DependencyVersion
+        /// <summary>
+        ///   <p><em>Sets <see cref="NuGetInstallSettings.DependencyVersion"/></em></p>
+        ///   <p><em>(4.4+)</em> The version of the dependency packages to use, which can be one of the following: <ul><li><c>Lowest</c>: (default) the lowest version.</li> <li><c>HighestPatch</c>: the version with the lowest major, lowest minor, highest patch.</li> <li><c>HighestMinor</c>: the version with the lowest major, highest minor, highest patch.</li> <li><c>Highest</c>: the highest version.</li> <li><c>Ignore</c>: No dependency packages will be used.</li></ul></p>
+        /// </summary>
+        [Pure]
+        public static T SetDependencyVersion<T>(this T toolSettings, DependencyVersion dependencyVersion) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DependencyVersion = dependencyVersion;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="NuGetInstallSettings.DependencyVersion"/></em></p>
+        ///   <p><em>(4.4+)</em> The version of the dependency packages to use, which can be one of the following: <ul><li><c>Lowest</c>: (default) the lowest version.</li> <li><c>HighestPatch</c>: the version with the lowest major, lowest minor, highest patch.</li> <li><c>HighestMinor</c>: the version with the lowest major, highest minor, highest patch.</li> <li><c>Highest</c>: the highest version.</li> <li><c>Ignore</c>: No dependency packages will be used.</li></ul></p>
+        /// </summary>
+        [Pure]
+        public static T ResetDependencyVersion<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DependencyVersion = null;
+            return toolSettings;
+        }
+        #endregion
+        #region DisableParallelProcessing
+        /// <summary>
+        ///   <p><em>Sets <see cref="NuGetInstallSettings.DisableParallelProcessing"/></em></p>
+        ///   <p>Disables installing multiple packages in parallel.</p>
+        /// </summary>
+        [Pure]
+        public static T SetDisableParallelProcessing<T>(this T toolSettings, bool? disableParallelProcessing) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallelProcessing = disableParallelProcessing;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="NuGetInstallSettings.DisableParallelProcessing"/></em></p>
+        ///   <p>Disables installing multiple packages in parallel.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetDisableParallelProcessing<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallelProcessing = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="NuGetInstallSettings.DisableParallelProcessing"/></em></p>
+        ///   <p>Disables installing multiple packages in parallel.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableDisableParallelProcessing<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallelProcessing = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="NuGetInstallSettings.DisableParallelProcessing"/></em></p>
+        ///   <p>Disables installing multiple packages in parallel.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableDisableParallelProcessing<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallelProcessing = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="NuGetInstallSettings.DisableParallelProcessing"/></em></p>
+        ///   <p>Disables installing multiple packages in parallel.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleDisableParallelProcessing<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallelProcessing = !toolSettings.DisableParallelProcessing;
+            return toolSettings;
+        }
+        #endregion
+        #region ExcludeVersion
+        /// <summary>
+        ///   <p><em>Sets <see cref="NuGetInstallSettings.ExcludeVersion"/></em></p>
+        ///   <p>Installs the package to a folder named with only the package name and not the version number.</p>
+        /// </summary>
+        [Pure]
+        public static T SetExcludeVersion<T>(this T toolSettings, bool? excludeVersion) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeVersion = excludeVersion;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="NuGetInstallSettings.ExcludeVersion"/></em></p>
+        ///   <p>Installs the package to a folder named with only the package name and not the version number.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetExcludeVersion<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeVersion = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="NuGetInstallSettings.ExcludeVersion"/></em></p>
+        ///   <p>Installs the package to a folder named with only the package name and not the version number.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableExcludeVersion<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeVersion = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="NuGetInstallSettings.ExcludeVersion"/></em></p>
+        ///   <p>Installs the package to a folder named with only the package name and not the version number.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableExcludeVersion<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeVersion = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="NuGetInstallSettings.ExcludeVersion"/></em></p>
+        ///   <p>Installs the package to a folder named with only the package name and not the version number.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleExcludeVersion<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeVersion = !toolSettings.ExcludeVersion;
+            return toolSettings;
+        }
+        #endregion
+        #region FallbackSource
+        /// <summary>
+        ///   <p><em>Sets <see cref="NuGetInstallSettings.FallbackSource"/> to a new list</em></p>
+        ///   <p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p>
+        /// </summary>
+        [Pure]
+        public static T SetFallbackSource<T>(this T toolSettings, params string[] fallbackSource) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FallbackSourceInternal = fallbackSource.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="NuGetInstallSettings.FallbackSource"/> to a new list</em></p>
+        ///   <p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p>
+        /// </summary>
+        [Pure]
+        public static T SetFallbackSource<T>(this T toolSettings, IEnumerable<string> fallbackSource) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FallbackSourceInternal = fallbackSource.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="NuGetInstallSettings.FallbackSource"/></em></p>
+        ///   <p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p>
+        /// </summary>
+        [Pure]
+        public static T AddFallbackSource<T>(this T toolSettings, params string[] fallbackSource) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FallbackSourceInternal.AddRange(fallbackSource);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="NuGetInstallSettings.FallbackSource"/></em></p>
+        ///   <p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p>
+        /// </summary>
+        [Pure]
+        public static T AddFallbackSource<T>(this T toolSettings, IEnumerable<string> fallbackSource) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FallbackSourceInternal.AddRange(fallbackSource);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="NuGetInstallSettings.FallbackSource"/></em></p>
+        ///   <p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearFallbackSource<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FallbackSourceInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="NuGetInstallSettings.FallbackSource"/></em></p>
+        ///   <p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveFallbackSource<T>(this T toolSettings, params string[] fallbackSource) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(fallbackSource);
+            toolSettings.FallbackSourceInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="NuGetInstallSettings.FallbackSource"/></em></p>
+        ///   <p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveFallbackSource<T>(this T toolSettings, IEnumerable<string> fallbackSource) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(fallbackSource);
+            toolSettings.FallbackSourceInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region Framework
+        /// <summary>
+        ///   <p><em>Sets <see cref="NuGetInstallSettings.Framework"/></em></p>
+        ///   <p><em>(4.4+)</em> Target framework used for selecting dependencies. Defaults to 'Any' if not specified.</p>
+        /// </summary>
+        [Pure]
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = framework;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="NuGetInstallSettings.Framework"/></em></p>
+        ///   <p><em>(4.4+)</em> Target framework used for selecting dependencies. Defaults to 'Any' if not specified.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetFramework<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = null;
+            return toolSettings;
+        }
+        #endregion
+        #region NoCache
+        /// <summary>
+        ///   <p><em>Sets <see cref="NuGetInstallSettings.NoCache"/></em></p>
+        ///   <p>Prevents NuGet from using cached packages. See <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders">Managing the global packages and cache folders</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoCache<T>(this T toolSettings, bool? noCache) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = noCache;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="NuGetInstallSettings.NoCache"/></em></p>
+        ///   <p>Prevents NuGet from using cached packages. See <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders">Managing the global packages and cache folders</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoCache<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="NuGetInstallSettings.NoCache"/></em></p>
+        ///   <p>Prevents NuGet from using cached packages. See <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders">Managing the global packages and cache folders</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoCache<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="NuGetInstallSettings.NoCache"/></em></p>
+        ///   <p>Prevents NuGet from using cached packages. See <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders">Managing the global packages and cache folders</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoCache<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="NuGetInstallSettings.NoCache"/></em></p>
+        ///   <p>Prevents NuGet from using cached packages. See <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders">Managing the global packages and cache folders</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoCache<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = !toolSettings.NoCache;
+            return toolSettings;
+        }
+        #endregion
+        #region OutputDirectory
+        /// <summary>
+        ///   <p><em>Sets <see cref="NuGetInstallSettings.OutputDirectory"/></em></p>
+        ///   <p>Specifies the folder in which packages are installed. If no folder is specified, the current folder is used.</p>
+        /// </summary>
+        [Pure]
+        public static T SetOutputDirectory<T>(this T toolSettings, string outputDirectory) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OutputDirectory = outputDirectory;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="NuGetInstallSettings.OutputDirectory"/></em></p>
+        ///   <p>Specifies the folder in which packages are installed. If no folder is specified, the current folder is used.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetOutputDirectory<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OutputDirectory = null;
+            return toolSettings;
+        }
+        #endregion
+        #region PackageSaveMode
+        /// <summary>
+        ///   <p><em>Sets <see cref="NuGetInstallSettings.PackageSaveMode"/> to a new list</em></p>
+        ///   <p>Specifies the types of files to save after package installation: one of <c>nuspec</c>, <c>nupkg</c>, or <c>nuspec;nupkg</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPackageSaveMode<T>(this T toolSettings, params PackageSaveMode[] packageSaveMode) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageSaveModeInternal = packageSaveMode.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="NuGetInstallSettings.PackageSaveMode"/> to a new list</em></p>
+        ///   <p>Specifies the types of files to save after package installation: one of <c>nuspec</c>, <c>nupkg</c>, or <c>nuspec;nupkg</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPackageSaveMode<T>(this T toolSettings, IEnumerable<PackageSaveMode> packageSaveMode) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageSaveModeInternal = packageSaveMode.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="NuGetInstallSettings.PackageSaveMode"/></em></p>
+        ///   <p>Specifies the types of files to save after package installation: one of <c>nuspec</c>, <c>nupkg</c>, or <c>nuspec;nupkg</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T AddPackageSaveMode<T>(this T toolSettings, params PackageSaveMode[] packageSaveMode) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageSaveModeInternal.AddRange(packageSaveMode);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="NuGetInstallSettings.PackageSaveMode"/></em></p>
+        ///   <p>Specifies the types of files to save after package installation: one of <c>nuspec</c>, <c>nupkg</c>, or <c>nuspec;nupkg</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T AddPackageSaveMode<T>(this T toolSettings, IEnumerable<PackageSaveMode> packageSaveMode) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageSaveModeInternal.AddRange(packageSaveMode);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="NuGetInstallSettings.PackageSaveMode"/></em></p>
+        ///   <p>Specifies the types of files to save after package installation: one of <c>nuspec</c>, <c>nupkg</c>, or <c>nuspec;nupkg</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearPackageSaveMode<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageSaveModeInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="NuGetInstallSettings.PackageSaveMode"/></em></p>
+        ///   <p>Specifies the types of files to save after package installation: one of <c>nuspec</c>, <c>nupkg</c>, or <c>nuspec;nupkg</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T RemovePackageSaveMode<T>(this T toolSettings, params PackageSaveMode[] packageSaveMode) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<PackageSaveMode>(packageSaveMode);
+            toolSettings.PackageSaveModeInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="NuGetInstallSettings.PackageSaveMode"/></em></p>
+        ///   <p>Specifies the types of files to save after package installation: one of <c>nuspec</c>, <c>nupkg</c>, or <c>nuspec;nupkg</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T RemovePackageSaveMode<T>(this T toolSettings, IEnumerable<PackageSaveMode> packageSaveMode) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<PackageSaveMode>(packageSaveMode);
+            toolSettings.PackageSaveModeInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region PreRelease
+        /// <summary>
+        ///   <p><em>Sets <see cref="NuGetInstallSettings.PreRelease"/></em></p>
+        ///   <p>Allows prerelease packages to be installed. This flag is not required when restoring packages with <c>packages.config</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPreRelease<T>(this T toolSettings, bool? preRelease) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PreRelease = preRelease;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="NuGetInstallSettings.PreRelease"/></em></p>
+        ///   <p>Allows prerelease packages to be installed. This flag is not required when restoring packages with <c>packages.config</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPreRelease<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PreRelease = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="NuGetInstallSettings.PreRelease"/></em></p>
+        ///   <p>Allows prerelease packages to be installed. This flag is not required when restoring packages with <c>packages.config</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T EnablePreRelease<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PreRelease = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="NuGetInstallSettings.PreRelease"/></em></p>
+        ///   <p>Allows prerelease packages to be installed. This flag is not required when restoring packages with <c>packages.config</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T DisablePreRelease<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PreRelease = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="NuGetInstallSettings.PreRelease"/></em></p>
+        ///   <p>Allows prerelease packages to be installed. This flag is not required when restoring packages with <c>packages.config</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T TogglePreRelease<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PreRelease = !toolSettings.PreRelease;
+            return toolSettings;
+        }
+        #endregion
+        #region RequireConsent
+        /// <summary>
+        ///   <p><em>Sets <see cref="NuGetInstallSettings.RequireConsent"/></em></p>
+        ///   <p>Verifies that restoring packages is enabled before downloading and installing the packages. For details, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore">Package Restore</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetRequireConsent<T>(this T toolSettings, bool? requireConsent) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequireConsent = requireConsent;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="NuGetInstallSettings.RequireConsent"/></em></p>
+        ///   <p>Verifies that restoring packages is enabled before downloading and installing the packages. For details, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore">Package Restore</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetRequireConsent<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequireConsent = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="NuGetInstallSettings.RequireConsent"/></em></p>
+        ///   <p>Verifies that restoring packages is enabled before downloading and installing the packages. For details, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore">Package Restore</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableRequireConsent<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequireConsent = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="NuGetInstallSettings.RequireConsent"/></em></p>
+        ///   <p>Verifies that restoring packages is enabled before downloading and installing the packages. For details, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore">Package Restore</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableRequireConsent<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequireConsent = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="NuGetInstallSettings.RequireConsent"/></em></p>
+        ///   <p>Verifies that restoring packages is enabled before downloading and installing the packages. For details, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore">Package Restore</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleRequireConsent<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequireConsent = !toolSettings.RequireConsent;
+            return toolSettings;
+        }
+        #endregion
+        #region SolutionDirectory
+        /// <summary>
+        ///   <p><em>Sets <see cref="NuGetInstallSettings.SolutionDirectory"/></em></p>
+        ///   <p>Specifies root folder of the solution for which to restore packages.</p>
+        /// </summary>
+        [Pure]
+        public static T SetSolutionDirectory<T>(this T toolSettings, string solutionDirectory) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SolutionDirectory = solutionDirectory;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="NuGetInstallSettings.SolutionDirectory"/></em></p>
+        ///   <p>Specifies root folder of the solution for which to restore packages.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetSolutionDirectory<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SolutionDirectory = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Source
+        /// <summary>
+        ///   <p><em>Sets <see cref="NuGetInstallSettings.Source"/> to a new list</em></p>
+        ///   <p>Specifies the list of package sources (as URLs) to use for the restore. If omitted, the command uses the sources provided in configuration files, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Common NuGet configurations</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetSource<T>(this T toolSettings, params string[] source) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceInternal = source.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="NuGetInstallSettings.Source"/> to a new list</em></p>
+        ///   <p>Specifies the list of package sources (as URLs) to use for the restore. If omitted, the command uses the sources provided in configuration files, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Common NuGet configurations</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetSource<T>(this T toolSettings, IEnumerable<string> source) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceInternal = source.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="NuGetInstallSettings.Source"/></em></p>
+        ///   <p>Specifies the list of package sources (as URLs) to use for the restore. If omitted, the command uses the sources provided in configuration files, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Common NuGet configurations</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T AddSource<T>(this T toolSettings, params string[] source) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceInternal.AddRange(source);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="NuGetInstallSettings.Source"/></em></p>
+        ///   <p>Specifies the list of package sources (as URLs) to use for the restore. If omitted, the command uses the sources provided in configuration files, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Common NuGet configurations</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T AddSource<T>(this T toolSettings, IEnumerable<string> source) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceInternal.AddRange(source);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="NuGetInstallSettings.Source"/></em></p>
+        ///   <p>Specifies the list of package sources (as URLs) to use for the restore. If omitted, the command uses the sources provided in configuration files, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Common NuGet configurations</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearSource<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="NuGetInstallSettings.Source"/></em></p>
+        ///   <p>Specifies the list of package sources (as URLs) to use for the restore. If omitted, the command uses the sources provided in configuration files, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Common NuGet configurations</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveSource<T>(this T toolSettings, params string[] source) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(source);
+            toolSettings.SourceInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="NuGetInstallSettings.Source"/></em></p>
+        ///   <p>Specifies the list of package sources (as URLs) to use for the restore. If omitted, the command uses the sources provided in configuration files, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Common NuGet configurations</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveSource<T>(this T toolSettings, IEnumerable<string> source) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(source);
+            toolSettings.SourceInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region Version
+        /// <summary>
+        ///   <p><em>Sets <see cref="NuGetInstallSettings.Version"/></em></p>
+        ///   <p>Specifies the version of the package to install.</p>
+        /// </summary>
+        [Pure]
+        public static T SetVersion<T>(this T toolSettings, string version) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Version = version;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="NuGetInstallSettings.Version"/></em></p>
+        ///   <p>Specifies the version of the package to install.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetVersion<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Version = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ConfigFile
+        /// <summary>
+        ///   <p><em>Sets <see cref="NuGetInstallSettings.ConfigFile"/></em></p>
+        ///   <p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p>
+        /// </summary>
+        [Pure]
+        public static T SetConfigFile<T>(this T toolSettings, string configFile) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = configFile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="NuGetInstallSettings.ConfigFile"/></em></p>
+        ///   <p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetConfigFile<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ForceEnglishOutput
+        /// <summary>
+        ///   <p><em>Sets <see cref="NuGetInstallSettings.ForceEnglishOutput"/></em></p>
+        ///   <p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p>
+        /// </summary>
+        [Pure]
+        public static T SetForceEnglishOutput<T>(this T toolSettings, bool? forceEnglishOutput) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = forceEnglishOutput;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="NuGetInstallSettings.ForceEnglishOutput"/></em></p>
+        ///   <p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetForceEnglishOutput<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="NuGetInstallSettings.ForceEnglishOutput"/></em></p>
+        ///   <p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableForceEnglishOutput<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="NuGetInstallSettings.ForceEnglishOutput"/></em></p>
+        ///   <p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableForceEnglishOutput<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="NuGetInstallSettings.ForceEnglishOutput"/></em></p>
+        ///   <p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleForceEnglishOutput<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = !toolSettings.ForceEnglishOutput;
+            return toolSettings;
+        }
+        #endregion
+        #region NonInteractive
+        /// <summary>
+        ///   <p><em>Sets <see cref="NuGetInstallSettings.NonInteractive"/></em></p>
+        ///   <p>Suppresses prompts for user input or confirmations.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNonInteractive<T>(this T toolSettings, bool? nonInteractive) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = nonInteractive;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="NuGetInstallSettings.NonInteractive"/></em></p>
+        ///   <p>Suppresses prompts for user input or confirmations.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNonInteractive<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="NuGetInstallSettings.NonInteractive"/></em></p>
+        ///   <p>Suppresses prompts for user input or confirmations.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNonInteractive<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="NuGetInstallSettings.NonInteractive"/></em></p>
+        ///   <p>Suppresses prompts for user input or confirmations.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNonInteractive<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="NuGetInstallSettings.NonInteractive"/></em></p>
+        ///   <p>Suppresses prompts for user input or confirmations.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNonInteractive<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = !toolSettings.NonInteractive;
+            return toolSettings;
+        }
+        #endregion
+        #region Verbosity
+        /// <summary>
+        ///   <p><em>Sets <see cref="NuGetInstallSettings.Verbosity"/></em></p>
+        ///   <p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetVerbosity<T>(this T toolSettings, NuGetVerbosity verbosity) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = verbosity;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="NuGetInstallSettings.Verbosity"/></em></p>
+        ///   <p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetVerbosity<T>(this T toolSettings) where T : NuGetInstallSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
     #region NuGetSourcesAddSettingsExtensions
     /// <summary>
     ///   Used within <see cref="NuGetTasks"/>.
@@ -5001,6 +6056,27 @@ namespace Nuke.Common.Tools.NuGet
         public static explicit operator NuGetSourcesListFormat(string value)
         {
             return new NuGetSourcesListFormat { Value = value };
+        }
+    }
+    #endregion
+    #region DependencyVersion
+    /// <summary>
+    ///   Used within <see cref="NuGetTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [Serializable]
+    [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<DependencyVersion>))]
+    public partial class DependencyVersion : Enumeration
+    {
+        public static DependencyVersion Lowest = (DependencyVersion) "Lowest";
+        public static DependencyVersion HighestPatch = (DependencyVersion) "HighestPatch";
+        public static DependencyVersion HighestMinor = (DependencyVersion) "HighestMinor";
+        public static DependencyVersion Highest = (DependencyVersion) "Highest";
+        public static DependencyVersion Ignore = (DependencyVersion) "Ignore";
+        public static explicit operator DependencyVersion(string value)
+        {
+            return new DependencyVersion { Value = value };
         }
     }
     #endregion

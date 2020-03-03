@@ -49,6 +49,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;projectFile&gt;</c> via <see cref="DotNetTestSettings.ProjectFile"/></li>
+        ///     <li><c>--blame</c> via <see cref="DotNetTestSettings.BlameMode"/></li>
         ///     <li><c>--collect</c> via <see cref="DotNetTestSettings.DataCollector"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetTestSettings.Configuration"/></li>
         ///     <li><c>--diag</c> via <see cref="DotNetTestSettings.DiagnosticsFile"/></li>
@@ -93,6 +94,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;projectFile&gt;</c> via <see cref="DotNetTestSettings.ProjectFile"/></li>
+        ///     <li><c>--blame</c> via <see cref="DotNetTestSettings.BlameMode"/></li>
         ///     <li><c>--collect</c> via <see cref="DotNetTestSettings.DataCollector"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetTestSettings.Configuration"/></li>
         ///     <li><c>--diag</c> via <see cref="DotNetTestSettings.DiagnosticsFile"/></li>
@@ -134,6 +136,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;projectFile&gt;</c> via <see cref="DotNetTestSettings.ProjectFile"/></li>
+        ///     <li><c>--blame</c> via <see cref="DotNetTestSettings.BlameMode"/></li>
         ///     <li><c>--collect</c> via <see cref="DotNetTestSettings.DataCollector"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetTestSettings.Configuration"/></li>
         ///     <li><c>--diag</c> via <see cref="DotNetTestSettings.DiagnosticsFile"/></li>
@@ -383,6 +386,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--no-cache</c> via <see cref="DotNetPackSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetPackSettings.NoDependencies"/></li>
         ///     <li><c>--no-restore</c> via <see cref="DotNetPackSettings.NoRestore"/></li>
+        ///     <li><c>--nologo</c> via <see cref="DotNetPackSettings.NoLogo"/></li>
         ///     <li><c>--output</c> via <see cref="DotNetPackSettings.OutputDirectory"/></li>
         ///     <li><c>--packages</c> via <see cref="DotNetPackSettings.PackageDirectory"/></li>
         ///     <li><c>--runtime</c> via <see cref="DotNetPackSettings.Runtime"/></li>
@@ -422,6 +426,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--no-cache</c> via <see cref="DotNetPackSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetPackSettings.NoDependencies"/></li>
         ///     <li><c>--no-restore</c> via <see cref="DotNetPackSettings.NoRestore"/></li>
+        ///     <li><c>--nologo</c> via <see cref="DotNetPackSettings.NoLogo"/></li>
         ///     <li><c>--output</c> via <see cref="DotNetPackSettings.OutputDirectory"/></li>
         ///     <li><c>--packages</c> via <see cref="DotNetPackSettings.PackageDirectory"/></li>
         ///     <li><c>--runtime</c> via <see cref="DotNetPackSettings.Runtime"/></li>
@@ -458,6 +463,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--no-cache</c> via <see cref="DotNetPackSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetPackSettings.NoDependencies"/></li>
         ///     <li><c>--no-restore</c> via <see cref="DotNetPackSettings.NoRestore"/></li>
+        ///     <li><c>--nologo</c> via <see cref="DotNetPackSettings.NoLogo"/></li>
         ///     <li><c>--output</c> via <see cref="DotNetPackSettings.OutputDirectory"/></li>
         ///     <li><c>--packages</c> via <see cref="DotNetPackSettings.PackageDirectory"/></li>
         ///     <li><c>--runtime</c> via <see cref="DotNetPackSettings.Runtime"/></li>
@@ -493,6 +499,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetBuildSettings.NoDependencies"/></li>
         ///     <li><c>--no-incremental</c> via <see cref="DotNetBuildSettings.NoIncremental"/></li>
         ///     <li><c>--no-restore</c> via <see cref="DotNetBuildSettings.NoRestore"/></li>
+        ///     <li><c>--nologo</c> via <see cref="DotNetBuildSettings.NoLogo"/></li>
         ///     <li><c>--output</c> via <see cref="DotNetBuildSettings.OutputDirectory"/></li>
         ///     <li><c>--packages</c> via <see cref="DotNetBuildSettings.PackageDirectory"/></li>
         ///     <li><c>--runtime</c> via <see cref="DotNetBuildSettings.Runtime"/></li>
@@ -532,6 +539,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetBuildSettings.NoDependencies"/></li>
         ///     <li><c>--no-incremental</c> via <see cref="DotNetBuildSettings.NoIncremental"/></li>
         ///     <li><c>--no-restore</c> via <see cref="DotNetBuildSettings.NoRestore"/></li>
+        ///     <li><c>--nologo</c> via <see cref="DotNetBuildSettings.NoLogo"/></li>
         ///     <li><c>--output</c> via <see cref="DotNetBuildSettings.OutputDirectory"/></li>
         ///     <li><c>--packages</c> via <see cref="DotNetBuildSettings.PackageDirectory"/></li>
         ///     <li><c>--runtime</c> via <see cref="DotNetBuildSettings.Runtime"/></li>
@@ -568,6 +576,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetBuildSettings.NoDependencies"/></li>
         ///     <li><c>--no-incremental</c> via <see cref="DotNetBuildSettings.NoIncremental"/></li>
         ///     <li><c>--no-restore</c> via <see cref="DotNetBuildSettings.NoRestore"/></li>
+        ///     <li><c>--nologo</c> via <see cref="DotNetBuildSettings.NoLogo"/></li>
         ///     <li><c>--output</c> via <see cref="DotNetBuildSettings.OutputDirectory"/></li>
         ///     <li><c>--packages</c> via <see cref="DotNetBuildSettings.PackageDirectory"/></li>
         ///     <li><c>--runtime</c> via <see cref="DotNetBuildSettings.Runtime"/></li>
@@ -594,6 +603,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>&lt;project&gt;</c> via <see cref="DotNetCleanSettings.Project"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetCleanSettings.Configuration"/></li>
         ///     <li><c>--framework</c> via <see cref="DotNetCleanSettings.Framework"/></li>
+        ///     <li><c>--nologo</c> via <see cref="DotNetCleanSettings.NoLogo"/></li>
         ///     <li><c>--output</c> via <see cref="DotNetCleanSettings.Output"/></li>
         ///     <li><c>--runtime</c> via <see cref="DotNetCleanSettings.Runtime"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetCleanSettings.Verbosity"/></li>
@@ -617,6 +627,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>&lt;project&gt;</c> via <see cref="DotNetCleanSettings.Project"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetCleanSettings.Configuration"/></li>
         ///     <li><c>--framework</c> via <see cref="DotNetCleanSettings.Framework"/></li>
+        ///     <li><c>--nologo</c> via <see cref="DotNetCleanSettings.NoLogo"/></li>
         ///     <li><c>--output</c> via <see cref="DotNetCleanSettings.Output"/></li>
         ///     <li><c>--runtime</c> via <see cref="DotNetCleanSettings.Runtime"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetCleanSettings.Verbosity"/></li>
@@ -637,6 +648,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>&lt;project&gt;</c> via <see cref="DotNetCleanSettings.Project"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetCleanSettings.Configuration"/></li>
         ///     <li><c>--framework</c> via <see cref="DotNetCleanSettings.Framework"/></li>
+        ///     <li><c>--nologo</c> via <see cref="DotNetCleanSettings.NoLogo"/></li>
         ///     <li><c>--output</c> via <see cref="DotNetCleanSettings.Output"/></li>
         ///     <li><c>--runtime</c> via <see cref="DotNetCleanSettings.Runtime"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetCleanSettings.Verbosity"/></li>
@@ -769,7 +781,9 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--api-key</c> via <see cref="DotNetNuGetPushSettings.ApiKey"/></li>
         ///     <li><c>--disable-buffering</c> via <see cref="DotNetNuGetPushSettings.DisableBuffering"/></li>
         ///     <li><c>--force-english-output</c> via <see cref="DotNetNuGetPushSettings.ForceEnglishOutput"/></li>
+        ///     <li><c>--no-service-endpoint</c> via <see cref="DotNetNuGetPushSettings.NoServiceEndpoint"/></li>
         ///     <li><c>--no-symbols</c> via <see cref="DotNetNuGetPushSettings.NoSymbols"/></li>
+        ///     <li><c>--skip-duplicate</c> via <see cref="DotNetNuGetPushSettings.SkipDuplicate"/></li>
         ///     <li><c>--source</c> via <see cref="DotNetNuGetPushSettings.Source"/></li>
         ///     <li><c>--symbol-api-key</c> via <see cref="DotNetNuGetPushSettings.SymbolApiKey"/></li>
         ///     <li><c>--symbol-source</c> via <see cref="DotNetNuGetPushSettings.SymbolSource"/></li>
@@ -794,7 +808,9 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--api-key</c> via <see cref="DotNetNuGetPushSettings.ApiKey"/></li>
         ///     <li><c>--disable-buffering</c> via <see cref="DotNetNuGetPushSettings.DisableBuffering"/></li>
         ///     <li><c>--force-english-output</c> via <see cref="DotNetNuGetPushSettings.ForceEnglishOutput"/></li>
+        ///     <li><c>--no-service-endpoint</c> via <see cref="DotNetNuGetPushSettings.NoServiceEndpoint"/></li>
         ///     <li><c>--no-symbols</c> via <see cref="DotNetNuGetPushSettings.NoSymbols"/></li>
+        ///     <li><c>--skip-duplicate</c> via <see cref="DotNetNuGetPushSettings.SkipDuplicate"/></li>
         ///     <li><c>--source</c> via <see cref="DotNetNuGetPushSettings.Source"/></li>
         ///     <li><c>--symbol-api-key</c> via <see cref="DotNetNuGetPushSettings.SymbolApiKey"/></li>
         ///     <li><c>--symbol-source</c> via <see cref="DotNetNuGetPushSettings.SymbolSource"/></li>
@@ -816,7 +832,9 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--api-key</c> via <see cref="DotNetNuGetPushSettings.ApiKey"/></li>
         ///     <li><c>--disable-buffering</c> via <see cref="DotNetNuGetPushSettings.DisableBuffering"/></li>
         ///     <li><c>--force-english-output</c> via <see cref="DotNetNuGetPushSettings.ForceEnglishOutput"/></li>
+        ///     <li><c>--no-service-endpoint</c> via <see cref="DotNetNuGetPushSettings.NoServiceEndpoint"/></li>
         ///     <li><c>--no-symbols</c> via <see cref="DotNetNuGetPushSettings.NoSymbols"/></li>
+        ///     <li><c>--skip-duplicate</c> via <see cref="DotNetNuGetPushSettings.SkipDuplicate"/></li>
         ///     <li><c>--source</c> via <see cref="DotNetNuGetPushSettings.Source"/></li>
         ///     <li><c>--symbol-api-key</c> via <see cref="DotNetNuGetPushSettings.SymbolApiKey"/></li>
         ///     <li><c>--symbol-source</c> via <see cref="DotNetNuGetPushSettings.SymbolSource"/></li>
@@ -1091,6 +1109,10 @@ namespace Nuke.Common.Tools.DotNet
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
+        ///   Runs the tests in blame mode. This option is helpful in isolating the problematic tests causing test host to crash. It creates an output file in the current directory as <em>Sequence.xml</em> that captures the order of tests execution before the crash.
+        /// </summary>
+        public virtual bool? BlameMode { get; internal set; }
+        /// <summary>
         ///   Disables restoring multiple projects in parallel.
         /// </summary>
         public virtual bool? DisableParallel { get; internal set; }
@@ -1159,6 +1181,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--list-tests", ListTests)
               .Add("--verbosity {value}", Verbosity)
               .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';')
+              .Add("--blame", BlameMode)
               .Add("--disable-parallel", DisableParallel)
               .Add("--force", Force)
               .Add("--ignore-failed-sources", IgnoreFailedSources)
@@ -1463,6 +1486,10 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual string VersionSuffix { get; internal set; }
         /// <summary>
+        ///   Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.
+        /// </summary>
+        public virtual bool? NoLogo { get; internal set; }
+        /// <summary>
         ///   Disables restoring multiple projects in parallel.
         /// </summary>
         public virtual bool? DisableParallel { get; internal set; }
@@ -1530,6 +1557,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--serviceable", Serviceable)
               .Add("--verbosity {value}", Verbostiy)
               .Add("--version-suffix {value}", VersionSuffix)
+              .Add("--nologo", NoLogo)
               .Add("--disable-parallel", DisableParallel)
               .Add("--force", Force)
               .Add("--ignore-failed-sources", IgnoreFailedSources)
@@ -1607,6 +1635,10 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual bool? NoConsoleLogger { get; internal set; }
         /// <summary>
+        ///   Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.
+        /// </summary>
+        public virtual bool? NoLogo { get; internal set; }
+        /// <summary>
         ///   Disables restoring multiple projects in parallel.
         /// </summary>
         public virtual bool? DisableParallel { get; internal set; }
@@ -1671,6 +1703,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--version-suffix {value}", VersionSuffix)
               .Add("/logger:{value}", Loggers)
               .Add("/noconsolelogger", NoConsoleLogger)
+              .Add("--nologo", NoLogo)
               .Add("--disable-parallel", DisableParallel)
               .Add("--force", Force)
               .Add("--ignore-failed-sources", IgnoreFailedSources)
@@ -1726,6 +1759,10 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual DotNetVerbosity Verbosity { get; internal set; }
         /// <summary>
+        ///   Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.
+        /// </summary>
+        public virtual bool? NoLogo { get; internal set; }
+        /// <summary>
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
@@ -1740,6 +1777,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--output {value}", Output)
               .Add("--runtime {value}", Runtime)
               .Add("--verbosity {value}", Verbosity)
+              .Add("--nologo", NoLogo)
               .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
             return base.ConfigureArguments(arguments);
         }
@@ -1934,6 +1972,14 @@ namespace Nuke.Common.Tools.DotNet
         ///   Forces all logged output in English.
         /// </summary>
         public virtual bool? ForceEnglishOutput { get; internal set; }
+        /// <summary>
+        ///   When pushing multiple packages to an HTTP(S) server, treats any 409 Conflict response as a warning so that the push can continue. Available since .NET Core 3.1 SDK.
+        /// </summary>
+        public virtual bool? SkipDuplicate { get; internal set; }
+        /// <summary>
+        ///   Doesn't append <c>api/v2/package</c> to the source URL. Option available since .NET Core 2.1 SDK.
+        /// </summary>
+        public virtual bool? NoServiceEndpoint { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -1946,7 +1992,9 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--symbol-api-key {value}", SymbolApiKey, secret: true)
               .Add("--disable-buffering", DisableBuffering)
               .Add("--no-symbols", NoSymbols)
-              .Add("--force-english-output", ForceEnglishOutput);
+              .Add("--force-english-output", ForceEnglishOutput)
+              .Add("--skip-duplicate", SkipDuplicate)
+              .Add("--no-service-endpoint", NoServiceEndpoint);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -2635,6 +2683,63 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal[propertyKey] = propertyValue;
+            return toolSettings;
+        }
+        #endregion
+        #region BlameMode
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetTestSettings.BlameMode"/></em></p>
+        ///   <p>Runs the tests in blame mode. This option is helpful in isolating the problematic tests causing test host to crash. It creates an output file in the current directory as <em>Sequence.xml</em> that captures the order of tests execution before the crash.</p>
+        /// </summary>
+        [Pure]
+        public static T SetBlameMode<T>(this T toolSettings, bool? blameMode) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameMode = blameMode;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetTestSettings.BlameMode"/></em></p>
+        ///   <p>Runs the tests in blame mode. This option is helpful in isolating the problematic tests causing test host to crash. It creates an output file in the current directory as <em>Sequence.xml</em> that captures the order of tests execution before the crash.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetBlameMode<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameMode = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetTestSettings.BlameMode"/></em></p>
+        ///   <p>Runs the tests in blame mode. This option is helpful in isolating the problematic tests causing test host to crash. It creates an output file in the current directory as <em>Sequence.xml</em> that captures the order of tests execution before the crash.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableBlameMode<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameMode = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetTestSettings.BlameMode"/></em></p>
+        ///   <p>Runs the tests in blame mode. This option is helpful in isolating the problematic tests causing test host to crash. It creates an output file in the current directory as <em>Sequence.xml</em> that captures the order of tests execution before the crash.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableBlameMode<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameMode = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetTestSettings.BlameMode"/></em></p>
+        ///   <p>Runs the tests in blame mode. This option is helpful in isolating the problematic tests causing test host to crash. It creates an output file in the current directory as <em>Sequence.xml</em> that captures the order of tests execution before the crash.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleBlameMode<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameMode = !toolSettings.BlameMode;
             return toolSettings;
         }
         #endregion
@@ -7167,6 +7272,63 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region NoLogo
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetPackSettings.NoLogo"/></em></p>
+        ///   <p>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoLogo<T>(this T toolSettings, bool? noLogo) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = noLogo;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetPackSettings.NoLogo"/></em></p>
+        ///   <p>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoLogo<T>(this T toolSettings) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetPackSettings.NoLogo"/></em></p>
+        ///   <p>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoLogo<T>(this T toolSettings) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetPackSettings.NoLogo"/></em></p>
+        ///   <p>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoLogo<T>(this T toolSettings) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetPackSettings.NoLogo"/></em></p>
+        ///   <p>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoLogo<T>(this T toolSettings) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = !toolSettings.NoLogo;
+            return toolSettings;
+        }
+        #endregion
         #region DisableParallel
         /// <summary>
         ///   <p><em>Sets <see cref="DotNetPackSettings.DisableParallel"/></em></p>
@@ -9158,6 +9320,63 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region NoLogo
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetBuildSettings.NoLogo"/></em></p>
+        ///   <p>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoLogo<T>(this T toolSettings, bool? noLogo) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = noLogo;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetBuildSettings.NoLogo"/></em></p>
+        ///   <p>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoLogo<T>(this T toolSettings) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetBuildSettings.NoLogo"/></em></p>
+        ///   <p>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoLogo<T>(this T toolSettings) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetBuildSettings.NoLogo"/></em></p>
+        ///   <p>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoLogo<T>(this T toolSettings) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetBuildSettings.NoLogo"/></em></p>
+        ///   <p>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoLogo<T>(this T toolSettings) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = !toolSettings.NoLogo;
+            return toolSettings;
+        }
+        #endregion
         #region DisableParallel
         /// <summary>
         ///   <p><em>Sets <see cref="DotNetBuildSettings.DisableParallel"/></em></p>
@@ -10846,6 +11065,63 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = null;
+            return toolSettings;
+        }
+        #endregion
+        #region NoLogo
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetCleanSettings.NoLogo"/></em></p>
+        ///   <p>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoLogo<T>(this T toolSettings, bool? noLogo) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = noLogo;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetCleanSettings.NoLogo"/></em></p>
+        ///   <p>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoLogo<T>(this T toolSettings) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetCleanSettings.NoLogo"/></em></p>
+        ///   <p>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoLogo<T>(this T toolSettings) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetCleanSettings.NoLogo"/></em></p>
+        ///   <p>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoLogo<T>(this T toolSettings) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetCleanSettings.NoLogo"/></em></p>
+        ///   <p>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoLogo<T>(this T toolSettings) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = !toolSettings.NoLogo;
             return toolSettings;
         }
         #endregion
@@ -14033,6 +14309,120 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEnglishOutput = !toolSettings.ForceEnglishOutput;
+            return toolSettings;
+        }
+        #endregion
+        #region SkipDuplicate
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetNuGetPushSettings.SkipDuplicate"/></em></p>
+        ///   <p>When pushing multiple packages to an HTTP(S) server, treats any 409 Conflict response as a warning so that the push can continue. Available since .NET Core 3.1 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T SetSkipDuplicate<T>(this T toolSettings, bool? skipDuplicate) where T : DotNetNuGetPushSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipDuplicate = skipDuplicate;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetNuGetPushSettings.SkipDuplicate"/></em></p>
+        ///   <p>When pushing multiple packages to an HTTP(S) server, treats any 409 Conflict response as a warning so that the push can continue. Available since .NET Core 3.1 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetSkipDuplicate<T>(this T toolSettings) where T : DotNetNuGetPushSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipDuplicate = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetNuGetPushSettings.SkipDuplicate"/></em></p>
+        ///   <p>When pushing multiple packages to an HTTP(S) server, treats any 409 Conflict response as a warning so that the push can continue. Available since .NET Core 3.1 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableSkipDuplicate<T>(this T toolSettings) where T : DotNetNuGetPushSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipDuplicate = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetNuGetPushSettings.SkipDuplicate"/></em></p>
+        ///   <p>When pushing multiple packages to an HTTP(S) server, treats any 409 Conflict response as a warning so that the push can continue. Available since .NET Core 3.1 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableSkipDuplicate<T>(this T toolSettings) where T : DotNetNuGetPushSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipDuplicate = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetNuGetPushSettings.SkipDuplicate"/></em></p>
+        ///   <p>When pushing multiple packages to an HTTP(S) server, treats any 409 Conflict response as a warning so that the push can continue. Available since .NET Core 3.1 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleSkipDuplicate<T>(this T toolSettings) where T : DotNetNuGetPushSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipDuplicate = !toolSettings.SkipDuplicate;
+            return toolSettings;
+        }
+        #endregion
+        #region NoServiceEndpoint
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetNuGetPushSettings.NoServiceEndpoint"/></em></p>
+        ///   <p>Doesn't append <c>api/v2/package</c> to the source URL. Option available since .NET Core 2.1 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoServiceEndpoint<T>(this T toolSettings, bool? noServiceEndpoint) where T : DotNetNuGetPushSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoServiceEndpoint = noServiceEndpoint;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetNuGetPushSettings.NoServiceEndpoint"/></em></p>
+        ///   <p>Doesn't append <c>api/v2/package</c> to the source URL. Option available since .NET Core 2.1 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoServiceEndpoint<T>(this T toolSettings) where T : DotNetNuGetPushSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoServiceEndpoint = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetNuGetPushSettings.NoServiceEndpoint"/></em></p>
+        ///   <p>Doesn't append <c>api/v2/package</c> to the source URL. Option available since .NET Core 2.1 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoServiceEndpoint<T>(this T toolSettings) where T : DotNetNuGetPushSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoServiceEndpoint = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetNuGetPushSettings.NoServiceEndpoint"/></em></p>
+        ///   <p>Doesn't append <c>api/v2/package</c> to the source URL. Option available since .NET Core 2.1 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoServiceEndpoint<T>(this T toolSettings) where T : DotNetNuGetPushSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoServiceEndpoint = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetNuGetPushSettings.NoServiceEndpoint"/></em></p>
+        ///   <p>Doesn't append <c>api/v2/package</c> to the source URL. Option available since .NET Core 2.1 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoServiceEndpoint<T>(this T toolSettings) where T : DotNetNuGetPushSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoServiceEndpoint = !toolSettings.NoServiceEndpoint;
             return toolSettings;
         }
         #endregion
