@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
-## [0.24.3] / 2020-03-03
+## [0.24.4] / 2020-03-03
 - Fixed Refit version
 - Fixed conversion of `GitHubActionsTrigger`
 - Fixed project default includes to check existence of files
@@ -543,7 +543,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Fixed background color in console output
 
 [vNext]: https://github.com/nuke-build/nuke/compare/0.24.3...HEAD
-[0.24.3]: https://github.com/nuke-build/nuke/compare/0.24.2...0.24.3
+[0.24.4]: https://github.com/nuke-build/nuke/compare/0.24.2...0.24.4
 [0.24.2]: https://github.com/nuke-build/nuke/compare/0.24.1...0.24.2
 [0.24.1]: https://github.com/nuke-build/nuke/compare/0.24.0...0.24.1
 [0.24.0]: https://github.com/nuke-build/nuke/compare/0.23.7...0.24.0
