@@ -159,6 +159,7 @@ namespace Nuke.Common.Tools.DotCover
         ///     <li><c>/LogFile</c> via <see cref="DotCoverCoverSettings.LogFile"/></li>
         ///     <li><c>/Output</c> via <see cref="DotCoverCoverSettings.OutputFile"/></li>
         ///     <li><c>/ProcessFilters</c> via <see cref="DotCoverCoverSettings.ProcessFilters"/></li>
+        ///     <li><c>/ReportType</c> via <see cref="DotCoverCoverSettings.ReportType"/></li>
         ///     <li><c>/ReturnTargetExitCode</c> via <see cref="DotCoverCoverSettings.ReturnTargetExitCode"/></li>
         ///     <li><c>/Scope</c> via <see cref="DotCoverCoverSettings.Scope"/></li>
         ///     <li><c>/SymbolSearchPaths</c> via <see cref="DotCoverCoverSettings.SymbolSearchPaths"/></li>
@@ -192,6 +193,7 @@ namespace Nuke.Common.Tools.DotCover
         ///     <li><c>/LogFile</c> via <see cref="DotCoverCoverSettings.LogFile"/></li>
         ///     <li><c>/Output</c> via <see cref="DotCoverCoverSettings.OutputFile"/></li>
         ///     <li><c>/ProcessFilters</c> via <see cref="DotCoverCoverSettings.ProcessFilters"/></li>
+        ///     <li><c>/ReportType</c> via <see cref="DotCoverCoverSettings.ReportType"/></li>
         ///     <li><c>/ReturnTargetExitCode</c> via <see cref="DotCoverCoverSettings.ReturnTargetExitCode"/></li>
         ///     <li><c>/Scope</c> via <see cref="DotCoverCoverSettings.Scope"/></li>
         ///     <li><c>/SymbolSearchPaths</c> via <see cref="DotCoverCoverSettings.SymbolSearchPaths"/></li>
@@ -222,6 +224,7 @@ namespace Nuke.Common.Tools.DotCover
         ///     <li><c>/LogFile</c> via <see cref="DotCoverCoverSettings.LogFile"/></li>
         ///     <li><c>/Output</c> via <see cref="DotCoverCoverSettings.OutputFile"/></li>
         ///     <li><c>/ProcessFilters</c> via <see cref="DotCoverCoverSettings.ProcessFilters"/></li>
+        ///     <li><c>/ReportType</c> via <see cref="DotCoverCoverSettings.ReportType"/></li>
         ///     <li><c>/ReturnTargetExitCode</c> via <see cref="DotCoverCoverSettings.ReturnTargetExitCode"/></li>
         ///     <li><c>/Scope</c> via <see cref="DotCoverCoverSettings.Scope"/></li>
         ///     <li><c>/SymbolSearchPaths</c> via <see cref="DotCoverCoverSettings.SymbolSearchPaths"/></li>
@@ -597,6 +600,10 @@ namespace Nuke.Common.Tools.DotCover
         /// </summary>
         public virtual string OutputFile { get; internal set; }
         /// <summary>
+        ///   A type of the report. The default value is <c>XML</c>.
+        /// </summary>
+        public virtual DotCoverReportType ReportType { get; internal set; }
+        /// <summary>
         ///   File name of the program to analyse.
         /// </summary>
         public virtual string TargetExecutable { get; internal set; }
@@ -667,6 +674,7 @@ namespace Nuke.Common.Tools.DotCover
               .Add("cover")
               .Add("{value}", Configuration)
               .Add("/Output={value}", OutputFile)
+              .Add("/ReportType={value}", ReportType)
               .Add("/TargetExecutable={value}", TargetExecutable)
               .Add("/TargetArguments={value}", TargetArguments)
               .Add("/TargetWorkingDir={value}", TargetWorkingDirectory)
@@ -1853,6 +1861,30 @@ namespace Nuke.Common.Tools.DotCover
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ReportType
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverSettings.ReportType"/></em></p>
+        ///   <p>A type of the report. The default value is <c>XML</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetReportType<T>(this T toolSettings, DotCoverReportType reportType) where T : DotCoverCoverSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReportType = reportType;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotCoverCoverSettings.ReportType"/></em></p>
+        ///   <p>A type of the report. The default value is <c>XML</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetReportType<T>(this T toolSettings) where T : DotCoverCoverSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReportType = null;
             return toolSettings;
         }
         #endregion
@@ -3350,6 +3382,7 @@ namespace Nuke.Common.Tools.DotCover
         public static DotCoverReportType Json = (DotCoverReportType) "Json";
         public static DotCoverReportType Xml = (DotCoverReportType) "Xml";
         public static DotCoverReportType DetailedXml = (DotCoverReportType) "DetailedXml";
+        public static DotCoverReportType NDependXML = (DotCoverReportType) "NDependXML";
         public static explicit operator DotCoverReportType(string value)
         {
             return new DotCoverReportType { Value = value };
