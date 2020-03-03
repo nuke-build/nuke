@@ -5,6 +5,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed Refit version
+- Fixed conversion of `GitHubActionsTrigger`
+- Fixed project default includes to check existence of files
+- Fixed projects to target `netcoreapp2.1`
+- Fixed configuration generation to allow multiple configurations per host type
+- Fixed `AzurePipelinesAttribute` to allow setting a configuration suffix
+- Fixed CI server detection to ignore empty environment variables
+- Fixed `TeamCityOutputSink` to not report errors as build problems
+- Fixed custom logger for `NpmTasks`
+- Fixed custom logger for `DockerTasks`
+- Fixed missing NuGet install task
+- Fixed missing `Framework` property in `OctopusTasks`
+- Fixed missing `ReportType` in `DotCoverTasks`
+- Fixed missing properties in `DotNetTasks`
 
 ## [0.24.2] / 2020-02-15
 - Fixed extension methods for settings with base type
