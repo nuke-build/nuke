@@ -34,6 +34,7 @@ namespace Nuke.Common.CI.AzurePipelines
         private string ConfigurationFileName => _suffix != null ? $"azure-pipelines.{_suffix}.yml" : "azure-pipelines.yml";
         private string ConfigurationFile => NukeBuild.RootDirectory / ConfigurationFileName;
 
+        public override string IdPostfix => _suffix;
         public override HostType HostType => HostType.AzurePipelines;
         public override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
         public override IEnumerable<string> RelevantTargetNames => InvokedTargets;
