@@ -125,6 +125,12 @@
             "itemFormat": "{key}={value}",
             "disallowedCharacter": ";",
             "help": "<p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\\Debug</c></p>"
+          },
+          {
+            "name": "BlameMode",
+            "type": "bool",
+            "format": "--blame",
+            "help": "Runs the tests in blame mode. This option is helpful in isolating the problematic tests causing test host to crash. It creates an output file in the current directory as <em>Sequence.xml</em> that captures the order of tests execution before the crash."
           }
         ]
       }
@@ -293,6 +299,12 @@
             "type": "string",
             "format": "--version-suffix {value}",
             "help": "Defines the value for the <c>$(VersionSuffix)</c> MSBuild property in the project."
+          },
+          {
+            "name": "NoLogo",
+            "type": "bool",
+            "format": "--nologo",
+            "help": "Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK."
           }
         ]
       }
@@ -372,6 +384,12 @@
             "type": "bool",
             "format": "/noconsolelogger",
             "help": "Disable the default console logger, and don't log events to the console."
+          },
+          {
+            "name": "NoLogo",
+            "type": "bool",
+            "format": "--nologo",
+            "help": "Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK."
           }
         ]
       }
@@ -418,6 +436,12 @@
             "type": "DotNetVerbosity",
             "format": "--verbosity {value}",
             "help": "Sets the verbosity level of the command. Allowed levels are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]."
+          },
+          {
+            "name": "NoLogo",
+            "type": "bool",
+            "format": "--nologo",
+            "help": "Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK."
           }
         ]
       }
@@ -562,6 +586,18 @@
             "type": "bool",
             "format": "--force-english-output",
             "help": "Forces all logged output in English."
+          },
+          {
+            "name": "SkipDuplicate",
+            "type": "bool",
+            "format": "--skip-duplicate",
+            "help": "When pushing multiple packages to an HTTP(S) server, treats any 409 Conflict response as a warning so that the push can continue. Available since .NET Core 3.1 SDK."
+          },
+          {
+            "name": "NoServiceEndpoint",
+            "type": "bool",
+            "format": "--no-service-endpoint",
+            "help": "Doesn't append <c>api/v2/package</c> to the source URL. Option available since .NET Core 2.1 SDK."
           }
         ]
       }

@@ -59,6 +59,12 @@
             "type": "string",
             "format": "/Output={value}",
             "help": "Path to the resulting coverage snapshot."
+          },
+          {
+            "name": "ReportType",
+            "type": "DotCoverReportType",
+            "format": "/ReportType={value}",
+            "help": "A type of the report. The default value is <c>XML</c>."
           }
         ]
       }
@@ -289,7 +295,8 @@
         "Html",
         "Json",
         "Xml",
-        "DetailedXml"
+        "DetailedXml",
+        "NDependXML"
       ]
     }
   ]

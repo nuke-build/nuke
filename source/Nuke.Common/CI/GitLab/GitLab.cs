@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.GitLab
 {
@@ -21,7 +22,7 @@ namespace Nuke.Common.CI.GitLab
 
         public static GitLab Instance => NukeBuild.Host == HostType.GitLab ? s_instance.Value : null;
 
-        internal static bool IsRunningGitLab => Environment.GetEnvironmentVariable("GITLAB_CI") != null;
+        internal static bool IsRunningGitLab => !Environment.GetEnvironmentVariable("GITLAB_CI").IsNullOrEmpty();
 
         internal GitLab()
         {

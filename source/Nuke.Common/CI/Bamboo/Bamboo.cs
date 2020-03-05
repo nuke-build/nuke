@@ -5,6 +5,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.Bamboo
 {
@@ -20,7 +21,7 @@ namespace Nuke.Common.CI.Bamboo
 
         public static Bamboo Instance => NukeBuild.Host == HostType.Bamboo ? s_instance.Value : null;
 
-        internal static bool IsRunningBamboo => Environment.GetEnvironmentVariable("BAMBOO_SERVER") != null;
+        internal static bool IsRunningBamboo => !Environment.GetEnvironmentVariable("BAMBOO_SERVER").IsNullOrEmpty();
 
         internal Bamboo()
         {
