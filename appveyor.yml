@@ -9,7 +9,7 @@
 #
 #     - To trigger manual generation invoke:
 #
-#         nuke --configure-build-server --host AppVeyor
+#         nuke --generate-configuration AppVeyor --host AppVeyor
 #
 # </auto-generated>
 # ------------------------------------------------------------------------------

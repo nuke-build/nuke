@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.Bitrise
 {
@@ -21,7 +22,7 @@ namespace Nuke.Common.CI.Bitrise
 
         public static Bitrise Instance => NukeBuild.Host == HostType.Bitrise ? s_instance.Value : null;
 
-        internal static bool IsRunningBitrise => Environment.GetEnvironmentVariable("BITRISE_BUILD_URL") != null;
+        internal static bool IsRunningBitrise => !Environment.GetEnvironmentVariable("BITRISE_BUILD_URL").IsNullOrEmpty();
 
         private static DateTime ConvertUnixTimestamp(long timestamp)
         {

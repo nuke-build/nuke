@@ -4,7 +4,8 @@
     "https://raw.githubusercontent.com/NuGet/docs.microsoft.com-nuget/live/docs/tools/cli-ref-pack.md",
     "https://raw.githubusercontent.com/NuGet/docs.microsoft.com-nuget/live/docs/tools/cli-ref-push.md",
     "https://raw.githubusercontent.com/NuGet/docs.microsoft.com-nuget/live/docs/tools/cli-ref-restore.md",
-    "https://raw.githubusercontent.com/NuGet/docs.microsoft.com-nuget/live/docs/tools/cli-ref-sources.md"
+    "https://raw.githubusercontent.com/NuGet/docs.microsoft.com-nuget/live/docs/tools/cli-ref-sources.md",
+    "https://raw.githubusercontent.com/NuGet/docs.microsoft.com-nuget/master/docs/reference/cli-reference/cli-ref-install.md"
   ],
   "name": "NuGet",
   "officialUrl": "https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference",
@@ -359,6 +360,105 @@
       }
     },
     {
+      "postfix": "Install",
+      "commonPropertySets": [
+        "sources"
+      ],
+      "definiteArgument": "install",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "PackageID",
+            "type": "string",
+            "format": "{value}",
+            "help": "Name of the package to install."
+          },
+          {
+            "name": "DependencyVersion",
+            "type": "DependencyVersion",
+            "format": "-DependencyVersion {value}",
+            "help": "<em>(4.4+)</em> The version of the dependency packages to use, which can be one of the following: <ul><li><c>Lowest</c>: (default) the lowest version.</li> <li><c>HighestPatch</c>: the version with the lowest major, lowest minor, highest patch.</li> <li><c>HighestMinor</c>: the version with the lowest major, highest minor, highest patch.</li> <li><c>Highest</c>: the highest version.</li> <li><c>Ignore</c>: No dependency packages will be used.</li></ul>"
+          },
+          {
+            "name": "DisableParallelProcessing",
+            "type": "bool",
+            "format": "-DisableParallelProcessing",
+            "help": "Disables installing multiple packages in parallel."
+          },
+          {
+            "name": "ExcludeVersion",
+            "type": "bool",
+            "format": "-ExcludeVersion",
+            "help": "Installs the package to a folder named with only the package name and not the version number."
+          },
+          {
+            "name": "FallbackSource",
+            "type": "List<string>",
+            "format": "-FallbackSource {value}",
+            "separator": ";",
+            "help": "<em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source."
+          },
+          {
+            "name": "Framework",
+            "type": "string",
+            "format": "-Framework {value}",
+            "help": "<em>(4.4+)</em> Target framework used for selecting dependencies. Defaults to 'Any' if not specified."
+          },
+          {
+            "name": "NoCache",
+            "type": "bool",
+            "format": "-NoCache",
+            "help": "Prevents NuGet from using cached packages. See <a href=\"https://docs.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders\">Managing the global packages and cache folders</a>."
+          },
+          {
+            "name": "OutputDirectory",
+            "type": "string",
+            "format": "-OutputDirectory {value}",
+            "help": "Specifies the folder in which packages are installed. If no folder is specified, the current folder is used."
+          },
+          {
+            "name": "PackageSaveMode",
+            "type": "List<PackageSaveMode>",
+            "format": "-PackageSaveMode {value}",
+            "separator": ";",
+            "help": "Specifies the types of files to save after package installation: one of <c>nuspec</c>, <c>nupkg</c>, or <c>nuspec;nupkg</c>."
+          },
+          {
+            "name": "PreRelease",
+            "type": "bool",
+            "format": "-PreRelease",
+            "help": "Allows prerelease packages to be installed. This flag is not required when restoring packages with <c>packages.config</c>."
+          },
+          {
+            "name": "RequireConsent",
+            "type": "bool",
+            "format": "-RequireConsent",
+            "help": "Verifies that restoring packages is enabled before downloading and installing the packages. For details, see <a href=\"https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore\">Package Restore</a>."
+          },
+          {
+            "name": "SolutionDirectory",
+            "type": "string",
+            "format": "-SolutionDirectory {value}",
+            "help": "Specifies root folder of the solution for which to restore packages."
+          },
+          {
+            "name": "Source",
+            "type": "List<string>",
+            "format": "-Source {value}",
+            "separator": ";",
+            "help": "Specifies the list of package sources (as URLs) to use for the restore. If omitted, the command uses the sources provided in configuration files, see <a href=\"https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior\">Common NuGet configurations</a>."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "-Version {value}",
+            "createOverload": true,
+            "help": "Specifies the version of the package to install."
+          }
+        ]
+      }
+    },
+    {
       "postfix": "SourcesAdd",
       "commonPropertySets": [
         "sources",
@@ -523,6 +623,16 @@
       "values": [
         "Detailed",
         "Short"
+      ]
+    },
+    {
+      "name": "DependencyVersion",
+      "values": [
+        "Lowest",
+        "HighestPatch",
+        "HighestMinor",
+        "Highest",
+        "Ignore"
       ]
     }
   ]

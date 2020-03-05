@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
+using Nuke.Common.CI;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.Bitrise;
@@ -51,6 +52,7 @@ namespace Nuke.Common
     [HandleHelpRequests]
     [HandleShellCompletion]
     [HandleVisualStudioDebugging]
+    [HandleConfigurationGeneration]
     public abstract partial class NukeBuild
     {
         /// <summary>

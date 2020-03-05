@@ -6,6 +6,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.24.4] / 2020-03-05
+- Fixed Refit version
+- Fixed conversion of `GitHubActionsTrigger`
+- Fixed project default includes to check existence of files
+- Fixed projects to target `netcoreapp2.1`
+- Fixed configuration generation to allow multiple configurations per host type
+- Fixed `AzurePipelinesAttribute` to allow setting a configuration suffix
+- Fixed CI server detection to ignore empty environment variables
+- Fixed `TeamCityOutputSink` to not report errors as build problems
+- Fixed custom logger for `NpmTasks`
+- Fixed custom logger for `DockerTasks`
+- Fixed missing NuGet install task
+- Fixed missing `Framework` property in `OctopusTasks`
+- Fixed missing `ReportType` in `DotCoverTasks`
+- Fixed missing properties in `DotNetTasks`
+- Fixed Glob version
+- Fixed `GitVersionAttribute` to avoid duplicated version numbers
+- Fixed `System.ValueTuple` version
+
 ## [0.24.2] / 2020-02-15
 - Fixed extension methods for settings with base type
 - Fixed `SonarScannerTasks` to have `Framework` property
@@ -526,7 +545,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.24.2...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.24.4...HEAD
+[0.24.4]: https://github.com/nuke-build/nuke/compare/0.24.2...0.24.4
 [0.24.2]: https://github.com/nuke-build/nuke/compare/0.24.1...0.24.2
 [0.24.1]: https://github.com/nuke-build/nuke/compare/0.24.0...0.24.1
 [0.24.0]: https://github.com/nuke-build/nuke/compare/0.23.7...0.24.0

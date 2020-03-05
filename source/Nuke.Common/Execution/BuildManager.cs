@@ -37,9 +37,12 @@ namespace Nuke.Common.Execution
             build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpressions);
 
             void ExecuteExtension<TExtension>(Action<TExtension> action)
-                where TExtension : IBuildExtension
-                => build.GetType().GetCustomAttributes()
-                    .OfType<TExtension>().ForEach(action);
+                where TExtension : IBuildExtension =>
+                build.GetType()
+                    .GetCustomAttributes()
+                    .OfType<TExtension>()
+                    .OrderBy(x => x.GetType() == typeof(HandleHelpRequestsAttribute))
+                    .ForEach(action);
 
             try
             {
