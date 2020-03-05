@@ -38,6 +38,9 @@ partial class Build
         .Executes(() =>
         {
             FinalizeChangelog(ChangelogFile, GitVersion.MajorMinorPatch, GitRepository);
+            Logger.Info("Please review CHANGELOG.md and press any key to continue...");
+            System.Console.ReadKey();
+
             Git($"add {ChangelogFile}");
             Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.MajorMinorPatch}\"");
         });
