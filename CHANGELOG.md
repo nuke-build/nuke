@@ -19,6 +19,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Fixed missing `Framework` property in `OctopusTasks`
 - Fixed missing `ReportType` in `DotCoverTasks`
 - Fixed missing properties in `DotNetTasks`
+- Fixed Glob version
+- Fixed `GitVersionAttribute` to avoid duplicated version numbers
+- Fixed `System.ValueTuple` version
 
 ## [0.24.2] / 2020-02-15
 - Fixed extension methods for settings with base type
@@ -540,7 +543,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.24.2...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.24.3...HEAD
+[0.24.4]: https://github.com/nuke-build/nuke/compare/0.24.2...0.24.4
 [0.24.2]: https://github.com/nuke-build/nuke/compare/0.24.1...0.24.2
 [0.24.1]: https://github.com/nuke-build/nuke/compare/0.24.0...0.24.1
 [0.24.0]: https://github.com/nuke-build/nuke/compare/0.23.7...0.24.0
