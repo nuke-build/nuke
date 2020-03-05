@@ -151,7 +151,7 @@ object Test_P1T2 : BuildType({
     steps {
         exec {
             path = "build.cmd"
-            arguments = "Test --skip --test-partition 1"
+            arguments = "DotNetSdk Test --skip --test-partition 1"
         }
     }
     dependencies {
@@ -174,7 +174,7 @@ object Test_P2T2 : BuildType({
     steps {
         exec {
             path = "build.cmd"
-            arguments = "Test --skip --test-partition 2"
+            arguments = "DotNetSdk Test --skip --test-partition 2"
         }
     }
     dependencies {

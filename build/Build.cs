@@ -35,6 +35,8 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
 using static Nuke.Common.Tools.InspectCode.InspectCodeTasks;
 using static Nuke.Common.IO.FileSystemTasks;
+using static Nuke.Common.IO.HttpTasks;
+using static Nuke.Common.Tooling.ProcessTasks;
 using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
 using static Nuke.Common.Tools.Slack.SlackTasks;
 
@@ -49,7 +51,7 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
     VcsTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
     NightlyTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
     ManuallyTriggeredTargets = new[] { nameof(Publish) },
-    NonEntryTargets = new[] { nameof(Restore) },
+    NonEntryTargets = new[] { nameof(Restore), nameof(DotNetSdk) },
     ExcludedTargets = new[] { nameof(Clean) })]
 [GitHubActions(
     "continuous",
@@ -73,7 +75,7 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
     AzurePipelinesImage.WindowsLatest,
     AzurePipelinesImage.MacOsLatest,
     InvokedTargets = new[] { nameof(Test), nameof(Pack) },
-    NonEntryTargets = new[] { nameof(Restore) },
+    NonEntryTargets = new[] { nameof(Restore), nameof(DotNetSdk) },
     ExcludedTargets = new[] { nameof(Clean), nameof(Coverage) })]
 partial class Build : NukeBuild
 {
@@ -168,6 +170,23 @@ partial class Build : NukeBuild
                 .SetOutputDirectory(PackageDirectory)
                 .SetVersion(GitVersion.NuGetVersionV2)
                 .SetPackageReleaseNotes(GetNuGetReleaseNotes(ChangelogFile, GitRepository)));
+        });
+
+    Target DotNetSdk => _ => _
+        .DependentFor(Test)
+        .Executes(() =>
+        {
+            var version = "2.2.101";
+            var scriptFileName = $"dotnet-install.{(EnvironmentInfo.IsWin ? "ps1" : "sh")}";
+            HttpDownloadFile(
+                uri: $"https://raw.githubusercontent.com/dotnet/cli/master/scripts/obtain/{scriptFileName}",
+                path: TemporaryDirectory / scriptFileName);
+            StartProcess(
+                    TemporaryDirectory / scriptFileName,
+                    arguments: EnvironmentInfo.IsWin
+                        ? $"-InstallDir {TemporaryDirectory / $"dotnet-{version}"} -Version {version} -NoPath"
+                        : $"--install-dir {TemporaryDirectory / $"dotnet-{version}"} --version {version} --no-path")
+                .AssertZeroExitCode();
         });
 
     [Partition(2)] readonly Partition TestPartition;
