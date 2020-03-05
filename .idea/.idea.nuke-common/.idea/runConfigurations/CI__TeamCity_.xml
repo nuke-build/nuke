@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="CI [TeamCity]" type="NukeBuildTarget" factoryName="NUKE" singleton="false">
     <option name="EXE_PATH" value="$PROJECT_DIR$/build/bin/Debug/_build.dll" />
-    <option name="PROGRAM_PARAMETERS" value="--configure-build-server --host TeamCity" />
+    <option name="PROGRAM_PARAMETERS" value="--configure-build-server TeamCity --host TeamCity" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/build/bin/Debug" />
     <option name="PASS_PARENT_ENVS" value="1" />
     <option name="USE_EXTERNAL_CONSOLE" value="0" />
