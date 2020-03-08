@@ -160,7 +160,7 @@ namespace Nuke.Common.ChangeLog
         [Pure]
         public static IEnumerable<string> ExtractChangelogSectionNotes(string changelogFile, string tag = null)
         {
-            var content = TextTasks.ReadAllLines(changelogFile).ToList();
+            var content = TextTasks.ReadAllLines(changelogFile).Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
             var sections = GetReleaseSections(content);
             var section = tag == null
                 ? sections.First(x => x.StartIndex < x.EndIndex)
@@ -176,8 +176,10 @@ namespace Nuke.Common.ChangeLog
             bool IsReleaseHead(string str)
                 => str.StartsWith("## ");
 
-            bool IsReleaseContent(string str)
-                => str.StartsWith("###") || str.Trim().StartsWith("-");
+            bool IsReleaseContent(string str) => str.StartsWith("###")
+                                              || str.Trim().StartsWith("-")
+                                              || str.Trim().StartsWith("*")
+                                              || str.Trim().StartsWith("+");
 
             string GetCaption(string str)
                 => str
