@@ -22,7 +22,11 @@ namespace Nuke.Common.ChangeLog
         public static string GetNuGetReleaseNotes(string changelogFile, GitRepository repository = null)
         {
             var changelogSectionNotes = ExtractChangelogSectionNotes(changelogFile)
-                .Select(x => x.Replace("- ", "\u2022 ").Replace("`", string.Empty).Replace(",", "%2C")).ToList();
+                .Select(x => x.Replace("- ", "\u2022 ")
+                              .Replace("* ", "\u2022 ")
+                              .Replace("+ ", "\u2022 ")
+                              .Replace("`", string.Empty)
+                              .Replace(",", "%2C")).ToList();
 
             if (repository.IsGitHubRepository())
             {
