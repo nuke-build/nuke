@@ -1,0 +1,361 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://nuke.build/docs/running-builds/global-tool.html"
+  ],
+  "name": "BenchmarkDotNet",
+  "officialUrl": "https://github.com/dotnet/BenchmarkDotNet",
+  "help": "Powerful .NET library for benchmarking https://benchmarkdotnet.org/",
+  "packageId": "benchmarkdotnet.tool",
+  "packageExecutable": "BenchmarkDotNet.Tool.dll",
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AssemblyFile",
+            "type": "string",
+            "format": "{value}",
+            "help": "The assembly with the benchmarks (required)."
+          },
+          {
+            "name": "Job",
+            "type": "Job",
+            "format": "--job {value}",
+            "default": "Job.Default",
+            "help": "Dry/Short/Medium/Long or Default"
+          },
+          {
+            "name": "Runtimes",
+            "type": "List<string>",
+            "format": "--runtimes {value}",
+            "separator": " ",
+            "quoteMultiple": true,
+            "help": "The assembly with the benchmarks (required)."
+          },
+          {
+            "name": "Exporters",
+            "type": "List<Exporter>",
+            "format": "--exporters {value}",
+            "separator": " ",
+            "quoteMultiple": true,
+            "help": "GitHub/StackOverflow/RPlot/CSV/JSON/HTML/XML"
+          },
+          {
+            "name": "PrintMemoryStats",
+            "type": "bool",
+            "format": "--memory {value}",
+            "default": "false",
+            "help": "Prints memory statistics"
+          },
+          {
+            "name": "PrintThreadingStats",
+            "type": "bool",
+            "format": "--threading {value}",
+            "default": "false",
+            "help": "Prints threading statistics"
+          },
+          {
+            "name": "Disasm",
+            "type": "bool",
+            "format": "--disasm {value}",
+            "default": "false",
+            "help": "Gets disassembly of benchmarked code"
+          },
+          {
+            "name": "Profiler",
+            "type": "string",
+            "format": "--profiler {value}",
+            "help": "Profiles benchmarked code using selected profiler. Currently the only available is \"ETW\" for Windows."
+          },
+          {
+            "name": "Filter",
+            "type": "string",
+            "format": "--filter {value}",
+            "help": "Glob patterns, e.g. *, '*.ClassA.*' '*.ClassB.*'"
+          },
+          {
+            "name": "RunInProcess",
+            "type": "bool",
+            "format": "--inProcess {value}",
+            "default": "false",
+            "help": "Run benchmarks in Process"
+          },
+          {
+            "name": "ArtifactsPath",
+            "type": "string",
+            "format": "--artifacts {value}",
+            "help": "Valid path to accessible directory"
+          },
+          {
+            "name": "Outliers",
+            "type": "OutlierRemoval",
+            "format": "--outliers {value}",
+            "default": "OutlierRemoval.RemoveUpper",
+            "help": "DontRemove/RemoveUpper/RemoveLower/RemoveAll"
+          },
+          {
+            "name": "Affinity",
+            "type": "string",
+            "format": "--affinity {value}",
+            "help": "Affinity mask to set for the benchmark process"
+          },
+          {
+            "name": "DisplayAllStats",
+            "type": "bool",
+            "format": "--allStats {value}",
+            "default": "false",
+            "help": "Displays all statistics (min, max &amp; more)"
+          },
+          {
+            "name": "AllCategories",
+            "type": "bool",
+            "format": "--allCategories {value}",
+            "help": "Categories to run. If few are provided, only the benchmarks which belong to all of them are going to be executed"
+          },
+          {
+            "name": "AnyCategories",
+            "type": "bool",
+            "format": "--anyCategories {value}",
+            "help": "Any Categories to run"
+          },
+          {
+            "name": "Attribute",
+            "type": "bool",
+            "format": "--attribute {value}",
+            "help": "Run all methods with given attribute (applied to class or method)"
+          },
+          {
+            "name": "Join",
+            "type": "bool",
+            "format": "--join {value}",
+            "default": "false",
+            "help": "Prints single table with results for all benchmarks"
+          },
+          {
+            "name": "KeepFiles",
+            "type": "bool",
+            "format": "--keepFiles {value}",
+            "help": "Determines if all auto-generated files should be kept or removed after running the benchmarks."
+          },
+          {
+            "name": "NoOverwrite",
+            "type": "bool",
+            "format": "--noOverwrite {value}",
+            "help": "Determines if the exported result files should not be overwritten (be default they are overwritten)."
+          },
+          {
+            "name": "HardwareCounters",
+            "type": "bool",
+            "format": "--counters {value}",
+            "help": "Hardware Counters"
+          },
+          {
+            "name": "Packages",
+            "type": "string",
+            "format": "--packages {value}",
+            "help": "The directory to restore packages to (optional)."
+          },
+          {
+            "name": "CoreRun",
+            "type": "List<string>",
+            "format": "--coreRun {value}",
+            "separator": " ",
+            "quoteMultiple": true,
+            "help": "Path(s) to CoreRun (optional)."
+          },
+          {
+            "name": "MonoPath",
+            "type": "string",
+            "format": "--monoPath {value}",
+            "help": "Optional path to Mono which should be used for running benchmarks."
+          },
+          {
+            "name": "ClrVersion",
+            "type": "string",
+            "format": "--clrVersion {value}",
+            "help": "Optional version of private CLR build used as the value of COMPLUS_Version env var."
+          },
+          {
+            "name": "CoreRtVersion",
+            "type": "string",
+            "format": "--coreRtVersion {value}",
+            "help": "Optional version of Microsoft.DotNet.ILCompiler which should be used to run with CoreRT. Example: \"1.0.0-alpha-26414-01\""
+          },
+          {
+            "name": "IlcPath",
+            "type": "string",
+            "format": "--ilcPath {value}",
+            "help": "Optional IlcPath which should be used to run with private CoreRT build."
+          },
+          {
+            "name": "LaunchCount",
+            "type": "int",
+            "format": "--launchCount {value}",
+            "default": "1",
+            "help": "How many times we should launch process with target benchmark. The default is 1."
+          },
+          {
+            "name": "WarmupCount",
+            "type": "int",
+            "format": "--warmupCount {value}",
+            "help": "How many warmup iterations should be performed. If you set it, the minWarmupCount and maxWarmupCount are ignored. By default calculated by the heuristic."
+          },
+          {
+            "name": "MinWarmupCount",
+            "type": "int",
+            "format": "--minWarmupCount {value}",
+            "default": "6",
+            "help": "Minimum count of warmup iterations that should be performed. The default is 6."
+          },
+          {
+            "name": "MaxWarmupCount",
+            "type": "int",
+            "format": "--maxWarmupCount {value}",
+            "default": "50",
+            "help": "Maximum count of warmup iterations that should be performed. The default is 50."
+          },
+          {
+            "name": "IterationTime",
+            "type": "string",
+            "format": "--iterationTime {value}",
+            "help": "Desired time of execution of an iteration in milliseconds. Used by Pilot stage to estimate the number of invocations per iteration. 500ms by default"
+          },
+          {
+            "name": "IterationCount",
+            "type": "int",
+            "format": "--iterationCount {value}",
+            "help": "How many target iterations should be performed. By default calculated by the heuristic."
+          },
+          {
+            "name": "MinIterationCount",
+            "type": "int",
+            "format": "--minIterationCount {value}",
+            "default": "15",
+            "help": "Minimum number of iterations to run. The default is 15."
+          },
+          {
+            "name": "MaxIterationCount",
+            "type": "int",
+            "format": "--maxIterationCount {value}",
+            "default": "15",
+            "help": "Maximum number of iterations to run. The default is 100."
+          },
+          {
+            "name": "InvocationCount",
+            "type": "int",
+            "format": "--invocationCount {value}",
+            "help": "Invocation count in a single iteration. By default calculated by the heuristic."
+          },
+          {
+            "name": "UnrollFactor",
+            "type": "int",
+            "format": "--unrollFactor {value}",
+            "default": "16",
+            "help": "How many times the benchmark method will be invoked per one iteration of a generated loop. 16 by default"
+          },
+          {
+            "name": "Strategy",
+            "type": "RunStrategy",
+            "format": "--strategy {value}",
+            "help": "The RunStrategy that should be used. Throughput/ColdStart/Monitoring."
+          },
+          {
+            "name": "RunOncePerIteration",
+            "type": "bool",
+            "format": "--runOncePerIteration {value}",
+            "default": "false",
+            "help": "Run the benchmark exactly once per iteration."
+          },
+          {
+            "name": "DisasmDepth",
+            "type": "int",
+            "format": "--disasmDepth {value}",
+            "default": "1",
+            "help": "Sets the recursive depth for the disassembler."
+          },
+          {
+            "name": "DisasmDiff",
+            "type": "bool",
+            "format": "--disasmDiff {value}",
+            "default": "false",
+            "help": "Generates diff reports for the disassembler."
+          },
+          {
+            "name": "BuildTimeout",
+            "type": "int",
+            "format": "--buildTimeout {value}",
+            "help": "Build timeout in seconds."
+          },
+          {
+            "name": "StopOnFirstError",
+            "type": "bool",
+            "format": "--stopOnFirstError {value}",
+            "default": "false",
+            "help": "Stop on first error."
+          },
+          {
+            "name": "StatisticalTest",
+            "type": "string",
+            "format": "--statisticalTest {value}",
+            "help": "Threshold for Mann–Whitney U Test. Examples: 5%, 10ms, 100ns, 1s"
+          },
+          {
+            "name": "DisableLogFile",
+            "type": "bool",
+            "format": "--disableLogFile {value}",
+            "help": "Disables the logfile."
+          },
+          {
+            "name": "MaxWidth",
+            "type": "int",
+            "format": "--maxWidth {value}",
+            "default": "20",
+            "help": "Max paramter column width, the default is 20."
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "Job",
+      "values": [
+        "Dry",
+        "Short",
+        "Medium",
+        "Long",
+        "Default"
+      ]
+    },
+    {
+      "name": "OutlierRemoval",
+      "values": [
+        "DontRemove",
+        "RemoveUpper",
+        "RemoveLower",
+        "RemoveAll"
+      ]
+    },
+    {
+      "name": "Exporter",
+      "values": [
+        "GitHub",
+        "StackOverflow",
+        "RPlot",
+        "CSV",
+        "JSON",
+        "HTML",
+        "XML"
+      ]
+    },
+    {
+      "name": "RunStrategy",
+      "values": [
+        "Throughput",
+        "ColdStart",
+        "Monitoring"
+      ]
+    }
+  ]
+}
