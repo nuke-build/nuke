@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -30,6 +31,8 @@ namespace Nuke.Common.Git
     [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
     public class GitRepository
     {
+        private static readonly Regex s_headRegex = new Regex("^ref: (?<reference>refs/heads/(?<branch>.*))");
+
         public static GitRepository FromUrl(string url, string branch = null)
         {
             var (protocol, endpoint, identifier) = GetRemoteFromUrl(url);
@@ -39,7 +42,9 @@ namespace Nuke.Common.Git
                 identifier,
                 branch,
                 localDirectory: null,
-                head: null);
+                head: null,
+                commit: null,
+                tags: null);
         }
 
         /// <summary>
@@ -51,40 +56,80 @@ namespace Nuke.Common.Git
             ControlFlow.Assert(rootDirectory != null, $"Could not find git directory for '{directory}'.");
             var gitDirectory = Path.Combine(rootDirectory, ".git");
 
-            var head = GetHead(gitDirectory);
             var (protocol, endpoint, identifier) = GetRemoteFromConfig(gitDirectory, remote ?? "origin");
+            var head = GetHead(gitDirectory);
+            var commit = GetCommitFromCI() ?? GetCommitFromHead(gitDirectory, head);
+            var tags = GetTagsFromCommit(gitDirectory, commit);
 
             return new GitRepository(
                 protocol,
                 endpoint,
                 identifier,
-                branch ?? GetBranch(head),
+                branch ?? GetBranchFromCI() ?? GetBranchFromHead(head),
                 rootDirectory,
-                head);
+                head,
+                commit,
+                tags);
+        }
+        
+        internal static string GetBranchFromHead(string head)
+        {
+            var match = s_headRegex.Match(head);
+            return match.Success ? match.Groups["branch"].Value : null;
+        }
+        
+        internal static string GetCommitFromHead(string gitDirectory, string head)
+        {
+            var match = s_headRegex.Match(head);
+            if (!match.Success)
+                return head;
+
+            var headRefFile = Path.Combine(gitDirectory, match.Groups["reference"].Value);
+            ControlFlow.Assert(File.Exists(headRefFile), $"File.Exists({headRefFile})");
+            return File.ReadAllLines(headRefFile).First();
         }
 
         private static string GetHead(string gitDirectory)
         {
             var headFile = Path.Combine(gitDirectory, "HEAD");
             ControlFlow.Assert(File.Exists(headFile), $"File.Exists({headFile})");
-            var headFileContent = File.ReadAllLines(headFile);
-            return headFileContent.First();
+            return File.ReadAllText(headFile).Trim();
         }
 
-        private static string GetBranch(string head)
+        internal static string GetBranchFromCI()
         {
-            var match = Regex.Match(head, "^ref: refs/heads/(?<branch>.*)");
-            return
-                AppVeyor.Instance?.RepositoryBranch ??
-                Bitrise.Instance?.GitBranch ??
-                GitLab.Instance?.CommitRefName ??
-                Jenkins.Instance?.GitBranch ??
-                Jenkins.Instance?.BranchName ??
-                TeamCity.Instance?.BranchName ??
-                AzurePipelines.Instance?.SourceBranchName ??
-                TravisCI.Instance?.Branch ??
-                GitHubActions.Instance?.GitHubRef ??
-                (match.Success ? match.Groups["branch"].Value : null);
+            return AppVeyor.Instance?.RepositoryBranch ??
+                   Bitrise.Instance?.GitBranch ??
+                   GitLab.Instance?.CommitRefName ??
+                   Jenkins.Instance?.GitBranch ?? Jenkins.Instance?.BranchName ??
+                   TeamCity.Instance?.BranchName ??
+                   AzurePipelines.Instance?.SourceBranchName ??
+                   TravisCI.Instance?.Branch ??
+                   GitHubActions.Instance?.GitHubRef;
+        }
+
+        internal static string GetCommitFromCI()
+        {
+            return AppVeyor.Instance?.RepositoryCommitSha ??
+                   Bitrise.Instance?.GitCommit ??
+                   GitLab.Instance?.CommitSha ??
+                   Jenkins.Instance?.GitCommit ??
+                   TeamCity.Instance?.BuildVcsNumber ??
+                   AzurePipelines.Instance?.SourceVersion ??
+                   TravisCI.Instance?.Commit ??
+                   GitHubActions.Instance?.GitHubSha;
+        }
+
+        private static IReadOnlyCollection<string> GetTagsFromCommit(string gitDirectory, string commit)
+        {
+            if (commit == null)
+                return new string[0];
+
+            var tagsDirectory = (AbsolutePath) gitDirectory / "refs" / "tags";
+            return tagsDirectory
+                .GlobFiles("**/*")
+                .Where(x => File.ReadAllText(x).Trim() == commit)
+                .Select(x => tagsDirectory.GetUnixRelativePathTo(x).ToString()).ToList();
         }
 
         private static (GitProtocol Protocol, string Endpoint, string Identifier) GetRemoteFromUrl(string url)
@@ -123,7 +168,9 @@ namespace Nuke.Common.Git
             string identifier,
             string branch,
             string localDirectory,
-            string head)
+            string head,
+            string commit,
+            IReadOnlyCollection<string> tags)
         {
             Protocol = protocol;
             Endpoint = endpoint;
@@ -131,6 +178,8 @@ namespace Nuke.Common.Git
             Branch = branch;
             LocalDirectory = localDirectory;
             Head = head;
+            Commit = commit;
+            Tags = tags;
         }
 
         /// <summary>Default protocol for the repository.</summary>
@@ -150,6 +199,12 @@ namespace Nuke.Common.Git
         [CanBeNull]
         public string Head { get; private set; }
 
+        /// <summary>Current commit; <c>null</c> if parsed from URL.</summary>
+        public string Commit { get; }
+
+        /// <summary>List of tags; <c>null</c> if parsed from URL.</summary>
+        public IReadOnlyCollection<string> Tags { get; }
+
         /// <summary>Current branch; <c>null</c> if head is detached.</summary>
         [CanBeNull]
         public string Branch { get; private set; }
@@ -168,7 +223,9 @@ namespace Nuke.Common.Git
                 Identifier,
                 branch,
                 LocalDirectory,
-                Head);
+                Head,
+                Commit,
+                Tags);
         }
 
         public override string ToString()
