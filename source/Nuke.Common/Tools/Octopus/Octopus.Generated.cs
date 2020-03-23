@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Octopus.json
+﻿// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Octopus.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -531,6 +531,93 @@ namespace Nuke.Common.Tools.Octopus
         public static IEnumerable<(OctopusDeployReleaseSettings Settings, IReadOnlyCollection<Output> Output)> OctopusDeployRelease(CombinatorialConfigure<OctopusDeployReleaseSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
             return configurator.Invoke(OctopusDeployRelease, OctopusLogger, degreeOfParallelism, completeOnFailure);
+        }
+        /// <summary>
+        ///   <p>The <c>Octo.exe lists-releases</c> can be used to list releases by project(s).</p>
+        ///   <p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--apiKey</c> via <see cref="OctopusListReleasesSettings.ApiKey"/></li>
+        ///     <li><c>--configFile</c> via <see cref="OctopusListReleasesSettings.ConfigFile"/></li>
+        ///     <li><c>--debug</c> via <see cref="OctopusListReleasesSettings.Debug"/></li>
+        ///     <li><c>--enableServiceMessages</c> via <see cref="OctopusListReleasesSettings.EnableServiceMessages"/></li>
+        ///     <li><c>--ignoreSslErrors</c> via <see cref="OctopusListReleasesSettings.IgnoreSslErrors"/></li>
+        ///     <li><c>--logLevel</c> via <see cref="OctopusListReleasesSettings.LogLevel"/></li>
+        ///     <li><c>--pass</c> via <see cref="OctopusListReleasesSettings.Password"/></li>
+        ///     <li><c>--project</c> via <see cref="OctopusListReleasesSettings.Project"/></li>
+        ///     <li><c>--proxy</c> via <see cref="OctopusListReleasesSettings.Proxy"/></li>
+        ///     <li><c>--proxyPass</c> via <see cref="OctopusListReleasesSettings.ProxyPassword"/></li>
+        ///     <li><c>--proxyUser</c> via <see cref="OctopusListReleasesSettings.ProxyUsername"/></li>
+        ///     <li><c>--server</c> via <see cref="OctopusListReleasesSettings.Server"/></li>
+        ///     <li><c>--space</c> via <see cref="OctopusListReleasesSettings.Space"/></li>
+        ///     <li><c>--timeout</c> via <see cref="OctopusListReleasesSettings.Timeout"/></li>
+        ///     <li><c>--user</c> via <see cref="OctopusListReleasesSettings.Username"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static (OctopusListReleasesResult[] Result, IReadOnlyCollection<Output> Output) OctopusListReleases(OctopusListReleasesSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new OctopusListReleasesSettings();
+            var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return (GetResult(process, toolSettings), process.Output);
+        }
+        /// <summary>
+        ///   <p>The <c>Octo.exe lists-releases</c> can be used to list releases by project(s).</p>
+        ///   <p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--apiKey</c> via <see cref="OctopusListReleasesSettings.ApiKey"/></li>
+        ///     <li><c>--configFile</c> via <see cref="OctopusListReleasesSettings.ConfigFile"/></li>
+        ///     <li><c>--debug</c> via <see cref="OctopusListReleasesSettings.Debug"/></li>
+        ///     <li><c>--enableServiceMessages</c> via <see cref="OctopusListReleasesSettings.EnableServiceMessages"/></li>
+        ///     <li><c>--ignoreSslErrors</c> via <see cref="OctopusListReleasesSettings.IgnoreSslErrors"/></li>
+        ///     <li><c>--logLevel</c> via <see cref="OctopusListReleasesSettings.LogLevel"/></li>
+        ///     <li><c>--pass</c> via <see cref="OctopusListReleasesSettings.Password"/></li>
+        ///     <li><c>--project</c> via <see cref="OctopusListReleasesSettings.Project"/></li>
+        ///     <li><c>--proxy</c> via <see cref="OctopusListReleasesSettings.Proxy"/></li>
+        ///     <li><c>--proxyPass</c> via <see cref="OctopusListReleasesSettings.ProxyPassword"/></li>
+        ///     <li><c>--proxyUser</c> via <see cref="OctopusListReleasesSettings.ProxyUsername"/></li>
+        ///     <li><c>--server</c> via <see cref="OctopusListReleasesSettings.Server"/></li>
+        ///     <li><c>--space</c> via <see cref="OctopusListReleasesSettings.Space"/></li>
+        ///     <li><c>--timeout</c> via <see cref="OctopusListReleasesSettings.Timeout"/></li>
+        ///     <li><c>--user</c> via <see cref="OctopusListReleasesSettings.Username"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static (OctopusListReleasesResult[] Result, IReadOnlyCollection<Output> Output) OctopusListReleases(Configure<OctopusListReleasesSettings> configurator)
+        {
+            return OctopusListReleases(configurator(new OctopusListReleasesSettings()));
+        }
+        /// <summary>
+        ///   <p>The <c>Octo.exe lists-releases</c> can be used to list releases by project(s).</p>
+        ///   <p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--apiKey</c> via <see cref="OctopusListReleasesSettings.ApiKey"/></li>
+        ///     <li><c>--configFile</c> via <see cref="OctopusListReleasesSettings.ConfigFile"/></li>
+        ///     <li><c>--debug</c> via <see cref="OctopusListReleasesSettings.Debug"/></li>
+        ///     <li><c>--enableServiceMessages</c> via <see cref="OctopusListReleasesSettings.EnableServiceMessages"/></li>
+        ///     <li><c>--ignoreSslErrors</c> via <see cref="OctopusListReleasesSettings.IgnoreSslErrors"/></li>
+        ///     <li><c>--logLevel</c> via <see cref="OctopusListReleasesSettings.LogLevel"/></li>
+        ///     <li><c>--pass</c> via <see cref="OctopusListReleasesSettings.Password"/></li>
+        ///     <li><c>--project</c> via <see cref="OctopusListReleasesSettings.Project"/></li>
+        ///     <li><c>--proxy</c> via <see cref="OctopusListReleasesSettings.Proxy"/></li>
+        ///     <li><c>--proxyPass</c> via <see cref="OctopusListReleasesSettings.ProxyPassword"/></li>
+        ///     <li><c>--proxyUser</c> via <see cref="OctopusListReleasesSettings.ProxyUsername"/></li>
+        ///     <li><c>--server</c> via <see cref="OctopusListReleasesSettings.Server"/></li>
+        ///     <li><c>--space</c> via <see cref="OctopusListReleasesSettings.Space"/></li>
+        ///     <li><c>--timeout</c> via <see cref="OctopusListReleasesSettings.Timeout"/></li>
+        ///     <li><c>--user</c> via <see cref="OctopusListReleasesSettings.Username"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(OctopusListReleasesSettings Settings, OctopusListReleasesResult[] Result, IReadOnlyCollection<Output> Output)> OctopusListReleases(CombinatorialConfigure<OctopusListReleasesSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+        {
+            return configurator.Invoke(OctopusListReleases, OctopusLogger, degreeOfParallelism, completeOnFailure);
         }
     }
     #region OctopusPackSettings
@@ -1167,6 +1254,146 @@ namespace Nuke.Common.Tools.Octopus
               .Add("--logLevel={value}", LogLevel);
             return base.ConfigureArguments(arguments);
         }
+    }
+    #endregion
+    #region OctopusListReleasesSettings
+    /// <summary>
+    ///   Used within <see cref="OctopusTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class OctopusListReleasesSettings : ToolSettings
+    {
+        /// <summary>
+        ///   Path to the Octopus executable.
+        /// </summary>
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
+        public override Action<OutputType, string> CustomLogger => OctopusTasks.OctopusLogger;
+        /// <summary>
+        ///   List of projects to filter by
+        /// </summary>
+        public virtual IReadOnlyList<string> Project => ProjectInternal.AsReadOnly();
+        internal List<string> ProjectInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   The base URL for your Octopus server - e.g., http://your-octopus/
+        /// </summary>
+        public virtual string Server { get; internal set; }
+        /// <summary>
+        ///   Your API key. Get this from the user profile page. Your must provide an apiKey or username and password. If the guest account is enabled, a key of API-GUEST can be used.
+        /// </summary>
+        public virtual string ApiKey { get; internal set; }
+        /// <summary>
+        ///   Username to use when authenticating with the server. Your must provide an apiKey or username and password.
+        /// </summary>
+        public virtual string Username { get; internal set; }
+        /// <summary>
+        ///   Password to use when authenticating with the server.
+        /// </summary>
+        public virtual string Password { get; internal set; }
+        /// <summary>
+        ///   Text file of default values, with one 'key = value' per line.
+        /// </summary>
+        public virtual string ConfigFile { get; internal set; }
+        /// <summary>
+        ///   Enable debug logging.
+        /// </summary>
+        public virtual bool? Debug { get; internal set; }
+        /// <summary>
+        ///   Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.
+        /// </summary>
+        public virtual bool? IgnoreSslErrors { get; internal set; }
+        /// <summary>
+        ///   Enable TeamCity or Team Foundation Build service messages when logging.
+        /// </summary>
+        public virtual bool? EnableServiceMessages { get; internal set; }
+        /// <summary>
+        ///   Timeout in seconds for network operations. Default is 600.
+        /// </summary>
+        public virtual int? Timeout { get; internal set; }
+        /// <summary>
+        ///   The URI of the proxy to use, e.g., http://example.com:8080.
+        /// </summary>
+        public virtual string Proxy { get; internal set; }
+        /// <summary>
+        ///   The username for the proxy.
+        /// </summary>
+        public virtual string ProxyUsername { get; internal set; }
+        /// <summary>
+        ///   The password for the proxy. If both the username and password are omitted and proxyAddress is specified, the default credentials are used.
+        /// </summary>
+        public virtual string ProxyPassword { get; internal set; }
+        /// <summary>
+        ///   The name of a space within which this command will be executed. The default space will be used if it is omitted.
+        /// </summary>
+        public virtual string Space { get; internal set; }
+        /// <summary>
+        ///   The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.
+        /// </summary>
+        public virtual string LogLevel { get; internal set; }
+        public virtual string Framework { get; internal set; }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("list-releases --outputFormat=json")
+              .Add("--project={value}", Project)
+              .Add("--server={value}", Server)
+              .Add("--apiKey={value}", ApiKey, secret: true)
+              .Add("--user={value}", Username)
+              .Add("--pass={value}", Password, secret: true)
+              .Add("--configFile={value}", ConfigFile)
+              .Add("--debug", Debug)
+              .Add("--ignoreSslErrors", IgnoreSslErrors)
+              .Add("--enableServiceMessages", EnableServiceMessages)
+              .Add("--timeout={value}", Timeout)
+              .Add("--proxy={value}", Proxy)
+              .Add("--proxyUser={value}", ProxyUsername)
+              .Add("--proxyPass={value}", ProxyPassword, secret: true)
+              .Add("--space={value}", Space)
+              .Add("--logLevel={value}", LogLevel);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
+    #region OctopusListReleasesResult
+    /// <summary>
+    ///   Used within <see cref="OctopusTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class OctopusListReleasesResult : ISettingsEntity
+    {
+        public virtual OctopusProjectResult Project { get; internal set; }
+        public virtual OctopusReleaseResult[] Releases { get; internal set; }
+    }
+    #endregion
+    #region OctopusProjectResult
+    /// <summary>
+    ///   Used within <see cref="OctopusTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class OctopusProjectResult : ISettingsEntity
+    {
+        public virtual string Id { get; internal set; }
+        public virtual string Name { get; internal set; }
+    }
+    #endregion
+    #region OctopusReleaseResult
+    /// <summary>
+    ///   Used within <see cref="OctopusTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class OctopusReleaseResult : ISettingsEntity
+    {
+        public virtual string Version { get; internal set; }
+        public virtual DateTimeOffset Assembled { get; internal set; }
+        public virtual string PackageVersions { get; internal set; }
+        public virtual string ReleaseNotes { get; internal set; }
     }
     #endregion
     #region OctopusPackSettingsExtensions
@@ -5288,6 +5515,554 @@ namespace Nuke.Common.Tools.Octopus
         /// </summary>
         [Pure]
         public static T ResetFramework<T>(this T toolSettings) where T : OctopusDeployReleaseSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region OctopusListReleasesSettingsExtensions
+    /// <summary>
+    ///   Used within <see cref="OctopusTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class OctopusListReleasesSettingsExtensions
+    {
+        #region Project
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusListReleasesSettings.Project"/> to a new list</em></p>
+        ///   <p>List of projects to filter by</p>
+        /// </summary>
+        [Pure]
+        public static T SetProject<T>(this T toolSettings, params string[] project) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProjectInternal = project.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusListReleasesSettings.Project"/> to a new list</em></p>
+        ///   <p>List of projects to filter by</p>
+        /// </summary>
+        [Pure]
+        public static T SetProject<T>(this T toolSettings, IEnumerable<string> project) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProjectInternal = project.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="OctopusListReleasesSettings.Project"/></em></p>
+        ///   <p>List of projects to filter by</p>
+        /// </summary>
+        [Pure]
+        public static T AddProject<T>(this T toolSettings, params string[] project) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProjectInternal.AddRange(project);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="OctopusListReleasesSettings.Project"/></em></p>
+        ///   <p>List of projects to filter by</p>
+        /// </summary>
+        [Pure]
+        public static T AddProject<T>(this T toolSettings, IEnumerable<string> project) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProjectInternal.AddRange(project);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="OctopusListReleasesSettings.Project"/></em></p>
+        ///   <p>List of projects to filter by</p>
+        /// </summary>
+        [Pure]
+        public static T ClearProject<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProjectInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="OctopusListReleasesSettings.Project"/></em></p>
+        ///   <p>List of projects to filter by</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveProject<T>(this T toolSettings, params string[] project) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(project);
+            toolSettings.ProjectInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="OctopusListReleasesSettings.Project"/></em></p>
+        ///   <p>List of projects to filter by</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveProject<T>(this T toolSettings, IEnumerable<string> project) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(project);
+            toolSettings.ProjectInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region Server
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusListReleasesSettings.Server"/></em></p>
+        ///   <p>The base URL for your Octopus server - e.g., http://your-octopus/</p>
+        /// </summary>
+        [Pure]
+        public static T SetServer<T>(this T toolSettings, string server) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Server = server;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusListReleasesSettings.Server"/></em></p>
+        ///   <p>The base URL for your Octopus server - e.g., http://your-octopus/</p>
+        /// </summary>
+        [Pure]
+        public static T ResetServer<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Server = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ApiKey
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusListReleasesSettings.ApiKey"/></em></p>
+        ///   <p>Your API key. Get this from the user profile page. Your must provide an apiKey or username and password. If the guest account is enabled, a key of API-GUEST can be used.</p>
+        /// </summary>
+        [Pure]
+        public static T SetApiKey<T>(this T toolSettings, string apiKey) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ApiKey = apiKey;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusListReleasesSettings.ApiKey"/></em></p>
+        ///   <p>Your API key. Get this from the user profile page. Your must provide an apiKey or username and password. If the guest account is enabled, a key of API-GUEST can be used.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetApiKey<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ApiKey = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Username
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusListReleasesSettings.Username"/></em></p>
+        ///   <p>Username to use when authenticating with the server. Your must provide an apiKey or username and password.</p>
+        /// </summary>
+        [Pure]
+        public static T SetUsername<T>(this T toolSettings, string username) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Username = username;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusListReleasesSettings.Username"/></em></p>
+        ///   <p>Username to use when authenticating with the server. Your must provide an apiKey or username and password.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetUsername<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Username = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Password
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusListReleasesSettings.Password"/></em></p>
+        ///   <p>Password to use when authenticating with the server.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPassword<T>(this T toolSettings, string password) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Password = password;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusListReleasesSettings.Password"/></em></p>
+        ///   <p>Password to use when authenticating with the server.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPassword<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Password = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ConfigFile
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusListReleasesSettings.ConfigFile"/></em></p>
+        ///   <p>Text file of default values, with one 'key = value' per line.</p>
+        /// </summary>
+        [Pure]
+        public static T SetConfigFile<T>(this T toolSettings, string configFile) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = configFile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusListReleasesSettings.ConfigFile"/></em></p>
+        ///   <p>Text file of default values, with one 'key = value' per line.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetConfigFile<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Debug
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusListReleasesSettings.Debug"/></em></p>
+        ///   <p>Enable debug logging.</p>
+        /// </summary>
+        [Pure]
+        public static T SetDebug<T>(this T toolSettings, bool? debug) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = debug;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusListReleasesSettings.Debug"/></em></p>
+        ///   <p>Enable debug logging.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetDebug<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="OctopusListReleasesSettings.Debug"/></em></p>
+        ///   <p>Enable debug logging.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableDebug<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="OctopusListReleasesSettings.Debug"/></em></p>
+        ///   <p>Enable debug logging.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableDebug<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="OctopusListReleasesSettings.Debug"/></em></p>
+        ///   <p>Enable debug logging.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleDebug<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = !toolSettings.Debug;
+            return toolSettings;
+        }
+        #endregion
+        #region IgnoreSslErrors
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusListReleasesSettings.IgnoreSslErrors"/></em></p>
+        ///   <p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p>
+        /// </summary>
+        [Pure]
+        public static T SetIgnoreSslErrors<T>(this T toolSettings, bool? ignoreSslErrors) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreSslErrors = ignoreSslErrors;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusListReleasesSettings.IgnoreSslErrors"/></em></p>
+        ///   <p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetIgnoreSslErrors<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreSslErrors = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="OctopusListReleasesSettings.IgnoreSslErrors"/></em></p>
+        ///   <p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableIgnoreSslErrors<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreSslErrors = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="OctopusListReleasesSettings.IgnoreSslErrors"/></em></p>
+        ///   <p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableIgnoreSslErrors<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreSslErrors = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="OctopusListReleasesSettings.IgnoreSslErrors"/></em></p>
+        ///   <p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleIgnoreSslErrors<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreSslErrors = !toolSettings.IgnoreSslErrors;
+            return toolSettings;
+        }
+        #endregion
+        #region EnableServiceMessages
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusListReleasesSettings.EnableServiceMessages"/></em></p>
+        ///   <p>Enable TeamCity or Team Foundation Build service messages when logging.</p>
+        /// </summary>
+        [Pure]
+        public static T SetEnableServiceMessages<T>(this T toolSettings, bool? enableServiceMessages) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnableServiceMessages = enableServiceMessages;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusListReleasesSettings.EnableServiceMessages"/></em></p>
+        ///   <p>Enable TeamCity or Team Foundation Build service messages when logging.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetEnableServiceMessages<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnableServiceMessages = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="OctopusListReleasesSettings.EnableServiceMessages"/></em></p>
+        ///   <p>Enable TeamCity or Team Foundation Build service messages when logging.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableEnableServiceMessages<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnableServiceMessages = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="OctopusListReleasesSettings.EnableServiceMessages"/></em></p>
+        ///   <p>Enable TeamCity or Team Foundation Build service messages when logging.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableEnableServiceMessages<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnableServiceMessages = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="OctopusListReleasesSettings.EnableServiceMessages"/></em></p>
+        ///   <p>Enable TeamCity or Team Foundation Build service messages when logging.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleEnableServiceMessages<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnableServiceMessages = !toolSettings.EnableServiceMessages;
+            return toolSettings;
+        }
+        #endregion
+        #region Timeout
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusListReleasesSettings.Timeout"/></em></p>
+        ///   <p>Timeout in seconds for network operations. Default is 600.</p>
+        /// </summary>
+        [Pure]
+        public static T SetTimeout<T>(this T toolSettings, int? timeout) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Timeout = timeout;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusListReleasesSettings.Timeout"/></em></p>
+        ///   <p>Timeout in seconds for network operations. Default is 600.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetTimeout<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Timeout = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Proxy
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusListReleasesSettings.Proxy"/></em></p>
+        ///   <p>The URI of the proxy to use, e.g., http://example.com:8080.</p>
+        /// </summary>
+        [Pure]
+        public static T SetProxy<T>(this T toolSettings, string proxy) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Proxy = proxy;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusListReleasesSettings.Proxy"/></em></p>
+        ///   <p>The URI of the proxy to use, e.g., http://example.com:8080.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetProxy<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Proxy = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ProxyUsername
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusListReleasesSettings.ProxyUsername"/></em></p>
+        ///   <p>The username for the proxy.</p>
+        /// </summary>
+        [Pure]
+        public static T SetProxyUsername<T>(this T toolSettings, string proxyUsername) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProxyUsername = proxyUsername;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusListReleasesSettings.ProxyUsername"/></em></p>
+        ///   <p>The username for the proxy.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetProxyUsername<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProxyUsername = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ProxyPassword
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusListReleasesSettings.ProxyPassword"/></em></p>
+        ///   <p>The password for the proxy. If both the username and password are omitted and proxyAddress is specified, the default credentials are used.</p>
+        /// </summary>
+        [Pure]
+        public static T SetProxyPassword<T>(this T toolSettings, string proxyPassword) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProxyPassword = proxyPassword;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusListReleasesSettings.ProxyPassword"/></em></p>
+        ///   <p>The password for the proxy. If both the username and password are omitted and proxyAddress is specified, the default credentials are used.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetProxyPassword<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProxyPassword = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Space
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusListReleasesSettings.Space"/></em></p>
+        ///   <p>The name of a space within which this command will be executed. The default space will be used if it is omitted.</p>
+        /// </summary>
+        [Pure]
+        public static T SetSpace<T>(this T toolSettings, string space) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Space = space;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusListReleasesSettings.Space"/></em></p>
+        ///   <p>The name of a space within which this command will be executed. The default space will be used if it is omitted.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetSpace<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Space = null;
+            return toolSettings;
+        }
+        #endregion
+        #region LogLevel
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusListReleasesSettings.LogLevel"/></em></p>
+        ///   <p>The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.</p>
+        /// </summary>
+        [Pure]
+        public static T SetLogLevel<T>(this T toolSettings, string logLevel) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogLevel = logLevel;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusListReleasesSettings.LogLevel"/></em></p>
+        ///   <p>The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetLogLevel<T>(this T toolSettings) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogLevel = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Framework
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusListReleasesSettings.Framework"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : OctopusListReleasesSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = framework;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusListReleasesSettings.Framework"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T ResetFramework<T>(this T toolSettings) where T : OctopusListReleasesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Framework = null;

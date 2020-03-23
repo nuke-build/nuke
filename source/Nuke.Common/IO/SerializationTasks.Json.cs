@@ -2,11 +2,11 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-using System;
 using System.IO;
-using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Nuke.Common.Tooling;
 
 namespace Nuke.Common.IO
@@ -52,6 +52,16 @@ namespace Nuke.Common.IO
                 });
 
             return JsonConvert.DeserializeObject<T>(content, settings);
+        }
+
+        internal class AllWritableContractResolver : DefaultContractResolver
+        {
+            protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
+            {
+                var property = base.CreateProperty(member, memberSerialization);
+                property.Writable = true;
+                return property;
+            }
         }
     }
 }

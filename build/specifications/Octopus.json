@@ -445,6 +445,22 @@
           }
         ]
       }
+    },
+    {
+      "help": "The <c>Octo.exe lists-releases</c> can be used to list releases by project(s).",
+      "postfix": "ListReleases",
+      "returnType": "OctopusListReleasesResult[]",
+      "definiteArgument": "list-releases --outputFormat=json",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Project",
+            "type": "List<string>",
+            "format": "--project={value}",
+            "help": "List of projects to filter by"
+          }
+        ]
+      }
     }
   ],
   "commonTaskProperties": [
@@ -539,6 +555,55 @@
       "name": "Framework",
       "type": "string",
       "noArgument": true
+    }
+  ],
+  "dataClasses": [
+    {
+      "name": "OctopusListReleasesResult",
+      "properties": [
+        {
+          "name": "Project",
+          "type": "OctopusProjectResult"
+        },
+        {
+          "name": "Releases",
+          "type": "OctopusReleaseResult[]"
+        }
+      ]
+    },
+    {
+      "name": "OctopusProjectResult",
+      "properties": [
+        {
+          "name": "Id",
+          "type": "string"
+        },
+        {
+          "name": "Name",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "OctopusReleaseResult",
+      "properties": [
+        {
+          "name": "Version",
+          "type": "string"
+        },
+        {
+          "name": "Assembled",
+          "type": "DateTimeOffset"
+        },
+        {
+          "name": "PackageVersions",
+          "type": "string"
+        },
+        {
+          "name": "ReleaseNotes",
+          "type": "string"
+        }
+      ]
     }
   ],
   "enumerations": [
