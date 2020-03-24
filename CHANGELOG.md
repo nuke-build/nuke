@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.24.5] / 2020-03-24
+- Fixed TeamCity configuration to use Bash script on Unix
+
 ## [0.24.4] / 2020-03-05
 - Fixed Refit version
 - Fixed conversion of `GitHubActionsTrigger`
@@ -545,7 +548,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.24.4...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.24.5...HEAD
+[0.24.5]: https://github.com/nuke-build/nuke/compare/0.24.4...0.24.5
 [0.24.4]: https://github.com/nuke-build/nuke/compare/0.24.2...0.24.4
 [0.24.2]: https://github.com/nuke-build/nuke/compare/0.24.1...0.24.2
 [0.24.1]: https://github.com/nuke-build/nuke/compare/0.24.0...0.24.1
