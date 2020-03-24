@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed TeamCity configuration to use Bash script on Unix
 
 ## [0.24.4] / 2020-03-05
 - Fixed Refit version
