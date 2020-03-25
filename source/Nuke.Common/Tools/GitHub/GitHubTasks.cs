@@ -23,7 +23,7 @@ namespace Nuke.Common.Tools.GitHub
         private static GitHubClient Client =>
             GitHubClient ??= new GitHubClient(new ProductHeaderValue(nameof(NukeBuild)));
 
-        public static async Task<IEnumerable<(string RelativePath, string DownloadUrl)>> GetGitHubDownloadUrls(
+        public static async Task<IEnumerable<(string DownloadUrl, string RelativePath)>> GetGitHubDownloadUrls(
             this GitRepository repository,
             string directory = null,
             string branch = null)
@@ -46,7 +46,7 @@ namespace Nuke.Common.Tools.GitHub
             return treeResponse.Tree
                 .Where(x => x.Type == TreeType.Blob)
                 .Where(x => x.Path.StartsWithOrdinalIgnoreCase(relativeDirectory))
-                .Select(x => (x.Path.TrimStart(relativeDirectory), repository.GetGitHubDownloadUrl(x.Path, branch)));
+                .Select(x => (repository.GetGitHubDownloadUrl(x.Path, branch), x.Path.TrimStart(relativeDirectory)));
         }
 
         public static async Task<string> GetDefaultBranch(this GitRepository repository)

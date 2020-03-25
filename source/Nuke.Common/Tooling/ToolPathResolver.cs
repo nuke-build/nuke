@@ -69,21 +69,22 @@ namespace Nuke.Common.Tooling
         {
             return packageIds
                 .SelectMany(x =>
-                    new[]
+                    new Func<string>[]
                     {
-                        ExecutingAssemblyDirectory != null
+                        () => ExecutingAssemblyDirectory != null
                             ? Path.Combine(ExecutingAssemblyDirectory, x)
                             : null,
-                        NuGetAssetsConfigFile != null
+                        () => NuGetAssetsConfigFile != null
                             ? NuGetPackageResolver.GetLocalInstalledPackage(x, NuGetAssetsConfigFile, version)?.Directory
                             : null,
-                        NuGetPackagesConfigFile != null
+                        () => NuGetPackagesConfigFile != null
                             ? NuGetPackageResolver.GetLocalInstalledPackage(x, NuGetPackagesConfigFile, version)?.Directory
                             : null,
-                        PaketPackagesConfigFile != null
+                        () => PaketPackagesConfigFile != null
                             ? PaketPackageResolver.GetLocalInstalledPackageDirectory(x, PaketPackagesConfigFile)
                             : null
                     })
+                .Select(x => x.Invoke())
                 .FirstOrDefault(Directory.Exists)
                 .NotNull(
                     new[]

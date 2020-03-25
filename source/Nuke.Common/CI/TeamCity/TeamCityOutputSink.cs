@@ -26,7 +26,7 @@ namespace Nuke.Common.CI.TeamCity
             Console.OutputEncoding = Encoding.UTF8;
         }
 
-        protected override string TraceCode => "37";
+        protected override string TraceCode => "90";
         protected override string InformationCode => "36";
         protected override string WarningCode => "33";
         protected override string ErrorCode => "31";

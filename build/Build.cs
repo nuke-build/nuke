@@ -121,7 +121,7 @@ partial class Build : NukeBuild
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
     Project GlobalToolProject => Solution.GetProject("Nuke.GlobalTool");
-    Project MSBuildTaskRunnerProject => Solution.GetProject("Nuke.MSBuildTaskRunner");
+    Project MSBuildTasksProject => Solution.GetProject("Nuke.MSBuildTasks");
 
     Target Compile => _ => _
         .DependsOn(Restore)
@@ -136,7 +136,7 @@ partial class Build : NukeBuild
                 .SetInformationalVersion(GitVersion.InformationalVersion));
 
             var publishConfigurations =
-                from project in new[] { GlobalToolProject, MSBuildTaskRunnerProject }
+                from project in new[] { GlobalToolProject, MSBuildTasksProject }
                 from framework in project.GetTargetFrameworks()
                 select new { project, framework };
 

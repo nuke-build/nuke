@@ -6,7 +6,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 using JetBrains.Annotations;
 
 namespace Nuke.Common.Utilities
@@ -18,12 +18,11 @@ namespace Nuke.Common.Utilities
     {
         public static T Clone<T>(this T obj)
         {
-            var binaryFormatter = new BinaryFormatter();
-
+            var serializer = new DataContractSerializer(typeof(T));
             using var memoryStream = new MemoryStream();
-            binaryFormatter.Serialize(memoryStream, obj);
+            serializer.WriteObject(memoryStream, obj);
             memoryStream.Seek(offset: 0, loc: SeekOrigin.Begin);
-            return (T) binaryFormatter.Deserialize(memoryStream);
+            return (T) serializer.ReadObject(memoryStream);
         }
     }
 }

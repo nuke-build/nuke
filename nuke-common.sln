@@ -24,7 +24,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.GlobalTool", "source\N
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.GlobalTool.Tests", "source\Nuke.GlobalTool.Tests\Nuke.GlobalTool.Tests.csproj", "{BD416DD4-06F4-4246-B92C-B261B026B6E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.MSBuildTaskRunner", "source\Nuke.MSBuildTaskRunner\Nuke.MSBuildTaskRunner.csproj", "{8166FF13-87CF-45BC-B307-7A16329B6981}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.MSBuildTasks", "source\Nuke.MSBuildTasks\Nuke.MSBuildTasks.csproj", "{EFF12255-4E26-4C8A-89DA-51CC426C1AA2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,10 +58,10 @@ Global
 		{BD416DD4-06F4-4246-B92C-B261B026B6E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD416DD4-06F4-4246-B92C-B261B026B6E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD416DD4-06F4-4246-B92C-B261B026B6E9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8166FF13-87CF-45BC-B307-7A16329B6981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8166FF13-87CF-45BC-B307-7A16329B6981}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8166FF13-87CF-45BC-B307-7A16329B6981}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8166FF13-87CF-45BC-B307-7A16329B6981}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFF12255-4E26-4C8A-89DA-51CC426C1AA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFF12255-4E26-4C8A-89DA-51CC426C1AA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFF12255-4E26-4C8A-89DA-51CC426C1AA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFF12255-4E26-4C8A-89DA-51CC426C1AA2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
