@@ -4,11 +4,11 @@
   <PropertyGroup>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <RootNamespace></RootNamespace>
-    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemDefinitionGroup>
     <PackageDownload Visible="false" />
+    <NukeExternalFiles Visible="false" />
   </ItemDefinitionGroup>
 
 </Project>

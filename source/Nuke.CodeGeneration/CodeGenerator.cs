@@ -21,38 +21,32 @@ namespace Nuke.CodeGeneration
     {
         public const string SpecificationFilePattern = "*.json";
 
-        public static void GenerateCode(
+        public static void GenerateCodeFromDirectory(
             string specificationDirectory,
             Func<Tool, string> outputFileProvider = null,
             Func<Tool, string> namespaceProvider = null,
             Func<Tool, string> sourceFileProvider = null)
         {
-            GenerateCode(
-                Directory.GetFiles(specificationDirectory, SpecificationFilePattern, SearchOption.TopDirectoryOnly),
-                outputFileProvider,
-                namespaceProvider,
-                sourceFileProvider);
+            Directory.GetFiles(specificationDirectory, SpecificationFilePattern, SearchOption.TopDirectoryOnly)
+                .ForEach(x => GenerateCode(x, outputFileProvider, namespaceProvider, sourceFileProvider));
         }
 
         public static void GenerateCode(
-            IReadOnlyCollection<string> specificationFiles,
+            string specificationFile,
             Func<Tool, string> outputFileProvider = null,
             Func<Tool, string> namespaceProvider = null,
             Func<Tool, string> sourceFileProvider = null)
         {
-            foreach (var specificationFile in specificationFiles)
-            {
-                var tool = ToolSerializer.Load(specificationFile);
-                // for formatting and ordering of properties
-                ToolSerializer.Save(tool, specificationFile);
+            var tool = ToolSerializer.Load(specificationFile);
+            // for formatting and ordering of properties
+            ToolSerializer.Save(tool, specificationFile);
 
-                tool.SpecificationFile = specificationFile;
-                tool.SourceFile = sourceFileProvider?.Invoke(tool);
-                tool.Namespace = namespaceProvider?.Invoke(tool);
-                ApplyRuntimeInformation(tool, specificationFile, sourceFileProvider, namespaceProvider);
+            tool.SpecificationFile = specificationFile;
+            tool.SourceFile = sourceFileProvider?.Invoke(tool);
+            tool.Namespace = namespaceProvider?.Invoke(tool);
+            ApplyRuntimeInformation(tool, specificationFile, sourceFileProvider, namespaceProvider);
 
-                GenerateCode(tool, outputFileProvider?.Invoke(tool) ?? tool.DefaultOutputFile);
-            }
+            GenerateCode(tool, outputFileProvider?.Invoke(tool) ?? tool.DefaultOutputFile);
         }
 
         public static void GenerateCode(Tool tool, string outputFile)

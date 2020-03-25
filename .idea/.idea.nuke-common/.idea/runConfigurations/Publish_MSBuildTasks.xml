@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Publish MSBuildTasks" type="RunNativeExe" factoryName="Native Executable">
+    <option name="EXE_PATH" value="/usr/local/share/dotnet/dotnet" />
+    <option name="PROGRAM_PARAMETERS" value="publish --framework netcoreapp2.1" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/source/Nuke.MSBuildTasks" />
+    <option name="PASS_PARENT_ENVS" value="1" />
+    <option name="USE_EXTERNAL_CONSOLE" value="0" />
+    <method v="2" />
+  </configuration>
+</component>
