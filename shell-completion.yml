@@ -1,12 +1,12 @@
-ApiKey: 
-AutoStash: 
+ApiKey:
+AutoStash:
 Configuration:
 - Debug
 - Release
-Continue: 
-GitHubToken: 
-GitterAuthToken: 
-Help: 
+Continue:
+GitHubToken:
+GitterAuthToken:
+Help:
 Host:
 - AppVeyor
 - AzurePipelines
@@ -18,10 +18,10 @@ Host:
 - Jenkins
 - TeamCity
 - Travis
-IgnoreFailedSources: 
-NoLogo: 
-Plan: 
-Root: 
+IgnoreFailedSources:
+NoLogo:
+Plan:
+Root:
 Skip:
 - Analysis
 - Announce
@@ -43,8 +43,8 @@ Skip:
 - Restore
 - Test
 - UpdateContributors
-SlackWebhook: 
-Source: 
+SlackWebhook:
+Source:
 Target:
 - Analysis
 - Announce
@@ -64,7 +64,7 @@ Target:
 - Restore
 - Test
 - UpdateContributors
-UseSSH: 
+UseSSH:
 Verbosity:
 - Minimal
 - Normal

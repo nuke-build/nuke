@@ -118,22 +118,24 @@ namespace Nuke.Common.CI.TeamCity
             TeamCityVcsRoot vcsRoot,
             LookupTable<ExecutableTarget, TeamCityBuildType> buildTypes)
         {
+            var chainLinkTargets = GetInvokedTargets(executableTarget).ToArray();
             var isPartitioned = ArtifactExtensions.Partitions.ContainsKey(executableTarget.Definition);
-            var artifactRules = ArtifactExtensions.ArtifactProducts[executableTarget.Definition].Select(GetArtifactRule).ToArray();
-            var artifactDependencies = (
-                from artifactDependency in ArtifactExtensions.ArtifactDependencies[executableTarget.Definition]
-                let dependency = executableTarget.ExecutionDependencies.Single(x => x.Factory == artifactDependency.Item1)
+
+            var artifactRules = chainLinkTargets.SelectMany(x =>
+                ArtifactExtensions.ArtifactProducts[x.Definition].Select(GetArtifactRule)).ToArray();
+            var artifactDependencies = chainLinkTargets.SelectMany(x => (
+                from artifactDependency in ArtifactExtensions.ArtifactDependencies[x.Definition]
+                let dependency = x.ExecutionDependencies.Single(y => y.Factory == artifactDependency.Item1)
                 let rules = (artifactDependency.Item2.Any()
                         ? artifactDependency.Item2
                         : ArtifactExtensions.ArtifactProducts[dependency.Definition])
                     .Select(GetArtifactRule).ToArray()
                 select new TeamCityArtifactDependency
                        {
-                           BuildType = buildTypes[dependency].Single(x => x.Partition == null),
+                           BuildType = buildTypes[dependency].Single(y => y.Partition == null),
                            ArtifactRules = rules
-                       }).ToArray<TeamCityDependency>();
+                       })).ToArray<TeamCityDependency>();
 
-            var chainLinkNames = GetInvokedTargets(executableTarget).ToArray();
             var snapshotDependencies = GetTargetDependencies(executableTarget)
                 .SelectMany(x => buildTypes[x])
                 .Where(x => x.Partition == null)
@@ -160,7 +162,7 @@ namespace Nuke.Common.CI.TeamCity
                                      ArtifactRules = artifactRules,
                                      Partition = partition,
                                      PartitionName = partitionName,
-                                     InvokedTargets = chainLinkNames,
+                                     InvokedTargets = chainLinkTargets.Select(x => x.Name).ToArray(),
                                      VcsRoot = new TeamCityBuildTypeVcsRoot { Root = vcsRoot, CleanCheckoutDirectory = CleanCheckoutDirectory },
                                      Dependencies = snapshotDependencies.Concat(artifactDependencies).ToArray()
                                  };
@@ -202,7 +204,7 @@ namespace Nuke.Common.CI.TeamCity
                                        },
                              IsComposite = isPartitioned,
                              IsDeployment = ManuallyTriggeredTargets.Contains(executableTarget.Name),
-                             InvokedTargets = chainLinkNames,
+                             InvokedTargets = chainLinkTargets.Select(x => x.Name).ToArray(),
                              ArtifactRules = artifactRules,
                              Dependencies = snapshotDependencies.Concat(artifactDependencies).ToArray(),
                              Parameters = parameters,
