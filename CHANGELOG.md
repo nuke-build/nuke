@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed NuGet package resolution performance
+- Fixed MSBuild integration
+- Fixed TeamCity trace output to be dark gray
+- Fixed missing using statement for `Nuke.Common.IO`
 
 ## [0.24.5] / 2020-03-24
 - Fixed TeamCity configuration to use Bash script on Unix
