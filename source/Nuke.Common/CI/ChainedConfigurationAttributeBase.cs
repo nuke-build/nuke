@@ -19,13 +19,12 @@ namespace Nuke.Common.CI
         public string[] NonEntryTargets { get; set; } = new string[0];
         public string[] ExcludedTargets { get; set; } = new string[0];
 
-        protected IEnumerable<string> GetInvokedTargets(ExecutableTarget executableTarget)
+        protected IEnumerable<ExecutableTarget> GetInvokedTargets(ExecutableTarget executableTarget)
         {
             return executableTarget
                 .DescendantsAndSelf(x => x.ExecutionDependencies.Concat(x.Triggers), x => IrrelevantTargetNames.Contains(x.Name))
                 .Where(x => x == executableTarget || NonEntryTargets.Contains(x.Name))
-                .Reverse()
-                .Select(x => x.Name);
+                .Reverse();
         }
 
         protected IEnumerable<ExecutableTarget> GetTargetDependencies(ExecutableTarget executableTarget)

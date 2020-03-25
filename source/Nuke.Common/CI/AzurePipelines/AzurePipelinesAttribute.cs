@@ -154,7 +154,7 @@ namespace Nuke.Common.CI.AzurePipelines
             //                ArtifactRules = rules
             //            }).ToArray<TeamCityDependency>();
 
-            var chainLinkNames = GetInvokedTargets(executableTarget).ToArray();
+            var chainLinkTargets = GetInvokedTargets(executableTarget).ToArray();
             var dependencies = GetTargetDependencies(executableTarget).SelectMany(x => jobs[x]).ToArray();
             return new AzurePipelinesJob
                    {
@@ -164,7 +164,7 @@ namespace Nuke.Common.CI.AzurePipelines
                        Dependencies = dependencies,
                        Parallel = totalPartitions,
                        PartitionName = partitionName,
-                       InvokedTargets = chainLinkNames,
+                       InvokedTargets = chainLinkTargets.Select(x => x.Name).ToArray(),
                        PublishArtifacts = publishedArtifacts
                    };
         }
