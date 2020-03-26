@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [0.24.7] / 2020-03-26
 - Fixed MSBuild targets for .NET Core
 - Fixed `GitRepository.GetGitHubMilestone` to retrieve milestone independent of state
 
@@ -556,7 +558,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.24.6...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.24.7...HEAD
+[0.24.7]: https://github.com/nuke-build/nuke/compare/0.24.6...0.24.7
 [0.24.6]: https://github.com/nuke-build/nuke/compare/0.24.5...0.24.6
 [0.24.5]: https://github.com/nuke-build/nuke/compare/0.24.4...0.24.5
 [0.24.4]: https://github.com/nuke-build/nuke/compare/0.24.2...0.24.4
