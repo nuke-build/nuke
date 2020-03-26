@@ -11,6 +11,7 @@ using Nuke.Common.Git;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Tools.GitVersion;
+using Octokit;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.ControlFlow;
 using static Nuke.Common.Tools.Git.GitTasks;
@@ -29,6 +30,7 @@ partial class Build
             var milestone = (await GitRepository.GetGitHubMilestone(milestoneTitle)).NotNull("milestone != null");
             Assert(milestone.OpenIssues == 0, "milestone.OpenIssues == 0");
             Assert(milestone.ClosedIssues != 0, "milestone.ClosedIssues != 0");
+            Assert(milestone.State == ItemState.Closed, "milestone.State == ItemState.Closed");
         });
 
     Target Changelog => _ => _
