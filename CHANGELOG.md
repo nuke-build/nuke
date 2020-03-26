@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 - Fixed MSBuild targets for .NET Core
+- Fixed `GitRepository.GetGitHubMilestone` to retrieve milestone independent of state
 
 ## [0.24.6] / 2020-03-25
 - Fixed NuGet package resolution performance

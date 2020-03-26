@@ -64,7 +64,8 @@ namespace Nuke.Common.Tools.GitHub
 
             var milestones = await Client.Issue.Milestone.GetAllForRepository(
                 repository.GetGitHubOwner(),
-                repository.GetGitHubName());
+                repository.GetGitHubName(),
+                new MilestoneRequest { State = ItemStateFilter.All });
             return milestones.FirstOrDefault(x => x.Title == name);
         }
 
