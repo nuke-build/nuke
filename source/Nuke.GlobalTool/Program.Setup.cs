@@ -238,6 +238,10 @@ namespace Nuke.GlobalTool
                 Path.Combine(buildDirectory, "Build.cs"),
                 FillTemplate(GetTemplate("Build.cs"), tokens));
 
+            TextTasks.WriteAllLines(
+                Path.Combine(buildDirectory, "Configuration.cs"),
+                GetTemplate("Configuration.cs"));
+
             void MakeExecutable(string scriptPath)
             {
                 if (Directory.Exists(Path.Combine(rootDirectory, ".git")))
