@@ -118,6 +118,7 @@ namespace Nuke.Common.CI.TeamCity
         public string BuildConfiguration => SystemProperties["teamcity.buildConfName"];
         public string BuildTypeId => SystemProperties["teamcity.buildType.id"];
         [NoConvert] public string BuildNumber => SystemProperties["build.number"];
+        public string BuildVcsNumber => SystemProperties["build.vcs.number"];
         public string Version => SystemProperties["teamcity.version"];
         public string ProjectName => SystemProperties["teamcity.projectName"];
         public string ServerUrl => ConfigurationProperties["teamcity.serverUrl"];
