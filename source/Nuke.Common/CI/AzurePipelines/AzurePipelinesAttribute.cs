@@ -23,6 +23,13 @@ namespace Nuke.Common.CI.AzurePipelines
         private readonly AzurePipelinesImage[] _images;
 
         public AzurePipelinesAttribute(
+            AzurePipelinesImage image,
+            params AzurePipelinesImage[] images)
+            : this(suffix: null, image, images)
+        {
+        }
+
+        public AzurePipelinesAttribute(
             [CanBeNull] string suffix,
             AzurePipelinesImage image,
             params AzurePipelinesImage[] images)
