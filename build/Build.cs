@@ -198,7 +198,7 @@ partial class Build : NukeBuild
                     .When(InvokedTargets.Contains(Coverage) || IsServerBuild, _ => _
                         .SetCoverletOutput(TestResultDirectory / $"{v.Name}.xml"))));
 
-            OutputDirectory.GlobFiles("*.trx").ForEach(x =>
+            TestResultDirectory.GlobFiles("*.trx").ForEach(x =>
                 AzurePipelines?.PublishTestResults(
                     type: AzurePipelinesTestResultsType.VSTest,
                     title: $"{Path.GetFileNameWithoutExtension(x)} ({AzurePipelines.StageDisplayName})",
