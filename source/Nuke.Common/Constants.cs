@@ -53,5 +53,10 @@ namespace Nuke.Common
         {
             return GetTemporaryDirectory(rootDirectory) / $"{VisualStudioDebugParameterName}.log";
         }
+
+        internal static AbsolutePath GetMissingPackageFile(AbsolutePath rootDirectory)
+        {
+            return GetTemporaryDirectory(rootDirectory) / "missing-package.log";
+        }
     }
 }

@@ -20,19 +20,14 @@ namespace Nuke.GlobalTool
         [UsedImplicitly]
         public static int Complete(string[] args, [CanBeNull] string rootDirectory, [CanBeNull] string buildScript)
         {
+            if (rootDirectory == null)
+                return 0;
+
             var words = args.Single();
             if (!words.StartsWithOrdinalIgnoreCase(c_commandName))
-            {
                 return 0;
-            }
 
             words = words.Substring(c_commandName.Length).TrimStart();
-
-            if (rootDirectory == null)
-            {
-                // TODO: parse --root parameter
-                return 0;
-            }
 
             var completionFile = Constants.GetCompletionFile((AbsolutePath) rootDirectory);
             if (!File.Exists(completionFile))
