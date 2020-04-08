@@ -17,7 +17,7 @@ $BuildProjectFile = "$PSScriptRoot\_BUILD_DIRECTORY_\_BUILD_PROJECT_NAME_.csproj
 $TempDirectory = "$PSScriptRoot\_ROOT_DIRECTORY_\.tmp"
 
 $DotNetGlobalFile = "$PSScriptRoot\_ROOT_DIRECTORY_\global.json"
-$DotNetInstallUrl = "https://raw.githubusercontent.com/dotnet/cli/master/scripts/obtain/dotnet-install.ps1"
+$DotNetInstallUrl = "https://dot.net/v1/dotnet-install.ps1"
 $DotNetChannel = "Current"
 
 $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1
