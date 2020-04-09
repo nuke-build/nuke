@@ -38,8 +38,9 @@ namespace Nuke.Common.CI.AzurePipelines
             _images = new[] { image }.Concat(images).ToArray();
         }
 
+        protected virtual AbsolutePath ConfigurationDirectory => NukeBuild.RootDirectory;
         private string ConfigurationFileName => _suffix != null ? $"azure-pipelines.{_suffix}.yml" : "azure-pipelines.yml";
-        private string ConfigurationFile => NukeBuild.RootDirectory / ConfigurationFileName;
+        private string ConfigurationFile => ConfigurationDirectory / ConfigurationFileName;
 
         public override string IdPostfix => _suffix;
         public override HostType HostType => HostType.AzurePipelines;
