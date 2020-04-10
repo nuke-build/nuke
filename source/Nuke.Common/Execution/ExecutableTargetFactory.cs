@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -22,7 +22,8 @@ namespace Nuke.Common.Execution
         {
             var defaultTargets = defaultTargetExpressions.Select(x => x.Compile().Invoke(build)).ToList();
             var properties = build.GetType()
-                .GetProperties(ReflectionService.Instance)
+                .GetProperties(ReflectionService.Instance) // TODO: static targets?
+                .Concat(build.GetType().GetInterfaces().SelectMany(x => x.GetProperties(ReflectionService.Instance)))
                 .Where(x => x.PropertyType == typeof(Target)).ToList();
 
             var executables = new List<ExecutableTarget>();
@@ -30,7 +31,7 @@ namespace Nuke.Common.Execution
             foreach (var property in properties)
             {
                 var factory = (Target) property.GetValue(build);
-                var definition = new TargetDefinition();
+                var definition = new TargetDefinition(build);
                 factory.Invoke(definition);
 
                 var target = new ExecutableTarget
