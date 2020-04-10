@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2020 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -49,7 +49,8 @@ namespace Nuke.Common.CI.AzurePipelines
 
         public string[] InvokedTargets { get; set; } = new string[0];
 
-        public bool TriggerBatch { get; set; }
+        public bool TriggerDisabled { get; set; }
+        public bool? TriggerBatch { get; set; }
         public string[] TriggerBranchesInclude { get; set; } = new string[0];
         public string[] TriggerBranchesExclude { get; set; } = new string[0];
         public string[] TriggerTagsInclude { get; set; } = new string[0];
@@ -72,7 +73,34 @@ namespace Nuke.Common.CI.AzurePipelines
         {
             return new AzurePipelinesConfiguration
                    {
+                       VcsPushTrigger = GetVcsPushTrigger(),
                        Stages = _images.Select(x => GetStage(x, relevantTargets)).ToArray()
+                   };
+        }
+
+        [CanBeNull]
+        protected AzurePipelinesVcsPushTrigger GetVcsPushTrigger()
+        {
+            if (!TriggerDisabled &&
+                !TriggerBatch.HasValue &&
+                TriggerBranchesInclude.Length == 0 &&
+                TriggerBranchesExclude.Length == 0 &&
+                TriggerTagsInclude.Length == 0 &&
+                TriggerTagsExclude.Length == 0 &&
+                TriggerPathsInclude.Length == 0 &&
+                TriggerPathsExclude.Length == 0)
+                return null;
+
+            return new AzurePipelinesVcsPushTrigger
+                   {
+                       Disabled = TriggerDisabled,
+                       Batch = TriggerBatch,
+                       BranchesInclude = TriggerBranchesInclude,
+                       BranchesExclude = TriggerBranchesExclude,
+                       TagsInclude = TriggerTagsInclude,
+                       TagsExclude = TriggerTagsExclude,
+                       PathsInclude = TriggerPathsInclude,
+                       PathsExclude = TriggerPathsExclude,
                    };
         }
 
