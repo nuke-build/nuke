@@ -24,6 +24,7 @@ namespace Nuke.GlobalTool
 
             try
             {
+                // TODO: parse from --root argument
                 var rootDirectory = Constants.TryGetRootDirectoryFrom(Directory.GetCurrentDirectory());
 
                 var buildScript = rootDirectory != null

@@ -92,11 +92,14 @@ namespace Nuke.Common.ProjectModel
                     Environment.SetEnvironmentVariable("MSBUILD_EXE_PATH", s_msbuildPathResolver.Value);
 
                 var projectCollection = new ProjectCollection();
-                var msbuildProject = new Microsoft.Build.Evaluation.Project(
-                    projectFile,
-                    GetProperties(configuration, targetFramework),
-                    projectCollection.DefaultToolsVersion,
-                    projectCollection);
+                var projectRoot = Microsoft.Build.Construction.ProjectRootElement.Open(projectFile, projectCollection, preserveFormatting: true);
+                var msbuildProject = Microsoft.Build.Evaluation.Project.FromProjectRootElement(projectRoot, new Microsoft.Build.Definition.ProjectOptions
+                {
+                    GlobalProperties = GetProperties(configuration, targetFramework),
+                    ToolsVersion = projectCollection.DefaultToolsVersion,
+                    ProjectCollection = projectCollection
+                });
+
                 var targetFrameworks = msbuildProject.AllEvaluatedItems
                     .Where(x => x.ItemType == "_TargetFrameworks")
                     .Select(x => x.EvaluatedInclude)
