@@ -1,13 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <PropertyGroup Condition="'$(NukeMSBuildIntegration)' != 'False' and '$(NukeMSBuildTasks)' == ''">
-    <NukeMSBuildTasks Condition="'$(MSBuildRuntimeType)' == 'Core'">$(MSBuildThisFileDirectory)\netcore</NukeMSBuildTasks>
-    <NukeMSBuildTasks Condition="'$(MSBuildRuntimeType)' != 'Core'">$(MSBuildThisFileDirectory)\netfx</NukeMSBuildTasks>
-  </PropertyGroup>
-
   <PropertyGroup Condition="'$(PackAsTool)' != 'True'">
     <IsPackable>False</IsPackable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(NukeMSBuildIntegration)' != 'False' and '$(NukeMSBuildTasks)' == ''">
+    <NukeMSBuildTasks>$(MSBuildThisFileDirectory)</NukeMSBuildTasks>
   </PropertyGroup>
 
   <Import Project="$(NukeMSBuildTasks)\Nuke.MSBuildTasks.targets" Condition="'$(NukeMSBuildTasks)' != ''" />
