@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed publishing of global tool for `netcoreapp3.1`
+- Fixed .NET Core SDK install script URL
+- Fixed trap error output in PowerShell bootstrapping
+- Fixed AzurePipelines push triggers
+- Fixed AzurePipelines configuration to allow overriding configuration directory
+- Fixed previous constructor usages for `AzurePipelinesAttribute`
+- Fixed PowerShell downloads to use TLS 1.2 security protocol
+- Fixed unrecognized `Visible` attribute for `PackageDownload` item group
 
 ## [0.24.7] / 2020-03-26
 - Fixed MSBuild targets for .NET Core
@@ -103,7 +111,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.23.5] / 2020-01-10
 - Fixed CI integrations to use correct warning/error reporting infrastructure
-- Fixed TeamCity configuration to use `UTF-8` encoding 
+- Fixed TeamCity configuration to use `UTF-8` encoding
 - Fixed process encoding by setting `StandardOutputEncoding` and `StandardErrorEncoding` to `UTF-8`
 - Fixed solution deserialization for missing configuration section
 - Fixed logo spacing
