@@ -6,7 +6,7 @@ Param(
 
 Write-Output "PowerShell $($PSVersionTable.PSEdition) version $($PSVersionTable.PSVersion)"
 
-Set-StrictMode -Version 2.0; $ErrorActionPreference = "Stop"; $ConfirmPreference = "None"; trap { exit 1 }
+Set-StrictMode -Version 2.0; $ErrorActionPreference = "Stop"; $ConfirmPreference = "None"; trap { Write-Error $_ -ErrorAction Continue; exit 1 }
 $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 
 ###########################################################################
@@ -33,6 +33,7 @@ function ExecSafe([scriptblock] $cmd) {
 $env:NUGET_EXE = "$TempDirectory\nuget.exe"
 if (!(Test-Path $env:NUGET_EXE)) {
     New-Item -ItemType Directory -Path $TempDirectory -Force | Out-Null
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     (New-Object System.Net.WebClient).DownloadFile($NuGetUrl, $env:NUGET_EXE)
 }
 elseif ($NuGetVersion -eq "latest") {
