@@ -15,6 +15,11 @@ namespace Nuke.Common.OutputSinks
     [ExcludeFromCodeCoverage]
     internal class SystemColorOutputSink : OutputSink
     {
+        public SystemColorOutputSink()
+        {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+        }
+
         internal override void WriteNormal(string text)
         {
             Console.WriteLine(text);

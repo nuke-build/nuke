@@ -13,6 +13,11 @@ namespace Nuke.Common.OutputSinks
     [ExcludeFromCodeCoverage]
     internal class AnsiColorOutputSink : OutputSink
     {
+        public AnsiColorOutputSink()
+        {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+        }
+
         public string ResetSequence { get; } = "\u001b[0m";
         public string TraceSequence => $"\u001b[{TraceCode}m";
         public string InformationSequence => $"\u001b[{InformationCode}m";
