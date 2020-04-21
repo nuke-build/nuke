@@ -15,11 +15,6 @@
     <NukeScriptDirectory Condition="'$(NukeScriptDirectory)' == ''">$(NukeRootDirectory)</NukeScriptDirectory>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(NukeDefaultIncludes)' != 'False'">
-    <NukeSpecificationFiles Include="**\*.json" Exclude="bin\**;obj\**" />
-    <NukeExternalFiles Include="**\*.*.ext" Exclude="bin\**;obj\**" />
-  </ItemGroup>
-
   <ItemGroup Condition="'$(NukeDefaultExcludes)' != 'False'">
     <None Remove="*.csproj.DotSettings;.editorconfig" />
   </ItemGroup>
