@@ -5,9 +5,7 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common
@@ -81,8 +79,10 @@ namespace Nuke.Common
         /// <summary>
         /// Returns the framework the build is running on.
         /// </summary>
-        public static FrameworkName Framework
-            => new FrameworkName(typeof(NukeBuild).Assembly.GetCustomAttribute<TargetFrameworkAttribute>().FrameworkName);
+        public static string Framework
+            => RuntimeInformation.FrameworkDescription;
+        
+        
 
         /// <summary>
         /// Returns the platform the build is running on.
