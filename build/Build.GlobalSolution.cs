@@ -56,9 +56,10 @@ partial class Build
         .Executes(() =>
         {
             var global = CreateSolution(
+                GlobalSolution,
                 solutions: new[] { Solution }.Concat(ExternalSolutions),
                 folderNameProvider: x => x == Solution ? null : x.Name);
-            global.SaveAs(GlobalSolution);
+            global.Save();
 
             if (File.Exists(RootDirectory / $"{Solution.FileName}.DotSettings"))
             {
