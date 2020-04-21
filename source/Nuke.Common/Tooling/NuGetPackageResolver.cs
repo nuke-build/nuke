@@ -241,7 +241,7 @@ namespace Nuke.Common.Tooling
             var projectDirectoryInfo = new DirectoryInfo(projectDirectory);
             var packagesConfigFile = projectDirectoryInfo.GetFiles("packages.config").SingleOrDefault()
                                      ?? projectDirectoryInfo.GetFiles("*.csproj")
-                                         .SingleOrDefaultOrError("Directory contains multiple project files.");
+                                         .SingleOrDefaultOrError($"Directory '{projectDirectory}' contains multiple project files.");
             return packagesConfigFile?.FullName;
         }
 

@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.24.9] / 2020-04-16
+- Fixed MSBuild targets directories
+
+## [0.24.8] / 2020-04-12
+- Fixed publishing of global tool for `netcoreapp3.1`
+- Fixed .NET Core SDK install script URL
+- Fixed trap error output in PowerShell bootstrapping
+- Fixed AzurePipelines push triggers
+- Fixed AzurePipelines configuration to allow overriding configuration directory
+- Fixed previous constructor usages for `AzurePipelinesAttribute`
+- Fixed PowerShell downloads to use TLS 1.2 security protocol
+- Fixed unrecognized `Visible` attribute for `PackageDownload` item group
+
 ## [0.24.7] / 2020-03-26
 - Fixed MSBuild targets for .NET Core
 - Fixed `GitRepository.GetGitHubMilestone` to retrieve milestone independent of state
@@ -103,7 +116,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.23.5] / 2020-01-10
 - Fixed CI integrations to use correct warning/error reporting infrastructure
-- Fixed TeamCity configuration to use `UTF-8` encoding 
+- Fixed TeamCity configuration to use `UTF-8` encoding
 - Fixed process encoding by setting `StandardOutputEncoding` and `StandardErrorEncoding` to `UTF-8`
 - Fixed solution deserialization for missing configuration section
 - Fixed logo spacing
@@ -558,7 +571,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.24.7...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.24.9...HEAD
+[0.24.9]: https://github.com/nuke-build/nuke/compare/0.24.8...0.24.9
+[0.24.8]: https://github.com/nuke-build/nuke/compare/0.24.7...0.24.8
 [0.24.7]: https://github.com/nuke-build/nuke/compare/0.24.6...0.24.7
 [0.24.6]: https://github.com/nuke-build/nuke/compare/0.24.5...0.24.6
 [0.24.5]: https://github.com/nuke-build/nuke/compare/0.24.4...0.24.5

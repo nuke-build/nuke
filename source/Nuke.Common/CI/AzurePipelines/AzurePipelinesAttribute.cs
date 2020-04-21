@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2020 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -23,6 +23,13 @@ namespace Nuke.Common.CI.AzurePipelines
         private readonly AzurePipelinesImage[] _images;
 
         public AzurePipelinesAttribute(
+            AzurePipelinesImage image,
+            params AzurePipelinesImage[] images)
+            : this(suffix: null, image, images)
+        {
+        }
+
+        public AzurePipelinesAttribute(
             [CanBeNull] string suffix,
             AzurePipelinesImage image,
             params AzurePipelinesImage[] images)
@@ -31,8 +38,9 @@ namespace Nuke.Common.CI.AzurePipelines
             _images = new[] { image }.Concat(images).ToArray();
         }
 
+        protected virtual AbsolutePath ConfigurationDirectory => NukeBuild.RootDirectory;
         private string ConfigurationFileName => _suffix != null ? $"azure-pipelines.{_suffix}.yml" : "azure-pipelines.yml";
-        private string ConfigurationFile => NukeBuild.RootDirectory / ConfigurationFileName;
+        private string ConfigurationFile => ConfigurationDirectory / ConfigurationFileName;
 
         public override string IdPostfix => _suffix;
         public override HostType HostType => HostType.AzurePipelines;
@@ -41,7 +49,8 @@ namespace Nuke.Common.CI.AzurePipelines
 
         public string[] InvokedTargets { get; set; } = new string[0];
 
-        public bool TriggerBatch { get; set; }
+        public bool TriggerDisabled { get; set; }
+        public bool? TriggerBatch { get; set; }
         public string[] TriggerBranchesInclude { get; set; } = new string[0];
         public string[] TriggerBranchesExclude { get; set; } = new string[0];
         public string[] TriggerTagsInclude { get; set; } = new string[0];
@@ -64,7 +73,34 @@ namespace Nuke.Common.CI.AzurePipelines
         {
             return new AzurePipelinesConfiguration
                    {
+                       VcsPushTrigger = GetVcsPushTrigger(),
                        Stages = _images.Select(x => GetStage(x, relevantTargets)).ToArray()
+                   };
+        }
+
+        [CanBeNull]
+        protected AzurePipelinesVcsPushTrigger GetVcsPushTrigger()
+        {
+            if (!TriggerDisabled &&
+                !TriggerBatch.HasValue &&
+                TriggerBranchesInclude.Length == 0 &&
+                TriggerBranchesExclude.Length == 0 &&
+                TriggerTagsInclude.Length == 0 &&
+                TriggerTagsExclude.Length == 0 &&
+                TriggerPathsInclude.Length == 0 &&
+                TriggerPathsExclude.Length == 0)
+                return null;
+
+            return new AzurePipelinesVcsPushTrigger
+                   {
+                       Disabled = TriggerDisabled,
+                       Batch = TriggerBatch,
+                       BranchesInclude = TriggerBranchesInclude,
+                       BranchesExclude = TriggerBranchesExclude,
+                       TagsInclude = TriggerTagsInclude,
+                       TagsExclude = TriggerTagsExclude,
+                       PathsInclude = TriggerPathsInclude,
+                       PathsExclude = TriggerPathsExclude,
                    };
         }
 

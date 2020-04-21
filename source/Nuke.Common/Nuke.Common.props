@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemDefinitionGroup>
-    <PackageDownload Visible="false" />
     <NukeExternalFiles Visible="false" />
   </ItemDefinitionGroup>
 

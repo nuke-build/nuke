@@ -32,6 +32,7 @@ namespace Nuke.Common
             FileSystemTasks.EnsureExistingDirectory(TemporaryDirectory);
             BuildAssemblyDirectory = GetBuildAssemblyDirectory();
             BuildProjectDirectory = GetBuildProjectDirectory(BuildAssemblyDirectory);
+            BuildProjectFile = GetBuildProjectDirectory(BuildAssemblyDirectory);
 
             Verbosity = EnvironmentInfo.GetParameter<Verbosity?>(() => Verbosity) ?? Verbosity.Normal;
             Host = EnvironmentInfo.GetParameter<HostType?>(() => Host) ?? GetHostType();
@@ -63,6 +64,12 @@ namespace Nuke.Common
         /// </summary>
         [CanBeNull]
         public static AbsolutePath BuildProjectDirectory { get; }
+
+        /// <summary>
+        /// Gets the full path to the build project file, or <c>null</c>
+        /// </summary>
+        [CanBeNull]
+        public static AbsolutePath BuildProjectFile { get; }
 
         /// <summary>
         /// Gets the logging verbosity during build execution. Default is <see cref="Nuke.Common.Verbosity.Normal"/>.
@@ -130,7 +137,7 @@ namespace Nuke.Common
         }
 
         [CanBeNull]
-        private static AbsolutePath GetBuildProjectDirectory(AbsolutePath buildAssemblyDirectory)
+        private static AbsolutePath GetBuildProjectDirectory([CanBeNull] AbsolutePath buildAssemblyDirectory)
         {
             if (buildAssemblyDirectory == null)
                 return null;
@@ -141,6 +148,12 @@ namespace Nuke.Common
                     .SingleOrDefaultOrError($"Found multiple project files in '{x}'."))
                 .FirstOrDefault(x => x != null)
                 ?.DirectoryName;
+        }
+
+        [CanBeNull]
+        private static AbsolutePath GetBuildProjectFile([CanBeNull] AbsolutePath buildProjectDirectory)
+        {
+            return buildProjectDirectory?.GlobFiles("*.csproj").SingleOrDefault();
         }
 
         private static HostType GetHostType()

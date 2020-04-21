@@ -33,6 +33,7 @@ function ExecSafe([scriptblock] $cmd) {
 $env:NUGET_EXE = "$TempDirectory\nuget.exe"
 if (!(Test-Path $env:NUGET_EXE)) {
     New-Item -ItemType Directory -Path $TempDirectory -Force | Out-Null
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     (New-Object System.Net.WebClient).DownloadFile($NuGetUrl, $env:NUGET_EXE)
 }
 elseif ($NuGetVersion -eq "latest") {
