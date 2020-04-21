@@ -25,7 +25,7 @@ namespace Nuke.Common.Tools.Twitter
         // https://blog.dantup.com/2016/07/simplest-csharp-code-to-post-a-tweet-using-oauth/
         // https://www.thatsoftwaredude.com/content/6289/how-to-post-a-tweet-using-c-for-single-user
 
-        private const string c_url = "https://api.twitter.com/1.1/statuses/update.json";
+        private const string Url = "https://api.twitter.com/1.1/statuses/update.json";
 
         public static void SendTweet(
             string message,
@@ -57,7 +57,7 @@ namespace Nuke.Common.Tools.Twitter
                     { "oauth_token", accessToken },
                     { "oauth_version", "1.0" }
                 };
-            data.AddPair("oauth_signature", GetOAuthSignature(data, c_url, consumerSecret, accessTokenSecret));
+            data.AddPair("oauth_signature", GetOAuthSignature(data, Url, consumerSecret, accessTokenSecret));
 
             var authorization = GetOAuthHeader(data);
             var formData = new FormUrlEncodedContent(data.Where(kvp => !kvp.Key.StartsWith("oauth_")));
@@ -65,7 +65,7 @@ namespace Nuke.Common.Tools.Twitter
             using var client = new HttpClient();
             client.DefaultRequestHeaders.Add("Authorization", authorization);
 
-            var response = await client.PostAsync(c_url, formData);
+            var response = await client.PostAsync(Url, formData);
             var responseBody = await response.Content.ReadAsStringAsync();
 
             ControlFlow.Assert(response.StatusCode == HttpStatusCode.OK, $"StatusCode != 200 - '{GetErrorFromBody(responseBody)}'");

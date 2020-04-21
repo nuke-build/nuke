@@ -79,7 +79,7 @@ namespace Nuke.Common.Tests.Execution
 
         private IEnumerable<ExecutableTarget> GetPlan(ExecutableTarget[] invokedTargets = null)
         {
-            string[] SelectNames(ExecutableTarget[] targets) => targets?.Select(x => x.Name).ToArray();
+            static string[] SelectNames(ExecutableTarget[] targets) => targets?.Select(x => x.Name).ToArray();
 
             return ExecutionPlanner.GetExecutionPlan(new[] { A, B, C }, SelectNames(invokedTargets));
         }

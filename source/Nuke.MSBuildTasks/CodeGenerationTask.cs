@@ -3,9 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 using JetBrains.Annotations;
 using Microsoft.Build.Framework;
 using Nuke.CodeGeneration;

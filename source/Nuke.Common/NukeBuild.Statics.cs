@@ -143,6 +143,7 @@ namespace Nuke.Common
                 ?.DirectoryName;
         }
 
+        // ReSharper disable once CognitiveComplexity
         private static HostType GetHostType()
         {
             if (AppVeyor.IsRunningAppVeyor)

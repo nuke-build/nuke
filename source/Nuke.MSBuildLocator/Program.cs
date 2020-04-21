@@ -15,11 +15,11 @@ namespace Nuke.MSBuildLocator
 {
     public static class Program
     {
-        private const string c_msbuildComponent = "Microsoft.Component.MSBuild";
-        private const string c_netcoreComponent = "Microsoft.Net.Core.Component.SDK";
+        private const string MSBuildComponent = "Microsoft.Component.MSBuild";
+        private const string NetCoreComponent = "Microsoft.Net.Core.Component.SDK";
 
         [STAThread]
-        public static void Main(string[] args)
+        public static void Main()
         {
             var assemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             Trace.Assert(assemblyDirectory != null, "assemblyDirectory != null");
@@ -50,8 +50,8 @@ namespace Nuke.MSBuildLocator
                           "/usr/local/bin/msbuild",
                           "/Library/Frameworks/Mono.framework/Versions/Current/Commands/msbuild"
                       }.FirstOrDefault(File.Exists)
-                    : TryGetMSBuildPath(products: "*", requires: new[] { c_msbuildComponent, c_netcoreComponent }, legacy: false) ??
-                      TryGetMSBuildPath(products: "*", requires: new[] { c_msbuildComponent }, legacy: false) ??
+                    : TryGetMSBuildPath(products: "*", requires: new[] { MSBuildComponent, NetCoreComponent }, legacy: false) ??
+                      TryGetMSBuildPath(products: "*", requires: new[] { MSBuildComponent }, legacy: false) ??
                       TryGetMSBuildPath(products: null, requires: null, legacy: true);
             }
 

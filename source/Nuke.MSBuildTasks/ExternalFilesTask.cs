@@ -4,14 +4,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Build.Framework;
-using Microsoft.Build.Tasks;
 using Nuke.Common;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
@@ -69,7 +67,7 @@ namespace Nuke.MSBuildTasks
                 .Except(s_predefined)
                 .ToDictionary(TemplateUtility.GetTokenName, item.GetMetadata);
 
-            Uri GetUri(string uriString)
+            static Uri GetUri(string uriString)
             {
                 Assert(Uri.TryCreate(uriString, UriKind.RelativeOrAbsolute, out var uri), $"Could not parse URI from '{uriString}'.");
                 return uri;

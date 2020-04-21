@@ -12,7 +12,6 @@ using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
-using static Nuke.Common.IO.PathConstruction;
 
 namespace Nuke.Common.CI.GitHubActions
 {
@@ -122,7 +121,7 @@ namespace Nuke.Common.CI.GitHubActions
 
         protected virtual IEnumerable<(string key, string value)> GetImports()
         {
-            string GetSecretValue(string secret) => $"${{{{ secrets.{secret} }}}}";
+            static string GetSecretValue(string secret) => $"${{{{ secrets.{secret} }}}}";
 
             if (ImportGitHubTokenAs != null)
                 yield return (ImportGitHubTokenAs, GetSecretValue("GITHUB_TOKEN"));

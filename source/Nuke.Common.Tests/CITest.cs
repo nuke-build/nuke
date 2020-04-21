@@ -113,11 +113,6 @@ namespace Nuke.Common.Tests
             Guid.TryParse(strValue, out _).Should().BeFalse("Guid");
         }
 
-        private static T CreateInstance<T>()
-        {
-            return (T) CreateInstance(typeof(T));
-        }
-
         private static object CreateInstance(Type type)
         {
             var bindingFlags = BindingFlags.CreateInstance | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.OptionalParamBinding;
@@ -135,18 +130,6 @@ namespace Nuke.Common.Tests
             private readonly Type _type;
 
             public CITheoryAttribute(Type type)
-            {
-                _type = type;
-            }
-
-            public override string Skip => !IsRunning(_type) ? $"Only applies to {_type.Name}." : null;
-        }
-
-        private class BuildServerFactAttribute : FactAttribute
-        {
-            private readonly Type _type;
-
-            public BuildServerFactAttribute(Type type)
             {
                 _type = type;
             }

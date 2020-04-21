@@ -281,7 +281,7 @@ namespace Nuke.Common.IO
                 FileExistsPolicy.Fail => throw new Exception($"File '{targetFile}' already exists."),
                 FileExistsPolicy.Skip => false,
                 FileExistsPolicy.Overwrite => true,
-                FileExistsPolicy.OverwriteIfNewer => (File.GetLastWriteTimeUtc(targetFile) < File.GetLastWriteTimeUtc(sourceFile)),
+                FileExistsPolicy.OverwriteIfNewer => File.GetLastWriteTimeUtc(targetFile) < File.GetLastWriteTimeUtc(sourceFile),
                 _ => throw new ArgumentOutOfRangeException(nameof(policy), policy, message: null)
             };
         }

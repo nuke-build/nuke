@@ -146,8 +146,8 @@ namespace Nuke.Common.Tooling
 
             startInfo.Environment.Clear();
 
-            foreach (var pair in environmentVariables)
-                startInfo.Environment[pair.Key] = pair.Value;
+            foreach (var (key, value) in environmentVariables)
+                startInfo.Environment[key] = value;
         }
 
         private static BlockingCollection<Output> GetOutputCollection(
@@ -195,23 +195,23 @@ namespace Nuke.Common.Tooling
 
         private static void PrintEnvironmentVariables(ProcessStartInfo startInfo)
         {
-            void TraceItem(string key, string value) => Logger.Trace($"  - {key} = {value}");
+            static void TraceItem(string key, string value) => Logger.Trace($"  - {key} = {value}");
 
             Logger.Trace("Environment variables:");
 
-            foreach (var pair in startInfo.Environment.OrderBy(x => x.Key, StringComparer.OrdinalIgnoreCase))
+            foreach (var (key, value) in startInfo.Environment.OrderBy(x => x.Key, StringComparer.OrdinalIgnoreCase))
             {
-                if (pair.Key.EqualsOrdinalIgnoreCase("path"))
+                if (key.EqualsOrdinalIgnoreCase("path"))
                 {
-                    var paths = pair.Value.Split(s_pathSeparators);
+                    var paths = value.Split(s_pathSeparators);
                     var padding = paths.Length.ToString().Length;
 
                     for (var i = 0; i < paths.Length; i++)
-                        TraceItem($"{pair.Key}[{i.ToString().PadLeft(padding, paddingChar: '0')}]", paths[i]);
+                        TraceItem($"{key}[{i.ToString().PadLeft(padding, paddingChar: '0')}]", paths[i]);
                 }
                 else
                 {
-                    TraceItem(pair.Key, pair.Value);
+                    TraceItem(key, value);
                 }
             }
         }

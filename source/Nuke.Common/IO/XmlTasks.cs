@@ -62,9 +62,7 @@ namespace Nuke.Common.IO
                 {
                     xmlNamespaceManager = new XmlNamespaceManager(reader.NameTable);
                     foreach (var (prefix, uri) in namespaces)
-                    {
                         xmlNamespaceManager.AddNamespace(prefix, uri);
-                    }
                 }
             }
 

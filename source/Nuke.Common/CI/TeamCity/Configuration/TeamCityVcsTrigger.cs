@@ -4,7 +4,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.KeyVault.Models;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.TeamCity.Configuration
