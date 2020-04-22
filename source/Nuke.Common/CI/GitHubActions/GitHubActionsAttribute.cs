@@ -74,8 +74,8 @@ namespace Nuke.Common.CI.GitHubActions
                                     DetailedTriggers = GetTriggers().ToArray(),
                                     Jobs = _images.Select(x => GetJobs(x, relevantTargets)).ToArray()
                                 };
-            ControlFlow.Assert(configuration.ShortTriggers == null || configuration.DetailedTriggers.Length == 0,
-                "configuration.ShortTriggers == null || configuration.DetailedTriggers.Length == 0");
+            ControlFlow.Assert(configuration.ShortTriggers.Length == 0 || configuration.DetailedTriggers.Length == 0,
+                "configuration.ShortTriggers.Length == 0 || configuration.DetailedTriggers.Length == 0");
 
             return configuration;
         }
