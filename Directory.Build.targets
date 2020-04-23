@@ -3,7 +3,7 @@
 
     <!-- Thanks to Thomas Frenzel (https://github.com/dotnet/sdk/issues/1151#issuecomment-385133284) -->
     <PropertyGroup>
-        <ReplacePackageReferences Condition="$(ReplacePackageReferences) == ''">false</ReplacePackageReferences>
+        <ReplacePackageReferences Condition="$(ReplacePackageReferences) == ''">true</ReplacePackageReferences>
         <SolutionPath>$(MSBuildThisFileDirectory)\nuke.sln</SolutionPath>
     </PropertyGroup>
 

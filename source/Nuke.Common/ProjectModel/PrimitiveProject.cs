@@ -4,9 +4,11 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Nuke.Common.ProjectModel
 {
+    [PublicAPI]
     public abstract class PrimitiveProject
     {
         protected PrimitiveProject(

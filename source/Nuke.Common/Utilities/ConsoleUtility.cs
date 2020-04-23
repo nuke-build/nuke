@@ -20,8 +20,8 @@ namespace Nuke.Common.Utilities
         private static string Selected => "»";
         private static string Unselected => " ";
 
-        private const ConsoleKey c_confirmationKey = ConsoleKey.Enter;
-        private const ConsoleKey c_interruptKey = ConsoleKey.F8;
+        private const ConsoleKey ConfirmationKey = ConsoleKey.Enter;
+        private const ConsoleKey InterruptKey = ConsoleKey.F8;
 
         private static bool s_interrupted;
 
@@ -59,9 +59,9 @@ namespace Nuke.Common.Utilities
                     inputBuilder.Append(input.KeyChar);
                 else if (input.Key == ConsoleKey.Backspace && inputBuilder.Length > 0)
                     inputBuilder.Remove(inputBuilder.Length - 1, length: 1);
-                else if (input.Key == c_interruptKey)
+                else if (input.Key == InterruptKey)
                     s_interrupted = true;
-            } while (!(input.Key == c_confirmationKey || input.Key == c_interruptKey));
+            } while (!(input.Key == ConfirmationKey || input.Key == InterruptKey));
 
             var result = inputBuilder.Length > 0 ? inputBuilder.ToString() : defaultValue;
             Console.CursorLeft = 0;
@@ -94,7 +94,7 @@ namespace Nuke.Common.Utilities
                     selection--;
                 else if (input == ConsoleKey.DownArrow)
                     selection++;
-                else if (input == c_interruptKey)
+                else if (input == InterruptKey)
                     s_interrupted = true;
                 selection = Math.Max(val1: 0, Math.Min(options.Length - 1, selection));
 
@@ -102,7 +102,7 @@ namespace Nuke.Common.Utilities
                 foreach (var option in options)
                     Console.WriteLine(new string(c: ' ', BufferWidth));
                 Console.CursorTop -= options.Length;
-            } while (!(input == c_confirmationKey || input == c_interruptKey));
+            } while (!(input == ConfirmationKey || input == InterruptKey));
 
             Console.WriteLine($"{Confirmed}  {options[selection].Description}", Color.Lime);
 

@@ -6,12 +6,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using JetBrains.Annotations;
 using Nuke.Common.Execution;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.IO
 {
+    // TODO: document
+    [PublicAPI]
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class FileGlobbingAttribute : FileSystemGlobbingAttributeBase
     {
@@ -21,6 +24,8 @@ namespace Nuke.Common.IO
         }
     }
 
+    // TODO: document
+    [PublicAPI]
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class DirectoryGlobbingAttribute : FileSystemGlobbingAttributeBase
     {

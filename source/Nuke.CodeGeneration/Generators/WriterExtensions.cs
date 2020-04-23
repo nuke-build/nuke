@@ -70,7 +70,7 @@ namespace Nuke.CodeGeneration.Generators
                 var argument = valueIndex == -1
                     ? property.Format
                     : valueIndex != 0
-                        ? property.Format.Substring(0, valueIndex).TrimEnd(':', '=', ' ')
+                        ? property.Format.Substring(startIndex: 0, valueIndex).TrimEnd(':', '=', ' ')
                         : $"&lt;{property.Name.ToInstance()}&gt;";
                 if (!argument.Any(char.IsLetter))
                     Logger.Warn($"Format for property {property.Name} in {property.DataClass.Tool.Name} is all non-letters.");
@@ -82,9 +82,7 @@ namespace Nuke.CodeGeneration.Generators
                 .OrderBy(x => !x.Argument.StartsWith("&lt;"))
                 .ThenBy(x => x.Argument);
             foreach (var pair in propertiesWithArgument)
-            {
                 yield return $"  <li><c>{pair.Argument}</c> via {pair.Property.ToSeeCref()}</li>";
-            }
 
             yield return "</ul>";
         }

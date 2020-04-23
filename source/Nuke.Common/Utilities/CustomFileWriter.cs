@@ -5,8 +5,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using Nuke.Common.CI;
-using Nuke.Common.IO;
 
 namespace Nuke.Common.Utilities
 {

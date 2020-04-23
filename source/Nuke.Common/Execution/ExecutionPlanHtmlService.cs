@@ -15,16 +15,16 @@ namespace Nuke.Common.Execution
 {
     internal class ExecutionPlanHtmlService
     {
-        private const string c_htmlFileName = "execution-plan.html";
+        private const string HtmlFileName = "execution-plan.html";
 
         public static void ShowPlan(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
-            var resourceText = ResourceUtility.GetResourceAllText<ExecutionPlanHtmlService>(c_htmlFileName);
+            var resourceText = ResourceUtility.GetResourceAllText<ExecutionPlanHtmlService>(HtmlFileName);
             var contents = resourceText
                 .Replace("__GRAPH__", GetGraphDefinition(executableTargets))
                 .Replace("__EVENTS__", GetEvents(executableTargets));
 
-            var path = Path.Combine(NukeBuild.TemporaryDirectory, c_htmlFileName);
+            var path = Path.Combine(NukeBuild.TemporaryDirectory, HtmlFileName);
             File.WriteAllText(path, contents);
 
             // Workaround for https://github.com/dotnet/corefx/issues/10361
@@ -67,7 +67,7 @@ namespace Nuke.Common.Execution
             // When not hovering anything, highlight the default plan
             var defaultTarget = executableTargets.SingleOrDefault(x => x.IsDefault);
             var defaultPlan = defaultTarget != null
-                ? ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { defaultTarget?.Name })
+                ? ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { defaultTarget.Name })
                 : new ExecutableTarget[0];
             defaultPlan.ForEach(x => builder.AppendLine($@"  $(""#{x.Name}"").addClass('highlight');"));
 

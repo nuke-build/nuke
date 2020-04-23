@@ -16,7 +16,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
 
         public override void Write(CustomFileWriter writer)
         {
-            string FormatAction(TeamCityDependencyFailureAction action)
+            static string FormatAction(TeamCityDependencyFailureAction action)
                 => "FailureAction." +
                    action.ToString().SplitCamelHumpsWithSeparator("_").ToUpperInvariant();
 

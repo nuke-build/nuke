@@ -14,13 +14,10 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
 
         public override void Write(CustomFileWriter writer)
         {
+            writer.WriteLine("schedule:");
             using (writer.Indent())
             {
-                writer.WriteLine("schedule:");
-                using (writer.Indent())
-                {
-                    writer.WriteLine($"  - cron: '{Cron}'");
-                }
+                writer.WriteLine($"- cron: '{Cron}'");
             }
         }
     }

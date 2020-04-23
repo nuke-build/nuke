@@ -5,9 +5,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Nuke.Common.ProjectModel
 {
+    [PublicAPI]
     public class SolutionFolder : PrimitiveProject
     {
         internal static readonly Guid Guid = Guid.Parse("2150E333-8FDC-42A3-9474-1A3956D46DE8");

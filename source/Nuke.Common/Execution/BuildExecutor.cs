@@ -167,7 +167,7 @@ namespace Nuke.Common.Execution
         private static bool HasSkippingCondition(ExecutableTarget target, IEnumerable<Expression<Func<bool>>> conditions)
         {
             // TODO: trim outer parenthesis
-            string GetSkipReason(Expression<Func<bool>> condition) =>
+            static string GetSkipReason(Expression<Func<bool>> condition) =>
                 condition.Body.ToString()
                     .Replace("False", "false")
                     .Replace("True", "true")

@@ -99,7 +99,7 @@ namespace Nuke.Common.Execution
             {
                 var enumType = memberType.IsEnum
                     ? memberType
-                    : Nullable.GetUnderlyingType(memberType) is Type underlyingType && underlyingType.IsEnum
+                    : Nullable.GetUnderlyingType(memberType) is { } underlyingType && underlyingType.IsEnum
                         ? underlyingType
                         : null;
                 return enumType != null

@@ -53,7 +53,7 @@ namespace Nuke.Common.Tests
             [UsedImplicitly]
             get
             {
-                object[] GetSerialization(string name, Func<Data, Data> serialization) => new object[] { name, serialization };
+                static object[] GetSerialization(string name, Func<Data, Data> serialization) => new object[] { name, serialization };
 
                 yield return GetSerialization("Json", x => SerializationTasks.JsonDeserialize<Data>(SerializationTasks.JsonSerialize(x)));
                 yield return GetSerialization("Yaml", x => SerializationTasks.YamlDeserialize<Data>(SerializationTasks.YamlSerialize(x)));

@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Nuke.Common.OutputSinks;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -18,7 +16,7 @@ namespace Nuke.Common.Execution
 {
     internal static class BuildManager
     {
-        private const int c_errorExitCode = -1;
+        private const int ErrorExitCode = -1;
 
         private static readonly LinkedList<Action> s_cancellationHandlers = new LinkedList<Action>();
 
@@ -85,14 +83,14 @@ namespace Nuke.Common.Execution
                     build,
                     EnvironmentInfo.GetParameter<string[]>(() => build.SkippedTargets));
 
-                return build.IsSuccessful ? 0 : c_errorExitCode;
+                return build.IsSuccessful ? 0 : ErrorExitCode;
             }
             catch (Exception exception)
             {
                 if (!(exception is TargetExecutionException))
                     Logger.Error(exception);
 
-                return c_errorExitCode;
+                return ErrorExitCode;
             }
             finally
             {

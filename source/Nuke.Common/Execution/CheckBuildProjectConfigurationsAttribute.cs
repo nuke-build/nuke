@@ -27,7 +27,7 @@ namespace Nuke.Common.Execution
             ControlFlow.AssertWarn(Task.Run(CheckConfiguration).Wait(TimeoutInMilliseconds),
                 $"Could not complete checking build configurations within {TimeoutInMilliseconds} milliseconds.");
 
-            Task CheckConfiguration()
+            static Task CheckConfiguration()
             {
                 var rootDirectory = new DirectoryInfo(NukeBuild.RootDirectory);
                 new[] { rootDirectory }

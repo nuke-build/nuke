@@ -141,7 +141,7 @@ namespace Nuke.Common.Tools.VSWhere
         /// </summary>
         public virtual bool? Latest { get; internal set; }
         /// <summary>
-        ///   A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.
+        ///   Return information about instances found in a format described below:<ul><li><c>text</c>: Colon-delimited properties in separate blocks for each instance (default).</li><li><c>json</c>: An array of JSON objects for each instance (no logo).</li><li><c>value</c>: A single property specified by the -property parameter (no logo).</li><li><c>xml</c>: An XML data set containing instances (no logo).</li></ul>
         /// </summary>
         public virtual VSWhereFormat Format { get; internal set; }
         /// <summary>
@@ -331,10 +331,11 @@ namespace Nuke.Common.Tools.VSWhere
         #region Format
         /// <summary>
         ///   <p><em>Sets <see cref="VSWhereSettings.Format"/></em></p>
-        ///   <p>A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.</p>
+        ///   <p>Return information about instances found in a format described below:<ul><li><c>text</c>: Colon-delimited properties in separate blocks for each instance (default).</li><li><c>json</c>: An array of JSON objects for each instance (no logo).</li><li><c>value</c>: A single property specified by the -property parameter (no logo).</li><li><c>xml</c>: An XML data set containing instances (no logo).</li></ul></p>
         /// </summary>
         [Pure]
-        public static T SetFormat<T>(this T toolSettings, VSWhereFormat format) where T : VSWhereSettings
+        public static T SetFormat<T>(this T toolSettings, VSWhereFormat format)
+            where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Format = format;
@@ -342,7 +343,7 @@ namespace Nuke.Common.Tools.VSWhere
         }
         /// <summary>
         ///   <p><em>Resets <see cref="VSWhereSettings.Format"/></em></p>
-        ///   <p>A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.</p>
+        ///   <p>Return information about instances found in a format described below:<ul><li><c>text</c>: Colon-delimited properties in separate blocks for each instance (default).</li><li><c>json</c>: An array of JSON objects for each instance (no logo).</li><li><c>value</c>: A single property specified by the -property parameter (no logo).</li><li><c>xml</c>: An XML data set containing instances (no logo).</li></ul></p>
         /// </summary>
         [Pure]
         public static T ResetFormat<T>(this T toolSettings) where T : VSWhereSettings

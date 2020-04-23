@@ -26,10 +26,10 @@ namespace Nuke.Common.Execution
         internal bool IsProceedAfterFailure { get; private set; }
         internal bool IsAssuredAfterFailure { get; private set; }
         internal bool IsInternal { get; private set; }
-        internal List<Target> BeforeTargets { get; private set; } = new List<Target>();
-        internal List<Target> AfterTargets { get; private set; } = new List<Target>();
-        internal List<Target> TriggersTargets { get; private set; } = new List<Target>();
-        internal List<Target> TriggeredByTargets { get; private set; } = new List<Target>();
+        internal List<Target> BeforeTargets { get; } = new List<Target>();
+        internal List<Target> AfterTargets { get; } = new List<Target>();
+        internal List<Target> TriggersTargets { get; } = new List<Target>();
+        internal List<Target> TriggeredByTargets { get; } = new List<Target>();
 
         ITargetDefinition ITargetDefinition.Description(string description)
         {

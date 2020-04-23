@@ -10,7 +10,6 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.CI.TeamCity.Configuration;
 using Nuke.Common.Execution;
-using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
