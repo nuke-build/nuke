@@ -50,7 +50,7 @@ namespace Nuke.Common.Tooling
             if (packageExecutablePaths.Count == 1 && framework == null)
                 return packageExecutablePaths.Single();
 
-            string GetFramework(string file)
+            static string GetFramework(string file)
             {
                 var directory = new FileInfo(file).Directory.NotNull();
                 return !directory.Name.EqualsOrdinalIgnoreCase("any")

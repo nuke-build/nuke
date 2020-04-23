@@ -10,7 +10,6 @@
 
     <!-- Test properties for MSBuild integration -->
     <NukeMSBuildIntegration Condition="'$(NukeMSBuildIntegration)' == ''">False</NukeMSBuildIntegration>
-    <NukeDefaultIncludes>False</NukeDefaultIncludes>
 <!--    <PackAsTool>True</PackAsTool>-->
 <!--    <ToolCommandName>build</ToolCommandName>-->
   </PropertyGroup>

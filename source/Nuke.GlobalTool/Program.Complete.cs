@@ -15,7 +15,7 @@ namespace Nuke.GlobalTool
 {
     partial class Program
     {
-        private const string c_commandName = "nuke";
+        private const string CommandName = "nuke";
 
         [UsedImplicitly]
         public static int Complete(string[] args, [CanBeNull] string rootDirectory, [CanBeNull] string buildScript)
@@ -24,10 +24,10 @@ namespace Nuke.GlobalTool
                 return 0;
 
             var words = args.Single();
-            if (!words.StartsWithOrdinalIgnoreCase(c_commandName))
+            if (!words.StartsWithOrdinalIgnoreCase(CommandName))
                 return 0;
 
-            words = words.Substring(c_commandName.Length).TrimStart();
+            words = words.Substring(CommandName.Length).TrimStart();
 
             var completionFile = Constants.GetCompletionFile((AbsolutePath) rootDirectory);
             if (!File.Exists(completionFile))

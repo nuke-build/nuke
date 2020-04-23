@@ -181,11 +181,6 @@ namespace Nuke.CodeGeneration.Generators
             return property.GetNullableType();
         }
 
-        private static string AssertionWithValue(string assertion, string propertyName)
-        {
-            return $"{assertion} [{propertyName} = {{{propertyName}}}]".DoubleQuoteInterpolated();
-        }
-
         private static DataClassWriter WriteConfigureArguments(this DataClassWriter writer)
         {
             var formatProperties = writer.DataClass.Properties.Where(x => x.Format != null).ToList();

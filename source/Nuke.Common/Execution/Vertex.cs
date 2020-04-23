@@ -38,8 +38,8 @@ namespace Nuke.Common.Execution
 
         internal int LowLink { get; set; }
 
-        public T Value { get; set; }
+        public T Value { get; }
 
-        public ICollection<Vertex<T>> Dependencies { get; set; }
+        public ICollection<Vertex<T>> Dependencies { get; }
     }
 }

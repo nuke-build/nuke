@@ -16,7 +16,7 @@ namespace Nuke.GlobalTool
 {
     public partial class Program
     {
-        private const char c_commandPrefix = ':';
+        private const char CommandPrefix = ':';
 
         private static int Main(string[] args)
         {
@@ -44,12 +44,12 @@ namespace Nuke.GlobalTool
 
         private static int Handle(string[] args, [CanBeNull] string rootDirectory, [CanBeNull] string buildScript)
         {
-            var hasCommand = args.FirstOrDefault()?.StartsWithOrdinalIgnoreCase(c_commandPrefix.ToString()) ?? false;
+            var hasCommand = args.FirstOrDefault()?.StartsWithOrdinalIgnoreCase(CommandPrefix.ToString()) ?? false;
             if (hasCommand)
             {
-                var command = args.First().Trim(c_commandPrefix);
+                var command = args.First().Trim(CommandPrefix);
                 if (string.IsNullOrWhiteSpace(command))
-                    ControlFlow.Fail($"No command specified. Usage is: nuke {c_commandPrefix}<command> [args]");
+                    ControlFlow.Fail($"No command specified. Usage is: nuke {CommandPrefix}<command> [args]");
 
                 var commandHandler = typeof(Program).GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
                     .SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(command));

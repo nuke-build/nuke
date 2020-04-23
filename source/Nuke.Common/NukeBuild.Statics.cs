@@ -156,6 +156,7 @@ namespace Nuke.Common
             return buildProjectDirectory?.GlobFiles("*.csproj").SingleOrDefault();
         }
 
+        // ReSharper disable once CognitiveComplexity
         private static HostType GetHostType()
         {
             if (AppVeyor.IsRunningAppVeyor)

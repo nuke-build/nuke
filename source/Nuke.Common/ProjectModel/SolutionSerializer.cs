@@ -82,10 +82,10 @@ namespace Nuke.Common.ProjectModel
 
         private static IEnumerable<PrimitiveProject> GetPrimitiveProjects(Solution solution, string[] content)
         {
-            string GuidPattern(string text)
+            static string GuidPattern(string text)
                 => $@"\{{(?<{Regex.Escape(text)}>[0-9a-fA-F]{{8}}-[0-9a-fA-F]{{4}}-[0-9a-fA-F]{{4}}-[0-9a-fA-F]{{4}}-[0-9a-fA-F]{{12}})\}}";
 
-            string TextPattern(string name)
+            static string TextPattern(string name)
                 => $@"""(?<{Regex.Escape(name)}>[^""]*)""";
 
             var projectRegex = new Regex(
@@ -171,7 +171,7 @@ namespace Nuke.Common.ProjectModel
                 Write($"\t{end}");
             }
 
-            string Format(Guid guid) => $"{{{guid.ToString("D").ToUpper()}}}";
+            static string Format(Guid guid) => $"{{{guid.ToString("D").ToUpper()}}}";
 
             solution.Header.ForEach(x => writer.WriteLine(x));
 

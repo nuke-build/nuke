@@ -3,7 +3,6 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
@@ -62,7 +61,7 @@ namespace Nuke.CodeGeneration
             Logger.Info($"Generated code for {tool.Name} from {Path.GetFileName(tool.SpecificationFile) ?? "<in-memory>"}.");
         }
 
-        // ReSharper disable once CyclomaticComplexity
+        // ReSharper disable once CognitiveComplexity
         private static void ApplyRuntimeInformation(
             Tool tool,
             string specificationFile,

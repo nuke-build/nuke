@@ -11,7 +11,6 @@ using static Nuke.CodeGeneration.CodeGenerator;
 using static Nuke.CodeGeneration.ReferenceUpdater;
 using static Nuke.CodeGeneration.SchemaGenerator;
 using static Nuke.Common.IO.FileSystemTasks;
-using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.Git.GitTasks;
 
 partial class Build
@@ -39,7 +38,7 @@ partial class Build
                 GitRepository.GetGitHubDownloadUrl(ToolSchemaFile, MasterBranch),
                 "Tool specification schema file by NUKE");
 
-            GenerateCode(
+            GenerateCodeFromDirectory(
                 SpecificationsDirectory,
                 outputFileProvider: x => GenerationDirectory / x.Name / x.DefaultOutputFileName,
                 namespaceProvider: x => $"Nuke.Common.Tools.{x.Name}",

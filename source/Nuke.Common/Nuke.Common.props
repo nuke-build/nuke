@@ -3,7 +3,6 @@
 
   <PropertyGroup>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <RootNamespace></RootNamespace>
   </PropertyGroup>
 
   <ItemDefinitionGroup>

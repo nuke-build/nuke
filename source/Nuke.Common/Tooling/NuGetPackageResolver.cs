@@ -21,7 +21,7 @@ namespace Nuke.Common.Tooling
     [PublicAPI]
     public static class NuGetPackageResolver
     {
-        private const int c_defaultTimeout = 2000;
+        private const int DefaultTimeout = 2000;
 
         [ItemCanBeNull]
         public static async Task<string> GetLatestPackageVersion(string packageId, bool includePrereleases, int? timeout = null)
@@ -29,9 +29,9 @@ namespace Nuke.Common.Tooling
             try
             {
                 var url = $"https://api-v2v3search-0.nuget.org/query?q=packageid:{packageId}&prerelease={includePrereleases}";
-                var response = await HttpTasks.HttpDownloadStringAsync(url, requestConfigurator: x => x.Timeout = timeout ?? c_defaultTimeout);
+                var response = await HttpTasks.HttpDownloadStringAsync(url, requestConfigurator: x => x.Timeout = timeout ?? DefaultTimeout);
                 var packageObject = JsonConvert.DeserializeObject<JObject>(response);
-                return packageObject["data"].Single()["version"].ToString();
+                return packageObject["data"].NotNull().Single()["version"].NotNull().ToString();
             }
             catch (Exception)
             {
@@ -66,7 +66,6 @@ namespace Nuke.Common.Tooling
                 : GetLocalInstalledPackagesFromConfigFile(packagesConfigFile, resolveDependencies);
         }
 
-        [ItemNotNull]
         private static IEnumerable<(string PackageId, string Version)> GetLocalInstalledPackagesFromAssetsFileWithoutLoading(
             string packagesConfigFile,
             bool resolveDependencies = true)

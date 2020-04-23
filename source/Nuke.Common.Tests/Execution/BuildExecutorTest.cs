@@ -96,7 +96,7 @@ namespace Nuke.Common.Tests.Execution
 
         private void ExecuteBuild(ExecutableTarget[] skippedTargets = null)
         {
-            string[] SelectNames(ExecutableTarget[] targets) => targets?.Select(x => x.Name).ToArray();
+            static string[] SelectNames(ExecutableTarget[] targets) => targets?.Select(x => x.Name).ToArray();
 
             var build = new TestBuild();
             build.ExecutableTargets = new[] { A, B, C };
@@ -113,16 +113,6 @@ namespace Nuke.Common.Tests.Execution
         private static void AssertSkipped(params ExecutableTarget[] targets)
         {
             targets.ForEach(x => x.Status.Should().Be(ExecutionStatus.Skipped));
-        }
-
-        private static void AssertUnscheduled(params ExecutableTarget[] targets)
-        {
-            targets.ForEach(x => x.Status.Should().BeNull());
-        }
-
-        private static void AssertNotRun(params ExecutableTarget[] targets)
-        {
-            targets.ForEach(x => x.Status.Should().Be(ExecutionStatus.NotRun));
         }
 
         private class TestBuild : NukeBuild

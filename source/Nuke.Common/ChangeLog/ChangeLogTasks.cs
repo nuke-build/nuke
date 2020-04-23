@@ -173,13 +173,13 @@ namespace Nuke.Common.ChangeLog
 
         private static IEnumerable<ReleaseSection> GetReleaseSections(List<string> content)
         {
-            bool IsReleaseHead(string str)
+            static bool IsReleaseHead(string str)
                 => str.StartsWith("## ");
 
-            bool IsReleaseContent(string str)
+            static bool IsReleaseContent(string str)
                 => str.StartsWith("###") || str.Trim().StartsWith("-");
 
-            string GetCaption(string str)
+            static string GetCaption(string str)
                 => str
                     .TrimStart('#', ' ', '[')
                     .Split(' ')

@@ -33,14 +33,12 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == ''">
-    <None Include="$(MSBuildProjectName).props" PackagePath="build\netcoreapp2.1" Pack="true"/>
-    <None Include="$(MSBuildProjectName).props" PackagePath="build\net472" Pack="true"/>
-    <None Include="$(MSBuildProjectName).targets" PackagePath="build\netcoreapp2.1" Pack="true"/>
-    <None Include="$(MSBuildProjectName).targets" PackagePath="build\net472" Pack="true"/>
-    <None Include="..\Nuke.MSBuildTasks\Nuke.MSBuildTasks.targets" PackagePath="build\netcoreapp2.1" Pack="true"/>
-    <None Include="..\Nuke.MSBuildTasks\Nuke.MSBuildTasks.targets" PackagePath="build\net472" Pack="true"/>
-    <None Include="..\Nuke.MSBuildTasks\bin\$(Configuration)\netcoreapp2.1\publish\**\*.*" PackagePath="build\netcoreapp2.1" Pack="true"/>
-    <None Include="..\Nuke.MSBuildTasks\bin\$(Configuration)\net472\publish\**\*.*" PackagePath="build\net472" Pack="true"/>
+    <None Include="$(MSBuildProjectName).props" PackagePath="build" Pack="true"/>
+    <None Include="$(MSBuildProjectName).targets" PackagePath="build" Pack="true"/>
+    <None Include="..\Nuke.MSBuildTasks\Nuke.MSBuildTasks.targets" PackagePath="build\netcore" Pack="true"/>
+    <None Include="..\Nuke.MSBuildTasks\Nuke.MSBuildTasks.targets" PackagePath="build\netfx" Pack="true"/>
+    <None Include="..\Nuke.MSBuildTasks\bin\$(Configuration)\netcoreapp2.1\publish\**\*.*" PackagePath="build\netcore" Pack="true"/>
+    <None Include="..\Nuke.MSBuildTasks\bin\$(Configuration)\net472\publish\**\*.*" PackagePath="build\netfx" Pack="true"/>
   </ItemGroup>
 
 </Project>
