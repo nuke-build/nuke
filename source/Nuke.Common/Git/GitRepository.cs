@@ -58,16 +58,6 @@ namespace Nuke.Common.Git
                 branch ?? (branchMatch.Success ? branchMatch.Groups["branch"].Value : null));
         }
 
-        //private static (string endpoint, string identifier) ParseUrl(string url)
-        //{
-        //    var regex = 
-        //        new Regex( @"^(?'protocol'\w+)?\:\/\/(?>(?'user'.*)@)?(?'endpoint'[^\/:]+)(?>\:(?'port'\d+))?[\/:](?'identifier'.*?)\/?(?>\.git)?$");
-        //    var match = regex.Match(url.Trim());
-
-        //    ControlFlow.Assert(match.Success, $"Url '{url}' could not be parsed.");
-        //    return (match.Groups["endpoint"].Value, match.Groups["identifier"].Value);
-        //}
-
         public GitRepository(
             GitUrl url,
             string localDirectory = null,
