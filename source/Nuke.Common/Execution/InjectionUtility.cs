@@ -23,6 +23,8 @@ namespace Nuke.Common.Execution
             [CanBeNull] T instance,
             IEnumerable<(MemberInfo Member, InjectionAttributeBase Attribute)> tuples)
         {
+            // Order collection so that attributes in base classes are initialized first
+            // Base classes with the same hirarchy level are sorted via Priority
             tuples = tuples
                 .OrderBy(x => x.Member.DeclaringType.Descendants(y => y.BaseType).Count())
                 .ThenByDescending(x => x.Attribute.Priority);
@@ -32,13 +34,17 @@ namespace Nuke.Common.Execution
                 if (member.DeclaringType == typeof(NukeBuild))
                     continue;
 
+                // Retrieve value to set on member
                 var value = attribute.GetValue(member, instance);
                 if (value == null)
                     continue;
 
+                // Guard
                 var valueType = value.GetType();
                 ControlFlow.Assert(member.GetMemberType().IsAssignableFrom(valueType),
                     $"Member '{member.Name}' must be of type '{valueType.Name}' to get its valued injected from '{attribute.GetType().Name}'.");
+
+                // Set attribute generated value in member
                 member.SetValue(instance, value);
             }
         }
