@@ -50,6 +50,13 @@ namespace Nuke.Common.Execution
                 .Select(x => x.Member).ToList();
         }
 
+        /// <summary>
+        /// Get all attributes defined in the given <see cref="type"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns>Collection where each entry describes a <see cref="InjectionAttributeBase"/>
+        /// and its corresponding member (method/property).
+        /// </returns>
         public static IReadOnlyCollection<(MemberInfo Member, InjectionAttributeBase Attribute)> GetInjectionMembers(Type type)
         {
             return type
