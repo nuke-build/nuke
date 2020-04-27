@@ -35,8 +35,8 @@ namespace Nuke.Common.Tests
         public void FromUrlTest(string url, string endpoint, string identifier, GitProtocol protocol)
         {
             var repository = GitRepository.FromUrl(url);
-            repository.Endpoint.Should().Be(endpoint);
-            repository.Identifier.Should().Be(identifier);
+            repository.Url.Endpoint.Should().Be(endpoint);
+            repository.Url.Identifier.Should().Be(identifier);
             repository.Url.Protocol.Should().Be(protocol);
         }
 
@@ -44,8 +44,8 @@ namespace Nuke.Common.Tests
         public void FromDirectoryTest()
         {
             var repository = GitRepository.FromLocalDirectory(Directory.GetCurrentDirectory()).NotNull();
-            repository.Endpoint.Should().NotBeNullOrEmpty();
-            repository.Identifier.Should().NotBeNullOrEmpty();
+            repository.Url.Endpoint.Should().NotBeNullOrEmpty();
+            repository.Url.Identifier.Should().NotBeNullOrEmpty();
             repository.LocalDirectory.Should().NotBeNullOrEmpty();
             repository.Head.Should().NotBeNullOrEmpty();
         }

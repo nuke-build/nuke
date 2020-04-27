@@ -65,18 +65,11 @@ namespace Nuke.Common.Git
             string branch = null)
         {
             Url = url;
-            Endpoint = Url.Endpoint;
-            Identifier = Url.Identifier;
             LocalDirectory = localDirectory;
             Head = head;
             Branch = branch;
         }
 
-        /// <summary>Endpoint for the repository. For instance <em>github.com</em>.</summary>
-        public string Endpoint { get; private set; }
-
-        /// <summary>Identifier of the repository.</summary>
-        public string Identifier { get; private set; }
         public GitUrl Url { get; }
 
         /// <summary>Local path from which the repository was parsed.</summary>
@@ -92,10 +85,10 @@ namespace Nuke.Common.Git
         public string Branch { get; private set; }
 
         /// <summary>Url in the form of <c>https://endpoint/identifier.git</c></summary>
-        public string HttpsUrl => $"https://{Endpoint}/{Identifier}.git";
+        public string HttpsUrl => $"https://{Url.Endpoint}/{Url.Identifier}.git";
 
         /// <summary>Url in the form of <c>git@endpoint:identifier.git</c></summary>
-        public string SshUrl => $"git@{Endpoint}:{Identifier}.git";
+        public string SshUrl => $"git@{Url.Endpoint}:{Url.Identifier}.git";
 
         public GitRepository SetBranch(string branch)
         {

@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -112,21 +112,21 @@ namespace Nuke.Common.Tools.GitHub
 
         public static bool IsGitHubRepository(this GitRepository repository)
         {
-            return repository != null && repository.Endpoint.EqualsOrdinalIgnoreCase("github.com");
+            return repository != null && repository.Url.Endpoint.EqualsOrdinalIgnoreCase("github.com");
         }
 
         public static string GetGitHubOwner(this GitRepository repository)
         {
             ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
 
-            return repository.Identifier.Split('/')[0];
+            return repository.Url.Identifier.Split('/')[0];
         }
 
         public static string GetGitHubName(this GitRepository repository)
         {
             ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
 
-            return repository.Identifier.Split('/')[1];
+            return repository.Url.Identifier.Split('/')[1];
         }
 
         /// <summary>Url in the form of <c>https://raw.githubusercontent.com/{identifier}/{branch}/{file}</c>.</summary>
@@ -136,7 +136,7 @@ namespace Nuke.Common.Tools.GitHub
 
             branch ??= repository.Branch.NotNull("repository.Branch != null");
             var relativePath = GetRepositoryRelativePath(file, repository);
-            return $"https://raw.githubusercontent.com/{repository.Identifier}/{branch}/{relativePath}";
+            return $"https://raw.githubusercontent.com/{repository.Url.Identifier}/{branch}/{relativePath}";
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace Nuke.Common.Tools.GitHub
             var method = GetMethod(relativePath, itemType, repository);
             ControlFlow.Assert(path == null || method != null, text: "Could not determine item type.");
 
-            return $"https://github.com/{repository.Identifier}/{method}/{branch}/{relativePath}";
+            return $"https://github.com/{repository.Url.Identifier}/{method}/{branch}/{relativePath}";
         }
 
         [CanBeNull]

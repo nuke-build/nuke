@@ -57,7 +57,7 @@ namespace Nuke.Common.Execution
         }
 
         /// <summary>
-        /// Get all attributes defined in the given <see cref="type"/>.
+        /// Get all attributes defined in the given <paramref name="type"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns>Collection where each entry describes a <see cref="InjectionAttributeBase"/>

@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -21,9 +21,9 @@ namespace Nuke.Common.Tests
             var rootDirectory = (AbsolutePath) Directory.GetCurrentDirectory() / ".." / ".." / ".." / ".." / "..";
             var repository = GitRepository.FromLocalDirectory(rootDirectory, "master").NotNull();
 
-            var rawUrl = $"https://raw.githubusercontent.com/{repository.Identifier}/{repository.Branch}";
-            var blobUrl = $"https://github.com/{repository.Identifier}/blob/{repository.Branch}";
-            var treeUrl = $"https://github.com/{repository.Identifier}/tree/{repository.Branch}";
+            var rawUrl = $"https://raw.githubusercontent.com/{repository.Url.Identifier}/{repository.Branch}";
+            var blobUrl = $"https://github.com/{repository.Url.Identifier}/blob/{repository.Branch}";
+            var treeUrl = $"https://github.com/{repository.Url.Identifier}/tree/{repository.Branch}";
 
             repository.GetGitHubDownloadUrl(rootDirectory / "LICENSE").Should().Be($"{rawUrl}/LICENSE");
 
