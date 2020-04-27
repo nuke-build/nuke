@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
+using Nuke.Common.Git.Url;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 
@@ -18,8 +19,9 @@ namespace Nuke.Common.Git
     {
         public static GitRepository FromUrl(string url, string branch = null)
         {
-            var (endpoint, identifier) = ParseUrl(url);
-            return new GitRepository(endpoint, identifier, branch: branch);
+            return new GitRepository(
+                new GitUrlParser(url).Parse(),
+                branch: branch);
         }
 
         /// <summary>
@@ -49,35 +51,32 @@ namespace Nuke.Common.Git
                 .Trim();
             ControlFlow.Assert(url != null, $"Could not parse remote URL for '{remote}'.");
 
-            var (endpoint, identifier) = ParseUrl(url);
-
             return new GitRepository(
-                endpoint,
-                identifier,
+                new GitUrlParser(url).Parse(),
                 rootDirectory,
                 head,
                 branch ?? (branchMatch.Success ? branchMatch.Groups["branch"].Value : null));
         }
 
-        private static (string endpoint, string identifier) ParseUrl(string url)
-        {
-            var regex = new Regex(
-                @"^(?'protocol'\w+\:\/\/)?(?>(?'user'.*)@)?(?'endpoint'[^\/:]+)(?>\:(?'port'\d+))?[\/:](?'identifier'.*?)\/?(?>\.git)?$");
-            var match = regex.Match(url.Trim());
+        //private static (string endpoint, string identifier) ParseUrl(string url)
+        //{
+        //    var regex = 
+        //        new Regex( @"^(?'protocol'\w+)?\:\/\/(?>(?'user'.*)@)?(?'endpoint'[^\/:]+)(?>\:(?'port'\d+))?[\/:](?'identifier'.*?)\/?(?>\.git)?$");
+        //    var match = regex.Match(url.Trim());
 
-            ControlFlow.Assert(match.Success, $"Url '{url}' could not be parsed.");
-            return (match.Groups["endpoint"].Value, match.Groups["identifier"].Value);
-        }
+        //    ControlFlow.Assert(match.Success, $"Url '{url}' could not be parsed.");
+        //    return (match.Groups["endpoint"].Value, match.Groups["identifier"].Value);
+        //}
 
         public GitRepository(
-            string endpoint,
-            string identifier,
+            GitUrl url,
             string localDirectory = null,
             string head = null,
             string branch = null)
         {
-            Endpoint = endpoint;
-            Identifier = identifier;
+            Url = url;
+            Endpoint = Url.Endpoint;
+            Identifier = Url.Identifier;
             LocalDirectory = localDirectory;
             Head = head;
             Branch = branch;
@@ -88,6 +87,7 @@ namespace Nuke.Common.Git
 
         /// <summary>Identifier of the repository.</summary>
         public string Identifier { get; private set; }
+        public GitUrl Url { get; }
 
         /// <summary>Local path from which the repository was parsed.</summary>
         [CanBeNull]
@@ -109,7 +109,7 @@ namespace Nuke.Common.Git
 
         public GitRepository SetBranch(string branch)
         {
-            return new GitRepository(Endpoint, Identifier, LocalDirectory, Head, branch);
+            return new GitRepository(Url, LocalDirectory, Head, branch);
         }
 
         public override string ToString()
