@@ -10,6 +10,7 @@ using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.Execution;
+using Nuke.Common.Git;
 using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.GitVersion
@@ -29,7 +30,8 @@ namespace Nuke.Common.Tools.GitVersion
 
         public override object GetValue(MemberInfo member, object instance)
         {
-            // TODO: https://github.com/GitTools/GitVersion/issues/1097
+            WarnAtFetchOnSshRepository();
+
             if (EnvironmentInfo.IsUnix && DisableOnUnix)
             {
                 Logger.Warn($"{nameof(GitVersion)} is disabled on UNIX environment.");
@@ -51,6 +53,16 @@ namespace Nuke.Common.Tools.GitVersion
             }
 
             return gitVersion;
+        }
+
+        private void WarnAtFetchOnSshRepository()
+        {
+            if (NoFetch) return;
+            var gitRepoProperty = GitRepository.FromLocalDirectory(NukeBuild.RootDirectory);
+            if (gitRepoProperty.Url.Protocol == Common.Git.Url.GitProtocol.ssh)
+            {
+                Logger.Warn($"{nameof(GitVersion)}: GitVersion doesn't support SSH. We suggest to set {nameof(NoFetch)} to {true}");
+            }
         }
     }
 }
