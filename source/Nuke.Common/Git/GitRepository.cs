@@ -16,7 +16,7 @@ namespace Nuke.Common.Git
 {
     [PublicAPI]
     [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-    public class GitRepository
+    public sealed class GitRepository
     {
         private readonly GitUrlCreater _gitUrlCreator = new GitUrlCreater();
 
