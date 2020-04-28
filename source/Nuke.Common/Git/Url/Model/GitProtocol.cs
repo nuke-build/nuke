@@ -1,4 +1,4 @@
-﻿namespace Nuke.Common.Git.Url
+﻿namespace Nuke.Common.Git.Url.Model
 {
     public enum GitProtocol
     {

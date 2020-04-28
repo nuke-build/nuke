@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using Nuke.Common.Git.Url;
+using Nuke.Common.Git.Url.Building;
+using Nuke.Common.Git.Url.Model;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 
@@ -17,6 +19,8 @@ namespace Nuke.Common.Git
     [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
     public class GitRepository
     {
+        private GitUrlCreater _gitUrlCreator = new GitUrlCreater();
+
         public static GitRepository FromUrl(string url, string branch = null)
         {
             return new GitRepository(
@@ -59,7 +63,7 @@ namespace Nuke.Common.Git
         }
 
         public GitRepository(
-            GitUrl url,
+            IGitUrl url,
             string localDirectory = null,
             string head = null,
             string branch = null)
@@ -70,7 +74,8 @@ namespace Nuke.Common.Git
             Branch = branch;
         }
 
-        public GitUrl Url { get; }
+
+        public IGitUrl Url { get; }
 
         /// <summary>Local path from which the repository was parsed.</summary>
         [CanBeNull]
@@ -85,10 +90,12 @@ namespace Nuke.Common.Git
         public string Branch { get; private set; }
 
         /// <summary>Url in the form of <c>https://endpoint/identifier.git</c></summary>
-        public string HttpsUrl => $"https://{Url.Endpoint}/{Url.Identifier}.git";
+        public string HttpsUrl => _gitUrlCreator.HttpsUrlFrom(Url);
+        //_gitUrlBuilder.Reset().From(Url).Protocol(GitProtocol.https).AsString();
 
         /// <summary>Url in the form of <c>git@endpoint:identifier.git</c></summary>
-        public string SshUrl => $"git@{Url.Endpoint}:{Url.Identifier}.git";
+        public string SshUrl => _gitUrlCreator.GitUrlWithoutPrefix(Url);
+            //$"git@{Url.Endpoint}:{Url.Identifier}.git";
 
         public GitRepository SetBranch(string branch)
         {

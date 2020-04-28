@@ -1,13 +1,13 @@
 ﻿using JetBrains.Annotations;
 using System;
 
-namespace Nuke.Common.Git.Url
+namespace Nuke.Common.Git.Url.Model
 {
 
     /// <summary>
     /// Acts as value type data only class for GitUrl information.
     /// </summary>
-    public sealed class GitUrl : IEquatable<GitUrl>
+    public class GitUrl : IEquatable<GitUrl>, IGitUrl
     {
         public GitUrl(
             string endpoint,
@@ -30,13 +30,7 @@ namespace Nuke.Common.Git.Url
 
         public GitProtocol Protocol { get; }
 
-        public string Url
-        {
-            get
-            {
-                return $"{Protocol}://{Endpoint}/{Identifier}.git";
-            }
-        }
+        public string Url => $"{Protocol}://{Endpoint}/{Identifier}.git";
 
 
         #region IEquatable

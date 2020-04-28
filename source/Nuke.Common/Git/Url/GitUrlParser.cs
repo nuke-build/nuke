@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using Nuke.Common.Git.Url.Model;
 using System;
 using System.Text.RegularExpressions;
 
@@ -7,7 +8,7 @@ namespace Nuke.Common.Git.Url
 
     public sealed class GitUrlParser
     {
-        private static readonly Regex regex =
+        private static readonly Regex _regex =
                 new Regex(@"^(?'protocol'(https|ssh|http|git)\:\/\/)?(?>(?'user'.*)@)?(?'endpoint'[^\/:]+)(?>\:(?'port'\d+))?[\/:](?'identifier'.*?)\/?(?>\.git)?$");
 
         [NotNull]
@@ -19,9 +20,9 @@ namespace Nuke.Common.Git.Url
             GitUrl = gitUrl.Trim();
         }
 
-        public GitUrl Parse()
+        public IGitUrl Parse()
         {
-            var match = regex.Match(GitUrl);
+            var match = _regex.Match(GitUrl);
             ControlFlow.Assert(match.Success, $"Url '{GitUrl}' could not be parsed.");
 
             var protocol = From(match.Groups["protocol"].Value);
