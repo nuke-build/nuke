@@ -3,7 +3,7 @@ using Nuke.Common.Git.Url.Model;
 using System;
 using System.Text.RegularExpressions;
 
-namespace Nuke.Common.Git.Url
+namespace Nuke.Common.Git.Url.Building
 {
 
     public sealed class GitUrlParser

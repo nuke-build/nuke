@@ -14,5 +14,10 @@ namespace Nuke.Common.Git.Url.Building
         {
             return $"git@{url.Endpoint}/{url.Identifier}";
         }
+
+        public IGitUrl From(string url)
+        {
+            return new GitUrlParser(url).Parse();
+        }
     }
 }

@@ -7,8 +7,9 @@ using System.IO;
 using System.Linq;
 using FluentAssertions;
 using Nuke.Common.Git;
-using Nuke.Common.Git.Url;
+using Nuke.Common.Git.Url.Model;
 using Xunit;
+
 
 namespace Nuke.Common.Tests
 {

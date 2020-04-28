@@ -1,4 +1,4 @@
-﻿using Nuke.Common.Git.Url;
+﻿using Nuke.Common.Git.Url.Model;
 using Xunit;
 
 namespace Nuke.Common.Tests.Git.Url

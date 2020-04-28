@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
-using Nuke.Common.Git.Url;
 using Nuke.Common.Git.Url.Building;
 using Nuke.Common.Git.Url.Model;
 using Nuke.Common.IO;
@@ -19,12 +18,12 @@ namespace Nuke.Common.Git
     [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
     public class GitRepository
     {
-        private GitUrlCreater _gitUrlCreator = new GitUrlCreater();
+        private readonly GitUrlCreater _gitUrlCreator = new GitUrlCreater();
 
         public static GitRepository FromUrl(string url, string branch = null)
         {
             return new GitRepository(
-                new GitUrlParser(url).Parse(),
+                new GitUrlCreater().From(url),
                 branch: branch);
         }
 
@@ -75,6 +74,7 @@ namespace Nuke.Common.Git
         }
 
 
+        [NotNull]
         public IGitUrl Url { get; }
 
         /// <summary>Local path from which the repository was parsed.</summary>
