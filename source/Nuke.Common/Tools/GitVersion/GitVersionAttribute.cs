@@ -59,7 +59,7 @@ namespace Nuke.Common.Tools.GitVersion
         {
             if (NoFetch) return;
             var gitRepoProperty = GitRepository.FromLocalDirectory(NukeBuild.RootDirectory);
-            if (gitRepoProperty.Url.Protocol == Common.Git.Url.GitProtocol.ssh)
+            if (gitRepoProperty.Url.Protocol == Common.Git.Url.Model.GitProtocol.ssh)
             {
                 Logger.Warn($"{nameof(GitVersion)}: GitVersion doesn't support SSH. We suggest to set {nameof(NoFetch)} to {true}");
             }
