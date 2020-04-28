@@ -1,4 +1,5 @@
-﻿using Nuke.Common.Git.Url.Model;
+﻿using JetBrains.Annotations;
+using Nuke.Common.Git.Url.Model;
 using System;
 
 namespace Nuke.Common.Git.Url.Building
@@ -6,7 +7,7 @@ namespace Nuke.Common.Git.Url.Building
     public sealed class GitUrlBuilder
     {
         private IGitUrl _url;
-        public GitUrlBuilder From(IGitUrl url)
+        public GitUrlBuilder From([NotNull] IGitUrl url)
         {
             _url = url ?? throw new ArgumentNullException(nameof(url));
             return this;
@@ -18,13 +19,17 @@ namespace Nuke.Common.Git.Url.Building
             return this;
         }
 
-        public GitUrlBuilder Endpoint(string endpoint)
+        public GitUrlBuilder Endpoint([NotNull] string endpoint)
         {
+            if (string.IsNullOrEmpty(endpoint)) throw new ArgumentException("message", nameof(endpoint));
+
             _url = new GitUrl(endpoint, _url.Identifier, _url.Protocol);
             return this;
         }
-        public GitUrlBuilder Identifier(string identifier)
+        public GitUrlBuilder Identifier([NotNull] string identifier)
         {
+            if (string.IsNullOrEmpty(identifier)) throw new ArgumentException("message", nameof(identifier));
+
             _url = new GitUrl(_url.Endpoint, identifier, _url.Protocol);
             return this;
         }

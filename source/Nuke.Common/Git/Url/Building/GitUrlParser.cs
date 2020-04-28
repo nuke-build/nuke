@@ -34,7 +34,7 @@ namespace Nuke.Common.Git.Url.Building
                  );
         }
 
-        private static GitProtocol From (string protocol)
+        private static GitProtocol From ([NotNull] string protocol)
         {
             var trimmedProtocol = string.IsNullOrEmpty(protocol) ? string.Empty : protocol.Split(':')[0];
             return trimmedProtocol switch

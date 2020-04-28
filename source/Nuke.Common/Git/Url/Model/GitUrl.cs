@@ -5,13 +5,13 @@ namespace Nuke.Common.Git.Url.Model
 {
 
     /// <summary>
-    /// Acts as value type data only class for GitUrl information.
+    /// Acts as value (immutable) type data only class for GitUrl information.
     /// </summary>
     public class GitUrl : IEquatable<GitUrl>, IGitUrl
     {
         public GitUrl(
-            string endpoint,
-            string identifier,
+            [NotNull] string endpoint,
+            [NotNull] string identifier,
             GitProtocol protocol)
         {
             if (string.IsNullOrEmpty(endpoint)) throw new ArgumentException("message", nameof(endpoint));

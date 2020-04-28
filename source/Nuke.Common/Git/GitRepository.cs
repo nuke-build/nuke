@@ -90,12 +90,12 @@ namespace Nuke.Common.Git
         public string Branch { get; private set; }
 
         /// <summary>Url in the form of <c>https://endpoint/identifier.git</c></summary>
+        [NotNull]
         public string HttpsUrl => _gitUrlCreator.HttpsUrlFrom(Url);
-        //_gitUrlBuilder.Reset().From(Url).Protocol(GitProtocol.https).AsString();
 
         /// <summary>Url in the form of <c>git@endpoint:identifier.git</c></summary>
+        [NotNull]
         public string SshUrl => _gitUrlCreator.GitUrlWithoutPrefix(Url);
-            //$"git@{Url.Endpoint}:{Url.Identifier}.git";
 
         public GitRepository SetBranch(string branch)
         {
