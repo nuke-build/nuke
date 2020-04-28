@@ -8,7 +8,7 @@ namespace Nuke.Common.Git.Url.Building
 
         public string HttpsUrlFrom(IGitUrl url)
         {
-            return _builder.Reset().From(url).Protocol(GitProtocol.ssh).AsString();
+            return _builder.Reset().From(url).Protocol(GitProtocol.https).AsString();
         }
         public string GitUrlWithoutPrefix(IGitUrl url)
         {
