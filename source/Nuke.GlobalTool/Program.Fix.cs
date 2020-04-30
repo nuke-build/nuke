@@ -24,6 +24,8 @@ namespace Nuke.GlobalTool
         [UsedImplicitly]
         private static int Fix(string[] args, [CanBeNull] string rootDirectory, [CanBeNull] string buildScript)
         {
+            PrintInfo();
+
             if (rootDirectory == null)
                 return 0;
 

@@ -20,8 +20,6 @@ namespace Nuke.GlobalTool
 
         private static int Main(string[] args)
         {
-            Logger.Info($"NUKE Global Tool {typeof(Program).Assembly.GetInformationalText()}");
-
             try
             {
                 // TODO: parse from --root argument
@@ -40,6 +38,11 @@ namespace Nuke.GlobalTool
                 Logger.Error(exception);
                 return 1;
             }
+        }
+
+        private static void PrintInfo()
+        {
+            Logger.Info($"NUKE Global Tool {typeof(Program).Assembly.GetInformationalText()}");
         }
 
         private static int Handle(string[] args, [CanBeNull] string rootDirectory, [CanBeNull] string buildScript)

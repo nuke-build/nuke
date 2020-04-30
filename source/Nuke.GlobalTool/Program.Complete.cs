@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
+using static Nuke.Common.Constants;
 
 namespace Nuke.GlobalTool
 {
@@ -29,10 +30,10 @@ namespace Nuke.GlobalTool
 
             words = words.Substring(CommandName.Length).TrimStart();
 
-            var completionFile = Constants.GetCompletionFile((AbsolutePath) rootDirectory);
+            var completionFile = GetCompletionFile((AbsolutePath) rootDirectory);
             if (!File.Exists(completionFile))
             {
-                Build(buildScript.NotNull(), $"--{Constants.CompletionParameterName}");
+                Build(buildScript.NotNull(), $"--{CompletionParameterName}");
                 return 1;
             }
 

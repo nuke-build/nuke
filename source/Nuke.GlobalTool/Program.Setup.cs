@@ -48,6 +48,8 @@ namespace Nuke.GlobalTool
         [UsedImplicitly]
         private static int Setup(string[] args, [CanBeNull] string rootDirectory, [CanBeNull] string buildScript)
         {
+            PrintInfo();
+
             #region Basic
 
             var nukeLatestReleaseVersion = NuGetPackageResolver.GetLatestPackageVersion("Nuke.Common", includePrereleases: false);
