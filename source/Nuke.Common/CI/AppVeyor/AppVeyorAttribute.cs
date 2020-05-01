@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.CI.AppVeyor.Configuration;
@@ -28,10 +29,10 @@ namespace Nuke.Common.CI.AppVeyor
             _images = new[] { image }.Concat(images).ToArray();
         }
 
-        private string ConfigurationFile => NukeBuild.RootDirectory / "appveyor.yml";
-
         public override HostType HostType => HostType.AppVeyor;
+        public override string ConfigurationFile => NukeBuild.RootDirectory / "appveyor.yml";
         public override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
+
         public override IEnumerable<string> RelevantTargetNames => InvokedTargets;
         public override IEnumerable<string> IrrelevantTargetNames => new string[0];
 
@@ -48,9 +49,9 @@ namespace Nuke.Common.CI.AppVeyor
         public string[] Init { get; set; } = new string[0];
         public string[] Cache { get; set; } = new string[0];
 
-        public override CustomFileWriter CreateWriter()
+        public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
         {
-            return new CustomFileWriter(ConfigurationFile, indentationFactor: 2, "#");
+            return new CustomFileWriter(streamWriter, indentationFactor: 2, "#");
         }
 
         public override ConfigurationEntity GetConfiguration(

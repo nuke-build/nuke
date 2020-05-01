@@ -8,10 +8,6 @@
 
   <Import Project="$(NukeMSBuildTasks)\Nuke.MSBuildTasks.targets" Condition="'$(NukeMSBuildTasks)' != ''" />
 
-  <PropertyGroup Condition="'$(PackAsTool)' != 'True'">
-    <IsPackable>False</IsPackable>
-  </PropertyGroup>
-
   <PropertyGroup>
     <NukeScriptDirectory Condition="'$(NukeScriptDirectory)' == ''">$(NukeRootDirectory)</NukeScriptDirectory>
   </PropertyGroup>

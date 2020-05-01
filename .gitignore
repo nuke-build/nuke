@@ -53,3 +53,6 @@ _ReSharper*
 _dotTrace*
 
 .DS_Store
+
+# Tests
+*.received.txt
