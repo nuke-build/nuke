@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed transitive artifacts in configuration generation
+- Fixed `StackOverflowException` in configuration generation
+- Fixed `IsPackable` property default
+- Fixed missing colon in GitHubActions triggers
+- Fixed assertion message for finding Git directory
+- Fixed assertion message for `teamcity.dotCover.home`
 
 ## [0.24.10] / 2020-04-24
 - Fixed MSBuild targets to switch on `MSBuildRuntimeType` again
