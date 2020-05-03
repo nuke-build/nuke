@@ -147,8 +147,8 @@ namespace Nuke.Common.CI.TeamCity
                 type != TeamCityImportType.dotNetCoverage || tool != null,
                 $"Importing data of type '{type}' requires to specify the tool.");
             ControlFlow.AssertWarn(
-                tool == TeamCityImportTool.dotcover &&
-                ConfigurationProperties["teamcity.dotCover.home"].EndsWithOrdinalIgnoreCase("bundled"),
+                    !(tool == TeamCityImportTool.dotcover &&
+                    ConfigurationProperties["teamcity.dotCover.home"].EndsWithOrdinalIgnoreCase("bundled")),
                 new[]
                 {
                     "Configuration parameter 'teamcity.dotCover.home' is set to the bundled version.",
