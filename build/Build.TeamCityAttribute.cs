@@ -25,7 +25,8 @@ partial class Build
             NukeBuild build,
             ExecutableTarget executableTarget,
             TeamCityVcsRoot vcsRoot,
-            LookupTable<ExecutableTarget, TeamCityBuildType> buildTypes)
+            LookupTable<ExecutableTarget, TeamCityBuildType> buildTypes,
+            IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             var dictionary = new Dictionary<string, string>
                              {
@@ -36,7 +37,7 @@ partial class Build
                                  { nameof(Publish), "🚚" },
                                  { nameof(Announce), "🗣" }
                              };
-            return base.GetBuildTypes(build, executableTarget, vcsRoot, buildTypes)
+            return base.GetBuildTypes(build, executableTarget, vcsRoot, buildTypes, relevantTargets)
                 .ForEachLazy(x =>
                 {
                     var symbol = dictionary.GetValueOrDefault(x.InvokedTargets.Last()).NotNull("symbol != null");
