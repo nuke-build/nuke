@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
+using static Nuke.Common.Constants;
 
 namespace Nuke.GlobalTool
 {
@@ -20,24 +21,19 @@ namespace Nuke.GlobalTool
         [UsedImplicitly]
         public static int Complete(string[] args, [CanBeNull] string rootDirectory, [CanBeNull] string buildScript)
         {
+            if (rootDirectory == null)
+                return 0;
+
             var words = args.Single();
             if (!words.StartsWithOrdinalIgnoreCase(CommandName))
-            {
                 return 0;
-            }
 
             words = words.Substring(CommandName.Length).TrimStart();
 
-            if (rootDirectory == null)
-            {
-                // TODO: parse --root parameter
-                return 0;
-            }
-
-            var completionFile = Constants.GetCompletionFile((AbsolutePath) rootDirectory);
+            var completionFile = GetCompletionFile((AbsolutePath) rootDirectory);
             if (!File.Exists(completionFile))
             {
-                Build(buildScript.NotNull(), $"--{Constants.CompletionParameterName}");
+                Build(buildScript.NotNull(), $"--{CompletionParameterName}");
                 return 1;
             }
 

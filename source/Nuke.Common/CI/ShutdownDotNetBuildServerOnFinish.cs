@@ -14,10 +14,12 @@ namespace Nuke.Common.CI
     [AttributeUsage(AttributeTargets.Class)]
     public class ShutdownDotNetBuildServerOnFinish : Attribute, IOnBuildFinished
     {
+        public bool EnableLogging { get; set; }
+
         public void OnBuildFinished(NukeBuild build)
         {
             // Note https://github.com/dotnet/cli/issues/11424
-            DotNetTasks.DotNet("build-server shutdown");
+            DotNetTasks.DotNet("build-server shutdown", logInvocation: EnableLogging, logOutput: EnableLogging);
         }
     }
 }

@@ -19,7 +19,7 @@
     <NukeUpdateReferences Condition="'$(NukeUpdateReferences)' == ''">True</NukeUpdateReferences>
   </PropertyGroup>
 
-  <Target Name="NukeExternalFiles" BeforeTargets="Restore">
+  <Target Name="NukeExternalFiles" BeforeTargets="Restore" Condition="'@(NukeExternalFiles)' != ''">
     <ExternalFilesTask
       ExternalFiles="@(NukeExternalFiles)"
       Timeout="$(NukeTaskTimeout)"
@@ -38,7 +38,7 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="NukeCodeGeneration" BeforeTargets="CoreCompile">
+  <Target Name="NukeCodeGeneration" BeforeTargets="CoreCompile" Condition="'@(NukeSpecificationFiles)' != ''">
     <CodeGenerationTask
       SpecificationFiles="@(NukeSpecificationFiles)"
       BaseDirectory="$(NukeBaseDirectory)"
