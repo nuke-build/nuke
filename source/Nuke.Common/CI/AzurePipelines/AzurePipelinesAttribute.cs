@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.CI.AzurePipelines.Configuration;
@@ -38,13 +39,14 @@ namespace Nuke.Common.CI.AzurePipelines
             _images = new[] { image }.Concat(images).ToArray();
         }
 
+        public override string IdPostfix => _suffix;
+
+        public override HostType HostType => HostType.AzurePipelines;
+        public override string ConfigurationFile => ConfigurationDirectory / ConfigurationFileName;
+        public override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
         protected virtual AbsolutePath ConfigurationDirectory => NukeBuild.RootDirectory;
         private string ConfigurationFileName => _suffix != null ? $"azure-pipelines.{_suffix}.yml" : "azure-pipelines.yml";
-        private string ConfigurationFile => ConfigurationDirectory / ConfigurationFileName;
 
-        public override string IdPostfix => _suffix;
-        public override HostType HostType => HostType.AzurePipelines;
-        public override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
         public override IEnumerable<string> RelevantTargetNames => InvokedTargets;
 
         public string[] InvokedTargets { get; set; } = new string[0];
@@ -64,9 +66,9 @@ namespace Nuke.Common.CI.AzurePipelines
         public string[] PullRequestsPathsInclude { get; set; } = new string[0];
         public string[] PullRequestsPathsExclude { get; set; } = new string[0];
 
-        public override CustomFileWriter CreateWriter()
+        public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
         {
-            return new CustomFileWriter(ConfigurationFile, indentationFactor: 2, commentPrefix: "#");
+            return new CustomFileWriter(streamWriter, indentationFactor: 2, commentPrefix: "#");
         }
 
         public override ConfigurationEntity GetConfiguration(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
@@ -110,7 +112,7 @@ namespace Nuke.Common.CI.AzurePipelines
         {
             var lookupTable = new LookupTable<ExecutableTarget, AzurePipelinesJob>();
             var jobs = relevantTargets
-                .Select(x => (ExecutableTarget: x, Job: GetJob(x, lookupTable)))
+                .Select(x => (ExecutableTarget: x, Job: GetJob(x, lookupTable, relevantTargets)))
                 .ForEachLazy(x => lookupTable.Add(x.ExecutableTarget, x.Job))
                 .Select(x => x.Job).ToArray();
 
@@ -126,7 +128,8 @@ namespace Nuke.Common.CI.AzurePipelines
 
         protected virtual AzurePipelinesJob GetJob(
             ExecutableTarget executableTarget,
-            LookupTable<ExecutableTarget, AzurePipelinesJob> jobs)
+            LookupTable<ExecutableTarget, AzurePipelinesJob> jobs,
+            IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             var (partitionName, totalPartitions) = ArtifactExtensions.Partitions.GetValueOrDefault(executableTarget.Definition);
 
@@ -154,7 +157,7 @@ namespace Nuke.Common.CI.AzurePipelines
             //                ArtifactRules = rules
             //            }).ToArray<TeamCityDependency>();
 
-            var chainLinkNames = GetInvokedTargets(executableTarget).ToArray();
+            var chainLinkTargets = GetInvokedTargets(executableTarget, relevantTargets).ToArray();
             var dependencies = GetTargetDependencies(executableTarget).SelectMany(x => jobs[x]).ToArray();
             return new AzurePipelinesJob
                    {
@@ -164,7 +167,7 @@ namespace Nuke.Common.CI.AzurePipelines
                        Dependencies = dependencies,
                        Parallel = totalPartitions,
                        PartitionName = partitionName,
-                       InvokedTargets = chainLinkNames,
+                       InvokedTargets = chainLinkTargets.Select(x => x.Name).ToArray(),
                        PublishArtifacts = publishedArtifacts
                    };
         }

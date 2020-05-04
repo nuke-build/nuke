@@ -8,27 +8,18 @@ using System.Linq;
 
 namespace Nuke.Common.Utilities
 {
-    public class CustomFileWriter : IDisposable
+    public class CustomFileWriter
     {
-        private readonly FileStream _fileStream;
         private readonly StreamWriter _streamWriter;
         private readonly int _indentationFactor;
         private readonly string _commentPrefix;
         private int _indentation;
 
-        public CustomFileWriter(string filename, int indentationFactor, string commentPrefix, FileMode fileMode = FileMode.Create)
+        public CustomFileWriter(StreamWriter streamWriter, int indentationFactor, string commentPrefix)
         {
-            _fileStream = File.Open(filename, fileMode);
-            _streamWriter = new StreamWriter(_fileStream);
-
+            _streamWriter = streamWriter;
             _indentationFactor = indentationFactor;
             _commentPrefix = commentPrefix;
-        }
-
-        public void Dispose()
-        {
-            _streamWriter.Dispose();
-            _fileStream.Dispose();
         }
 
         public void WriteLine(string text = null)

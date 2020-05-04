@@ -31,7 +31,10 @@ namespace Nuke.Common.Execution
             do
             {
                 executionPlan = GetExecutionPlanInternal(executableTargets, invokedTargets);
-                additionallyTriggered = executionPlan.SelectMany(x => x.Triggers).Except(executionPlan).ToList();
+                additionallyTriggered = executionPlan
+                    .SelectMany(x => x.Triggers)
+                    .Except(executionPlan)
+                    .Where(executableTargets.Contains).ToList();
                 invokedTargets = executionPlan.Concat(additionallyTriggered).ToList();
             } while (additionallyTriggered.Count > 0);
 
@@ -88,7 +91,7 @@ namespace Nuke.Common.Execution
         {
             var vertexDictionary = executableTargets.ToDictionary(x => x, x => new Vertex<ExecutableTarget>(x));
             foreach (var (executable, vertex) in vertexDictionary)
-                vertex.Dependencies.AddRange(executable.AllDependencies.Select(x => vertexDictionary[x]));
+                vertex.Dependencies.AddRange(executable.AllDependencies.Select(x => vertexDictionary.GetValueOrDefault(x)).WhereNotNull());
 
             return vertexDictionary;
         }

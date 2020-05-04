@@ -1,16 +1,14 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2020 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.ComponentModel;
 using System.Linq;
-using JetBrains.Annotations;
 using Nuke.Common.Tooling;
 
-namespace Nuke.Common
+namespace Nuke.Common.Tests.CI
 {
-    [PublicAPI]
     [TypeConverter(typeof(TypeConverter<Configuration>))]
     public class Configuration : Enumeration
     {

@@ -1,11 +1,13 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+// Copyright 2020 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -18,6 +20,8 @@ namespace Nuke.Common.Tooling
         public static string NuGetPackagesConfigFile;
         public static string NuGetAssetsConfigFile;
         public static string PaketPackagesConfigFile;
+
+        internal const string MissingPackageDefaultVersion = "latest";
 
         [CanBeNull]
         public static string TryGetEnvironmentExecutable(string environmentExecutable)
@@ -65,50 +69,66 @@ namespace Nuke.Common.Tooling
             return frameworks[framework];
         }
 
-        private static string GetPackageDirectory(string[] packageIds, string version)
+        private static string GetPackageDirectory(string[] packageIds, [CanBeNull] string version)
         {
-            return packageIds
-                .SelectMany(x =>
-                    new Func<string>[]
-                    {
-                        () => ExecutingAssemblyDirectory != null
-                            ? Path.Combine(ExecutingAssemblyDirectory, x)
-                            : null,
-                        () => NuGetAssetsConfigFile != null
-                            ? NuGetPackageResolver.GetLocalInstalledPackage(x, NuGetAssetsConfigFile, version)?.Directory
-                            : null,
-                        () => NuGetPackagesConfigFile != null
-                            ? NuGetPackageResolver.GetLocalInstalledPackage(x, NuGetPackagesConfigFile, version)?.Directory
-                            : null,
-                        () => PaketPackagesConfigFile != null
-                            ? PaketPackageResolver.GetLocalInstalledPackageDirectory(x, PaketPackagesConfigFile)
-                            : null
-                    })
-                .Select(x => x.Invoke())
-                .FirstOrDefault(Directory.Exists)
-                .NotNull(
-                    new[]
+            try
+            {
+                return packageIds
+                    .SelectMany(x =>
+                        new Func<string>[]
                         {
-                            $"Could not find package {packageIds.Select(x => x.SingleQuote()).JoinCommaOr()} " +
-                            $"{(version != null ? $"({version}) " : string.Empty)}" +
-                            "using:"
-                        }
-                        .Concat(
-                            new[]
+                            () => ExecutingAssemblyDirectory != null
+                                ? Path.Combine(ExecutingAssemblyDirectory, x)
+                                : null,
+                            () => NuGetAssetsConfigFile != null
+                                ? NuGetPackageResolver.GetLocalInstalledPackage(x, NuGetAssetsConfigFile, version)?.Directory
+                                : null,
+                            () => NuGetPackagesConfigFile != null
+                                ? NuGetPackageResolver.GetLocalInstalledPackage(x, NuGetPackagesConfigFile, version)?.Directory
+                                : null,
+                            () => PaketPackagesConfigFile != null
+                                ? PaketPackageResolver.GetLocalInstalledPackageDirectory(x, PaketPackagesConfigFile)
+                                : null
+                        })
+                    .Select(x => x.Invoke())
+                    .FirstOrDefault(Directory.Exists)
+                    .NotNull(
+                        new[]
                             {
-                                NukeBuild.BuildProjectDirectory == null
-                                    ? $"Embedded packages directory at '{ExecutingAssemblyDirectory}'"
-                                    : null,
-                                NuGetAssetsConfigFile != null
-                                    ? $"Project assets file '{NuGetAssetsConfigFile}'"
-                                    : null,
-                                NuGetPackagesConfigFile != null
-                                    ? $"NuGet packages config '{NuGetPackagesConfigFile}'"
-                                    : null,
-                                PaketPackagesConfigFile != null
-                                    ? $"Paket packages config '{PaketPackagesConfigFile}'"
-                                    : null
-                            }.WhereNotNull().Select(x => $" - {x}")).JoinNewLine());
+                                $"Could not find package {packageIds.Select(x => x.SingleQuote()).JoinCommaOr()} " +
+                                $"{(version != null ? $"({version}) " : string.Empty)}" +
+                                "using:"
+                            }
+                            .Concat(
+                                new[]
+                                {
+                                    NukeBuild.BuildProjectDirectory == null
+                                        ? $"Embedded packages directory at '{ExecutingAssemblyDirectory}'"
+                                        : null,
+                                    NuGetAssetsConfigFile != null
+                                        ? $"Project assets file '{NuGetAssetsConfigFile}'"
+                                        : null,
+                                    NuGetPackagesConfigFile != null
+                                        ? $"NuGet packages config '{NuGetPackagesConfigFile}'"
+                                        : null,
+                                    PaketPackagesConfigFile != null
+                                        ? $"Paket packages config '{PaketPackagesConfigFile}'"
+                                        : null
+                                }.WhereNotNull().Select(x => $" - {x}")).JoinNewLine());
+            }
+            catch (Exception exception)
+            {
+                if (!NuGetPackagesConfigFile.EndsWithOrdinalIgnoreCase(".csproj"))
+                    throw;
+
+                TextTasks.WriteAllLines(
+                    Constants.GetMissingPackageFile(NukeBuild.RootDirectory),
+                    lines: new[] { NuGetPackagesConfigFile }
+                        .Concat(packageIds.Select(x => $"{x}@{version ?? MissingPackageDefaultVersion}"))
+                        .ToList());
+
+                throw new Exception(new[] { exception.Message, "Run 'nuke :fix' to add missing references." }.JoinNewLine(), exception);
+            }
         }
 
         public static string GetPathExecutable(string pathExecutable)
