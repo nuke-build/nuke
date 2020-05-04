@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.CI.GitHubActions.Configuration;
@@ -34,11 +35,11 @@ namespace Nuke.Common.CI.GitHubActions
             _images = new[] { image }.Concat(images).ToArray();
         }
 
-        private string ConfigurationFile => NukeBuild.RootDirectory / ".github" / "workflows" / $"{_name}.yml";
-
         public override string IdPostfix => _name;
         public override HostType HostType => HostType.GitHubActions;
+        public override string ConfigurationFile => NukeBuild.RootDirectory / ".github" / "workflows" / $"{_name}.yml";
         public override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
+
         public override IEnumerable<string> RelevantTargetNames => InvokedTargets;
         public override IEnumerable<string> IrrelevantTargetNames => new string[0];
 
@@ -58,9 +59,9 @@ namespace Nuke.Common.CI.GitHubActions
 
         public string[] InvokedTargets { get; set; } = new string[0];
 
-        public override CustomFileWriter CreateWriter()
+        public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
         {
-            return new CustomFileWriter(ConfigurationFile, indentationFactor: 2, commentPrefix: "#");
+            return new CustomFileWriter(streamWriter, indentationFactor: 2, commentPrefix: "#");
         }
 
         public override ConfigurationEntity GetConfiguration(
