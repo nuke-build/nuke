@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [0.24.11] / 2020-05-04
 - Fixed transitive artifacts in configuration generation
 - Fixed `StackOverflowException` in configuration generation
 - Fixed `IsPackable` property default
@@ -584,7 +586,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.24.10...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.24.11...HEAD
+[0.24.11]: https://github.com/nuke-build/nuke/compare/0.24.10...0.24.11
 [0.24.10]: https://github.com/nuke-build/nuke/compare/0.24.9...0.24.10
 [0.24.9]: https://github.com/nuke-build/nuke/compare/0.24.8...0.24.9
 [0.24.8]: https://github.com/nuke-build/nuke/compare/0.24.7...0.24.8
