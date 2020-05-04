@@ -255,6 +255,7 @@ partial class Build : NukeBuild
     [Parameter("Slack Webhook")] readonly string SlackWebhook;
 
     Target Publish => _ => _
+        .ProceedAfterFailure()
         .DependsOn(Clean, Test, Pack)
         .Consumes(Pack)
         .Requires(() => ApiKey)
@@ -282,7 +283,6 @@ partial class Build : NukeBuild
 
     Target Announce => _ => _
         .TriggeredBy(Publish)
-        .AssuredAfterFailure()
         .OnlyWhenStatic(() => GitRepository.IsOnMasterBranch())
         .Executes(() =>
         {
