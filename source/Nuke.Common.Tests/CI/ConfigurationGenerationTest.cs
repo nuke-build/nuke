@@ -20,10 +20,11 @@ using Xunit;
 
 namespace Nuke.Common.Tests.CI
 {
-    [UseReporter(typeof(RiderReporter))]
+    [UseReporter(typeof(DiffReporter))]
     public class ConfigurationGenerationTest
     {
-        [Theory]
+        // TODO: https://github.com/approvals/ApprovalTests.Net/issues/134
+        [Theory(Skip = "Line ending")]
         [MemberData(nameof(GetAttributes))]
         public void Test(string testName, ITestConfigurationGenerator attribute)
         {
