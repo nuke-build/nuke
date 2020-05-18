@@ -23,9 +23,12 @@ partial class Build
         {
         }
 
-        protected override AzurePipelinesJob GetJob(ExecutableTarget executableTarget, LookupTable<ExecutableTarget, AzurePipelinesJob> jobs)
+        protected override AzurePipelinesJob GetJob(
+            ExecutableTarget executableTarget,
+            LookupTable<ExecutableTarget, AzurePipelinesJob> jobs,
+            IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
-            var job = base.GetJob(executableTarget, jobs);
+            var job = base.GetJob(executableTarget, jobs, relevantTargets);
 
             var dictionary = new Dictionary<string, string>
                              {

@@ -20,7 +20,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
 
         public override void Write(CustomFileWriter writer)
         {
-            writer.WriteLine(Kind.GetValue());
+            writer.WriteLine($"{Kind.GetValue()}:");
 
             using (writer.Indent())
             {
