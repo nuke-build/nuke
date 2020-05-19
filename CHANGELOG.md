@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
-## [0.24.11] / 2020-05-04
+## [0.24.11] / 2020-05-18
 - Fixed transitive artifacts in configuration generation
 - Fixed `StackOverflowException` in configuration generation
 - Fixed `IsPackable` property default
