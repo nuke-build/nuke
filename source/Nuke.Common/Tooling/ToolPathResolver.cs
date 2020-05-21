@@ -38,7 +38,11 @@ namespace Nuke.Common.Tooling
             var packageDirectory = GetPackageDirectory(packageId.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries), version);
             var packageExecutables = packageExecutable.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
             var packageExecutablePaths = packageExecutables
-                .Select(x => Directory.GetFiles(packageDirectory, x, SearchOption.AllDirectories))
+                .Select(x => Directory.GetFiles(packageDirectory, x, new EnumerationOptions
+                {
+                    RecurseSubdirectories = true,
+                    MatchCasing = MatchCasing.CaseInsensitive,
+                }))
                 .FirstOrDefault(x => x.Length > 0)?.ToList();
 
             ControlFlow.Assert(packageExecutablePaths != null,
