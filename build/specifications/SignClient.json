@@ -1,0 +1,88 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://github.com/dotnet/SignService#client-configuration"
+  ],
+  "name": "SignClient",
+  "officialUrl": "https://discoverdot.net/projects/sign-service",
+  "help": "Code Signing client for Authenticode, NuGet, VSIX, and more",
+  "packageId": "SignClient",
+  "packageExecutable": "SignClient.exe",
+  "tasks": [
+    {
+      "postfix": "Sign",
+      "definiteArgument": "sign",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Config",
+            "type": "string",
+            "format": "--config {value}",
+            "help": "Path to config json file"
+          },
+          {
+            "name": "Input",
+            "type": "string",
+            "format": "--input {value}",
+            "help": "Path to input file"
+          },
+          {
+            "name": "BaseDirectory",
+            "type": "string",
+            "format": "--baseDirectory {value}",
+            "help": "Base directory for files to override the working directory"
+          },
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "--output {value}",
+            "help": "Path to output file. May be same as input to overwrite"
+          },
+          {
+            "name": "FileList",
+            "type": "string",
+            "format": "--fileList {value}",
+            "help": "Path to file containing paths of files to sign within an archive"
+          },
+          {
+            "name": "Secret",
+            "type": "string",
+            "format": "--secret {value}",
+            "secret": true,
+            "help": "Client Secret"
+          },
+          {
+            "name": "Username",
+            "type": "string",
+            "format": "--user {value}",
+            "help": "Username"
+          },
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "--name {value}",
+            "help": "Name of project for tracking"
+          },
+          {
+            "name": "Description",
+            "type": "string",
+            "format": "--description {value}",
+            "help": "Description"
+          },
+          {
+            "name": "DescriptionUrl",
+            "type": "string",
+            "format": "--descriptionUrl {value}",
+            "help": "Description Url"
+          },
+          {
+            "name": "MaxConcurrency",
+            "type": "string",
+            "format": "--maxConcurrency {value}",
+            "help": "Maximum concurrency (default is 4)"
+          }
+        ]
+      }
+    }
+  ]
+}
