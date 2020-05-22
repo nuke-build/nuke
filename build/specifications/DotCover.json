@@ -23,19 +23,19 @@
           {
             "name": "ReportType",
             "type": "DotCoverReportType",
-            "format": "/ReportType={value}",
+            "format": "--ReportType={value}",
             "help": "A type of the report. The default value is <c>XML</c>."
           },
           {
             "name": "OutputFile",
             "type": "string",
-            "format": "/Output={value}",
+            "format": "--Output={value}",
             "help": "Resulting report file name."
           },
           {
             "name": "HideAutoProperties",
             "type": "bool",
-            "format": "/HideAutoProperties",
+            "format": "--HideAutoProperties",
             "help": "Remove auto-implemented properties from report."
           }
         ]
@@ -57,13 +57,13 @@
           {
             "name": "OutputFile",
             "type": "string",
-            "format": "/Output={value}",
+            "format": "--Output={value}",
             "help": "Path to the resulting coverage snapshot."
           },
           {
             "name": "ReportType",
             "type": "DotCoverReportType",
-            "format": "/ReportType={value}",
+            "format": "--ReportType={value}",
             "help": "A type of the report. The default value is <c>XML</c>."
           }
         ]
@@ -82,7 +82,7 @@
           {
             "name": "Source",
             "type": "List<string>",
-            "format": "/Source={value}",
+            "format": "--Source={value}",
             "separator": ";",
             "help": "List of snapshot files."
           }
@@ -102,20 +102,20 @@
           {
             "name": "Source",
             "type": "List<string>",
-            "format": "/Source={value}",
+            "format": "--Source={value}",
             "separator": ";",
             "help": "List of snapshot files."
           },
           {
             "name": "OutputFile",
             "type": "string",
-            "format": "/Output={value}",
+            "format": "--Output={value}",
             "help": "File name for the merged snapshot."
           },
           {
             "name": "TempDirectory",
             "type": "string",
-            "format": "/TempDir={value}",
+            "format": "--TempDir={value}",
             "help": "Directory for auxiliary files. Set to the system temp by default."
           }
         ]
@@ -134,26 +134,26 @@
           {
             "name": "Source",
             "type": "List<string>",
-            "format": "/Source={value}",
+            "format": "--Source={value}",
             "separator": ";",
             "help": "List of snapshot files."
           },
           {
             "name": "OutputFile",
             "type": "string",
-            "format": "/Output={value}",
+            "format": "--Output={value}",
             "help": "Resulting report file name."
           },
           {
             "name": "ReportType",
             "type": "DotCoverReportType",
-            "format": "/ReportType={value}",
+            "format": "--ReportType={value}",
             "help": "A type of the report. The default value is <c>XML</c>."
           },
           {
             "name": "HideAutoProperties",
             "type": "bool",
-            "format": "/HideAutoProperties",
+            "format": "--HideAutoProperties",
             "help": "Remove auto-implemented properties from report."
           }
         ]
@@ -172,13 +172,13 @@
           {
             "name": "Source",
             "type": "string",
-            "format": "/Source={value}",
+            "format": "--Source={value}",
             "help": "Coverage snapshot file name."
           },
           {
             "name": "OutputFile",
             "type": "string",
-            "format": "/Output={value}",
+            "format": "--Output={value}",
             "help": "Zipped snapshot file name."
           }
         ]
@@ -189,7 +189,7 @@
     {
       "name": "LogFile",
       "type": "string",
-      "format": "/LogFile={value}",
+      "format": "--LogFile={value}",
       "help": "Enables logging and specifies log file name."
     }
   ],
@@ -198,91 +198,91 @@
       {
         "name": "TargetExecutable",
         "type": "string",
-        "format": "/TargetExecutable={value}",
+        "format": "--TargetExecutable={value}",
         "help": "File name of the program to analyse."
       },
       {
         "name": "TargetArguments",
         "type": "string",
-        "format": "/TargetArguments={value}",
+        "format": "--TargetArguments={value}",
         "help": "Program arguments."
       },
       {
         "name": "TargetWorkingDirectory",
         "type": "string",
-        "format": "/TargetWorkingDir={value}",
+        "format": "--TargetWorkingDir={value}",
         "help": "Program working directory."
       },
       {
         "name": "TempDirectory",
         "type": "string",
-        "format": "/TempDir={value}",
+        "format": "--TempDir={value}",
         "help": "Directory for auxiliary files. Set to the system temp by default."
       },
       {
         "name": "InheritConsole",
         "type": "bool",
-        "format": "/InheritConsole={value}",
+        "format": "--InheritConsole={value}",
         "default": "true",
         "help": "Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited."
       },
       {
         "name": "AnalyseTargetArguments",
         "type": "bool",
-        "format": "/AnalyseTargetArguments={value}",
+        "format": "--AnalyseTargetArguments={value}",
         "default": "true",
         "help": "Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>."
       },
       {
         "name": "Scope",
         "type": "List<string>",
-        "format": "/Scope={value}",
+        "format": "--Scope={value}",
         "separator": ";",
         "help": "Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>)."
       },
       {
         "name": "Filters",
         "type": "List<string>",
-        "format": "/Filters={value}",
+        "format": "--Filters={value}",
         "separator": ";",
         "help": "Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here."
       },
       {
         "name": "AttributeFilters",
         "type": "List<string>",
-        "format": "/AttributeFilters={value}",
+        "format": "--AttributeFilters={value}",
         "separator": ";",
         "help": "Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here."
       },
       {
         "name": "DisableDefaultFilters",
         "type": "bool",
-        "format": "/DisableDefaultFilters",
+        "format": "--DisableDefaultFilters",
         "help": "Disables default (automatically added) filters."
       },
       {
         "name": "SymbolSearchPaths",
         "type": "List<string>",
-        "format": "/SymbolSearchPaths={value}",
+        "format": "--SymbolSearchPaths={value}",
         "separator": ";",
         "help": "Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here."
       },
       {
         "name": "AllowSymbolServerAccess",
         "type": "bool",
-        "format": "/AllowSymbolServerAccess",
+        "format": "--AllowSymbolServerAccess",
         "help": "Allows dotCover to search for PDB files on a symbol server."
       },
       {
         "name": "ReturnTargetExitCode",
         "type": "bool",
-        "format": "/ReturnTargetExitCode",
+        "format": "--ReturnTargetExitCode",
         "help": "Returns the exit code of the target executable in case coverage analysis succeeded."
       },
       {
         "name": "ProcessFilters",
         "type": "List<string>",
-        "format": "/ProcessFilters={value}",
+        "format": "--ProcessFilters={value}",
         "separator": ";",
         "help": "Specifies process filters. Syntax: <c>+:process1;-:process2</c>."
       }
