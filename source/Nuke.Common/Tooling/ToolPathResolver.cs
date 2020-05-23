@@ -42,10 +42,10 @@ namespace Nuke.Common.Tooling
             var packageDirectory = GetPackageDirectory(packageId.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries), version);
             var packageExecutables = packageExecutable.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
             var packageExecutablePaths = packageExecutables
-                .Select(x => Directory.GetFiles(packageDirectory, x, SearchOption.AllDirectories))
-                .FirstOrDefault(x => x.Length > 0)?.ToList();
+                .SelectMany(x => Directory.GetFiles(packageDirectory, x, SearchOption.AllDirectories))
+                .Where(x => x.Length > 0).ToList();
 
-            ControlFlow.Assert(packageExecutablePaths != null,
+            ControlFlow.Assert(packageExecutablePaths.Count > 0,
                 $"Could not find {packageExecutables.Select(x => x.SingleQuote()).JoinCommaOr()} inside '{packageDirectory}'.");
             if (packageExecutablePaths.Count == 1 && framework == null)
                 return packageExecutablePaths.Single();
