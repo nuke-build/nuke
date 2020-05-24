@@ -6,15 +6,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Threading.Tasks;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Execution
 {
     internal class TargetDefinition : ITargetDefinition
     {
-        public TargetDefinition(NukeBuild build)
+        private readonly Stack<PropertyInfo> _baseMembers;
+
+        public TargetDefinition(NukeBuild build, Stack<PropertyInfo> baseMembers)
         {
             Build = build;
+            _baseMembers = baseMembers;
         }
 
         public NukeBuild Build { get; }
@@ -177,6 +182,25 @@ namespace Nuke.Common.Execution
         public ITargetDefinition Unlisted()
         {
             IsInternal = true;
+            return this;
+        }
+
+        public ITargetDefinition Base()
+        {
+            ControlFlow.Assert(_baseMembers.Count > 0, "_baseMembers.Count > 0");
+            Inherit(_baseMembers.Pop().GetValueNonVirtual<Target>(Build));
+            return this;
+        }
+
+        public ITargetDefinition Inherit(params Target[] targets)
+        {
+            targets.ForEach(x => x.Invoke(this));
+            return this;
+        }
+
+        public ITargetDefinition Inherit<T>(params Expression<Func<T, Target>>[] targets)
+        {
+            Inherit(targets.Select(x => x.GetMemberInfo().GetValueNonVirtual<Target>(Build)).ToArray());
             return this;
         }
     }
