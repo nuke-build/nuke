@@ -39,7 +39,7 @@ namespace Nuke.Common.Execution
         private static bool IsMemberNull(MemberInfo member, NukeBuild build, ExecutableTarget target = null)
         {
             member = member.DeclaringType != build.GetType()
-                ? build.GetType().GetMember(member.Name).Single()
+                ? build.GetType().GetMember(member.Name).SingleOrDefault() ?? member
                 : member;
 
             var from = target != null ? $"from target '{target.Name}' " : string.Empty;

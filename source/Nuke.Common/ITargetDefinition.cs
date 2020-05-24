@@ -142,6 +142,16 @@ namespace Nuke.Common
         ///  Defines that this target should not be listed.
         /// </summary>
         ITargetDefinition Unlisted();
+
+        /// <summary>
+        ///  Inherits base target definition.
+        /// </summary>
+        ITargetDefinition Base();
+
+        /// <summary>
+        ///   Inherits target definition.
+        /// </summary>
+        ITargetDefinition Inherit<T>(params Expression<Func<T, Target>>[] targets);
     }
 
     /// <summary>

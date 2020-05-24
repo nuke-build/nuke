@@ -6,7 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using NuGet.Packaging;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Execution
 {
@@ -20,18 +22,28 @@ namespace Nuke.Common.Execution
             params Expression<Func<T, Target>>[] defaultTargetExpressions)
             where T : NukeBuild
         {
-            var defaultTargets = defaultTargetExpressions.Select(x => x.Compile().Invoke(build)).ToList();
-            var properties = build.GetType()
+            var buildType = build.GetType();
+            var defaultProperties = buildType.GetInterfaces()
+                .SelectMany(x => x.GetProperties(ReflectionService.Instance))
+                .Where(x => buildType.GetProperty(x.Name) == null);
+            var properties = buildType
                 .GetProperties(ReflectionService.Instance) // TODO: static targets?
-                .Concat(build.GetType().GetInterfaces().SelectMany(x => x.GetProperties(ReflectionService.Instance)))
+                .Concat(defaultProperties)
                 .Where(x => x.PropertyType == typeof(Target)).ToList();
+            var defaultTargets = defaultTargetExpressions.Select(x => x.Compile().Invoke(build)).ToList();
 
             var executables = new List<ExecutableTarget>();
 
             foreach (var property in properties)
             {
+                var baseMembers = buildType
+                    .Descendants(x => x.BaseType)
+                    .Select(x => x.GetProperty(property.Name))
+                    .Where(x => x != null && x.DeclaringType == x.ReflectedType)
+                    .Reverse().ToList();
+                var definition = new TargetDefinition(build, new Stack<PropertyInfo>(baseMembers));
+
                 var factory = (Target) property.GetValue(build);
-                var definition = new TargetDefinition(build);
                 factory.Invoke(definition);
 
                 var target = new ExecutableTarget

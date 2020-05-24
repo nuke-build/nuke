@@ -80,5 +80,57 @@ namespace Nuke.Common.Tests.Execution
                 .After(B)
                 .Before(C);
         }
+
+        [Fact]
+        public void TestInheritance()
+        {
+            var build = new TestFinalBuild();
+            var targets = ExecutableTargetFactory.CreateAll(build);
+
+            var shared = targets.Single(x => x.Name == nameof(TestFinalBuild.SharedTarget));
+            var specific = targets.Single(x => x.Name == nameof(TestFinalBuild.SpecificTarget));
+
+            shared.Actions.Should().HaveCount(1);
+            shared.ExecutionDependencies.Single().Name.Should().Be(nameof(TestFinalBuild.SpecificTarget));
+            shared.Description.Should().Be(nameof(TestFinalBuild.SharedTarget));
+
+            specific.Actions.Should().HaveCount(1);
+            specific.OrderDependencies.Single().Name.Should().Be(nameof(TestFinalBuild.SharedTarget));
+            specific.Description.Should().Be(nameof(TestFinalBuild.SpecificTarget));
+        }
+
+        private interface ITestSharedBuild
+        {
+            Target SharedTarget => _ => _
+                .Executes(() => { });
+        }
+
+        private class TestBaseBuild : NukeBuild
+        {
+            public virtual Target SpecificTarget => _ => _
+                .Executes(() => { });
+        }
+
+        private class TestIntermediateBuild : TestBaseBuild, ITestSharedBuild
+        {
+            public override Target SpecificTarget => _ => _
+                .Base()
+                .After(SharedTarget);
+
+            public virtual Target SharedTarget => _ => _
+                .Inherit<ITestSharedBuild>(x => x.SharedTarget)
+                .DependsOn(SpecificTarget);
+        }
+
+        private class TestFinalBuild : TestIntermediateBuild
+        {
+            public override Target SpecificTarget => _ => _
+                .Base()
+                .Description(nameof(SpecificTarget));
+
+            public override Target SharedTarget => _ => _
+                .Base()
+                .Description(nameof(SharedTarget));
+        }
     }
 }

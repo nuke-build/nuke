@@ -77,11 +77,36 @@ namespace Nuke.Common.Tests.Execution
         }
 
         [Fact]
+        public void TestRequirementValidation()
+        {
+            EnvironmentInfo.SetVariable("StringParameter", "hello");
+            var build = new ParameterBuild();
+            var targets = ExecutableTargetFactory.CreateAll(build, x => ((IParameterInterface)x).HelloWorld);
+
+            // must not throw
+            RequirementService.ValidateRequirements(build, targets);
+        }
+
+        [Fact]
         public void TestInvalidDependencyType()
         {
             var build = new InvalidDependencyTypeTestBuild();
             Assert.Throws<InvalidCastException>(() => ExecutableTargetFactory.CreateAll(build, x => x.E));
         }
+
+        private interface IParameterInterface
+        {
+            [Parameter] string StringParameter => InjectionUtility.GetInjectionValue(() => StringParameter);
+
+            public Target HelloWorld => _ => _
+                .Requires(() => StringParameter)
+                .Executes(() =>
+                {
+                    Logger.Info(StringParameter);
+                });
+        }
+
+        private class ParameterBuild : NukeBuild, IParameterInterface { }
 
         private class TestBuild : NukeBuild, ITestBuild
         {
