@@ -43,7 +43,7 @@
             "name": "Server",
             "type": "string",
             "format": "/d:sonar.host.url={value}",
-            "help": "The server URL. Default is http://localhost:9000"
+            "help": "The server URL. Default is <c>http://localhost:9000</c>"
           },
           {
             "name": "Login",
@@ -56,7 +56,7 @@
             "type": "string",
             "format": "/d:sonar.password={value}",
             "secret": true,
-            "help": "Specifies the password for the SonarQube username in the `sonar.login` argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step."
+            "help": "Specifies the password for the SonarQube username in the <c>sonar.login</c> argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step."
           },
           {
             "name": "Verbose",
@@ -90,56 +90,56 @@
             "type": "List<string>",
             "format": "/d:sonar.exclusions={value}",
             "separator": ",",
-            "help": "Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?)."
+            "help": "Comma separated list of source files to exclude from analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>)."
           },
           {
             "name": "SourceInclusions",
             "type": "List<string>",
             "format": "/d:sonar.inclusions={value}",
             "separator": ",",
-            "help": "Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?)."
+            "help": "Comma separated list of source files to include in analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>)."
           },
           {
             "name": "TestFileExclusions",
             "type": "List<string>",
             "format": "/d:sonar.test.exclusions={value}",
             "separator": ",",
-            "help": "Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?)."
+            "help": "Comma separated list of test files to exclude from analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>)."
           },
           {
             "name": "TestFileInclusions",
             "type": "List<string>",
             "format": "/d:sonar.test.inclusions={value}",
             "separator": ",",
-            "help": "Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?)."
+            "help": "Comma separated list of test files to include in analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>)."
           },
           {
             "name": "CoverageExclusions",
             "type": "List<string>",
             "format": "/d:sonar.coverage.exclusions={value}",
             "separator": ",",
-            "help": "Comma separated list of files to exclude from coverage calculations. Supports wildcards (*, **, ?)."
+            "help": "Comma separated list of files to exclude from coverage calculations. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>)."
           },
           {
             "name": "VisualStudioCoveragePaths",
             "type": "List<string>",
             "format": "/d:sonar.cs.vscoveragexml.reportsPaths={value}",
             "separator": ",",
-            "help": "Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (*, **, ?)."
+            "help": "Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>)."
           },
           {
             "name": "DotCoverPaths",
             "type": "List<string>",
             "format": "/d:sonar.cs.dotcover.reportsPaths={value}",
             "separator": ",",
-            "help": "Comma separated list of dotCover HTML-reports to include. Supports wildcards (*, **, ?)."
+            "help": "Comma separated list of dotCover HTML-reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>)."
           },
           {
             "name": "OpenCoverPaths",
             "type": "List<string>",
             "format": "/d:sonar.cs.opencover.reportsPaths={value}",
             "separator": ",",
-            "help": "Comma separated list of OpenCover reports to include. Supports wildcards (*, **, ?)."
+            "help": "Comma separated list of OpenCover reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>)."
           },
           {
             "name": "WebServiceTimeout",
@@ -175,7 +175,7 @@
             "name": "SourceEncoding",
             "type": "string",
             "format": "/d:sonar.sourceEncoding={value}",
-            "help": "Encoding of the source files. Ex: UTF-8 , MacRoman , Shift_JIS . This property can be replaced by the standard property project.build.sourceEncoding in Maven projects. The list of available encodings depends on your JVM."
+            "help": "Encoding of the source files. Ex: <c>UTF-8</c> , <c>MacRoman</c> , <c>Shift_JIS</c>. This property can be replaced by the standard property <c>project.build.sourceEncoding</c> in Maven projects. The list of available encodings depends on your JVM."
           },
           {
             "name": "DuplicationExclusions",
@@ -183,6 +183,30 @@
             "format": "/d:sonar.cpd.exclusions={value}",
             "separator": ",",
             "help": "Comma-delimited list of file path patterns to be excluded from duplication detection."
+          },
+          {
+            "name": "BranchName",
+            "type": "string",
+            "format": "/d:sonar.branch.name={value}",
+            "help": "Name of the branch (visible in the UI)"
+          },
+          {
+            "name": "PullRequestKey",
+            "type": "string",
+            "format": "/d:sonar.pullrequest.key={value}",
+            "help": "Unique identifier of your Pull Request. Must correspond to the key of the Pull Request in your ALM. e.g.: <c>sonar.pullrequest.key=5</c>"
+          },
+          {
+            "name": "PullRequestBranch",
+            "type": "string",
+            "format": "/d:sonar.pullrequest.branch={value}",
+            "help": "The name of the branch that contains the changes to be merged. e.g.: <c>sonar.pullrequest.branch=feature/my-new-feature</c>"
+          },
+          {
+            "name": "PullRequestBase",
+            "type": "string",
+            "format": "/d:sonar.pullrequest.base={value}",
+            "help": "The branch into which the Pull Request will be merged. Default: <c>master</c>. e.g.: <c>sonar.pullrequest.base=master</c>"
           }
         ]
       }
@@ -203,7 +227,7 @@
             "type": "string",
             "format": "/d:sonar.password={value}",
             "secret": true,
-            "help": "Specifies the password for the SonarQube username in the `sonar.login` argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step."
+            "help": "Specifies the password for the SonarQube username in the <c>sonar.login</c> argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step."
           }
         ]
       }
