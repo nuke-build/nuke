@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -77,6 +77,8 @@ namespace Nuke.Common.Tooling
                     .WithDegreeOfParallelism(degreeOfParallelism)
                     .ForAll(x =>
                     {
+                        LoggerProvider.AttachLoggerToCurrentThread(currentLogger);
+
                         try
                         {
                             invocations.Add((x, executor(x.SetLogOutput(singleExecution)), default));

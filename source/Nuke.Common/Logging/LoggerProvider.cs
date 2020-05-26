@@ -19,13 +19,18 @@ namespace Nuke.Common.Logging
             return null;
         }
 
-        internal static ILogger CreateLogger(bool autoFlush)
+        internal static ILogger CreateLogger(bool autoFlush = true)
         {
             var logger = new InMemoryLogger(Logger.LogLevel, Logger.OutputSink, autoFlush);
-            if (CurrentLoggers.TryAdd(Thread.CurrentThread.ManagedThreadId, logger))
+            if (AttachLoggerToCurrentThread(logger))
                 return logger;
 
             return null;
+        }
+
+        internal static bool AttachLoggerToCurrentThread(ILogger logger)
+        {
+            return CurrentLoggers.TryAdd(Thread.CurrentThread.ManagedThreadId, logger);
         }
     }
 }
