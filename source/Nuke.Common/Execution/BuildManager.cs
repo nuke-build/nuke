@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Nuke.Common.Logging;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -51,6 +52,7 @@ namespace Nuke.Common.Execution
 
                 Logger.OutputSink = build.OutputSink;
                 Logger.LogLevel = NukeBuild.LogLevel;
+                LoggerProvider.CreateLogger();
 
                 if (NukeBuild.BuildProjectDirectory != null)
                     ToolPathResolver.ExecutingAssemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);

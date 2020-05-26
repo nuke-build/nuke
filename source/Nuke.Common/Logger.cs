@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
+using Nuke.Common.Logging;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities.Collections;
 
@@ -124,8 +125,7 @@ namespace Nuke.Common
         /// </summary>
         public static void Normal(string text = null)
         {
-            if (LogLevel <= LogLevel.Normal)
-                OutputSink.WriteNormal(text ?? string.Empty);
+            LoggerProvider.GetCurrentLogger().Normal(text ?? string.Empty);
         }
 
         #endregion
@@ -183,8 +183,7 @@ namespace Nuke.Common
         /// </summary>
         public static void Trace(string text = null)
         {
-            if (LogLevel <= LogLevel.Trace)
-                OutputSink.WriteTrace(text ?? string.Empty);
+            LoggerProvider.GetCurrentLogger().Trace(text ?? string.Empty);
         }
 
         #endregion
@@ -213,8 +212,7 @@ namespace Nuke.Common
         /// </summary>
         public static void Info(string text = null)
         {
-            if (LogLevel <= LogLevel.Normal)
-                OutputSink.WriteInformation(text ?? string.Empty);
+            LoggerProvider.GetCurrentLogger().Info(text ?? string.Empty);
         }
 
         #endregion
@@ -243,8 +241,7 @@ namespace Nuke.Common
         /// </summary>
         public static void Warn(string text = null)
         {
-            if (LogLevel <= LogLevel.Warning)
-                OutputSink.WriteAndReportWarning(text ?? string.Empty);
+            LoggerProvider.GetCurrentLogger().Warn(text ?? string.Empty);
         }
 
         /// <summary>
@@ -252,8 +249,7 @@ namespace Nuke.Common
         /// </summary>
         public static void Warn(Exception exception)
         {
-            if (LogLevel <= LogLevel.Warning)
-                HandleException(exception, OutputSink.WriteAndReportWarning);
+            LoggerProvider.GetCurrentLogger().Warn(exception);
         }
 
         #endregion
@@ -282,8 +278,7 @@ namespace Nuke.Common
         /// </summary>
         public static void Error(string text = null)
         {
-            if (LogLevel <= LogLevel.Error)
-                OutputSink.WriteAndReportError(text ?? string.Empty);
+            LoggerProvider.GetCurrentLogger().Error(text ?? string.Empty);
         }
 
         /// <summary>
@@ -291,30 +286,9 @@ namespace Nuke.Common
         /// </summary>
         public static void Error(Exception exception)
         {
-            if (LogLevel <= LogLevel.Error)
-                HandleException(exception, OutputSink.WriteAndReportError);
+            LoggerProvider.GetCurrentLogger().Error(exception);
         }
 
         #endregion
-
-        private static void HandleException(Exception exception, Action<string, string> exceptionOutput, string prefix = null)
-        {
-            switch (exception)
-            {
-                case AggregateException ex:
-                    var exceptions = ex.Flatten().InnerExceptions;
-                    exceptions.ForEach((x, i) => HandleException(x, exceptionOutput, $"#{i + 1}/{exceptions.Count}: "));
-                    break;
-                case TargetInvocationException ex:
-                    HandleException(ex.InnerException, exceptionOutput);
-                    break;
-                case TypeInitializationException ex:
-                    HandleException(ex.InnerException, exceptionOutput);
-                    break;
-                default:
-                    exceptionOutput(prefix + exception.Message, exception.StackTrace + EnvironmentInfo.NewLine);
-                    break;
-            }
-        }
     }
 }
