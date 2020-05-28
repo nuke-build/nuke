@@ -90,15 +90,15 @@ namespace Nuke.Common
         public IReadOnlyCollection<ExecutableTarget> ExecutingTargets => ExecutionPlan.Where(x => x.Status != ExecutionStatus.Skipped).ToList();
 
         protected internal virtual OutputSink OutputSink => Host switch
-            {
-                HostType.Bitrise => new BitriseOutputSink(),
-                HostType.Travis => new TravisCIOutputSink(),
-                HostType.TeamCity => new TeamCityOutputSink(new TeamCity()),
-                HostType.AzurePipelines => new AzurePipelinesOutputSink(new AzurePipelines()),
-                HostType.GitHubActions => new GitHubActionsOutputSink(new GitHubActions()),
-                HostType.AppVeyor => new AppVeyorOutputSink(new AppVeyor()),
-                _ => OutputSink.Default
-            };
+        {
+            HostType.Bitrise => new BitriseOutputSink(),
+            HostType.Travis => new TravisCIOutputSink(),
+            HostType.TeamCity => new TeamCityOutputSink(new TeamCity()),
+            HostType.AzurePipelines => new AzurePipelinesOutputSink(new AzurePipelines()),
+            HostType.GitHubActions => new GitHubActionsOutputSink(new GitHubActions()),
+            HostType.AppVeyor => new AppVeyorOutputSink(new AppVeyor()),
+            _ => OutputSink.Default
+        };
 
         [CanBeNull]
         protected internal virtual string NuGetPackagesConfigFile =>
@@ -116,5 +116,10 @@ namespace Nuke.Common
             .All(x => x.Status != ExecutionStatus.Failed &&
                       x.Status != ExecutionStatus.NotRun &&
                       x.Status != ExecutionStatus.Aborted);
+
+        public virtual void ConfigureCI(ICIBuilder builder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

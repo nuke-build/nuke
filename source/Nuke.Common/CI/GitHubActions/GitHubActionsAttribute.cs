@@ -21,7 +21,7 @@ namespace Nuke.Common.CI.GitHubActions
     /// </summary>
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class GitHubActionsAttribute : ConfigurationAttributeBase
+    public class GitHubActionsAttribute : ConfigurationAttributeBase, ICIProvider
     {
         private readonly string _name;
         private readonly GitHubActionsImage[] _images;
