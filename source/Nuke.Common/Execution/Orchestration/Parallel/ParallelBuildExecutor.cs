@@ -74,6 +74,7 @@ namespace Nuke.Common.Execution.Orchestration.Parallel
             {
                 executionItem.Logger = LoggerProvider.GetCurrentLogger();
                 TargetExecutor.ExecuteItem(build, executionItem, new string[] { }, cts.Token);
+                LoggerProvider.DetachLogger(executionItem.Logger);
 
                 // TargetExecutor raises the signal on the countdown
             }
