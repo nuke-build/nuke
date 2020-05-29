@@ -6,12 +6,12 @@ namespace Nuke.Common.Execution.Progress
 {
     public static class ProgressReporterFactory
     {
-        public static IProgressReporter Create()
+        public static IProgressReporter Create(bool parallelExecution)
         {
             if (NukeBuild.Host == HostType.Console && !Console.IsOutputRedirected)
                 return new ProgressBarReporter();
 
-            return NukeBuild.Parallel
+            return parallelExecution
                 ? (IProgressReporter)new LogPerTargetReporter()
                 : new ContinuousLogReporter();
         }

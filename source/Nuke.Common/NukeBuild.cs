@@ -63,7 +63,8 @@ namespace Nuke.Common
         protected static int Execute<T>(params Expression<Func<T, Target>>[] defaultTargetExpressions)
             where T : NukeBuild
         {
-            return Task.Run(() => BuildManager.Execute(defaultTargetExpressions)).Result;
+            // TODO: use this to decide parallel = false?
+            return Task.Run(() => BuildManager.Execute(defaultTargetExpressions, false)).Result;
         }
 
         /// <summary>
@@ -73,7 +74,8 @@ namespace Nuke.Common
         protected static async Task<int> ExecuteAsync<T>(params Expression<Func<T, Target>>[] defaultTargetExpressions)
             where T : NukeBuild
         {
-            return await BuildManager.Execute(defaultTargetExpressions);
+            // TODO: use this to decide parallel = true?
+            return await BuildManager.Execute(defaultTargetExpressions, !NoParallel);
         }
 
         internal IReadOnlyCollection<ExecutableTarget> ExecutableTargets { get; set; }

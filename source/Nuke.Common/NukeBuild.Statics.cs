@@ -84,10 +84,10 @@ namespace Nuke.Common
         public static HostType Host { get; }
 
         /// <summary>
-        /// Gets whether to allow parallel execution. Default is <em>true</em>.
+        /// Gets whether to suppress parallel execution. Default is <em>false</em>.
         /// </summary>
-        [Parameter("Allow parallel execution. Default is 'true'.")]
-        public static bool Parallel { get; } = true;
+        [Parameter("Suppress parallel execution. Default is 'false'.")]
+        public static bool NoParallel { get; }
 
         /// <summary>
         /// Gets a value whether to show the execution plan (HTML).

@@ -32,7 +32,7 @@ namespace Nuke.Common.Execution
             remove => s_cancellationHandlers.Remove(value);
         }
 
-        public static async Task<int> Execute<T>(Expression<Func<T, Target>>[] defaultTargetExpressions)
+        public static async Task<int> Execute<T>(Expression<Func<T, Target>>[] defaultTargetExpressions, bool parallelExecution)
             where T : NukeBuild
         {
             Console.CancelKeyPress += (s, e) => s_cancellationHandlers.ForEach(x => x());
@@ -77,7 +77,7 @@ namespace Nuke.Common.Execution
                 Logger.Info($"NUKE Execution Engine {typeof(BuildManager).Assembly.GetInformationalText()}");
                 Logger.Normal();
 
-                var buildOrchestrator = NukeBuild.Parallel
+                var buildOrchestrator = parallelExecution
                     ? (IBuildOrchestrator)new ParallelBuildOrchestrator()
                     : new SequentialBuildOrchestrator();
 
@@ -95,7 +95,7 @@ namespace Nuke.Common.Execution
 
                 LoggerProvider.RemoveCurrentLogger();
 
-                using (var progressReporter = ProgressReporterFactory.Create())
+                using (var progressReporter = ProgressReporterFactory.Create(parallelExecution))
                 {
                     progressReporter.WatchAndReport(build);
                     stopwatch.Start();
