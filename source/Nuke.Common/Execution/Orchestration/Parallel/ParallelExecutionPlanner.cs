@@ -31,26 +31,6 @@ namespace Nuke.Common.Execution.Orchestration.Parallel
         }
 
         /// <summary>
-        /// Counts the calls to target branching out from the invoked targets.
-        /// </summary>
-        private static void CountDependents(IReadOnlyCollection<ExecutionItem> workSets)
-        {
-            var invokedTargets = workSets.Where(x => x.IsInvoked).ToList();
-
-            foreach (var target in invokedTargets)
-            {
-                var flattenedDependencies = target.Dependencies
-                    .Flatten(x => x.Dependencies)
-                    .Distinct()
-                    .Concat(target)
-                    .ToList();
-                flattenedDependencies.ForEach(workSet => 
-                    workSet.DependentsPathCount += flattenedDependencies.Count(x => x.Dependencies.Contains(workSet))
-                );
-            }
-        }
-
-        /// <summary>
         /// Creates a parallel execution plan by clustering independent sequences of targets, and connecting them as a graph.
         /// </summary>
         public static ExecutionPlan GetParallelExecutionPlan(
@@ -108,9 +88,6 @@ namespace Nuke.Common.Execution.Orchestration.Parallel
                 // so just look for the item which contains this target.
                 item.Dependencies = executionItems.Where(x => top.ExecutionDependencies.Any(y => x.Targets.Contains(y))).ToList();
             }
-
-            // Count total dependents, so the threads now how long to block.
-            CountDependents(executionItems);
 
             return new ExecutionPlan(executionItems, orderedTargets);
         }

@@ -23,29 +23,18 @@ namespace Nuke.Common.Execution
 
         public bool IsInvoked => Targets.Any(x => x.Invoked);
 
-        public int DependentsPathCount { get; set; }
-
         public ILogger Logger { get; set; }
 
-        private CountdownEvent CountdownEvent { get; set; }
-
-        private int count;
+        private CountdownEvent CountdownEvent { get; set; } = new CountdownEvent(2);
 
 
         public event ProgressChangedEventHandler ProgressChanged;
-
-        public void InitCountdown()
-        {
-            if (DependentsPathCount > 0)
-                CountdownEvent = new CountdownEvent(DependentsPathCount + 1);
-        }
 
         public bool WillExecuteWork()
         {
             lock (this)
             {
-                Log($"Start {++count}");
-                var result = CountdownEvent == null || CountdownEvent.CurrentCount == CountdownEvent.InitialCount;
+                var result = CountdownEvent.CurrentCount == CountdownEvent.InitialCount;
                 if (result)
                     Signal();
 
@@ -76,16 +65,6 @@ namespace Nuke.Common.Execution
             }
             Log("Work Finished End");
             ProgressChanged?.Invoke(this, new ProgressChangedEventArgs(100, null));
-        }
-
-        public void DidNothing()
-        {
-            Log("DidNothing Begin");
-            lock (this)
-            {
-                Signal();
-            }
-            Log("DidNothing End");
         }
 
         public void Join(CancellationToken cancellationToken)

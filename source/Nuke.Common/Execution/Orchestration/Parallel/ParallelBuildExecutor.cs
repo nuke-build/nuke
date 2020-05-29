@@ -26,9 +26,6 @@ namespace Nuke.Common.Execution.Orchestration.Parallel
             
             try
             {
-                // create the countdowns for all items which have dependents
-                workSets.ForEach(x => x.InitCountdown());
-
                 var invokedTargets = workSets.Where(x => x.IsInvoked).ToList();
                 await ExecuteItems(build, invokedTargets, cts);
             }
@@ -79,11 +76,6 @@ namespace Nuke.Common.Execution.Orchestration.Parallel
                 TargetExecutor.ExecuteItem(build, executionItem, new string[] { }, cts.Token);
 
                 // TargetExecutor raises the signal on the countdown
-            }
-            else
-            {
-                // Raise the signal, even if doing nothing
-                executionItem.DidNothing();
             }
 
             // Now wait for all its iterations to arrive and/or finish work
