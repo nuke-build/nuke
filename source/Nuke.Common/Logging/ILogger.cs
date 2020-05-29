@@ -14,5 +14,6 @@ namespace Nuke.Common.Logging
         void Warn(Exception exception);
 
         void Flush();
+        string PeekLastMessage();
     }
 }

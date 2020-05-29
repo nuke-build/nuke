@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Nuke.Common.CI;
 using Nuke.Common.CI.AppVeyor;
@@ -59,14 +60,14 @@ namespace Nuke.Common
         /// Executes the build. The provided expression defines the <em>default</em> target that is invoked,
         /// if no targets have been specified via command-line arguments.
         /// </summary>
-        protected static int Execute<T>(params Expression<Func<T, Target>>[] defaultTargetExpressions)
+        protected static async Task<int> Execute<T>(params Expression<Func<T, Target>>[] defaultTargetExpressions)
             where T : NukeBuild
         {
-            return BuildManager.Execute(defaultTargetExpressions);
+            return await BuildManager.Execute(defaultTargetExpressions);
         }
 
         internal IReadOnlyCollection<ExecutableTarget> ExecutableTargets { get; set; }
-        internal IReadOnlyCollection<ExecutableTarget> ExecutionPlan { get; set; }
+        internal ExecutionPlan ExecutionPlan { get; set; }
 
         /// <summary>
         /// Gets the list of targets that were invoked.
@@ -74,7 +75,7 @@ namespace Nuke.Common
         [Parameter("List of targets to be executed. Default is '{default_target}'.",
             Name = InvokedTargetsParameterName,
             Separator = TargetsSeparator)]
-        public IReadOnlyCollection<ExecutableTarget> InvokedTargets => ExecutionPlan.Where(x => x.Invoked).ToList();
+        public IReadOnlyCollection<ExecutableTarget> InvokedTargets => ExecutionPlan.AllExecutionTargets.Where(x => x.Invoked).ToList();
 
         /// <summary>
         /// Gets the list of targets that are skipped.
@@ -82,12 +83,12 @@ namespace Nuke.Common
         [Parameter("List of targets to be skipped. Empty list skips all dependencies.",
             Name = SkippedTargetsParameterName,
             Separator = TargetsSeparator)]
-        public IReadOnlyCollection<ExecutableTarget> SkippedTargets => ExecutionPlan.Where(x => x.Status == ExecutionStatus.Skipped).ToList();
+        public IReadOnlyCollection<ExecutableTarget> SkippedTargets => ExecutionPlan.AllExecutionTargets.Where(x => x.Status == ExecutionStatus.Skipped).ToList();
 
         /// <summary>
         /// Gets the list of targets that are executing.
         /// </summary>
-        public IReadOnlyCollection<ExecutableTarget> ExecutingTargets => ExecutionPlan.Where(x => x.Status != ExecutionStatus.Skipped).ToList();
+        public IReadOnlyCollection<ExecutableTarget> ExecutingTargets => ExecutionPlan.AllExecutionTargets.Where(x => x.Status != ExecutionStatus.Skipped).ToList();
 
         protected internal virtual OutputSink OutputSink => Host switch
             {
@@ -112,7 +113,7 @@ namespace Nuke.Common
                 ? BuildProjectDirectory / "obj" / "project.assets.json"
                 : null;
 
-        public bool IsSuccessful => ExecutionPlan
+        public bool IsSuccessful => ExecutionPlan.AllExecutionTargets
             .All(x => x.Status != ExecutionStatus.Failed &&
                       x.Status != ExecutionStatus.NotRun &&
                       x.Status != ExecutionStatus.Aborted);

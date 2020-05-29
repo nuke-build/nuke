@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
+using Nuke.Common.Execution.Orchestration.Sequential;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI
@@ -33,7 +34,7 @@ namespace Nuke.Common.CI
                 invokedTargets.AddRange(additionalInvokedTargets);
             } while (additionalInvokedTargets.Count > 0);
 
-            return ExecutionPlanner.GetExecutionPlan(invokedTargets, new[] { executableTarget.Name });
+            return SequentialExecutionPlanner.GetExecutionPlan(invokedTargets, new[] { executableTarget.Name }).AllExecutionTargets;
         }
 
         protected IEnumerable<ExecutableTarget> GetTargetDependencies(ExecutableTarget executableTarget)

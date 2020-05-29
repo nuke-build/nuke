@@ -18,5 +18,10 @@ namespace Nuke.Common.Logging
             Message = message;
             Exception = exception;
         }
+
+        public override string ToString()
+        {
+            return $"[{Level}] {Message}";
+        }
     }
 }

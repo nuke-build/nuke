@@ -11,12 +11,14 @@ namespace Nuke.Common.Logging
     {
         private static ConcurrentDictionary<int, ILogger> CurrentLoggers { get; } = new ConcurrentDictionary<int, ILogger>();
 
+        public static bool AutoFlush { get; set; } = true;
+
         internal static ILogger GetCurrentLogger()
         {
-            if (CurrentLoggers.TryGetValue(Thread.CurrentThread.ManagedThreadId, out var logger))
-                return logger;
-
-            return null;
+            return CurrentLoggers.GetOrAdd(
+                Thread.CurrentThread.ManagedThreadId,
+                _ => new InMemoryLogger(Logger.LogLevel, Logger.OutputSink, AutoFlush)
+                );
         }
 
         internal static ILogger CreateLogger(bool autoFlush = true)
@@ -31,6 +33,11 @@ namespace Nuke.Common.Logging
         internal static bool AttachLoggerToCurrentThread(ILogger logger)
         {
             return CurrentLoggers.TryAdd(Thread.CurrentThread.ManagedThreadId, logger);
+        }
+
+        internal static void RemoveCurrentLogger()
+        {
+            CurrentLoggers.TryRemove(Thread.CurrentThread.ManagedThreadId, out var _);
         }
     }
 }

@@ -1,23 +1,26 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using JetBrains.Annotations;
 using NuGet.Packaging;
+using Nuke.Common.Logging;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using ShellProgressBar;
 
-namespace Nuke.Common.Execution
+namespace Nuke.Common.Execution.Orchestration.Sequential
 {
     /// <summary>
     /// Given the invoked target names, creates an execution plan under consideration of execution, ordering and trigger dependencies.
     /// </summary>
-    internal static class ExecutionPlanner
+    internal static class SequentialExecutionPlanner
     {
-        public static IReadOnlyCollection<ExecutableTarget> GetExecutionPlan(
+        public static ExecutionPlan GetExecutionPlan(
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             [CanBeNull] IReadOnlyCollection<string> invokedTargetNames)
         {
@@ -38,7 +41,7 @@ namespace Nuke.Common.Execution
                 invokedTargets = executionPlan.Concat(additionallyTriggered).ToList();
             } while (additionallyTriggered.Count > 0);
 
-            return executionPlan;
+            return new ExecutionPlan(executionPlan);
         }
 
         private static IReadOnlyCollection<ExecutableTarget> GetExecutionPlanInternal(

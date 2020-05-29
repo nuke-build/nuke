@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Nuke.Common.Execution.Orchestration.Sequential;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -67,13 +68,13 @@ namespace Nuke.Common.Execution
             // When not hovering anything, highlight the default plan
             var defaultTarget = executableTargets.SingleOrDefault(x => x.IsDefault);
             var defaultPlan = defaultTarget != null
-                ? ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { defaultTarget.Name })
+                ? SequentialExecutionPlanner.GetExecutionPlan(executableTargets, new[] { defaultTarget.Name }).AllExecutionTargets
                 : new ExecutableTarget[0];
             defaultPlan.ForEach(x => builder.AppendLine($@"  $(""#{x.Name}"").addClass('highlight');"));
 
             foreach (var executableTarget in executableTargets)
             {
-                var executionPlan = ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { executableTarget.Name });
+                var executionPlan = SequentialExecutionPlanner.GetExecutionPlan(executableTargets, new[] { executableTarget.Name }).AllExecutionTargets;
                 builder
                     .AppendLine($@"  $(""#{executableTarget.Name}"").hover(")
                     .AppendLine("    function() {");

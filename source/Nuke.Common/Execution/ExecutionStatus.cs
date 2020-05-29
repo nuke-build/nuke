@@ -17,4 +17,13 @@ namespace Nuke.Common.Execution
         Aborted,
         Collective
     }
+
+    public static class ExecutionStatusExtensions
+    {
+        public static bool IsCompleted(this ExecutionStatus status)
+        {
+            return status != ExecutionStatus.NotRun
+                && status != ExecutionStatus.Executing;
+        }
+    }
 }

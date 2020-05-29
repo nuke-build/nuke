@@ -2,12 +2,15 @@
 using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Reflection;
 
 namespace Nuke.Common.Logging
 {
     internal class InMemoryLogger : ILogger
     {
+        private static object _flushLock = new object();
+
         public bool AutoFlush { get; } = true;
 
         public LogLevel LogLevel { get; }
@@ -39,11 +42,14 @@ namespace Nuke.Common.Logging
 
         public void Flush()
         {
-            lock (Entries)
+            lock (_flushLock)
             {
-                while (Entries.TryDequeue(out var entry))
+                lock (Entries)
                 {
-                    Flush(entry.Level, entry.Message, entry.Exception);
+                    while (Entries.TryDequeue(out var entry))
+                    {
+                        Flush(entry.Level, entry.Message, entry.Exception);
+                    }
                 }
             }
         }
@@ -160,6 +166,14 @@ namespace Nuke.Common.Logging
                     exceptionOutput(prefix + exception.Message, exception.StackTrace + EnvironmentInfo.NewLine);
                     break;
             }
+        }
+
+        public string PeekLastMessage()
+        {
+            if (Entries.Count == 0)
+                return null;
+
+            return Entries.Last().Message;
         }
     }
 }

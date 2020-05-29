@@ -8,6 +8,11 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
+using Nuke.Common.Execution.Orchestration;
+using Nuke.Common.Execution.Orchestration.Parallel;
+using Nuke.Common.Execution.Orchestration.Sequential;
+using Nuke.Common.Execution.Progress;
 using Nuke.Common.Logging;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
@@ -27,7 +32,7 @@ namespace Nuke.Common.Execution
             remove => s_cancellationHandlers.Remove(value);
         }
 
-        public static int Execute<T>(Expression<Func<T, Target>>[] defaultTargetExpressions)
+        public static async Task<int> Execute<T>(Expression<Func<T, Target>>[] defaultTargetExpressions)
             where T : NukeBuild
         {
             Console.CancelKeyPress += (s, e) => s_cancellationHandlers.ForEach(x => x());
@@ -42,6 +47,8 @@ namespace Nuke.Common.Execution
                     .OfType<TExtension>()
                     .OrderBy(x => x.GetType() == typeof(HandleHelpRequestsAttribute))
                     .ForEach(action);
+
+            var stopwatch = new System.Diagnostics.Stopwatch();
 
             try
             {
@@ -70,9 +77,14 @@ namespace Nuke.Common.Execution
                 Logger.Info($"NUKE Execution Engine {typeof(BuildManager).Assembly.GetInformationalText()}");
                 Logger.Normal();
 
-                build.ExecutionPlan = ExecutionPlanner.GetExecutionPlan(
-                    build.ExecutableTargets,
-                    EnvironmentInfo.GetParameter<string[]>(() => build.InvokedTargets));
+                var buildOrchestrator = NukeBuild.Parallel
+                    ? (IBuildOrchestrator)new ParallelBuildOrchestrator()
+                    : new SequentialBuildOrchestrator();
+
+                buildOrchestrator.PlanBuild(build);
+
+                RunConditionEvaluator.MarkSkippedTargets(build, EnvironmentInfo.GetParameter<string[]>(() => build.InvokedTargets));
+                RequirementService.ValidateRequirements(build, build.ExecutingTargets.ToList());
 
                 ExecuteExtension<IOnAfterLogo>(x => x.OnAfterLogo(build, build.ExecutableTargets, build.ExecutionPlan));
                 CancellationHandler += Finish;
@@ -81,9 +93,14 @@ namespace Nuke.Common.Execution
 
                 build.OnBuildInitialized();
 
-                BuildExecutor.Execute(
-                    build,
-                    EnvironmentInfo.GetParameter<string[]>(() => build.SkippedTargets));
+                LoggerProvider.RemoveCurrentLogger();
+
+                using (var progressReporter = ProgressReporterFactory.Create())
+                {
+                    progressReporter.WatchAndReport(build);
+                    stopwatch.Start();
+                    await buildOrchestrator.RunBuild(build);
+                }
 
                 return build.IsSuccessful ? 0 : ErrorExitCode;
             }
@@ -102,11 +119,13 @@ namespace Nuke.Common.Execution
 
             void Finish()
             {
-                build.ExecutionPlan
+                stopwatch.Stop();
+
+                build.ExecutionPlan.AllExecutionTargets
                     .Where(x => x.Status == ExecutionStatus.Executing)
                     .ForEach(x => x.Status = ExecutionStatus.Aborted);
 
-                Logger.OutputSink.WriteSummary(build);
+                Logger.OutputSink.WriteSummary(build, stopwatch.Elapsed);
 
                 build.OnBuildFinished();
                 ExecuteExtension<IOnBuildFinished>(x => x.OnBuildFinished(build));

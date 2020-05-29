@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -37,11 +37,11 @@ namespace Nuke.Common.OutputSinks
                     var formattedBlockText = FormatBlockText(text)
                         .Split(new[] { EnvironmentInfo.NewLine }, StringSplitOptions.None);
 
-                    Console.WriteLine();
-                    Console.WriteLine("╬" + new string(c: '═', text.Length + 5));
-                    formattedBlockText.ForEach(x => Console.WriteLine($"║ {x}"));
-                    Console.WriteLine("╬" + new string(c: '═', Math.Max(text.Length - 4, 2)));
-                    Console.WriteLine();
+                    Logger.Normal();
+                    Logger.Normal("╬" + new string(c: '═', text.Length + 5));
+                    formattedBlockText.ForEach(x => Logger.Normal($"║ {x}"));
+                    Logger.Normal("╬" + new string(c: '═', Math.Max(text.Length - 4, 2)));
+                    Logger.Normal();
                 });
         }
 
@@ -55,7 +55,7 @@ namespace Nuke.Common.OutputSinks
             Logger.Normal("╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝");
         }
 
-        internal virtual void WriteSummary(NukeBuild build)
+        internal virtual void WriteSummary(NukeBuild build, TimeSpan totalElapsed)
         {
             if (SevereMessages.Count > 0)
             {
@@ -63,7 +63,7 @@ namespace Nuke.Common.OutputSinks
                 WriteNormal();
             }
 
-            WriteSummaryTable(build);
+            WriteSummaryTable(build, totalElapsed);
             WriteNormal();
 
             if (build.IsSuccessful)
@@ -83,13 +83,12 @@ namespace Nuke.Common.OutputSinks
             WriteError($"Build failed on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}. (╯°□°）╯︵ ┻━┻");
         }
 
-        protected virtual void WriteSummaryTable(NukeBuild build)
+        protected virtual void WriteSummaryTable(NukeBuild build, TimeSpan totalElapsed)
         {
-            var firstColumn = Math.Max(build.ExecutionPlan.Max(x => x.Name.Length) + 4, val2: 19);
+            var firstColumn = Math.Max(build.ExecutionPlan.AllExecutionTargets.Max(x => x.Name.Length) + 4, val2: 19);
             var secondColumn = 10;
             var thirdColumn = 10;
             var allColumns = firstColumn + secondColumn + thirdColumn;
-            var totalDuration = build.ExecutionPlan.Aggregate(TimeSpan.Zero, (t, x) => t.Add(x.Duration));
 
             string CreateLine(string target, string executionStatus, string duration, string appendix = null)
                 => target.PadRight(firstColumn, paddingChar: ' ')
@@ -104,7 +103,7 @@ namespace Nuke.Common.OutputSinks
             WriteInformation(CreateLine("Target", "Status", "Duration"));
             //WriteInformationInternal($"{{0,-{firstColumn}}}{{1,-{secondColumn}}}{{2,{thirdColumn}}}{{3,1}}", "Target", "Status", "Duration", "Test");
             WriteNormal(new string(c: '─', count: allColumns));
-            foreach (var target in build.ExecutionPlan)
+            foreach (var target in build.ExecutionPlan.AllExecutionTargets)
             {
                 var line = CreateLine(target.Name, target.Status.ToString(), ToMinutesAndSeconds(target.Duration), target.SkipReason);
                 switch (target.Status)
@@ -126,7 +125,7 @@ namespace Nuke.Common.OutputSinks
             }
 
             WriteNormal(new string(c: '─', count: allColumns));
-            WriteInformation(CreateLine("Total", "", ToMinutesAndSeconds(totalDuration)));
+            WriteInformation(CreateLine("Total", "", ToMinutesAndSeconds(totalElapsed)));
             WriteNormal(new string(c: '═', count: allColumns));
         }
 

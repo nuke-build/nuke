@@ -1,4 +1,4 @@
-// Copyright 2020 Maintainers of NUKE.
+﻿// Copyright 2020 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -43,7 +43,7 @@ namespace Nuke.Common.CI
         public void OnAfterLogo(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
-            IReadOnlyCollection<ExecutableTarget> executionPlan)
+            ExecutionPlan executionPlan)
         {
             if (NukeBuild.IsServerBuild)
                 return;
