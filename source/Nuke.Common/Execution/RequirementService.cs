@@ -38,11 +38,9 @@ namespace Nuke.Common.Execution
 
         private static bool IsMemberNull(MemberInfo member, NukeBuild build, ExecutableTarget target = null)
         {
-            if (member.DeclaringType != build.GetType())
-            {
-                // Can happen when a derived class overrides a member
-                member = build.GetType().GetMember(member.Name).SingleOrDefault() ?? member;
-            }
+            member = member.DeclaringType != build.GetType()
+                ? build.GetType().GetMember(member.Name).SingleOrDefault() ?? member
+                : member;
 
             var from = target != null ? $"from target '{target.Name}' " : string.Empty;
             ControlFlow.Assert(member.HasCustomAttribute<InjectionAttributeBase>(),
