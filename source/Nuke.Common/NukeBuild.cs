@@ -60,7 +60,17 @@ namespace Nuke.Common
         /// Executes the build. The provided expression defines the <em>default</em> target that is invoked,
         /// if no targets have been specified via command-line arguments.
         /// </summary>
-        protected static async Task<int> Execute<T>(params Expression<Func<T, Target>>[] defaultTargetExpressions)
+        protected static int Execute<T>(params Expression<Func<T, Target>>[] defaultTargetExpressions)
+            where T : NukeBuild
+        {
+            return Task.Run(() => BuildManager.Execute(defaultTargetExpressions)).Result;
+        }
+
+        /// <summary>
+        /// Executes the build. The provided expression defines the <em>default</em> target that is invoked,
+        /// if no targets have been specified via command-line arguments.
+        /// </summary>
+        protected static async Task<int> ExecuteAsync<T>(params Expression<Func<T, Target>>[] defaultTargetExpressions)
             where T : NukeBuild
         {
             return await BuildManager.Execute(defaultTargetExpressions);
