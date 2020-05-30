@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities.Collections;
@@ -13,6 +14,14 @@ namespace Nuke.Common.Execution
 {
     public static class InjectionUtility
     {
+        public static T GetInjectionValue<T>(Expression<Func<T>> parameterExpression)
+        {
+            // TODO: caching?
+            var parameter = parameterExpression.GetMemberInfo();
+            var attribute = parameter.GetCustomAttribute<InjectionAttributeBase>().NotNull();
+            return (T) attribute.GetValue(parameter, instance: null);
+        }
+
         public static void InjectValues<T>(T instance = default, Func<InjectionAttributeBase, bool> filter = null)
         {
             filter ??= x => true;
@@ -30,6 +39,9 @@ namespace Nuke.Common.Execution
             foreach (var (member, attribute) in tuples)
             {
                 if (member.DeclaringType == typeof(NukeBuild))
+                    continue;
+
+                if (member.ReflectedType.NotNull().IsInterface)
                     continue;
 
                 var value = attribute.GetValue(member, instance);
@@ -54,6 +66,7 @@ namespace Nuke.Common.Execution
         {
             return type
                 .GetMembers(ReflectionService.All)
+                .Concat(type.GetInterfaces().SelectMany(x => x.GetMembers(ReflectionService.All)))
                 .Select(x => (Member: x, Attribute: x.GetCustomAttribute<InjectionAttributeBase>()))
                 .Where(x => x.Attribute != null).ToList();
         }

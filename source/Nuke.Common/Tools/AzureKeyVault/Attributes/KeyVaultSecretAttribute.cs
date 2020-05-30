@@ -14,7 +14,7 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Field)]
     [MeansImplicitUse(ImplicitUseKindFlags.Assign)]
-    public class KeyVaultSecretAttribute : InjectionAttributeBase
+    public class KeyVaultSecretAttribute : ParameterAttribute
     {
         protected static KeyVaultTaskSettings CreateSettings (string secretName, KeyVaultSettings keyVaultSettings)
         {
@@ -62,6 +62,10 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
                 return KeyVaultTasks.GetCertificateBundle(CreateSettings(secretName, settings));
             if (memberType == typeof(KeyVault))
                 return KeyVaultTasks.LoadVault(CreateSettings(secretName, settings));
+
+            var baseValue = base.GetValue(member, instance);
+            if (baseValue != null)
+                return baseValue;
 
             throw new NotSupportedException();
         }
