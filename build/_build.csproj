@@ -20,8 +20,7 @@
     <DefineConstants Condition="'$(OS)' != 'Windows_NT'">$(DefineConstants);UNIX</DefineConstants>
   </PropertyGroup>
 
-  <ItemGroup>
-    <!-- https://github.com/nuke-build/common/tree/develop/source/Nuke.GlobalTool/templates -->
+  <ItemGroup><!-- https://github.com/nuke-build/common/tree/develop/source/Nuke.GlobalTool/templates -->
     <!-- https://github.com/nuke-build/common/blob/develop/source/Nuke.GlobalTool/templates/_build.sdk.csproj -->
     <!-- http,s://raw.githubusercontent.com/nuke-build/common/develop/source/Nuke.GlobalTool/templates/_build.sdk.csproj -->
 <!--    <NukeExternalFiles Include="https://github.com/nuke-build/common/tree/develop/source/Nuke.GlobalTool/templates" BasePath="..\download">-->
@@ -30,6 +29,10 @@
 <!--      <NuGetSource>https://www.myget.org/F/matkoch/api/v2/package</NuGetSource>-->
 <!--      <NukeVersion>6.6.6</NukeVersion>-->
 <!--    </NukeExternalFiles>-->
+  
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0008" />
+  
+    <PackageReference Include="tweetinviapi" Version="5.0.0-alpha-6" />
   </ItemGroup>
 
   <ItemGroup>

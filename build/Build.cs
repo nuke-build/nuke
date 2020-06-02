@@ -49,7 +49,7 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
     VcsTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
     NightlyTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
     ManuallyTriggeredTargets = new[] { nameof(Publish) },
-    NonEntryTargets = new[] { nameof(Restore) },
+    NonEntryTargets = new[] { nameof(Restore), nameof(DownloadFonts), nameof(InstallFonts), nameof(ReleaseImage) },
     ExcludedTargets = new[] { nameof(Clean) })]
 [GitHubActions(
     "continuous",
@@ -73,7 +73,7 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
     AzurePipelinesImage.WindowsLatest,
     AzurePipelinesImage.MacOsLatest,
     InvokedTargets = new[] { nameof(Test), nameof(Pack) },
-    NonEntryTargets = new[] { nameof(Restore) },
+    NonEntryTargets = new[] { nameof(Restore), nameof(DownloadFonts), nameof(InstallFonts), nameof(ReleaseImage) },
     ExcludedTargets = new[] { nameof(Clean), nameof(Coverage) })]
 partial class Build : NukeBuild
 {
@@ -250,17 +250,11 @@ partial class Build : NukeBuild
     [Parameter("NuGet Api Key")] readonly string ApiKey;
     [Parameter("NuGet Source for Packages")] readonly string Source = "https://api.nuget.org/v3/index.json";
 
-    [Parameter("GitHub Token")] readonly string GitHubToken;
-    [Parameter("Gitter Auth Token")] readonly string GitterAuthToken;
-    [Parameter("Slack Webhook")] readonly string SlackWebhook;
-
     Target Publish => _ => _
         .ProceedAfterFailure()
         .DependsOn(Clean, Test, Pack)
         .Consumes(Pack)
         .Requires(() => ApiKey)
-        .Requires(() => SlackWebhook)
-        .Requires(() => GitterAuthToken)
         .Requires(() => GitHasCleanWorkingCopy())
         .Requires(() => Configuration.Equals(Configuration.Release))
         .Requires(() => GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch) ||
@@ -279,26 +273,6 @@ partial class Build : NukeBuild
                         .SetTargetPath(v)),
                 degreeOfParallelism: 5,
                 completeOnFailure: true);
-        });
-
-    Target Announce => _ => _
-        .TriggeredBy(Publish)
-        .OnlyWhenStatic(() => GitRepository.IsOnMasterBranch())
-        .Executes(() =>
-        {
-            SendSlackMessage(_ => _
-                    .SetText(new StringBuilder()
-                        .AppendLine($"<!here> :mega::shipit: *NUKE {GitVersion.SemVer} IS OUT!!!*")
-                        .AppendLine()
-                        .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "• ")).JoinNewLine()).ToString()),
-                SlackWebhook);
-
-            SendGitterMessage(new StringBuilder()
-                    .AppendLine($"@/all :mega::shipit: **NUKE {GitVersion.SemVer} IS OUT!!!**")
-                    .AppendLine()
-                    .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "* ")).JoinNewLine()).ToString(),
-                "593f3dadd73408ce4f66db89",
-                GitterAuthToken);
         });
 
     Target Install => _ => _

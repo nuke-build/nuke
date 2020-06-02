@@ -30,16 +30,19 @@ Skip:
 - Clean
 - Compile
 - Coverage
+- DownloadFonts
 - GenerateGlobalSolution
 - GeneratePublicApi
 - GenerateTools
 - Hotfix
 - Install
+- InstallFonts
 - Milestone
 - Pack
 - Publish
 - References
 - Release
+- ReleaseImage
 - Restore
 - Test
 - UpdateContributors
@@ -52,18 +55,25 @@ Target:
 - Clean
 - Compile
 - Coverage
+- DownloadFonts
 - GenerateGlobalSolution
 - GeneratePublicApi
 - GenerateTools
 - Hotfix
 - Install
+- InstallFonts
 - Pack
 - Publish
 - References
 - Release
+- ReleaseImage
 - Restore
 - Test
 - UpdateContributors
+TwitterAccessToken: 
+TwitterAccessTokenSecret: 
+TwitterConsumerKey: 
+TwitterConsumerSecret: 
 UseSSH: 
 Verbosity:
 - Minimal
