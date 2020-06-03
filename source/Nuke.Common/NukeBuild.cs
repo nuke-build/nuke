@@ -53,7 +53,7 @@ namespace Nuke.Common
     [HandleShellCompletion]
     [HandleVisualStudioDebugging]
     [HandleConfigurationGeneration]
-    public abstract partial class NukeBuild
+    public abstract partial class NukeBuild : INukeBuild
     {
         /// <summary>
         /// Executes the build. The provided expression defines the <em>default</em> target that is invoked,
@@ -112,7 +112,7 @@ namespace Nuke.Common
                 ? BuildProjectDirectory / "obj" / "project.assets.json"
                 : null;
 
-        internal bool IsSuccessful => ExecutionPlan
+        public bool IsSuccessful => ExecutionPlan
             .All(x => x.Status != ExecutionStatus.Failed &&
                       x.Status != ExecutionStatus.NotRun &&
                       x.Status != ExecutionStatus.Aborted);
