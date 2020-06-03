@@ -57,7 +57,7 @@ partial class Build
         .DependsOn(InstallFonts)
         .Executes(() =>
         {
-            const float logoScaling = 0.2f;
+            const float logoScaling = 0.37f;
             var logo = Image.Load(WatermarkImageFile);
             logo.Mutate(x => x.Resize((int) (logo.Width * logoScaling), (int) (logo.Height * logoScaling)));
 
@@ -72,26 +72,26 @@ partial class Build
                                   }
                 };
 
-            const int width = 720;
-            const int height = 450;
+            const int width = 1200;
+            const int height = 675;
             var image = new Image<Rgba64>(width: width, height: height);
             image.Mutate(x => x
-                .BackgroundColor(Color.FromRgb(r: 34, g: 34, b: 34))
+                .BackgroundColor(Color.FromRgb(r: 25, g: 25, b: 25))
                 .DrawImage(
                     logo,
                     location: new Point(image.Width / 2 - logo.Width / 2, image.Height / 2 - logo.Height / 2),
-                    opacity: 0.01f)
+                    opacity: 0.025f)
                 .DrawText(
                     text: "New Release".ToUpperInvariant(),
-                    font: robotoFont.CreateFont(30),
+                    font: robotoFont.CreateFont(70),
                     color: Color.WhiteSmoke,
-                    location: new PointF(image.Width / 2f, image.Height / 2f - 50),
+                    location: new PointF(image.Width / 2f, image.Height / 2f - 100),
                     options: graphicsOptions)
                 .DrawText(
-                    text: GitVersion.FullSemVer,
-                    font: robotoFont.CreateFont(60),
+                    text: "0.24.0",
+                    font: robotoFont.CreateFont(150),
                     color: Color.WhiteSmoke,
-                    location: new PointF(image.Width / 2f, image.Height / 2f + 10),
+                    location: new PointF(image.Width / 2f, image.Height / 2f),
                     options: graphicsOptions));
 
             using var fileStream = new FileStream(ReleaseImageFile, FileMode.Create);
