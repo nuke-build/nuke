@@ -23,18 +23,11 @@ namespace Nuke.Common.Execution
             where T : NukeBuild
         {
             var buildType = build.GetType();
-            var defaultProperties = buildType.GetInterfaces()
-                .SelectMany(x => x.GetProperties(ReflectionService.Instance))
-                .Where(x => buildType.GetProperty(x.Name) == null);
-            var properties = buildType
-                .GetProperties(ReflectionService.Instance) // TODO: static targets?
-                .Concat(defaultProperties)
-                .Where(x => x.PropertyType == typeof(Target)).ToList();
+            var targetProperties = GetTargetProperties(buildType);
             var defaultTargets = defaultTargetExpressions.Select(x => x.Compile().Invoke(build)).ToList();
 
             var executables = new List<ExecutableTarget>();
-
-            foreach (var property in properties)
+            foreach (var property in targetProperties)
             {
                 var baseMembers = buildType
                     .Descendants(x => x.BaseType)
@@ -91,6 +84,21 @@ namespace Nuke.Common.Execution
             }
 
             return executables;
+        }
+
+        private static IEnumerable<PropertyInfo> GetTargetProperties(Type buildType)
+        {
+            // TODO: static targets?
+            var interfaceProperties = buildType.GetInterfaces()
+                .SelectMany(x => x.GetProperties(ReflectionService.Instance))
+                .Where(x => buildType.GetProperty(x.Name) == null).ToList();
+            var classProperties = buildType
+                .GetProperties(ReflectionService.Instance)
+                .Where(x => !x.Name.Contains(".")).ToList();
+
+            return classProperties
+                .Concat(interfaceProperties)
+                .Where(x => x.PropertyType == typeof(Target)).ToList();
         }
     }
 }
