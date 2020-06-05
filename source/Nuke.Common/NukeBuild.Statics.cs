@@ -32,7 +32,7 @@ namespace Nuke.Common
             FileSystemTasks.EnsureExistingDirectory(TemporaryDirectory);
             BuildAssemblyDirectory = GetBuildAssemblyDirectory();
             BuildProjectDirectory = GetBuildProjectDirectory(BuildAssemblyDirectory);
-            BuildProjectFile = GetBuildProjectDirectory(BuildAssemblyDirectory);
+            BuildProjectFile = GetBuildProjectFile(BuildAssemblyDirectory);
 
             Verbosity = EnvironmentInfo.GetParameter<Verbosity?>(() => Verbosity) ?? Verbosity.Normal;
             Host = EnvironmentInfo.GetParameter<HostType?>(() => Host) ?? GetHostType();
