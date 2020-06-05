@@ -264,7 +264,7 @@ partial class Build : NukeBuild
         .Executes(() =>
         {
             var packages = PackageDirectory.GlobFiles("*.nupkg");
-            Assert(packages.Count == 4, "packages.Count == 4");
+            Assert(packages.Count == 5, "packages.Count == 5");
 
             DotNetNuGetPush(_ => _
                     .SetSource(Source)
