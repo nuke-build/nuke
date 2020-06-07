@@ -129,7 +129,6 @@ namespace Nuke.Common.CI.AppVeyor
             string projectName = null,
             AbsolutePath projectFileName = null)
         {
-            Logger.Warn(OutputSink.GetIssueDetailString("warning", fileName, line,column, null) + message, details);
             WriteCompilationMessage(AppVeyorMessageCategory.Warning, message, fileName, line, column, projectName, projectFileName);
         }
 
@@ -142,7 +141,6 @@ namespace Nuke.Common.CI.AppVeyor
             string projectName = null,
             AbsolutePath projectFileName = null)
         {
-            Logger.Error(OutputSink.GetIssueDetailString("error", fileName, line,column, null) + message, details);
             WriteCompilationMessage(AppVeyorMessageCategory.Error, message, fileName, line, column, projectName, projectFileName);
         }
 
@@ -201,13 +199,11 @@ namespace Nuke.Common.CI.AppVeyor
 
         void IBuildServer.IssueWarning(string message, string file, int? line, int? column, string code)
         {
-            Logger.Warn(message);
             WriteCompilationWarning(message, fileName: file, line: line, column: column);
         }
 
         void IBuildServer.IssueError(string message, string file, int? line, int? column, string code)
         {
-            Logger.Error(message);
             WriteCompilationError(message, fileName: file, line: line, column: column);
         }
 

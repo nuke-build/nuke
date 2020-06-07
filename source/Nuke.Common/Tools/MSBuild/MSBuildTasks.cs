@@ -10,6 +10,11 @@ namespace Nuke.Common.Tools.MSBuild
 {
     partial class MSBuildTasks
     {
+        private static string GetToolPath()
+        {
+            return MSBuildToolPathResolver.Resolve();
+        }
+        
         internal static void CustomLogger(OutputType type, string output)
         {
             if (type == OutputType.Err)
@@ -34,17 +39,7 @@ namespace Nuke.Common.Tools.MSBuild
                     'o' == output[i - 1] &&
                     'r' == output[i])
                 {
-                    var codeEnd = output.IndexOf(value: ':', i);
-                    var pathAndLine = output.Substring(startIndex: 0, codeEnd);
-                    var lineStart = output.LastIndexOf('(');
-                    var colStart = output.IndexOf(value: ',', lineStart);
-                    var colEnd = output.IndexOf(value: ')', colStart);
-                    var file = pathAndLine.Substring(startIndex: 0, lineStart);
-                    var line = pathAndLine.Substring(lineStart + 1, colStart - lineStart - 1);
-                    var col = pathAndLine.Substring(colStart + 1, colEnd - colStart - 1);
-                    var codeStart = i + 2;
-                    var code = pathAndLine.Substring(codeStart, codeEnd - codeStart);
-                    Logger.IssueError(output.Substring(codeEnd + 1), file, int.Parse(line), int.Parse(col), code);
+                    Logger.Error(output);
                     return;
                 }
 
@@ -57,27 +52,12 @@ namespace Nuke.Common.Tools.MSBuild
                     'n' == output[i - 1] &&
                     'g' == output[i])
                 {
-                    var codeEnd = output.IndexOf(value: ':', i);
-                    var pathAndLine = output.Substring(startIndex: 0, codeEnd);
-                    var lineStart = output.LastIndexOf('(');
-                    var colStart = output.IndexOf(value: ',', lineStart);
-                    var colEnd = output.IndexOf(value: ')', colStart);
-                    var file = pathAndLine.Substring(startIndex: 0, lineStart);
-                    var line = pathAndLine.Substring(lineStart + 1, colStart - lineStart - 1);
-                    var col = pathAndLine.Substring(colStart + 1, colEnd - colStart - 1);
-                    var codeStart = i + 2;
-                    var code = pathAndLine.Substring(codeStart, codeEnd - codeStart);
-                    Logger.IssueWarning(output.Substring(codeEnd + 1), file, int.Parse(line), int.Parse(col), code);
+                    Logger.Warn(output);
                     return;
                 }
             }
 
             Logger.Normal(output);
-        }
-        
-        private static string GetToolPath()
-        {
-            return MSBuildToolPathResolver.Resolve();
         }
     }
 }

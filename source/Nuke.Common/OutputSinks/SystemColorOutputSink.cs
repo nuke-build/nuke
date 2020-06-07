@@ -51,16 +51,6 @@ namespace Nuke.Common.OutputSinks
                 WriteWithColors(details, ConsoleColor.Red);
         }
 
-        internal override void IssueWarning(string message, string filePath = null, int? line = null, int? column = null, string code = null)
-        {
-            WriteWarning(GetIssueDetailString("warning", filePath, line, column, code) + message);
-        }
-
-        internal override void IssueError(string message, string filePath = null, int? line = null, int? column = null, string code = null)
-        {
-            WriteError(GetIssueDetailString("error", filePath, line, column, code) + message);
-        }
-
         [MethodImpl(MethodImplOptions.Synchronized)]
         private void WriteWithColors(string text, ConsoleColor foregroundColor)
         {

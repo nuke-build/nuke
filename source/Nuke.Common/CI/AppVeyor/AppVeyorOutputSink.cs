@@ -51,15 +51,5 @@ namespace Nuke.Common.CI.AppVeyor
                                   "contact https://appveyor.com/support to resolve this issue for your account.");
             }
         }
-
-        internal override void IssueWarning(string message, string filePath = null, int? line = null, int? column = null, string code = null)
-        {
-            _appVeyor.WriteCompilationWarning(message, fileName: filePath, line: line, column: column);
-        }
-
-        internal override void IssueError(string message, string filePath = null, int? line = null, int? column = null, string code = null)
-        {
-            _appVeyor.WriteCompilationError(message, fileName: filePath, line: line, column: column);
-        }
     }
 }
