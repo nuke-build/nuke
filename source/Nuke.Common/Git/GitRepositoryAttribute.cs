@@ -6,16 +6,8 @@ using System;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Common.CI.AppVeyor;
-using Nuke.Common.CI.AzurePipelines;
-using Nuke.Common.CI.Bitrise;
-using Nuke.Common.CI.GitHubActions;
-using Nuke.Common.CI.GitLab;
-using Nuke.Common.CI.Jenkins;
-using Nuke.Common.CI.TeamCity;
-using Nuke.Common.CI.TravisCI;
+using Nuke.Common.CI;
 using Nuke.Common.Execution;
-using Nuke.Common.Tools.Git;
 
 namespace Nuke.Common.Git
 {
@@ -42,17 +34,7 @@ namespace Nuke.Common.Git
 
         private string GetBranch()
         {
-            return
-                AppVeyor.Instance?.RepositoryBranch ??
-                Bitrise.Instance?.GitBranch ??
-                GitLab.Instance?.CommitRefName ??
-                Jenkins.Instance?.GitBranch ??
-                Jenkins.Instance?.BranchName ??
-                TeamCity.Instance?.BranchName ??
-                AzurePipelines.Instance?.SourceBranchName ??
-                TravisCI.Instance?.Branch ??
-                GitHubActions.Instance?.GitHubRef ??
-                GitTasks.GitCurrentBranch();
+            return BuildServer.Instance.SourceBranch;
         }
     }
 }

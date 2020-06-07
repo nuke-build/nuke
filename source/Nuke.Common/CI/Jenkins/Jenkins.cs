@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.Jenkins
@@ -16,7 +17,7 @@ namespace Nuke.Common.CI.Jenkins
     [PublicAPI]
     [CI]
     [ExcludeFromCodeCoverage]
-    public class Jenkins
+    public class Jenkins: IBuildServer
     {
         private static Lazy<Jenkins> s_instance = new Lazy<Jenkins>(() => new Jenkins());
 
@@ -131,6 +132,42 @@ namespace Nuke.Common.CI.Jenkins
         /// <summary>
         /// The path to the folder this job is running in.
         /// </summary>
-        public string Workspace => EnvironmentInfo.GetVariable<string>("WORKSPACE");
+        public AbsolutePath Workspace => EnvironmentInfo.GetVariable<AbsolutePath>("WORKSPACE");
+
+        #region IBuildServer
+        
+        HostType IBuildServer.Host => HostType.Jenkins;
+        string IBuildServer.BuildNumber => BuildNumber.ToString();
+        AbsolutePath IBuildServer.SourceDirectory => Workspace;
+        AbsolutePath IBuildServer.OutputDirectory => null;
+        string IBuildServer.SourceBranch => GitBranch;
+        string IBuildServer.TargetBranch => null;
+        void IBuildServer.IssueWarning(string message, string file, int? line, int? column, string code)
+        {
+            Logger.Warn(message);
+        }
+
+        void IBuildServer.IssueError(string message, string file, int? line, int? column, string code)
+        {
+            Logger.Error(message);
+        }
+
+        void IBuildServer.SetEnvironmentVariable(string name, string value)
+        {
+            Logger.Trace("Setting environment variables are not supported by {0}", ((IBuildServer) this ).Host.ToString());
+        }
+
+        void IBuildServer.SetOutputParameter(string name, string value)
+        {
+            Logger.Trace("Setting output parameters are not supported by {0}", ((IBuildServer) this ).Host.ToString());
+        }
+
+        void IBuildServer.PublishArtifact(AbsolutePath artifactPath)
+        {
+            Logger.Trace("publishing artifacts are not supported by {0}", ((IBuildServer) this ).Host.ToString());
+        }
+
+        void IBuildServer.UpdateBuildNumber(string buildNumber) { }
+        #endregion
     }
 }

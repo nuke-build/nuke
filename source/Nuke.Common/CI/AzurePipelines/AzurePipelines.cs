@@ -1,12 +1,10 @@
-﻿// Copyright 2019 Maintainers of NUKE.
-// Distributed under the MIT License.
-// https://github.com/nuke-build/nuke/blob/master/LICENSE
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -19,11 +17,11 @@ namespace Nuke.Common.CI.AzurePipelines
     [PublicAPI]
     [CI]
     [ExcludeFromCodeCoverage]
-    public class AzurePipelines
+    public class AzurePipelines: IBuildServer
     {
         private static Lazy<AzurePipelines> s_instance = new Lazy<AzurePipelines>(() => new AzurePipelines());
 
-        public static AzurePipelines Instance => NukeBuild.Host == HostType.AzurePipelines ? s_instance.Value : null;
+        public static AzurePipelines Instance => NukeBuild.Host == Common.HostType.AzurePipelines ? s_instance.Value : null;
 
         internal static bool IsRunningAzurePipelines => !Environment.GetEnvironmentVariable("TF_BUILD").IsNullOrEmpty();
 
@@ -35,51 +33,82 @@ namespace Nuke.Common.CI.AzurePipelines
         }
 
         public string AgentBuildDirectory => EnvironmentInfo.GetVariable<string>("AGENT_BUILDDIRECTORY");
-        public string AgentHomeDirectory => EnvironmentInfo.GetVariable<string>("AGENT_HOMEDIRECTORY");
+        public AbsolutePath AgentHomeDirectory => EnvironmentInfo.GetVariable<AbsolutePath>("AGENT_HOMEDIRECTORY");
         public long AgentId => EnvironmentInfo.GetVariable<long>("AGENT_ID");
+        public string AgentJobName => EnvironmentInfo.GetVariable<string>("AGENT_JOBNAME");
         public AzurePipelinesJobStatus AgentJobStatus => EnvironmentInfo.GetVariable<AzurePipelinesJobStatus>("AGENT_JOBSTATUS");
         public string AgentMachineName => EnvironmentInfo.GetVariable<string>("AGENT_MACHINENAME");
         public string AgentName => EnvironmentInfo.GetVariable<string>("AGENT_NAME");
-        public string AgentWorkFolder => EnvironmentInfo.GetVariable<string>("AGENT_WORKFOLDER");
-        public string ArtifactStagingDirectory => EnvironmentInfo.GetVariable<string>("BUILD_ARTIFACTSTAGINGDIRECTORY");
+        public AzurePipelinesOperatingSystem AgentOperatingSystem => AzurePipelinesOperatingSystem.Parse(EnvironmentInfo.GetVariable<string>("AGENT_OS"));
+        public AzurePipelinesOperatingSystemArchitecture AgentOperatingSystemArchitecture => EnvironmentInfo.GetVariable<AzurePipelinesOperatingSystemArchitecture>("AGENT_OSARCHITECTURE");
+        public AbsolutePath AgentTempDirectory => EnvironmentInfo.GetVariable<AbsolutePath>("AGENT_TEMPDIRECTORY");
+        public AbsolutePath AgentToolsDirectory => EnvironmentInfo.GetVariable<AbsolutePath>("AGENT_TOOLSDIRECTORY");
+        public AbsolutePath AgentWorkFolder => EnvironmentInfo.GetVariable<AbsolutePath>("AGENT_WORKFOLDER");
+        public AbsolutePath ArtifactStagingDirectory => EnvironmentInfo.GetVariable<AbsolutePath>("BUILD_ARTIFACTSTAGINGDIRECTORY");
         public long BuildId => EnvironmentInfo.GetVariable<long>("BUILD_BUILDID");
         [NoConvert] public string BuildNumber => EnvironmentInfo.GetVariable<string>("BUILD_BUILDNUMBER");
         public string BuildUri => EnvironmentInfo.GetVariable<string>("BUILD_BUILDURI");
-        public string BinariesDirectory => EnvironmentInfo.GetVariable<string>("BUILD_BINARIESDIRECTORY");
+        public AbsolutePath BinariesDirectory => EnvironmentInfo.GetVariable<AbsolutePath>("BUILD_BINARIESDIRECTORY");
+        public long? ContainerId => EnvironmentInfo.GetVariable<long?>("BUILD_CONTAINERID");
         public string DefinitionName => EnvironmentInfo.GetVariable<string>("BUILD_DEFINITIONNAME");
         public long DefinitionVersion => EnvironmentInfo.GetVariable<long>("BUILD_DEFINITIONVERSION");
         public string QueuedBy => EnvironmentInfo.GetVariable<string>("BUILD_QUEUEDBY");
         public Guid QueuedById => EnvironmentInfo.GetVariable<Guid>("BUILD_QUEUEDBYID");
         public AzurePipelinesBuildReason BuildReason => EnvironmentInfo.GetVariable<AzurePipelinesBuildReason>("BUILD_REASON");
         public bool RepositoryClean => EnvironmentInfo.GetVariable<bool>("BUILD_REPOSITORY_CLEAN");
-        public string RepositoryLocalPath => EnvironmentInfo.GetVariable<string>("BUILD_REPOSITORY_LOCALPATH");
+        public AbsolutePath RepositoryLocalPath => EnvironmentInfo.GetVariable<AbsolutePath>("BUILD_REPOSITORY_LOCALPATH");
+        public string RepositoryId => EnvironmentInfo.GetVariable<string>("BUILD_REPOSITORY_ID");
         public string RepositoryName => EnvironmentInfo.GetVariable<string>("BUILD_REPOSITORY_NAME");
 
         public AzurePipelinesRepositoryType RepositoryProvider =>
             EnvironmentInfo.GetVariable<AzurePipelinesRepositoryType>("BUILD_REPOSITORY_PROVIDER");
 
         [CanBeNull] public string RepositoryTfvcWorkspace => EnvironmentInfo.GetVariable<string>("BUILD_REPOSITORY_TFVC_WORKSPACE");
-        public string RepositoryUri => EnvironmentInfo.GetVariable<string>("BUILD_REPOSITORY_URI");
+        public Uri RepositoryUri => EnvironmentInfo.GetVariable<Uri>("BUILD_REPOSITORY_URI");
         public string RequestedFor => EnvironmentInfo.GetVariable<string>("BUILD_REQUESTEDFOR");
         public string RequestedForEmail => EnvironmentInfo.GetVariable<string>("BUILD_REQUESTEDFOREMAIL");
         public Guid RequestedForId => EnvironmentInfo.GetVariable<Guid>("BUILD_REQUESTEDFORID");
         public string SourceBranch => EnvironmentInfo.GetVariable<string>("BUILD_SOURCEBRANCH");
         public string SourceBranchName => EnvironmentInfo.GetVariable<string>("BUILD_SOURCEBRANCHNAME");
-        public string SourceDirectory => EnvironmentInfo.GetVariable<string>("BUILD_SOURCESDIRECTORY");
+        public AbsolutePath SourceDirectory => EnvironmentInfo.GetVariable<AbsolutePath>("BUILD_SOURCESDIRECTORY");
         public string SourceVersion => EnvironmentInfo.GetVariable<string>("BUILD_SOURCEVERSION");
-        public string StagingDirectory => EnvironmentInfo.GetVariable<string>("BUILD_STAGINGDIRECTORY");
+        public string SourceVersionMessage => EnvironmentInfo.GetVariable<string>("BUILD_SOURCEVERSIONMESSAGE");
+        public AbsolutePath StagingDirectory => EnvironmentInfo.GetVariable<AbsolutePath>("BUILD_STAGINGDIRECTORY");
         public bool RepositoryGitSubmoduleCheckout => EnvironmentInfo.GetVariable<bool>("BUILD_REPOSITORY_GIT_SUBMODULECHECKOUT");
         [CanBeNull] public string SourceTfvcShelveset => EnvironmentInfo.GetVariable<string>("BUILD_SOURCETFVCSHELVESET");
-        public string TestResultsDirectory => EnvironmentInfo.GetVariable<string>("COMMON_TESTRESULTSDIRECTORY");
+        [CanBeNull] public int? TriggeredByBuildId => EnvironmentInfo.GetVariable<int?>("BUILD_TRIGGEREDBY_BUILDID");
+        [CanBeNull] public int? TriggeredByDefinitionId => EnvironmentInfo.GetVariable<int?>("BUILD_TRIGGEREDBY_DEFINITIONID");
+        [CanBeNull] public string TriggeredByDefinitionName => EnvironmentInfo.GetVariable<string>("BUILD_TRIGGEREDBY_DEFINITIONNAME");
+        [CanBeNull] public string TriggeredByBuildNumber => EnvironmentInfo.GetVariable<string>("BUILD_TRIGGEREDBY_BUILDNUMBER");
+        [CanBeNull] public Guid? TriggeredByProjectID => EnvironmentInfo.GetVariable<Guid?>("BUILD_TRIGGEREDBY_PROJECTID");
+        public AbsolutePath TestResultsDirectory => EnvironmentInfo.GetVariable<AbsolutePath>("COMMON_TESTRESULTSDIRECTORY");
+        public AbsolutePath PipelineWorkspace => EnvironmentInfo.GetVariable<AbsolutePath>("PIPELINE_WORKSPACE");
+        [CanBeNull] public string EnvironmentName => EnvironmentInfo.GetVariable<string>("ENVIRONMENT_NAME");
+        [CanBeNull] public int? EnvironmentId => EnvironmentInfo.GetVariable<int?>("ENVIRONMENT_ID");
+        [CanBeNull] public string EnvironmentResourceName => EnvironmentInfo.GetVariable<string>("ENVIRONMENT_RESOURCENAME");
+        [CanBeNull] public int? EnvironmentResourceId => EnvironmentInfo.GetVariable<int?>("ENVIRONMENT_RESOURCEID");
         [CanBeNull] public string AccessToken => EnvironmentInfo.GetVariable<string>("SYSTEM_ACCESSTOKEN");
         public Guid CollectionId => EnvironmentInfo.GetVariable<Guid>("SYSTEM_COLLECTIONID");
-        public string DefaultWorkingDirectory => EnvironmentInfo.GetVariable<string>("SYSTEM_DEFAULTWORKINGDIRECTORY");
+        public Uri CollectionUri => EnvironmentInfo.GetVariable<Uri>("SYSTEM_COLLECTIONURI");
+        public AbsolutePath DefaultWorkingDirectory => EnvironmentInfo.GetVariable<AbsolutePath>("SYSTEM_DEFAULTWORKINGDIRECTORY");
         public long DefinitionId => EnvironmentInfo.GetVariable<long>("SYSTEM_DEFINITIONID");
-        [CanBeNull] public long? PullRequestId => EnvironmentInfo.GetVariable<long?>("SYSTEM_PULLREQUEST_PULLREQUESTID");
-        [CanBeNull] public string PullRequestSourceBranch => EnvironmentInfo.GetVariable<string>("SYSTEM_PULLREQUEST_SOURCEBRANCH");
-        [CanBeNull] public string PullRequestTargetBranch => EnvironmentInfo.GetVariable<string>("SYSTEM_PULLREQUEST_TARGETBRANCH");
-        public string StageName => EnvironmentInfo.GetVariable<string>("SYSTEM_STAGENAME");
+        public AzurePipelinesHostType HostType => EnvironmentInfo.GetVariable<AzurePipelinesHostType>("SYSTEM_HOSTTYPE");
+        public int JobAttempt => EnvironmentInfo.GetVariable<int>("SYSTEM_JOBATTEMPT");
+        public string JobDisplayName => EnvironmentInfo.GetVariable<string>("SYSTEM_JOBDISPLAYNAME");
+        public Guid? JobId => EnvironmentInfo.GetVariable<Guid?>("SYSTEM_JOBID");
+        public string JobName => EnvironmentInfo.GetVariable<string>("SYSTEM_JOBNAME");
+        public int PhaseAttempt => EnvironmentInfo.GetVariable<int>("SYSTEM_PHASEATTEMPT");
+        public string PhaseDisplayName => EnvironmentInfo.GetVariable<string>("SYSTEM_PHASEDISPLAYNAME");
+        public string PhaseName => EnvironmentInfo.GetVariable<string>("SYSTEM_PHASENAME");
+        public int StageAttempt => EnvironmentInfo.GetVariable<int>("SYSTEM_STAGEATTEMPT");
         public string StageDisplayName => EnvironmentInfo.GetVariable<string>("SYSTEM_STAGEDISPLAYNAME");
+        public string StageName => EnvironmentInfo.GetVariable<string>("SYSTEM_STAGENAME");
+        public bool PullRequestIsFork => EnvironmentInfo.GetVariable<bool>("SYSTEM_PULLREQUEST_ISFORK");
+        [CanBeNull] public long? PullRequestId => EnvironmentInfo.GetVariable<long?>("SYSTEM_PULLREQUEST_PULLREQUESTID");
+        [CanBeNull] public long? PullRequestNumber => EnvironmentInfo.GetVariable<long?>("SYSTEM_PULLREQUEST_PULLREQUESTNUMBER");
+        [CanBeNull] public string PullRequestSourceBranch => EnvironmentInfo.GetVariable<string>("SYSTEM_PULLREQUEST_SOURCEBRANCH");
+        [CanBeNull] public string PullRequestSourceRepositoryURI => EnvironmentInfo.GetVariable<string>("SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI");
+        [CanBeNull] public string PullRequestTargetBranch => EnvironmentInfo.GetVariable<string>("SYSTEM_PULLREQUEST_TARGETBRANCH");
         public string TeamFoundationCollectionUri => EnvironmentInfo.GetVariable<string>("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI");
         public string TeamProject => EnvironmentInfo.GetVariable<string>("SYSTEM_TEAMPROJECT");
         public Guid TeamProjectId => EnvironmentInfo.GetVariable<Guid>("SYSTEM_TEAMPROJECTID");
@@ -121,8 +150,8 @@ namespace Nuke.Common.CI.AzurePipelines
         public void LogError(
             string message,
             string sourcePath = null,
-            string lineNumber = null,
-            string columnNumber = null,
+            int? lineNumber = null,
+            int? columnNumber = null,
             string code = null)
         {
             LogIssue(AzurePipelinesIssueType.Error, message, sourcePath, lineNumber, columnNumber, code);
@@ -131,8 +160,8 @@ namespace Nuke.Common.CI.AzurePipelines
         public void LogWarning(
             string message,
             string sourcePath = null,
-            string lineNumber = null,
-            string columnNumber = null,
+            int? lineNumber = null,
+            int? columnNumber = null,
             string code = null)
         {
             LogIssue(AzurePipelinesIssueType.Warning, message, sourcePath, lineNumber, columnNumber, code);
@@ -179,8 +208,8 @@ namespace Nuke.Common.CI.AzurePipelines
             AzurePipelinesIssueType type,
             string message,
             string sourcePath = null,
-            string lineNumber = null,
-            string columnNumber = null,
+            int? lineNumber = null,
+            int? columnNumber = null,
             string code = null)
         {
             WriteCommand(
@@ -218,6 +247,94 @@ namespace Nuke.Common.CI.AzurePipelines
 
             Write(command, escapedTokens, message);
         }
+        
+        
+        public void SetProgress(int percentage, string currentOperation = null)
+        {
+            WriteCommand(
+                "task.setprogress",
+                currentOperation,
+                o => o.AddPair("value", percentage)
+            );
+        }
+
+        public void SetVariable(
+            string variable,
+            string value,
+            bool? isSecret = null,
+            bool? isOutput = null,
+            bool? isReadOnly = null
+        )
+        {
+            WriteCommand(
+                "task.setvariable",
+                value,
+                o => o.AddPair(nameof(variable), variable)
+                    .AddPairWhenValueNotNull(nameof(isSecret).ToLower(), isSecret?.ToString().ToLower())
+                    .AddPairWhenValueNotNull(nameof(isOutput).ToLower(), isOutput?.ToString().ToLower())
+                    .AddPairWhenValueNotNull(nameof(isReadOnly).ToLower(), isReadOnly?.ToString().ToLower())
+            );
+        }
+
+        public void UploadSummary(AbsolutePath path)
+        {
+            WriteCommand("task.uploadsummary", path);
+        }
+
+        public void UploadFile(AbsolutePath path)
+        {
+            WriteCommand("task.uploadfile", path);
+        }
+
+        public void AddPath(AbsolutePath path)
+        {
+            WriteCommand("task.prependpath", path);
+        }
+
+        public void AssociateArtifact(
+            string artifactName,
+            AzurePipelinesArtifactType artifactType,
+            string path
+        )
+        {
+            WriteCommand(
+                "artifact.associate",
+                path,
+                x => x
+                    .AddPair(nameof(artifactName).ToLower(), artifactName)
+                    .AddPair("type", artifactType.ToString().ToLower())
+            );
+        }
+
+        public void UploadArtifact(
+            AbsolutePath packageDirectory,
+            string containerFolder = null,
+            string artifactName = null
+        )
+        {
+            WriteCommand(
+                "artifact.upload",
+                packageDirectory,
+                dictionaryConfigurator: x => x
+                    .AddPairWhenValueNotNull(nameof(containerFolder).ToLower(), containerFolder ?? Path.GetDirectoryName(packageDirectory))
+                    .AddPairWhenValueNotNull(nameof(artifactName).ToLower(), artifactName)
+            );
+        }
+
+        public void UploadArtifact(
+            string glob,
+            string containerFolder = null,
+            string artifactName = null
+        )
+        {
+            WriteCommand(
+                "artifact.upload",
+                glob,
+                dictionaryConfigurator: x => x
+                    .AddPairWhenValueNotNull(nameof(containerFolder).ToLower(), containerFolder)
+                    .AddPairWhenValueNotNull(nameof(artifactName).ToLower(), artifactName)
+            );
+        }
 
         private void Write(string command, string[] escapedTokens, [CanBeNull] string message)
         {
@@ -239,5 +356,44 @@ namespace Nuke.Common.CI.AzurePipelines
                 .Replace("]", "%5D")
                 .Replace(";", "%3B");
         }
+
+        #region IBuildServer
+        HostType IBuildServer.Host => Common.HostType.AzurePipelines;
+        string IBuildServer.BuildNumber => BuildNumber;
+        AbsolutePath IBuildServer.SourceDirectory => SourceDirectory;
+        AbsolutePath IBuildServer.OutputDirectory => ArtifactStagingDirectory;
+        string IBuildServer.SourceBranch => string.IsNullOrWhiteSpace(PullRequestSourceBranch) ? SourceBranchName : PullRequestSourceBranch;
+        string IBuildServer.TargetBranch => PullRequestTargetBranch;
+
+        void IBuildServer.IssueWarning(string message, string file, int? line, int? column, string code)
+        {
+            LogIssue(AzurePipelinesIssueType.Warning, message, file, line, column, code);
+        }
+
+        void IBuildServer.IssueError(string message, string file, int? line, int? column, string code)
+        {
+            LogIssue(AzurePipelinesIssueType.Warning, message, file, line, column, code);
+        }
+
+        void IBuildServer.SetEnvironmentVariable(string name, string value)
+        {
+            SetVariable(name.Replace("_", "."), value);
+        }
+
+        void IBuildServer.SetOutputParameter(string name, string value)
+        {
+            SetVariable(name, value, isOutput: true);
+        }
+
+        void IBuildServer.PublishArtifact(AbsolutePath artifactPath)
+        {
+            UploadArtifact(artifactPath);
+        }
+
+        void IBuildServer.UpdateBuildNumber(string buildNumber)
+        {
+            UpdateBuildNumber($"{buildNumber}.build.{BuildNumber}");
+        }
+        #endregion
     }
 }

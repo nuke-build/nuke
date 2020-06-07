@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
 using Nuke.Common.Utilities;
@@ -194,5 +195,58 @@ namespace Nuke.Common.OutputSinks
 
         protected abstract void WriteWarning(string text, string details = null);
         protected abstract void WriteError(string text, string details = null);
+
+        internal abstract void IssueWarning(
+            string message,
+            string filePath = null,
+            int? line = null,
+            int? column = null,
+            string code = null);
+
+        internal abstract void IssueError(
+            string message,
+            string filePath = null,
+            int? line = null,
+            int? column = null,
+            string code = null);
+
+        internal static string GetIssueDetailString(
+            [CanBeNull] string name,
+            [CanBeNull] string filePath,
+            int? line,
+            int? column,
+            [CanBeNull] string code)
+        {
+            var sb = new StringBuilder();
+            if (!string.IsNullOrWhiteSpace(filePath))
+                sb.Append(filePath);
+            if (line.HasValue)
+            {
+                sb.Append("(");
+                sb.Append(line.Value);
+                if (column.HasValue)
+                {
+                    sb.Append(", ");
+                    sb.Append(column.Value);
+                }
+
+                sb.Append("): ");
+            }
+            else
+            {
+                sb.Append(": ");
+            }
+
+            sb.Append(name);
+
+            if (!string.IsNullOrWhiteSpace(code))
+            {
+                sb.Append(" ");
+                sb.Append(code);
+            }
+
+            sb.Append(": ");
+            return sb.ToString();
+        }
     }
 }

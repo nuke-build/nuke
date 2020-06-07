@@ -54,7 +54,17 @@ namespace Nuke.Common.Tools.DotNet
                     'o' == output[i - 1] &&
                     'r' == output[i])
                 {
-                    Logger.Error(output);
+                    var codeEnd = output.IndexOf(value: ':', i);
+                    var pathAndLine = output.Substring(startIndex: 0, codeEnd);
+                    var lineStart = output.LastIndexOf('(');
+                    var colStart = output.IndexOf(value: ',', lineStart);
+                    var colEnd = output.IndexOf(value: ')', colStart);
+                    var file = pathAndLine.Substring(startIndex: 0, lineStart);
+                    var line = pathAndLine.Substring(lineStart + 1, colStart - lineStart - 1);
+                    var col = pathAndLine.Substring(colStart + 1, colEnd - colStart - 1);
+                    var codeStart = i + 2;
+                    var code = pathAndLine.Substring(codeStart, codeEnd - codeStart);
+                    Logger.IssueError(output.Substring(codeEnd + 1), file, int.Parse(line), int.Parse(col), code);
                     return;
                 }
 
@@ -67,7 +77,17 @@ namespace Nuke.Common.Tools.DotNet
                     'n' == output[i - 1] &&
                     'g' == output[i])
                 {
-                    Logger.Warn(output);
+                    var codeEnd = output.IndexOf(value: ':', i);
+                    var pathAndLine = output.Substring(startIndex: 0, codeEnd);
+                    var lineStart = output.LastIndexOf('(');
+                    var colStart = output.IndexOf(value: ',', lineStart);
+                    var colEnd = output.IndexOf(value: ')', colStart);
+                    var file = pathAndLine.Substring(startIndex: 0, lineStart);
+                    var line = pathAndLine.Substring(lineStart + 1, colStart - lineStart - 1);
+                    var col = pathAndLine.Substring(colStart + 1, colEnd - colStart - 1);
+                    var codeStart = i + 2;
+                    var code = pathAndLine.Substring(codeStart, codeEnd - codeStart);
+                    Logger.IssueWarning(output.Substring(codeEnd + 1), file, int.Parse(line), int.Parse(col), code);
                     return;
                 }
             }

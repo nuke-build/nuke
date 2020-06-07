@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.TravisCI
@@ -16,7 +17,7 @@ namespace Nuke.Common.CI.TravisCI
     [PublicAPI]
     [CI]
     [ExcludeFromCodeCoverage]
-    public class TravisCI
+    public class TravisCI: IBuildServer
     {
         private static Lazy<TravisCI> s_instance = new Lazy<TravisCI>(() => new TravisCI());
 
@@ -51,7 +52,7 @@ namespace Nuke.Common.CI.TravisCI
         /// <summary>
         /// The absolute path to the directory where the repository being built has been copied on the worker.
         /// </summary>
-        public string BuildDir => EnvironmentInfo.GetVariable<string>("TRAVIS_BUILD_DIR");
+        public AbsolutePath BuildDir => EnvironmentInfo.GetVariable<AbsolutePath>("TRAVIS_BUILD_DIR");
 
         /// <summary>
         ///  The id of the current build that Travis CI uses internally.
@@ -159,5 +160,42 @@ namespace Nuke.Common.CI.TravisCI
         [CanBeNull] public string XCodeScheme => EnvironmentInfo.GetVariable<string>("TRAVIS_XCODE_SCHEME");
         [CanBeNull] public string XCodeProject => EnvironmentInfo.GetVariable<string>("TRAVIS_XCODE_PROJECT");
         [CanBeNull] public string XCodeWorkspace => EnvironmentInfo.GetVariable<string>("TRAVIS_XCODE_WORKSPACE");
+
+        #region IBuildServer
+        
+        HostType IBuildServer.Host => HostType.Travis;
+        string IBuildServer.BuildNumber => BuildNumber.ToString();
+        AbsolutePath IBuildServer.SourceDirectory => BuildDir;
+        AbsolutePath IBuildServer.OutputDirectory => null;
+        string IBuildServer.SourceBranch => string.IsNullOrWhiteSpace(PullRequestBranch) ? Branch : PullRequestBranch;
+        string IBuildServer.TargetBranch => string.IsNullOrWhiteSpace(PullRequestBranch) ? null : Branch;
+        void IBuildServer.IssueWarning(string message, string file, int? line, int? column, string code)
+        {
+            Logger.Warn(message);
+        }
+
+        void IBuildServer.IssueError(string message, string file, int? line, int? column, string code)
+        {
+            Logger.Error(message);
+        }
+
+        void IBuildServer.SetEnvironmentVariable(string name, string value)
+        {
+            Logger.Trace("Setting environment variables are not supported by {0}", ((IBuildServer) this ).Host.ToString());
+        }
+
+        void IBuildServer.SetOutputParameter(string name, string value)
+        {
+            Logger.Trace("Setting output parameters are not supported by {0}", ((IBuildServer) this ).Host.ToString());
+        }
+
+        void IBuildServer.PublishArtifact(AbsolutePath artifactPath)
+        {
+            Logger.Trace("publishing artifacts are not supported by {0}", ((IBuildServer) this ).Host.ToString());
+        }
+
+        void IBuildServer.UpdateBuildNumber(string buildNumber) { }
+
+        #endregion
     }
 }

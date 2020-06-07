@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.GitLab
@@ -16,7 +17,7 @@ namespace Nuke.Common.CI.GitLab
     [PublicAPI]
     [CI]
     [ExcludeFromCodeCoverage]
-    public class GitLab
+    public class GitLab: IBuildServer
     {
         private static Lazy<GitLab> s_instance = new Lazy<GitLab>(() => new GitLab());
 
@@ -146,7 +147,7 @@ namespace Nuke.Common.CI.GitLab
         /// <summary>
         /// The full path where the repository is cloned and where the job is run.
         /// </summary>
-        public string ProjectDir => EnvironmentInfo.GetVariable<string>("CI_PROJECT_DIR");
+        public AbsolutePath ProjectDir => EnvironmentInfo.GetVariable<AbsolutePath>("CI_PROJECT_DIR");
 
         /// <summary>
         /// The unique id of the current project that GitLab CI uses internally.
@@ -267,5 +268,40 @@ namespace Nuke.Common.CI.GitLab
         /// Number of attempts to restore the cache running a job.
         /// </summary>
         public int RestoreCacheAttempts => EnvironmentInfo.GetVariable<int>("RESTORE_CACHE_ATTEMPTS");
+
+        #region IBuildServer
+        HostType IBuildServer.Host => HostType.GitLab;
+        string IBuildServer.BuildNumber => JobId;
+        AbsolutePath IBuildServer.SourceDirectory => ProjectDir;
+        AbsolutePath IBuildServer.OutputDirectory => null;
+        string IBuildServer.SourceBranch => CommitRefName;
+        string IBuildServer.TargetBranch => null;
+        void IBuildServer.IssueWarning(string message, string file, int? line, int? column, string code)
+        {
+            Logger.Warn(message);
+        }
+
+        void IBuildServer.IssueError(string message, string file, int? line, int? column, string code)
+        {
+            Logger.Error(message);
+        }
+
+        void IBuildServer.SetEnvironmentVariable(string name, string value)
+        {
+            Logger.Trace("Setting environment variables are not supported by {0}", ((IBuildServer) this ).Host.ToString());
+        }
+
+        void IBuildServer.SetOutputParameter(string name, string value)
+        {
+            Logger.Trace("Setting output parameters are not supported by {0}", ((IBuildServer) this ).Host.ToString());
+        }
+
+        void IBuildServer.PublishArtifact(AbsolutePath artifactPath)
+        {
+            Logger.Trace("publishing artifacts are not supported by {0}", ((IBuildServer) this ).Host.ToString());
+        }
+
+        void IBuildServer.UpdateBuildNumber(string buildNumber) { }
+        #endregion
     }
 }

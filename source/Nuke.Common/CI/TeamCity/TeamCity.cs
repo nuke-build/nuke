@@ -26,13 +26,19 @@ namespace Nuke.Common.CI.TeamCity
     [PublicAPI]
     [CI]
     [ExcludeFromCodeCoverage]
-    public class TeamCity
+    public class TeamCity: IBuildServer
     {
         private static Lazy<TeamCity> s_instance = new Lazy<TeamCity>(() => new TeamCity());
 
         public static TeamCity Instance => NukeBuild.Host == HostType.TeamCity ? s_instance.Value : null;
 
         internal static bool IsRunningTeamCity => !Environment.GetEnvironmentVariable("TEAMCITY_VERSION").IsNullOrEmpty();
+        
+        private TeamCity()
+        {
+            Console.WriteLine($"##teamcity[inspectionType id='nuke-warning' name='Warning' description='A warning reported by the nuke build' category='Issues']");
+            Console.WriteLine($"##teamcity[inspectionType id='nuke-error' name='Error' description='An error reported by the nuke build' category='Issues']");
+        }
 
         public static T CreateRestClient<T>(string serverUrl, string username, string password)
         {
@@ -116,6 +122,10 @@ namespace Nuke.Common.CI.TeamCity
         public ITeamCityRestClient RestClient => _restClient.Value;
 
         public string BuildConfiguration => SystemProperties["teamcity.buildConfName"];
+        public AbsolutePath WorkingDirectory => (AbsolutePath)SystemProperties["teamcity.agent.work.dir"];
+        public AbsolutePath HomeDirectory => (AbsolutePath)SystemProperties["teamcity.agent.home.dir"];
+        public AbsolutePath ToolsDirectory => (AbsolutePath)SystemProperties["teamcity.agent.tools.dir"];
+        public string AgentName => SystemProperties["teamcity.agent.name"];
         public string BuildTypeId => SystemProperties["teamcity.buildType.id"];
         [NoConvert] public string BuildNumber => SystemProperties["build.number"];
         public string BuildVcsNumber => SystemProperties["build.vcs.number"];
@@ -228,6 +238,11 @@ namespace Nuke.Common.CI.TeamCity
             Write("publishArtifacts", path);
         }
 
+        public void PublishArtifacts(AbsolutePath path)
+        {
+            Write("publishArtifacts", path);
+        }
+
         public void OpenBlock(string name, string description = null)
         {
             Write("blockOpened",
@@ -284,6 +299,50 @@ namespace Nuke.Common.CI.TeamCity
                     .AddPairWhenValueNotNull("errorDetails", errorDetails));
         }
 
+        public void IssueWarning(string text, string file = null, int? line = null)
+        {
+            IssueInspection(TeamCityInspectionType.Warning, text, file, line);
+            WriteWarning(text);
+        }
+
+        public void IssueError(string text, string file = null, int? line = null, string errorDetails = null)
+        {
+            IssueInspection(TeamCityInspectionType.Error, text, file, line);
+            WriteError(text, errorDetails);
+        }
+
+        public void IssueInspection(TeamCityInspectionType inspectionType, string text, string file = null, int? line = null)
+        {
+            Write("inspection",
+                x => x
+                    .AddPair("typeId", GetInspectionTypeText(inspectionType))
+                    .AddPairWhenValueNotNull("message", text)
+                    .AddPairWhenValueNotNull("file", file)
+                    .AddPairWhenValueNotNull("line", line)
+                    .AddPairWhenValueNotNull("SEVERITY", GetInspectionSeverity(inspectionType))
+                );
+        }
+
+        private string GetInspectionTypeText( TeamCityInspectionType inspectionType)
+        {
+            return inspectionType switch
+            {
+                TeamCityInspectionType.Error => "nuke-error",
+                TeamCityInspectionType.Warning => "nuke-warning",
+                _ => throw new NotSupportedException("Unknown team city inspection type")
+            };
+        }
+
+        private string GetInspectionSeverity( TeamCityInspectionType inspectionType)
+        {
+            return inspectionType switch
+            {
+                TeamCityInspectionType.Error => "ERROR",
+                TeamCityInspectionType.Warning => "WARNING",
+                _ => throw new NotSupportedException("Unknown team city inspection type")
+            };
+        }
+
         public void Write(string command, Func<IDictionary<string, object>, IDictionary<string, object>> dictionaryConfigurator)
         {
             Write(new[] { command }.Concat(dictionaryConfigurator(new Dictionary<string, object>())
@@ -322,5 +381,43 @@ namespace Nuke.Common.CI.TeamCity
                 }),
                 sb => sb.ToString());
         }
+
+        #region IBuildServer
+        HostType IBuildServer.Host => HostType.TeamCity;
+        string IBuildServer.BuildNumber => BuildNumber;
+        AbsolutePath IBuildServer.SourceDirectory => WorkingDirectory;
+        AbsolutePath IBuildServer.OutputDirectory => null;
+        string IBuildServer.SourceBranch => BranchName;
+        string IBuildServer.TargetBranch => null;
+        void IBuildServer.IssueWarning(string message, string file, int? line, int? column, string code)
+        {
+            IssueInspection(TeamCityInspectionType.Warning, message, file, line);
+        }
+
+        void IBuildServer.IssueError(string message, string file, int? line, int? column, string code)
+        {
+            IssueInspection(TeamCityInspectionType.Error, message, file, line);
+        }
+
+        void IBuildServer.SetEnvironmentVariable(string name, string value)
+        {
+            SetEnvironmentVariable(name, value);
+        }
+
+        void IBuildServer.SetOutputParameter(string name, string value)
+        {
+            SetConfigurationParameter(name, value);
+        }
+
+        void IBuildServer.PublishArtifact(AbsolutePath artifactPath)
+        {
+            PublishArtifacts(artifactPath);
+        }
+
+        void IBuildServer.UpdateBuildNumber(string buildNumber)
+        {
+            SetBuildNumber($"{buildNumber}.build.{BuildNumber}");
+        }
+        #endregion
     }
 }

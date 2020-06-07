@@ -51,5 +51,15 @@ namespace Nuke.Common.CI.AzurePipelines
             if (details != null)
                 base.WriteError(details);
         }
+
+        internal override void IssueWarning(string message, string filePath = null, int? line = null, int? column = null, string code = null)
+        {
+            _azurePipelines.LogWarning(message, filePath, line, column, code);
+        }
+
+        internal override void IssueError(string message, string filePath = null, int? line = null, int? column = null, string code = null)
+        {
+            _azurePipelines.LogError(message, filePath, line, column, code);
+        }
     }
 }

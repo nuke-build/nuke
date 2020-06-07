@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
+using Nuke.Common.CI;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities.Collections;
 
@@ -297,6 +298,30 @@ namespace Nuke.Common
 
         #endregion
 
+        #region Issue
+
+        public static void IssueWarning(
+            string message,
+            string filePath = null,
+            int? line = null,
+            int? column = null,
+            string code = null)
+        {
+            OutputSink.IssueWarning(message, filePath, line, column, code);
+        }
+
+        public static void IssueError(
+            string message,
+            string filePath = null,
+            int? line = null,
+            int? column = null,
+            string code = null)
+        {
+            OutputSink.IssueError(message, filePath, line, column, code);
+        }
+
+        #endregion
+        
         private static void HandleException(Exception exception, Action<string, string> exceptionOutput, string prefix = null)
         {
             switch (exception)

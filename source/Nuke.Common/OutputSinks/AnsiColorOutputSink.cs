@@ -3,9 +3,13 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text;
 using JetBrains.Annotations;
+using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.OutputSinks
 {
@@ -88,6 +92,16 @@ namespace Nuke.Common.OutputSinks
         internal override void WriteSuccess(string text)
         {
             Console.WriteLine(FormatSuccess(text));
+        }
+
+        internal override void IssueWarning(string message, string filePath = null, int? line = null, int? column = null, string code = null)
+        {
+            WriteWarning(GetIssueDetailString("warning", filePath, line, column, code) + message);
+        }
+
+        internal override void IssueError(string message, string filePath = null, int? line = null, int? column = null, string code = null)
+        {
+            WriteError(GetIssueDetailString("error", filePath, line, column, code) + message);
         }
     }
 }

@@ -67,5 +67,15 @@ namespace Nuke.Common.CI.TeamCity
             if (details != null)
                 _teamCity.WriteError(details);
         }
+
+        internal override void IssueWarning(string message, string filePath = null, int? line = null, int? column = null, string code = null)
+        {
+            _teamCity.IssueWarning(message, filePath, line);
+        }
+
+        internal override void IssueError(string message, string filePath = null, int? line = null, int? column = null, string code = null)
+        {
+            _teamCity.IssueError(message, filePath, line);
+        }
     }
 }

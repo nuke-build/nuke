@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
+using Nuke.Common.CI;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.TeamCity;
@@ -45,9 +46,7 @@ namespace Nuke.Common.Tools.GitVersion
 
             if (UpdateBuildNumber)
             {
-                AzurePipelines.Instance?.UpdateBuildNumber(gitVersion.FullSemVer);
-                TeamCity.Instance?.SetBuildNumber(gitVersion.FullSemVer);
-                AppVeyor.Instance?.UpdateBuildNumber($"{gitVersion.FullSemVer}.build.{AppVeyor.Instance.BuildNumber}");
+                BuildServer.Instance.UpdateBuildNumber(gitVersion.FullSemVer);
             }
 
             return gitVersion;

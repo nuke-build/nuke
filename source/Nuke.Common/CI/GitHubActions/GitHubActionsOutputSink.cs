@@ -47,5 +47,15 @@ namespace Nuke.Common.CI.GitHubActions
             if (details != null)
                 base.WriteError(details);
         }
+
+        internal override void IssueWarning(string message, string filePath = null, int? line = null, int? column = null, string code = null)
+        {
+            _githubActions.LogWarning(message, filePath, line, column);
+        }
+
+        internal override void IssueError(string message, string filePath = null, int? line = null, int? column = null, string code = null)
+        {
+            _githubActions.LogError(message, filePath, line, column);
+        }
     }
 }
