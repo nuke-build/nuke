@@ -110,5 +110,10 @@ namespace Nuke.Common
         {
             return (T) s_parameterService.GetEnvironmentVariable(parameterName, typeof(T), separator);
         }
+
+        public static bool HasArgument(MemberInfo member)
+        {
+            return s_parameterService.HasCommandLineArgument(ParameterService.GetParameterMemberName(member));
+        }
     }
 }

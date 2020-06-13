@@ -19,9 +19,11 @@ Host:
 - TeamCity
 - Travis
 IgnoreFailedSources: 
+LoadProfile: 
 NoLogo: 
 Plan: 
 Root: 
+SaveProfile: 
 Skip:
 - Analysis
 - Announce

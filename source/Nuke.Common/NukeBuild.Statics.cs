@@ -16,6 +16,7 @@ using Nuke.Common.CI.GitLab;
 using Nuke.Common.CI.Jenkins;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.CI.TravisCI;
+using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -40,6 +41,9 @@ namespace Nuke.Common
             Plan = EnvironmentInfo.GetParameter(() => Plan);
             Help = EnvironmentInfo.GetParameter(() => Help);
             NoLogo = EnvironmentInfo.GetParameter(() => NoLogo);
+
+            LoadedProfiles = HandleProfileManagementAttribute.GetLoadProfiles();
+            SaveProfile = HandleProfileManagementAttribute.GetSaveProfile();
         }
 
         /// <summary>
@@ -99,7 +103,13 @@ namespace Nuke.Common
         /// Gets a value whether to display the NUKE logo.
         /// </summary>
         [Parameter("Disables displaying the NUKE logo.")]
-        public static bool NoLogo { get; }
+        public static bool NoLogo { get; set; }
+
+        [Parameter("Defines the profiles to load.", Name = "LoadProfile")]
+        public static string[] LoadedProfiles { get; }
+
+        [Parameter("Defines the profile to save to.")]
+        public static string SaveProfile { get; }
 
         public static bool IsLocalBuild => Host == HostType.Console;
         public static bool IsServerBuild => Host != HostType.Console;

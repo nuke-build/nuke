@@ -216,7 +216,7 @@ namespace Nuke.Common.Execution
             }
         }
 
-        private bool HasCommandLineArgument(string argumentName)
+        public bool HasCommandLineArgument(string argumentName)
         {
             return GetCommandLineArgumentIndex(argumentName) != -1;
         }

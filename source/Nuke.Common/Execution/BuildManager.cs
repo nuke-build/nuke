@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Nuke.Common.CI;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -40,6 +41,8 @@ namespace Nuke.Common.Execution
                     .GetCustomAttributes()
                     .OfType<TExtension>()
                     .OrderBy(x => x.GetType() == typeof(HandleHelpRequestsAttribute))
+                    .ThenBy(x => x.GetType() == typeof(HandleProfileManagementAttribute))
+                    .ThenBy(x => x.GetType() == typeof(HandleConfigurationGenerationAttribute))
                     .ForEach(action);
 
             try

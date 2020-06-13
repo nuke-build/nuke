@@ -51,6 +51,7 @@ namespace Nuke.Common
     [PublicAPI]
     [HandleHelpRequests]
     [HandleShellCompletion]
+    [HandleProfileManagement]
     [HandleVisualStudioDebugging]
     [HandleConfigurationGeneration]
     public abstract partial class NukeBuild : INukeBuild
