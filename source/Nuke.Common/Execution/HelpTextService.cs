@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Nuke.Common.Utilities;
+using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.Execution
 {
@@ -40,7 +41,7 @@ namespace Nuke.Common.Execution
             var defaultTarget = build.ExecutableTargets.SingleOrDefault(x => x.IsDefault);
             var builder = new StringBuilder();
 
-            var parameters = InjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false)
+            var parameters = ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false)
                 .OrderBy(x => x.Name).ToList();
             var padRightParameter = Math.Max(parameters.Max(x => x.Name.Length), val2: 16);
 

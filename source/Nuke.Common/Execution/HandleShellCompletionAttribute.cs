@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common.IO;
+using Nuke.Common.ValueInjection;
 using static Nuke.Common.Constants;
 
 namespace Nuke.Common.Execution
@@ -22,7 +23,7 @@ namespace Nuke.Common.Execution
             completionItems[InvokedTargetsParameterName] = targets.Where(x => x.Listed).Select(x => x.Name).ToArray();
             completionItems[SkippedTargetsParameterName] = targets.Select(x => x.Name).ToArray();
 
-            var parameters = InjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false);
+            var parameters = ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false);
             foreach (var parameter in parameters)
             {
                 var parameterName = ParameterService.GetParameterMemberName(parameter);

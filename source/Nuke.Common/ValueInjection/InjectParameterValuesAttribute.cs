@@ -5,14 +5,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Nuke.Common.Execution;
 
-namespace Nuke.Common.Execution
+namespace Nuke.Common.ValueInjection
 {
     public class InjectParameterValuesAttribute : BuildExtensionAttributeBase, IOnBeforeLogo
     {
         public void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
-            InjectionUtility.InjectValues(build, x => x is ParameterAttribute);
+            ValueInjectionUtility.InjectValues(build, x => x is ParameterAttribute);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using FluentAssertions;
 using Nuke.Common.Execution;
+using Nuke.Common.ValueInjection;
 using Xunit;
 
 namespace Nuke.Common.Tests.Execution
@@ -96,7 +97,7 @@ namespace Nuke.Common.Tests.Execution
 
         private interface IParameterInterface
         {
-            [Parameter] string StringParameter => InjectionUtility.GetInjectionValue(() => StringParameter);
+            [Parameter] string StringParameter => ValueInjectionUtility.GetInjectionValue(() => StringParameter);
 
             public Target HelloWorld => _ => _
                 .Requires(() => StringParameter)

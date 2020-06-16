@@ -5,8 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Nuke.Common.Execution;
 
-namespace Nuke.Common.Execution
+namespace Nuke.Common.ValueInjection
 {
     public class InjectNonParameterValuesAttribute : BuildExtensionAttributeBase, IOnAfterLogo
     {
@@ -15,7 +16,7 @@ namespace Nuke.Common.Execution
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
-            InjectionUtility.InjectValues(build, x => !(x is ParameterAttribute));
+            ValueInjectionUtility.InjectValues(build, x => !(x is ParameterAttribute));
         }
     }
 }

@@ -11,6 +11,7 @@ using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
+using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.Tools.GitVersion
 {
@@ -19,7 +20,7 @@ namespace Nuke.Common.Tools.GitVersion
     /// </summary>
     [PublicAPI]
     [UsedImplicitly(ImplicitUseKindFlags.Default)]
-    public class GitVersionAttribute : InjectionAttributeBase
+    public class GitVersionAttribute : ValueInjectionAttributeBase
     {
         public string Framework { get; set; } = "netcoreapp3.0";
         public bool DisableOnUnix { get; set; }

@@ -9,6 +9,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
+using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common
 {

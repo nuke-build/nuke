@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Nuke.Common.Utilities;
+using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.Execution
 {
@@ -27,7 +28,7 @@ namespace Nuke.Common.Execution
                     ControlFlow.Fail($"Target '{target.Name}' requires member '{requirement.GetMemberInfo().Name}' to be not null.");
             }
 
-            var requiredMembers = InjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: true)
+            var requiredMembers = ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: true)
                 .Where(x => x.HasCustomAttribute<RequiredAttribute>());
             foreach (var member in requiredMembers)
             {
@@ -43,7 +44,7 @@ namespace Nuke.Common.Execution
                 : member;
 
             var from = target != null ? $"from target '{target.Name}' " : string.Empty;
-            ControlFlow.Assert(member.HasCustomAttribute<InjectionAttributeBase>(),
+            ControlFlow.Assert(member.HasCustomAttribute<ValueInjectionAttributeBase>(),
                 $"Member '{member.Name}' is required {from}but not marked with an injection attribute.");
 
             if (NukeBuild.Host == HostType.Console)

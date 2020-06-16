@@ -12,6 +12,7 @@ using System.Text;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Nuke.Common.Execution;
+using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common
 {
@@ -35,7 +36,7 @@ namespace Nuke.Common
     ///     </code>
     /// </example>
     [PublicAPI]
-    public class ParameterAttribute : InjectionAttributeBase
+    public class ParameterAttribute : ValueInjectionAttributeBase
     {
         public ParameterAttribute(string description = null)
         {

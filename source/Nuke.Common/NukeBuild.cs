@@ -17,6 +17,7 @@ using Nuke.Common.CI.TravisCI;
 using Nuke.Common.Execution;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Tooling;
+using Nuke.Common.ValueInjection;
 using static Nuke.Common.Constants;
 
 // ReSharper disable VirtualMemberNeverOverridden.Global

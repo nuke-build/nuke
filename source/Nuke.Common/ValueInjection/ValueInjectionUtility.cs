@@ -8,21 +8,22 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using JetBrains.Annotations;
+using Nuke.Common.Execution;
 using Nuke.Common.Utilities.Collections;
 
-namespace Nuke.Common.Execution
+namespace Nuke.Common.ValueInjection
 {
-    public static class InjectionUtility
+    public static class ValueInjectionUtility
     {
         public static T GetInjectionValue<T>(Expression<Func<T>> parameterExpression)
         {
             // TODO: caching?
             var parameter = parameterExpression.GetMemberInfo();
-            var attribute = parameter.GetCustomAttribute<InjectionAttributeBase>().NotNull();
+            var attribute = parameter.GetCustomAttribute<ValueInjectionAttributeBase>().NotNull();
             return (T) attribute.GetValue(parameter, instance: null);
         }
 
-        public static void InjectValues<T>(T instance = default, Func<InjectionAttributeBase, bool> filter = null)
+        public static void InjectValues<T>(T instance = default, Func<ValueInjectionAttributeBase, bool> filter = null)
         {
             filter ??= x => true;
             InjectValuesInternal(instance, GetInjectionMembers(instance?.GetType() ?? typeof(T)).Where(x => filter(x.Attribute)));
@@ -30,7 +31,7 @@ namespace Nuke.Common.Execution
 
         private static void InjectValuesInternal<T>(
             [CanBeNull] T instance,
-            IEnumerable<(MemberInfo Member, InjectionAttributeBase Attribute)> tuples)
+            IEnumerable<(MemberInfo Member, ValueInjectionAttributeBase Attribute)> tuples)
         {
             tuples = tuples
                 .OrderBy(x => x.Member.DeclaringType.Descendants(y => y.BaseType).Count())
@@ -62,12 +63,12 @@ namespace Nuke.Common.Execution
                 .Select(x => x.Member).ToList();
         }
 
-        public static IReadOnlyCollection<(MemberInfo Member, InjectionAttributeBase Attribute)> GetInjectionMembers(Type type)
+        public static IReadOnlyCollection<(MemberInfo Member, ValueInjectionAttributeBase Attribute)> GetInjectionMembers(Type type)
         {
             return type
                 .GetMembers(ReflectionService.All)
                 .Concat(type.GetInterfaces().SelectMany(x => x.GetMembers(ReflectionService.All)))
-                .Select(x => (Member: x, Attribute: x.GetCustomAttribute<InjectionAttributeBase>()))
+                .Select(x => (Member: x, Attribute: x.GetCustomAttribute<ValueInjectionAttributeBase>()))
                 .Where(x => x.Attribute != null).ToList();
         }
     }
