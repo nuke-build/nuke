@@ -55,8 +55,6 @@ namespace Nuke.Common
         [CanBeNull]
         public string ValueProvider { get; set; }
 
-        public override bool IsFast => true;
-
         [CanBeNull]
         public override object GetValue(MemberInfo member, object instance)
         {

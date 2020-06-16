@@ -18,7 +18,5 @@ namespace Nuke.Common.Execution
         public abstract object GetValue(MemberInfo member, object instance);
 
         public virtual int Priority => 0;
-
-        public virtual bool IsFast => false;
     }
 }

@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -46,8 +46,6 @@ namespace Nuke.Common.Execution
 
             try
             {
-                InjectionUtility.InjectValues(build, x => x.IsFast);
-
                 ExecuteExtension<IOnBeforeLogo>(x => x.OnBeforeLogo(build, build.ExecutableTargets));
                 build.OnBuildCreated();
 
@@ -75,12 +73,9 @@ namespace Nuke.Common.Execution
                     EnvironmentInfo.GetParameter<string[]>(() => build.InvokedTargets));
 
                 ExecuteExtension<IOnAfterLogo>(x => x.OnAfterLogo(build, build.ExecutableTargets, build.ExecutionPlan));
-                CancellationHandler += Finish;
-
-                InjectionUtility.InjectValues(build, x => !x.IsFast);
-
                 build.OnBuildInitialized();
 
+                CancellationHandler += Finish;
                 BuildExecutor.Execute(
                     build,
                     EnvironmentInfo.GetParameter<string[]>(() => build.SkippedTargets));

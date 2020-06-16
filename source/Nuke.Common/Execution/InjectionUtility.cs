@@ -25,7 +25,7 @@ namespace Nuke.Common.Execution
         public static void InjectValues<T>(T instance = default, Func<InjectionAttributeBase, bool> filter = null)
         {
             filter ??= x => true;
-            InjectValuesInternal(instance, GetInjectionMembers(typeof(T)).Where(x => filter(x.Attribute)));
+            InjectValuesInternal(instance, GetInjectionMembers(instance?.GetType() ?? typeof(T)).Where(x => filter(x.Attribute)));
         }
 
         private static void InjectValuesInternal<T>(

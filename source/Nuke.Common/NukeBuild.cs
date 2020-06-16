@@ -50,6 +50,7 @@ namespace Nuke.Common
     /// </example>
     [PublicAPI]
     // Before logo
+    [InjectParameterValues(Priority = 100)]
     [GenerateBuildServerConfigurations(Priority = 50)]
     [HandleShellCompletion(Priority = 40)]
     [SaveBuildProfile(Priority = 30)]
@@ -58,6 +59,7 @@ namespace Nuke.Common
     [InvokeBuildServerConfigurationGeneration(Priority = 50)]
     [HandleHelpRequests(Priority = 5)]
     [HandleVisualStudioDebugging]
+    [InjectNonParameterValues(Priority = -100)]
     // After finish
     [SerializeBuildServerState]
     public abstract partial class NukeBuild : INukeBuild
