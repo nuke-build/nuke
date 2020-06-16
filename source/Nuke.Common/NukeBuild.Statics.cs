@@ -42,8 +42,8 @@ namespace Nuke.Common
             Help = EnvironmentInfo.GetParameter(() => Help);
             NoLogo = EnvironmentInfo.GetParameter(() => NoLogo);
 
-            LoadedProfiles = HandleProfileManagementAttribute.GetLoadProfiles();
-            SaveProfile = HandleProfileManagementAttribute.GetSaveProfile();
+            LoadedProfiles = BuildProfileManagementAttributeBase.GetLoadProfiles();
+            SaveProfile = BuildProfileManagementAttributeBase.GetSaveProfile();
         }
 
         /// <summary>

@@ -10,13 +10,11 @@ using System.Reflection;
 using DeviceId;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Nuke.Common.IO;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Execution
 {
-    [AttributeUsage(AttributeTargets.Class)]
-    public class HandleProfileManagementAttribute : Attribute, IOnBeforeLogo
+    public class BuildProfileManagementAttributeBase : BuildExtensionAttributeBase
     {
         private const string DefaultProfile = "default";
         private const char Separator = ':';
@@ -51,39 +49,12 @@ namespace Nuke.Common.Execution
                        .AddMotherboardSerialNumber().ToString();
         }
 
-        private static string GetProfileFile(string profile)
+        protected static string GetProfileFile(string profile)
         {
             return Path.ChangeExtension(NukeBuild.TemporaryDirectory / GetProfileName(profile), ".json");
         }
 
-        public void OnBeforeLogo(
-            NukeBuild build,
-            IReadOnlyCollection<ExecutableTarget> executableTargets)
-        {
-            if (NukeBuild.SaveProfile != null)
-                SaveProfileAndExit(build, NukeBuild.SaveProfile);
-
-            NukeBuild.LoadedProfiles
-                .ForEach(x => LoadProfile(x, build));
-        }
-
-        private void LoadProfile(string profile, NukeBuild build)
-        {
-            var profileFile = GetProfileFile(profile);
-            var profileContent = TextTasks.ReadAllText(profileFile);
-            JsonConvert.PopulateObject(profileContent, build, GetSerializerSettings(profile));
-        }
-
-        private void SaveProfileAndExit(NukeBuild build, string profile)
-        {
-            var profileFile = GetProfileFile(profile);
-            var content = JsonConvert.SerializeObject(build, Formatting.Indented, GetSerializerSettings(profile));
-            File.WriteAllText(profileFile, content);
-
-            Environment.Exit(0);
-        }
-
-        private JsonSerializerSettings GetSerializerSettings(string profile)
+        protected JsonSerializerSettings GetSerializerSettings(string profile)
         {
             return new JsonSerializerSettings
                    {

@@ -10,6 +10,7 @@ using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tools.MSBuild
 {
+    [PublicAPI]
     public class MSBuildVerbosityMappingAttribute : VerbosityMappingAttribute
     {
         public MSBuildVerbosityMappingAttribute()

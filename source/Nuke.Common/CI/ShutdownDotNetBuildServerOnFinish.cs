@@ -11,9 +11,10 @@ using Nuke.Common.Tools.DotNet;
 namespace Nuke.Common.CI
 {
     [PublicAPI]
-    [AttributeUsage(AttributeTargets.Class)]
-    public class ShutdownDotNetBuildServerOnFinish : Attribute, IOnBuildFinished
+    public class ShutdownDotNetBuildServerOnFinish : BuildExtensionAttributeBase, IOnBuildFinished
     {
+        public override float Priority => -50;
+
         public bool EnableLogging { get; set; }
 
         public void OnBuildFinished(NukeBuild build)

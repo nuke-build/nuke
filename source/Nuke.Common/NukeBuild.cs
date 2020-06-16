@@ -49,11 +49,17 @@ namespace Nuke.Common
     /// </code>
     /// </example>
     [PublicAPI]
-    [HandleHelpRequests]
-    [HandleShellCompletion]
-    [HandleProfileManagement]
+    // Before logo
+    [GenerateBuildServerConfigurations(Priority = 50)]
+    [HandleShellCompletion(Priority = 40)]
+    [SaveBuildProfile(Priority = 30)]
+    [LoadBuildProfiles(Priority = 25)]
+    // After logo
+    [InvokeBuildServerConfigurationGeneration(Priority = 50)]
+    [HandleHelpRequests(Priority = 5)]
     [HandleVisualStudioDebugging]
-    [HandleConfigurationGeneration]
+    // After finish
+    [SerializeBuildServerState]
     public abstract partial class NukeBuild : INukeBuild
     {
         /// <summary>

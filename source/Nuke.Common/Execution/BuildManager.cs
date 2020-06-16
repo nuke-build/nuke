@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -35,15 +35,14 @@ namespace Nuke.Common.Execution
             var build = Create<T>();
             build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpressions);
 
-            void ExecuteExtension<TExtension>(Action<TExtension> action)
+            void ExecuteExtension<TExtension>(Expression<Action<TExtension>> action)
                 where TExtension : IBuildExtension =>
                 build.GetType()
                     .GetCustomAttributes()
                     .OfType<TExtension>()
-                    .OrderBy(x => x.GetType() == typeof(HandleHelpRequestsAttribute))
-                    .ThenBy(x => x.GetType() == typeof(HandleProfileManagementAttribute))
-                    .ThenBy(x => x.GetType() == typeof(HandleConfigurationGenerationAttribute))
-                    .ForEach(action);
+                    .OrderByDescending(x => x.Priority)
+                    .ForEachLazy(x => Logger.Trace($"[{action.GetMemberInfo().Name}] {x.GetType().Name.TrimEnd(nameof(Attribute))} ({x.Priority})"))
+                    .ForEach(action.Compile());
 
             try
             {

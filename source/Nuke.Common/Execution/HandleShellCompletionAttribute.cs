@@ -10,8 +10,7 @@ using static Nuke.Common.Constants;
 
 namespace Nuke.Common.Execution
 {
-    [AttributeUsage(AttributeTargets.Class)]
-    internal class HandleShellCompletionAttribute : Attribute, IOnBeforeLogo
+    internal class HandleShellCompletionAttribute : BuildExtensionAttributeBase, IOnBeforeLogo
     {
         public void OnBeforeLogo(
             NukeBuild build,
