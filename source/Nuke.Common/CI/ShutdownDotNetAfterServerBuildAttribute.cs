@@ -10,8 +10,11 @@ using Nuke.Common.Tools.DotNet;
 
 namespace Nuke.Common.CI
 {
+    /// <summary>
+    ///   See <a href="https://github.com/dotnet/cli/issues/11424">dotnet/cli#11424</a>.
+    /// </summary>
     [PublicAPI]
-    public class ShutdownDotNetBuildServerOnFinish : BuildExtensionAttributeBase, IOnBuildFinished
+    public class ShutdownDotNetAfterServerBuildAttribute : BuildExtensionAttributeBase, IOnBuildFinished
     {
         public override float Priority => -50;
 
@@ -19,8 +22,8 @@ namespace Nuke.Common.CI
 
         public void OnBuildFinished(NukeBuild build)
         {
-            // Note https://github.com/dotnet/cli/issues/11424
-            DotNetTasks.DotNet("build-server shutdown", logInvocation: EnableLogging, logOutput: EnableLogging);
+            if (NukeBuild.IsServerBuild)
+                DotNetTasks.DotNet("build-server shutdown", logInvocation: EnableLogging, logOutput: EnableLogging);
         }
     }
 }
