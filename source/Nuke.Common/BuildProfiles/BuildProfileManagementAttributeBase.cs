@@ -10,9 +10,10 @@ using System.Reflection;
 using DeviceId;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Nuke.Common.Execution;
 using Nuke.Common.Utilities.Collections;
 
-namespace Nuke.Common.Execution
+namespace Nuke.Common.BuildProfiles
 {
     public class BuildProfileManagementAttributeBase : BuildExtensionAttributeBase
     {

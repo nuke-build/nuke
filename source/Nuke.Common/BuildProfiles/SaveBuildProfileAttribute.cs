@@ -8,8 +8,9 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
+using Nuke.Common.Execution;
 
-namespace Nuke.Common.Execution
+namespace Nuke.Common.BuildProfiles
 {
     [PublicAPI]
     public class SaveBuildProfileAttribute : BuildProfileManagementAttributeBase, IOnBeforeLogo

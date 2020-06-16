@@ -7,10 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
+using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities.Collections;
 
-namespace Nuke.Common.Execution
+namespace Nuke.Common.BuildProfiles
 {
     [PublicAPI]
     public class LoadBuildProfilesAttribute : BuildProfileManagementAttributeBase, IOnBeforeLogo
