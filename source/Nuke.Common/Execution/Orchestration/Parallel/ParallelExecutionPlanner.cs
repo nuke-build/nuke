@@ -61,13 +61,13 @@ namespace Nuke.Common.Execution.Orchestration.Parallel
                 // Now try to take as many single-dependency targets as possible.
                 // These will need to be executed sequentially
                 var current = target;
-                while (current.ExecutionDependencies.Count() == 1)
+                while (current.AllDependencies.Distinct().Count() == 1)
                 {
-                    var dependency = current.ExecutionDependencies.Single();
+                    var dependency = current.AllDependencies.First();
 
                     // If any target in the execution plan apart from the current also has the same dependency, 
                     // we can't include it in the sequence. It is no longer a single-dependency.
-                    if (orderedTargets.Any(x => x != current && x.ExecutionDependencies.Contains(dependency)))
+                    if (orderedTargets.Any(x => x != current && x.AllDependencies.Contains(dependency)))
                         break;
 
                     executionItem.Targets.Push(dependency);
@@ -86,7 +86,7 @@ namespace Nuke.Common.Execution.Orchestration.Parallel
 
                 // the dependencies of this item are those of the top (= first to execute) target in the execution stack.
                 // so just look for the item which contains this target.
-                item.Dependencies = executionItems.Where(x => top.ExecutionDependencies.Any(y => x.Targets.Contains(y))).ToList();
+                item.Dependencies = executionItems.Where(x => top.AllDependencies.Any(y => x.Targets.Contains(y))).ToList();
             }
 
             return new ExecutionPlan(executionItems, orderedTargets);
