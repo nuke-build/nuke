@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using Nuke.Common.Logging;
+using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using ShellProgressBar;
 
@@ -15,8 +16,6 @@ namespace Nuke.Common.Execution
 {
     public class ExecutionItem : IDisposable
     {
-        private readonly object _lockObject = new object();
-
         public List<ExecutionItem> Dependencies { get; set; }
 
         public Stack<ExecutableTarget> Targets { get; set; } = new Stack<ExecutableTarget>();
@@ -25,24 +24,13 @@ namespace Nuke.Common.Execution
 
         public ILogger Logger { get; set; }
 
-        private CountdownEvent CountdownEvent { get; set; } = new CountdownEvent(2);
+        private SemaphoreSlim WorkerSemaphore { get; } = new SemaphoreSlim(1);
 
+        public bool IsCompleted { get; private set; }
 
         public event ProgressChangedEventHandler ProgressChanged;
 
-        public bool WillExecuteWork()
-        {
-            lock (this)
-            {
-                var result = CountdownEvent.CurrentCount == CountdownEvent.InitialCount;
-                if (result)
-                    Signal();
-
-                return result;
-            }
-        }
-
-        public void StartWork()
+        public void StartWatchProgress()
         {
             Targets.ForEach(x =>
             {
@@ -58,37 +46,21 @@ namespace Nuke.Common.Execution
 
         public void WorkFinished()
         {
-            Log("Work Finished Begin");
-            lock (this)
-            {
-                Signal();
-            }
-            Log("Work Finished End");
             ProgressChanged?.Invoke(this, new ProgressChangedEventArgs(100, null));
+            IsCompleted = true;
         }
 
-        public void Join(CancellationToken cancellationToken)
+        public IDisposable EnsureSinglethreadedExecution(CancellationToken cancellationToken)
         {
-            Log("Wait Begin");
-            CountdownEvent?.Wait(cancellationToken);
-            Log("Wait End");
-        }
-
-        private void Signal()
-        {
-            if (CountdownEvent != null)
-                Log($"Signal {CountdownEvent.CurrentCount} => {CountdownEvent.CurrentCount - 1}");
-            CountdownEvent?.Signal();
+            return DelegateDisposable.CreateBracket(
+                () => WorkerSemaphore.Wait(cancellationToken),
+                () => WorkerSemaphore.Release()
+                );
         }
 
         public void Dispose()
         {
-            CountdownEvent?.Dispose();
-        }
-
-        public void Log(string text)
-        {
-            //Console.WriteLine($"[{ToString()}]: {text}");
+            WorkerSemaphore.Dispose();
         }
 
         public override string ToString()

@@ -60,7 +60,7 @@ namespace Nuke.Common.Execution
             CancellationToken? cancellationToken = null)
         {
             // Hook into status changed events
-            item.StartWork();
+            item.StartWatchProgress();
 
             var workStack = new Stack<ExecutableTarget>(item.Targets.Reverse());
 
@@ -73,7 +73,7 @@ namespace Nuke.Common.Execution
                 Execute(build, target, previouslyExecutedTargets);
             }
 
-            // Signal finisehd work
+            // Signal finished work
             item.WorkFinished();
         }
 

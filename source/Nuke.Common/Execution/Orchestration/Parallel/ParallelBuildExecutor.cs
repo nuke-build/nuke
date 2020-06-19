@@ -61,26 +61,21 @@ namespace Nuke.Common.Execution.Orchestration.Parallel
         /// </summary>
         private static async Task ExecuteParallel(NukeBuild build, ExecutionItem executionItem, CancellationTokenSource cts)
         {
-            // Only the first one to arrive will do the work, all others simply wait.
-            var executeWorkload = executionItem.WillExecuteWork();
-
-            // but first execute all dependencies
+            // first execute all dependencies
             if (executionItem.Dependencies.Any())
             {
                 await ExecuteItems(build, executionItem.Dependencies, cts);
             }
 
-            if (executeWorkload)
+            using (executionItem.EnsureSinglethreadedExecution(cts.Token))
             {
-                executionItem.Logger = LoggerProvider.GetCurrentLogger();
-                TargetExecutor.ExecuteItem(build, executionItem, new string[] { }, cts.Token);
-                LoggerProvider.DetachLogger(executionItem.Logger);
-
-                // TargetExecutor raises the signal on the countdown
+                if (!executionItem.IsCompleted)
+                {
+                    executionItem.Logger = LoggerProvider.GetCurrentLogger();
+                    TargetExecutor.ExecuteItem(build, executionItem, new string[] { }, cts.Token);
+                    LoggerProvider.DetachLogger(executionItem.Logger);
+                }
             }
-
-            // Now wait for all its iterations to arrive and/or finish work
-            executionItem.Join(cts.Token);
         }
     }
 }
