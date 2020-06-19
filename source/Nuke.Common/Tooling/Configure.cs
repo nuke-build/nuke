@@ -7,6 +7,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.Logging;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Tooling
@@ -69,6 +70,7 @@ namespace Nuke.Common.Tooling
             var singleExecution = degreeOfParallelism == 1;
 
             var invocations = new ConcurrentBag<(TSettings Settings, TResult Result, Exception Exception)>();
+            var currentLogger = LoggerProvider.GetCurrentLogger();
 
             try
             {

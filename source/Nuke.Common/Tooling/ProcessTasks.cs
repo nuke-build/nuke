@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
+using Nuke.Common.Logging;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -157,6 +158,7 @@ namespace Nuke.Common.Tooling
             Func<string, string> outputFilter)
         {
             var output = new BlockingCollection<Output>();
+            var currentLogger = LoggerProvider.GetCurrentLogger();
 
             process.OutputDataReceived += (s, e) =>
             {
@@ -166,7 +168,10 @@ namespace Nuke.Common.Tooling
                 output.Add(new Output { Text = e.Data, Type = OutputType.Std });
 
                 if (logOutput)
+                {
+                    LoggerProvider.AttachLoggerToCurrentThread(currentLogger);
                     logger(OutputType.Std, outputFilter(e.Data));
+                }
             };
             process.ErrorDataReceived += (s, e) =>
             {
@@ -176,7 +181,10 @@ namespace Nuke.Common.Tooling
                 output.Add(new Output { Text = e.Data, Type = OutputType.Err });
 
                 if (logOutput)
+                {
+                    LoggerProvider.AttachLoggerToCurrentThread(currentLogger);
                     logger(OutputType.Err, outputFilter(e.Data));
+                }
             };
 
             process.BeginOutputReadLine();

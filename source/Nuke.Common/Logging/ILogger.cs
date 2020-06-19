@@ -2,7 +2,7 @@
 
 namespace Nuke.Common.Logging
 {
-    internal interface ILogger
+    public interface ILogger
     {
         void Error(string text = null);
         void Error(Exception exception);
