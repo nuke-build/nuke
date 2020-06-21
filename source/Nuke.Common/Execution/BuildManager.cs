@@ -96,6 +96,8 @@ namespace Nuke.Common.Execution
                 // (which might change depending on which progress reporter is used)
                 LoggerProvider.RemoveCurrentLogger();
 
+                BuildTimeEstimator.ParseRecordFile();
+
                 using (var progressReporter = ProgressReporterFactory.Create(parallelExecution))
                 {
                     progressReporter.WatchAndReport(build);
@@ -125,6 +127,12 @@ namespace Nuke.Common.Execution
                 build.ExecutionPlan.AllExecutionTargets
                     .Where(x => x.Status == ExecutionStatus.Executing)
                     .ForEach(x => x.Status = ExecutionStatus.Aborted);
+
+                build.ExecutionPlan.AllExecutionTargets
+                    .Where(x => x.Status == ExecutionStatus.Executed)
+                    .ForEach(x => BuildTimeEstimator.AddTimeSample(x.Name, x.Duration));
+
+                BuildTimeEstimator.WriteRecordFile();
 
                 Logger.OutputSink.WriteSummary(build, stopwatch.Elapsed);
 

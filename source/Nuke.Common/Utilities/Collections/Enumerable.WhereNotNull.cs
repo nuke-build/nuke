@@ -15,5 +15,11 @@ namespace Nuke.Common.Utilities.Collections
         {
             return enumerable.Where(x => x != null);
         }
+
+        public static IEnumerable<T> WhereNotNull<T>(this IEnumerable<T?> enumerable)
+            where T : struct
+        {
+            return enumerable.Where(x => x.HasValue).Select(x => x.Value);
+        }
     }
 }

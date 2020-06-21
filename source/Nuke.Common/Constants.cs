@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -57,6 +57,11 @@ namespace Nuke.Common
         internal static AbsolutePath GetMissingPackageFile(AbsolutePath rootDirectory)
         {
             return GetTemporaryDirectory(rootDirectory) / "missing-package.log";
+        }
+
+        internal static AbsolutePath GetBuildTimeRecordFile(AbsolutePath rootDirectory)
+        {
+            return GetTemporaryDirectory(rootDirectory) / "buildtime-record.log";
         }
     }
 }
