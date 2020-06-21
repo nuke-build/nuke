@@ -28,6 +28,8 @@ namespace Nuke.Common.Execution
 
         public bool IsCompleted { get; private set; }
 
+        public int Progress { get; private set; }
+
         public event ProgressChangedEventHandler ProgressChanged;
 
         public void StartWatchProgress()
@@ -40,8 +42,8 @@ namespace Nuke.Common.Execution
 
         private void UpdateProgress(ExecutableTarget target)
         {
-            var progress = Targets.Count(x => x.Status.IsCompleted()) / (double)Targets.Count * 100;
-            ProgressChanged?.Invoke(this, new ProgressChangedEventArgs((int)progress, target));
+            Progress = (int)(Targets.Count(x => x.Status.IsCompleted()) / (double)Targets.Count * 100);
+            ProgressChanged?.Invoke(this, new ProgressChangedEventArgs(Progress, target));
         }
 
         public void WorkFinished()

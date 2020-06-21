@@ -25,5 +25,11 @@ namespace Nuke.Common.Execution
             return status != ExecutionStatus.NotRun
                 && status != ExecutionStatus.Executing;
         }
+
+        public static bool IsSuccessful(this ExecutionStatus status)
+        {
+            return status == ExecutionStatus.Executed
+                || status == ExecutionStatus.Skipped;
+        }
     }
 }
