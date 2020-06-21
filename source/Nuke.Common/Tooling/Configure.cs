@@ -79,8 +79,6 @@ namespace Nuke.Common.Tooling
                     .WithDegreeOfParallelism(degreeOfParallelism)
                     .ForAll(x =>
                     {
-                        LoggerProvider.AttachLoggerToCurrentThread(currentLogger);
-
                         try
                         {
                             invocations.Add((x, executor(x.SetLogOutput(singleExecution)), default));

@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -59,7 +59,6 @@ namespace Nuke.Common.Execution
 
                 Logger.OutputSink = build.OutputSink;
                 Logger.LogLevel = NukeBuild.LogLevel;
-                LoggerProvider.CreateLogger();
 
                 if (NukeBuild.BuildProjectDirectory != null)
                     ToolPathResolver.ExecutingAssemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -93,6 +92,8 @@ namespace Nuke.Common.Execution
 
                 build.OnBuildInitialized();
 
+                // Remove main thread logger so that they are recreated and use current AutoFlush setting
+                // (which might change depending on which progress reporter is used)
                 LoggerProvider.RemoveCurrentLogger();
 
                 using (var progressReporter = ProgressReporterFactory.Create(parallelExecution))

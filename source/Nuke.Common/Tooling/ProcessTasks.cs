@@ -169,7 +169,6 @@ namespace Nuke.Common.Tooling
 
                 if (logOutput)
                 {
-                    LoggerProvider.AttachLoggerToCurrentThread(currentLogger);
                     logger(OutputType.Std, outputFilter(e.Data));
                 }
             };
@@ -182,7 +181,6 @@ namespace Nuke.Common.Tooling
 
                 if (logOutput)
                 {
-                    LoggerProvider.AttachLoggerToCurrentThread(currentLogger);
                     logger(OutputType.Err, outputFilter(e.Data));
                 }
             };
