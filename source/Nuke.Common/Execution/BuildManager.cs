@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -9,9 +9,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
-using Nuke.Common.Execution.Orchestration;
-using Nuke.Common.Execution.Orchestration.Parallel;
-using Nuke.Common.Execution.Orchestration.Sequential;
+using Nuke.Common.Execution.Strategies;
+using Nuke.Common.Execution.Strategies.Parallel;
+using Nuke.Common.Execution.Strategies.Sequential;
 using Nuke.Common.Execution.Progress;
 using Nuke.Common.Logging;
 using Nuke.Common.Tooling;
@@ -76,11 +76,11 @@ namespace Nuke.Common.Execution
                 Logger.Info($"NUKE Execution Engine {typeof(BuildManager).Assembly.GetInformationalText()}");
                 Logger.Normal();
 
-                var buildOrchestrator = parallelExecution
-                    ? (IBuildOrchestrator)new ParallelBuildOrchestrator()
-                    : new SequentialBuildOrchestrator();
+                var buildStrategy = parallelExecution
+                    ? (IBuildStrategy)new ParallelBuildStrategy()
+                    : new SequentialBuildStrategy();
 
-                buildOrchestrator.PlanBuild(build);
+                buildStrategy.PlanBuild(build);
 
                 RunConditionEvaluator.MarkSkippedTargets(build, EnvironmentInfo.GetParameter<string[]>(() => build.InvokedTargets));
                 RequirementService.ValidateRequirements(build, build.ExecutingTargets.ToList());
@@ -100,7 +100,7 @@ namespace Nuke.Common.Execution
                 {
                     progressReporter.WatchAndReport(build);
                     stopwatch.Start();
-                    await buildOrchestrator.RunBuild(build);
+                    await buildStrategy.RunBuild(build);
                 }
 
                 return build.IsSuccessful ? 0 : ErrorExitCode;

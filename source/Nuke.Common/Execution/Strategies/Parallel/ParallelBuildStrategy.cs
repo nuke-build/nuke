@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nuke.Common.Execution.Orchestration.Parallel
+namespace Nuke.Common.Execution.Strategies.Parallel
 {
-    public class ParallelBuildOrchestrator : IBuildOrchestrator
+    public class ParallelBuildStrategy : IBuildStrategy
     {
         public void PlanBuild(NukeBuild build)
         {

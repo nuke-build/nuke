@@ -13,7 +13,7 @@ using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using ShellProgressBar;
 
-namespace Nuke.Common.Execution.Orchestration.Sequential
+namespace Nuke.Common.Execution.Strategies.Sequential
 {
     /// <summary>
     /// Given the invoked target names, creates an execution plan under consideration of execution, ordering and trigger dependencies.

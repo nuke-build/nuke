@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nuke.Common.Execution.Orchestration
+namespace Nuke.Common.Execution.Strategies
 {
-    public interface IBuildOrchestrator
+    public interface IBuildStrategy
     {
         void PlanBuild(NukeBuild build);
 

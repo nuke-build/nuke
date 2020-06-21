@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
-using Nuke.Common.Execution.Orchestration.Sequential;
+using Nuke.Common.Execution.Strategies.Sequential;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using static Nuke.Common.CI.HandleConfigurationGenerationAttribute;

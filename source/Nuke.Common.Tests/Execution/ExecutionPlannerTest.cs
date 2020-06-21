@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using Nuke.Common.Execution;
-using Nuke.Common.Execution.Orchestration.Sequential;
+using Nuke.Common.Execution.Strategies.Sequential;
 using Xunit;
 
 namespace Nuke.Common.Tests.Execution

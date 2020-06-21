@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using FluentAssertions;
 using Nuke.Common.Execution;
-using Nuke.Common.Execution.Orchestration.Sequential;
+using Nuke.Common.Execution.Strategies.Sequential;
 using Nuke.Common.Utilities.Collections;
 using Xunit;
 

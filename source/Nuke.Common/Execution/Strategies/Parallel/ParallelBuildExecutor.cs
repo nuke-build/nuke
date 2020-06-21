@@ -1,5 +1,5 @@
 ﻿using JetBrains.Annotations;
-using Nuke.Common.Execution.Orchestration.Sequential;
+using Nuke.Common.Execution.Strategies.Sequential;
 using Nuke.Common.Logging;
 using Nuke.Common.Utilities.Collections;
 using ShellProgressBar;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Nuke.Common.Execution.Orchestration.Parallel
+namespace Nuke.Common.Execution.Strategies.Parallel
 {
     public static class ParallelBuildExecutor
     {

@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Nuke.Common.Execution.Orchestration.Sequential;
+using Nuke.Common.Execution.Strategies.Sequential;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 

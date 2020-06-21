@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nuke.Common.Execution.Orchestration.Sequential
+namespace Nuke.Common.Execution.Strategies.Sequential
 {
-    public class SequentialBuildOrchestrator : IBuildOrchestrator
+    public class SequentialBuildStrategy : IBuildStrategy
     {
         public void PlanBuild(NukeBuild build)
         {

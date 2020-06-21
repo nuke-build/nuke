@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Nuke.Common.Execution.Orchestration.Sequential
+namespace Nuke.Common.Execution.Strategies.Sequential
 {
     public static class SequentialBuildExecutor
     {

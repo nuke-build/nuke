@@ -1,12 +1,12 @@
 ﻿using JetBrains.Annotations;
-using Nuke.Common.Execution.Orchestration.Sequential;
+using Nuke.Common.Execution.Strategies.Sequential;
 using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Nuke.Common.Execution.Orchestration.Parallel
+namespace Nuke.Common.Execution.Strategies.Parallel
 {
     public static class ParallelExecutionPlanner
     {
