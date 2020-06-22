@@ -1,4 +1,5 @@
-﻿using Nuke.Common.Logging;
+﻿using Microsoft.Build.Utilities;
+using Nuke.Common.Logging;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using ShellProgressBar;
@@ -15,7 +16,7 @@ namespace Nuke.Common.Execution.Progress
     {
         public ExecutionItem Item { get; set; }
 
-        public ChildProgressBar ProgressBar { get; set; }
+        public ChildProgressBar GroupProgressBar { get; set; }
 
         private Timer Timer { get; }
 
@@ -45,9 +46,21 @@ namespace Nuke.Common.Execution.Progress
             Timer_Elapsed(null, null);
         }
 
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        public void CheckForFinishedBars()
+        {
+            TargetProgressBars
+                .Where(x => x.Key.Status.IsSuccessful())
+                .ForEach(x => x.Value.Tick(100));
+        }
+
+        public void UpdateCurrentMessage()
         {
             CurrentMessageTarget.Message = $"{CurrentTarget}: {Item.Logger.PeekLastMessage()}";
+        }
+
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            UpdateCurrentMessage();
 
             if (CurrentMessageTarget.EstimatedDuration != default)
             {
@@ -62,14 +75,14 @@ namespace Nuke.Common.Execution.Progress
         {
             Timer.Stop();
             Timer.Dispose();
-            ProgressBar?.Dispose();
+            GroupProgressBar?.Dispose();
             TargetProgressBars?.Values.ForEach(x => x?.Dispose());
         }
     }
 
     public class ProgressBarReporter : IProgressReporter
     {
-        private ProgressBar ProgressBar;
+        private ProgressBar MainProgressBar;
         private Dictionary<ExecutionItem, ProgressBarExecutionItem> ChildProgressBars = new Dictionary<ExecutionItem, ProgressBarExecutionItem>();
         private IEnumerable<ExecutionItem> AllExecutionItems;
         private ConsoleColor PreviousColor;
@@ -124,10 +137,10 @@ namespace Nuke.Common.Execution.Progress
             foreach (var progressItem in ChildProgressBars.Values.Where(x => x.CurrentMessageTarget.EndTime == null))
             {
                 var intermediateTicks = Math.Min(progressItem.CurrentMessageTarget.CurrentTick, 100) / 100d * (100d / progressItem.Item.Targets.Count);
-                progressItem.ProgressBar.Tick(progressItem.Item.Progress + (int)intermediateTicks);
+                progressItem.GroupProgressBar.Tick(progressItem.Item.Progress + (int)intermediateTicks);
             }
 
-            ProgressBar.Tick(ChildProgressBars.Values.Sum(x => x.ProgressBar.CurrentTick));
+            MainProgressBar.Tick(ChildProgressBars.Values.Sum(x => x.GroupProgressBar.CurrentTick));
         }
 
         private ChildProgressBar Spawn(ProgressBarBase parent, string targetName, ProgressBarOptions options)
@@ -143,62 +156,76 @@ namespace Nuke.Common.Execution.Progress
             return bar;
         }
 
-        // TODO: pretty "hacky" hard-to-understand code. should be rethought and refactored sometime.
-        private void ExecutionItem_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+        private ProgressBarExecutionItem SpawnGroupBar(ExecutionItem item)
         {
-            var item = sender as ExecutionItem;
-            var target = e.UserState as ExecutableTarget;
-
             if (!ChildProgressBars.TryGetValue(item, out var progressItem))
             {
-                var childBar = Spawn(ProgressBar, item.ToString(), ItemOptions);
+                var childBar = Spawn(MainProgressBar, item.ToString(), ItemOptions);
                 progressItem = new ProgressBarExecutionItem
                 {
                     Item = item,
-                    ProgressBar = childBar,
+                    GroupProgressBar = childBar,
                     CurrentMessageTarget = childBar,
                     CurrentTarget = item.ToString()
                 };
                 progressItem.Start();
                 ChildProgressBars.Add(item, progressItem);
             }
+            return progressItem;
+        }
 
-            // PER TARGET BARS
-            if (item.Targets.Count > 1 && target != null)
+        private ChildProgressBar SpawnTargetBar(ProgressBarExecutionItem progressItem, ExecutableTarget target)
+        {
+            if (!progressItem.TargetProgressBars.TryGetValue(target, out var targetProgressBar))
             {
-                progressItem.TargetProgressBars
-                    .Where(x => x.Key.Status.IsSuccessful())
-                    .ForEach(x => x.Value.Tick(100));
+                progressItem.CurrentTarget = target.Name;
+                targetProgressBar = Spawn(progressItem.GroupProgressBar, target.Name, TargetOptions);
 
-                if (!progressItem.TargetProgressBars.TryGetValue(target, out var targetProgressBar))
-                {
-                    progressItem.CurrentTarget = target.Name;
-                    targetProgressBar = Spawn(progressItem.ProgressBar, target.Name, TargetOptions);
-
-                    progressItem.CurrentMessageTarget = targetProgressBar;
-                    progressItem.TargetProgressBars.Add(target, targetProgressBar);
-                }
-
-                if (target.Status == ExecutionStatus.Failed)
-                    targetProgressBar.ForegroundColor = ConsoleColor.Red;
-                else if (target.Status.IsSuccessful())
-                    targetProgressBar.Tick(100);
+                progressItem.CurrentMessageTarget = targetProgressBar;
+                progressItem.TargetProgressBars.Add(target, targetProgressBar);
             }
+
+            return targetProgressBar;
+        }
+
+        private void FinishBar(ChildProgressBar progressBar)
+        {
+            progressBar.Dispose();
+        }
+
+        private void HandleFailedTarget(ProgressBarExecutionItem progressItem)
+        {
+            progressItem.Stop();
+
+            progressItem.CurrentMessageTarget.ForegroundColor = ConsoleColor.Red;
+            progressItem.GroupProgressBar.ForegroundColor = ConsoleColor.Red;
+            MainProgressBar.ForegroundColor = ConsoleColor.Red;
+
+            System.Threading.Tasks.Task.Run(async () =>
+            {
+                await System.Threading.Tasks.Task.Delay(1200);
+                FinishBar(progressItem.CurrentMessageTarget);
+                FinishBar(progressItem.GroupProgressBar);
+            });
+        }
+
+        private void ExecutionItem_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+        {
+            var item = sender as ExecutionItem;
+            var target = e.UserState as ExecutableTarget;
+
+            var progressItem = SpawnGroupBar(item);
+            progressItem.CheckForFinishedBars();
+
+            // Update last message for completed target before execution item moves to next target
+            if (target?.Status.IsCompleted() == true)
+                progressItem.UpdateCurrentMessage();
 
             if (target?.Status == ExecutionStatus.Failed)
-            {
-                progressItem.Stop();
-
-                progressItem.ProgressBar.ForegroundColor = ConsoleColor.Red;
-                ProgressBar.ForegroundColor = ConsoleColor.Red;
-                ProgressBar.Tick(ProgressBar.CurrentTick);
-
-                if (progressItem.TargetProgressBars.TryGetValue(target, out var targetProgressBar))
-                    progressItem.TargetProgressBars.Remove(target);
-            }
+                HandleFailedTarget(progressItem);
             else
             {
-                progressItem.ProgressBar.Tick(e.ProgressPercentage);
+                progressItem.GroupProgressBar.Tick(e.ProgressPercentage);
 
                 if (e.ProgressPercentage == 100)
                 {
@@ -206,6 +233,9 @@ namespace Nuke.Common.Execution.Progress
                     progressItem.TargetProgressBars.Values.ForEach(x => x.Tick(100));
                 }
             }
+
+            if (item.Targets.Count > 1 && target != null)
+                SpawnTargetBar(progressItem, target);
         }
 
         private void InitializeMainProgressBar(NukeBuild build)
@@ -214,7 +244,7 @@ namespace Nuke.Common.Execution.Progress
             Console.WriteLine();
 
             var totalSteps = build.ExecutionPlan.ExecutionItems.Count * 100;
-            ProgressBar = new ProgressBar(totalSteps, "Progress", MainOptions);
+            MainProgressBar = new ProgressBar(totalSteps, "Progress", MainOptions);
         }
 
         public void Dispose()
@@ -222,7 +252,7 @@ namespace Nuke.Common.Execution.Progress
             UpdateTimer.Stop();
             UpdateTimer.Dispose();
 
-            ProgressBar.Dispose();
+            MainProgressBar.Dispose();
             ChildProgressBars.Values.ForEach(x => x.Dispose());
 
             AllExecutionItems.ForEach(x => x.Logger?.Flush());

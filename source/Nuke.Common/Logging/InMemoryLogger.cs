@@ -173,7 +173,16 @@ namespace Nuke.Common.Logging
             if (Entries.Count == 0)
                 return null;
 
-            return Entries.Last().Message;
+            string current = null;
+            var count = 0;
+
+            do
+            {
+                current = Entries.SkipLast(count++).Last().Message;
+            }
+            while (count < Entries.Count && string.IsNullOrWhiteSpace(current));
+
+            return current;
         }
     }
 }
