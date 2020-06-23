@@ -2,6 +2,7 @@
 using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -17,7 +18,7 @@ namespace Nuke.Common.Logging
 
         public OutputSink Sink { get; }
 
-        private ConcurrentQueue<LogEntry> Entries { get; } = new ConcurrentQueue<LogEntry>();
+        private List<LogEntry> Entries { get; } = new List<LogEntry>();
 
         public InMemoryLogger(LogLevel logLevel, OutputSink sink, bool autoFlush)
         {
@@ -36,7 +37,7 @@ namespace Nuke.Common.Logging
                 if (AutoFlush)
                     Flush(level, text, exception);
                 else
-                    Entries.Enqueue(new LogEntry(level, text, exception));
+                    Entries.Add(new LogEntry(level, text, exception));
             }
         }
 
@@ -46,10 +47,8 @@ namespace Nuke.Common.Logging
             {
                 lock (Entries)
                 {
-                    while (Entries.TryDequeue(out var entry))
-                    {
-                        Flush(entry.Level, entry.Message, entry.Exception);
-                    }
+                    Entries.ForEach(entry => Flush(entry.Level, entry.Message, entry.Exception));
+                    Entries.Clear();
                 }
             }
         }
@@ -173,16 +172,22 @@ namespace Nuke.Common.Logging
             if (Entries.Count == 0)
                 return null;
 
-            string current = null;
-            var count = 0;
-
-            do
+            try
             {
-                current = Entries.SkipLast(count++).Last().Message;
-            }
-            while (count < Entries.Count && string.IsNullOrWhiteSpace(current));
+                string current = null;
+                var index = Entries.Count - 1;
 
-            return current;
+                while (index > 0 && string.IsNullOrWhiteSpace(current))
+                {
+                    current = Entries[index--].Message;
+                }
+
+                return current;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Nuke.Common.Execution.Progress
             var lines = File.ReadAllLines(BuildTimeRecordFile);
             foreach (var line in lines)
             {
-                var tokens = line.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                var tokens = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 if (tokens.Length < 2)
                     continue;
 
@@ -51,7 +51,7 @@ namespace Nuke.Common.Execution.Progress
             var lines = new List<string>();
             foreach (var (key, value) in TargetTimeSamples)
             {
-                lines.Add($"{key} {string.Join(' ', value)}");
+                lines.Add($"{key} {string.Join(" ", value)}");
             }
             File.WriteAllLines(BuildTimeRecordFile, lines);
         }
