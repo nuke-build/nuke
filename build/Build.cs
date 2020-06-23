@@ -84,9 +84,7 @@ partial class Build : NukeBuild
     ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
     ///   - Microsoft VSCode           https://nuke.build/vscode
 
-    //public static Task<int> Main() => ExecuteAsync<Build>(x => x.PublishIt);
-    //public static Task<int> Main() => ExecuteAsync<Build>(x => x.PublishIt, x => x.PackIt);
-    public static Task<int> Main() => ExecuteAsync<Build>(x => x.Pack, x => x.Test);
+    public static int Main() => Execute<Build>(x => x.Pack);
 
     [CI] readonly TeamCity TeamCity;
     [CI] readonly AzurePipelines AzurePipelines;
