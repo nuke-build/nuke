@@ -35,6 +35,8 @@ namespace Nuke.Common.Execution
             var build = Create<T>();
             build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpressions);
 
+            Logger.LogLevel = NukeBuild.LogLevel;
+
             void ExecuteExtension<TExtension>(Expression<Action<TExtension>> action)
                 where TExtension : IBuildExtension =>
                 build.GetType()
@@ -50,7 +52,6 @@ namespace Nuke.Common.Execution
                 build.OnBuildCreated();
 
                 Logger.OutputSink = build.OutputSink;
-                Logger.LogLevel = NukeBuild.LogLevel;
 
                 if (NukeBuild.BuildProjectDirectory != null)
                     ToolPathResolver.ExecutingAssemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
