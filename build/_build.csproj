@@ -1,10 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\source\Nuke.Common\Nuke.Common.props" />
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace></RootNamespace>
     <NoWarn>CS0649;CS0169</NoWarn>
     <NukeRootDirectory>.\..</NukeRootDirectory>
 
@@ -29,9 +30,9 @@
 <!--      <NuGetSource>https://www.myget.org/F/matkoch/api/v2/package</NuGetSource>-->
 <!--      <NukeVersion>9999.0.0</NukeVersion>-->
 <!--    </NukeExternalFiles>-->
-  
+
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0008" />
-  
+
     <PackageReference Include="tweetinviapi" Version="5.0.0-alpha-6" />
   </ItemGroup>
 
