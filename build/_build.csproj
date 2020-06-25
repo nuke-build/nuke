@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\source\Nuke.Common\Nuke.Common.props" />
 
@@ -27,7 +27,7 @@
 <!--      <TargetFramework>Bla</TargetFramework>-->
 <!--      <GitVersion />-->
 <!--      <NuGetSource>https://www.myget.org/F/matkoch/api/v2/package</NuGetSource>-->
-<!--      <NukeVersion>6.6.6</NukeVersion>-->
+<!--      <NukeVersion>9999.0.0</NukeVersion>-->
 <!--    </NukeExternalFiles>-->
   
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0008" />
