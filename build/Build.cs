@@ -61,6 +61,7 @@ using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
 [AppVeyor(
     AppVeyorImage.VisualStudio2019,
     AppVeyorImage.Ubuntu1804,
+    AutoGenerate = false,
     SkipTags = true,
     InvokedTargets = new[] { nameof(Test), nameof(Pack) })]
 [AzurePipelines(
