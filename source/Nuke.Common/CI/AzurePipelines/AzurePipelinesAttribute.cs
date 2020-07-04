@@ -18,6 +18,7 @@ using static Nuke.Common.IO.PathConstruction;
 namespace Nuke.Common.CI.AzurePipelines
 {
     [PublicAPI]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class AzurePipelinesAttribute : ChainedConfigurationAttributeBase
     {
         private readonly string _suffix;
