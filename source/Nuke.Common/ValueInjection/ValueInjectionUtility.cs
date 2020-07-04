@@ -15,12 +15,12 @@ namespace Nuke.Common.ValueInjection
 {
     public static class ValueInjectionUtility
     {
-        public static T GetInjectionValue<T>(Expression<Func<T>> parameterExpression)
+        public static T TryGetValue<T>(Expression<Func<T>> parameterExpression)
         {
             // TODO: caching?
             var parameter = parameterExpression.GetMemberInfo();
             var attribute = parameter.GetCustomAttribute<ValueInjectionAttributeBase>().NotNull();
-            return (T) attribute.GetValue(parameter, instance: null);
+            return (T) attribute.TryGetValue(parameter, instance: null);
         }
 
         public static void InjectValues<T>(T instance = default, Func<ValueInjectionAttributeBase, bool> filter = null)
@@ -45,7 +45,7 @@ namespace Nuke.Common.ValueInjection
                 if (member.ReflectedType.NotNull().IsInterface)
                     continue;
 
-                var value = attribute.GetValue(member, instance);
+                var value = attribute.TryGetValue(member, instance);
                 if (value == null)
                     continue;
 

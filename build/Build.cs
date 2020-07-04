@@ -84,9 +84,9 @@ partial class Build : NukeBuild
     [CI] readonly TeamCity TeamCity;
     [CI] readonly AzurePipelines AzurePipelines;
 
-    [GitRepository] readonly GitRepository GitRepository;
-    [GitVersion(NoFetch = true)] readonly GitVersion GitVersion;
-    [Solution] readonly Solution Solution;
+    [Required] [GitRepository] readonly GitRepository GitRepository;
+    [Required] [GitVersion(NoFetch = true)] readonly GitVersion GitVersion;
+    [Required] [Solution] readonly Solution Solution;
 
     AbsolutePath OutputDirectory => RootDirectory / "output";
     AbsolutePath SourceDirectory => RootDirectory / "source";

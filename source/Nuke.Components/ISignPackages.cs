@@ -19,10 +19,10 @@ namespace Nuke.Components
 {
     public interface ISignPackages : INukeBuild
     {
-        [Parameter] string SignPathApiToken => ValueInjectionUtility.GetInjectionValue(() => SignPathApiToken);
-        [Parameter] string SignPathOrganizationId => ValueInjectionUtility.GetInjectionValue(() => SignPathOrganizationId);
-        [Parameter] string SignPathProjectKey => ValueInjectionUtility.GetInjectionValue(() => SignPathProjectKey);
-        [Parameter] string SignPathPolicyKey => ValueInjectionUtility.GetInjectionValue(() => SignPathPolicyKey);
+        [Parameter] string SignPathApiToken => ValueInjectionUtility.TryGetValue(() => SignPathApiToken);
+        [Parameter] string SignPathOrganizationId => ValueInjectionUtility.TryGetValue(() => SignPathOrganizationId);
+        [Parameter] string SignPathProjectKey => ValueInjectionUtility.TryGetValue(() => SignPathProjectKey);
+        [Parameter] string SignPathPolicyKey => ValueInjectionUtility.TryGetValue(() => SignPathPolicyKey);
 
         AbsolutePath SignPathTemporaryDirectory => TemporaryDirectory / $"signpath";
         AbsolutePath SignPathRequestDirectory => SignPathTemporaryDirectory / "sign-request";

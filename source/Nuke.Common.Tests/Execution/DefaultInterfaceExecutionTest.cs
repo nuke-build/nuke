@@ -97,7 +97,7 @@ namespace Nuke.Common.Tests.Execution
 
         private interface IParameterInterface
         {
-            [Parameter] string StringParameter => ValueInjectionUtility.GetInjectionValue(() => StringParameter);
+            [Parameter] string StringParameter => ValueInjectionUtility.TryGetValue(() => StringParameter);
 
             public Target HelloWorld => _ => _
                 .Requires(() => StringParameter)

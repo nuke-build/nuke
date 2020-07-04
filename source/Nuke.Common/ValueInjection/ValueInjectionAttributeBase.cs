@@ -15,6 +15,12 @@ namespace Nuke.Common.ValueInjection
     public abstract class ValueInjectionAttributeBase : Attribute
     {
         [CanBeNull]
+        public object TryGetValue(MemberInfo member, object instance)
+        {
+            return ControlFlow.SuppressErrors(() => GetValue(member, instance));
+        }
+
+        [CanBeNull]
         public abstract object GetValue(MemberInfo member, object instance);
 
         public virtual int Priority => 0;
