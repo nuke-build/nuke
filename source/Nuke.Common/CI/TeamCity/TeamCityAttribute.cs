@@ -16,6 +16,7 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Nuke.Common.ValueInjection;
 using static Nuke.Common.IO.PathConstruction;
 
 namespace Nuke.Common.CI.TeamCity
@@ -259,7 +260,7 @@ namespace Nuke.Common.CI.TeamCity
 
         protected virtual IEnumerable<TeamCityParameter> GetGlobalParameters(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
-            return InjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false)
+            return ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false)
                 .Except(relevantTargets.SelectMany(x => x.Requirements
                     .Where(y => !(y is Expression<Func<bool>>))
                     .Select(y => y.GetMemberInfo())))

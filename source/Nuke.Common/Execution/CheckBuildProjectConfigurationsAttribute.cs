@@ -14,8 +14,7 @@ using Nuke.Common.Utilities.Collections;
 namespace Nuke.Common.Execution
 {
     [PublicAPI]
-    [AttributeUsage(AttributeTargets.Class)]
-    public class CheckBuildProjectConfigurationsAttribute : Attribute, IOnAfterLogo
+    public class CheckBuildProjectConfigurationsAttribute : BuildExtensionAttributeBase, IOnAfterLogo
     {
         public int TimeoutInMilliseconds { get; set; } = 500;
 

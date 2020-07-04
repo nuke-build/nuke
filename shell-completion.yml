@@ -1,12 +1,12 @@
-ApiKey: 
-AutoStash: 
+ApiKey:
+AutoStash:
 Configuration:
 - Debug
 - Release
-Continue: 
-GitHubToken: 
-GitterAuthToken: 
-Help: 
+Continue:
+GitHubToken:
+GitterAuthToken:
+Help:
 Host:
 - AppVeyor
 - AzurePipelines
@@ -18,10 +18,16 @@ Host:
 - Jenkins
 - TeamCity
 - Travis
-IgnoreFailedSources: 
-NoLogo: 
-Plan: 
-Root: 
+IgnoreFailedSources:
+LoadProfile:
+NoLogo:
+Plan:
+Root:
+SaveProfile:
+SignPathApiToken:
+SignPathOrganizationId:
+SignPathPolicyKey:
+SignPathProjectKey:
 Skip:
 - Analysis
 - Announce
@@ -44,10 +50,11 @@ Skip:
 - Release
 - ReleaseImage
 - Restore
+- SignPackages
 - Test
 - UpdateContributors
-SlackWebhook: 
-Source: 
+SlackWebhook:
+Source:
 Target:
 - Analysis
 - Announce
@@ -68,13 +75,14 @@ Target:
 - Release
 - ReleaseImage
 - Restore
+- SignPackages
 - Test
 - UpdateContributors
-TwitterAccessToken: 
-TwitterAccessTokenSecret: 
-TwitterConsumerKey: 
-TwitterConsumerSecret: 
-UseSSH: 
+TwitterAccessToken:
+TwitterAccessTokenSecret:
+TwitterConsumerKey:
+TwitterConsumerSecret:
+UseSSH:
 Verbosity:
 - Minimal
 - Normal

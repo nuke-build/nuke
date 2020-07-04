@@ -7,39 +7,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using JetBrains.Annotations;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
-using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI
 {
-    [PublicAPI]
-    [AttributeUsage(AttributeTargets.Class)]
-    public class HandleConfigurationGenerationAttribute : Attribute, IOnBeforeLogo, IOnAfterLogo, IOnBuildFinished
+    public class InvokeBuildServerConfigurationGenerationAttribute
+        : BuildServerConfigurationGenerationAttributeBase, IOnAfterLogo
     {
-        public const string ConfigurationParameterName = "generate-configuration";
-
-        public void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
-        {
-            var configurationId = EnvironmentInfo.GetParameter<string>(ConfigurationParameterName);
-            if (configurationId == null)
-                return;
-
-            ControlFlow.Assert(NukeBuild.RootDirectory != null, "NukeBuild.RootDirectory != null");
-
-            var generator = GetGenerators(build)
-                .Where(x => x.Id == configurationId)
-                .SingleOrDefaultOrError($"Found multiple {nameof(IConfigurationGenerator)} with same ID '{configurationId}'.")
-                .NotNull("generator != null");
-
-            generator.Generate(build, executableTargets);
-
-            Environment.Exit(0);
-        }
-
         public void OnAfterLogo(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
@@ -52,18 +29,6 @@ namespace Nuke.Common.CI
                 .Where(x => x.AutoGenerate)
                 .AsParallel()
                 .ForAll(InvokeGeneration);
-        }
-
-        public void OnBuildFinished(NukeBuild build)
-        {
-            GetGenerators(build)
-                .FirstOrDefault(x => x.HostType == NukeBuild.Host)
-                ?.SerializeState();
-        }
-
-        private static IEnumerable<IConfigurationGenerator> GetGenerators(NukeBuild build)
-        {
-            return build.GetType().GetCustomAttributes<ConfigurationAttributeBase>();
         }
 
         private void InvokeGeneration(IConfigurationGenerator generator)

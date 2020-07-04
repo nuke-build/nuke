@@ -28,3 +28,10 @@ artifacts:
   - path: output/test-results/*.xml
   - path: output/coverage-report.zip
   - path: output/packages/*.nupkg
+
+environment:
+  SignPathApiToken:
+    secure: A7xODEf8xLS3iaUyZScRx2NNCDWaODbWHk30FmncIH3NtXU77bR74FAsTQGwRCIe
+  SignPathOrganizationId: 09e500c8-00f7-4f3b-95f6-e33f77e67410
+  SignPathProjectKey: nuke
+  SignPathPolicyKey: test-signing

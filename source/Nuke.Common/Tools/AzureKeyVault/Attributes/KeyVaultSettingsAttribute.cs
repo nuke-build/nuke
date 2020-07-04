@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
+using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.Tools.AzureKeyVault.Attributes
 {
@@ -45,7 +46,7 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Field)]
     [MeansImplicitUse(ImplicitUseKindFlags.Assign)]
-    public class KeyVaultSettingsAttribute : InjectionAttributeBase
+    public class KeyVaultSettingsAttribute : ValueInjectionAttributeBase
     {
         /// <summary><p>The base url of the Azure Key Vault. Either <see cref="BaseUrl"/> or <see cref="BaseUrlParameterName"/> must be set.</p></summary>
         [CanBeNull] public string BaseUrl { get; set; }

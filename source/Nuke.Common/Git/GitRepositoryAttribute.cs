@@ -16,6 +16,7 @@ using Nuke.Common.CI.TeamCity;
 using Nuke.Common.CI.TravisCI;
 using Nuke.Common.Execution;
 using Nuke.Common.Tools.Git;
+using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.Git
 {
@@ -24,7 +25,7 @@ namespace Nuke.Common.Git
     /// </summary>
     [PublicAPI]
     [UsedImplicitly(ImplicitUseKindFlags.Default)]
-    public class GitRepositoryAttribute : InjectionAttributeBase
+    public class GitRepositoryAttribute : ValueInjectionAttributeBase
     {
         [CanBeNull]
         public string Branch { get; set; }

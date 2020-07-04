@@ -4,10 +4,12 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.DotNet
 {
+    [PublicAPI]
     public class DotNetVerbosityMappingAttribute : VerbosityMappingAttribute
     {
         public DotNetVerbosityMappingAttribute()

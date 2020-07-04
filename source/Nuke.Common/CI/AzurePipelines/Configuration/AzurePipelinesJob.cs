@@ -4,6 +4,7 @@ using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.CI.AzurePipelines.Configuration
 {

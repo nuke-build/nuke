@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Nuke.Common.CI;
 using System.Threading.Tasks;
 using Nuke.Common.Execution.Strategies;
 using Nuke.Common.Execution.Strategies.Parallel;
@@ -40,25 +41,25 @@ namespace Nuke.Common.Execution
             var build = Create<T>();
             build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpressions);
 
-            void ExecuteExtension<TExtension>(Action<TExtension> action)
+            Logger.LogLevel = NukeBuild.LogLevel;
+
+            void ExecuteExtension<TExtension>(Expression<Action<TExtension>> action)
                 where TExtension : IBuildExtension =>
                 build.GetType()
                     .GetCustomAttributes()
                     .OfType<TExtension>()
-                    .OrderBy(x => x.GetType() == typeof(HandleHelpRequestsAttribute))
-                    .ForEach(action);
+                    .OrderByDescending(x => x.Priority)
+                    .ForEachLazy(x => Logger.Trace($"[{action.GetMemberInfo().Name}] {x.GetType().Name.TrimEnd(nameof(Attribute))} ({x.Priority})"))
+                    .ForEach(action.Compile());
 
             var stopwatch = new System.Diagnostics.Stopwatch();
 
             try
             {
-                InjectionUtility.InjectValues(build, x => x.IsFast);
-
                 ExecuteExtension<IOnBeforeLogo>(x => x.OnBeforeLogo(build, build.ExecutableTargets));
                 build.OnBuildCreated();
 
                 Logger.OutputSink = build.OutputSink;
-                Logger.LogLevel = NukeBuild.LogLevel;
 
                 if (NukeBuild.BuildProjectDirectory != null)
                     ToolPathResolver.ExecutingAssemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -86,12 +87,10 @@ namespace Nuke.Common.Execution
                 RequirementService.ValidateRequirements(build, build.ExecutingTargets.ToList());
 
                 ExecuteExtension<IOnAfterLogo>(x => x.OnAfterLogo(build, build.ExecutableTargets, build.ExecutionPlan));
-                CancellationHandler += Finish;
-
-                InjectionUtility.InjectValues(build, x => !x.IsFast);
-
                 build.OnBuildInitialized();
 
+                CancellationHandler += Finish;
+                
                 // Remove main thread logger so that they are recreated and use current AutoFlush setting
                 // (which might change depending on which progress reporter is used)
                 LoggerProvider.RemoveCurrentLogger();

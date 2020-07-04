@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Nuke.Common.BuildProfiles;
 using Nuke.Common.CI;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
@@ -18,6 +19,7 @@ using Nuke.Common.CI.TravisCI;
 using Nuke.Common.Execution;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Tooling;
+using Nuke.Common.ValueInjection;
 using static Nuke.Common.Constants;
 
 // ReSharper disable VirtualMemberNeverOverridden.Global
@@ -50,10 +52,19 @@ namespace Nuke.Common
     /// </code>
     /// </example>
     [PublicAPI]
-    [HandleHelpRequests]
-    [HandleShellCompletion]
+    // Before logo
+    [InjectParameterValues(Priority = 100)]
+    [GenerateBuildServerConfigurations(Priority = 50)]
+    [HandleShellCompletion(Priority = 40)]
+    [SaveBuildProfile(Priority = 30)]
+    [LoadBuildProfiles(Priority = 25)]
+    // After logo
+    [InvokeBuildServerConfigurationGeneration(Priority = 50)]
+    [HandleHelpRequests(Priority = 5)]
     [HandleVisualStudioDebugging]
-    [HandleConfigurationGeneration]
+    [InjectNonParameterValues(Priority = -100)]
+    // After finish
+    [SerializeBuildServerState]
     public abstract partial class NukeBuild : INukeBuild
     {
         /// <summary>

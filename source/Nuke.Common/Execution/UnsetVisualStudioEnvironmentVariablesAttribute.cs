@@ -11,8 +11,7 @@ using Nuke.Common.Utilities.Collections;
 namespace Nuke.Common.Execution
 {
     [PublicAPI]
-    [AttributeUsage(AttributeTargets.Class)]
-    public class UnsetVisualStudioEnvironmentVariablesAttribute : Attribute, IOnBeforeLogo
+    public class UnsetVisualStudioEnvironmentVariablesAttribute : BuildExtensionAttributeBase, IOnBeforeLogo
     {
         public void OnBeforeLogo(
             NukeBuild build,

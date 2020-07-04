@@ -8,8 +8,7 @@ using System.Linq;
 
 namespace Nuke.Common.Execution
 {
-    [AttributeUsage(AttributeTargets.Class)]
-    internal class HandleHelpRequestsAttribute : Attribute, IOnAfterLogo
+    internal class HandleHelpRequestsAttribute : BuildExtensionAttributeBase, IOnAfterLogo
     {
         public void OnAfterLogo(
             NukeBuild build,
