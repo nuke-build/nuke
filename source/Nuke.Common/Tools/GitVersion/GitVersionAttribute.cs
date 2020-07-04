@@ -48,7 +48,7 @@ namespace Nuke.Common.Tools.GitVersion
             {
                 AzurePipelines.Instance?.UpdateBuildNumber(gitVersion.FullSemVer);
                 TeamCity.Instance?.SetBuildNumber(gitVersion.FullSemVer);
-                AppVeyor.Instance?.UpdateBuildNumber($"{gitVersion.FullSemVer}.build.{AppVeyor.Instance.BuildNumber}");
+                AppVeyor.Instance?.UpdateBuildVersion($"{gitVersion.FullSemVer}.build.{AppVeyor.Instance.BuildNumber}");
             }
 
             return gitVersion;
