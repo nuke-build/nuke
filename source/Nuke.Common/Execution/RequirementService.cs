@@ -28,7 +28,8 @@ namespace Nuke.Common.Execution
                     ControlFlow.Fail($"Target '{target.Name}' requires member '{requirement.GetMemberInfo().Name}' to be not null.");
             }
 
-            var requiredMembers = ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: true)
+            var requiredMembers = ValueInjectionUtility.GetInjectionMembers(build.GetType())
+                .Select(x => x.Member)
                 .Where(x => x.HasCustomAttribute<RequiredAttribute>());
             foreach (var member in requiredMembers)
             {
@@ -48,13 +49,16 @@ namespace Nuke.Common.Execution
                 $"Member '{member.Name}' is required {from}but not marked with an injection attribute.");
 
             if (NukeBuild.Host == HostType.Console)
-                InjectValueInteractive(member, build);
+                TryInjectValueInteractive(member, build);
 
             return member.GetValue(build) == null;
         }
 
-        private static void InjectValueInteractive(MemberInfo member, NukeBuild build)
+        private static void TryInjectValueInteractive(MemberInfo member, NukeBuild build)
         {
+            if (!member.HasCustomAttribute<ParameterAttribute>())
+                return;
+
             if (member is PropertyInfo property && !property.CanWrite)
                 return;
 
