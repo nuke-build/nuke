@@ -14,7 +14,7 @@ namespace Nuke.Common.ValueInjection
         public void OnAfterLogo(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
-            IReadOnlyCollection<ExecutableTarget> executionPlan)
+            ExecutionPlan executionPlan)
         {
             ValueInjectionUtility.InjectValues(build, x => !(x is ParameterAttribute));
         }
