@@ -46,7 +46,7 @@ using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
     NightlyTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
     ManuallyTriggeredTargets = new[] { nameof(Publish) },
     NonEntryTargets = new[] { nameof(Restore), nameof(DownloadFonts), nameof(InstallFonts), nameof(ReleaseImage) },
-    ExcludedTargets = new[] { nameof(Clean) })]
+    ExcludedTargets = new[] { nameof(Clean), nameof(SignPackages) })]
 [GitHubActions(
     "continuous",
     GitHubActionsImage.MacOs1014,
@@ -71,7 +71,7 @@ using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
     AzurePipelinesImage.MacOsLatest,
     InvokedTargets = new[] { nameof(Test), nameof(Pack) },
     NonEntryTargets = new[] { nameof(Restore), nameof(DownloadFonts), nameof(InstallFonts), nameof(ReleaseImage) },
-    ExcludedTargets = new[] { nameof(Clean), nameof(Coverage) })]
+    ExcludedTargets = new[] { nameof(Clean), nameof(Coverage), nameof(SignPackages) })]
 partial class Build : NukeBuild
 {
     /// Support plugins are available for:
@@ -151,6 +151,7 @@ partial class Build : NukeBuild
 
     string ChangelogFile => RootDirectory / "CHANGELOG.md";
     AbsolutePath PackageDirectory => OutputDirectory / "packages";
+    IReadOnlyCollection<AbsolutePath> PackageFiles => PackageDirectory.GlobFiles("*.nupkg");
     IEnumerable<string> ChangelogSectionNotes => ExtractChangelogSectionNotes(ChangelogFile);
 
     Target Pack => _ => _
@@ -260,13 +261,12 @@ partial class Build : NukeBuild
                         GitRepository.Branch.StartsWithOrdinalIgnoreCase(HotfixBranchPrefix))
         .Executes(() =>
         {
-            var packages = PackageDirectory.GlobFiles("*.nupkg");
-            Assert(packages.Count == 5, "packages.Count == 5");
+            Assert(PackageFiles.Count == 5, "packages.Count == 5");
 
             DotNetNuGetPush(_ => _
                     .SetSource(Source)
                     .SetApiKey(ApiKey)
-                    .CombineWith(packages, (_, v) => _
+                    .CombineWith(PackageFiles, (_, v) => _
                         .SetTargetPath(v)),
                 degreeOfParallelism: 5,
                 completeOnFailure: true);

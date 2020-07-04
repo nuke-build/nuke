@@ -46,7 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\source\Nuke.Common\Nuke.Common.csproj" />
+    <ProjectReference Include="..\source\Nuke.Components\Nuke.Components.csproj" />
     <ProjectReference Include="..\source\Nuke.CodeGeneration\Nuke.CodeGeneration.csproj" />
   </ItemGroup>
 

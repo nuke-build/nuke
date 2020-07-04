@@ -83,6 +83,30 @@ project {
             checked = "True",
             unchecked = "False",
             display = ParameterDisplay.NORMAL)
+        text (
+            "env.SignPathApiToken",
+            label = "SignPathApiToken",
+            value = "",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
+        text (
+            "env.SignPathOrganizationId",
+            label = "SignPathOrganizationId",
+            value = "",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
+        text (
+            "env.SignPathProjectKey",
+            label = "SignPathProjectKey",
+            value = "",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
+        text (
+            "env.SignPathPolicyKey",
+            label = "SignPathPolicyKey",
+            value = "",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
         param(
             "teamcity.runner.commandline.stdstreams.encoding",
             "UTF-8"
