@@ -18,7 +18,7 @@
             "type": "List<string>",
             "format": "{value}",
             "createOverload": true,
-            "help": "<p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href=\"https://github.com/nunit/docs/wiki/NUnit-Test-Projects\">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>"
+            "help": "<p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (<c>.nunit</c>) test projects (see <a href=\"https://github.com/nunit/docs/wiki/NUnit-Test-Projects\">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>"
           },
           {
             "name": "Tests",
@@ -37,32 +37,32 @@
             "name": "WhereExpression",
             "type": "string",
             "format": "--where={value}",
-            "help": "An expression indicating which tests to run. It may specify test names, classes, methods, catgories or properties comparing them to actual values with the operators ==, !=, =~ and !~. See Test Selection Language for a full description of the syntax."
+            "help": "An expression indicating which tests to run. It may specify test names, classes, methods, catgories or properties comparing them to actual values with the operators <c>==</c>, <c>!=</c>, <c>=~</c> and <c>!~</c>. See Test Selection Language for a full description of the syntax."
           },
           {
             "name": "Parameters",
             "type": "Dictionary<string, string>",
             "format": "--params={value}",
             "itemFormat": "{key}={value}",
-            "help": "A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the --params option multiple times."
+            "help": "A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the <c>--params</c> option multiple times."
           },
           {
             "name": "Configuration",
             "type": "string",
             "format": "--config={value}",
-            "help": "Name of a project configuration to load (e.g.: Debug)."
+            "help": "Name of a project configuration to load (e.g.: <c>Debug</c>)."
           },
           {
             "name": "Process",
             "type": "NUnitProcessType",
             "format": "--process={value}",
-            "help": "Process isolation for test assemblies. Values: Single, Separate, Multiple. If not specified, defaults to Separate for a single assembly or Multiple for more than one. By default, processes are run in parallel."
+            "help": "Process isolation for test assemblies. Values: <c>Single</c>, <c>Separate</c>, <c>Multiple</c>. If not specified, defaults to Separate for a single assembly or Multiple for more than one. By default, processes are run in parallel."
           },
           {
             "name": "InProcess",
             "type": "bool",
             "format": "--inprocess",
-            "help": "This option is a synonym for --process=Single"
+            "help": "This option is a synonym for <c>--process=Single</c>"
           },
           {
             "name": "Agents",
@@ -74,13 +74,13 @@
             "name": "Domain",
             "type": "string",
             "format": "--domain={value}",
-            "help": "Domain isolation for test assemblies. Values: None, Single, Multiple. If not specified, defaults to Single for a single assembly or Multiple for more than one."
+            "help": "Domain isolation for test assemblies. Values: <c>None</c>, <c>Single</c>, <c>Multiple</c>. If not specified, defaults to <c>Single</c> for a single assembly or <c>Multiple</c> for more than one."
           },
           {
             "name": "Framework",
             "type": "string",
             "format": "--framework={value}",
-            "help": "Framework type/version to use for tests. Examples: mono, net-4.5, v4.0, 2.0, mono-4.0"
+            "help": "Framework type/version to use for tests. Examples: <c>mono</c>, <c>net-4.5,</c> <c>v4.0</c>, <c>2.0</c>, <c>mono-4.0</c>"
           },
           {
             "name": "X86",
@@ -110,7 +110,7 @@
             "name": "Workers",
             "type": "int",
             "format": "--workers={value}",
-            "help": "Specify the number of worker threads to be used in running tests. This setting is used to control running your tests in parallel and is used in conjunction with the Parallelizable Attribute. If not specified, workers defaults to the number of processors on the machine, or 2, whichever is greater."
+            "help": "Specify the number of worker threads to be used in running tests. This setting is used to control running your tests in parallel and is used in conjunction with the <c>Parallelizable</c> attribute. If not specified, workers defaults to the number of processors on the machine, or 2, whichever is greater."
           },
           {
             "name": "StopOnError",
@@ -140,7 +140,7 @@
             "name": "Pause",
             "type": "bool",
             "format": "--pause",
-            "help": "Causes NUnit to immediately open a message box, allowing you to attach a debugger. For cases where --debug does not work."
+            "help": "Causes NUnit to immediately open a message box, allowing you to attach a debugger. For cases where <c>--debug </c>does not work."
           },
           {
             "name": "Wait",
@@ -188,19 +188,19 @@
             "name": "Labels",
             "type": "NUnitLabelType",
             "format": "--labels={value}",
-            "help": "Specify whether to write test case names to the output. Values: Off, On, All"
+            "help": "Specify whether to write test case names to the output. Values: <c>Off</c>, <c>On</c>, <c>All</c>"
           },
           {
             "name": "Trace",
             "type": "NUnitTraceLevel",
             "format": "--trace={value}",
-            "help": "Set internal trace LEVEL. Values: Off, Error, Warning, Info, Verbose (Debug)"
+            "help": "Set internal trace level. Values: <c>Off</c>, !<c>Error</c>, <c>Warning</c>, <c>Info</c>, <c>Verbose</c> (<c>Debug</c>)"
           },
           {
             "name": "Encoding",
             "type": "string",
             "format": "--encoding={value}",
-            "help": "Specify the console codepage, such as utf-8, ascii, etc. This option is not normally needed unless your output includes special characters. The page specified must be available on the system."
+            "help": "Specify the console codepage, such as <c>utf-8</c>, <c>ascii</c>cc, etc. This option is not normally needed unless your output includes special characters. The page specified must be available on the system."
           },
           {
             "name": "ShadowCopy",
@@ -230,7 +230,7 @@
             "name": "SetPrincipalPolicy",
             "type": "NUnitPrincipalPolicy",
             "format": "--set-principal-policy={value}",
-            "help": "Set the principal policy for the test domain to POLICY. Values: UnauthenticatedPrincipal, NoPrincipal, WindowsPrincipal"
+            "help": "Set the principal policy for the test domain. Values: <c>UnauthenticatedPrincipal</c>, <c>NoPrincipal</c>, <c>WindowsPrincipal</c>"
           },
           {
             "name": "NoHeader",
