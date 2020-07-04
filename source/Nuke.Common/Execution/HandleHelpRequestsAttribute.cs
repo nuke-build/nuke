@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,9 +13,9 @@ namespace Nuke.Common.Execution
         public void OnAfterLogo(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
-            IReadOnlyCollection<ExecutableTarget> executionPlan)
+            ExecutionPlan executionPlan)
         {
-            if (NukeBuild.Help || executionPlan.Count == 0)
+            if (NukeBuild.Help || executionPlan.AllExecutionTargets.Count == 0)
             {
                 Logger.Normal(HelpTextService.GetTargetsText(build.ExecutableTargets));
                 Logger.Normal(HelpTextService.GetParametersText(build));
@@ -24,7 +24,7 @@ namespace Nuke.Common.Execution
             if (NukeBuild.Plan)
                 ExecutionPlanHtmlService.ShowPlan(build.ExecutableTargets);
 
-            if (NukeBuild.Help || executionPlan.Count == 0 || NukeBuild.Plan)
+            if (NukeBuild.Help || executionPlan.AllExecutionTargets.Count == 0 || NukeBuild.Plan)
                 Environment.Exit(exitCode: 0);
         }
     }

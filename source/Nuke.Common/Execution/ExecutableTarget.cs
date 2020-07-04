@@ -1,9 +1,10 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
@@ -14,6 +15,8 @@ namespace Nuke.Common.Execution
     [DebuggerDisplay("{" + nameof(Name) + "}")]
     public class ExecutableTarget
     {
+        private ExecutionStatus status;
+
         internal TargetDefinition Definition { get; set; }
         public MemberInfo Member { get; set; }
         public string Name { get; set; }
@@ -36,9 +39,15 @@ namespace Nuke.Common.Execution
             => ExecutionDependencies.Concat(OrderDependencies).Concat(TriggerDependencies).ToList();
 
         public bool IsDefault { get; set; }
-        public ExecutionStatus Status { get; set; }
+        public ExecutionStatus Status
+        {
+            get { return status; }
+            set { status = value; StatusChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Status))); }
+        }
         public TimeSpan Duration { get; set; }
         public bool Invoked { get; set; }
         public string SkipReason { get; set; }
+
+        public event PropertyChangedEventHandler StatusChanged;
     }
 }

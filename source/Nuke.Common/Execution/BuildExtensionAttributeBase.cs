@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -29,7 +29,7 @@ namespace Nuke.Common.Execution
         void OnAfterLogo(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
-            IReadOnlyCollection<ExecutableTarget> executionPlan);
+            ExecutionPlan executionPlan);
     }
 
     public interface IOnBuildFinished : IBuildExtension

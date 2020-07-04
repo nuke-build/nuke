@@ -27,6 +27,7 @@
     <PackageReference Include="Octokit" Version="0.36.0" />
     <PackageReference Include="Refit" Version="5.0.23" />
     <PackageReference Include="SharpZipLib" Version="1.1.0" />
+    <PackageReference Include="ShellProgressBar" Version="5.0.0" />
     <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />

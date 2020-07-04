@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using Nuke.Common.Execution;
+using Nuke.Common.Execution.Strategies.Sequential;
 using Xunit;
 
 namespace Nuke.Common.Tests.Execution
@@ -98,7 +99,7 @@ namespace Nuke.Common.Tests.Execution
         {
             static string[] SelectNames(ExecutableTarget[] targets) => targets?.Select(x => x.Name).ToArray();
 
-            return ExecutionPlanner.GetExecutionPlan(new[] { A, B, C }, SelectNames(invokedTargets));
+            return SequentialExecutionPlanner.GetExecutionPlan(new[] { A, B, C }, SelectNames(invokedTargets)).AllExecutionTargets;
         }
 
         private void AddTrigger(ExecutableTarget source, ExecutableTarget target)

@@ -20,7 +20,7 @@ namespace Nuke.Common.CI
         public void OnAfterLogo(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
-            IReadOnlyCollection<ExecutableTarget> executionPlan)
+            ExecutionPlan executionPlan)
         {
             if (NukeBuild.IsServerBuild)
                 return;

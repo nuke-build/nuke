@@ -13,6 +13,7 @@ namespace Nuke.Common
     {
         Trace,
         Normal,
+        Information,
         Warning,
         Error
     }

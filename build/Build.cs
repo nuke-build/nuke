@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -33,6 +33,7 @@ using static Nuke.Common.Tools.Git.GitTasks;
 using static Nuke.Common.Tools.InspectCode.InspectCodeTasks;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
+using System.Threading.Tasks;
 
 [CheckBuildProjectConfigurations]
 [DotNetVerbosityMapping]
@@ -79,6 +80,7 @@ partial class Build : NukeBuild
     ///   - JetBrains Rider            https://nuke.build/rider
     ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
     ///   - Microsoft VSCode           https://nuke.build/vscode
+
     public static int Main() => Execute<Build>(x => x.Pack);
 
     [CI] readonly TeamCity TeamCity;

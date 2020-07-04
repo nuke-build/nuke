@@ -9,6 +9,12 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Nuke.Common.CI;
+using System.Threading.Tasks;
+using Nuke.Common.Execution.Strategies;
+using Nuke.Common.Execution.Strategies.Parallel;
+using Nuke.Common.Execution.Strategies.Sequential;
+using Nuke.Common.Execution.Progress;
+using Nuke.Common.Logging;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -27,7 +33,7 @@ namespace Nuke.Common.Execution
             remove => s_cancellationHandlers.Remove(value);
         }
 
-        public static int Execute<T>(Expression<Func<T, Target>>[] defaultTargetExpressions)
+        public static async Task<int> Execute<T>(Expression<Func<T, Target>>[] defaultTargetExpressions, bool parallelExecution)
             where T : NukeBuild
         {
             Console.CancelKeyPress += (s, e) => s_cancellationHandlers.ForEach(x => x());
@@ -45,6 +51,8 @@ namespace Nuke.Common.Execution
                     .OrderByDescending(x => x.Priority)
                     .ForEachLazy(x => Logger.Trace($"[{action.GetMemberInfo().Name}] {x.GetType().Name.TrimEnd(nameof(Attribute))} ({x.Priority})"))
                     .ForEach(action.Compile());
+
+            var stopwatch = new System.Diagnostics.Stopwatch();
 
             try
             {
@@ -69,17 +77,32 @@ namespace Nuke.Common.Execution
                 Logger.Info($"NUKE Execution Engine {typeof(BuildManager).Assembly.GetInformationalText()}");
                 Logger.Normal();
 
-                build.ExecutionPlan = ExecutionPlanner.GetExecutionPlan(
-                    build.ExecutableTargets,
-                    EnvironmentInfo.GetParameter<string[]>(() => build.InvokedTargets));
+                var buildStrategy = parallelExecution
+                    ? (IBuildStrategy)new ParallelBuildStrategy()
+                    : new SequentialBuildStrategy();
+
+                buildStrategy.PlanBuild(build);
+
+                RunConditionEvaluator.MarkSkippedTargets(build, EnvironmentInfo.GetParameter<string[]>(() => build.InvokedTargets));
+                RequirementService.ValidateRequirements(build, build.ExecutingTargets.ToList());
 
                 ExecuteExtension<IOnAfterLogo>(x => x.OnAfterLogo(build, build.ExecutableTargets, build.ExecutionPlan));
                 build.OnBuildInitialized();
 
                 CancellationHandler += Finish;
-                BuildExecutor.Execute(
-                    build,
-                    EnvironmentInfo.GetParameter<string[]>(() => build.SkippedTargets));
+                
+                // Remove main thread logger so that they are recreated and use current AutoFlush setting
+                // (which might change depending on which progress reporter is used)
+                LoggerProvider.RemoveCurrentLogger();
+
+                BuildTimeEstimator.ParseRecordFile();
+
+                using (var progressReporter = ProgressReporterFactory.Create(parallelExecution))
+                {
+                    progressReporter.WatchAndReport(build);
+                    stopwatch.Start();
+                    await buildStrategy.RunBuild(build);
+                }
 
                 return build.IsSuccessful ? 0 : ErrorExitCode;
             }
@@ -98,11 +121,19 @@ namespace Nuke.Common.Execution
 
             void Finish()
             {
-                build.ExecutionPlan
+                stopwatch.Stop();
+
+                build.ExecutionPlan.AllExecutionTargets
                     .Where(x => x.Status == ExecutionStatus.Executing)
                     .ForEach(x => x.Status = ExecutionStatus.Aborted);
 
-                Logger.OutputSink.WriteSummary(build);
+                build.ExecutionPlan.AllExecutionTargets
+                    .Where(x => x.Status == ExecutionStatus.Executed)
+                    .ForEach(x => BuildTimeEstimator.AddTimeSample(x.Name, x.Duration));
+
+                BuildTimeEstimator.WriteRecordFile();
+
+                Logger.OutputSink.WriteSummary(build, stopwatch.Elapsed);
 
                 build.OnBuildFinished();
                 ExecuteExtension<IOnBuildFinished>(x => x.OnBuildFinished(build));

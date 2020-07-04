@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using FluentAssertions;
 using Nuke.Common.Execution;
+using Nuke.Common.Execution.Strategies.Sequential;
 using Nuke.Common.Utilities.Collections;
 using Xunit;
 
@@ -100,9 +101,12 @@ namespace Nuke.Common.Tests.Execution
 
             var build = new TestBuild();
             build.ExecutableTargets = new[] { A, B, C };
-            build.ExecutionPlan = new[] { A, B, C };
-            build.ExecutionPlan.ForEach(x => x.Status = ExecutionStatus.NotRun);
-            BuildExecutor.Execute(build, SelectNames(skippedTargets));
+            build.ExecutionPlan = new ExecutionPlan(new[] { A, B, C });
+            build.ExecutionPlan.AllExecutionTargets.ForEach(x => x.Status = ExecutionStatus.NotRun);
+
+            RunConditionEvaluator.MarkSkippedTargets(build, SelectNames(skippedTargets));
+            RequirementService.ValidateRequirements(build, build.ExecutingTargets.ToList());
+            SequentialBuildExecutor.Execute(build);
         }
 
         private static void AssertExecuted(params ExecutableTarget[] targets)

@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
+using Nuke.Common.Execution.Strategies.Sequential;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using static Nuke.Common.CI.BuildServerConfigurationGenerationAttributeBase;
@@ -41,7 +42,7 @@ namespace Nuke.Common.CI
         public void Generate(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             var relevantTargets = RelevantTargetNames
-                .SelectMany(x => ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { x }))
+                .SelectMany(x => SequentialExecutionPlanner.GetExecutionPlan(executableTargets, new[] { x }).AllExecutionTargets)
                 .Distinct()
                 .Where(x => !IrrelevantTargetNames.Contains(x.Name)).ToList();
             var configuration = GetConfiguration(build, relevantTargets);
