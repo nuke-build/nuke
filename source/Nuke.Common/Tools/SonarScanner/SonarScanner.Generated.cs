@@ -50,6 +50,7 @@ namespace Nuke.Common.Tools.SonarScanner
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>/d:sonar.branch.name</c> via <see cref="SonarScannerBeginSettings.BranchName"/></li>
         ///     <li><c>/d:sonar.coverage.exclusions</c> via <see cref="SonarScannerBeginSettings.CoverageExclusions"/></li>
         ///     <li><c>/d:sonar.cpd.exclusions</c> via <see cref="SonarScannerBeginSettings.DuplicationExclusions"/></li>
         ///     <li><c>/d:sonar.cs.dotcover.reportsPaths</c> via <see cref="SonarScannerBeginSettings.DotCoverPaths"/></li>
@@ -68,6 +69,9 @@ namespace Nuke.Common.Tools.SonarScanner
         ///     <li><c>/d:sonar.login</c> via <see cref="SonarScannerBeginSettings.Login"/></li>
         ///     <li><c>/d:sonar.password</c> via <see cref="SonarScannerBeginSettings.Password"/></li>
         ///     <li><c>/d:sonar.projectDescription</c> via <see cref="SonarScannerBeginSettings.Description"/></li>
+        ///     <li><c>/d:sonar.pullrequest.base</c> via <see cref="SonarScannerBeginSettings.PullRequestBase"/></li>
+        ///     <li><c>/d:sonar.pullrequest.branch</c> via <see cref="SonarScannerBeginSettings.PullRequestBranch"/></li>
+        ///     <li><c>/d:sonar.pullrequest.key</c> via <see cref="SonarScannerBeginSettings.PullRequestKey"/></li>
         ///     <li><c>/d:sonar.sourceEncoding</c> via <see cref="SonarScannerBeginSettings.SourceEncoding"/></li>
         ///     <li><c>/d:sonar.test.exclusions</c> via <see cref="SonarScannerBeginSettings.TestFileExclusions"/></li>
         ///     <li><c>/d:sonar.test.inclusions</c> via <see cref="SonarScannerBeginSettings.TestFileInclusions"/></li>
@@ -92,6 +96,7 @@ namespace Nuke.Common.Tools.SonarScanner
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>/d:sonar.branch.name</c> via <see cref="SonarScannerBeginSettings.BranchName"/></li>
         ///     <li><c>/d:sonar.coverage.exclusions</c> via <see cref="SonarScannerBeginSettings.CoverageExclusions"/></li>
         ///     <li><c>/d:sonar.cpd.exclusions</c> via <see cref="SonarScannerBeginSettings.DuplicationExclusions"/></li>
         ///     <li><c>/d:sonar.cs.dotcover.reportsPaths</c> via <see cref="SonarScannerBeginSettings.DotCoverPaths"/></li>
@@ -110,6 +115,9 @@ namespace Nuke.Common.Tools.SonarScanner
         ///     <li><c>/d:sonar.login</c> via <see cref="SonarScannerBeginSettings.Login"/></li>
         ///     <li><c>/d:sonar.password</c> via <see cref="SonarScannerBeginSettings.Password"/></li>
         ///     <li><c>/d:sonar.projectDescription</c> via <see cref="SonarScannerBeginSettings.Description"/></li>
+        ///     <li><c>/d:sonar.pullrequest.base</c> via <see cref="SonarScannerBeginSettings.PullRequestBase"/></li>
+        ///     <li><c>/d:sonar.pullrequest.branch</c> via <see cref="SonarScannerBeginSettings.PullRequestBranch"/></li>
+        ///     <li><c>/d:sonar.pullrequest.key</c> via <see cref="SonarScannerBeginSettings.PullRequestKey"/></li>
         ///     <li><c>/d:sonar.sourceEncoding</c> via <see cref="SonarScannerBeginSettings.SourceEncoding"/></li>
         ///     <li><c>/d:sonar.test.exclusions</c> via <see cref="SonarScannerBeginSettings.TestFileExclusions"/></li>
         ///     <li><c>/d:sonar.test.inclusions</c> via <see cref="SonarScannerBeginSettings.TestFileInclusions"/></li>
@@ -131,6 +139,7 @@ namespace Nuke.Common.Tools.SonarScanner
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>/d:sonar.branch.name</c> via <see cref="SonarScannerBeginSettings.BranchName"/></li>
         ///     <li><c>/d:sonar.coverage.exclusions</c> via <see cref="SonarScannerBeginSettings.CoverageExclusions"/></li>
         ///     <li><c>/d:sonar.cpd.exclusions</c> via <see cref="SonarScannerBeginSettings.DuplicationExclusions"/></li>
         ///     <li><c>/d:sonar.cs.dotcover.reportsPaths</c> via <see cref="SonarScannerBeginSettings.DotCoverPaths"/></li>
@@ -149,6 +158,9 @@ namespace Nuke.Common.Tools.SonarScanner
         ///     <li><c>/d:sonar.login</c> via <see cref="SonarScannerBeginSettings.Login"/></li>
         ///     <li><c>/d:sonar.password</c> via <see cref="SonarScannerBeginSettings.Password"/></li>
         ///     <li><c>/d:sonar.projectDescription</c> via <see cref="SonarScannerBeginSettings.Description"/></li>
+        ///     <li><c>/d:sonar.pullrequest.base</c> via <see cref="SonarScannerBeginSettings.PullRequestBase"/></li>
+        ///     <li><c>/d:sonar.pullrequest.branch</c> via <see cref="SonarScannerBeginSettings.PullRequestBranch"/></li>
+        ///     <li><c>/d:sonar.pullrequest.key</c> via <see cref="SonarScannerBeginSettings.PullRequestKey"/></li>
         ///     <li><c>/d:sonar.sourceEncoding</c> via <see cref="SonarScannerBeginSettings.SourceEncoding"/></li>
         ///     <li><c>/d:sonar.test.exclusions</c> via <see cref="SonarScannerBeginSettings.TestFileExclusions"/></li>
         ///     <li><c>/d:sonar.test.inclusions</c> via <see cref="SonarScannerBeginSettings.TestFileInclusions"/></li>
@@ -243,7 +255,7 @@ namespace Nuke.Common.Tools.SonarScanner
         /// </summary>
         public virtual string Description { get; internal set; }
         /// <summary>
-        ///   The server URL. Default is http://localhost:9000
+        ///   The server URL. Default is <c>http://localhost:9000</c>
         /// </summary>
         public virtual string Server { get; internal set; }
         /// <summary>
@@ -251,7 +263,7 @@ namespace Nuke.Common.Tools.SonarScanner
         /// </summary>
         public virtual string Login { get; internal set; }
         /// <summary>
-        ///   Specifies the password for the SonarQube username in the `sonar.login` argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.
+        ///   Specifies the password for the SonarQube username in the <c>sonar.login</c> argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.
         /// </summary>
         public virtual string Password { get; internal set; }
         /// <summary>
@@ -274,42 +286,42 @@ namespace Nuke.Common.Tools.SonarScanner
         public virtual IReadOnlyList<string> XUnitTestReports => XUnitTestReportsInternal.AsReadOnly();
         internal List<string> XUnitTestReportsInternal { get; set; } = new List<string>();
         /// <summary>
-        ///   Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).
+        ///   Comma separated list of source files to exclude from analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).
         /// </summary>
         public virtual IReadOnlyList<string> SourceExclusions => SourceExclusionsInternal.AsReadOnly();
         internal List<string> SourceExclusionsInternal { get; set; } = new List<string>();
         /// <summary>
-        ///   Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).
+        ///   Comma separated list of source files to include in analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).
         /// </summary>
         public virtual IReadOnlyList<string> SourceInclusions => SourceInclusionsInternal.AsReadOnly();
         internal List<string> SourceInclusionsInternal { get; set; } = new List<string>();
         /// <summary>
-        ///   Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).
+        ///   Comma separated list of test files to exclude from analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).
         /// </summary>
         public virtual IReadOnlyList<string> TestFileExclusions => TestFileExclusionsInternal.AsReadOnly();
         internal List<string> TestFileExclusionsInternal { get; set; } = new List<string>();
         /// <summary>
-        ///   Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).
+        ///   Comma separated list of test files to include in analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).
         /// </summary>
         public virtual IReadOnlyList<string> TestFileInclusions => TestFileInclusionsInternal.AsReadOnly();
         internal List<string> TestFileInclusionsInternal { get; set; } = new List<string>();
         /// <summary>
-        ///   Comma separated list of files to exclude from coverage calculations. Supports wildcards (*, **, ?).
+        ///   Comma separated list of files to exclude from coverage calculations. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).
         /// </summary>
         public virtual IReadOnlyList<string> CoverageExclusions => CoverageExclusionsInternal.AsReadOnly();
         internal List<string> CoverageExclusionsInternal { get; set; } = new List<string>();
         /// <summary>
-        ///   Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (*, **, ?).
+        ///   Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).
         /// </summary>
         public virtual IReadOnlyList<string> VisualStudioCoveragePaths => VisualStudioCoveragePathsInternal.AsReadOnly();
         internal List<string> VisualStudioCoveragePathsInternal { get; set; } = new List<string>();
         /// <summary>
-        ///   Comma separated list of dotCover HTML-reports to include. Supports wildcards (*, **, ?).
+        ///   Comma separated list of dotCover HTML-reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).
         /// </summary>
         public virtual IReadOnlyList<string> DotCoverPaths => DotCoverPathsInternal.AsReadOnly();
         internal List<string> DotCoverPathsInternal { get; set; } = new List<string>();
         /// <summary>
-        ///   Comma separated list of OpenCover reports to include. Supports wildcards (*, **, ?).
+        ///   Comma separated list of OpenCover reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).
         /// </summary>
         public virtual IReadOnlyList<string> OpenCoverPaths => OpenCoverPathsInternal.AsReadOnly();
         internal List<string> OpenCoverPathsInternal { get; set; } = new List<string>();
@@ -334,7 +346,7 @@ namespace Nuke.Common.Tools.SonarScanner
         /// </summary>
         public virtual string SCMUrl { get; internal set; }
         /// <summary>
-        ///   Encoding of the source files. Ex: UTF-8 , MacRoman , Shift_JIS . This property can be replaced by the standard property project.build.sourceEncoding in Maven projects. The list of available encodings depends on your JVM.
+        ///   Encoding of the source files. Ex: <c>UTF-8</c> , <c>MacRoman</c> , <c>Shift_JIS</c>. This property can be replaced by the standard property <c>project.build.sourceEncoding</c> in Maven projects. The list of available encodings depends on your JVM.
         /// </summary>
         public virtual string SourceEncoding { get; internal set; }
         /// <summary>
@@ -342,6 +354,22 @@ namespace Nuke.Common.Tools.SonarScanner
         /// </summary>
         public virtual IReadOnlyList<string> DuplicationExclusions => DuplicationExclusionsInternal.AsReadOnly();
         internal List<string> DuplicationExclusionsInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Name of the branch (visible in the UI)
+        /// </summary>
+        public virtual string BranchName { get; internal set; }
+        /// <summary>
+        ///   Unique identifier of your Pull Request. Must correspond to the key of the Pull Request in your ALM. e.g.: <c>sonar.pullrequest.key=5</c>
+        /// </summary>
+        public virtual string PullRequestKey { get; internal set; }
+        /// <summary>
+        ///   The name of the branch that contains the changes to be merged. e.g.: <c>sonar.pullrequest.branch=feature/my-new-feature</c>
+        /// </summary>
+        public virtual string PullRequestBranch { get; internal set; }
+        /// <summary>
+        ///   The branch into which the Pull Request will be merged. Default: <c>master</c>. e.g.: <c>sonar.pullrequest.base=master</c>
+        /// </summary>
+        public virtual string PullRequestBase { get; internal set; }
         public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -372,7 +400,11 @@ namespace Nuke.Common.Tools.SonarScanner
               .Add("/d:sonar.links.issue={value}", IssueTrackerUrl)
               .Add("/d:sonar.links.scm={value}", SCMUrl)
               .Add("/d:sonar.sourceEncoding={value}", SourceEncoding)
-              .Add("/d:sonar.cpd.exclusions={value}", DuplicationExclusions, separator: ',');
+              .Add("/d:sonar.cpd.exclusions={value}", DuplicationExclusions, separator: ',')
+              .Add("/d:sonar.branch.name={value}", BranchName)
+              .Add("/d:sonar.pullrequest.key={value}", PullRequestKey)
+              .Add("/d:sonar.pullrequest.branch={value}", PullRequestBranch)
+              .Add("/d:sonar.pullrequest.base={value}", PullRequestBase);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -396,7 +428,7 @@ namespace Nuke.Common.Tools.SonarScanner
         /// </summary>
         public virtual string Login { get; internal set; }
         /// <summary>
-        ///   Specifies the password for the SonarQube username in the `sonar.login` argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.
+        ///   Specifies the password for the SonarQube username in the <c>sonar.login</c> argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.
         /// </summary>
         public virtual string Password { get; internal set; }
         public virtual string Framework { get; internal set; }
@@ -517,7 +549,7 @@ namespace Nuke.Common.Tools.SonarScanner
         #region Server
         /// <summary>
         ///   <p><em>Sets <see cref="SonarScannerBeginSettings.Server"/></em></p>
-        ///   <p>The server URL. Default is http://localhost:9000</p>
+        ///   <p>The server URL. Default is <c>http://localhost:9000</c></p>
         /// </summary>
         [Pure]
         public static T SetServer<T>(this T toolSettings, string server) where T : SonarScannerBeginSettings
@@ -528,7 +560,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Resets <see cref="SonarScannerBeginSettings.Server"/></em></p>
-        ///   <p>The server URL. Default is http://localhost:9000</p>
+        ///   <p>The server URL. Default is <c>http://localhost:9000</c></p>
         /// </summary>
         [Pure]
         public static T ResetServer<T>(this T toolSettings) where T : SonarScannerBeginSettings
@@ -565,7 +597,7 @@ namespace Nuke.Common.Tools.SonarScanner
         #region Password
         /// <summary>
         ///   <p><em>Sets <see cref="SonarScannerBeginSettings.Password"/></em></p>
-        ///   <p>Specifies the password for the SonarQube username in the `sonar.login` argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.</p>
+        ///   <p>Specifies the password for the SonarQube username in the <c>sonar.login</c> argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.</p>
         /// </summary>
         [Pure]
         public static T SetPassword<T>(this T toolSettings, string password) where T : SonarScannerBeginSettings
@@ -576,7 +608,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Resets <see cref="SonarScannerBeginSettings.Password"/></em></p>
-        ///   <p>Specifies the password for the SonarQube username in the `sonar.login` argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.</p>
+        ///   <p>Specifies the password for the SonarQube username in the <c>sonar.login</c> argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.</p>
         /// </summary>
         [Pure]
         public static T ResetPassword<T>(this T toolSettings) where T : SonarScannerBeginSettings
@@ -889,7 +921,7 @@ namespace Nuke.Common.Tools.SonarScanner
         #region SourceExclusions
         /// <summary>
         ///   <p><em>Sets <see cref="SonarScannerBeginSettings.SourceExclusions"/> to a new list</em></p>
-        ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T SetSourceExclusions<T>(this T toolSettings, params string[] sourceExclusions) where T : SonarScannerBeginSettings
@@ -900,7 +932,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Sets <see cref="SonarScannerBeginSettings.SourceExclusions"/> to a new list</em></p>
-        ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T SetSourceExclusions<T>(this T toolSettings, IEnumerable<string> sourceExclusions) where T : SonarScannerBeginSettings
@@ -911,7 +943,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.SourceExclusions"/></em></p>
-        ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T AddSourceExclusions<T>(this T toolSettings, params string[] sourceExclusions) where T : SonarScannerBeginSettings
@@ -922,7 +954,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.SourceExclusions"/></em></p>
-        ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T AddSourceExclusions<T>(this T toolSettings, IEnumerable<string> sourceExclusions) where T : SonarScannerBeginSettings
@@ -933,7 +965,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Clears <see cref="SonarScannerBeginSettings.SourceExclusions"/></em></p>
-        ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T ClearSourceExclusions<T>(this T toolSettings) where T : SonarScannerBeginSettings
@@ -944,7 +976,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.SourceExclusions"/></em></p>
-        ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T RemoveSourceExclusions<T>(this T toolSettings, params string[] sourceExclusions) where T : SonarScannerBeginSettings
@@ -956,7 +988,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.SourceExclusions"/></em></p>
-        ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T RemoveSourceExclusions<T>(this T toolSettings, IEnumerable<string> sourceExclusions) where T : SonarScannerBeginSettings
@@ -970,7 +1002,7 @@ namespace Nuke.Common.Tools.SonarScanner
         #region SourceInclusions
         /// <summary>
         ///   <p><em>Sets <see cref="SonarScannerBeginSettings.SourceInclusions"/> to a new list</em></p>
-        ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T SetSourceInclusions<T>(this T toolSettings, params string[] sourceInclusions) where T : SonarScannerBeginSettings
@@ -981,7 +1013,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Sets <see cref="SonarScannerBeginSettings.SourceInclusions"/> to a new list</em></p>
-        ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T SetSourceInclusions<T>(this T toolSettings, IEnumerable<string> sourceInclusions) where T : SonarScannerBeginSettings
@@ -992,7 +1024,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.SourceInclusions"/></em></p>
-        ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T AddSourceInclusions<T>(this T toolSettings, params string[] sourceInclusions) where T : SonarScannerBeginSettings
@@ -1003,7 +1035,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.SourceInclusions"/></em></p>
-        ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T AddSourceInclusions<T>(this T toolSettings, IEnumerable<string> sourceInclusions) where T : SonarScannerBeginSettings
@@ -1014,7 +1046,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Clears <see cref="SonarScannerBeginSettings.SourceInclusions"/></em></p>
-        ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T ClearSourceInclusions<T>(this T toolSettings) where T : SonarScannerBeginSettings
@@ -1025,7 +1057,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.SourceInclusions"/></em></p>
-        ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T RemoveSourceInclusions<T>(this T toolSettings, params string[] sourceInclusions) where T : SonarScannerBeginSettings
@@ -1037,7 +1069,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.SourceInclusions"/></em></p>
-        ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T RemoveSourceInclusions<T>(this T toolSettings, IEnumerable<string> sourceInclusions) where T : SonarScannerBeginSettings
@@ -1051,7 +1083,7 @@ namespace Nuke.Common.Tools.SonarScanner
         #region TestFileExclusions
         /// <summary>
         ///   <p><em>Sets <see cref="SonarScannerBeginSettings.TestFileExclusions"/> to a new list</em></p>
-        ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T SetTestFileExclusions<T>(this T toolSettings, params string[] testFileExclusions) where T : SonarScannerBeginSettings
@@ -1062,7 +1094,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Sets <see cref="SonarScannerBeginSettings.TestFileExclusions"/> to a new list</em></p>
-        ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T SetTestFileExclusions<T>(this T toolSettings, IEnumerable<string> testFileExclusions) where T : SonarScannerBeginSettings
@@ -1073,7 +1105,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.TestFileExclusions"/></em></p>
-        ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T AddTestFileExclusions<T>(this T toolSettings, params string[] testFileExclusions) where T : SonarScannerBeginSettings
@@ -1084,7 +1116,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.TestFileExclusions"/></em></p>
-        ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T AddTestFileExclusions<T>(this T toolSettings, IEnumerable<string> testFileExclusions) where T : SonarScannerBeginSettings
@@ -1095,7 +1127,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Clears <see cref="SonarScannerBeginSettings.TestFileExclusions"/></em></p>
-        ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T ClearTestFileExclusions<T>(this T toolSettings) where T : SonarScannerBeginSettings
@@ -1106,7 +1138,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.TestFileExclusions"/></em></p>
-        ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T RemoveTestFileExclusions<T>(this T toolSettings, params string[] testFileExclusions) where T : SonarScannerBeginSettings
@@ -1118,7 +1150,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.TestFileExclusions"/></em></p>
-        ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T RemoveTestFileExclusions<T>(this T toolSettings, IEnumerable<string> testFileExclusions) where T : SonarScannerBeginSettings
@@ -1132,7 +1164,7 @@ namespace Nuke.Common.Tools.SonarScanner
         #region TestFileInclusions
         /// <summary>
         ///   <p><em>Sets <see cref="SonarScannerBeginSettings.TestFileInclusions"/> to a new list</em></p>
-        ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T SetTestFileInclusions<T>(this T toolSettings, params string[] testFileInclusions) where T : SonarScannerBeginSettings
@@ -1143,7 +1175,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Sets <see cref="SonarScannerBeginSettings.TestFileInclusions"/> to a new list</em></p>
-        ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T SetTestFileInclusions<T>(this T toolSettings, IEnumerable<string> testFileInclusions) where T : SonarScannerBeginSettings
@@ -1154,7 +1186,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.TestFileInclusions"/></em></p>
-        ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T AddTestFileInclusions<T>(this T toolSettings, params string[] testFileInclusions) where T : SonarScannerBeginSettings
@@ -1165,7 +1197,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.TestFileInclusions"/></em></p>
-        ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T AddTestFileInclusions<T>(this T toolSettings, IEnumerable<string> testFileInclusions) where T : SonarScannerBeginSettings
@@ -1176,7 +1208,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Clears <see cref="SonarScannerBeginSettings.TestFileInclusions"/></em></p>
-        ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T ClearTestFileInclusions<T>(this T toolSettings) where T : SonarScannerBeginSettings
@@ -1187,7 +1219,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.TestFileInclusions"/></em></p>
-        ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T RemoveTestFileInclusions<T>(this T toolSettings, params string[] testFileInclusions) where T : SonarScannerBeginSettings
@@ -1199,7 +1231,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.TestFileInclusions"/></em></p>
-        ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T RemoveTestFileInclusions<T>(this T toolSettings, IEnumerable<string> testFileInclusions) where T : SonarScannerBeginSettings
@@ -1213,7 +1245,7 @@ namespace Nuke.Common.Tools.SonarScanner
         #region CoverageExclusions
         /// <summary>
         ///   <p><em>Sets <see cref="SonarScannerBeginSettings.CoverageExclusions"/> to a new list</em></p>
-        ///   <p>Comma separated list of files to exclude from coverage calculations. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of files to exclude from coverage calculations. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T SetCoverageExclusions<T>(this T toolSettings, params string[] coverageExclusions) where T : SonarScannerBeginSettings
@@ -1224,7 +1256,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Sets <see cref="SonarScannerBeginSettings.CoverageExclusions"/> to a new list</em></p>
-        ///   <p>Comma separated list of files to exclude from coverage calculations. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of files to exclude from coverage calculations. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T SetCoverageExclusions<T>(this T toolSettings, IEnumerable<string> coverageExclusions) where T : SonarScannerBeginSettings
@@ -1235,7 +1267,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.CoverageExclusions"/></em></p>
-        ///   <p>Comma separated list of files to exclude from coverage calculations. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of files to exclude from coverage calculations. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T AddCoverageExclusions<T>(this T toolSettings, params string[] coverageExclusions) where T : SonarScannerBeginSettings
@@ -1246,7 +1278,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.CoverageExclusions"/></em></p>
-        ///   <p>Comma separated list of files to exclude from coverage calculations. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of files to exclude from coverage calculations. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T AddCoverageExclusions<T>(this T toolSettings, IEnumerable<string> coverageExclusions) where T : SonarScannerBeginSettings
@@ -1257,7 +1289,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Clears <see cref="SonarScannerBeginSettings.CoverageExclusions"/></em></p>
-        ///   <p>Comma separated list of files to exclude from coverage calculations. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of files to exclude from coverage calculations. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T ClearCoverageExclusions<T>(this T toolSettings) where T : SonarScannerBeginSettings
@@ -1268,7 +1300,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.CoverageExclusions"/></em></p>
-        ///   <p>Comma separated list of files to exclude from coverage calculations. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of files to exclude from coverage calculations. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T RemoveCoverageExclusions<T>(this T toolSettings, params string[] coverageExclusions) where T : SonarScannerBeginSettings
@@ -1280,7 +1312,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.CoverageExclusions"/></em></p>
-        ///   <p>Comma separated list of files to exclude from coverage calculations. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of files to exclude from coverage calculations. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T RemoveCoverageExclusions<T>(this T toolSettings, IEnumerable<string> coverageExclusions) where T : SonarScannerBeginSettings
@@ -1294,7 +1326,7 @@ namespace Nuke.Common.Tools.SonarScanner
         #region VisualStudioCoveragePaths
         /// <summary>
         ///   <p><em>Sets <see cref="SonarScannerBeginSettings.VisualStudioCoveragePaths"/> to a new list</em></p>
-        ///   <p>Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T SetVisualStudioCoveragePaths<T>(this T toolSettings, params string[] visualStudioCoveragePaths) where T : SonarScannerBeginSettings
@@ -1305,7 +1337,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Sets <see cref="SonarScannerBeginSettings.VisualStudioCoveragePaths"/> to a new list</em></p>
-        ///   <p>Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T SetVisualStudioCoveragePaths<T>(this T toolSettings, IEnumerable<string> visualStudioCoveragePaths) where T : SonarScannerBeginSettings
@@ -1316,7 +1348,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.VisualStudioCoveragePaths"/></em></p>
-        ///   <p>Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T AddVisualStudioCoveragePaths<T>(this T toolSettings, params string[] visualStudioCoveragePaths) where T : SonarScannerBeginSettings
@@ -1327,7 +1359,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.VisualStudioCoveragePaths"/></em></p>
-        ///   <p>Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T AddVisualStudioCoveragePaths<T>(this T toolSettings, IEnumerable<string> visualStudioCoveragePaths) where T : SonarScannerBeginSettings
@@ -1338,7 +1370,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Clears <see cref="SonarScannerBeginSettings.VisualStudioCoveragePaths"/></em></p>
-        ///   <p>Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T ClearVisualStudioCoveragePaths<T>(this T toolSettings) where T : SonarScannerBeginSettings
@@ -1349,7 +1381,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.VisualStudioCoveragePaths"/></em></p>
-        ///   <p>Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T RemoveVisualStudioCoveragePaths<T>(this T toolSettings, params string[] visualStudioCoveragePaths) where T : SonarScannerBeginSettings
@@ -1361,7 +1393,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.VisualStudioCoveragePaths"/></em></p>
-        ///   <p>Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T RemoveVisualStudioCoveragePaths<T>(this T toolSettings, IEnumerable<string> visualStudioCoveragePaths) where T : SonarScannerBeginSettings
@@ -1375,7 +1407,7 @@ namespace Nuke.Common.Tools.SonarScanner
         #region DotCoverPaths
         /// <summary>
         ///   <p><em>Sets <see cref="SonarScannerBeginSettings.DotCoverPaths"/> to a new list</em></p>
-        ///   <p>Comma separated list of dotCover HTML-reports to include. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of dotCover HTML-reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T SetDotCoverPaths<T>(this T toolSettings, params string[] dotCoverPaths) where T : SonarScannerBeginSettings
@@ -1386,7 +1418,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Sets <see cref="SonarScannerBeginSettings.DotCoverPaths"/> to a new list</em></p>
-        ///   <p>Comma separated list of dotCover HTML-reports to include. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of dotCover HTML-reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T SetDotCoverPaths<T>(this T toolSettings, IEnumerable<string> dotCoverPaths) where T : SonarScannerBeginSettings
@@ -1397,7 +1429,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.DotCoverPaths"/></em></p>
-        ///   <p>Comma separated list of dotCover HTML-reports to include. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of dotCover HTML-reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T AddDotCoverPaths<T>(this T toolSettings, params string[] dotCoverPaths) where T : SonarScannerBeginSettings
@@ -1408,7 +1440,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.DotCoverPaths"/></em></p>
-        ///   <p>Comma separated list of dotCover HTML-reports to include. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of dotCover HTML-reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T AddDotCoverPaths<T>(this T toolSettings, IEnumerable<string> dotCoverPaths) where T : SonarScannerBeginSettings
@@ -1419,7 +1451,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Clears <see cref="SonarScannerBeginSettings.DotCoverPaths"/></em></p>
-        ///   <p>Comma separated list of dotCover HTML-reports to include. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of dotCover HTML-reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T ClearDotCoverPaths<T>(this T toolSettings) where T : SonarScannerBeginSettings
@@ -1430,7 +1462,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.DotCoverPaths"/></em></p>
-        ///   <p>Comma separated list of dotCover HTML-reports to include. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of dotCover HTML-reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T RemoveDotCoverPaths<T>(this T toolSettings, params string[] dotCoverPaths) where T : SonarScannerBeginSettings
@@ -1442,7 +1474,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.DotCoverPaths"/></em></p>
-        ///   <p>Comma separated list of dotCover HTML-reports to include. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of dotCover HTML-reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T RemoveDotCoverPaths<T>(this T toolSettings, IEnumerable<string> dotCoverPaths) where T : SonarScannerBeginSettings
@@ -1456,7 +1488,7 @@ namespace Nuke.Common.Tools.SonarScanner
         #region OpenCoverPaths
         /// <summary>
         ///   <p><em>Sets <see cref="SonarScannerBeginSettings.OpenCoverPaths"/> to a new list</em></p>
-        ///   <p>Comma separated list of OpenCover reports to include. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of OpenCover reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T SetOpenCoverPaths<T>(this T toolSettings, params string[] openCoverPaths) where T : SonarScannerBeginSettings
@@ -1467,7 +1499,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Sets <see cref="SonarScannerBeginSettings.OpenCoverPaths"/> to a new list</em></p>
-        ///   <p>Comma separated list of OpenCover reports to include. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of OpenCover reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T SetOpenCoverPaths<T>(this T toolSettings, IEnumerable<string> openCoverPaths) where T : SonarScannerBeginSettings
@@ -1478,7 +1510,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.OpenCoverPaths"/></em></p>
-        ///   <p>Comma separated list of OpenCover reports to include. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of OpenCover reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T AddOpenCoverPaths<T>(this T toolSettings, params string[] openCoverPaths) where T : SonarScannerBeginSettings
@@ -1489,7 +1521,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.OpenCoverPaths"/></em></p>
-        ///   <p>Comma separated list of OpenCover reports to include. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of OpenCover reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T AddOpenCoverPaths<T>(this T toolSettings, IEnumerable<string> openCoverPaths) where T : SonarScannerBeginSettings
@@ -1500,7 +1532,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Clears <see cref="SonarScannerBeginSettings.OpenCoverPaths"/></em></p>
-        ///   <p>Comma separated list of OpenCover reports to include. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of OpenCover reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T ClearOpenCoverPaths<T>(this T toolSettings) where T : SonarScannerBeginSettings
@@ -1511,7 +1543,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.OpenCoverPaths"/></em></p>
-        ///   <p>Comma separated list of OpenCover reports to include. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of OpenCover reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T RemoveOpenCoverPaths<T>(this T toolSettings, params string[] openCoverPaths) where T : SonarScannerBeginSettings
@@ -1523,7 +1555,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.OpenCoverPaths"/></em></p>
-        ///   <p>Comma separated list of OpenCover reports to include. Supports wildcards (*, **, ?).</p>
+        ///   <p>Comma separated list of OpenCover reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
         /// </summary>
         [Pure]
         public static T RemoveOpenCoverPaths<T>(this T toolSettings, IEnumerable<string> openCoverPaths) where T : SonarScannerBeginSettings
@@ -1657,7 +1689,7 @@ namespace Nuke.Common.Tools.SonarScanner
         #region SourceEncoding
         /// <summary>
         ///   <p><em>Sets <see cref="SonarScannerBeginSettings.SourceEncoding"/></em></p>
-        ///   <p>Encoding of the source files. Ex: UTF-8 , MacRoman , Shift_JIS . This property can be replaced by the standard property project.build.sourceEncoding in Maven projects. The list of available encodings depends on your JVM.</p>
+        ///   <p>Encoding of the source files. Ex: <c>UTF-8</c> , <c>MacRoman</c> , <c>Shift_JIS</c>. This property can be replaced by the standard property <c>project.build.sourceEncoding</c> in Maven projects. The list of available encodings depends on your JVM.</p>
         /// </summary>
         [Pure]
         public static T SetSourceEncoding<T>(this T toolSettings, string sourceEncoding) where T : SonarScannerBeginSettings
@@ -1668,7 +1700,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Resets <see cref="SonarScannerBeginSettings.SourceEncoding"/></em></p>
-        ///   <p>Encoding of the source files. Ex: UTF-8 , MacRoman , Shift_JIS . This property can be replaced by the standard property project.build.sourceEncoding in Maven projects. The list of available encodings depends on your JVM.</p>
+        ///   <p>Encoding of the source files. Ex: <c>UTF-8</c> , <c>MacRoman</c> , <c>Shift_JIS</c>. This property can be replaced by the standard property <c>project.build.sourceEncoding</c> in Maven projects. The list of available encodings depends on your JVM.</p>
         /// </summary>
         [Pure]
         public static T ResetSourceEncoding<T>(this T toolSettings) where T : SonarScannerBeginSettings
@@ -1759,6 +1791,102 @@ namespace Nuke.Common.Tools.SonarScanner
             return toolSettings;
         }
         #endregion
+        #region BranchName
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.BranchName"/></em></p>
+        ///   <p>Name of the branch (visible in the UI)</p>
+        /// </summary>
+        [Pure]
+        public static T SetBranchName<T>(this T toolSettings, string branchName) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BranchName = branchName;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SonarScannerBeginSettings.BranchName"/></em></p>
+        ///   <p>Name of the branch (visible in the UI)</p>
+        /// </summary>
+        [Pure]
+        public static T ResetBranchName<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BranchName = null;
+            return toolSettings;
+        }
+        #endregion
+        #region PullRequestKey
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.PullRequestKey"/></em></p>
+        ///   <p>Unique identifier of your Pull Request. Must correspond to the key of the Pull Request in your ALM. e.g.: <c>sonar.pullrequest.key=5</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetPullRequestKey<T>(this T toolSettings, string pullRequestKey) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PullRequestKey = pullRequestKey;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SonarScannerBeginSettings.PullRequestKey"/></em></p>
+        ///   <p>Unique identifier of your Pull Request. Must correspond to the key of the Pull Request in your ALM. e.g.: <c>sonar.pullrequest.key=5</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetPullRequestKey<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PullRequestKey = null;
+            return toolSettings;
+        }
+        #endregion
+        #region PullRequestBranch
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.PullRequestBranch"/></em></p>
+        ///   <p>The name of the branch that contains the changes to be merged. e.g.: <c>sonar.pullrequest.branch=feature/my-new-feature</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetPullRequestBranch<T>(this T toolSettings, string pullRequestBranch) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PullRequestBranch = pullRequestBranch;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SonarScannerBeginSettings.PullRequestBranch"/></em></p>
+        ///   <p>The name of the branch that contains the changes to be merged. e.g.: <c>sonar.pullrequest.branch=feature/my-new-feature</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetPullRequestBranch<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PullRequestBranch = null;
+            return toolSettings;
+        }
+        #endregion
+        #region PullRequestBase
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.PullRequestBase"/></em></p>
+        ///   <p>The branch into which the Pull Request will be merged. Default: <c>master</c>. e.g.: <c>sonar.pullrequest.base=master</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetPullRequestBase<T>(this T toolSettings, string pullRequestBase) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PullRequestBase = pullRequestBase;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SonarScannerBeginSettings.PullRequestBase"/></em></p>
+        ///   <p>The branch into which the Pull Request will be merged. Default: <c>master</c>. e.g.: <c>sonar.pullrequest.base=master</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetPullRequestBase<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PullRequestBase = null;
+            return toolSettings;
+        }
+        #endregion
         #region Framework
         /// <summary>
         ///   <p><em>Sets <see cref="SonarScannerBeginSettings.Framework"/></em></p>
@@ -1818,7 +1946,7 @@ namespace Nuke.Common.Tools.SonarScanner
         #region Password
         /// <summary>
         ///   <p><em>Sets <see cref="SonarScannerEndSettings.Password"/></em></p>
-        ///   <p>Specifies the password for the SonarQube username in the `sonar.login` argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.</p>
+        ///   <p>Specifies the password for the SonarQube username in the <c>sonar.login</c> argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.</p>
         /// </summary>
         [Pure]
         public static T SetPassword<T>(this T toolSettings, string password) where T : SonarScannerEndSettings
@@ -1829,7 +1957,7 @@ namespace Nuke.Common.Tools.SonarScanner
         }
         /// <summary>
         ///   <p><em>Resets <see cref="SonarScannerEndSettings.Password"/></em></p>
-        ///   <p>Specifies the password for the SonarQube username in the `sonar.login` argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.</p>
+        ///   <p>Specifies the password for the SonarQube username in the <c>sonar.login</c> argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.</p>
         /// </summary>
         [Pure]
         public static T ResetPassword<T>(this T toolSettings) where T : SonarScannerEndSettings

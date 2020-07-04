@@ -80,15 +80,15 @@
           {
             "name": "ReferenceTargets",
             "type": "List<string>",
-            "separator": ";",
             "format": "--targets-for-references={value}",
+            "separator": ";",
             "help": "Names of custom MSBuild targets that will be executed to get referenced assemblies of projects. The targets are defined either in the project file or in the <c>.targets</c> file. Multiple values are separated with the semicolon. For example, <c>--targets-for-references=\"GetReferences\"</c>."
           },
           {
             "name": "ItemTargets",
             "type": "List<string>",
-            "separator": ";",
             "format": "--targets-for-items={value}",
+            "separator": ";",
             "help": "Names of custom MSBuild targets that will be executed to get other items (for example, a Compile item) of projects. The targets are defined either in the project file or in the <c>.targets</c> file. Multiple values are separated with the semicolon. For example, <c>--targets-for-items=\"GetCompileItems\"</c>."
           },
           {

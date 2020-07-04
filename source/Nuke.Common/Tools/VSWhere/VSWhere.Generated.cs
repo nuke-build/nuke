@@ -334,8 +334,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>Return information about instances found in a format described below:<ul><li><c>text</c>: Colon-delimited properties in separate blocks for each instance (default).</li><li><c>json</c>: An array of JSON objects for each instance (no logo).</li><li><c>value</c>: A single property specified by the -property parameter (no logo).</li><li><c>xml</c>: An XML data set containing instances (no logo).</li></ul></p>
         /// </summary>
         [Pure]
-        public static T SetFormat<T>(this T toolSettings, VSWhereFormat format)
-            where T : VSWhereSettings
+        public static T SetFormat<T>(this T toolSettings, VSWhereFormat format) where T : VSWhereSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Format = format;
