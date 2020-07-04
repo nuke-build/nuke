@@ -19,11 +19,13 @@ Host:
 - TeamCity
 - Travis
 IgnoreFailedSources: 
-LoadProfile: 
 NoLogo: 
 Plan: 
 Root: 
-SaveProfile: 
+SignPathApiToken: 
+SignPathOrganizationId: 
+SignPathPolicyKey: 
+SignPathProjectKey: 
 Skip:
 - Analysis
 - Announce
@@ -46,6 +48,7 @@ Skip:
 - Release
 - ReleaseImage
 - Restore
+- SignPackages
 - Test
 - UpdateContributors
 SlackWebhook: 
@@ -70,6 +73,7 @@ Target:
 - Release
 - ReleaseImage
 - Restore
+- SignPackages
 - Test
 - UpdateContributors
 TwitterAccessToken: 
