@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 
@@ -32,6 +33,26 @@ namespace Nuke.Common.Utilities
         public static bool EndsWithOrdinalIgnoreCase(this string str, string other)
         {
             return str.EndsWith(other, StringComparison.OrdinalIgnoreCase);
+        }
+
+        public static bool StartsWithAny(this string str, params string[] others)
+        {
+            return str.StartsWithAny(others.AsEnumerable());
+        }
+
+        public static bool StartsWithAny(this string str, IEnumerable<string> others)
+        {
+            return others.Any(str.StartsWith);
+        }
+
+        public static bool EndsWithAny(this string str, params string[] others)
+        {
+            return str.EndsWithAny(others.AsEnumerable());
+        }
+
+        public static bool EndsWithAny(this string str, IEnumerable<string> others)
+        {
+            return others.Any(str.EndsWith);
         }
     }
 }
