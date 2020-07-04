@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
-using Nuke.Common.BuildProfiles;
 using Nuke.Common.CI;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
@@ -55,8 +54,8 @@ namespace Nuke.Common
     [InjectParameterValues(Priority = 100)]
     [GenerateBuildServerConfigurations(Priority = 50)]
     [HandleShellCompletion(Priority = 40)]
-    [SaveBuildProfile(Priority = 30)]
-    [LoadBuildProfiles(Priority = 25)]
+    // [SaveBuildProfile(Priority = 30)]
+    // [LoadBuildProfiles(Priority = 25)]
     // After logo
     [InvokeBuildServerConfigurationGeneration(Priority = 50)]
     [HandleHelpRequests(Priority = 5)]

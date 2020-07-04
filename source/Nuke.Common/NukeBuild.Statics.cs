@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Common.BuildProfiles;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.Bamboo;
@@ -17,7 +16,6 @@ using Nuke.Common.CI.GitLab;
 using Nuke.Common.CI.Jenkins;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.CI.TravisCI;
-using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -43,8 +41,8 @@ namespace Nuke.Common
             Help = EnvironmentInfo.GetParameter(() => Help);
             NoLogo = EnvironmentInfo.GetParameter(() => NoLogo);
 
-            LoadedProfiles = BuildProfileManagementAttributeBase.GetLoadProfiles();
-            SaveProfile = BuildProfileManagementAttributeBase.GetSaveProfile();
+            // LoadedProfiles = BuildProfileManagementAttributeBase.GetLoadProfiles();
+            // SaveProfile = BuildProfileManagementAttributeBase.GetSaveProfile();
         }
 
         /// <summary>
@@ -106,11 +104,11 @@ namespace Nuke.Common
         [Parameter("Disables displaying the NUKE logo.")]
         public static bool NoLogo { get; set; }
 
-        [Parameter("Defines the profiles to load.", Name = "LoadProfile")]
-        public static string[] LoadedProfiles { get; }
-
-        [Parameter("Defines the profile to save to.")]
-        public static string SaveProfile { get; }
+        // [Parameter("Defines the profiles to load.", Name = "LoadProfile")]
+        // public static string[] LoadedProfiles { get; }
+        //
+        // [Parameter("Defines the profile to save to.")]
+        // public static string SaveProfile { get; }
 
         public static bool IsLocalBuild => Host == HostType.Console;
         public static bool IsServerBuild => Host != HostType.Console;
