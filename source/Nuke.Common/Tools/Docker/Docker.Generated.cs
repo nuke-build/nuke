@@ -39,9 +39,9 @@ namespace Nuke.Common.Tools.Docker
         ///   <p>Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications. By taking advantage of Docker’s methodologies for shipping, testing, and deploying code quickly, you can significantly reduce the delay between writing code and running it in production.</p>
         ///   <p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Docker(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Docker(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(DockerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, DockerLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(DockerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logFile, DockerLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -59,7 +59,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerConfigRm(DockerConfigRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerConfigRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -108,7 +108,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerLoad(DockerLoadSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerLoadSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -159,7 +159,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerPrune(DockerContainerPruneSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerPruneSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -208,7 +208,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTrust(DockerTrustSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTrustSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -255,7 +255,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerStack(DockerStackSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerStackSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -306,7 +306,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTop(DockerTopSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTopSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -360,7 +360,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPull(DockerPullSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPullSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -415,7 +415,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTrustSign(DockerTrustSignSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTrustSignSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -460,7 +460,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerCheckpoint(DockerCheckpointSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerCheckpointSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -505,7 +505,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTrustSigner(DockerTrustSignerSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTrustSignerSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -553,7 +553,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerConfigInspect(DockerConfigInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerConfigInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -604,7 +604,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerService(DockerServiceSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerServiceSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -650,7 +650,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTrustKeyGenerate(DockerTrustKeyGenerateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTrustKeyGenerateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -697,7 +697,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSystem(DockerSystemSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSystemSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -745,7 +745,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerConfigLs(DockerConfigLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerConfigLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -801,7 +801,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContextUpdate(DockerContextUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContextUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -861,7 +861,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerStackServices(DockerStackServicesSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerStackServicesSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -918,7 +918,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerPort(DockerContainerPortSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerPortSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -969,7 +969,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerRename(DockerRenameSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerRenameSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1020,7 +1020,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTag(DockerTagSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTagSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1072,7 +1072,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSecretInspect(DockerSecretInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSecretInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1123,7 +1123,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSecret(DockerSecretSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSecretSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1170,7 +1170,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerExport(DockerContainerExportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerExportSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1224,7 +1224,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerHistory(DockerHistorySettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerHistorySettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1348,7 +1348,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerServiceCreate(DockerServiceCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerServiceCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1537,7 +1537,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerServicePs(DockerServicePsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerServicePsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1596,7 +1596,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerStop(DockerStopSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerStopSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1645,7 +1645,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNode(DockerNodeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNodeSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1706,7 +1706,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerUpdate(DockerUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1786,7 +1786,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPluginCreate(DockerPluginCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPluginCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1838,7 +1838,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSystemInfo(DockerSystemInfoSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSystemInfoSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1887,7 +1887,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerVolumePrune(DockerVolumePruneSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerVolumePruneSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1941,7 +1941,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPluginUpgrade(DockerPluginUpgradeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPluginUpgradeSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1996,7 +1996,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerBuilderPrune(DockerBuilderPruneSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerBuilderPruneSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2044,7 +2044,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSwarmJoinToken(DockerSwarmJoinTokenSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSwarmJoinTokenSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2100,7 +2100,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNodeUpdate(DockerNodeUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNodeUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2158,7 +2158,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTrustSignerAdd(DockerTrustSignerAddSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTrustSignerAddSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2216,7 +2216,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSwarmUpdate(DockerSwarmUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSwarmUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2285,7 +2285,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerServiceLogs(DockerServiceLogsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerServiceLogsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2353,7 +2353,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerServiceLs(DockerServiceLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerServiceLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2404,7 +2404,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSwarmUnlock(DockerSwarmUnlockSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSwarmUnlockSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2453,7 +2453,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNetworkLs(DockerNetworkLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNetworkLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2510,7 +2510,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPluginLs(DockerPluginLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPluginLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2565,7 +2565,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPluginRm(DockerPluginRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPluginRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2650,7 +2650,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImageBuild(DockerImageBuildSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImageBuildSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2769,7 +2769,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTrustRevoke(DockerTrustRevokeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTrustRevokeSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2821,7 +2821,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerRmi(DockerRmiSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerRmiSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2873,7 +2873,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNetworkRm(DockerNetworkRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNetworkRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2922,7 +2922,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerVersion(DockerVersionSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerVersionSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2976,7 +2976,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSecretCreate(DockerSecretCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSecretCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3032,7 +3032,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerServiceRm(DockerServiceRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerServiceRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3081,7 +3081,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTrustKeyLoad(DockerTrustKeyLoadSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTrustKeyLoadSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3131,7 +3131,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSecretRm(DockerSecretRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSecretRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3180,7 +3180,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImageInspect(DockerImageInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImageInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3231,7 +3231,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImageSave(DockerImageSaveSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImageSaveSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3280,7 +3280,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTrustKey(DockerTrustKeySettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTrustKeySettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3329,7 +3329,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerAttach(DockerContainerAttachSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerAttachSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3388,7 +3388,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContextCreate(DockerContextCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContextCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3449,7 +3449,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerConfigCreate(DockerConfigCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerConfigCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3504,7 +3504,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerVolumeInspect(DockerVolumeInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerVolumeInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3555,7 +3555,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerStop(DockerContainerStopSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerStopSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3606,7 +3606,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNetworkPrune(DockerNetworkPruneSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNetworkPruneSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3659,7 +3659,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerManifestInspect(DockerManifestInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerManifestInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3713,7 +3713,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerInfo(DockerInfoSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerInfoSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3766,7 +3766,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerCommit(DockerCommitSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerCommitSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3830,7 +3830,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerStackDeploy(DockerStackDeploySettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerStackDeploySettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3890,7 +3890,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerServiceScale(DockerServiceScaleSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerServiceScaleSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -4041,7 +4041,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerRun(DockerRunSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerRunSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -4395,7 +4395,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerCreate(DockerCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -4727,7 +4727,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerServiceUpdate(DockerServiceUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerServiceUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -4944,7 +4944,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPort(DockerPortSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPortSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -4993,7 +4993,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainer(DockerContainerSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5040,7 +5040,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImagePush(DockerImagePushSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImagePushSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5092,7 +5092,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerServiceInspect(DockerServiceInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerServiceInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5151,7 +5151,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNetworkConnect(DockerNetworkConnectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNetworkConnectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5215,7 +5215,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSecretLs(DockerSecretLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSecretLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5267,7 +5267,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSwarmLeave(DockerSwarmLeaveSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSwarmLeaveSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5321,7 +5321,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImages(DockerImagesSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImagesSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5384,7 +5384,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerEngineUpdate(DockerEngineUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerEngineUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5441,7 +5441,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSystemEvents(DockerSystemEventsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSystemEventsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5498,7 +5498,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerInspect(DockerInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5559,7 +5559,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerEngineCheck(DockerEngineCheckSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerEngineCheckSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5624,7 +5624,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerAttach(DockerAttachSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerAttachSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5678,7 +5678,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerWait(DockerContainerWaitSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerWaitSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5732,7 +5732,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSwarmCa(DockerSwarmCaSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSwarmCaSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5792,7 +5792,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerEngine(DockerEngineSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerEngineSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5843,7 +5843,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSystemPrune(DockerSystemPruneSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSystemPruneSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5896,7 +5896,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerBuilder(DockerBuilderSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerBuilderSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5942,7 +5942,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerPause(DockerContainerPauseSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerPauseSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5995,7 +5995,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerCommit(DockerContainerCommitSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerCommitSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6054,7 +6054,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContextLs(DockerContextLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContextLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6104,7 +6104,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContextRm(DockerContextRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContextRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6158,7 +6158,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerStackPs(DockerStackPsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerStackPsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6318,7 +6318,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerCreate(DockerContainerCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6570,7 +6570,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerVolumeCreate(DockerVolumeCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerVolumeCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6625,7 +6625,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPlugin(DockerPluginSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPluginSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6673,7 +6673,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerLogin(DockerLoginSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerLoginSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6726,7 +6726,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSwarmUnlockKey(DockerSwarmUnlockKeySettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSwarmUnlockKeySettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6781,7 +6781,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerStart(DockerStartSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerStartSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6853,7 +6853,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSwarmInit(DockerSwarmInitSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSwarmInitSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6929,7 +6929,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerDiff(DockerContainerDiffSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerDiffSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6978,7 +6978,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerRestart(DockerContainerRestartSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerRestartSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7027,7 +7027,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerConfig(DockerConfigSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerConfigSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7074,7 +7074,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPluginDisable(DockerPluginDisableSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPluginDisableSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7124,7 +7124,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerUnpause(DockerContainerUnpauseSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerUnpauseSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7173,7 +7173,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContextImport(DockerContextImportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContextImportSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7226,7 +7226,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerRm(DockerRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7286,7 +7286,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerDeploy(DockerDeploySettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerDeploySettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7347,7 +7347,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNodeRm(DockerNodeRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNodeRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7399,7 +7399,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerCheckpointRm(DockerCheckpointRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerCheckpointRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7452,7 +7452,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPush(DockerPushSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPushSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7518,7 +7518,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNetworkCreate(DockerNetworkCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNetworkCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7600,7 +7600,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerVolumeLs(DockerVolumeLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerVolumeLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7652,7 +7652,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTrustInspect(DockerTrustInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTrustInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7702,7 +7702,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNetworkInspect(DockerNetworkInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNetworkInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7761,7 +7761,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerEngineActivate(DockerEngineActivateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerEngineActivateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7823,7 +7823,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContextUse(DockerContextUseSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContextUseSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7872,7 +7872,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerVolumeRm(DockerVolumeRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerVolumeRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7923,7 +7923,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerManifestCreate(DockerManifestCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerManifestCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7975,7 +7975,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerManifestPush(DockerManifestPushSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerManifestPushSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8028,7 +8028,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPluginEnable(DockerPluginEnableSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPluginEnableSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8082,7 +8082,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImport(DockerImportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImportSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8241,7 +8241,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerRun(DockerContainerRunSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerRunSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8497,7 +8497,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNodeInspect(DockerNodeInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNodeInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8550,7 +8550,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSave(DockerSaveSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSaveSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8604,7 +8604,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerStats(DockerContainerStatsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerStatsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8670,7 +8670,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerExec(DockerContainerExecSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerExecSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8740,7 +8740,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNodeLs(DockerNodeLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNodeLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8796,7 +8796,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSwarmJoin(DockerSwarmJoinSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSwarmJoinSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8858,7 +8858,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerLogs(DockerContainerLogsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerLogsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8919,7 +8919,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerCheckpointLs(DockerCheckpointLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerCheckpointLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8970,7 +8970,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerKill(DockerContainerKillSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerKillSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9025,7 +9025,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPluginInstall(DockerPluginInstallSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPluginInstallSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9085,7 +9085,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImagePrune(DockerImagePruneSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImagePruneSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9141,7 +9141,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImageImport(DockerImageImportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImageImportSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9197,7 +9197,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerDiff(DockerDiffSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerDiffSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9245,7 +9245,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerUnpause(DockerUnpauseSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerUnpauseSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9300,7 +9300,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerLs(DockerContainerLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9367,7 +9367,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNodePs(DockerNodePsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNodePsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9426,7 +9426,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerTop(DockerContainerTopSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerTopSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9477,7 +9477,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerRename(DockerContainerRenameSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerRenameSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9531,7 +9531,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImageHistory(DockerImageHistorySettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImageHistorySettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9594,7 +9594,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPs(DockerPsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9657,7 +9657,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImageTag(DockerImageTagSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImageTagSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9708,7 +9708,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerExport(DockerExportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerExportSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9760,7 +9760,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNetworkDisconnect(DockerNetworkDisconnectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNetworkDisconnectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9847,7 +9847,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerBuilderBuild(DockerBuilderBuildSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerBuilderBuildSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9969,7 +9969,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerStats(DockerStatsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerStatsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10031,7 +10031,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSearch(DockerSearchSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSearchSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10091,7 +10091,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerManifest(DockerManifestSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerManifestSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10140,7 +10140,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPluginPush(DockerPluginPushSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPluginPushSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10191,7 +10191,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImageLoad(DockerImageLoadSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImageLoadSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10240,7 +10240,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSwarm(DockerSwarmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSwarmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10289,7 +10289,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerRm(DockerContainerRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10358,7 +10358,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerUpdate(DockerContainerUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10437,7 +10437,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPluginSet(DockerPluginSetSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPluginSetSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10487,7 +10487,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerWait(DockerWaitSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerWaitSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10537,7 +10537,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContextExport(DockerContextExportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContextExportSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10594,7 +10594,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerManifestAnnotate(DockerManifestAnnotateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerManifestAnnotateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10656,7 +10656,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImagePull(DockerImagePullSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImagePullSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10715,7 +10715,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerEvents(DockerEventsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerEventsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10771,7 +10771,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerStackLs(DockerStackLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerStackLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10825,7 +10825,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerInspect(DockerContainerInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10878,7 +10878,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerKill(DockerKillSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerKillSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10931,7 +10931,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerCheckpointCreate(DockerCheckpointCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerCheckpointCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10985,7 +10985,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPause(DockerPauseSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPauseSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11039,7 +11039,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerLogs(DockerLogsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerLogsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11101,7 +11101,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContextInspect(DockerContextInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContextInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11153,7 +11153,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNodePromote(DockerNodePromoteSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNodePromoteSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11201,7 +11201,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNodeDemote(DockerNodeDemoteSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNodeDemoteSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11259,7 +11259,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerExec(DockerExecSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerExecSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11329,7 +11329,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImageRm(DockerImageRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImageRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11380,7 +11380,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImage(DockerImageSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImageSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11425,7 +11425,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContext(DockerContextSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContextSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11471,7 +11471,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerVolume(DockerVolumeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerVolumeSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11524,7 +11524,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerStart(DockerContainerStartSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerStartSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11583,7 +11583,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPluginInspect(DockerPluginInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPluginInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11633,7 +11633,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerLogout(DockerLogoutSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerLogoutSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11680,7 +11680,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNetwork(DockerNetworkSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNetworkSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11732,7 +11732,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImageLs(DockerImageLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImageLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11793,7 +11793,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSystemDf(DockerSystemDfSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSystemDfSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11845,7 +11845,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerServiceRollback(DockerServiceRollbackSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerServiceRollbackSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11898,7 +11898,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerRestart(DockerRestartSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerRestartSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11950,7 +11950,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTrustSignerRemove(DockerTrustSignerRemoveSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTrustSignerRemoveSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -12003,7 +12003,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerStackRm(DockerStackRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerStackRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -12088,7 +12088,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerBuild(DockerBuildSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerBuildSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }

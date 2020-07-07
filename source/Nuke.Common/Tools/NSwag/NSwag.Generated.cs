@@ -39,9 +39,9 @@ namespace Nuke.Common.Tools.NSwag
         ///   <p>The project combines the functionality of Swashbuckle (Swagger generation) and AutoRest (client generation) in one toolchain. This way a lot of incompatibilites can be avoided and features which are not well described by the Swagger specification or JSON Schema are better supported (e.g. <a href="https://github.com/NJsonSchema/NJsonSchema/wiki/Inheritance">inheritance</a>, <a href="https://github.com/NJsonSchema/NJsonSchema/wiki/Enums">enum</a> and reference handling). The NSwag project heavily uses <a href="http://njsonschema.org/">NJsonSchema for .NET</a> for JSON Schema handling and C#/TypeScript class/interface generation.</p>
         ///   <p>For more details, visit the <a href="https://github.com/RSuter/NSwag">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> NSwag(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> NSwag(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(NSwagPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, NSwagLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(NSwagPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logFile, NSwagLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -58,7 +58,7 @@ namespace Nuke.Common.Tools.NSwag
         public static IReadOnlyCollection<Output> NSwagVersion(NSwagVersionSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NSwagVersionSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -109,7 +109,7 @@ namespace Nuke.Common.Tools.NSwag
         public static IReadOnlyCollection<Output> NSwagListTypes(NSwagListTypesSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NSwagListTypesSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -172,7 +172,7 @@ namespace Nuke.Common.Tools.NSwag
         public static IReadOnlyCollection<Output> NSwagListWebApiControllers(NSwagListWebApiControllersSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NSwagListWebApiControllersSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -235,7 +235,7 @@ namespace Nuke.Common.Tools.NSwag
         public static IReadOnlyCollection<Output> NSwagTypesToOpenApi(NSwagTypesToOpenApiSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NSwagTypesToOpenApiSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -308,7 +308,7 @@ namespace Nuke.Common.Tools.NSwag
         public static IReadOnlyCollection<Output> NSwagTypesToSwagger(NSwagTypesToSwaggerSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NSwagTypesToSwaggerSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -424,7 +424,7 @@ namespace Nuke.Common.Tools.NSwag
         public static IReadOnlyCollection<Output> NSwagWebApiToOpenApi(NSwagWebApiToOpenApiSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NSwagWebApiToOpenApiSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -593,7 +593,7 @@ namespace Nuke.Common.Tools.NSwag
         public static IReadOnlyCollection<Output> NSwagWebApiToSwagger(NSwagWebApiToSwaggerSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NSwagWebApiToSwaggerSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -769,7 +769,7 @@ namespace Nuke.Common.Tools.NSwag
         public static IReadOnlyCollection<Output> NSwagAspNetCoreToOpenApi(NSwagAspNetCoreToOpenApiSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NSwagAspNetCoreToOpenApiSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -941,7 +941,7 @@ namespace Nuke.Common.Tools.NSwag
         public static IReadOnlyCollection<Output> NSwagAspNetCoreToSwagger(NSwagAspNetCoreToSwaggerSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NSwagAspNetCoreToSwaggerSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1084,7 +1084,7 @@ namespace Nuke.Common.Tools.NSwag
         public static IReadOnlyCollection<Output> NSwagCreateDocument(NSwagCreateDocumentSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NSwagCreateDocumentSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1131,7 +1131,7 @@ namespace Nuke.Common.Tools.NSwag
         public static IReadOnlyCollection<Output> NSwagExecuteDocument(NSwagExecuteDocumentSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NSwagExecuteDocumentSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1194,7 +1194,7 @@ namespace Nuke.Common.Tools.NSwag
         public static IReadOnlyCollection<Output> NSwagJsonSchemaToCSharp(NSwagJsonSchemaToCSharpSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NSwagJsonSchemaToCSharpSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1272,7 +1272,7 @@ namespace Nuke.Common.Tools.NSwag
         public static IReadOnlyCollection<Output> NSwagJsonSchemaToTypeScript(NSwagJsonSchemaToTypeScriptSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NSwagJsonSchemaToTypeScriptSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1379,7 +1379,7 @@ namespace Nuke.Common.Tools.NSwag
         public static IReadOnlyCollection<Output> NSwagOpenApiToCSharpClient(NSwagOpenApiToCSharpClientSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NSwagOpenApiToCSharpClientSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1607,7 +1607,7 @@ namespace Nuke.Common.Tools.NSwag
         public static IReadOnlyCollection<Output> NSwagSwaggerToCSharpClient(NSwagSwaggerToCSharpClientSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NSwagSwaggerToCSharpClientSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1862,7 +1862,7 @@ namespace Nuke.Common.Tools.NSwag
         public static IReadOnlyCollection<Output> NSwagOpenApiToCSharpController(NSwagOpenApiToCSharpControllerSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NSwagOpenApiToCSharpControllerSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2071,7 +2071,7 @@ namespace Nuke.Common.Tools.NSwag
         public static IReadOnlyCollection<Output> NSwagSwaggerToCSharpController(NSwagSwaggerToCSharpControllerSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NSwagSwaggerToCSharpControllerSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2244,7 +2244,7 @@ namespace Nuke.Common.Tools.NSwag
         public static IReadOnlyCollection<Output> NSwagOpenApiToTypeScriptClient(NSwagOpenApiToTypeScriptClientSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NSwagOpenApiToTypeScriptClientSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2360,7 +2360,7 @@ namespace Nuke.Common.Tools.NSwag
         public static IReadOnlyCollection<Output> NSwagSwaggerToTypeScriptClient(NSwagSwaggerToTypeScriptClientSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NSwagSwaggerToTypeScriptClientSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }

@@ -125,6 +125,16 @@ namespace Nuke.Common.Tooling
             return newToolSettings;
         }
 
+        ///<summary>Sets <see cref="ToolSettings.LogFile"/> -- <inheritdoc cref="ToolSettings.LogFile" /></summary>
+        [Pure]
+        public static T SetLogFile<T>(this T toolSettings, string logFile)
+            where T : ToolSettings
+        {
+            var newToolSettings = toolSettings.NewInstance();
+            newToolSettings.LogFile = logFile;
+            return newToolSettings;
+        }
+
         ///<summary>Sets <see cref="ToolSettings.ToolPath"/> -- <inheritdoc cref="ToolSettings.ToolPath" /></summary>
         [Pure]
         public static T SetToolPath<T>(this T toolSettings, [CanBeNull] string toolPath)

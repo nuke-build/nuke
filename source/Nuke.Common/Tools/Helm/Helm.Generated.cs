@@ -35,9 +35,9 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   <p>For more details, visit the <a href="https://helm.sh/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Helm(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Helm(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(HelmPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, HelmLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(HelmPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logFile, HelmLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -55,7 +55,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmCompletion(HelmCompletionSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmCompletionSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -104,7 +104,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmCreate(HelmCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -165,7 +165,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmDelete(HelmDeleteSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmDeleteSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -237,7 +237,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmDependencyBuild(HelmDependencyBuildSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmDependencyBuildSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -289,7 +289,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmDependencyList(HelmDependencyListSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmDependencyListSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -340,7 +340,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmDependencyUpdate(HelmDependencyUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmDependencyUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -408,7 +408,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmFetch(HelmFetchSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmFetchSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -491,7 +491,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmGet(HelmGetSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmGetSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -560,7 +560,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmGetHooks(HelmGetHooksSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmGetHooksSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -629,7 +629,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmGetManifest(HelmGetManifestSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmGetManifestSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -698,7 +698,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmGetNotes(HelmGetNotesSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmGetNotesSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -769,7 +769,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmGetValues(HelmGetValuesSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmGetValuesSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -844,7 +844,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmHistory(HelmHistorySettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmHistorySettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -909,7 +909,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmHome(HelmHomeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmHomeSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -978,7 +978,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmInit(HelmInitSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmInitSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1082,7 +1082,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmInspect(HelmInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1160,7 +1160,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmInspectChart(HelmInspectChartSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmInspectChartSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1236,7 +1236,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmInspectReadme(HelmInspectReadmeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmInspectReadmeSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1310,7 +1310,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmInspectValues(HelmInspectValuesSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmInspectValuesSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1411,7 +1411,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmInstall(HelmInstallSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmInstallSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1531,7 +1531,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmLint(HelmLintSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmLintSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1612,7 +1612,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmList(HelmListSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmListSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1710,7 +1710,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmPackage(HelmPackageSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmPackageSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1776,7 +1776,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmPluginInstall(HelmPluginInstallSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmPluginInstallSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1827,7 +1827,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmPluginList(HelmPluginListSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmPluginListSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1873,7 +1873,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmPluginRemove(HelmPluginRemoveSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmPluginRemoveSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1921,7 +1921,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmPluginUpdate(HelmPluginUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmPluginUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1976,7 +1976,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmRepoAdd(HelmRepoAddSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmRepoAddSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2040,7 +2040,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmRepoIndex(HelmRepoIndexSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmRepoIndexSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2091,7 +2091,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmRepoList(HelmRepoListSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmRepoListSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2137,7 +2137,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmRepoRemove(HelmRepoRemoveSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmRepoRemoveSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2185,7 +2185,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmRepoUpdate(HelmRepoUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmRepoUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2240,7 +2240,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmReset(HelmResetSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmResetSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2316,7 +2316,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmRollback(HelmRollbackSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmRollbackSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2396,7 +2396,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmSearch(HelmSearchSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmSearchSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2454,7 +2454,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmServe(HelmServeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmServeSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2514,7 +2514,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmStatus(HelmStatusSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmStatusSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2590,7 +2590,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmTemplate(HelmTemplateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmTemplateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2671,7 +2671,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmTest(HelmTestSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmTestSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2771,7 +2771,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmUpgrade(HelmUpgradeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmUpgradeSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2888,7 +2888,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmVerify(HelmVerifySettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmVerifySettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2947,7 +2947,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmVersion(HelmVersionSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmVersionSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }

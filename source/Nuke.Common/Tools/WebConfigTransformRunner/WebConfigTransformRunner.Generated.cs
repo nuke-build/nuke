@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         ///   <p>This is a commandline tool to run an ASP.Net web.config tranformation.</p>
         ///   <p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> WebConfigTransformRunner(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> WebConfigTransformRunner(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(WebConfigTransformRunnerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, WebConfigTransformRunnerLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(WebConfigTransformRunnerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logFile, WebConfigTransformRunnerLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -58,7 +58,7 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         public static IReadOnlyCollection<Output> WebConfigTransformRunner(WebConfigTransformRunnerSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new WebConfigTransformRunnerSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }

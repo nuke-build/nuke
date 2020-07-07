@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   <p>Use SpecFlow to define, manage and automatically execute human-readable acceptance tests in .NET projects. Writing easily understandable tests is a cornerstone of the BDD paradigm and also helps build up a living documentation of your system.</p>
         ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> SpecFlow(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> SpecFlow(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(SpecFlowPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, SpecFlowLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(SpecFlowPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logFile, SpecFlowLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -62,7 +62,7 @@ namespace Nuke.Common.Tools.SpecFlow
         public static IReadOnlyCollection<Output> SpecFlowNUnitExecutionReport(SpecFlowNUnitExecutionReportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowNUnitExecutionReportSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -122,7 +122,7 @@ namespace Nuke.Common.Tools.SpecFlow
         public static IReadOnlyCollection<Output> SpecFlowMSTestExecutionReport(SpecFlowMSTestExecutionReportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowMSTestExecutionReportSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -176,7 +176,7 @@ namespace Nuke.Common.Tools.SpecFlow
         public static IReadOnlyCollection<Output> SpecFlowStepDefinitionReport(SpecFlowStepDefinitionReportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowStepDefinitionReportSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -233,7 +233,7 @@ namespace Nuke.Common.Tools.SpecFlow
         public static IReadOnlyCollection<Output> SpecFlowRun(SpecFlowRunSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowRunSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -296,7 +296,7 @@ namespace Nuke.Common.Tools.SpecFlow
         public static IReadOnlyCollection<Output> SpecFlowBuildServerRun(SpecFlowBuildServerRunSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowBuildServerRunSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -354,7 +354,7 @@ namespace Nuke.Common.Tools.SpecFlow
         public static IReadOnlyCollection<Output> SpecFlowRegister(SpecFlowRegisterSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowRegisterSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -398,7 +398,7 @@ namespace Nuke.Common.Tools.SpecFlow
         public static IReadOnlyCollection<Output> SpecFlowUnregister(SpecFlowUnregisterSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowUnregisterSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -434,7 +434,7 @@ namespace Nuke.Common.Tools.SpecFlow
         public static IReadOnlyCollection<Output> SpecFlowAbout(SpecFlowAboutSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowAboutSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }

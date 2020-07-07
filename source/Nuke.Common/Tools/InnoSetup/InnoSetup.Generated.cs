@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Inno Setup is a free installer for Windows programs by Jordan Russell and Martijn Laan. First introduced in 1997, Inno Setup today rivals and even surpasses many commercial installers in feature set and stability.</p>
         ///   <p>For more details, visit the <a href="http://www.jrsoftware.org/isinfo.php">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> InnoSetup(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> InnoSetup(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(InnoSetupPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, InnoSetupLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(InnoSetupPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logFile, InnoSetupLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -65,7 +65,7 @@ namespace Nuke.Common.Tools.InnoSetup
         public static IReadOnlyCollection<Output> InnoSetup(InnoSetupSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new InnoSetupSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }

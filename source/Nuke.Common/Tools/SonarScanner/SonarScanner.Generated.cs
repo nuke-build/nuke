@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.</p>
         ///   <p>For more details, visit the <a href="https://www.sonarqube.org/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> SonarScanner(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> SonarScanner(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(SonarScannerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, SonarScannerLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(SonarScannerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logFile, SonarScannerLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -85,7 +85,7 @@ namespace Nuke.Common.Tools.SonarScanner
         public static IReadOnlyCollection<Output> SonarScannerBegin(SonarScannerBeginSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SonarScannerBeginSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -189,7 +189,7 @@ namespace Nuke.Common.Tools.SonarScanner
         public static IReadOnlyCollection<Output> SonarScannerEnd(SonarScannerEndSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SonarScannerEndSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }

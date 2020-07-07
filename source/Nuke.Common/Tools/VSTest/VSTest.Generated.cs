@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.</p>
         ///   <p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/jj155796.aspx">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> VSTest(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> VSTest(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(VSTestPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, VSTestLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(VSTestPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logFile, VSTestLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -73,7 +73,7 @@ namespace Nuke.Common.Tools.VSTest
         public static IReadOnlyCollection<Output> VSTest(VSTestSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new VSTestSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }

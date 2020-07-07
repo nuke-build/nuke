@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Unity is usually launched by double-clicking its icon from the desktop. However, it is also possible to run it from the command line (from the macOS Terminal or the Windows Command Prompt). When launched in this way, Unity can receive commands and information on startup, which can be very useful for test suites, automated builds and other production tasks.</p>
         ///   <p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Unity(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Unity(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(UnityPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, UnityLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(UnityPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logFile, UnityLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -63,7 +63,7 @@ namespace Nuke.Common.Tools.Unity
         {
             toolSettings = toolSettings ?? new UnityCreateManualActivationFileSettings();
             PreProcess(ref toolSettings);
-            var process = StartProcess(toolSettings);
+            using var process = StartProcess(toolSettings);
             AssertProcess(process, toolSettings);
             return process.Output;
         }
@@ -128,7 +128,7 @@ namespace Nuke.Common.Tools.Unity
         {
             toolSettings = toolSettings ?? new UnityManualLicenseFileSettings();
             PreProcess(ref toolSettings);
-            var process = StartProcess(toolSettings);
+            using var process = StartProcess(toolSettings);
             AssertProcess(process, toolSettings);
             return process.Output;
         }
@@ -229,7 +229,7 @@ namespace Nuke.Common.Tools.Unity
         {
             toolSettings = toolSettings ?? new UnitySettings();
             PreProcess(ref toolSettings);
-            var process = StartProcess(toolSettings);
+            using var process = StartProcess(toolSettings);
             AssertProcess(process, toolSettings);
             return process.Output;
         }
@@ -363,7 +363,7 @@ namespace Nuke.Common.Tools.Unity
         {
             toolSettings = toolSettings ?? new UnityReturnLicenseSettings();
             PreProcess(ref toolSettings);
-            var process = StartProcess(toolSettings);
+            using var process = StartProcess(toolSettings);
             AssertProcess(process, toolSettings);
             return process.Output;
         }

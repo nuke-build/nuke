@@ -35,9 +35,9 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   <p>For more details, visit the <a href="https://kubernetes.io/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Kubernetes(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Kubernetes(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(KubernetesPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, KubernetesLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(KubernetesPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logFile, KubernetesLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -59,7 +59,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesApiResources(KubernetesApiResourcesSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesApiResourcesSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -121,7 +121,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesDrain(KubernetesDrainSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesDrainSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -218,7 +218,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesRun(KubernetesRunSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesRunSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -362,7 +362,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesGet(KubernetesGetSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesGetSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -455,7 +455,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesVersion(KubernetesVersionSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesVersionSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -501,7 +501,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesTop(KubernetesTopSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesTopSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -537,7 +537,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesConfig(KubernetesConfigSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesConfigSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -580,7 +580,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesExec(KubernetesExecSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesExecSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -646,7 +646,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesRollingUpdate(KubernetesRollingUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesRollingUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -733,7 +733,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesLabel(KubernetesLabelSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesLabelSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -825,7 +825,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesAnnotate(KubernetesAnnotateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesAnnotateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -913,7 +913,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesDelete(KubernetesDeleteSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesDeleteSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1005,7 +1005,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesExpose(KubernetesExposeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesExposeSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1089,7 +1089,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesOptions(KubernetesOptionsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesOptionsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1132,7 +1132,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesAttach(KubernetesAttachSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesAttachSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1195,7 +1195,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesProxy(KubernetesProxySettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesProxySettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1257,7 +1257,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesAlpha(KubernetesAlphaSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesAlphaSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1293,7 +1293,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> Kubernetes(KubernetesSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1329,7 +1329,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesCompletion(KubernetesCompletionSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesCompletionSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1378,7 +1378,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesPatch(KubernetesPatchSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesPatchSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1454,7 +1454,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesReplace(KubernetesReplaceSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesReplaceSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1529,7 +1529,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesTaint(KubernetesTaintSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesTaintSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1596,7 +1596,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesDescribe(KubernetesDescribeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesDescribeSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1653,7 +1653,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesSet(KubernetesSetSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesSetSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1698,7 +1698,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesAuth(KubernetesAuthSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesAuthSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1743,7 +1743,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesCertificate(KubernetesCertificateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesCertificateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1788,7 +1788,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesRollout(KubernetesRolloutSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesRolloutSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1852,7 +1852,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesApply(KubernetesApplySettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesApplySettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1937,7 +1937,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesCordon(KubernetesCordonSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesCordonSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1988,7 +1988,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesCp(KubernetesCpSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesCpSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2034,7 +2034,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesApiVersions(KubernetesApiVersionsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesApiVersionsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2075,7 +2075,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesUncordon(KubernetesUncordonSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesUncordonSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2136,7 +2136,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesAutoscale(KubernetesAutoscaleSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesAutoscaleSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2205,7 +2205,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesPlugin(KubernetesPluginSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesPluginSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2247,7 +2247,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesClusterInfo(KubernetesClusterInfoSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesClusterInfoSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2293,7 +2293,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesWait(KubernetesWaitSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesWaitSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2359,7 +2359,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesConvert(KubernetesConvertSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesConvertSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2430,7 +2430,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesCreate(KubernetesCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2501,7 +2501,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesPortForward(KubernetesPortForwardSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesPortForwardSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2587,7 +2587,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesRunContainer(KubernetesRunContainerSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesRunContainerSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2717,7 +2717,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesEdit(KubernetesEditSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesEditSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2795,7 +2795,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesScale(KubernetesScaleSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesScaleSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2864,7 +2864,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesExplain(KubernetesExplainSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesExplainSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2925,7 +2925,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static IReadOnlyCollection<Output> KubernetesLogs(KubernetesLogsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new KubernetesLogsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }

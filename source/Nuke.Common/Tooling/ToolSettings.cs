@@ -31,6 +31,7 @@ namespace Nuke.Common.Tooling
         public int? ExecutionTimeout { get; internal set; }
         public bool? LogOutput { get; internal set; }
         public bool? LogInvocation { get; internal set; }
+        public string LogFile { get; internal set; }
 
         public abstract Action<OutputType, string> CustomLogger { get; }
 

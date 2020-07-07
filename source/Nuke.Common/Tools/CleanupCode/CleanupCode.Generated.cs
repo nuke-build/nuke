@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.CleanupCode
         ///   <p>CleanupCode is a free command-line tool that can perform code cleanup to instantly eliminate code style violations in a project or solution and ensure a uniform code base.</p>
         ///   <p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/CleanupCode.html">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> CleanupCode(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> CleanupCode(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(CleanupCodePath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, CleanupCodeLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(CleanupCodePath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logFile, CleanupCodeLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -71,7 +71,7 @@ namespace Nuke.Common.Tools.CleanupCode
         {
             toolSettings = toolSettings ?? new CleanupCodeSettings();
             PreProcess(ref toolSettings);
-            var process = StartProcess(toolSettings);
+            using var process = StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }

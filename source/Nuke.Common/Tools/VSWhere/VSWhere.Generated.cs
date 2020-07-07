@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p>
         ///   <p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> VSWhere(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> VSWhere(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(VSWherePath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, VSWhereLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(VSWherePath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logFile, VSWhereLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -67,7 +67,7 @@ namespace Nuke.Common.Tools.VSWhere
         public static (List<VSWhereResult> Result, IReadOnlyCollection<Output> Output) VSWhere(VSWhereSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new VSWhereSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return (GetResult(process, toolSettings), process.Output);
         }

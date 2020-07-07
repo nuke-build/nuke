@@ -35,6 +35,7 @@ namespace Nuke.Common.Tooling
                 toolSettings.ExecutionTimeout,
                 toolSettings.LogOutput,
                 toolSettings.LogInvocation,
+                toolSettings.LogFile,
                 toolSettings.CustomLogger,
                 arguments.FilterSecrets);
         }
@@ -47,6 +48,7 @@ namespace Nuke.Common.Tooling
             int? timeout = null,
             bool? logOutput = null,
             bool? logInvocation = null,
+            string logFile = null,
             Action<OutputType, string> customLogger = null,
             Func<string, string> outputFilter = null)
         {
@@ -75,8 +77,10 @@ namespace Nuke.Common.Tooling
                 workingDirectory,
                 environmentVariables,
                 timeout,
-                logOutput ?? DefaultLogOutput,
-                customLogger,
+                logFile,
+                logOutput ?? DefaultLogOutput
+                    ? customLogger ?? DefaultLogger
+                    : null,
                 outputFilter);
         }
 
@@ -107,9 +111,9 @@ namespace Nuke.Common.Tooling
             [CanBeNull] string workingDirectory,
             [CanBeNull] IReadOnlyDictionary<string, string> environmentVariables,
             int? timeout,
-            bool logOutput,
-            [CanBeNull] Action<OutputType, string> customLogger,
-            [CanBeNull] Func<string, string> outputFilter)
+            [CanBeNull] string logFile,
+            [CanBeNull] Action<OutputType, string> logger,
+            Func<string, string> outputFilter)
         {
             ControlFlow.Assert(workingDirectory == null || Directory.Exists(workingDirectory),
                 $"WorkingDirectory '{workingDirectory}' does not exist.");
@@ -133,8 +137,9 @@ namespace Nuke.Common.Tooling
             if (process == null)
                 return null;
 
-            var output = GetOutputCollection(process, logOutput, customLogger ?? DefaultLogger, outputFilter);
-            return new Process2(process, outputFilter, timeout, output);
+            var logStream = logFile != null ? new StreamWriter(File.Open(logFile, FileMode.Create)) : null;
+            var output = GetOutputCollection(process, logger, logStream, outputFilter);
+            return new Process2(process, outputFilter, timeout, logStream, output);
         }
 
         private static void ApplyEnvironmentVariables(
@@ -152,8 +157,8 @@ namespace Nuke.Common.Tooling
 
         private static BlockingCollection<Output> GetOutputCollection(
             Process process,
-            bool logOutput,
-            Action<OutputType, string> logger,
+            [CanBeNull] Action<OutputType, string> logger,
+            [CanBeNull] StreamWriter logFile,
             Func<string, string> outputFilter)
         {
             var output = new BlockingCollection<Output>();
@@ -165,8 +170,9 @@ namespace Nuke.Common.Tooling
 
                 output.Add(new Output { Text = e.Data, Type = OutputType.Std });
 
-                if (logOutput)
-                    logger(OutputType.Std, outputFilter(e.Data));
+                var filteredOutput = outputFilter(e.Data);
+                logFile?.WriteLine($"[STD] {filteredOutput}");
+                logger?.Invoke(OutputType.Std, filteredOutput);
             };
             process.ErrorDataReceived += (s, e) =>
             {
@@ -175,8 +181,9 @@ namespace Nuke.Common.Tooling
 
                 output.Add(new Output { Text = e.Data, Type = OutputType.Err });
 
-                if (logOutput)
-                    logger(OutputType.Err, outputFilter(e.Data));
+                var filteredOutput = outputFilter(e.Data);
+                logFile?.WriteLine($"[ERR] {filteredOutput}");
+                logger?.Invoke(OutputType.Err, filteredOutput);
             };
 
             process.BeginOutputReadLine();
