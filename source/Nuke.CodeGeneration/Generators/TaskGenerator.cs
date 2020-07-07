@@ -51,6 +51,7 @@ namespace Nuke.CodeGeneration.Generators
                                  "int? timeout = null",
                                  "bool? logOutput = null",
                                  "bool? logInvocation = null",
+                                 "bool? logTimestamp = null",
                                  "string logFile = null",
                                  "Func<string, string> outputFilter = null"
                              };
@@ -63,6 +64,7 @@ namespace Nuke.CodeGeneration.Generators
                                 "timeout",
                                 "logOutput",
                                 "logInvocation",
+                                "logTimestamp",
                                 "logFile",
                                 $"{tool.Name}Logger",
                                 "outputFilter"

@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.SignClient
         ///   <p>Code Signing client for Authenticode, NuGet, VSIX, and more</p>
         ///   <p>For more details, visit the <a href="https://discoverdot.net/projects/sign-service">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> SignClient(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, string logFile = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> SignClient(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            using var process = ProcessTasks.StartProcess(SignClientPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logFile, SignClientLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(SignClientPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, SignClientLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

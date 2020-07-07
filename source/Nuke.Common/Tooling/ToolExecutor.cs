@@ -24,6 +24,7 @@ namespace Nuke.Common.Tooling
             int? timeout = null,
             bool? logOutput = null,
             bool? logInvocation = null,
+            bool? logTimestamp = null,
             string logFile = null,
             Action<OutputType, string> customLogger = null,
             Func<string, string> outputFilter = null)
@@ -36,6 +37,7 @@ namespace Nuke.Common.Tooling
                 timeout,
                 logOutput,
                 logInvocation,
+                logTimestamp,
                 logFile,
                 customLogger,
                 outputFilter);

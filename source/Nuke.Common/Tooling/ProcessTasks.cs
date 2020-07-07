@@ -20,6 +20,7 @@ namespace Nuke.Common.Tooling
     {
         public static bool DefaultLogOutput = true;
         public static bool DefaultLogInvocation = true;
+        public static bool DefaultLogTimestamp = false;
         public static bool LogWorkingDirectory = true;
 
         private static readonly char[] s_pathSeparators = { EnvironmentInfo.IsWin ? ';' : ':' };
@@ -35,6 +36,7 @@ namespace Nuke.Common.Tooling
                 toolSettings.ExecutionTimeout,
                 toolSettings.LogOutput,
                 toolSettings.LogInvocation,
+                toolSettings.LogTimestamp,
                 toolSettings.LogFile,
                 toolSettings.CustomLogger,
                 arguments.FilterSecrets);
@@ -48,6 +50,7 @@ namespace Nuke.Common.Tooling
             int? timeout = null,
             bool? logOutput = null,
             bool? logInvocation = null,
+            bool? logTimestamp = null,
             string logFile = null,
             Action<OutputType, string> customLogger = null,
             Func<string, string> outputFilter = null)
@@ -77,6 +80,7 @@ namespace Nuke.Common.Tooling
                 workingDirectory,
                 environmentVariables,
                 timeout,
+                logTimestamp ?? DefaultLogTimestamp,
                 logFile,
                 logOutput ?? DefaultLogOutput
                     ? customLogger ?? DefaultLogger
@@ -111,6 +115,7 @@ namespace Nuke.Common.Tooling
             [CanBeNull] string workingDirectory,
             [CanBeNull] IReadOnlyDictionary<string, string> environmentVariables,
             int? timeout,
+            bool logTimestamp,
             [CanBeNull] string logFile,
             [CanBeNull] Action<OutputType, string> logger,
             Func<string, string> outputFilter)
@@ -138,7 +143,7 @@ namespace Nuke.Common.Tooling
                 return null;
 
             var logStream = logFile != null ? new StreamWriter(File.Open(logFile, FileMode.Create)) : null;
-            var output = GetOutputCollection(process, logger, logStream, outputFilter);
+            var output = GetOutputCollection(process, logTimestamp, logger, logStream, outputFilter);
             return new Process2(process, outputFilter, timeout, logStream, output);
         }
 
@@ -157,11 +162,17 @@ namespace Nuke.Common.Tooling
 
         private static BlockingCollection<Output> GetOutputCollection(
             Process process,
+            bool logTimestamp,
             [CanBeNull] Action<OutputType, string> logger,
             [CanBeNull] StreamWriter logFile,
             Func<string, string> outputFilter)
         {
             var output = new BlockingCollection<Output>();
+
+            string GetProcessedOutput(string data)
+                => logTimestamp
+                    ? $"{DateTime.Now.ToLongTimeString()} {outputFilter.Invoke(data)}"
+                    : outputFilter.Invoke(data);
 
             process.OutputDataReceived += (s, e) =>
             {
@@ -170,9 +181,9 @@ namespace Nuke.Common.Tooling
 
                 output.Add(new Output { Text = e.Data, Type = OutputType.Std });
 
-                var filteredOutput = outputFilter(e.Data);
-                logFile?.WriteLine($"[STD] {filteredOutput}");
-                logger?.Invoke(OutputType.Std, filteredOutput);
+                var processedOutput = GetProcessedOutput(e.Data);
+                logFile?.WriteLine($"[STD] {processedOutput}");
+                logger?.Invoke(OutputType.Std, processedOutput);
             };
             process.ErrorDataReceived += (s, e) =>
             {
@@ -181,9 +192,9 @@ namespace Nuke.Common.Tooling
 
                 output.Add(new Output { Text = e.Data, Type = OutputType.Err });
 
-                var filteredOutput = outputFilter(e.Data);
-                logFile?.WriteLine($"[ERR] {filteredOutput}");
-                logger?.Invoke(OutputType.Err, filteredOutput);
+                var processedOutput = GetProcessedOutput(e.Data);
+                logFile?.WriteLine($"[ERR] {processedOutput}");
+                logger?.Invoke(OutputType.Err, processedOutput);
             };
 
             process.BeginOutputReadLine();
