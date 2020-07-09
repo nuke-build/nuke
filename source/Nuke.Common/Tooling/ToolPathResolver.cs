@@ -41,9 +41,7 @@ namespace Nuke.Common.Tooling
 
             var packageDirectory = GetPackageDirectory(packageId.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries), version);
             var packageExecutables = packageExecutable.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
-            var packageExecutablePaths = packageExecutables
-                .SelectMany(x => Directory.GetFiles(packageDirectory, x, SearchOption.AllDirectories))
-                .Where(x => x.Length > 0).ToList();
+            var packageExecutablePaths = packageExecutables.SelectMany(x => Directory.GetFiles(packageDirectory, x, SearchOption.AllDirectories)).ToList();
 
             ControlFlow.Assert(packageExecutablePaths.Count > 0,
                 $"Could not find {packageExecutables.Select(x => x.SingleQuote()).JoinCommaOr()} inside '{packageDirectory}'.");
@@ -58,15 +56,23 @@ namespace Nuke.Common.Tooling
                     : directory.Parent.NotNull().Name;
             }
 
-            var frameworks = packageExecutablePaths.ToDictionary(GetFramework, x => x, StringComparer.OrdinalIgnoreCase);
+            var frameworks = packageExecutablePaths.ToLookup(GetFramework, x => x, StringComparer.OrdinalIgnoreCase);
+
+            static string GetPackageExecutable(IEnumerable<string> executables)
+                => executables
+                    .OrderByDescending(x => x.EndsWithOrdinalIgnoreCase(".dll"))
+                    .ThenByDescending(x => EnvironmentInfo.IsWin && x.EndsWithOrdinalIgnoreCase(".exe"))
+                    .ThenByDescending(x => EnvironmentInfo.IsUnix && x.EndsWithOrdinalIgnoreCase(".sh")).ToList()
+                    .First();
+
             ControlFlow.Assert(frameworks.Count > 0, "frameworks.Count > 0");
             if (frameworks.Count == 1)
-                return frameworks.Values.Single();
+                return GetPackageExecutable(frameworks.Single());
 
-            ControlFlow.Assert(framework != null && frameworks.ContainsKey(framework),
+            ControlFlow.Assert(framework != null && frameworks.Contains(framework),
                 $"Package executable {packageExecutables.JoinCommaOr()} [{packageId}] requires a framework:"
-                    .Concat(frameworks.Keys.Select(x => $" - {x}")).JoinNewLine());
-            return frameworks[framework];
+                    .Concat(frameworks.Select(x => $" - {x.Key}")).JoinNewLine());
+            return GetPackageExecutable(frameworks[framework]);
         }
 
         private static string GetPackageDirectory(string[] packageIds, [CanBeNull] string version)
