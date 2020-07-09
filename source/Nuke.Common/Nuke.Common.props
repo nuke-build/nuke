@@ -5,8 +5,4 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
-  <ItemDefinitionGroup>
-    <NukeExternalFiles Visible="false" />
-  </ItemDefinitionGroup>
-
 </Project>
