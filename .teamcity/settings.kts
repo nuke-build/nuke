@@ -49,6 +49,12 @@ project {
             value = "Release",
             options = listOf("Debug" to "Debug", "Release" to "Release"),
             display = ParameterDisplay.NORMAL)
+        text (
+            "env.GitHubToken",
+            label = "GitHubToken",
+            value = "",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
         checkbox (
             "env.IgnoreFailedSources",
             label = "IgnoreFailedSources",
@@ -61,13 +67,6 @@ project {
             label = "Source",
             description = "NuGet Source for Packages",
             value = "https://api.nuget.org/v3/index.json",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        text (
-            "env.GitHubToken",
-            label = "GitHubToken",
-            description = "GitHub Token",
-            value = "",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         checkbox (
@@ -83,6 +82,30 @@ project {
             value = "False",
             checked = "True",
             unchecked = "False",
+            display = ParameterDisplay.NORMAL)
+        text (
+            "env.SignPathApiToken",
+            label = "SignPathApiToken",
+            value = "",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
+        text (
+            "env.SignPathOrganizationId",
+            label = "SignPathOrganizationId",
+            value = "",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
+        text (
+            "env.SignPathProjectKey",
+            label = "SignPathProjectKey",
+            value = "",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
+        text (
+            "env.SignPathPolicyKey",
+            label = "SignPathPolicyKey",
+            value = "",
+            allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         param(
             "teamcity.runner.commandline.stdstreams.encoding",
@@ -277,20 +300,6 @@ object Publish : BuildType({
             value = "",
             allowEmpty = false,
             display = ParameterDisplay.PROMPT)
-        text (
-            "env.SlackWebhook",
-            label = "SlackWebhook",
-            description = "Slack Webhook",
-            value = "",
-            allowEmpty = false,
-            display = ParameterDisplay.PROMPT)
-        text (
-            "env.GitterAuthToken",
-            label = "GitterAuthToken",
-            description = "Gitter Auth Token",
-            value = "",
-            allowEmpty = false,
-            display = ParameterDisplay.PROMPT)
     }
     dependencies {
         snapshot(Test) {
@@ -315,8 +324,46 @@ object Announce : BuildType({
     steps {
         exec {
             path = "build.cmd"
-            arguments = "Announce --skip"
+            arguments = "DownloadFonts InstallFonts ReleaseImage Announce --skip"
         }
+    }
+    params {
+        text (
+            "env.TwitterConsumerKey",
+            label = "TwitterConsumerKey",
+            value = "",
+            allowEmpty = false,
+            display = ParameterDisplay.PROMPT)
+        text (
+            "env.TwitterConsumerSecret",
+            label = "TwitterConsumerSecret",
+            value = "",
+            allowEmpty = false,
+            display = ParameterDisplay.PROMPT)
+        text (
+            "env.TwitterAccessToken",
+            label = "TwitterAccessToken",
+            value = "",
+            allowEmpty = false,
+            display = ParameterDisplay.PROMPT)
+        text (
+            "env.TwitterAccessTokenSecret",
+            label = "TwitterAccessTokenSecret",
+            value = "",
+            allowEmpty = false,
+            display = ParameterDisplay.PROMPT)
+        text (
+            "env.SlackWebhook",
+            label = "SlackWebhook",
+            value = "",
+            allowEmpty = false,
+            display = ParameterDisplay.PROMPT)
+        text (
+            "env.GitterAuthToken",
+            label = "GitterAuthToken",
+            value = "",
+            allowEmpty = false,
+            display = ParameterDisplay.PROMPT)
     }
     triggers {
         finishBuildTrigger {

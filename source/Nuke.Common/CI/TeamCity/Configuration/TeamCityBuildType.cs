@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using Nuke.Common.Execution;
 using Nuke.Common.Utilities;
+using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.CI.TeamCity.Configuration
 {

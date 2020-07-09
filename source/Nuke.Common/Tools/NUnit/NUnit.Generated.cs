@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.</p>
         ///   <p>For more details, visit the <a href="https://www.nunit.org/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> NUnit(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> NUnit(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(NUnitPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, NUnitLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(NUnitPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, NUnitLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -93,7 +93,7 @@ namespace Nuke.Common.Tools.NUnit
         public static IReadOnlyCollection<Output> NUnit3(NUnit3Settings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NUnit3Settings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -215,7 +215,7 @@ namespace Nuke.Common.Tools.NUnit
         public override string ToolPath => base.ToolPath ?? NUnitTasks.NUnitPath;
         public override Action<OutputType, string> CustomLogger => NUnitTasks.NUnitLogger;
         /// <summary>
-        ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
+        ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (<c>.nunit</c>) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
         /// </summary>
         public virtual IReadOnlyList<string> InputFiles => InputFilesInternal.AsReadOnly();
         internal List<string> InputFilesInternal { get; set; } = new List<string>();
@@ -229,24 +229,24 @@ namespace Nuke.Common.Tools.NUnit
         /// </summary>
         public virtual string TestListFile { get; internal set; }
         /// <summary>
-        ///   An expression indicating which tests to run. It may specify test names, classes, methods, catgories or properties comparing them to actual values with the operators ==, !=, =~ and !~. See Test Selection Language for a full description of the syntax.
+        ///   An expression indicating which tests to run. It may specify test names, classes, methods, catgories or properties comparing them to actual values with the operators <c>==</c>, <c>!=</c>, <c>=~</c> and <c>!~</c>. See Test Selection Language for a full description of the syntax.
         /// </summary>
         public virtual string WhereExpression { get; internal set; }
         /// <summary>
-        ///   A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the --params option multiple times.
+        ///   A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the <c>--params</c> option multiple times.
         /// </summary>
         public virtual IReadOnlyDictionary<string, string> Parameters => ParametersInternal.AsReadOnly();
         internal Dictionary<string, string> ParametersInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
-        ///   Name of a project configuration to load (e.g.: Debug).
+        ///   Name of a project configuration to load (e.g.: <c>Debug</c>).
         /// </summary>
         public virtual string Configuration { get; internal set; }
         /// <summary>
-        ///   Process isolation for test assemblies. Values: Single, Separate, Multiple. If not specified, defaults to Separate for a single assembly or Multiple for more than one. By default, processes are run in parallel.
+        ///   Process isolation for test assemblies. Values: <c>Single</c>, <c>Separate</c>, <c>Multiple</c>. If not specified, defaults to Separate for a single assembly or Multiple for more than one. By default, processes are run in parallel.
         /// </summary>
         public virtual NUnitProcessType Process { get; internal set; }
         /// <summary>
-        ///   This option is a synonym for --process=Single
+        ///   This option is a synonym for <c>--process=Single</c>
         /// </summary>
         public virtual bool? InProcess { get; internal set; }
         /// <summary>
@@ -254,11 +254,11 @@ namespace Nuke.Common.Tools.NUnit
         /// </summary>
         public virtual int? Agents { get; internal set; }
         /// <summary>
-        ///   Domain isolation for test assemblies. Values: None, Single, Multiple. If not specified, defaults to Single for a single assembly or Multiple for more than one.
+        ///   Domain isolation for test assemblies. Values: <c>None</c>, <c>Single</c>, <c>Multiple</c>. If not specified, defaults to <c>Single</c> for a single assembly or <c>Multiple</c> for more than one.
         /// </summary>
         public virtual string Domain { get; internal set; }
         /// <summary>
-        ///   Framework type/version to use for tests. Examples: mono, net-4.5, v4.0, 2.0, mono-4.0
+        ///   Framework type/version to use for tests. Examples: <c>mono</c>, <c>net-4.5,</c> <c>v4.0</c>, <c>2.0</c>, <c>mono-4.0</c>
         /// </summary>
         public virtual string Framework { get; internal set; }
         /// <summary>
@@ -278,7 +278,7 @@ namespace Nuke.Common.Tools.NUnit
         /// </summary>
         public virtual int? Seed { get; internal set; }
         /// <summary>
-        ///   Specify the number of worker threads to be used in running tests. This setting is used to control running your tests in parallel and is used in conjunction with the Parallelizable Attribute. If not specified, workers defaults to the number of processors on the machine, or 2, whichever is greater.
+        ///   Specify the number of worker threads to be used in running tests. This setting is used to control running your tests in parallel and is used in conjunction with the <c>Parallelizable</c> attribute. If not specified, workers defaults to the number of processors on the machine, or 2, whichever is greater.
         /// </summary>
         public virtual int? Workers { get; internal set; }
         /// <summary>
@@ -298,7 +298,7 @@ namespace Nuke.Common.Tools.NUnit
         /// </summary>
         public virtual bool? DebugAgent { get; internal set; }
         /// <summary>
-        ///   Causes NUnit to immediately open a message box, allowing you to attach a debugger. For cases where --debug does not work.
+        ///   Causes NUnit to immediately open a message box, allowing you to attach a debugger. For cases where <c>--debug </c>does not work.
         /// </summary>
         public virtual bool? Pause { get; internal set; }
         /// <summary>
@@ -332,15 +332,15 @@ namespace Nuke.Common.Tools.NUnit
         /// </summary>
         public virtual bool? NoResults { get; internal set; }
         /// <summary>
-        ///   Specify whether to write test case names to the output. Values: Off, On, All
+        ///   Specify whether to write test case names to the output. Values: <c>Off</c>, <c>On</c>, <c>All</c>
         /// </summary>
         public virtual NUnitLabelType Labels { get; internal set; }
         /// <summary>
-        ///   Set internal trace LEVEL. Values: Off, Error, Warning, Info, Verbose (Debug)
+        ///   Set internal trace level. Values: <c>Off</c>, !<c>Error</c>, <c>Warning</c>, <c>Info</c>, <c>Verbose</c> (<c>Debug</c>)
         /// </summary>
         public virtual NUnitTraceLevel Trace { get; internal set; }
         /// <summary>
-        ///   Specify the console codepage, such as utf-8, ascii, etc. This option is not normally needed unless your output includes special characters. The page specified must be available on the system.
+        ///   Specify the console codepage, such as <c>utf-8</c>, <c>ascii</c>cc, etc. This option is not normally needed unless your output includes special characters. The page specified must be available on the system.
         /// </summary>
         public virtual string Encoding { get; internal set; }
         /// <summary>
@@ -360,7 +360,7 @@ namespace Nuke.Common.Tools.NUnit
         /// </summary>
         public virtual bool? ListExtensions { get; internal set; }
         /// <summary>
-        ///   Set the principal policy for the test domain to POLICY. Values: UnauthenticatedPrincipal, NoPrincipal, WindowsPrincipal
+        ///   Set the principal policy for the test domain. Values: <c>UnauthenticatedPrincipal</c>, <c>NoPrincipal</c>, <c>WindowsPrincipal</c>
         /// </summary>
         public virtual NUnitPrincipalPolicy SetPrincipalPolicy { get; internal set; }
         /// <summary>
@@ -427,7 +427,7 @@ namespace Nuke.Common.Tools.NUnit
         #region InputFiles
         /// <summary>
         ///   <p><em>Sets <see cref="NUnit3Settings.InputFiles"/> to a new list</em></p>
-        ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
+        ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (<c>.nunit</c>) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
         /// </summary>
         [Pure]
         public static T SetInputFiles<T>(this T toolSettings, params string[] inputFiles) where T : NUnit3Settings
@@ -438,7 +438,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Sets <see cref="NUnit3Settings.InputFiles"/> to a new list</em></p>
-        ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
+        ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (<c>.nunit</c>) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
         /// </summary>
         [Pure]
         public static T SetInputFiles<T>(this T toolSettings, IEnumerable<string> inputFiles) where T : NUnit3Settings
@@ -449,7 +449,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Adds values to <see cref="NUnit3Settings.InputFiles"/></em></p>
-        ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
+        ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (<c>.nunit</c>) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
         /// </summary>
         [Pure]
         public static T AddInputFiles<T>(this T toolSettings, params string[] inputFiles) where T : NUnit3Settings
@@ -460,7 +460,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Adds values to <see cref="NUnit3Settings.InputFiles"/></em></p>
-        ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
+        ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (<c>.nunit</c>) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
         /// </summary>
         [Pure]
         public static T AddInputFiles<T>(this T toolSettings, IEnumerable<string> inputFiles) where T : NUnit3Settings
@@ -471,7 +471,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Clears <see cref="NUnit3Settings.InputFiles"/></em></p>
-        ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
+        ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (<c>.nunit</c>) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
         /// </summary>
         [Pure]
         public static T ClearInputFiles<T>(this T toolSettings) where T : NUnit3Settings
@@ -482,7 +482,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Removes values from <see cref="NUnit3Settings.InputFiles"/></em></p>
-        ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
+        ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (<c>.nunit</c>) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
         /// </summary>
         [Pure]
         public static T RemoveInputFiles<T>(this T toolSettings, params string[] inputFiles) where T : NUnit3Settings
@@ -494,7 +494,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Removes values from <see cref="NUnit3Settings.InputFiles"/></em></p>
-        ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
+        ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (<c>.nunit</c>) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
         /// </summary>
         [Pure]
         public static T RemoveInputFiles<T>(this T toolSettings, IEnumerable<string> inputFiles) where T : NUnit3Settings
@@ -613,7 +613,7 @@ namespace Nuke.Common.Tools.NUnit
         #region WhereExpression
         /// <summary>
         ///   <p><em>Sets <see cref="NUnit3Settings.WhereExpression"/></em></p>
-        ///   <p>An expression indicating which tests to run. It may specify test names, classes, methods, catgories or properties comparing them to actual values with the operators ==, !=, =~ and !~. See Test Selection Language for a full description of the syntax.</p>
+        ///   <p>An expression indicating which tests to run. It may specify test names, classes, methods, catgories or properties comparing them to actual values with the operators <c>==</c>, <c>!=</c>, <c>=~</c> and <c>!~</c>. See Test Selection Language for a full description of the syntax.</p>
         /// </summary>
         [Pure]
         public static T SetWhereExpression<T>(this T toolSettings, string whereExpression) where T : NUnit3Settings
@@ -624,7 +624,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Resets <see cref="NUnit3Settings.WhereExpression"/></em></p>
-        ///   <p>An expression indicating which tests to run. It may specify test names, classes, methods, catgories or properties comparing them to actual values with the operators ==, !=, =~ and !~. See Test Selection Language for a full description of the syntax.</p>
+        ///   <p>An expression indicating which tests to run. It may specify test names, classes, methods, catgories or properties comparing them to actual values with the operators <c>==</c>, <c>!=</c>, <c>=~</c> and <c>!~</c>. See Test Selection Language for a full description of the syntax.</p>
         /// </summary>
         [Pure]
         public static T ResetWhereExpression<T>(this T toolSettings) where T : NUnit3Settings
@@ -637,7 +637,7 @@ namespace Nuke.Common.Tools.NUnit
         #region Parameters
         /// <summary>
         ///   <p><em>Sets <see cref="NUnit3Settings.Parameters"/> to a new dictionary</em></p>
-        ///   <p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the --params option multiple times.</p>
+        ///   <p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the <c>--params</c> option multiple times.</p>
         /// </summary>
         [Pure]
         public static T SetParameters<T>(this T toolSettings, IDictionary<string, string> parameters) where T : NUnit3Settings
@@ -648,7 +648,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Clears <see cref="NUnit3Settings.Parameters"/></em></p>
-        ///   <p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the --params option multiple times.</p>
+        ///   <p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the <c>--params</c> option multiple times.</p>
         /// </summary>
         [Pure]
         public static T ClearParameters<T>(this T toolSettings) where T : NUnit3Settings
@@ -659,7 +659,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Adds a new key-value-pair <see cref="NUnit3Settings.Parameters"/></em></p>
-        ///   <p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the --params option multiple times.</p>
+        ///   <p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the <c>--params</c> option multiple times.</p>
         /// </summary>
         [Pure]
         public static T AddParameter<T>(this T toolSettings, string parameterKey, string parameterValue) where T : NUnit3Settings
@@ -670,7 +670,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Removes a key-value-pair from <see cref="NUnit3Settings.Parameters"/></em></p>
-        ///   <p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the --params option multiple times.</p>
+        ///   <p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the <c>--params</c> option multiple times.</p>
         /// </summary>
         [Pure]
         public static T RemoveParameter<T>(this T toolSettings, string parameterKey) where T : NUnit3Settings
@@ -681,7 +681,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Sets a key-value-pair in <see cref="NUnit3Settings.Parameters"/></em></p>
-        ///   <p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the --params option multiple times.</p>
+        ///   <p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the <c>--params</c> option multiple times.</p>
         /// </summary>
         [Pure]
         public static T SetParameter<T>(this T toolSettings, string parameterKey, string parameterValue) where T : NUnit3Settings
@@ -694,7 +694,7 @@ namespace Nuke.Common.Tools.NUnit
         #region Configuration
         /// <summary>
         ///   <p><em>Sets <see cref="NUnit3Settings.Configuration"/></em></p>
-        ///   <p>Name of a project configuration to load (e.g.: Debug).</p>
+        ///   <p>Name of a project configuration to load (e.g.: <c>Debug</c>).</p>
         /// </summary>
         [Pure]
         public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : NUnit3Settings
@@ -705,7 +705,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Resets <see cref="NUnit3Settings.Configuration"/></em></p>
-        ///   <p>Name of a project configuration to load (e.g.: Debug).</p>
+        ///   <p>Name of a project configuration to load (e.g.: <c>Debug</c>).</p>
         /// </summary>
         [Pure]
         public static T ResetConfiguration<T>(this T toolSettings) where T : NUnit3Settings
@@ -718,7 +718,7 @@ namespace Nuke.Common.Tools.NUnit
         #region Process
         /// <summary>
         ///   <p><em>Sets <see cref="NUnit3Settings.Process"/></em></p>
-        ///   <p>Process isolation for test assemblies. Values: Single, Separate, Multiple. If not specified, defaults to Separate for a single assembly or Multiple for more than one. By default, processes are run in parallel.</p>
+        ///   <p>Process isolation for test assemblies. Values: <c>Single</c>, <c>Separate</c>, <c>Multiple</c>. If not specified, defaults to Separate for a single assembly or Multiple for more than one. By default, processes are run in parallel.</p>
         /// </summary>
         [Pure]
         public static T SetProcess<T>(this T toolSettings, NUnitProcessType process) where T : NUnit3Settings
@@ -729,7 +729,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Resets <see cref="NUnit3Settings.Process"/></em></p>
-        ///   <p>Process isolation for test assemblies. Values: Single, Separate, Multiple. If not specified, defaults to Separate for a single assembly or Multiple for more than one. By default, processes are run in parallel.</p>
+        ///   <p>Process isolation for test assemblies. Values: <c>Single</c>, <c>Separate</c>, <c>Multiple</c>. If not specified, defaults to Separate for a single assembly or Multiple for more than one. By default, processes are run in parallel.</p>
         /// </summary>
         [Pure]
         public static T ResetProcess<T>(this T toolSettings) where T : NUnit3Settings
@@ -742,7 +742,7 @@ namespace Nuke.Common.Tools.NUnit
         #region InProcess
         /// <summary>
         ///   <p><em>Sets <see cref="NUnit3Settings.InProcess"/></em></p>
-        ///   <p>This option is a synonym for --process=Single</p>
+        ///   <p>This option is a synonym for <c>--process=Single</c></p>
         /// </summary>
         [Pure]
         public static T SetInProcess<T>(this T toolSettings, bool? inProcess) where T : NUnit3Settings
@@ -753,7 +753,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Resets <see cref="NUnit3Settings.InProcess"/></em></p>
-        ///   <p>This option is a synonym for --process=Single</p>
+        ///   <p>This option is a synonym for <c>--process=Single</c></p>
         /// </summary>
         [Pure]
         public static T ResetInProcess<T>(this T toolSettings) where T : NUnit3Settings
@@ -764,7 +764,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Enables <see cref="NUnit3Settings.InProcess"/></em></p>
-        ///   <p>This option is a synonym for --process=Single</p>
+        ///   <p>This option is a synonym for <c>--process=Single</c></p>
         /// </summary>
         [Pure]
         public static T EnableInProcess<T>(this T toolSettings) where T : NUnit3Settings
@@ -775,7 +775,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Disables <see cref="NUnit3Settings.InProcess"/></em></p>
-        ///   <p>This option is a synonym for --process=Single</p>
+        ///   <p>This option is a synonym for <c>--process=Single</c></p>
         /// </summary>
         [Pure]
         public static T DisableInProcess<T>(this T toolSettings) where T : NUnit3Settings
@@ -786,7 +786,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Toggles <see cref="NUnit3Settings.InProcess"/></em></p>
-        ///   <p>This option is a synonym for --process=Single</p>
+        ///   <p>This option is a synonym for <c>--process=Single</c></p>
         /// </summary>
         [Pure]
         public static T ToggleInProcess<T>(this T toolSettings) where T : NUnit3Settings
@@ -823,7 +823,7 @@ namespace Nuke.Common.Tools.NUnit
         #region Domain
         /// <summary>
         ///   <p><em>Sets <see cref="NUnit3Settings.Domain"/></em></p>
-        ///   <p>Domain isolation for test assemblies. Values: None, Single, Multiple. If not specified, defaults to Single for a single assembly or Multiple for more than one.</p>
+        ///   <p>Domain isolation for test assemblies. Values: <c>None</c>, <c>Single</c>, <c>Multiple</c>. If not specified, defaults to <c>Single</c> for a single assembly or <c>Multiple</c> for more than one.</p>
         /// </summary>
         [Pure]
         public static T SetDomain<T>(this T toolSettings, string domain) where T : NUnit3Settings
@@ -834,7 +834,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Resets <see cref="NUnit3Settings.Domain"/></em></p>
-        ///   <p>Domain isolation for test assemblies. Values: None, Single, Multiple. If not specified, defaults to Single for a single assembly or Multiple for more than one.</p>
+        ///   <p>Domain isolation for test assemblies. Values: <c>None</c>, <c>Single</c>, <c>Multiple</c>. If not specified, defaults to <c>Single</c> for a single assembly or <c>Multiple</c> for more than one.</p>
         /// </summary>
         [Pure]
         public static T ResetDomain<T>(this T toolSettings) where T : NUnit3Settings
@@ -847,7 +847,7 @@ namespace Nuke.Common.Tools.NUnit
         #region Framework
         /// <summary>
         ///   <p><em>Sets <see cref="NUnit3Settings.Framework"/></em></p>
-        ///   <p>Framework type/version to use for tests. Examples: mono, net-4.5, v4.0, 2.0, mono-4.0</p>
+        ///   <p>Framework type/version to use for tests. Examples: <c>mono</c>, <c>net-4.5,</c> <c>v4.0</c>, <c>2.0</c>, <c>mono-4.0</c></p>
         /// </summary>
         [Pure]
         public static T SetFramework<T>(this T toolSettings, string framework) where T : NUnit3Settings
@@ -858,7 +858,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Resets <see cref="NUnit3Settings.Framework"/></em></p>
-        ///   <p>Framework type/version to use for tests. Examples: mono, net-4.5, v4.0, 2.0, mono-4.0</p>
+        ///   <p>Framework type/version to use for tests. Examples: <c>mono</c>, <c>net-4.5,</c> <c>v4.0</c>, <c>2.0</c>, <c>mono-4.0</c></p>
         /// </summary>
         [Pure]
         public static T ResetFramework<T>(this T toolSettings) where T : NUnit3Settings
@@ -1033,7 +1033,7 @@ namespace Nuke.Common.Tools.NUnit
         #region Workers
         /// <summary>
         ///   <p><em>Sets <see cref="NUnit3Settings.Workers"/></em></p>
-        ///   <p>Specify the number of worker threads to be used in running tests. This setting is used to control running your tests in parallel and is used in conjunction with the Parallelizable Attribute. If not specified, workers defaults to the number of processors on the machine, or 2, whichever is greater.</p>
+        ///   <p>Specify the number of worker threads to be used in running tests. This setting is used to control running your tests in parallel and is used in conjunction with the <c>Parallelizable</c> attribute. If not specified, workers defaults to the number of processors on the machine, or 2, whichever is greater.</p>
         /// </summary>
         [Pure]
         public static T SetWorkers<T>(this T toolSettings, int? workers) where T : NUnit3Settings
@@ -1044,7 +1044,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Resets <see cref="NUnit3Settings.Workers"/></em></p>
-        ///   <p>Specify the number of worker threads to be used in running tests. This setting is used to control running your tests in parallel and is used in conjunction with the Parallelizable Attribute. If not specified, workers defaults to the number of processors on the machine, or 2, whichever is greater.</p>
+        ///   <p>Specify the number of worker threads to be used in running tests. This setting is used to control running your tests in parallel and is used in conjunction with the <c>Parallelizable</c> attribute. If not specified, workers defaults to the number of processors on the machine, or 2, whichever is greater.</p>
         /// </summary>
         [Pure]
         public static T ResetWorkers<T>(this T toolSettings) where T : NUnit3Settings
@@ -1285,7 +1285,7 @@ namespace Nuke.Common.Tools.NUnit
         #region Pause
         /// <summary>
         ///   <p><em>Sets <see cref="NUnit3Settings.Pause"/></em></p>
-        ///   <p>Causes NUnit to immediately open a message box, allowing you to attach a debugger. For cases where --debug does not work.</p>
+        ///   <p>Causes NUnit to immediately open a message box, allowing you to attach a debugger. For cases where <c>--debug </c>does not work.</p>
         /// </summary>
         [Pure]
         public static T SetPause<T>(this T toolSettings, bool? pause) where T : NUnit3Settings
@@ -1296,7 +1296,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Resets <see cref="NUnit3Settings.Pause"/></em></p>
-        ///   <p>Causes NUnit to immediately open a message box, allowing you to attach a debugger. For cases where --debug does not work.</p>
+        ///   <p>Causes NUnit to immediately open a message box, allowing you to attach a debugger. For cases where <c>--debug </c>does not work.</p>
         /// </summary>
         [Pure]
         public static T ResetPause<T>(this T toolSettings) where T : NUnit3Settings
@@ -1307,7 +1307,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Enables <see cref="NUnit3Settings.Pause"/></em></p>
-        ///   <p>Causes NUnit to immediately open a message box, allowing you to attach a debugger. For cases where --debug does not work.</p>
+        ///   <p>Causes NUnit to immediately open a message box, allowing you to attach a debugger. For cases where <c>--debug </c>does not work.</p>
         /// </summary>
         [Pure]
         public static T EnablePause<T>(this T toolSettings) where T : NUnit3Settings
@@ -1318,7 +1318,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Disables <see cref="NUnit3Settings.Pause"/></em></p>
-        ///   <p>Causes NUnit to immediately open a message box, allowing you to attach a debugger. For cases where --debug does not work.</p>
+        ///   <p>Causes NUnit to immediately open a message box, allowing you to attach a debugger. For cases where <c>--debug </c>does not work.</p>
         /// </summary>
         [Pure]
         public static T DisablePause<T>(this T toolSettings) where T : NUnit3Settings
@@ -1329,7 +1329,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Toggles <see cref="NUnit3Settings.Pause"/></em></p>
-        ///   <p>Causes NUnit to immediately open a message box, allowing you to attach a debugger. For cases where --debug does not work.</p>
+        ///   <p>Causes NUnit to immediately open a message box, allowing you to attach a debugger. For cases where <c>--debug </c>does not work.</p>
         /// </summary>
         [Pure]
         public static T TogglePause<T>(this T toolSettings) where T : NUnit3Settings
@@ -1690,7 +1690,7 @@ namespace Nuke.Common.Tools.NUnit
         #region Labels
         /// <summary>
         ///   <p><em>Sets <see cref="NUnit3Settings.Labels"/></em></p>
-        ///   <p>Specify whether to write test case names to the output. Values: Off, On, All</p>
+        ///   <p>Specify whether to write test case names to the output. Values: <c>Off</c>, <c>On</c>, <c>All</c></p>
         /// </summary>
         [Pure]
         public static T SetLabels<T>(this T toolSettings, NUnitLabelType labels) where T : NUnit3Settings
@@ -1701,7 +1701,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Resets <see cref="NUnit3Settings.Labels"/></em></p>
-        ///   <p>Specify whether to write test case names to the output. Values: Off, On, All</p>
+        ///   <p>Specify whether to write test case names to the output. Values: <c>Off</c>, <c>On</c>, <c>All</c></p>
         /// </summary>
         [Pure]
         public static T ResetLabels<T>(this T toolSettings) where T : NUnit3Settings
@@ -1714,7 +1714,7 @@ namespace Nuke.Common.Tools.NUnit
         #region Trace
         /// <summary>
         ///   <p><em>Sets <see cref="NUnit3Settings.Trace"/></em></p>
-        ///   <p>Set internal trace LEVEL. Values: Off, Error, Warning, Info, Verbose (Debug)</p>
+        ///   <p>Set internal trace level. Values: <c>Off</c>, !<c>Error</c>, <c>Warning</c>, <c>Info</c>, <c>Verbose</c> (<c>Debug</c>)</p>
         /// </summary>
         [Pure]
         public static T SetTrace<T>(this T toolSettings, NUnitTraceLevel trace) where T : NUnit3Settings
@@ -1725,7 +1725,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Resets <see cref="NUnit3Settings.Trace"/></em></p>
-        ///   <p>Set internal trace LEVEL. Values: Off, Error, Warning, Info, Verbose (Debug)</p>
+        ///   <p>Set internal trace level. Values: <c>Off</c>, !<c>Error</c>, <c>Warning</c>, <c>Info</c>, <c>Verbose</c> (<c>Debug</c>)</p>
         /// </summary>
         [Pure]
         public static T ResetTrace<T>(this T toolSettings) where T : NUnit3Settings
@@ -1738,7 +1738,7 @@ namespace Nuke.Common.Tools.NUnit
         #region Encoding
         /// <summary>
         ///   <p><em>Sets <see cref="NUnit3Settings.Encoding"/></em></p>
-        ///   <p>Specify the console codepage, such as utf-8, ascii, etc. This option is not normally needed unless your output includes special characters. The page specified must be available on the system.</p>
+        ///   <p>Specify the console codepage, such as <c>utf-8</c>, <c>ascii</c>cc, etc. This option is not normally needed unless your output includes special characters. The page specified must be available on the system.</p>
         /// </summary>
         [Pure]
         public static T SetEncoding<T>(this T toolSettings, string encoding) where T : NUnit3Settings
@@ -1749,7 +1749,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Resets <see cref="NUnit3Settings.Encoding"/></em></p>
-        ///   <p>Specify the console codepage, such as utf-8, ascii, etc. This option is not normally needed unless your output includes special characters. The page specified must be available on the system.</p>
+        ///   <p>Specify the console codepage, such as <c>utf-8</c>, <c>ascii</c>cc, etc. This option is not normally needed unless your output includes special characters. The page specified must be available on the system.</p>
         /// </summary>
         [Pure]
         public static T ResetEncoding<T>(this T toolSettings) where T : NUnit3Settings
@@ -1990,7 +1990,7 @@ namespace Nuke.Common.Tools.NUnit
         #region SetPrincipalPolicy
         /// <summary>
         ///   <p><em>Sets <see cref="NUnit3Settings.SetPrincipalPolicy"/></em></p>
-        ///   <p>Set the principal policy for the test domain to POLICY. Values: UnauthenticatedPrincipal, NoPrincipal, WindowsPrincipal</p>
+        ///   <p>Set the principal policy for the test domain. Values: <c>UnauthenticatedPrincipal</c>, <c>NoPrincipal</c>, <c>WindowsPrincipal</c></p>
         /// </summary>
         [Pure]
         public static T SetSetPrincipalPolicy<T>(this T toolSettings, NUnitPrincipalPolicy setPrincipalPolicy) where T : NUnit3Settings
@@ -2001,7 +2001,7 @@ namespace Nuke.Common.Tools.NUnit
         }
         /// <summary>
         ///   <p><em>Resets <see cref="NUnit3Settings.SetPrincipalPolicy"/></em></p>
-        ///   <p>Set the principal policy for the test domain to POLICY. Values: UnauthenticatedPrincipal, NoPrincipal, WindowsPrincipal</p>
+        ///   <p>Set the principal policy for the test domain. Values: <c>UnauthenticatedPrincipal</c>, <c>NoPrincipal</c>, <c>WindowsPrincipal</c></p>
         /// </summary>
         [Pure]
         public static T ResetSetPrincipalPolicy<T>(this T toolSettings) where T : NUnit3Settings

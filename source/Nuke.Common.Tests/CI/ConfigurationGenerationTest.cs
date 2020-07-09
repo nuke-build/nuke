@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using ApprovalTests;
@@ -16,6 +17,7 @@ using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
+using Nuke.Common.Tooling;
 using Xunit;
 
 namespace Nuke.Common.Tests.CI
@@ -195,6 +197,18 @@ namespace Nuke.Common.Tests.CI
             public Target Announce => _ => _
                 .TriggeredBy(Publish)
                 .AssuredAfterFailure();
+        }
+
+        [TypeConverter(typeof(TypeConverter<Configuration>))]
+        public class Configuration : Enumeration
+        {
+            public static Configuration Debug = new Configuration { Value = nameof(Debug) };
+            public static Configuration Release = new Configuration { Value = nameof(Release) };
+
+            public static implicit operator string(Configuration configuration)
+            {
+                return configuration.Value;
+            }
         }
     }
 }

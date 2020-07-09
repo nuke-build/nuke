@@ -9,6 +9,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
+using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common
 {
@@ -109,6 +110,11 @@ namespace Nuke.Common
         public static T GetVariable<T>(string parameterName, char? separator = null)
         {
             return (T) s_parameterService.GetEnvironmentVariable(parameterName, typeof(T), separator);
+        }
+
+        public static bool HasArgument(MemberInfo member)
+        {
+            return s_parameterService.HasCommandLineArgument(ParameterService.GetParameterMemberName(member));
         }
     }
 }

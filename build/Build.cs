@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Nuke.Common;
 using Nuke.Common.CI;
 using Nuke.Common.CI.AppVeyor;
@@ -24,24 +23,21 @@ using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.InspectCode;
 using Nuke.Common.Tools.ReportGenerator;
-using Nuke.Common.Tools.Slack;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.ControlFlow;
-using static Nuke.Common.Gitter.GitterTasks;
 using static Nuke.Common.IO.CompressionTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
 using static Nuke.Common.Tools.InspectCode.InspectCodeTasks;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
-using static Nuke.Common.Tools.Slack.SlackTasks;
 
 [CheckBuildProjectConfigurations]
 [DotNetVerbosityMapping]
 [UnsetVisualStudioEnvironmentVariables]
-[ShutdownDotNetBuildServerOnFinish]
+[ShutdownDotNetAfterServerBuild]
 [TeamCitySetDotCoverHomePath]
 [TeamCity(
     TeamCityAgentPlatform.Windows,
@@ -49,8 +45,8 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
     VcsTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
     NightlyTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
     ManuallyTriggeredTargets = new[] { nameof(Publish) },
-    NonEntryTargets = new[] { nameof(Restore) },
-    ExcludedTargets = new[] { nameof(Clean) })]
+    NonEntryTargets = new[] { nameof(Restore), nameof(DownloadFonts), nameof(InstallFonts), nameof(ReleaseImage) },
+    ExcludedTargets = new[] { nameof(Clean), nameof(SignPackages) })]
 [GitHubActions(
     "continuous",
     GitHubActionsImage.MacOs1014,
@@ -65,6 +61,7 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
 [AppVeyor(
     AppVeyorImage.VisualStudio2019,
     AppVeyorImage.Ubuntu1804,
+    AutoGenerate = false,
     SkipTags = true,
     InvokedTargets = new[] { nameof(Test), nameof(Pack) })]
 [AzurePipelines(
@@ -73,8 +70,8 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
     AzurePipelinesImage.WindowsLatest,
     AzurePipelinesImage.MacOsLatest,
     InvokedTargets = new[] { nameof(Test), nameof(Pack) },
-    NonEntryTargets = new[] { nameof(Restore) },
-    ExcludedTargets = new[] { nameof(Clean), nameof(Coverage) })]
+    NonEntryTargets = new[] { nameof(Restore), nameof(DownloadFonts), nameof(InstallFonts), nameof(ReleaseImage) },
+    ExcludedTargets = new[] { nameof(Clean), nameof(Coverage), nameof(SignPackages) })]
 partial class Build : NukeBuild
 {
     /// Support plugins are available for:
@@ -87,9 +84,9 @@ partial class Build : NukeBuild
     [CI] readonly TeamCity TeamCity;
     [CI] readonly AzurePipelines AzurePipelines;
 
-    [GitRepository] readonly GitRepository GitRepository;
-    [GitVersion(NoFetch = true)] readonly GitVersion GitVersion;
-    [Solution] readonly Solution Solution;
+    [Required] [GitRepository] readonly GitRepository GitRepository;
+    [Required] [GitVersion(NoFetch = true)] readonly GitVersion GitVersion;
+    [Required] [Solution] readonly Solution Solution;
 
     AbsolutePath OutputDirectory => RootDirectory / "output";
     AbsolutePath SourceDirectory => RootDirectory / "source";
@@ -154,6 +151,7 @@ partial class Build : NukeBuild
 
     string ChangelogFile => RootDirectory / "CHANGELOG.md";
     AbsolutePath PackageDirectory => OutputDirectory / "packages";
+    IReadOnlyCollection<AbsolutePath> PackageFiles => PackageDirectory.GlobFiles("*.nupkg");
     IEnumerable<string> ChangelogSectionNotes => ExtractChangelogSectionNotes(ChangelogFile);
 
     Target Pack => _ => _
@@ -250,17 +248,11 @@ partial class Build : NukeBuild
     [Parameter("NuGet Api Key")] readonly string ApiKey;
     [Parameter("NuGet Source for Packages")] readonly string Source = "https://api.nuget.org/v3/index.json";
 
-    [Parameter("GitHub Token")] readonly string GitHubToken;
-    [Parameter("Gitter Auth Token")] readonly string GitterAuthToken;
-    [Parameter("Slack Webhook")] readonly string SlackWebhook;
-
     Target Publish => _ => _
         .ProceedAfterFailure()
         .DependsOn(Clean, Test, Pack)
         .Consumes(Pack)
         .Requires(() => ApiKey)
-        .Requires(() => SlackWebhook)
-        .Requires(() => GitterAuthToken)
         .Requires(() => GitHasCleanWorkingCopy())
         .Requires(() => Configuration.Equals(Configuration.Release))
         .Requires(() => GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch) ||
@@ -269,36 +261,15 @@ partial class Build : NukeBuild
                         GitRepository.Branch.StartsWithOrdinalIgnoreCase(HotfixBranchPrefix))
         .Executes(() =>
         {
-            var packages = PackageDirectory.GlobFiles("*.nupkg");
-            Assert(packages.Count == 4, "packages.Count == 4");
+            Assert(PackageFiles.Count == 5, "packages.Count == 5");
 
             DotNetNuGetPush(_ => _
                     .SetSource(Source)
                     .SetApiKey(ApiKey)
-                    .CombineWith(packages, (_, v) => _
+                    .CombineWith(PackageFiles, (_, v) => _
                         .SetTargetPath(v)),
                 degreeOfParallelism: 5,
                 completeOnFailure: true);
-        });
-
-    Target Announce => _ => _
-        .TriggeredBy(Publish)
-        .OnlyWhenStatic(() => GitRepository.IsOnMasterBranch())
-        .Executes(() =>
-        {
-            SendSlackMessage(_ => _
-                    .SetText(new StringBuilder()
-                        .AppendLine($"<!here> :mega::shipit: *NUKE {GitVersion.SemVer} IS OUT!!!*")
-                        .AppendLine()
-                        .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "• ")).JoinNewLine()).ToString()),
-                SlackWebhook);
-
-            SendGitterMessage(new StringBuilder()
-                    .AppendLine($"@/all :mega::shipit: **NUKE {GitVersion.SemVer} IS OUT!!!**")
-                    .AppendLine()
-                    .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "* ")).JoinNewLine()).ToString(),
-                "593f3dadd73408ce4f66db89",
-                GitterAuthToken);
         });
 
     Target Install => _ => _

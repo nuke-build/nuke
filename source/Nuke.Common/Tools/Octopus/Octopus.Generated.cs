@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>Octopus Deploy is an automated deployment server, which you install yourself, much like you would install SQL Server, Team Foundation Server or JetBrains TeamCity. Octopus makes it easy to automate deployment of ASP.NET web applications and Windows Services into development, test and production environments.<para/>Along with the Octopus Deploy server, you'll also install a lightweight agent service on each of the machines that you plan to deploy to, for example your web and application servers. We call this the Tentacle agent; the idea being that one Octopus server controls many Tentacles, potentially a lot more than 8! With Octopus and Tentacle, you can easily deploy to your own servers, or cloud services from providers like Amazon Web Services or Microsoft Azure.</p>
         ///   <p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Octopus(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Octopus(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(OctopusPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, OctopusLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(OctopusPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, OctopusLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -68,7 +68,7 @@ namespace Nuke.Common.Tools.Octopus
         public static IReadOnlyCollection<Output> OctopusPack(OctopusPackSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new OctopusPackSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -152,7 +152,7 @@ namespace Nuke.Common.Tools.Octopus
         public static IReadOnlyCollection<Output> OctopusPush(OctopusPushSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new OctopusPushSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -269,7 +269,7 @@ namespace Nuke.Common.Tools.Octopus
         public static IReadOnlyCollection<Output> OctopusCreateRelease(OctopusCreateReleaseSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new OctopusCreateReleaseSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -432,7 +432,7 @@ namespace Nuke.Common.Tools.Octopus
         public static IReadOnlyCollection<Output> OctopusDeployRelease(OctopusDeployReleaseSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new OctopusDeployReleaseSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }

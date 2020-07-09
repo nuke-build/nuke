@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>npm is the package manager for the Node JavaScript platform. It puts modules in place so that node can find them, and manages dependency conflicts intelligently.<para/>It is extremely configurable to support a wide variety of use cases. Most commonly, it is used to publish, discover, install, and develop node programs.</p>
         ///   <p>For more details, visit the <a href="https://www.npmjs.com/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Npm(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Npm(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(NpmPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, NpmLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(NpmPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, NpmLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -53,7 +53,7 @@ namespace Nuke.Common.Tools.Npm
         public static IReadOnlyCollection<Output> NpmCi(NpmCiSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NpmCiSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -104,7 +104,7 @@ namespace Nuke.Common.Tools.Npm
         public static IReadOnlyCollection<Output> NpmInstall(NpmInstallSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NpmInstallSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -174,7 +174,7 @@ namespace Nuke.Common.Tools.Npm
         public static IReadOnlyCollection<Output> NpmRun(NpmRunSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NpmRunSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }

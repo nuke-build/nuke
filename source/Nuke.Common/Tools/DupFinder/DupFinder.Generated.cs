@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>dupFinder is a free command line tool that finds duplicates in C# and Visual Basic .NET code - no more, no less. But being a JetBrains tool, dupFinder does it in a smart way. By default, it considers code fragments as duplicates not only if they are identical, but also if they are structurally similar, even if they contain different variables, fields, methods, types or literals. Of course, you can configure the allowed similarity as well as the minimum relative size of duplicated fragments.</p>
         ///   <p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/dupFinder.html">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> DupFinder(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> DupFinder(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(DupFinderPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, DupFinderLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(DupFinderPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, DupFinderLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -70,7 +70,7 @@ namespace Nuke.Common.Tools.DupFinder
         public static IReadOnlyCollection<Output> DupFinder(DupFinderSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DupFinderSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -187,7 +187,7 @@ namespace Nuke.Common.Tools.DupFinder
         /// <summary>
         ///   Allows setting a threshold for code complexity of the duplicated fragments. The fragments with lower complexity are discarded as non-duplicates. The value for this option is provided in relative units. Using this option, you can filter out equal code fragments that present no semantic duplication. E.g. you can often have the following statements in tests: <c>Assert.AreEqual(gold, result);</c>. If the <c>discard-cost</c> value is less than 10, statements like that will appear as duplicates, which is obviously unhelpful. You'll need to play a bit with this value to find a balance between avoiding false positives and missing real duplicates. The proper values will differ for different codebases.
         /// </summary>
-        public virtual bool? DiscardCost { get; internal set; }
+        public virtual int? DiscardCost { get; internal set; }
         /// <summary>
         ///   Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.
         /// </summary>
@@ -764,7 +764,7 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>Allows setting a threshold for code complexity of the duplicated fragments. The fragments with lower complexity are discarded as non-duplicates. The value for this option is provided in relative units. Using this option, you can filter out equal code fragments that present no semantic duplication. E.g. you can often have the following statements in tests: <c>Assert.AreEqual(gold, result);</c>. If the <c>discard-cost</c> value is less than 10, statements like that will appear as duplicates, which is obviously unhelpful. You'll need to play a bit with this value to find a balance between avoiding false positives and missing real duplicates. The proper values will differ for different codebases.</p>
         /// </summary>
         [Pure]
-        public static T SetDiscardCost<T>(this T toolSettings, bool? discardCost) where T : DupFinderSettings
+        public static T SetDiscardCost<T>(this T toolSettings, int? discardCost) where T : DupFinderSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardCost = discardCost;
@@ -779,39 +779,6 @@ namespace Nuke.Common.Tools.DupFinder
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DiscardCost = null;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Enables <see cref="DupFinderSettings.DiscardCost"/></em></p>
-        ///   <p>Allows setting a threshold for code complexity of the duplicated fragments. The fragments with lower complexity are discarded as non-duplicates. The value for this option is provided in relative units. Using this option, you can filter out equal code fragments that present no semantic duplication. E.g. you can often have the following statements in tests: <c>Assert.AreEqual(gold, result);</c>. If the <c>discard-cost</c> value is less than 10, statements like that will appear as duplicates, which is obviously unhelpful. You'll need to play a bit with this value to find a balance between avoiding false positives and missing real duplicates. The proper values will differ for different codebases.</p>
-        /// </summary>
-        [Pure]
-        public static T EnableDiscardCost<T>(this T toolSettings) where T : DupFinderSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DiscardCost = true;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Disables <see cref="DupFinderSettings.DiscardCost"/></em></p>
-        ///   <p>Allows setting a threshold for code complexity of the duplicated fragments. The fragments with lower complexity are discarded as non-duplicates. The value for this option is provided in relative units. Using this option, you can filter out equal code fragments that present no semantic duplication. E.g. you can often have the following statements in tests: <c>Assert.AreEqual(gold, result);</c>. If the <c>discard-cost</c> value is less than 10, statements like that will appear as duplicates, which is obviously unhelpful. You'll need to play a bit with this value to find a balance between avoiding false positives and missing real duplicates. The proper values will differ for different codebases.</p>
-        /// </summary>
-        [Pure]
-        public static T DisableDiscardCost<T>(this T toolSettings) where T : DupFinderSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DiscardCost = false;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Toggles <see cref="DupFinderSettings.DiscardCost"/></em></p>
-        ///   <p>Allows setting a threshold for code complexity of the duplicated fragments. The fragments with lower complexity are discarded as non-duplicates. The value for this option is provided in relative units. Using this option, you can filter out equal code fragments that present no semantic duplication. E.g. you can often have the following statements in tests: <c>Assert.AreEqual(gold, result);</c>. If the <c>discard-cost</c> value is less than 10, statements like that will appear as duplicates, which is obviously unhelpful. You'll need to play a bit with this value to find a balance between avoiding false positives and missing real duplicates. The proper values will differ for different codebases.</p>
-        /// </summary>
-        [Pure]
-        public static T ToggleDiscardCost<T>(this T toolSettings) where T : DupFinderSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DiscardCost = !toolSettings.DiscardCost;
             return toolSettings;
         }
         #endregion

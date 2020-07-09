@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.NuGet
         ///   <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> NuGet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> NuGet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(NuGetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, NuGetLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(NuGetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, NuGetLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -67,7 +67,7 @@ namespace Nuke.Common.Tools.NuGet
         public static IReadOnlyCollection<Output> NuGetPush(NuGetPushSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetPushSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -153,7 +153,7 @@ namespace Nuke.Common.Tools.NuGet
         public static IReadOnlyCollection<Output> NuGetPack(NuGetPackSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetPackSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -254,7 +254,7 @@ namespace Nuke.Common.Tools.NuGet
         public static IReadOnlyCollection<Output> NuGetRestore(NuGetRestoreSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetRestoreSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -352,7 +352,7 @@ namespace Nuke.Common.Tools.NuGet
         public static IReadOnlyCollection<Output> NuGetInstall(NuGetInstallSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetInstallSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -439,7 +439,7 @@ namespace Nuke.Common.Tools.NuGet
         public static IReadOnlyCollection<Output> NuGetSourcesAdd(NuGetSourcesAddSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetSourcesAddSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -508,7 +508,7 @@ namespace Nuke.Common.Tools.NuGet
         public static IReadOnlyCollection<Output> NuGetSourcesUpdate(NuGetSourcesUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetSourcesUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -573,7 +573,7 @@ namespace Nuke.Common.Tools.NuGet
         public static IReadOnlyCollection<Output> NuGetSourcesRemove(NuGetSourcesRemoveSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetSourcesRemoveSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -630,7 +630,7 @@ namespace Nuke.Common.Tools.NuGet
         public static IReadOnlyCollection<Output> NuGetSourcesEnable(NuGetSourcesEnableSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetSourcesEnableSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -687,7 +687,7 @@ namespace Nuke.Common.Tools.NuGet
         public static IReadOnlyCollection<Output> NuGetSourcesDisable(NuGetSourcesDisableSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetSourcesDisableSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -744,7 +744,7 @@ namespace Nuke.Common.Tools.NuGet
         public static IReadOnlyCollection<Output> NuGetSourcesList(NuGetSourcesListSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetSourcesListSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }

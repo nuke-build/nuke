@@ -80,5 +80,82 @@ namespace Nuke.Common.Tests.Execution
                 .After(B)
                 .Before(C);
         }
+
+        [Fact]
+        public void TestInheritance()
+        {
+            var build = new TestFinalBuild();
+            var targets = ExecutableTargetFactory.CreateAll(build);
+
+            var shared = targets.Single(x => x.Name == nameof(TestFinalBuild.SharedTarget));
+            var specific = targets.Single(x => x.Name == nameof(TestFinalBuild.SpecificTarget));
+
+            shared.Actions.Should().HaveCount(1);
+            shared.ExecutionDependencies.Single().Name.Should().Be(nameof(TestFinalBuild.SpecificTarget));
+            shared.Description.Should().Be(nameof(TestFinalBuild.SharedTarget));
+
+            specific.Actions.Should().HaveCount(1);
+            specific.OrderDependencies.Single().Name.Should().Be(nameof(TestFinalBuild.SharedTarget));
+            specific.Description.Should().Be(nameof(TestFinalBuild.SpecificTarget));
+
+            targets.Should().HaveCount(7);
+            targets.Single(x => x.Name == nameof(ITestSharedBuild.AbstractSharedTarget)).Description.Should().Be("RIGHT");
+            targets.Single(x => x.Name == nameof(ITestSharedBuild.ExplicitSharedTarget)).Description.Should().Be("RIGHT");
+            targets.Single(x => x.Name == nameof(IAnotherSharedBuild.ExplicitTargetWithDefault)).Description.Should().Be("RIGHT");
+            targets.Single(x => x.Name == nameof(IAnotherSharedBuild.ExplicitTargetWithoutDefault)).Description.Should().Be("RIGHT");
+            targets.Single(x => x.Name == nameof(IAnotherSharedBuild.TargetWithDefault)).Description.Should().Be("RIGHT");
+        }
+
+        private interface ITestSharedBuild
+        {
+            Target SharedTarget => _ => _
+                .Executes(() => { });
+
+            Target AbstractSharedTarget { get; }
+            Target ExplicitSharedTarget => _ => _.Description("WRONG");
+        }
+
+        private class TestBaseBuild : NukeBuild
+        {
+            public virtual Target SpecificTarget => _ => _
+                .Executes(() => { });
+        }
+
+        private abstract class TestIntermediateBuild : TestBaseBuild, ITestSharedBuild
+        {
+            public override Target SpecificTarget => _ => _
+                .Base()
+                .After(SharedTarget);
+
+            public virtual Target SharedTarget => _ => _
+                .Inherit<ITestSharedBuild>(x => x.SharedTarget)
+                .DependsOn(SpecificTarget);
+
+            public abstract Target AbstractSharedTarget { get; }
+            Target ITestSharedBuild.ExplicitSharedTarget => _ => _.Description("RIGHT");
+        }
+
+        private interface IAnotherSharedBuild
+        {
+            Target ExplicitTargetWithDefault => _ => _.Description("WRONG");
+            Target ExplicitTargetWithoutDefault { get; }
+            Target TargetWithDefault => _ => _.Description("RIGHT");
+        }
+
+        private class TestFinalBuild : TestIntermediateBuild, IAnotherSharedBuild
+        {
+            public override Target SpecificTarget => _ => _
+                .Base()
+                .Description(nameof(SpecificTarget));
+
+            public override Target SharedTarget => _ => _
+                .Base()
+                .Description(nameof(SharedTarget));
+
+            public override Target AbstractSharedTarget => _ => _.Description("RIGHT");
+
+            Target IAnotherSharedBuild.ExplicitTargetWithDefault => _ => _.Description("RIGHT");
+            Target IAnotherSharedBuild.ExplicitTargetWithoutDefault => _ => _.Description("RIGHT");
+        }
     }
 }

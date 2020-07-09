@@ -1,18 +1,31 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\source\Nuke.Common\Nuke.Common.props" />
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace></RootNamespace>
     <NoWarn>CS0649;CS0169</NoWarn>
     <NukeRootDirectory>.\..</NukeRootDirectory>
+  </PropertyGroup>
 
-    <!-- Test properties for MSBuild integration -->
+  <!-- Test properties for MSBuild integration -->
+  <PropertyGroup>
     <NukeMSBuildIntegration Condition="'$(NukeMSBuildIntegration)' == ''">False</NukeMSBuildIntegration>
+    <NukeMSBuildTasks>$(MSBuildThisFileDirectory)\..\source\Nuke.MSBuildTasks\bin\Debug\netcoreapp2.1\publish</NukeMSBuildTasks>
 <!--    <PackAsTool>True</PackAsTool>-->
 <!--    <ToolCommandName>build</ToolCommandName>-->
   </PropertyGroup>
+
+<!--  <ItemGroup>-->
+<!--    <NukeExternalFiles Include="https://github.com/nuke-build/common/tree/develop/source/Nuke.GlobalTool/templates" BasePath="..\download">-->
+<!--      <TargetFramework>Bla</TargetFramework>-->
+<!--      <GitVersion />-->
+<!--      <NuGetSource>https://www.myget.org/F/matkoch/api/v2/package</NuGetSource>-->
+<!--      <NukeVersion>9999.0.0</NukeVersion>-->
+<!--    </NukeExternalFiles>-->
+<!--  </ItemGroup>-->
 
   <PropertyGroup>
     <DefineConstants>$(Configuration.ToUpper())</DefineConstants>
@@ -21,18 +34,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- https://github.com/nuke-build/common/tree/develop/source/Nuke.GlobalTool/templates -->
-    <!-- https://github.com/nuke-build/common/blob/develop/source/Nuke.GlobalTool/templates/_build.sdk.csproj -->
-    <!-- http,s://raw.githubusercontent.com/nuke-build/common/develop/source/Nuke.GlobalTool/templates/_build.sdk.csproj -->
-<!--    <NukeExternalFiles Include="https://github.com/nuke-build/common/tree/develop/source/Nuke.GlobalTool/templates" BasePath="..\download">-->
-<!--      <TargetFramework>Bla</TargetFramework>-->
-<!--      <GitVersion />-->
-<!--      <NuGetSource>https://www.myget.org/F/matkoch/api/v2/package</NuGetSource>-->
-<!--      <NukeVersion>6.6.6</NukeVersion>-->
-<!--    </NukeExternalFiles>-->
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0008" />
+    <PackageReference Include="tweetinviapi" Version="5.0.0-alpha-6" />
     <PackageDownload Include="GitVersion.Tool" Version="[5.1.1]" />
     <PackageDownload Include="JetBrains.dotCover.CommandLineTools" Version="[2019.2.2]" />
     <PackageDownload Include="JetBrains.ReSharper.CommandLineTools" Version="[2019.2.1]" />
@@ -42,7 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\source\Nuke.Common\Nuke.Common.csproj" />
+    <ProjectReference Include="..\source\Nuke.Components\Nuke.Components.csproj" />
     <ProjectReference Include="..\source\Nuke.CodeGeneration\Nuke.CodeGeneration.csproj" />
   </ItemGroup>
 

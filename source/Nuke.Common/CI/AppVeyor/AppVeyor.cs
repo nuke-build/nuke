@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Tooling;
@@ -49,6 +50,7 @@ namespace Nuke.Common.CI.AppVeyor
 
         private readonly Tool _cli;
 
+        public string Url => EnvironmentInfo.GetVariable<string>("APPVEYOR_URL");
         public string ApiUrl => EnvironmentInfo.GetVariable<string>("APPVEYOR_API_URL");
         public string AccountName => EnvironmentInfo.GetVariable<string>("APPVEYOR_ACCOUNT_NAME");
         public int ProjectId => EnvironmentInfo.GetVariable<int>("APPVEYOR_PROJECT_ID");
@@ -82,9 +84,16 @@ namespace Nuke.Common.CI.AppVeyor
         [CanBeNull] public string Platform => EnvironmentInfo.GetVariable<string>("PLATFORM");
         [CanBeNull] public string Configuration => EnvironmentInfo.GetVariable<string>("CONFIGURATION");
 
-        public void UpdateBuildNumber(string version)
+        public void UpdateBuildVersion(string version)
         {
             _cli.Invoke($"UpdateBuild -Version {version.DoubleQuote()}");
+            EnvironmentInfo.SetVariable("APPVEYOR_BUILD_VERSION", version);
+        }
+
+        public void PushArtifact(string path, string name = null)
+        {
+            name ??= Path.GetFileName(path);
+            _cli.Invoke($"PushArtifact {path} -FileName {name}");
         }
 
         public void WriteInformation(string message, string details = null)

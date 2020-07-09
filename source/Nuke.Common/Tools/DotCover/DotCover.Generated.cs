@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
         ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> DotCover(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> DotCover(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(DotCoverPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, DotCoverLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(DotCoverPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, DotCoverLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -51,30 +51,30 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverAnalyseSettings.Configuration"/></li>
-        ///     <li><c>/AllowSymbolServerAccess</c> via <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/></li>
-        ///     <li><c>/AnalyseTargetArguments</c> via <see cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/></li>
-        ///     <li><c>/AttributeFilters</c> via <see cref="DotCoverAnalyseSettings.AttributeFilters"/></li>
-        ///     <li><c>/DisableDefaultFilters</c> via <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/></li>
-        ///     <li><c>/Filters</c> via <see cref="DotCoverAnalyseSettings.Filters"/></li>
-        ///     <li><c>/HideAutoProperties</c> via <see cref="DotCoverAnalyseSettings.HideAutoProperties"/></li>
-        ///     <li><c>/InheritConsole</c> via <see cref="DotCoverAnalyseSettings.InheritConsole"/></li>
-        ///     <li><c>/LogFile</c> via <see cref="DotCoverAnalyseSettings.LogFile"/></li>
-        ///     <li><c>/Output</c> via <see cref="DotCoverAnalyseSettings.OutputFile"/></li>
-        ///     <li><c>/ProcessFilters</c> via <see cref="DotCoverAnalyseSettings.ProcessFilters"/></li>
-        ///     <li><c>/ReportType</c> via <see cref="DotCoverAnalyseSettings.ReportType"/></li>
-        ///     <li><c>/ReturnTargetExitCode</c> via <see cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/></li>
-        ///     <li><c>/Scope</c> via <see cref="DotCoverAnalyseSettings.Scope"/></li>
-        ///     <li><c>/SymbolSearchPaths</c> via <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/></li>
-        ///     <li><c>/TargetArguments</c> via <see cref="DotCoverAnalyseSettings.TargetArguments"/></li>
-        ///     <li><c>/TargetExecutable</c> via <see cref="DotCoverAnalyseSettings.TargetExecutable"/></li>
-        ///     <li><c>/TargetWorkingDir</c> via <see cref="DotCoverAnalyseSettings.TargetWorkingDirectory"/></li>
-        ///     <li><c>/TempDir</c> via <see cref="DotCoverAnalyseSettings.TempDirectory"/></li>
+        ///     <li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/></li>
+        ///     <li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/></li>
+        ///     <li><c>--AttributeFilters</c> via <see cref="DotCoverAnalyseSettings.AttributeFilters"/></li>
+        ///     <li><c>--DisableDefaultFilters</c> via <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/></li>
+        ///     <li><c>--Filters</c> via <see cref="DotCoverAnalyseSettings.Filters"/></li>
+        ///     <li><c>--HideAutoProperties</c> via <see cref="DotCoverAnalyseSettings.HideAutoProperties"/></li>
+        ///     <li><c>--InheritConsole</c> via <see cref="DotCoverAnalyseSettings.InheritConsole"/></li>
+        ///     <li><c>--LogFile</c> via <see cref="DotCoverAnalyseSettings.LogFile"/></li>
+        ///     <li><c>--Output</c> via <see cref="DotCoverAnalyseSettings.OutputFile"/></li>
+        ///     <li><c>--ProcessFilters</c> via <see cref="DotCoverAnalyseSettings.ProcessFilters"/></li>
+        ///     <li><c>--ReportType</c> via <see cref="DotCoverAnalyseSettings.ReportType"/></li>
+        ///     <li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/></li>
+        ///     <li><c>--Scope</c> via <see cref="DotCoverAnalyseSettings.Scope"/></li>
+        ///     <li><c>--SymbolSearchPaths</c> via <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/></li>
+        ///     <li><c>--TargetArguments</c> via <see cref="DotCoverAnalyseSettings.TargetArguments"/></li>
+        ///     <li><c>--TargetExecutable</c> via <see cref="DotCoverAnalyseSettings.TargetExecutable"/></li>
+        ///     <li><c>--TargetWorkingDir</c> via <see cref="DotCoverAnalyseSettings.TargetWorkingDirectory"/></li>
+        ///     <li><c>--TempDir</c> via <see cref="DotCoverAnalyseSettings.TempDirectory"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotCoverAnalyse(DotCoverAnalyseSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotCoverAnalyseSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -86,24 +86,24 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverAnalyseSettings.Configuration"/></li>
-        ///     <li><c>/AllowSymbolServerAccess</c> via <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/></li>
-        ///     <li><c>/AnalyseTargetArguments</c> via <see cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/></li>
-        ///     <li><c>/AttributeFilters</c> via <see cref="DotCoverAnalyseSettings.AttributeFilters"/></li>
-        ///     <li><c>/DisableDefaultFilters</c> via <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/></li>
-        ///     <li><c>/Filters</c> via <see cref="DotCoverAnalyseSettings.Filters"/></li>
-        ///     <li><c>/HideAutoProperties</c> via <see cref="DotCoverAnalyseSettings.HideAutoProperties"/></li>
-        ///     <li><c>/InheritConsole</c> via <see cref="DotCoverAnalyseSettings.InheritConsole"/></li>
-        ///     <li><c>/LogFile</c> via <see cref="DotCoverAnalyseSettings.LogFile"/></li>
-        ///     <li><c>/Output</c> via <see cref="DotCoverAnalyseSettings.OutputFile"/></li>
-        ///     <li><c>/ProcessFilters</c> via <see cref="DotCoverAnalyseSettings.ProcessFilters"/></li>
-        ///     <li><c>/ReportType</c> via <see cref="DotCoverAnalyseSettings.ReportType"/></li>
-        ///     <li><c>/ReturnTargetExitCode</c> via <see cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/></li>
-        ///     <li><c>/Scope</c> via <see cref="DotCoverAnalyseSettings.Scope"/></li>
-        ///     <li><c>/SymbolSearchPaths</c> via <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/></li>
-        ///     <li><c>/TargetArguments</c> via <see cref="DotCoverAnalyseSettings.TargetArguments"/></li>
-        ///     <li><c>/TargetExecutable</c> via <see cref="DotCoverAnalyseSettings.TargetExecutable"/></li>
-        ///     <li><c>/TargetWorkingDir</c> via <see cref="DotCoverAnalyseSettings.TargetWorkingDirectory"/></li>
-        ///     <li><c>/TempDir</c> via <see cref="DotCoverAnalyseSettings.TempDirectory"/></li>
+        ///     <li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/></li>
+        ///     <li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/></li>
+        ///     <li><c>--AttributeFilters</c> via <see cref="DotCoverAnalyseSettings.AttributeFilters"/></li>
+        ///     <li><c>--DisableDefaultFilters</c> via <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/></li>
+        ///     <li><c>--Filters</c> via <see cref="DotCoverAnalyseSettings.Filters"/></li>
+        ///     <li><c>--HideAutoProperties</c> via <see cref="DotCoverAnalyseSettings.HideAutoProperties"/></li>
+        ///     <li><c>--InheritConsole</c> via <see cref="DotCoverAnalyseSettings.InheritConsole"/></li>
+        ///     <li><c>--LogFile</c> via <see cref="DotCoverAnalyseSettings.LogFile"/></li>
+        ///     <li><c>--Output</c> via <see cref="DotCoverAnalyseSettings.OutputFile"/></li>
+        ///     <li><c>--ProcessFilters</c> via <see cref="DotCoverAnalyseSettings.ProcessFilters"/></li>
+        ///     <li><c>--ReportType</c> via <see cref="DotCoverAnalyseSettings.ReportType"/></li>
+        ///     <li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/></li>
+        ///     <li><c>--Scope</c> via <see cref="DotCoverAnalyseSettings.Scope"/></li>
+        ///     <li><c>--SymbolSearchPaths</c> via <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/></li>
+        ///     <li><c>--TargetArguments</c> via <see cref="DotCoverAnalyseSettings.TargetArguments"/></li>
+        ///     <li><c>--TargetExecutable</c> via <see cref="DotCoverAnalyseSettings.TargetExecutable"/></li>
+        ///     <li><c>--TargetWorkingDir</c> via <see cref="DotCoverAnalyseSettings.TargetWorkingDirectory"/></li>
+        ///     <li><c>--TempDir</c> via <see cref="DotCoverAnalyseSettings.TempDirectory"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotCoverAnalyse(Configure<DotCoverAnalyseSettings> configurator)
@@ -118,24 +118,24 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverAnalyseSettings.Configuration"/></li>
-        ///     <li><c>/AllowSymbolServerAccess</c> via <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/></li>
-        ///     <li><c>/AnalyseTargetArguments</c> via <see cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/></li>
-        ///     <li><c>/AttributeFilters</c> via <see cref="DotCoverAnalyseSettings.AttributeFilters"/></li>
-        ///     <li><c>/DisableDefaultFilters</c> via <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/></li>
-        ///     <li><c>/Filters</c> via <see cref="DotCoverAnalyseSettings.Filters"/></li>
-        ///     <li><c>/HideAutoProperties</c> via <see cref="DotCoverAnalyseSettings.HideAutoProperties"/></li>
-        ///     <li><c>/InheritConsole</c> via <see cref="DotCoverAnalyseSettings.InheritConsole"/></li>
-        ///     <li><c>/LogFile</c> via <see cref="DotCoverAnalyseSettings.LogFile"/></li>
-        ///     <li><c>/Output</c> via <see cref="DotCoverAnalyseSettings.OutputFile"/></li>
-        ///     <li><c>/ProcessFilters</c> via <see cref="DotCoverAnalyseSettings.ProcessFilters"/></li>
-        ///     <li><c>/ReportType</c> via <see cref="DotCoverAnalyseSettings.ReportType"/></li>
-        ///     <li><c>/ReturnTargetExitCode</c> via <see cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/></li>
-        ///     <li><c>/Scope</c> via <see cref="DotCoverAnalyseSettings.Scope"/></li>
-        ///     <li><c>/SymbolSearchPaths</c> via <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/></li>
-        ///     <li><c>/TargetArguments</c> via <see cref="DotCoverAnalyseSettings.TargetArguments"/></li>
-        ///     <li><c>/TargetExecutable</c> via <see cref="DotCoverAnalyseSettings.TargetExecutable"/></li>
-        ///     <li><c>/TargetWorkingDir</c> via <see cref="DotCoverAnalyseSettings.TargetWorkingDirectory"/></li>
-        ///     <li><c>/TempDir</c> via <see cref="DotCoverAnalyseSettings.TempDirectory"/></li>
+        ///     <li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/></li>
+        ///     <li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/></li>
+        ///     <li><c>--AttributeFilters</c> via <see cref="DotCoverAnalyseSettings.AttributeFilters"/></li>
+        ///     <li><c>--DisableDefaultFilters</c> via <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/></li>
+        ///     <li><c>--Filters</c> via <see cref="DotCoverAnalyseSettings.Filters"/></li>
+        ///     <li><c>--HideAutoProperties</c> via <see cref="DotCoverAnalyseSettings.HideAutoProperties"/></li>
+        ///     <li><c>--InheritConsole</c> via <see cref="DotCoverAnalyseSettings.InheritConsole"/></li>
+        ///     <li><c>--LogFile</c> via <see cref="DotCoverAnalyseSettings.LogFile"/></li>
+        ///     <li><c>--Output</c> via <see cref="DotCoverAnalyseSettings.OutputFile"/></li>
+        ///     <li><c>--ProcessFilters</c> via <see cref="DotCoverAnalyseSettings.ProcessFilters"/></li>
+        ///     <li><c>--ReportType</c> via <see cref="DotCoverAnalyseSettings.ReportType"/></li>
+        ///     <li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/></li>
+        ///     <li><c>--Scope</c> via <see cref="DotCoverAnalyseSettings.Scope"/></li>
+        ///     <li><c>--SymbolSearchPaths</c> via <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/></li>
+        ///     <li><c>--TargetArguments</c> via <see cref="DotCoverAnalyseSettings.TargetArguments"/></li>
+        ///     <li><c>--TargetExecutable</c> via <see cref="DotCoverAnalyseSettings.TargetExecutable"/></li>
+        ///     <li><c>--TargetWorkingDir</c> via <see cref="DotCoverAnalyseSettings.TargetWorkingDirectory"/></li>
+        ///     <li><c>--TempDir</c> via <see cref="DotCoverAnalyseSettings.TempDirectory"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(DotCoverAnalyseSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverAnalyse(CombinatorialConfigure<DotCoverAnalyseSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -150,29 +150,29 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverCoverSettings.Configuration"/></li>
-        ///     <li><c>/AllowSymbolServerAccess</c> via <see cref="DotCoverCoverSettings.AllowSymbolServerAccess"/></li>
-        ///     <li><c>/AnalyseTargetArguments</c> via <see cref="DotCoverCoverSettings.AnalyseTargetArguments"/></li>
-        ///     <li><c>/AttributeFilters</c> via <see cref="DotCoverCoverSettings.AttributeFilters"/></li>
-        ///     <li><c>/DisableDefaultFilters</c> via <see cref="DotCoverCoverSettings.DisableDefaultFilters"/></li>
-        ///     <li><c>/Filters</c> via <see cref="DotCoverCoverSettings.Filters"/></li>
-        ///     <li><c>/InheritConsole</c> via <see cref="DotCoverCoverSettings.InheritConsole"/></li>
-        ///     <li><c>/LogFile</c> via <see cref="DotCoverCoverSettings.LogFile"/></li>
-        ///     <li><c>/Output</c> via <see cref="DotCoverCoverSettings.OutputFile"/></li>
-        ///     <li><c>/ProcessFilters</c> via <see cref="DotCoverCoverSettings.ProcessFilters"/></li>
-        ///     <li><c>/ReportType</c> via <see cref="DotCoverCoverSettings.ReportType"/></li>
-        ///     <li><c>/ReturnTargetExitCode</c> via <see cref="DotCoverCoverSettings.ReturnTargetExitCode"/></li>
-        ///     <li><c>/Scope</c> via <see cref="DotCoverCoverSettings.Scope"/></li>
-        ///     <li><c>/SymbolSearchPaths</c> via <see cref="DotCoverCoverSettings.SymbolSearchPaths"/></li>
-        ///     <li><c>/TargetArguments</c> via <see cref="DotCoverCoverSettings.TargetArguments"/></li>
-        ///     <li><c>/TargetExecutable</c> via <see cref="DotCoverCoverSettings.TargetExecutable"/></li>
-        ///     <li><c>/TargetWorkingDir</c> via <see cref="DotCoverCoverSettings.TargetWorkingDirectory"/></li>
-        ///     <li><c>/TempDir</c> via <see cref="DotCoverCoverSettings.TempDirectory"/></li>
+        ///     <li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverCoverSettings.AllowSymbolServerAccess"/></li>
+        ///     <li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverCoverSettings.AnalyseTargetArguments"/></li>
+        ///     <li><c>--AttributeFilters</c> via <see cref="DotCoverCoverSettings.AttributeFilters"/></li>
+        ///     <li><c>--DisableDefaultFilters</c> via <see cref="DotCoverCoverSettings.DisableDefaultFilters"/></li>
+        ///     <li><c>--Filters</c> via <see cref="DotCoverCoverSettings.Filters"/></li>
+        ///     <li><c>--InheritConsole</c> via <see cref="DotCoverCoverSettings.InheritConsole"/></li>
+        ///     <li><c>--LogFile</c> via <see cref="DotCoverCoverSettings.LogFile"/></li>
+        ///     <li><c>--Output</c> via <see cref="DotCoverCoverSettings.OutputFile"/></li>
+        ///     <li><c>--ProcessFilters</c> via <see cref="DotCoverCoverSettings.ProcessFilters"/></li>
+        ///     <li><c>--ReportType</c> via <see cref="DotCoverCoverSettings.ReportType"/></li>
+        ///     <li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverCoverSettings.ReturnTargetExitCode"/></li>
+        ///     <li><c>--Scope</c> via <see cref="DotCoverCoverSettings.Scope"/></li>
+        ///     <li><c>--SymbolSearchPaths</c> via <see cref="DotCoverCoverSettings.SymbolSearchPaths"/></li>
+        ///     <li><c>--TargetArguments</c> via <see cref="DotCoverCoverSettings.TargetArguments"/></li>
+        ///     <li><c>--TargetExecutable</c> via <see cref="DotCoverCoverSettings.TargetExecutable"/></li>
+        ///     <li><c>--TargetWorkingDir</c> via <see cref="DotCoverCoverSettings.TargetWorkingDirectory"/></li>
+        ///     <li><c>--TempDir</c> via <see cref="DotCoverCoverSettings.TempDirectory"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotCoverCover(DotCoverCoverSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotCoverCoverSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -184,23 +184,23 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverCoverSettings.Configuration"/></li>
-        ///     <li><c>/AllowSymbolServerAccess</c> via <see cref="DotCoverCoverSettings.AllowSymbolServerAccess"/></li>
-        ///     <li><c>/AnalyseTargetArguments</c> via <see cref="DotCoverCoverSettings.AnalyseTargetArguments"/></li>
-        ///     <li><c>/AttributeFilters</c> via <see cref="DotCoverCoverSettings.AttributeFilters"/></li>
-        ///     <li><c>/DisableDefaultFilters</c> via <see cref="DotCoverCoverSettings.DisableDefaultFilters"/></li>
-        ///     <li><c>/Filters</c> via <see cref="DotCoverCoverSettings.Filters"/></li>
-        ///     <li><c>/InheritConsole</c> via <see cref="DotCoverCoverSettings.InheritConsole"/></li>
-        ///     <li><c>/LogFile</c> via <see cref="DotCoverCoverSettings.LogFile"/></li>
-        ///     <li><c>/Output</c> via <see cref="DotCoverCoverSettings.OutputFile"/></li>
-        ///     <li><c>/ProcessFilters</c> via <see cref="DotCoverCoverSettings.ProcessFilters"/></li>
-        ///     <li><c>/ReportType</c> via <see cref="DotCoverCoverSettings.ReportType"/></li>
-        ///     <li><c>/ReturnTargetExitCode</c> via <see cref="DotCoverCoverSettings.ReturnTargetExitCode"/></li>
-        ///     <li><c>/Scope</c> via <see cref="DotCoverCoverSettings.Scope"/></li>
-        ///     <li><c>/SymbolSearchPaths</c> via <see cref="DotCoverCoverSettings.SymbolSearchPaths"/></li>
-        ///     <li><c>/TargetArguments</c> via <see cref="DotCoverCoverSettings.TargetArguments"/></li>
-        ///     <li><c>/TargetExecutable</c> via <see cref="DotCoverCoverSettings.TargetExecutable"/></li>
-        ///     <li><c>/TargetWorkingDir</c> via <see cref="DotCoverCoverSettings.TargetWorkingDirectory"/></li>
-        ///     <li><c>/TempDir</c> via <see cref="DotCoverCoverSettings.TempDirectory"/></li>
+        ///     <li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverCoverSettings.AllowSymbolServerAccess"/></li>
+        ///     <li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverCoverSettings.AnalyseTargetArguments"/></li>
+        ///     <li><c>--AttributeFilters</c> via <see cref="DotCoverCoverSettings.AttributeFilters"/></li>
+        ///     <li><c>--DisableDefaultFilters</c> via <see cref="DotCoverCoverSettings.DisableDefaultFilters"/></li>
+        ///     <li><c>--Filters</c> via <see cref="DotCoverCoverSettings.Filters"/></li>
+        ///     <li><c>--InheritConsole</c> via <see cref="DotCoverCoverSettings.InheritConsole"/></li>
+        ///     <li><c>--LogFile</c> via <see cref="DotCoverCoverSettings.LogFile"/></li>
+        ///     <li><c>--Output</c> via <see cref="DotCoverCoverSettings.OutputFile"/></li>
+        ///     <li><c>--ProcessFilters</c> via <see cref="DotCoverCoverSettings.ProcessFilters"/></li>
+        ///     <li><c>--ReportType</c> via <see cref="DotCoverCoverSettings.ReportType"/></li>
+        ///     <li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverCoverSettings.ReturnTargetExitCode"/></li>
+        ///     <li><c>--Scope</c> via <see cref="DotCoverCoverSettings.Scope"/></li>
+        ///     <li><c>--SymbolSearchPaths</c> via <see cref="DotCoverCoverSettings.SymbolSearchPaths"/></li>
+        ///     <li><c>--TargetArguments</c> via <see cref="DotCoverCoverSettings.TargetArguments"/></li>
+        ///     <li><c>--TargetExecutable</c> via <see cref="DotCoverCoverSettings.TargetExecutable"/></li>
+        ///     <li><c>--TargetWorkingDir</c> via <see cref="DotCoverCoverSettings.TargetWorkingDirectory"/></li>
+        ///     <li><c>--TempDir</c> via <see cref="DotCoverCoverSettings.TempDirectory"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotCoverCover(Configure<DotCoverCoverSettings> configurator)
@@ -215,23 +215,23 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverCoverSettings.Configuration"/></li>
-        ///     <li><c>/AllowSymbolServerAccess</c> via <see cref="DotCoverCoverSettings.AllowSymbolServerAccess"/></li>
-        ///     <li><c>/AnalyseTargetArguments</c> via <see cref="DotCoverCoverSettings.AnalyseTargetArguments"/></li>
-        ///     <li><c>/AttributeFilters</c> via <see cref="DotCoverCoverSettings.AttributeFilters"/></li>
-        ///     <li><c>/DisableDefaultFilters</c> via <see cref="DotCoverCoverSettings.DisableDefaultFilters"/></li>
-        ///     <li><c>/Filters</c> via <see cref="DotCoverCoverSettings.Filters"/></li>
-        ///     <li><c>/InheritConsole</c> via <see cref="DotCoverCoverSettings.InheritConsole"/></li>
-        ///     <li><c>/LogFile</c> via <see cref="DotCoverCoverSettings.LogFile"/></li>
-        ///     <li><c>/Output</c> via <see cref="DotCoverCoverSettings.OutputFile"/></li>
-        ///     <li><c>/ProcessFilters</c> via <see cref="DotCoverCoverSettings.ProcessFilters"/></li>
-        ///     <li><c>/ReportType</c> via <see cref="DotCoverCoverSettings.ReportType"/></li>
-        ///     <li><c>/ReturnTargetExitCode</c> via <see cref="DotCoverCoverSettings.ReturnTargetExitCode"/></li>
-        ///     <li><c>/Scope</c> via <see cref="DotCoverCoverSettings.Scope"/></li>
-        ///     <li><c>/SymbolSearchPaths</c> via <see cref="DotCoverCoverSettings.SymbolSearchPaths"/></li>
-        ///     <li><c>/TargetArguments</c> via <see cref="DotCoverCoverSettings.TargetArguments"/></li>
-        ///     <li><c>/TargetExecutable</c> via <see cref="DotCoverCoverSettings.TargetExecutable"/></li>
-        ///     <li><c>/TargetWorkingDir</c> via <see cref="DotCoverCoverSettings.TargetWorkingDirectory"/></li>
-        ///     <li><c>/TempDir</c> via <see cref="DotCoverCoverSettings.TempDirectory"/></li>
+        ///     <li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverCoverSettings.AllowSymbolServerAccess"/></li>
+        ///     <li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverCoverSettings.AnalyseTargetArguments"/></li>
+        ///     <li><c>--AttributeFilters</c> via <see cref="DotCoverCoverSettings.AttributeFilters"/></li>
+        ///     <li><c>--DisableDefaultFilters</c> via <see cref="DotCoverCoverSettings.DisableDefaultFilters"/></li>
+        ///     <li><c>--Filters</c> via <see cref="DotCoverCoverSettings.Filters"/></li>
+        ///     <li><c>--InheritConsole</c> via <see cref="DotCoverCoverSettings.InheritConsole"/></li>
+        ///     <li><c>--LogFile</c> via <see cref="DotCoverCoverSettings.LogFile"/></li>
+        ///     <li><c>--Output</c> via <see cref="DotCoverCoverSettings.OutputFile"/></li>
+        ///     <li><c>--ProcessFilters</c> via <see cref="DotCoverCoverSettings.ProcessFilters"/></li>
+        ///     <li><c>--ReportType</c> via <see cref="DotCoverCoverSettings.ReportType"/></li>
+        ///     <li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverCoverSettings.ReturnTargetExitCode"/></li>
+        ///     <li><c>--Scope</c> via <see cref="DotCoverCoverSettings.Scope"/></li>
+        ///     <li><c>--SymbolSearchPaths</c> via <see cref="DotCoverCoverSettings.SymbolSearchPaths"/></li>
+        ///     <li><c>--TargetArguments</c> via <see cref="DotCoverCoverSettings.TargetArguments"/></li>
+        ///     <li><c>--TargetExecutable</c> via <see cref="DotCoverCoverSettings.TargetExecutable"/></li>
+        ///     <li><c>--TargetWorkingDir</c> via <see cref="DotCoverCoverSettings.TargetWorkingDirectory"/></li>
+        ///     <li><c>--TempDir</c> via <see cref="DotCoverCoverSettings.TempDirectory"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(DotCoverCoverSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverCover(CombinatorialConfigure<DotCoverCoverSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -246,14 +246,14 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverDeleteSettings.Configuration"/></li>
-        ///     <li><c>/LogFile</c> via <see cref="DotCoverDeleteSettings.LogFile"/></li>
-        ///     <li><c>/Source</c> via <see cref="DotCoverDeleteSettings.Source"/></li>
+        ///     <li><c>--LogFile</c> via <see cref="DotCoverDeleteSettings.LogFile"/></li>
+        ///     <li><c>--Source</c> via <see cref="DotCoverDeleteSettings.Source"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotCoverDelete(DotCoverDeleteSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotCoverDeleteSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -265,8 +265,8 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverDeleteSettings.Configuration"/></li>
-        ///     <li><c>/LogFile</c> via <see cref="DotCoverDeleteSettings.LogFile"/></li>
-        ///     <li><c>/Source</c> via <see cref="DotCoverDeleteSettings.Source"/></li>
+        ///     <li><c>--LogFile</c> via <see cref="DotCoverDeleteSettings.LogFile"/></li>
+        ///     <li><c>--Source</c> via <see cref="DotCoverDeleteSettings.Source"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotCoverDelete(Configure<DotCoverDeleteSettings> configurator)
@@ -281,8 +281,8 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverDeleteSettings.Configuration"/></li>
-        ///     <li><c>/LogFile</c> via <see cref="DotCoverDeleteSettings.LogFile"/></li>
-        ///     <li><c>/Source</c> via <see cref="DotCoverDeleteSettings.Source"/></li>
+        ///     <li><c>--LogFile</c> via <see cref="DotCoverDeleteSettings.LogFile"/></li>
+        ///     <li><c>--Source</c> via <see cref="DotCoverDeleteSettings.Source"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(DotCoverDeleteSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverDelete(CombinatorialConfigure<DotCoverDeleteSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -297,16 +297,16 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverMergeSettings.Configuration"/></li>
-        ///     <li><c>/LogFile</c> via <see cref="DotCoverMergeSettings.LogFile"/></li>
-        ///     <li><c>/Output</c> via <see cref="DotCoverMergeSettings.OutputFile"/></li>
-        ///     <li><c>/Source</c> via <see cref="DotCoverMergeSettings.Source"/></li>
-        ///     <li><c>/TempDir</c> via <see cref="DotCoverMergeSettings.TempDirectory"/></li>
+        ///     <li><c>--LogFile</c> via <see cref="DotCoverMergeSettings.LogFile"/></li>
+        ///     <li><c>--Output</c> via <see cref="DotCoverMergeSettings.OutputFile"/></li>
+        ///     <li><c>--Source</c> via <see cref="DotCoverMergeSettings.Source"/></li>
+        ///     <li><c>--TempDir</c> via <see cref="DotCoverMergeSettings.TempDirectory"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotCoverMerge(DotCoverMergeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotCoverMergeSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -318,10 +318,10 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverMergeSettings.Configuration"/></li>
-        ///     <li><c>/LogFile</c> via <see cref="DotCoverMergeSettings.LogFile"/></li>
-        ///     <li><c>/Output</c> via <see cref="DotCoverMergeSettings.OutputFile"/></li>
-        ///     <li><c>/Source</c> via <see cref="DotCoverMergeSettings.Source"/></li>
-        ///     <li><c>/TempDir</c> via <see cref="DotCoverMergeSettings.TempDirectory"/></li>
+        ///     <li><c>--LogFile</c> via <see cref="DotCoverMergeSettings.LogFile"/></li>
+        ///     <li><c>--Output</c> via <see cref="DotCoverMergeSettings.OutputFile"/></li>
+        ///     <li><c>--Source</c> via <see cref="DotCoverMergeSettings.Source"/></li>
+        ///     <li><c>--TempDir</c> via <see cref="DotCoverMergeSettings.TempDirectory"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotCoverMerge(Configure<DotCoverMergeSettings> configurator)
@@ -336,10 +336,10 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverMergeSettings.Configuration"/></li>
-        ///     <li><c>/LogFile</c> via <see cref="DotCoverMergeSettings.LogFile"/></li>
-        ///     <li><c>/Output</c> via <see cref="DotCoverMergeSettings.OutputFile"/></li>
-        ///     <li><c>/Source</c> via <see cref="DotCoverMergeSettings.Source"/></li>
-        ///     <li><c>/TempDir</c> via <see cref="DotCoverMergeSettings.TempDirectory"/></li>
+        ///     <li><c>--LogFile</c> via <see cref="DotCoverMergeSettings.LogFile"/></li>
+        ///     <li><c>--Output</c> via <see cref="DotCoverMergeSettings.OutputFile"/></li>
+        ///     <li><c>--Source</c> via <see cref="DotCoverMergeSettings.Source"/></li>
+        ///     <li><c>--TempDir</c> via <see cref="DotCoverMergeSettings.TempDirectory"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(DotCoverMergeSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverMerge(CombinatorialConfigure<DotCoverMergeSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -354,17 +354,17 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverReportSettings.Configuration"/></li>
-        ///     <li><c>/HideAutoProperties</c> via <see cref="DotCoverReportSettings.HideAutoProperties"/></li>
-        ///     <li><c>/LogFile</c> via <see cref="DotCoverReportSettings.LogFile"/></li>
-        ///     <li><c>/Output</c> via <see cref="DotCoverReportSettings.OutputFile"/></li>
-        ///     <li><c>/ReportType</c> via <see cref="DotCoverReportSettings.ReportType"/></li>
-        ///     <li><c>/Source</c> via <see cref="DotCoverReportSettings.Source"/></li>
+        ///     <li><c>--HideAutoProperties</c> via <see cref="DotCoverReportSettings.HideAutoProperties"/></li>
+        ///     <li><c>--LogFile</c> via <see cref="DotCoverReportSettings.LogFile"/></li>
+        ///     <li><c>--Output</c> via <see cref="DotCoverReportSettings.OutputFile"/></li>
+        ///     <li><c>--ReportType</c> via <see cref="DotCoverReportSettings.ReportType"/></li>
+        ///     <li><c>--Source</c> via <see cref="DotCoverReportSettings.Source"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotCoverReport(DotCoverReportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotCoverReportSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -376,11 +376,11 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverReportSettings.Configuration"/></li>
-        ///     <li><c>/HideAutoProperties</c> via <see cref="DotCoverReportSettings.HideAutoProperties"/></li>
-        ///     <li><c>/LogFile</c> via <see cref="DotCoverReportSettings.LogFile"/></li>
-        ///     <li><c>/Output</c> via <see cref="DotCoverReportSettings.OutputFile"/></li>
-        ///     <li><c>/ReportType</c> via <see cref="DotCoverReportSettings.ReportType"/></li>
-        ///     <li><c>/Source</c> via <see cref="DotCoverReportSettings.Source"/></li>
+        ///     <li><c>--HideAutoProperties</c> via <see cref="DotCoverReportSettings.HideAutoProperties"/></li>
+        ///     <li><c>--LogFile</c> via <see cref="DotCoverReportSettings.LogFile"/></li>
+        ///     <li><c>--Output</c> via <see cref="DotCoverReportSettings.OutputFile"/></li>
+        ///     <li><c>--ReportType</c> via <see cref="DotCoverReportSettings.ReportType"/></li>
+        ///     <li><c>--Source</c> via <see cref="DotCoverReportSettings.Source"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotCoverReport(Configure<DotCoverReportSettings> configurator)
@@ -395,11 +395,11 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverReportSettings.Configuration"/></li>
-        ///     <li><c>/HideAutoProperties</c> via <see cref="DotCoverReportSettings.HideAutoProperties"/></li>
-        ///     <li><c>/LogFile</c> via <see cref="DotCoverReportSettings.LogFile"/></li>
-        ///     <li><c>/Output</c> via <see cref="DotCoverReportSettings.OutputFile"/></li>
-        ///     <li><c>/ReportType</c> via <see cref="DotCoverReportSettings.ReportType"/></li>
-        ///     <li><c>/Source</c> via <see cref="DotCoverReportSettings.Source"/></li>
+        ///     <li><c>--HideAutoProperties</c> via <see cref="DotCoverReportSettings.HideAutoProperties"/></li>
+        ///     <li><c>--LogFile</c> via <see cref="DotCoverReportSettings.LogFile"/></li>
+        ///     <li><c>--Output</c> via <see cref="DotCoverReportSettings.OutputFile"/></li>
+        ///     <li><c>--ReportType</c> via <see cref="DotCoverReportSettings.ReportType"/></li>
+        ///     <li><c>--Source</c> via <see cref="DotCoverReportSettings.Source"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(DotCoverReportSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverReport(CombinatorialConfigure<DotCoverReportSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -414,15 +414,15 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverZipSettings.Configuration"/></li>
-        ///     <li><c>/LogFile</c> via <see cref="DotCoverZipSettings.LogFile"/></li>
-        ///     <li><c>/Output</c> via <see cref="DotCoverZipSettings.OutputFile"/></li>
-        ///     <li><c>/Source</c> via <see cref="DotCoverZipSettings.Source"/></li>
+        ///     <li><c>--LogFile</c> via <see cref="DotCoverZipSettings.LogFile"/></li>
+        ///     <li><c>--Output</c> via <see cref="DotCoverZipSettings.OutputFile"/></li>
+        ///     <li><c>--Source</c> via <see cref="DotCoverZipSettings.Source"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotCoverZip(DotCoverZipSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotCoverZipSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -434,9 +434,9 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverZipSettings.Configuration"/></li>
-        ///     <li><c>/LogFile</c> via <see cref="DotCoverZipSettings.LogFile"/></li>
-        ///     <li><c>/Output</c> via <see cref="DotCoverZipSettings.OutputFile"/></li>
-        ///     <li><c>/Source</c> via <see cref="DotCoverZipSettings.Source"/></li>
+        ///     <li><c>--LogFile</c> via <see cref="DotCoverZipSettings.LogFile"/></li>
+        ///     <li><c>--Output</c> via <see cref="DotCoverZipSettings.OutputFile"/></li>
+        ///     <li><c>--Source</c> via <see cref="DotCoverZipSettings.Source"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotCoverZip(Configure<DotCoverZipSettings> configurator)
@@ -451,9 +451,9 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverZipSettings.Configuration"/></li>
-        ///     <li><c>/LogFile</c> via <see cref="DotCoverZipSettings.LogFile"/></li>
-        ///     <li><c>/Output</c> via <see cref="DotCoverZipSettings.OutputFile"/></li>
-        ///     <li><c>/Source</c> via <see cref="DotCoverZipSettings.Source"/></li>
+        ///     <li><c>--LogFile</c> via <see cref="DotCoverZipSettings.LogFile"/></li>
+        ///     <li><c>--Output</c> via <see cref="DotCoverZipSettings.OutputFile"/></li>
+        ///     <li><c>--Source</c> via <see cref="DotCoverZipSettings.Source"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(DotCoverZipSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverZip(CombinatorialConfigure<DotCoverZipSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -558,24 +558,24 @@ namespace Nuke.Common.Tools.DotCover
             arguments
               .Add("analyse")
               .Add("{value}", Configuration)
-              .Add("/ReportType={value}", ReportType)
-              .Add("/Output={value}", OutputFile)
-              .Add("/HideAutoProperties", HideAutoProperties)
-              .Add("/TargetExecutable={value}", TargetExecutable)
-              .Add("/TargetArguments={value}", TargetArguments)
-              .Add("/TargetWorkingDir={value}", TargetWorkingDirectory)
-              .Add("/TempDir={value}", TempDirectory)
-              .Add("/InheritConsole={value}", InheritConsole)
-              .Add("/AnalyseTargetArguments={value}", AnalyseTargetArguments)
-              .Add("/Scope={value}", Scope, separator: ';')
-              .Add("/Filters={value}", Filters, separator: ';')
-              .Add("/AttributeFilters={value}", AttributeFilters, separator: ';')
-              .Add("/DisableDefaultFilters", DisableDefaultFilters)
-              .Add("/SymbolSearchPaths={value}", SymbolSearchPaths, separator: ';')
-              .Add("/AllowSymbolServerAccess", AllowSymbolServerAccess)
-              .Add("/ReturnTargetExitCode", ReturnTargetExitCode)
-              .Add("/ProcessFilters={value}", ProcessFilters, separator: ';')
-              .Add("/LogFile={value}", LogFile);
+              .Add("--ReportType={value}", ReportType)
+              .Add("--Output={value}", OutputFile)
+              .Add("--HideAutoProperties", HideAutoProperties)
+              .Add("--TargetExecutable={value}", TargetExecutable)
+              .Add("--TargetArguments={value}", TargetArguments)
+              .Add("--TargetWorkingDir={value}", TargetWorkingDirectory)
+              .Add("--TempDir={value}", TempDirectory)
+              .Add("--InheritConsole={value}", InheritConsole)
+              .Add("--AnalyseTargetArguments={value}", AnalyseTargetArguments)
+              .Add("--Scope={value}", Scope, separator: ';')
+              .Add("--Filters={value}", Filters, separator: ';')
+              .Add("--AttributeFilters={value}", AttributeFilters, separator: ';')
+              .Add("--DisableDefaultFilters", DisableDefaultFilters)
+              .Add("--SymbolSearchPaths={value}", SymbolSearchPaths, separator: ';')
+              .Add("--AllowSymbolServerAccess", AllowSymbolServerAccess)
+              .Add("--ReturnTargetExitCode", ReturnTargetExitCode)
+              .Add("--ProcessFilters={value}", ProcessFilters, separator: ';')
+              .Add("--LogFile={value}", LogFile);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -673,23 +673,23 @@ namespace Nuke.Common.Tools.DotCover
             arguments
               .Add("cover")
               .Add("{value}", Configuration)
-              .Add("/Output={value}", OutputFile)
-              .Add("/ReportType={value}", ReportType)
-              .Add("/TargetExecutable={value}", TargetExecutable)
-              .Add("/TargetArguments={value}", TargetArguments)
-              .Add("/TargetWorkingDir={value}", TargetWorkingDirectory)
-              .Add("/TempDir={value}", TempDirectory)
-              .Add("/InheritConsole={value}", InheritConsole)
-              .Add("/AnalyseTargetArguments={value}", AnalyseTargetArguments)
-              .Add("/Scope={value}", Scope, separator: ';')
-              .Add("/Filters={value}", Filters, separator: ';')
-              .Add("/AttributeFilters={value}", AttributeFilters, separator: ';')
-              .Add("/DisableDefaultFilters", DisableDefaultFilters)
-              .Add("/SymbolSearchPaths={value}", SymbolSearchPaths, separator: ';')
-              .Add("/AllowSymbolServerAccess", AllowSymbolServerAccess)
-              .Add("/ReturnTargetExitCode", ReturnTargetExitCode)
-              .Add("/ProcessFilters={value}", ProcessFilters, separator: ';')
-              .Add("/LogFile={value}", LogFile);
+              .Add("--Output={value}", OutputFile)
+              .Add("--ReportType={value}", ReportType)
+              .Add("--TargetExecutable={value}", TargetExecutable)
+              .Add("--TargetArguments={value}", TargetArguments)
+              .Add("--TargetWorkingDir={value}", TargetWorkingDirectory)
+              .Add("--TempDir={value}", TempDirectory)
+              .Add("--InheritConsole={value}", InheritConsole)
+              .Add("--AnalyseTargetArguments={value}", AnalyseTargetArguments)
+              .Add("--Scope={value}", Scope, separator: ';')
+              .Add("--Filters={value}", Filters, separator: ';')
+              .Add("--AttributeFilters={value}", AttributeFilters, separator: ';')
+              .Add("--DisableDefaultFilters", DisableDefaultFilters)
+              .Add("--SymbolSearchPaths={value}", SymbolSearchPaths, separator: ';')
+              .Add("--AllowSymbolServerAccess", AllowSymbolServerAccess)
+              .Add("--ReturnTargetExitCode", ReturnTargetExitCode)
+              .Add("--ProcessFilters={value}", ProcessFilters, separator: ';')
+              .Add("--LogFile={value}", LogFile);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -723,8 +723,8 @@ namespace Nuke.Common.Tools.DotCover
             arguments
               .Add("delete")
               .Add("{value}", Configuration)
-              .Add("/Source={value}", Source, separator: ';')
-              .Add("/LogFile={value}", LogFile);
+              .Add("--Source={value}", Source, separator: ';')
+              .Add("--LogFile={value}", LogFile);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -766,10 +766,10 @@ namespace Nuke.Common.Tools.DotCover
             arguments
               .Add("merge")
               .Add("{value}", Configuration)
-              .Add("/Source={value}", Source, separator: ';')
-              .Add("/Output={value}", OutputFile)
-              .Add("/TempDir={value}", TempDirectory)
-              .Add("/LogFile={value}", LogFile);
+              .Add("--Source={value}", Source, separator: ';')
+              .Add("--Output={value}", OutputFile)
+              .Add("--TempDir={value}", TempDirectory)
+              .Add("--LogFile={value}", LogFile);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -815,11 +815,11 @@ namespace Nuke.Common.Tools.DotCover
             arguments
               .Add("report")
               .Add("{value}", Configuration)
-              .Add("/Source={value}", Source, separator: ';')
-              .Add("/Output={value}", OutputFile)
-              .Add("/ReportType={value}", ReportType)
-              .Add("/HideAutoProperties", HideAutoProperties)
-              .Add("/LogFile={value}", LogFile);
+              .Add("--Source={value}", Source, separator: ';')
+              .Add("--Output={value}", OutputFile)
+              .Add("--ReportType={value}", ReportType)
+              .Add("--HideAutoProperties", HideAutoProperties)
+              .Add("--LogFile={value}", LogFile);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -856,9 +856,9 @@ namespace Nuke.Common.Tools.DotCover
             arguments
               .Add("zip")
               .Add("{value}", Configuration)
-              .Add("/Source={value}", Source)
-              .Add("/Output={value}", OutputFile)
-              .Add("/LogFile={value}", LogFile);
+              .Add("--Source={value}", Source)
+              .Add("--Output={value}", OutputFile)
+              .Add("--LogFile={value}", LogFile);
             return base.ConfigureArguments(arguments);
         }
     }

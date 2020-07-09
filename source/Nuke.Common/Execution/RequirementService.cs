@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Nuke.Common.Utilities;
+using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.Execution
 {
@@ -27,7 +28,8 @@ namespace Nuke.Common.Execution
                     ControlFlow.Fail($"Target '{target.Name}' requires member '{requirement.GetMemberInfo().Name}' to be not null.");
             }
 
-            var requiredMembers = InjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: true)
+            var requiredMembers = ValueInjectionUtility.GetInjectionMembers(build.GetType())
+                .Select(x => x.Member)
                 .Where(x => x.HasCustomAttribute<RequiredAttribute>());
             foreach (var member in requiredMembers)
             {
@@ -38,18 +40,28 @@ namespace Nuke.Common.Execution
 
         private static bool IsMemberNull(MemberInfo member, NukeBuild build, ExecutableTarget target = null)
         {
+            member = member.DeclaringType != build.GetType()
+                ? build.GetType().GetMember(member.Name).SingleOrDefault() ?? member
+                : member;
+
             var from = target != null ? $"from target '{target.Name}' " : string.Empty;
-            ControlFlow.Assert(member.HasCustomAttribute<InjectionAttributeBase>(),
+            ControlFlow.Assert(member.HasCustomAttribute<ValueInjectionAttributeBase>(),
                 $"Member '{member.Name}' is required {from}but not marked with an injection attribute.");
 
             if (NukeBuild.Host == HostType.Console)
-                InjectValueInteractive(build, member);
+                TryInjectValueInteractive(member, build);
 
             return member.GetValue(build) == null;
         }
 
-        private static void InjectValueInteractive(NukeBuild build, MemberInfo member)
+        private static void TryInjectValueInteractive(MemberInfo member, NukeBuild build)
         {
+            if (!member.HasCustomAttribute<ParameterAttribute>())
+                return;
+
+            if (member is PropertyInfo property && !property.CanWrite)
+                return;
+
             var memberType = member.GetMemberType();
             var nameOrDescription = ParameterService.GetParameterDescription(member) ??
                                     ParameterService.GetParameterMemberName(member);

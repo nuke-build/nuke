@@ -22,6 +22,10 @@ IgnoreFailedSources:
 NoLogo: 
 Plan: 
 Root: 
+SignPathApiToken: 
+SignPathOrganizationId: 
+SignPathPolicyKey: 
+SignPathProjectKey: 
 Skip:
 - Analysis
 - Announce
@@ -30,17 +34,21 @@ Skip:
 - Clean
 - Compile
 - Coverage
+- DownloadFonts
 - GenerateGlobalSolution
 - GeneratePublicApi
 - GenerateTools
 - Hotfix
 - Install
+- InstallFonts
 - Milestone
 - Pack
 - Publish
 - References
 - Release
+- ReleaseImage
 - Restore
+- SignPackages
 - Test
 - UpdateContributors
 SlackWebhook: 
@@ -52,18 +60,26 @@ Target:
 - Clean
 - Compile
 - Coverage
+- DownloadFonts
 - GenerateGlobalSolution
 - GeneratePublicApi
 - GenerateTools
 - Hotfix
 - Install
+- InstallFonts
 - Pack
 - Publish
 - References
 - Release
+- ReleaseImage
 - Restore
+- SignPackages
 - Test
 - UpdateContributors
+TwitterAccessToken: 
+TwitterAccessTokenSecret: 
+TwitterConsumerKey: 
+TwitterConsumerSecret: 
 UseSSH: 
 Verbosity:
 - Minimal

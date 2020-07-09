@@ -35,9 +35,9 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> DotNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> DotNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(DotNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, DotNetLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(DotNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, DotNetLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -82,7 +82,7 @@ namespace Nuke.Common.Tools.DotNet
         public static IReadOnlyCollection<Output> DotNetTest(DotNetTestSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotNetTestSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -203,7 +203,7 @@ namespace Nuke.Common.Tools.DotNet
         public static IReadOnlyCollection<Output> DotNetRun(DotNetRunSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotNetRunSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -303,7 +303,7 @@ namespace Nuke.Common.Tools.DotNet
         public static IReadOnlyCollection<Output> DotNetRestore(DotNetRestoreSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotNetRestoreSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -401,7 +401,7 @@ namespace Nuke.Common.Tools.DotNet
         public static IReadOnlyCollection<Output> DotNetPack(DotNetPackSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotNetPackSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -515,7 +515,7 @@ namespace Nuke.Common.Tools.DotNet
         public static IReadOnlyCollection<Output> DotNetBuild(DotNetBuildSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotNetBuildSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -613,7 +613,7 @@ namespace Nuke.Common.Tools.DotNet
         public static IReadOnlyCollection<Output> DotNetClean(DotNetCleanSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotNetCleanSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -694,7 +694,7 @@ namespace Nuke.Common.Tools.DotNet
         public static IReadOnlyCollection<Output> DotNetPublish(DotNetPublishSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotNetPublishSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -793,7 +793,7 @@ namespace Nuke.Common.Tools.DotNet
         public static IReadOnlyCollection<Output> DotNetNuGetPush(DotNetNuGetPushSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotNetNuGetPushSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -865,7 +865,7 @@ namespace Nuke.Common.Tools.DotNet
         public static IReadOnlyCollection<Output> DotNetToolInstall(DotNetToolInstallSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotNetToolInstallSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -927,7 +927,7 @@ namespace Nuke.Common.Tools.DotNet
         public static IReadOnlyCollection<Output> DotNetToolUninstall(DotNetToolUninstallSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotNetToolUninstallSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -984,7 +984,7 @@ namespace Nuke.Common.Tools.DotNet
         public static IReadOnlyCollection<Output> DotNetToolUpdate(DotNetToolUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotNetToolUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }

@@ -10,6 +10,13 @@ namespace Nuke.Common.Execution
 {
     public interface IBuildExtension
     {
+        float Priority { get; }
+    }
+
+    [AttributeUsage(AttributeTargets.Class)]
+    public abstract class BuildExtensionAttributeBase : Attribute, IBuildExtension
+    {
+        public virtual float Priority { get; set; }
     }
 
     public interface IOnBeforeLogo : IBuildExtension

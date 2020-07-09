@@ -125,6 +125,46 @@ namespace Nuke.Common.Tooling
             return newToolSettings;
         }
 
+        ///<summary>Sets <see cref="ToolSettings.LogTimestamp"/> -- <inheritdoc cref="ToolSettings.LogTimestamp" /></summary>
+        [Pure]
+        public static T SetLogTimestamp<T>(this T toolSettings, bool logTimestamp)
+            where T : ToolSettings
+        {
+            var newToolSettings = toolSettings.NewInstance();
+            newToolSettings.LogTimestamp = logTimestamp;
+            return newToolSettings;
+        }
+
+        ///<summary>Enables <see cref="ToolSettings.LogTimestamp"/> -- <inheritdoc cref="ToolSettings.LogTimestamp" /></summary>
+        [Pure]
+        public static T EnableLogTimestamp<T>(this T toolSettings)
+            where T : ToolSettings
+        {
+            var newToolSettings = toolSettings.NewInstance();
+            newToolSettings.LogTimestamp = true;
+            return newToolSettings;
+        }
+
+        ///<summary>Disables <see cref="ToolSettings.LogTimestamp"/> -- <inheritdoc cref="ToolSettings.LogTimestamp" /></summary>
+        [Pure]
+        public static T DisableLogTimestamp<T>(this T toolSettings)
+            where T : ToolSettings
+        {
+            var newToolSettings = toolSettings.NewInstance();
+            newToolSettings.LogTimestamp = false;
+            return newToolSettings;
+        }
+
+        ///<summary>Sets <see cref="ToolSettings.LogFile"/> -- <inheritdoc cref="ToolSettings.LogFile" /></summary>
+        [Pure]
+        public static T SetLogFile<T>(this T toolSettings, string logFile)
+            where T : ToolSettings
+        {
+            var newToolSettings = toolSettings.NewInstance();
+            newToolSettings.LogFile = logFile;
+            return newToolSettings;
+        }
+
         ///<summary>Sets <see cref="ToolSettings.ToolPath"/> -- <inheritdoc cref="ToolSettings.ToolPath" /></summary>
         [Pure]
         public static T SetToolPath<T>(this T toolSettings, [CanBeNull] string toolPath)

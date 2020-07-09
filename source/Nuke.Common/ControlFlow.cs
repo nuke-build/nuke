@@ -199,9 +199,13 @@ namespace Nuke.Common
             [InstantHandle] Action action,
             [InstantHandle] Action cleanup = null,
             int retryAttempts = 3,
-            int waitInSeconds = 0)
+            int waitInSeconds = 0,
+            Action<string> logAction = null)
         {
             Assert(retryAttempts > 0, "retryAttempts > 0");
+
+            logAction ??= Logger.Warn;
+            Exception lastException = null;
 
             for (var attempt = 0; attempt < retryAttempts; attempt++)
             {
@@ -212,13 +216,13 @@ namespace Nuke.Common
                 }
                 catch (Exception exception)
                 {
-                    Logger.Warn($"Attempt #{attempt + 1} failed with:");
-                    Logger.Warn(exception.Message);
+                    lastException = exception;
+                    logAction($"Attempt #{attempt + 1} failed with: {exception.Message}");
 
                     if (waitInSeconds <= 0 || attempt + 1 >= retryAttempts)
                         continue;
 
-                    Logger.Warn($"Waiting {waitInSeconds} seconds before next attempt...");
+                    logAction($"Waiting {waitInSeconds} seconds before next attempt...");
                     Task.Delay(TimeSpan.FromSeconds(waitInSeconds)).Wait();
                 }
                 finally
@@ -227,7 +231,11 @@ namespace Nuke.Common
                 }
             }
 
-            Fail($"Executing failed permanently after {retryAttempts} attempts.");
+            Fail(new[]
+                 {
+                     $"Executing failed permanently after {retryAttempts} attempts.",
+                     $"Last attempt failed with: {lastException!.Message}"
+                 }.JoinNewLine());
         }
     }
 }

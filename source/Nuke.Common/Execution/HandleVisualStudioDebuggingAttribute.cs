@@ -13,8 +13,7 @@ using JetBrains.Annotations;
 namespace Nuke.Common.Execution
 {
     [PublicAPI]
-    [AttributeUsage(AttributeTargets.Class)]
-    public class HandleVisualStudioDebuggingAttribute : Attribute, IOnBeforeLogo
+    public class HandleVisualStudioDebuggingAttribute : BuildExtensionAttributeBase, IOnBeforeLogo
     {
         public int TimeoutInMilliseconds { get; } = 10_000;
 

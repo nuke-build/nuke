@@ -13,7 +13,7 @@ using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.Execution.ReflectionService;
 
-namespace Nuke.Common.Execution
+namespace Nuke.Common.ValueInjection
 {
     internal class ParameterService
     {
@@ -216,7 +216,7 @@ namespace Nuke.Common.Execution
             }
         }
 
-        private bool HasCommandLineArgument(string argumentName)
+        public bool HasCommandLineArgument(string argumentName)
         {
             return GetCommandLineArgumentIndex(argumentName) != -1;
         }

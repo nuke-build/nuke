@@ -5,6 +5,30 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Changed `InjectionAttribute` to catch exceptions and report as warnings
+- Changed `ShutdownDotNetBuildServerOnFinish` to not log by default
+- Changed `ShutdownDotNetBuildServerOnFinish` to only shutdown on server build
+- Added support for interface default implementations
+- Added `Base` and `Inherit` target definition methods
+- Added `ToolSettings.Apply` for fluent configurator invocation
+- Added `nuke :fix` command to `Nuke.GlobalTool` for adding missing package downloads
+- Added `nuke :GetRootDirectory` and `nuke :GetParentRootDirectory` in `Nuke.GlobalTool` 
+- Added `BuildExtensionAttributeBase` with `Priority` property
+- Added `SignPathTasks`
+- Added `SignClientTasks`
+- Added `BenchmarkDotNetTasks`
+- Added `CleanupCodeTasks`
+- Added logger delegate to `ControlFlow.ExecuteWithRetry`
+- Added `TeamCity.BuildVcsNumber` property
+- Added `AppVeyor.Url` and `PushArtifact` members
+- Added verbosity mapping attributes for `NUnit`, `OpenCover`, and `ReportGenerator`
+- Added missing properties in `SonarScannerTasks`
+- Fixed tool path resolution consider all package execcutable names
+- Fixed `NukeBuild.BuildProjectFile` property
+- Fixed `AzurePipelinensAttribute` to allow multiple use
+- Fixed `AppVeyor.UpdateBuildVersion` to set environment variable
+- Fixed `DiscardCost` property in `DupFinderTasks`
+- Fixed `DotCoverTasks` to use double-dashes instead of slashes
 
 ## [0.24.11] / 2020-05-18
 - Fixed transitive artifacts in configuration generation

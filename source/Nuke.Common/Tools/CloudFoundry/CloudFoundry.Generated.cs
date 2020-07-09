@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Cloud Foundry CLI is the official command line client for Cloud Foundry</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> CloudFoundry(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> CloudFoundry(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(CloudFoundryPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, CloudFoundryLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(CloudFoundryPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, CloudFoundryLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -75,7 +75,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryPush(CloudFoundryPushSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryPushSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -163,7 +163,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryLogin(CloudFoundryLoginSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryLoginSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -221,7 +221,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryAuth(CloudFoundryAuthSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryAuthSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -274,7 +274,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryScale(CloudFoundryScaleSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryScaleSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -325,7 +325,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundrySetEnv(CloudFoundrySetEnvSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundrySetEnvSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -377,7 +377,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryCurl(CloudFoundryCurlSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryCurlSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -430,7 +430,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryApi(CloudFoundryApiSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryApiSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -483,7 +483,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryCreateUserProvidedService(CloudFoundryCreateUserProvidedServiceSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryCreateUserProvidedServiceSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -536,7 +536,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryStart(CloudFoundryStartSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryStartSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -581,7 +581,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryStop(CloudFoundryStopSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryStopSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -626,7 +626,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryRestart(CloudFoundryRestartSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryRestartSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -671,7 +671,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryRestage(CloudFoundryRestageSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryRestageSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -717,7 +717,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryDeleteApplication(CloudFoundryDeleteApplicationSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryDeleteApplicationSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -768,7 +768,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryCreateService(CloudFoundryCreateServiceSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryCreateServiceSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -821,7 +821,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryDeleteService(CloudFoundryDeleteServiceSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryDeleteServiceSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -866,7 +866,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryGetServiceInfo(CloudFoundryGetServiceInfoSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryGetServiceInfoSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -914,7 +914,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryBindService(CloudFoundryBindServiceSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryBindServiceSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -966,7 +966,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryUnbindService(CloudFoundryUnbindServiceSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryUnbindServiceSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1014,7 +1014,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryUnsetEnv(CloudFoundryUnsetEnvSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryUnsetEnvSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1066,7 +1066,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryCreateRoute(CloudFoundryCreateRouteSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryCreateRouteSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1126,7 +1126,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryMapRoute(CloudFoundryMapRouteSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryMapRouteSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1185,7 +1185,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryUnmapRoute(CloudFoundryUnmapRouteSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryUnmapRouteSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1240,7 +1240,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryCreateSpace(CloudFoundryCreateSpaceSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryCreateSpaceSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1290,7 +1290,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryDeleteSpace(CloudFoundryDeleteSpaceSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryDeleteSpaceSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1338,7 +1338,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IReadOnlyCollection<Output> CloudFoundryTarget(CloudFoundryTargetSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryTargetSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }

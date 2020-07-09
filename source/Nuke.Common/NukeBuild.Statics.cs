@@ -32,6 +32,7 @@ namespace Nuke.Common
             FileSystemTasks.EnsureExistingDirectory(TemporaryDirectory);
             BuildAssemblyDirectory = GetBuildAssemblyDirectory();
             BuildProjectDirectory = GetBuildProjectDirectory(BuildAssemblyDirectory);
+            BuildProjectFile = GetBuildProjectFile(BuildAssemblyDirectory);
 
             Verbosity = EnvironmentInfo.GetParameter<Verbosity?>(() => Verbosity) ?? Verbosity.Normal;
             Host = EnvironmentInfo.GetParameter<HostType?>(() => Host) ?? GetHostType();
@@ -39,6 +40,9 @@ namespace Nuke.Common
             Plan = EnvironmentInfo.GetParameter(() => Plan);
             Help = EnvironmentInfo.GetParameter(() => Help);
             NoLogo = EnvironmentInfo.GetParameter(() => NoLogo);
+
+            // LoadedProfiles = BuildProfileManagementAttributeBase.GetLoadProfiles();
+            // SaveProfile = BuildProfileManagementAttributeBase.GetSaveProfile();
         }
 
         /// <summary>
@@ -63,6 +67,12 @@ namespace Nuke.Common
         /// </summary>
         [CanBeNull]
         public static AbsolutePath BuildProjectDirectory { get; }
+
+        /// <summary>
+        /// Gets the full path to the build project file, or <c>null</c>
+        /// </summary>
+        [CanBeNull]
+        public static AbsolutePath BuildProjectFile { get; }
 
         /// <summary>
         /// Gets the logging verbosity during build execution. Default is <see cref="Nuke.Common.Verbosity.Normal"/>.
@@ -92,7 +102,13 @@ namespace Nuke.Common
         /// Gets a value whether to display the NUKE logo.
         /// </summary>
         [Parameter("Disables displaying the NUKE logo.")]
-        public static bool NoLogo { get; }
+        public static bool NoLogo { get; set; }
+
+        // [Parameter("Defines the profiles to load.", Name = "LoadProfile")]
+        // public static string[] LoadedProfiles { get; }
+        //
+        // [Parameter("Defines the profile to save to.")]
+        // public static string SaveProfile { get; }
 
         public static bool IsLocalBuild => Host == HostType.Console;
         public static bool IsServerBuild => Host != HostType.Console;
@@ -130,7 +146,7 @@ namespace Nuke.Common
         }
 
         [CanBeNull]
-        private static AbsolutePath GetBuildProjectDirectory(AbsolutePath buildAssemblyDirectory)
+        private static AbsolutePath GetBuildProjectDirectory([CanBeNull] AbsolutePath buildAssemblyDirectory)
         {
             if (buildAssemblyDirectory == null)
                 return null;
@@ -141,6 +157,12 @@ namespace Nuke.Common
                     .SingleOrDefaultOrError($"Found multiple project files in '{x}'."))
                 .FirstOrDefault(x => x != null)
                 ?.DirectoryName;
+        }
+
+        [CanBeNull]
+        private static AbsolutePath GetBuildProjectFile([CanBeNull] AbsolutePath buildProjectDirectory)
+        {
+            return buildProjectDirectory?.GlobFiles("*.csproj").SingleOrDefault();
         }
 
         // ReSharper disable once CognitiveComplexity

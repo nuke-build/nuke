@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.Build.Evaluation;
+using Microsoft.Build.Locator;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
@@ -17,6 +18,27 @@ namespace Nuke.Common.ProjectModel
     [PublicAPI]
     public static class ProjectModelTasks
     {
+        static ProjectModelTasks()
+        {
+            try
+            {
+                MSBuildLocator.RegisterDefaults();
+            }
+            catch (Exception exception)
+            {
+                Logger.Warn(exception);
+
+                var dotnet = ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
+                             ToolPathResolver.GetPathExecutable("dotnet");
+                var output = ProcessTasks.StartProcess(dotnet, "--info", logOutput: false).AssertZeroExitCode().Output;
+                var basePath = (AbsolutePath) output
+                    .Select(x => x.Text.Trim())
+                    .Single(x => x.StartsWith("Base Path:"))
+                    .TrimStart("Base Path:").Trim();
+                MSBuildLocator.RegisterMSBuildPath(basePath);
+            }
+        }
+
         public static Solution CreateSolution(string fileName = null, params Solution[] solutions)
         {
             return CreateSolution(fileName, solutions, folderNameProvider: null);
@@ -84,45 +106,38 @@ namespace Nuke.Common.ProjectModel
             string configuration = null,
             string targetFramework = null)
         {
-            var msbuildPath = Environment.GetEnvironmentVariable("MSBUILD_EXE_PATH");
+            var projectCollection = new ProjectCollection();
+            var projectRoot = Microsoft.Build.Construction.ProjectRootElement.Open(projectFile, projectCollection, preserveFormatting: true);
+            var msbuildProject = Microsoft.Build.Evaluation.Project.FromProjectRootElement(
+                projectRoot,
+                new Microsoft.Build.Definition.ProjectOptions
+                {
+                    GlobalProperties = GetProperties(configuration, targetFramework),
+                    ToolsVersion = projectCollection.DefaultToolsVersion,
+                    ProjectCollection = projectCollection
+                });
 
-            try
+            var targetFrameworks = msbuildProject.AllEvaluatedItems
+                .Where(x => x.ItemType == "_TargetFrameworks")
+                .Select(x => x.EvaluatedInclude)
+                .OrderBy(x => x).ToList();
+
+            if (targetFramework == null && targetFrameworks.Count > 1)
             {
-                if (string.IsNullOrEmpty(msbuildPath))
-                    Environment.SetEnvironmentVariable("MSBUILD_EXE_PATH", s_msbuildPathResolver.Value);
+                projectCollection.UnloadProject(msbuildProject);
+                targetFramework = targetFrameworks.First();
 
-                var projectCollection = new ProjectCollection();
-                var msbuildProject = new Microsoft.Build.Evaluation.Project(
+                Logger.Warn($"Project '{projectFile}' has multiple target frameworks ({targetFrameworks.JoinComma()}).");
+                Logger.Warn($"Evaluating using '{targetFramework}'...");
+
+                msbuildProject = new Microsoft.Build.Evaluation.Project(
                     projectFile,
                     GetProperties(configuration, targetFramework),
                     projectCollection.DefaultToolsVersion,
                     projectCollection);
-                var targetFrameworks = msbuildProject.AllEvaluatedItems
-                    .Where(x => x.ItemType == "_TargetFrameworks")
-                    .Select(x => x.EvaluatedInclude)
-                    .OrderBy(x => x).ToList();
-
-                if (targetFramework == null && targetFrameworks.Count > 1)
-                {
-                    projectCollection.UnloadProject(msbuildProject);
-                    targetFramework = targetFrameworks.First();
-
-                    Logger.Warn($"Project '{projectFile}' has multiple target frameworks ({targetFrameworks.JoinComma()}).");
-                    Logger.Warn($"Evaluating using '{targetFramework}'...");
-
-                    msbuildProject = new Microsoft.Build.Evaluation.Project(
-                        projectFile,
-                        GetProperties(configuration, targetFramework),
-                        projectCollection.DefaultToolsVersion,
-                        projectCollection);
-                }
-
-                return msbuildProject;
             }
-            finally
-            {
-                Environment.SetEnvironmentVariable("MSBUILD_EXE_PATH", msbuildPath);
-            }
+
+            return msbuildProject;
         }
 
         private static Dictionary<string, string> GetProperties([CanBeNull] string configuration, [CanBeNull] string targetFramework)
