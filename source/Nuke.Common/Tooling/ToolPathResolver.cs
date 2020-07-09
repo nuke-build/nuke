@@ -41,7 +41,17 @@ namespace Nuke.Common.Tooling
 
             var packageDirectory = GetPackageDirectory(packageId.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries), version);
             var packageExecutables = packageExecutable.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
-            var packageExecutablePaths = packageExecutables.SelectMany(x => Directory.GetFiles(packageDirectory, x, SearchOption.AllDirectories)).ToList();
+            var packageExecutablePaths = packageExecutables
+#if NETCORE
+                .SelectMany(x => Directory.GetFiles(packageDirectory, x, new EnumerationOptions
+                {
+                    RecurseSubdirectories = true,
+                    MatchCasing = MatchCasing.CaseInsensitive,
+                }))
+#else
+                .SelectMany(x => Directory.GetFiles(packageDirectory, x, SearchOption.AllDirectories))
+#endif
+                .ToList();
 
             ControlFlow.Assert(packageExecutablePaths.Count > 0,
                 $"Could not find {packageExecutables.Select(x => x.SingleQuote()).JoinCommaOr()} inside '{packageDirectory}'.");
