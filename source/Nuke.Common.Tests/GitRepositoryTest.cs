@@ -38,6 +38,17 @@ namespace Nuke.Common.Tests
             repository.Identifier.Should().Be(identifier);
         }
 
+        [Theory]
+        [InlineData("https://github.com/nuke-build", GitProtocol.Https)]
+        [InlineData("git@git.test.org:test", GitProtocol.Ssh)]
+        [InlineData("ssh://git.test.org:1234/test/test", GitProtocol.Ssh)]
+        [InlineData("git://git.test.org:1234/test/test", GitProtocol.Ssh)]
+        public void FromUrlProtocolTest(string url, GitProtocol protocol)
+        {
+            var repository = GitRepository.FromUrl(url);
+            repository.Protocol.Should().Be(protocol);
+        }
+
         [Fact]
         public void FromDirectoryTest()
         {

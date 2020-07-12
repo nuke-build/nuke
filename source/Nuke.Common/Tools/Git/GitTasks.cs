@@ -34,7 +34,7 @@ namespace Nuke.Common.Tools.Git
             return GitCurrentBranch(workingDirectory: null);
         }
 
-        private static string GitCurrentBranch(string workingDirectory)
+        public static string GitCurrentBranch(string workingDirectory)
         {
             return Git("rev-parse --abbrev-ref HEAD", workingDirectory, logOutput: false).Select(x => x.Text).Single();
         }
