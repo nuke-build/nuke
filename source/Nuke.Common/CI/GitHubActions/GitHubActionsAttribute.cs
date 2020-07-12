@@ -101,7 +101,7 @@ namespace Nuke.Common.CI.GitHubActions
             yield return new GitHubActionsRunStep
                          {
                              Command = $"./{BuildCmdPath} {InvokedTargets.JoinSpace()}",
-                             Imports = GetImports().ToDictionary(x => x.key, x => x.value)
+                             Imports = GetImports().ToDictionary(x => x.Key, x => x.Value)
                          };
 
             var artifacts = relevantTargets
@@ -120,7 +120,7 @@ namespace Nuke.Common.CI.GitHubActions
             }
         }
 
-        protected virtual IEnumerable<(string key, string value)> GetImports()
+        protected virtual IEnumerable<(string Key, string Value)> GetImports()
         {
             static string GetSecretValue(string secret) => $"${{{{ secrets.{secret} }}}}";
 
