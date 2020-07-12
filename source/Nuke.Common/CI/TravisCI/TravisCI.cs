@@ -37,11 +37,6 @@ namespace Nuke.Common.CI.TravisCI
         public bool SecureEnvVars => EnvironmentInfo.GetVariable<bool>("TRAVIS_SECURE_ENV_VARS");
 
         /// <summary>
-        /// Set to <c>true</c> if the job is allowed to fail otherwhise <c>false</c>.
-        /// </summary>
-        public bool AllowFailure => EnvironmentInfo.GetVariable<bool>("TRAVIS_ALLOW_FAILURE");
-
-        /// <summary>
         /// For push builds, or builds not triggered by a pull request, this is the name of the branch.
         /// For builds triggered by a pull request this is the name of the branch targeted by the pull request.
         /// For builds triggered by a tag, this is the same as the name of the tag (<c>TRAVIS_TAG</c>).
