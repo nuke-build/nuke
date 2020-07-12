@@ -35,25 +35,7 @@ namespace Nuke.Common.Git
 
         public override object GetValue(MemberInfo member, object instance)
         {
-            return GitRepository.FromLocalDirectory(
-                NukeBuild.RootDirectory,
-                Branch ?? GetBranch(),
-                Remote ?? "origin");
-        }
-
-        private string GetBranch()
-        {
-            return
-                AppVeyor.Instance?.RepositoryBranch ??
-                Bitrise.Instance?.GitBranch ??
-                GitLab.Instance?.CommitRefName ??
-                Jenkins.Instance?.GitBranch ??
-                Jenkins.Instance?.BranchName ??
-                TeamCity.Instance?.BranchName ??
-                AzurePipelines.Instance?.SourceBranchName ??
-                TravisCI.Instance?.Branch ??
-                GitHubActions.Instance?.GitHubRef ??
-                GitTasks.GitCurrentBranch();
+            return GitRepository.FromLocalDirectory(NukeBuild.RootDirectory, Branch, Remote);
         }
     }
 }
