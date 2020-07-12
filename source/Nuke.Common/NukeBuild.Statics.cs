@@ -182,7 +182,7 @@ namespace Nuke.Common
                 return HostType.Bitrise;
             if (GitLab.IsRunningGitLab)
                 return HostType.GitLab;
-            if (TravisCI.IsRunningTravis)
+            if (TravisCI.IsRunningTravisCI)
                 return HostType.Travis;
             if (GitHubActions.IsRunningGitHubActions)
                 return HostType.GitHubActions;

@@ -22,7 +22,7 @@ namespace Nuke.Common.CI.TravisCI
 
         public static TravisCI Instance => NukeBuild.Host == HostType.Travis ? s_instance.Value : null;
 
-        internal static bool IsRunningTravis => !Environment.GetEnvironmentVariable("TRAVIS").IsNullOrEmpty();
+        internal static bool IsRunningTravisCI => !Environment.GetEnvironmentVariable("TRAVIS").IsNullOrEmpty();
 
         internal TravisCI()
         {
