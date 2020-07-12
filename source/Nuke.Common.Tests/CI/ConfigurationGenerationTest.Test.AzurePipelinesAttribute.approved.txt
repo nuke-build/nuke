@@ -14,6 +14,9 @@
 # </auto-generated>
 # ------------------------------------------------------------------------------
 
+variables:
+  - variable-group-1
+
 trigger:
   batch: true
   branches:
@@ -46,6 +49,9 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore --skip'
+            env:
+              AzurePipelinesSystemAccessToken: $(System.AccessToken)
+              GitHubToken: $(GitHubToken)
       - job: Compile
         displayName: 'Compile'
         dependsOn: [ Restore ]
@@ -53,6 +59,9 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Compile --skip'
+            env:
+              AzurePipelinesSystemAccessToken: $(System.AccessToken)
+              GitHubToken: $(GitHubToken)
       - job: Test
         displayName: 'Test'
         dependsOn: [ Compile ]
@@ -62,6 +71,9 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
+            env:
+              AzurePipelinesSystemAccessToken: $(System.AccessToken)
+              GitHubToken: $(GitHubToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: test-results
@@ -73,6 +85,9 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Coverage --skip'
+            env:
+              AzurePipelinesSystemAccessToken: $(System.AccessToken)
+              GitHubToken: $(GitHubToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: coverage-report.zip
@@ -90,6 +105,9 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore --skip'
+            env:
+              AzurePipelinesSystemAccessToken: $(System.AccessToken)
+              GitHubToken: $(GitHubToken)
       - job: Compile
         displayName: 'Compile'
         dependsOn: [ Restore ]
@@ -97,6 +115,9 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Compile --skip'
+            env:
+              AzurePipelinesSystemAccessToken: $(System.AccessToken)
+              GitHubToken: $(GitHubToken)
       - job: Test
         displayName: 'Test'
         dependsOn: [ Compile ]
@@ -106,6 +127,9 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
+            env:
+              AzurePipelinesSystemAccessToken: $(System.AccessToken)
+              GitHubToken: $(GitHubToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: test-results
@@ -117,6 +141,9 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Coverage --skip'
+            env:
+              AzurePipelinesSystemAccessToken: $(System.AccessToken)
+              GitHubToken: $(GitHubToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: coverage-report.zip

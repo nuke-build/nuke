@@ -71,6 +71,13 @@ project {
             value = "",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
+        text (
+            "env.AzurePipelinesSystemAccessToken",
+            label = "AzurePipelinesSystemAccessToken",
+            description = "Azure Pipelines System Access Token",
+            value = "",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
     }
 }
 object Restore : BuildType({
