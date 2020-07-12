@@ -84,8 +84,8 @@ partial class Build : NukeBuild
     [CI] readonly TeamCity TeamCity;
     [CI] readonly AzurePipelines AzurePipelines;
 
+    [Required] [GitVersion(Framework = "netcoreapp3.1", NoFetch = true)] readonly GitVersion GitVersion;
     [Required] [GitRepository] readonly GitRepository GitRepository;
-    [Required] [GitVersion(NoFetch = true)] readonly GitVersion GitVersion;
     [Required] [Solution] readonly Solution Solution;
 
     AbsolutePath OutputDirectory => RootDirectory / "output";
