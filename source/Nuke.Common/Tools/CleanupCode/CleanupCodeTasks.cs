@@ -77,7 +77,7 @@ namespace Nuke.Common.Tools.CleanupCode
             CleanupCodeSettings toolSettings,
             IReadOnlyCollection<NuGetPackageResolver.InstalledPackage> installedPlugins)
         {
-            var hashCode = installedPlugins.Select(x => x.Id).OrderBy(x => x).JoinComma().GetMD5Hash();
+            var hashCode = toolSettings.ToolPath.Concat(installedPlugins.Select(x => x.Id)).OrderBy(x => x).JoinComma().GetMD5Hash();
             return Path.Combine(NukeBuild.TemporaryDirectory, $"CleanupCode-{hashCode.Substring(startIndex: 0, length: 4)}");
         }
     }
