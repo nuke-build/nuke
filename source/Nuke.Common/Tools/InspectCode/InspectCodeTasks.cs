@@ -83,7 +83,7 @@ namespace Nuke.Common.Tools.InspectCode
             InspectCodeSettings toolSettings,
             IReadOnlyCollection<NuGetPackageResolver.InstalledPackage> installedPlugins)
         {
-            var hashCode = installedPlugins.Select(x => x.Id).OrderBy(x => x).JoinComma().GetMD5Hash();
+            var hashCode = toolSettings.ToolPath.Concat(installedPlugins.Select(x => x.Id)).OrderBy(x => x).JoinComma().GetMD5Hash();
             return Path.Combine(NukeBuild.TemporaryDirectory, $"InspectCode-{hashCode.Substring(startIndex: 0, length: 4)}");
         }
     }
