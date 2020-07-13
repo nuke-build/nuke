@@ -21,7 +21,11 @@ namespace Nuke.Common.Tools.InspectCode
 
         private static string GetPackageExecutable()
         {
-            return EnvironmentInfo.Is64Bit ? "inspectcode.exe" : "inspectcode.x86.exe";
+            return EnvironmentInfo.IsUnix
+                ? "inspectcode.sh"
+                : EnvironmentInfo.Is64Bit
+                    ? "inspectcode.exe"
+                    : "inspectcode.x86.exe";
         }
 
         private static void PreProcess(ref InspectCodeSettings toolSettings)

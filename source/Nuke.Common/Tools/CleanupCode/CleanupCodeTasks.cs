@@ -20,7 +20,11 @@ namespace Nuke.Common.Tools.CleanupCode
 
         private static string GetPackageExecutable()
         {
-            return EnvironmentInfo.Is64Bit ? "cleanupcode.exe" : "cleanupcode.x86.exe";
+            return EnvironmentInfo.IsUnix
+                ? "cleanupcode.sh"
+                : EnvironmentInfo.Is64Bit
+                    ? "cleanupcode.exe"
+                    : "cleanupcode.x86.exe";
         }
 
         private static void PreProcess(ref CleanupCodeSettings toolSettings)
