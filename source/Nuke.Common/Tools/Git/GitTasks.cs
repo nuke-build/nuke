@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -37,6 +37,16 @@ namespace Nuke.Common.Tools.Git
         public static string GitCurrentBranch(string workingDirectory)
         {
             return Git("rev-parse --abbrev-ref HEAD", workingDirectory, logOutput: false).Select(x => x.Text).Single();
+        }
+
+        public static string GitCurrentCommit()
+        {
+            return GitCurrentCommit(workingDirectory: null);
+        }
+
+        public static string GitCurrentCommit(string workingDirectory)
+        {
+            return Git("rev-parse HEAD", workingDirectory, logOutput: false).Select(x => x.Text).Single();
         }
     }
 }
