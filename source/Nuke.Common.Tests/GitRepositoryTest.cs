@@ -57,6 +57,8 @@ namespace Nuke.Common.Tests
             repository.Identifier.Should().NotBeNullOrEmpty();
             repository.LocalDirectory.Should().NotBeNullOrEmpty();
             repository.Head.Should().NotBeNullOrEmpty();
+            repository.Commit.Should().NotBeNullOrEmpty();
+            repository.Tags.Should().NotBeNull();
         }
     }
 }

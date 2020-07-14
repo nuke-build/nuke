@@ -20,7 +20,11 @@ namespace Nuke.Common.Tools.CleanupCode
 
         private static string GetPackageExecutable()
         {
-            return EnvironmentInfo.Is64Bit ? "cleanupcode.exe" : "cleanupcode.x86.exe";
+            return EnvironmentInfo.IsUnix
+                ? "cleanupcode.sh"
+                : EnvironmentInfo.Is64Bit
+                    ? "cleanupcode.exe"
+                    : "cleanupcode.x86.exe";
         }
 
         private static void PreProcess(ref CleanupCodeSettings toolSettings)
@@ -73,7 +77,7 @@ namespace Nuke.Common.Tools.CleanupCode
             CleanupCodeSettings toolSettings,
             IReadOnlyCollection<NuGetPackageResolver.InstalledPackage> installedPlugins)
         {
-            var hashCode = installedPlugins.Select(x => x.Id).OrderBy(x => x).JoinComma().GetMD5Hash();
+            var hashCode = toolSettings.ToolPath.Concat(installedPlugins.Select(x => x.Id)).OrderBy(x => x).JoinComma().GetMD5Hash();
             return Path.Combine(NukeBuild.TemporaryDirectory, $"CleanupCode-{hashCode.Substring(startIndex: 0, length: 4)}");
         }
     }
