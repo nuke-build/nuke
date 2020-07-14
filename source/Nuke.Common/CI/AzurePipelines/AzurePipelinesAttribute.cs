@@ -15,6 +15,7 @@ using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Nuke.Common.ValueInjection;
 using static Nuke.Common.IO.PathConstruction;
 
 namespace Nuke.Common.CI.AzurePipelines
@@ -80,11 +81,15 @@ namespace Nuke.Common.CI.AzurePipelines
 
         public override ConfigurationEntity GetConfiguration(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
+            var systemVariablesLookup = ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false)
+                .Where(x => x.HasCustomAttribute<AzurePipelinesVariableAttribute>())
+                .ToLookupTable(x => x.Name, x => ((AzurePipelinesVariableAttribute)x.GetCustomAttribute(typeof(AzurePipelinesVariableAttribute))).Name);
+
             return new AzurePipelinesConfiguration
                    {
                        VariableGroups = ImportVariableGroups,
                        VcsPushTrigger = GetVcsPushTrigger(),
-                       Stages = _images.Select(x => GetStage(x, relevantTargets)).ToArray()
+                       Stages = _images.Select(x => GetStage(x, systemVariablesLookup, relevantTargets)).ToArray()
                    };
         }
 
@@ -116,11 +121,12 @@ namespace Nuke.Common.CI.AzurePipelines
 
         protected virtual AzurePipelinesStage GetStage(
             AzurePipelinesImage image,
+            LookupTable<string, string> systemVariablesLookup,
             IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             var lookupTable = new LookupTable<ExecutableTarget, AzurePipelinesJob>();
             var jobs = relevantTargets
-                .Select(x => (ExecutableTarget: x, Job: GetJob(x, lookupTable, relevantTargets)))
+                .Select(x => (ExecutableTarget: x, Job: GetJob(x, lookupTable, systemVariablesLookup, relevantTargets)))
                 .ForEachLazy(x => lookupTable.Add(x.ExecutableTarget, x.Job))
                 .Select(x => x.Job).ToArray();
 
@@ -137,6 +143,7 @@ namespace Nuke.Common.CI.AzurePipelines
         protected virtual AzurePipelinesJob GetJob(
             ExecutableTarget executableTarget,
             LookupTable<ExecutableTarget, AzurePipelinesJob> jobs,
+            LookupTable<string, string> systemVariablesLookup,
             IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             var (partitionName, totalPartitions) = ArtifactExtensions.Partitions.GetValueOrDefault(executableTarget.Definition);
@@ -175,22 +182,27 @@ namespace Nuke.Common.CI.AzurePipelines
                        Dependencies = dependencies,
                        Parallel = totalPartitions,
                        PartitionName = partitionName,
-                       Imports = GetImports().ToDictionary(x => x.Key, x => x.Value),
+                       Imports = GetImports(systemVariablesLookup).ToDictionary(x => x.Key, x => x.Value),
                        InvokedTargets = chainLinkTargets.Select(x => x.Name).ToArray(),
                        PublishArtifacts = publishedArtifacts
                    };
         }
 
-        protected virtual IEnumerable<(string Key, string Value)> GetImports()
+        protected virtual IEnumerable<(string Key, string Value)> GetImports(LookupTable<string, string> systemVariablesLookup)
         {
             if (ImportSystemAccessTokenAs != null)
                 yield return (ImportSystemAccessTokenAs, "$(System.AccessToken)");
 
             foreach (var variable in ImportVariables)
             {
-
-
-                yield return (variable, $"$({variable})");
+                if (systemVariablesLookup.Contains(variable))
+                {
+                    yield return (variable, $"$({systemVariablesLookup[variable]})");
+                }
+                else
+                {
+                    yield return (variable, $"$({variable})");
+                }
             }
         }
 
