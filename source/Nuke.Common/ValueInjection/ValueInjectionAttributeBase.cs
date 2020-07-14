@@ -17,7 +17,7 @@ namespace Nuke.Common.ValueInjection
         [CanBeNull]
         public object TryGetValue(MemberInfo member, object instance)
         {
-            return ControlFlow.SuppressErrors(() => GetValue(member, instance));
+            return ControlFlow.SuppressErrors(() => GetValue(member, instance), includeStackTrace: true);
         }
 
         [CanBeNull]

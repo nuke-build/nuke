@@ -35,7 +35,7 @@ namespace Nuke.MSBuildTasks
         protected override bool ExecuteInner()
         {
             var specificationFiles = SpecificationFiles.Select(x => x.GetMetadata("Fullpath")).ToList();
-            var repository = ControlFlow.SuppressErrors(() => GitRepository.FromLocalDirectory(BaseDirectory));
+            var repository = ControlFlow.SuppressErrors(() => GitRepository.FromLocalDirectory(BaseDirectory), includeStackTrace: true);
 
             string GetFilePath(Tool tool)
                 => (AbsolutePath) BaseDirectory
