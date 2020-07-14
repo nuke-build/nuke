@@ -23,7 +23,7 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
             {
                 using (writer.WriteBlock("variables:"))
                 {
-                    VariableGroups.ForEach(x => writer.WriteLine($"- group: {x}"));
+                    VariableGroups.ForEach(x => writer.WriteLine($"- group: '{x}'"));
                     writer.WriteLine();
                 }
             }
