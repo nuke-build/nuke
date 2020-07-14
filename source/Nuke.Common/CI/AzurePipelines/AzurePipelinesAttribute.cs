@@ -4,8 +4,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.CI.AzurePipelines.Configuration;
 using Nuke.Common.Execution;
@@ -69,8 +71,7 @@ namespace Nuke.Common.CI.AzurePipelines
 
         public string[] ImportVariableGroups { get; set; } = new string[0];
         public string ImportSystemAccessTokenAs { get; set; }
-        public string[] ImportSecrets { get; set; } = new string[0];
-        public IDictionary<string, string> ImportSystemVariablesAs { get; set; } = new Dictionary<string, string>();
+        public string[] ImportVariables { get; set; } = new string[0];
 
         public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
         {
@@ -185,14 +186,12 @@ namespace Nuke.Common.CI.AzurePipelines
             if (ImportSystemAccessTokenAs != null)
                 yield return (ImportSystemAccessTokenAs, "$(System.AccessToken)");
 
-            foreach (var secret in ImportSecrets)
-                yield return (secret, $"$({secret})");
+            foreach (var variable in ImportVariables)
+            {
 
-            // NB: ImportSystemVariablesAs is an inverted dictionary
-            // so the value is the local variable name and they key is
-            // the azure pipelines variable name
-            foreach (var kvp in ImportSystemVariablesAs)
-                yield return (kvp.Value, $"$({kvp.Key})");
+
+                yield return (variable, $"$({variable})");
+            }
         }
 
         protected virtual string GetArtifact(string artifact)
