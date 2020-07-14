@@ -190,14 +190,16 @@ namespace Nuke.Common.Tests.CI
             [Parameter("NuGet Source for Packages")]
             public readonly string Source = "https://api.nuget.org/v3/index.json";
 
-            [Parameter("GitHub Token")] 
+            [Parameter("GitHub Token")]
+            [AzurePipelinesVariable]
             public readonly string GitHubToken;
 
             [Parameter("Azure Pipelines Build Number")]
             [AzurePipelinesVariable("Build.BuildNumber")]
             public readonly string BuildNumber;
 
-            [Parameter("Azure Pipelines System Access Token")] 
+            [Parameter("Azure Pipelines System Access Token")]
+            [AzurePipelinesVariable("System.AccessToken")]
             public readonly string AzurePipelinesSystemAccessToken;
 
             public Target Publish => _ => _

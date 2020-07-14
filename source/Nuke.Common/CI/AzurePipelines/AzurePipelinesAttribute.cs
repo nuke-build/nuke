@@ -71,8 +71,6 @@ namespace Nuke.Common.CI.AzurePipelines
         public string[] PullRequestsPathsExclude { get; set; } = new string[0];
 
         public string[] ImportVariableGroups { get; set; } = new string[0];
-        public string ImportSystemAccessTokenAs { get; set; }
-        public string[] ImportVariables { get; set; } = new string[0];
 
         public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
         {
@@ -81,15 +79,16 @@ namespace Nuke.Common.CI.AzurePipelines
 
         public override ConfigurationEntity GetConfiguration(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
-            var systemVariablesLookup = ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false)
+            var variables = ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false)
                 .Where(x => x.HasCustomAttribute<AzurePipelinesVariableAttribute>())
-                .ToLookupTable(x => x.Name, x => ((AzurePipelinesVariableAttribute)x.GetCustomAttribute(typeof(AzurePipelinesVariableAttribute))).Name);
+                .ToDictionary(x => x.Name, 
+                    x => ((AzurePipelinesVariableAttribute)x.GetCustomAttribute(typeof(AzurePipelinesVariableAttribute))).Name ?? x.Name);
 
             return new AzurePipelinesConfiguration
                    {
                        VariableGroups = ImportVariableGroups,
                        VcsPushTrigger = GetVcsPushTrigger(),
-                       Stages = _images.Select(x => GetStage(x, systemVariablesLookup, relevantTargets)).ToArray()
+                       Stages = _images.Select(x => GetStage(x, variables, relevantTargets)).ToArray()
                    };
         }
 
@@ -121,12 +120,12 @@ namespace Nuke.Common.CI.AzurePipelines
 
         protected virtual AzurePipelinesStage GetStage(
             AzurePipelinesImage image,
-            LookupTable<string, string> systemVariablesLookup,
+            IReadOnlyDictionary<string, string> variables,
             IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             var lookupTable = new LookupTable<ExecutableTarget, AzurePipelinesJob>();
             var jobs = relevantTargets
-                .Select(x => (ExecutableTarget: x, Job: GetJob(x, lookupTable, systemVariablesLookup, relevantTargets)))
+                .Select(x => (ExecutableTarget: x, Job: GetJob(x, lookupTable, variables, relevantTargets)))
                 .ForEachLazy(x => lookupTable.Add(x.ExecutableTarget, x.Job))
                 .Select(x => x.Job).ToArray();
 
@@ -143,7 +142,7 @@ namespace Nuke.Common.CI.AzurePipelines
         protected virtual AzurePipelinesJob GetJob(
             ExecutableTarget executableTarget,
             LookupTable<ExecutableTarget, AzurePipelinesJob> jobs,
-            LookupTable<string, string> systemVariablesLookup,
+            IReadOnlyDictionary<string, string> variables,
             IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             var (partitionName, totalPartitions) = ArtifactExtensions.Partitions.GetValueOrDefault(executableTarget.Definition);
@@ -182,29 +181,29 @@ namespace Nuke.Common.CI.AzurePipelines
                        Dependencies = dependencies,
                        Parallel = totalPartitions,
                        PartitionName = partitionName,
-                       Imports = GetImports(systemVariablesLookup).ToDictionary(x => x.Key, x => x.Value),
+                       Imports = variables.ToDictionary(x => x.Key, x => $"$({x.Value})"),
                        InvokedTargets = chainLinkTargets.Select(x => x.Name).ToArray(),
                        PublishArtifacts = publishedArtifacts
                    };
         }
 
-        protected virtual IEnumerable<(string Key, string Value)> GetImports(LookupTable<string, string> systemVariablesLookup)
-        {
-            if (ImportSystemAccessTokenAs != null)
-                yield return (ImportSystemAccessTokenAs, "$(System.AccessToken)");
+        //protected virtual IEnumerable<(string Key, string Value)> GetImports(LookupTable<string, string> systemVariablesLookup)
+        //{
+        //    if (ImportSystemAccessTokenAs != null)
+        //        yield return (ImportSystemAccessTokenAs, "$(System.AccessToken)");
 
-            foreach (var variable in ImportVariables)
-            {
-                if (systemVariablesLookup.Contains(variable))
-                {
-                    yield return (variable, $"$({systemVariablesLookup[variable]})");
-                }
-                else
-                {
-                    yield return (variable, $"$({variable})");
-                }
-            }
-        }
+        //    foreach (var variable in ImportVariables)
+        //    {
+        //        if (systemVariablesLookup.Contains(variable))
+        //        {
+        //            yield return (variable, $"$({systemVariablesLookup[variable]})");
+        //        }
+        //        else
+        //        {
+        //            yield return (variable, $"$({variable})");
+        //        }
+        //    }
+        //}
 
         protected virtual string GetArtifact(string artifact)
         {

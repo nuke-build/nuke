@@ -6,7 +6,10 @@ namespace Nuke.Common.CI
     {
         public string Name { get; set; }
 
-        public CIVariableAttribute(string name)
+        protected CIVariableAttribute()
+        { }
+
+        protected CIVariableAttribute(string name)
         {
             Name = name;
         }
