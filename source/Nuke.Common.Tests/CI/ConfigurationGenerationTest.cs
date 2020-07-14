@@ -1,4 +1,4 @@
-// Copyright 2020 Maintainers of NUKE.
+﻿// Copyright 2020 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -85,6 +85,10 @@ namespace Nuke.Common.Tests.CI
                         ImportSystemAccessTokenAs = nameof(AzurePipelinesSystemAccessToken),
                         ImportVariableGroups = new[] { "variable-group-1" },
                         ImportSecrets = new[] { nameof(GitHubToken) },
+                        ImportSystemVariablesAs = new Dictionary<string, string>
+                        {
+                            { "Build.BuildNumber", nameof(BuildNumber) }
+                        },
                         TriggerBatch = true,
                         TriggerBranchesInclude = new[] { "included_branch" },
                         TriggerBranchesExclude = new[] { "excluded_branch" },
@@ -191,6 +195,7 @@ namespace Nuke.Common.Tests.CI
             public readonly string Source = "https://api.nuget.org/v3/index.json";
 
             [Parameter("GitHub Token")] public readonly string GitHubToken;
+            [Parameter("Azure Pipelines Build Number")] public readonly string BuildNumber;
             [Parameter("Azure Pipelines System Access Token")] public readonly string AzurePipelinesSystemAccessToken;
 
             public Target Publish => _ => _

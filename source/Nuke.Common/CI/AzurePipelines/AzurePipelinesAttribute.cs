@@ -68,8 +68,9 @@ namespace Nuke.Common.CI.AzurePipelines
         public string[] PullRequestsPathsExclude { get; set; } = new string[0];
 
         public string[] ImportVariableGroups { get; set; } = new string[0];
-        public string[] ImportSecrets { get; set; } = new string[0];
         public string ImportSystemAccessTokenAs { get; set; }
+        public string[] ImportSecrets { get; set; } = new string[0];
+        public IDictionary<string, string> ImportSystemVariablesAs { get; set; } = new Dictionary<string, string>();
 
         public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
         {
@@ -186,6 +187,12 @@ namespace Nuke.Common.CI.AzurePipelines
 
             foreach (var secret in ImportSecrets)
                 yield return (secret, $"$({secret})");
+
+            // NB: ImportSystemVariablesAs is an inverted dictionary
+            // so the value is the local variable name and they key is
+            // the azure pipelines variable name
+            foreach (var kvp in ImportSystemVariablesAs)
+                yield return (kvp.Value, $"$({kvp.Key})");
         }
 
         protected virtual string GetArtifact(string artifact)
