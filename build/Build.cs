@@ -70,8 +70,8 @@ using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
     AzurePipelinesImage.WindowsLatest,
     AzurePipelinesImage.MacOsLatest,
     InvokedTargets = new[] { nameof(Test), nameof(Pack) },
-    NonEntryTargets = new[] { nameof(Restore), nameof(DownloadFonts), nameof(InstallFonts), nameof(ReleaseImage) },
-    ExcludedTargets = new[] { nameof(Clean), nameof(Coverage), nameof(SignPackages) })]
+    NonEntryTargets = new[] { nameof(Restore), nameof(DownloadFonts), nameof(InstallFonts), nameof(ReleaseImage), nameof(Coverage) },
+    ExcludedTargets = new[] { nameof(Clean), nameof(SignPackages) })]
 partial class Build : NukeBuild
 {
     /// Support plugins are available for:
