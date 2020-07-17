@@ -171,6 +171,7 @@ partial class Build : NukeBuild
     [Partition(2)] readonly Partition TestPartition;
     AbsolutePath TestResultDirectory => OutputDirectory / "test-results";
     IEnumerable<Project> TestProjects => TestPartition.GetCurrent(Solution.GetProjects("*.Tests"));
+    bool ShouldGenerateCoverage = false;
 
     Target Test => _ => _
         .DependsOn(Compile)
@@ -179,12 +180,14 @@ partial class Build : NukeBuild
         .Partition(() => TestPartition)
         .Executes(() =>
         {
+            ShouldGenerateCoverage = InvokedTargets.Contains(Coverage) || IsServerBuild;
+
             DotNetTest(_ => _
                 .SetConfiguration(Configuration)
                 .SetNoBuild(InvokedTargets.Contains(Compile))
                 .ResetVerbosity()
                 .SetResultsDirectory(TestResultDirectory)
-                .When(InvokedTargets.Contains(Coverage) || IsServerBuild, _ => _
+                .When(ShouldGenerateCoverage, _ => _
                     .EnableCollectCoverage()
                     .SetCoverletOutputFormat(CoverletOutputFormat.cobertura)
                     .SetExcludeByFile("*.Generated.cs")
@@ -193,7 +196,7 @@ partial class Build : NukeBuild
                 .CombineWith(TestProjects, (_, v) => _
                     .SetProjectFile(v)
                     .SetLogger($"trx;LogFileName={v.Name}.trx")
-                    .When(InvokedTargets.Contains(Coverage) || IsServerBuild, _ => _
+                    .When(ShouldGenerateCoverage, _ => _
                         .SetCoverletOutput(TestResultDirectory / $"{v.Name}.xml"))));
 
             TestResultDirectory.GlobFiles("*.trx").ForEach(x =>
@@ -210,6 +213,7 @@ partial class Build : NukeBuild
         .DependsOn(Test)
         .TriggeredBy(Test)
         .Consumes(Test)
+        .OnlyWhenDynamic(() => ShouldGenerateCoverage)
         .Produces(CoverageReportArchive)
         .Executes(() =>
         {
