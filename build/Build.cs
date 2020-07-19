@@ -21,8 +21,8 @@ using Nuke.Common.Tools.Coverlet;
 using Nuke.Common.Tools.DotCover;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
-using Nuke.Common.Tools.InspectCode;
 using Nuke.Common.Tools.ReportGenerator;
+using Nuke.Common.Tools.ReSharper;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
@@ -30,9 +30,9 @@ using static Nuke.Common.ControlFlow;
 using static Nuke.Common.IO.CompressionTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
-using static Nuke.Common.Tools.InspectCode.InspectCodeTasks;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
+using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
 
 [CheckBuildProjectConfigurations]
 [DotNetVerbosityMapping]
@@ -235,14 +235,10 @@ partial class Build : NukeBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
-            InspectCode(_ => _
+            ReSharperInspectCode(_ => _
                 .SetTargetPath(Solution)
                 .SetOutput(OutputDirectory / "inspectCode.xml")
-                .AddPlugin("EtherealCode.ReSpeller", InspectCodePluginLatest)
-                .AddPlugin("PowerToys.CyclomaticComplexity", InspectCodePluginLatest)
-                .AddPlugin("ReSharper.ImplicitNullability", InspectCodePluginLatest)
-                .AddPlugin("ReSharper.SerializationInspections", InspectCodePluginLatest)
-                .AddPlugin("ReSharper.XmlDocInspections", InspectCodePluginLatest));
+                .AddPlugin("ReSharperPlugin.CognitiveComplexity", ReSharperPluginLatest));
         });
 
     [Parameter("NuGet Api Key")] readonly string ApiKey;
