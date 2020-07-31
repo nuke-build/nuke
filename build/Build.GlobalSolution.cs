@@ -39,7 +39,7 @@ partial class Build
                 var origin = UseHttps ? repository.HttpsUrl : repository.SshUrl;
 
                 if (!Directory.Exists(repositoryDirectory))
-                    Git($"clone {origin} {repositoryDirectory} --branch {await repository.GetDefaultBranch()} --progress");
+                    Git($"clone {origin} {repositoryDirectory} --progress");
                 else
                 {
                     SuppressErrors(() => Git($"remote add origin {origin}", repositoryDirectory));
