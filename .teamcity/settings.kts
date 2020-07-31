@@ -77,8 +77,8 @@ project {
             unchecked = "False",
             display = ParameterDisplay.NORMAL)
         checkbox (
-            "env.UseSSH",
-            label = "UseSSH",
+            "env.UseHttps",
+            label = "UseHttps",
             value = "False",
             checked = "True",
             unchecked = "False",

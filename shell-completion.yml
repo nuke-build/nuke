@@ -80,7 +80,7 @@ TwitterAccessToken:
 TwitterAccessTokenSecret: 
 TwitterConsumerKey: 
 TwitterConsumerSecret: 
-UseSSH: 
+UseHttps: 
 Verbosity:
 - Minimal
 - Normal

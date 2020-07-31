@@ -20,7 +20,7 @@ using static Nuke.Common.Tools.Git.GitTasks;
 
 partial class Build
 {
-    [Parameter] readonly bool UseSSH;
+    [Parameter] readonly bool UseHttps;
 
     AbsolutePath GlobalSolution => RootDirectory / "nuke-global.sln";
     AbsolutePath ExternalRepositoriesDirectory => RootDirectory / "external";
@@ -36,7 +36,7 @@ partial class Build
             foreach (var repository in ExternalRepositories)
             {
                 var repositoryDirectory = ExternalRepositoriesDirectory / repository.GetGitHubName();
-                var origin = UseSSH ? repository.SshUrl : repository.HttpsUrl;
+                var origin = UseHttps ? repository.HttpsUrl : repository.SshUrl;
 
                 if (!Directory.Exists(repositoryDirectory))
                     Git($"clone {origin} {repositoryDirectory} --branch {await repository.GetDefaultBranch()} --progress");
