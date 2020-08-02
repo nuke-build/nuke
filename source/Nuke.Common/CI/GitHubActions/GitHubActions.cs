@@ -12,7 +12,7 @@ using Nuke.Common.Utilities;
 namespace Nuke.Common.CI.GitHubActions
 {
     /// <summary>
-    /// Interface according to the <a href="https://github.com/actions/toolkit/blob/master/packages/core/src/core.ts">official website</a>.
+    /// Interface according to the <a href="https://docs.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables">official website</a>.
     /// </summary>
     [PublicAPI]
     [CI]
@@ -64,8 +64,6 @@ namespace Nuke.Common.CI.GitHubActions
 
         ///<summary>Only set for forked repositories. The branch of the base repository.</summary>
         public string GitHubBaseRef => EnvironmentInfo.GetVariable<string>("GITHUB_BASE_REF");
-
-        public string GitHubToken => EnvironmentInfo.GetVariable<string>("GITHUB_TOKEN");
 
         // https://github.com/actions/toolkit/tree/master/packages/core/src
 
