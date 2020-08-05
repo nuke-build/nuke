@@ -44,6 +44,9 @@ namespace Nuke.Common.CI.GitHubActions
         ///<summary>The owner and repository name. For example, <code>octocat/Hello-World</code>.</summary>
         public string GitHubRepository => EnvironmentInfo.GetVariable<string>("GITHUB_REPOSITORY");
 
+        ///<summary>The owner name. For example, <code>octocat</code>.</summary>
+        public string GitHubRepositoryOwner => EnvironmentInfo.GetVariable<string>("GITHUB_REPOSITORY_OWNER");
+
         ///<summary>The name of the webhook event that triggered the workflow.</summary>
         public string GitHubEventName => EnvironmentInfo.GetVariable<string>("GITHUB_EVENT_NAME");
 
@@ -64,6 +67,8 @@ namespace Nuke.Common.CI.GitHubActions
 
         ///<summary>Only set for forked repositories. The branch of the base repository.</summary>
         public string GitHubBaseRef => EnvironmentInfo.GetVariable<string>("GITHUB_BASE_REF");
+
+        public string GitHubRunNumber => EnvironmentInfo.GetVariable<string>("GITHUB_RUN_NUMBER");
 
         // https://github.com/actions/toolkit/tree/master/packages/core/src
 
