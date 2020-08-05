@@ -846,6 +846,66 @@ namespace Nuke.Common.Tools.DotNet
             return configurator.Invoke(DotNetNuGetPush, DotNetLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary>
+        ///   <p>Adds a NuGet source.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;source&gt;</c> via <see cref="DotNetNuGetAddSourceSettings.Source"/></li>
+        ///     <li><c>--name</c> via <see cref="DotNetNuGetAddSourceSettings.Name"/></li>
+        ///     <li><c>--password</c> via <see cref="DotNetNuGetAddSourceSettings.Password"/></li>
+        ///     <li><c>--store-password-in-clear-text</c> via <see cref="DotNetNuGetAddSourceSettings.StorePasswordInClearText"/></li>
+        ///     <li><c>--username</c> via <see cref="DotNetNuGetAddSourceSettings.Username"/></li>
+        ///     <li><c>--valid-authentication-types</c> via <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> DotNetNuGetAddSource(DotNetNuGetAddSourceSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new DotNetNuGetAddSourceSettings();
+            using var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary>
+        ///   <p>Adds a NuGet source.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;source&gt;</c> via <see cref="DotNetNuGetAddSourceSettings.Source"/></li>
+        ///     <li><c>--name</c> via <see cref="DotNetNuGetAddSourceSettings.Name"/></li>
+        ///     <li><c>--password</c> via <see cref="DotNetNuGetAddSourceSettings.Password"/></li>
+        ///     <li><c>--store-password-in-clear-text</c> via <see cref="DotNetNuGetAddSourceSettings.StorePasswordInClearText"/></li>
+        ///     <li><c>--username</c> via <see cref="DotNetNuGetAddSourceSettings.Username"/></li>
+        ///     <li><c>--valid-authentication-types</c> via <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> DotNetNuGetAddSource(Configure<DotNetNuGetAddSourceSettings> configurator)
+        {
+            return DotNetNuGetAddSource(configurator(new DotNetNuGetAddSourceSettings()));
+        }
+        /// <summary>
+        ///   <p>Adds a NuGet source.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;source&gt;</c> via <see cref="DotNetNuGetAddSourceSettings.Source"/></li>
+        ///     <li><c>--name</c> via <see cref="DotNetNuGetAddSourceSettings.Name"/></li>
+        ///     <li><c>--password</c> via <see cref="DotNetNuGetAddSourceSettings.Password"/></li>
+        ///     <li><c>--store-password-in-clear-text</c> via <see cref="DotNetNuGetAddSourceSettings.StorePasswordInClearText"/></li>
+        ///     <li><c>--username</c> via <see cref="DotNetNuGetAddSourceSettings.Username"/></li>
+        ///     <li><c>--valid-authentication-types</c> via <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(DotNetNuGetAddSourceSettings Settings, IReadOnlyCollection<Output> Output)> DotNetNuGetAddSource(CombinatorialConfigure<DotNetNuGetAddSourceSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+        {
+            return configurator.Invoke(DotNetNuGetAddSource, DotNetLogger, degreeOfParallelism, completeOnFailure);
+        }
+        /// <summary>
         ///   <p>The <c>dotnet tool install</c> command provides a way for you to install .NET Core Global Tools on your machine. To use the command, you either have to specify that you want a user-wide installation using the <c>--global</c> option or you specify a path to install it using the <c>--tool-path</c> option.<para/>Global Tools are installed in the following directories by default when you specify the <c>-g</c> (or <c>--global</c>) option:<ul><li>Linux/macOS: <c>$HOME/.dotnet/tools</c></li><li>Windows: <c>%USERPROFILE%\.dotnet\tools</c></li></ul></p>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
         /// </summary>
@@ -1995,6 +2055,59 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--force-english-output", ForceEnglishOutput)
               .Add("--skip-duplicate", SkipDuplicate)
               .Add("--no-service-endpoint", NoServiceEndpoint);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
+    #region DotNetNuGetAddSourceSettings
+    /// <summary>
+    ///   Used within <see cref="DotNetTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class DotNetNuGetAddSourceSettings : ToolSettings
+    {
+        /// <summary>
+        ///   Path to the DotNet executable.
+        /// </summary>
+        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        /// <summary>
+        ///   URL of the source.
+        /// </summary>
+        public virtual string Source { get; internal set; }
+        /// <summary>
+        ///   Name of the source.
+        /// </summary>
+        public virtual string Name { get; internal set; }
+        /// <summary>
+        ///   Username to be used when connecting to an authenticated source.
+        /// </summary>
+        public virtual string Username { get; internal set; }
+        /// <summary>
+        ///   Password to be used when connecting to an authenticated source.
+        /// </summary>
+        public virtual string Password { get; internal set; }
+        /// <summary>
+        ///   Enables storing portable package source credentials by disabling password encryption.
+        /// </summary>
+        public virtual bool? StorePasswordInClearText { get; internal set; }
+        /// <summary>
+        ///   List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.
+        /// </summary>
+        public virtual IReadOnlyList<DotNetNuGetAuthentication> ValidAuthenticationTypes => ValidAuthenticationTypesInternal.AsReadOnly();
+        internal List<DotNetNuGetAuthentication> ValidAuthenticationTypesInternal { get; set; } = new List<DotNetNuGetAuthentication>();
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("nuget add source")
+              .Add("{value}", Source)
+              .Add("--name {value}", Name)
+              .Add("--username {value}", Username)
+              .Add("--password {value}", Password, secret: true)
+              .Add("--store-password-in-clear-text", StorePasswordInClearText)
+              .Add("--valid-authentication-types", ValidAuthenticationTypes, separator: ',');
             return base.ConfigureArguments(arguments);
         }
     }
@@ -14428,6 +14541,250 @@ namespace Nuke.Common.Tools.DotNet
         #endregion
     }
     #endregion
+    #region DotNetNuGetAddSourceSettingsExtensions
+    /// <summary>
+    ///   Used within <see cref="DotNetTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class DotNetNuGetAddSourceSettingsExtensions
+    {
+        #region Source
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetNuGetAddSourceSettings.Source"/></em></p>
+        ///   <p>URL of the source.</p>
+        /// </summary>
+        [Pure]
+        public static T SetSource<T>(this T toolSettings, string source) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Source = source;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetNuGetAddSourceSettings.Source"/></em></p>
+        ///   <p>URL of the source.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetSource<T>(this T toolSettings) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Source = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Name
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetNuGetAddSourceSettings.Name"/></em></p>
+        ///   <p>Name of the source.</p>
+        /// </summary>
+        [Pure]
+        public static T SetName<T>(this T toolSettings, string name) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Name = name;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetNuGetAddSourceSettings.Name"/></em></p>
+        ///   <p>Name of the source.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetName<T>(this T toolSettings) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Name = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Username
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetNuGetAddSourceSettings.Username"/></em></p>
+        ///   <p>Username to be used when connecting to an authenticated source.</p>
+        /// </summary>
+        [Pure]
+        public static T SetUsername<T>(this T toolSettings, string username) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Username = username;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetNuGetAddSourceSettings.Username"/></em></p>
+        ///   <p>Username to be used when connecting to an authenticated source.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetUsername<T>(this T toolSettings) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Username = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Password
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetNuGetAddSourceSettings.Password"/></em></p>
+        ///   <p>Password to be used when connecting to an authenticated source.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPassword<T>(this T toolSettings, string password) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Password = password;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetNuGetAddSourceSettings.Password"/></em></p>
+        ///   <p>Password to be used when connecting to an authenticated source.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPassword<T>(this T toolSettings) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Password = null;
+            return toolSettings;
+        }
+        #endregion
+        #region StorePasswordInClearText
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetNuGetAddSourceSettings.StorePasswordInClearText"/></em></p>
+        ///   <p>Enables storing portable package source credentials by disabling password encryption.</p>
+        /// </summary>
+        [Pure]
+        public static T SetStorePasswordInClearText<T>(this T toolSettings, bool? storePasswordInClearText) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.StorePasswordInClearText = storePasswordInClearText;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetNuGetAddSourceSettings.StorePasswordInClearText"/></em></p>
+        ///   <p>Enables storing portable package source credentials by disabling password encryption.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetStorePasswordInClearText<T>(this T toolSettings) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.StorePasswordInClearText = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetNuGetAddSourceSettings.StorePasswordInClearText"/></em></p>
+        ///   <p>Enables storing portable package source credentials by disabling password encryption.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableStorePasswordInClearText<T>(this T toolSettings) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.StorePasswordInClearText = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetNuGetAddSourceSettings.StorePasswordInClearText"/></em></p>
+        ///   <p>Enables storing portable package source credentials by disabling password encryption.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableStorePasswordInClearText<T>(this T toolSettings) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.StorePasswordInClearText = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetNuGetAddSourceSettings.StorePasswordInClearText"/></em></p>
+        ///   <p>Enables storing portable package source credentials by disabling password encryption.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleStorePasswordInClearText<T>(this T toolSettings) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.StorePasswordInClearText = !toolSettings.StorePasswordInClearText;
+            return toolSettings;
+        }
+        #endregion
+        #region ValidAuthenticationTypes
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/> to a new list</em></p>
+        ///   <p>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</p>
+        /// </summary>
+        [Pure]
+        public static T SetValidAuthenticationTypes<T>(this T toolSettings, params DotNetNuGetAuthentication[] validAuthenticationTypes) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ValidAuthenticationTypesInternal = validAuthenticationTypes.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/> to a new list</em></p>
+        ///   <p>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</p>
+        /// </summary>
+        [Pure]
+        public static T SetValidAuthenticationTypes<T>(this T toolSettings, IEnumerable<DotNetNuGetAuthentication> validAuthenticationTypes) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ValidAuthenticationTypesInternal = validAuthenticationTypes.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/></em></p>
+        ///   <p>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</p>
+        /// </summary>
+        [Pure]
+        public static T AddValidAuthenticationTypes<T>(this T toolSettings, params DotNetNuGetAuthentication[] validAuthenticationTypes) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ValidAuthenticationTypesInternal.AddRange(validAuthenticationTypes);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/></em></p>
+        ///   <p>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</p>
+        /// </summary>
+        [Pure]
+        public static T AddValidAuthenticationTypes<T>(this T toolSettings, IEnumerable<DotNetNuGetAuthentication> validAuthenticationTypes) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ValidAuthenticationTypesInternal.AddRange(validAuthenticationTypes);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/></em></p>
+        ///   <p>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearValidAuthenticationTypes<T>(this T toolSettings) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ValidAuthenticationTypesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/></em></p>
+        ///   <p>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveValidAuthenticationTypes<T>(this T toolSettings, params DotNetNuGetAuthentication[] validAuthenticationTypes) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<DotNetNuGetAuthentication>(validAuthenticationTypes);
+            toolSettings.ValidAuthenticationTypesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/></em></p>
+        ///   <p>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveValidAuthenticationTypes<T>(this T toolSettings, IEnumerable<DotNetNuGetAuthentication> validAuthenticationTypes) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<DotNetNuGetAuthentication>(validAuthenticationTypes);
+            toolSettings.ValidAuthenticationTypesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
     #region DotNetToolInstallSettingsExtensions
     /// <summary>
     ///   Used within <see cref="DotNetTasks"/>.
@@ -15163,6 +15520,27 @@ namespace Nuke.Common.Tools.DotNet
         public static explicit operator DotNetSymbolPackageFormat(string value)
         {
             return new DotNetSymbolPackageFormat { Value = value };
+        }
+    }
+    #endregion
+    #region DotNetNuGetAuthentication
+    /// <summary>
+    ///   Used within <see cref="DotNetTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [Serializable]
+    [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<DotNetNuGetAuthentication>))]
+    public partial class DotNetNuGetAuthentication : Enumeration
+    {
+        public static DotNetNuGetAuthentication basic = (DotNetNuGetAuthentication) "basic";
+        public static DotNetNuGetAuthentication negotiate = (DotNetNuGetAuthentication) "negotiate";
+        public static DotNetNuGetAuthentication kerberos = (DotNetNuGetAuthentication) "kerberos";
+        public static DotNetNuGetAuthentication ntlm = (DotNetNuGetAuthentication) "ntlm";
+        public static DotNetNuGetAuthentication digest = (DotNetNuGetAuthentication) "digest";
+        public static explicit operator DotNetNuGetAuthentication(string value)
+        {
+            return new DotNetNuGetAuthentication { Value = value };
         }
     }
     #endregion
