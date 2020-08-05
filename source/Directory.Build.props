@@ -18,7 +18,6 @@
     <PackageTags>build automation continuous-integration tools orchestration</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://nuke.build</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/nuke-build/nuke</RepositoryUrl>
     <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 

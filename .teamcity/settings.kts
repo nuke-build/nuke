@@ -42,6 +42,13 @@ project {
             value = "Normal",
             options = listOf("Minimal" to "Minimal", "Normal" to "Normal", "Quiet" to "Quiet", "Verbose" to "Verbose"),
             display = ParameterDisplay.NORMAL)
+        text (
+            "env.ApiKey",
+            label = "ApiKey",
+            description = "NuGet Api Key",
+            value = "",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
         select (
             "env.Configuration",
             label = "Configuration",
@@ -61,13 +68,6 @@ project {
             value = "False",
             checked = "True",
             unchecked = "False",
-            display = ParameterDisplay.NORMAL)
-        text (
-            "env.Source",
-            label = "Source",
-            description = "NuGet Source for Packages",
-            value = "https://api.nuget.org/v3/index.json",
-            allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         checkbox (
             "env.AutoStash",
@@ -291,15 +291,6 @@ object Publish : BuildType({
             path = "build.cmd"
             arguments = "Publish --skip"
         }
-    }
-    params {
-        text (
-            "env.ApiKey",
-            label = "ApiKey",
-            description = "NuGet Api Key",
-            value = "",
-            allowEmpty = false,
-            display = ParameterDisplay.PROMPT)
     }
     dependencies {
         snapshot(Test) {

@@ -48,13 +48,9 @@ using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
     ExcludedTargets = new[] { nameof(Clean), nameof(SignPackages) })]
 [GitHubActions(
     "continuous",
-    GitHubActionsImage.MacOs1014,
-    GitHubActionsImage.Ubuntu1604,
-    GitHubActionsImage.Ubuntu1804,
-    GitHubActionsImage.WindowsServer2016R2,
-    GitHubActionsImage.WindowsServer2019,
+    GitHubActionsImage.WindowsLatest,
     On = new[] { GitHubActionsTrigger.Push },
-    InvokedTargets = new[] { nameof(Test), nameof(Pack) },
+    InvokedTargets = new[] { nameof(Publish) },
     ImportGitHubTokenAs = nameof(GitHubToken),
     ImportSecrets = new[] { nameof(SlackWebhook), nameof(GitterAuthToken) })]
 [AppVeyor(
@@ -82,6 +78,7 @@ partial class Build : NukeBuild
 
     [CI] readonly TeamCity TeamCity;
     [CI] readonly AzurePipelines AzurePipelines;
+    [CI] readonly GitHubActions GitHubActions;
 
     [Required] [GitVersion(Framework = "netcoreapp3.1", NoFetch = true)] readonly GitVersion GitVersion;
     [Required] [GitRepository] readonly GitRepository GitRepository;
@@ -127,6 +124,7 @@ partial class Build : NukeBuild
                 .SetProjectFile(Solution)
                 .SetNoRestore(InvokedTargets.Contains(Restore))
                 .SetConfiguration(Configuration)
+                .SetRepositoryUrl(GitRepository.HttpsUrl)
                 .SetAssemblyVersion(GitVersion.AssemblySemVer)
                 .SetFileVersion(GitVersion.AssemblySemFileVer)
                 .SetInformationalVersion(GitVersion.InformationalVersion));
@@ -139,6 +137,7 @@ partial class Build : NukeBuild
             DotNetPublish(_ => _
                     .SetNoRestore(InvokedTargets.Contains(Restore))
                     .SetConfiguration(Configuration)
+                    .SetRepositoryUrl(GitRepository.HttpsUrl)
                     .SetAssemblyVersion(GitVersion.AssemblySemVer)
                     .SetFileVersion(GitVersion.AssemblySemFileVer)
                     .SetInformationalVersion(GitVersion.InformationalVersion)
@@ -241,21 +240,34 @@ partial class Build : NukeBuild
         });
 
     [Parameter("NuGet Api Key")] readonly string ApiKey;
-    [Parameter("NuGet Source for Packages")] readonly string Source = "https://api.nuget.org/v3/index.json";
+    bool IsOriginalRepository => GitRepository.Identifier == "nuke-build/nuke";
+
+    string Source => IsOriginalRepository
+        ? "https://api.nuget.org/v3/index.json"
+        : $"https://nuget.pkg.github.com/{GitHubActions.GitHubRepositoryOwner}/index.json";
 
     Target Publish => _ => _
         .ProceedAfterFailure()
         .DependsOn(Clean, Test, Pack)
         .Consumes(Pack)
-        .Requires(() => ApiKey)
+        .Requires(() => ApiKey != null || !IsOriginalRepository)
         .Requires(() => GitHasCleanWorkingCopy())
         .Requires(() => Configuration.Equals(Configuration.Release))
-        .Requires(() => GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch) ||
+        .Requires(() => !IsOriginalRepository ||
+                        GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch) ||
                         GitRepository.Branch.EqualsOrdinalIgnoreCase(DevelopBranch) ||
                         GitRepository.Branch.StartsWithOrdinalIgnoreCase(ReleaseBranchPrefix) ||
                         GitRepository.Branch.StartsWithOrdinalIgnoreCase(HotfixBranchPrefix))
         .Executes(() =>
         {
+            if (GitHubActions != null)
+            {
+                DotNetNuGetAddSource(_ => _
+                    .SetSource($"https://nuget.pkg.github.com/{GitHubActions.GitHubRepositoryOwner}/index.json")
+                    .SetUsername(GitHubActions.GitHubActor)
+                    .SetPassword(GitHubToken));
+            }
+
             Assert(PackageFiles.Count == 5, "packages.Count == 5");
 
             DotNetNuGetPush(_ => _

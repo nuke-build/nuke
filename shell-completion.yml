@@ -52,7 +52,6 @@ Skip:
 - Test
 - UpdateContributors
 SlackWebhook: 
-Source: 
 Target:
 - Analysis
 - Announce
