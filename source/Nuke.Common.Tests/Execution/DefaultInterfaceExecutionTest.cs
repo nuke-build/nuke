@@ -95,6 +95,17 @@ namespace Nuke.Common.Tests.Execution
             Assert.Throws<InvalidCastException>(() => ExecutableTargetFactory.CreateAll(build, x => x.E));
         }
 
+        [Fact]
+        public void TestDuplicateTargets()
+        {
+            var build = new DuplicateTargetTestBuild();
+            var targets = ExecutableTargetFactory.CreateAll(build);
+
+            targets.Count(x => x.Name == nameof(ITestBuild.Duplicate)).Should().Be(1);
+
+            // Otherwise ExecutionPlanner.GetExecutableTarget fails
+        }
+
         private interface IParameterInterface
         {
             [Parameter] string StringParameter => ValueInjectionUtility.TryGetValue(() => StringParameter);
@@ -130,6 +141,12 @@ namespace Nuke.Common.Tests.Execution
                 .Executes(() => { });
         }
 
+        private class DuplicateTargetTestBuild : NukeBuild, ITestBuild
+        {
+            public Target Duplicate => _ => _
+               .Executes(Action);
+        }
+
         private interface ITestBuild
         {
             public string Description => DefaultInterfaceExecutionTest.Description;
@@ -158,6 +175,9 @@ namespace Nuke.Common.Tests.Execution
                 .OnlyWhenDynamic(DynamicCondition)
                 .After(B)
                 .Before(C);
+
+            public Target Duplicate => _ => _
+               .Executes(Action);
         }
 
         private interface IInheritedTestBuild : ITestBuild

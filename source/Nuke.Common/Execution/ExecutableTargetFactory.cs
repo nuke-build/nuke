@@ -98,7 +98,9 @@ namespace Nuke.Common.Execution
 
             return classProperties
                 .Concat(interfaceProperties)
-                .Where(x => x.PropertyType == typeof(Target)).ToList();
+                .Where(x => x.PropertyType == typeof(Target))
+                .Distinct(x => x.Name)
+                .ToList();
         }
     }
 }
