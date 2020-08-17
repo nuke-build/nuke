@@ -36,7 +36,6 @@ using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
 
 [CheckBuildProjectConfigurations]
 [DotNetVerbosityMapping]
-[UnsetVisualStudioEnvironmentVariables]
 [ShutdownDotNetAfterServerBuild]
 [TeamCitySetDotCoverHomePath]
 [TeamCity(
