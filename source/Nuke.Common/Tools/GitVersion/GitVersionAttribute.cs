@@ -10,8 +10,10 @@ using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.Execution;
+using Nuke.Common.Git;
 using Nuke.Common.Tooling;
 using Nuke.Common.ValueInjection;
+using static Nuke.Common.ControlFlow;
 
 namespace Nuke.Common.Tools.GitVersion
 {
@@ -36,6 +38,10 @@ namespace Nuke.Common.Tools.GitVersion
                 Logger.Warn($"{nameof(GitVersion)} is disabled on UNIX environment.");
                 return null;
             }
+
+            var repository = SuppressErrors(() => GitRepository.FromLocalDirectory(NukeBuild.RootDirectory));
+            AssertWarn(repository == null || repository.Protocol != GitProtocol.Ssh || NoFetch,
+                $"{nameof(GitVersion)} does not support fetching SSH endpoints. Enable {nameof(NoFetch)} to skip fetching.");
 
             var gitVersion = GitVersionTasks.GitVersion(s => s
                     .SetFramework(Framework)
