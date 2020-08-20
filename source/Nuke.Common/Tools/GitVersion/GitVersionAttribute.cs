@@ -9,7 +9,6 @@ using JetBrains.Annotations;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.TeamCity;
-using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
 using Nuke.Common.ValueInjection;
 
