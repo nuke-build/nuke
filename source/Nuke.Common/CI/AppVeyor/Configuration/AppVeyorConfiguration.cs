@@ -102,7 +102,8 @@ namespace Nuke.Common.CI.AppVeyor.Configuration
 
             using (writer.WriteBlock("build_script:"))
             {
-                writer.WriteLine($@"- ps: .\{Path.ChangeExtension(BuildCmdPath, ".ps1")} {InvokedTargets.JoinSpace()}");
+                writer.WriteLine($@"- cmd: .\{BuildCmdPath} {InvokedTargets.JoinSpace()}");
+                writer.WriteLine($@"- sh: ./{BuildCmdPath} {InvokedTargets.JoinSpace()}");
                 writer.WriteLine();
             }
 

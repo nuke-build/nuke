@@ -21,7 +21,8 @@ image:
 skip_tags: true
 
 build_script:
-  - ps: .\build.ps1 Test Pack
+  - cmd: .\build.cmd Test Pack
+  - sh: ./build.cmd Test Pack
 
 artifacts:
   - path: output/test-results/*.trx
