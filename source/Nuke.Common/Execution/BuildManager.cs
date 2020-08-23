@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
 using Nuke.Common.CI;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
@@ -30,6 +31,8 @@ namespace Nuke.Common.Execution
         public static int Execute<T>(Expression<Func<T, Target>>[] defaultTargetExpressions)
             where T : NukeBuild
         {
+            Console.OutputEncoding = Encoding.UTF8;
+            Console.InputEncoding = Encoding.UTF8;
             Console.CancelKeyPress += (s, e) => s_cancellationHandlers.ForEach(x => x());
 
             var build = Create<T>();
