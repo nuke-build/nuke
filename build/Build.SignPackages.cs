@@ -13,8 +13,14 @@ using Nuke.Components;
 
 partial class Build : ISignPackages
 {
+    // https://ci.appveyor.com/tools/encrypt
+
     public IEnumerable<AbsolutePath> SignPathPackages => PackageFiles
-        .Where(x => Path.GetFileName(x).StartsWithAny("Nuke.Common", "Nuke.Components", "Nuke.CodeGeneration"));
+        .Where(x => Path.GetFileName(x).StartsWithAny(
+            "Nuke.Common",
+            "Nuke.Components",
+            "Nuke.CodeGeneration",
+            "Nuke.GlobalTool"));
 
     public Target SignPackages => _ => _
         .Inherit<ISignPackages>(x => x.SignPackages)
