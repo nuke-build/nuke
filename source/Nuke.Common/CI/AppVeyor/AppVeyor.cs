@@ -61,7 +61,7 @@ namespace Nuke.Common.CI.AppVeyor
         public int BuildNumber => EnvironmentInfo.GetVariable<int>("APPVEYOR_BUILD_NUMBER");
         public string BuildVersion => EnvironmentInfo.GetVariable<string>("APPVEYOR_BUILD_VERSION");
         public string BuildWorkerImage => EnvironmentInfo.GetVariable<string>("APPVEYOR_BUILD_WORKER_IMAGE");
-        public int PullRequestNumber => EnvironmentInfo.GetVariable<int>("APPVEYOR_PULL_REQUEST_NUMBER");
+        [CanBeNull] public int? PullRequestNumber => EnvironmentInfo.GetVariable<int?>("APPVEYOR_PULL_REQUEST_NUMBER");
         [CanBeNull] public string PullRequestTitle => EnvironmentInfo.GetVariable<string>("APPVEYOR_PULL_REQUEST_TITLE");
         public string JobId => EnvironmentInfo.GetVariable<string>("APPVEYOR_JOB_ID");
         [CanBeNull] public string JobName => EnvironmentInfo.GetVariable<string>("APPVEYOR_JOB_NAME");
