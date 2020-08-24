@@ -158,6 +158,7 @@ namespace Nuke.Common.Execution
                 ConstructorInfo constructor => constructor.IsPublic,
                 FieldInfo field => field.IsPublic,
                 MethodInfo method => method.IsPublic,
+                PropertyInfo property => property.GetMethod.IsPublic,
                 _ => throw new NotSupportedException(member.ToString())
             };
         }
@@ -169,6 +170,7 @@ namespace Nuke.Common.Execution
                 ConstructorInfo constructor => constructor.IsFamily,
                 FieldInfo field => field.IsFamily,
                 MethodInfo method => method.IsFamily,
+                PropertyInfo property => property.GetMethod.IsFamily,
                 _ => throw new NotSupportedException(member.ToString())
             };
         }
@@ -180,6 +182,7 @@ namespace Nuke.Common.Execution
                 ConstructorInfo constructor => constructor.IsAssembly,
                 FieldInfo field => field.IsAssembly,
                 MethodInfo method => method.IsAssembly,
+                PropertyInfo property => property.GetMethod.IsAssembly,
                 _ => throw new NotSupportedException(member.ToString())
             };
         }
