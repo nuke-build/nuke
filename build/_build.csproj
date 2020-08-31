@@ -12,8 +12,8 @@
 
   <!-- Test properties for MSBuild integration -->
   <PropertyGroup>
-    <NukeMSBuildIntegration Condition="'$(NukeMSBuildIntegration)' == ''">False</NukeMSBuildIntegration>
-    <NukeMSBuildTasks>$(MSBuildThisFileDirectory)\..\source\Nuke.MSBuildTasks\bin\Debug\netcoreapp2.1\publish</NukeMSBuildTasks>
+    <NukeTasksEnabled Condition="'$(NukeTasksEnabled)' == ''">False</NukeTasksEnabled>
+    <NukeTasksDirectory>$(MSBuildThisFileDirectory)\..\source\Nuke.MSBuildTasks\bin\Debug\netcoreapp2.1\publish</NukeTasksDirectory>
 <!--    <PackAsTool>True</PackAsTool>-->
 <!--    <ToolCommandName>build</ToolCommandName>-->
   </PropertyGroup>
