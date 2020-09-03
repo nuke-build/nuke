@@ -17,6 +17,10 @@ namespace Nuke.Common.ValueInjection
 {
     internal class ParameterService
     {
+        internal static ParameterService Instance = new ParameterService(
+            () => EnvironmentInfo.CommandLineArguments.Skip(count: 1).ToArray(),
+            () => EnvironmentInfo.Variables);
+
         private readonly Func<string[]> _commandLineArgumentsProvider;
         private readonly Func<IReadOnlyDictionary<string, string>> _environmentVariablesProvider;
 
@@ -150,14 +154,14 @@ namespace Nuke.Common.ValueInjection
             if (index == -1)
                 return GetDefaultValue(destinationType);
 
-            var values = Arguments.Skip(index + 1).TakeWhile(x => !x.StartsWith("-")).ToArray();
+            var values = Arguments.Skip(index + 1).TakeUntil(IsParameter).ToArray();
             return ConvertCommandLineArguments(argumentName, values, destinationType, Arguments, separator);
         }
 
         [CanBeNull]
         public object GetCommandLineArgument(int position, Type destinationType, char? separator)
         {
-            var positionalParametersCount = Arguments.TakeWhile(x => !x.StartsWith("-")).Count();
+            var positionalParametersCount = Arguments.TakeUntil(IsParameter).Count();
             if (position < 0)
                 position = positionalParametersCount + position % positionalParametersCount;
 
@@ -175,7 +179,7 @@ namespace Nuke.Common.ValueInjection
         [CanBeNull]
         public object GetPositionalCommandLineArguments(Type destinationType, char? separator = null)
         {
-            var positionalArguments = Arguments.TakeWhile(x => !x.StartsWith("-")).ToArray();
+            var positionalArguments = Arguments.TakeUntil(IsParameter).ToArray();
             if (positionalArguments.Length == 0)
                 return GetDefaultValue(destinationType);
 
@@ -224,7 +228,7 @@ namespace Nuke.Common.ValueInjection
         private int GetCommandLineArgumentIndex(string argumentName)
         {
             var index = Array.FindLastIndex(Arguments,
-                x => x.StartsWith("-") && x.Replace("-", string.Empty).EqualsOrdinalIgnoreCase(argumentName.Replace("-", string.Empty)));
+                x => IsParameter(x) && GetParameterMemberName(x).EqualsOrdinalIgnoreCase(GetParameterMemberName(argumentName)));
 
             // if (index == -1 && checkNames)
             // {

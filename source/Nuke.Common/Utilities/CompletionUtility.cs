@@ -43,7 +43,7 @@ namespace Nuke.Common.Utilities
             {
                 var passedItems = parts
                     .Reverse()
-                    .TakeWhile(x => !ParameterService.IsParameter(x))
+                    .TakeUntil(ParameterService.IsParameter)
                     .Select(ParameterService.GetParameterMemberName);
 
                 var items = completionItems.GetValueOrDefault(parameter)?.Except(passedItems, StringComparer.OrdinalIgnoreCase) ??
