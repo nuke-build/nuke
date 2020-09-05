@@ -149,6 +149,11 @@ namespace Nuke.Common.Execution
             };
         }
 
+        public static Type GetScalarType(this Type type)
+        {
+            return type.IsArray ? type.GetElementType() : type;
+        }
+
         public static bool IsPublic(this MemberInfo member)
         {
             return member switch
