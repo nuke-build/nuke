@@ -49,9 +49,12 @@ namespace Nuke.Common
         public string Separator { get; set; }
 
         public virtual bool List { get; set; } = true;
+        
+        [CanBeNull]
+        public Type ValueProviderType { get; set; }
 
         [CanBeNull]
-        public string ValueProvider { get; set; }
+        public string ValueProviderMember { get; set; }
 
         [CanBeNull]
         public override object GetValue(MemberInfo member, object instance)

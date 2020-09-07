@@ -82,12 +82,14 @@ namespace Nuke.Common.ValueInjection
 
             IEnumerable<(string Text, object Object)> TryGetFromValueProvider()
             {
-                if (attribute.ValueProvider == null)
+                if (attribute.ValueProviderMember == null)
                     return null;
 
-                var valueProvider = instance.GetType().GetMember(attribute.ValueProvider, All)
+                var valueProviderType = attribute.ValueProviderType ?? instance.GetType();
+                var valueProvider = valueProviderType
+                    .GetMember(attribute.ValueProviderMember, All)
                     .SingleOrDefault()
-                    .NotNull($"No single provider '{attribute.ValueProvider}' found for member '{member.Name}'.");
+                    .NotNull($"No single provider '{valueProviderType.Name}.{member.Name}' found.");
                 ControlFlow.Assert(valueProvider.GetMemberType() == typeof(IEnumerable<string>),
                     $"Value provider '{valueProvider.Name}' must be of type '{typeof(IEnumerable<string>).GetDisplayShortName()}'.");
 
