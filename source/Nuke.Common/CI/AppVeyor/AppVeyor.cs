@@ -41,7 +41,7 @@ namespace Nuke.Common.CI.AppVeyor
 
         internal static bool IsRunningAppVeyor => !Environment.GetEnvironmentVariable("APPVEYOR").IsNullOrEmpty();
 
-        private readonly Lazy<Tool> _cli = new Lazy<Tool>(() => IsRunningAppVeyor ? ToolResolver.GetPathTool("appveyor") : null);
+        private readonly Lazy<Tool> _cli = Lazy.Create(() => IsRunningAppVeyor ? ToolResolver.GetPathTool("appveyor") : null);
 
         internal AppVeyor()
         {

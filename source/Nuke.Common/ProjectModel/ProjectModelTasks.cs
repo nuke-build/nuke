@@ -66,7 +66,7 @@ namespace Nuke.Common.ProjectModel
             return SolutionSerializer.Deserialize(solutionFile);
         }
 
-        private static Lazy<string> s_msbuildPathResolver = new Lazy<string>(() =>
+        private static Lazy<string> s_msbuildPathResolver = Lazy.Create(() =>
         {
             var dotnet = ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
                          ToolPathResolver.GetPathExecutable("dotnet");
@@ -76,7 +76,7 @@ namespace Nuke.Common.ProjectModel
                 .Single(x => x.StartsWith("Base Path:"))
                 .TrimStart("Base Path:").Trim();
 
-            return basePath / "MSBuild.dll";
+            return (string) (basePath / "MSBuild.dll");
         });
 
         public static Microsoft.Build.Evaluation.Project ParseProject(

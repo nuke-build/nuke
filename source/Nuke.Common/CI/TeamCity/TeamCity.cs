@@ -41,11 +41,6 @@ namespace Nuke.Common.CI.TeamCity
             return RestService.For<T>(httpClient);
         }
 
-        private static Lazy<T> GetLazy<T>(Func<T> provider)
-        {
-            return new Lazy<T>(provider);
-        }
-
         [CanBeNull]
         private static IReadOnlyDictionary<string, string> ParseDictionary([CanBeNull] string file)
         {
@@ -90,12 +85,12 @@ namespace Nuke.Common.CI.TeamCity
 
         internal TeamCity(Action<string> messageSink)
         {
-            _messageSink = messageSink ?? System.Console.WriteLine;
+            _messageSink = messageSink ?? Console.WriteLine;
 
-            _systemProperties = GetLazy(() => ParseDictionary(EnvironmentInfo.GetVariable<string>("TEAMCITY_BUILD_PROPERTIES_FILE")));
-            _configurationProperties = GetLazy(() => ParseDictionary(SystemProperties?["teamcity.configuration.properties.file"]));
-            _runnerProperties = GetLazy(() => ParseDictionary(SystemProperties?["teamcity.runner.properties.file"]));
-            _recentlyFailedTests = GetLazy(() =>
+            _systemProperties = Lazy.Create(() => ParseDictionary(EnvironmentInfo.GetVariable<string>("TEAMCITY_BUILD_PROPERTIES_FILE")));
+            _configurationProperties = Lazy.Create(() => ParseDictionary(SystemProperties?["teamcity.configuration.properties.file"]));
+            _runnerProperties = Lazy.Create(() => ParseDictionary(SystemProperties?["teamcity.runner.properties.file"]));
+            _recentlyFailedTests = Lazy.Create(() =>
             {
                 var file = SystemProperties?["teamcity.tests.recentlyFailedTests.file"];
                 return File.Exists(file)
@@ -103,7 +98,7 @@ namespace Nuke.Common.CI.TeamCity
                     : new string[0];
             });
 
-            _restClient = GetLazy(() => CreateRestClient<ITeamCityRestClient>());
+            _restClient = Lazy.Create(() => CreateRestClient<ITeamCityRestClient>());
         }
 
         public T CreateRestClient<T>()
