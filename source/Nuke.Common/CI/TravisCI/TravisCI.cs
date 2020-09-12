@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.TravisCI
@@ -14,19 +15,19 @@ namespace Nuke.Common.CI.TravisCI
     /// Interface according to the <a href="https://docs.travis-ci.com/user/environment-variables/">official website</a>.
     /// </summary>
     [PublicAPI]
-    [CI]
     [ExcludeFromCodeCoverage]
-    public class TravisCI
+    public class TravisCI : Host, IBuildServer
     {
-        private static Lazy<TravisCI> s_instance = new Lazy<TravisCI>(() => new TravisCI());
-
-        public static TravisCI Instance => NukeBuild.Host == HostType.Travis ? s_instance.Value : null;
-
         internal static bool IsRunningTravisCI => !Environment.GetEnvironmentVariable("TRAVIS").IsNullOrEmpty();
 
         internal TravisCI()
         {
         }
+
+        protected internal override OutputSink OutputSink => new TravisCIOutputSink();
+
+        string IBuildServer.Branch => Branch;
+        string IBuildServer.Commit => Commit;
 
         public bool Ci => EnvironmentInfo.GetVariable<bool>("CI");
         public bool ContinousIntegration => EnvironmentInfo.GetVariable<bool>("CONTINUOUS_INTEGRATION");

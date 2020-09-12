@@ -8,14 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
 using Nuke.Common.CI;
-using Nuke.Common.CI.AppVeyor;
-using Nuke.Common.CI.AzurePipelines;
-using Nuke.Common.CI.Bitrise;
-using Nuke.Common.CI.GitHubActions;
-using Nuke.Common.CI.TeamCity;
-using Nuke.Common.CI.TravisCI;
 using Nuke.Common.Execution;
-using Nuke.Common.OutputSinks;
 using Nuke.Common.Tooling;
 using Nuke.Common.ValueInjection;
 using static Nuke.Common.Constants;
@@ -99,17 +92,6 @@ namespace Nuke.Common
         /// Gets the list of targets that are executing.
         /// </summary>
         public IReadOnlyCollection<ExecutableTarget> ExecutingTargets => ExecutionPlan.Where(x => x.Status != ExecutionStatus.Skipped).ToList();
-
-        protected internal virtual OutputSink OutputSink => Host switch
-            {
-                HostType.Bitrise => new BitriseOutputSink(),
-                HostType.Travis => new TravisCIOutputSink(),
-                HostType.TeamCity => new TeamCityOutputSink(new TeamCity()),
-                HostType.AzurePipelines => new AzurePipelinesOutputSink(new AzurePipelines()),
-                HostType.GitHubActions => new GitHubActionsOutputSink(new GitHubActions()),
-                HostType.AppVeyor => new AppVeyorOutputSink(new AppVeyor()),
-                _ => OutputSink.Default
-            };
 
         [CanBeNull]
         protected internal virtual string NuGetPackagesConfigFile =>

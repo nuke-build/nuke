@@ -16,13 +16,14 @@ namespace Nuke.Common.CI.SpaceAutomation
     [PublicAPI]
     [CI]
     [ExcludeFromCodeCoverage]
-    public class SpaceAutomation
+    public class SpaceAutomation : Host, IBuildServer
     {
-        private static Lazy<SpaceAutomation> s_instance = new Lazy<SpaceAutomation>(() => new SpaceAutomation());
-
-        public static SpaceAutomation Instance => NukeBuild.Host == HostType.SpaceAutomation ? s_instance.Value : null;
+        public new static SpaceAutomation Instance => Host.Instance as SpaceAutomation;
 
         internal static bool IsRunningSpaceAutomation => !Environment.GetEnvironmentVariable("JB_SPACE_PROJECT_KEY").IsNullOrEmpty();
+
+        string IBuildServer.Branch => GitBranch;
+        string IBuildServer.Commit => GitRevision;
 
         public string ProjectKey => EnvironmentInfo.GetVariable<string>("JB_SPACE_PROJECT_KEY");
         public string ApiUrl => EnvironmentInfo.GetVariable<string>("JB_SPACE_API_URL");

@@ -26,7 +26,7 @@ namespace Nuke.Common
         [CanBeNull] AbsolutePath BuildProjectFile { get; }
 
         Verbosity Verbosity { get; }
-        HostType Host { get; }
+        Host Host { get; }
         bool Plan { get; }
         bool Help { get; }
         bool NoLogo { get; }

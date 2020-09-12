@@ -16,17 +16,16 @@ namespace Nuke.Common.CI.GitLab
     [PublicAPI]
     [CI]
     [ExcludeFromCodeCoverage]
-    public class GitLab
+    public class GitLab : Host, IBuildServer
     {
-        private static Lazy<GitLab> s_instance = new Lazy<GitLab>(() => new GitLab());
-
-        public static GitLab Instance => NukeBuild.Host == HostType.GitLab ? s_instance.Value : null;
-
         internal static bool IsRunningGitLab => !Environment.GetEnvironmentVariable("GITLAB_CI").IsNullOrEmpty();
 
         internal GitLab()
         {
         }
+
+        string IBuildServer.Branch => CommitRefName;
+        string IBuildServer.Commit => CommitSha;
 
         /// <summary>
         /// Mark that job is executed in CI environment.

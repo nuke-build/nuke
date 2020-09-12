@@ -25,7 +25,7 @@ namespace Nuke.Common.CI.TeamCity
     [PublicAPI]
     public class TeamCityAttribute : ChainedConfigurationAttributeBase
     {
-        public override HostType HostType => HostType.TeamCity;
+        public override Type HostType => typeof(TeamCity);
         public override string ConfigurationFile => TeamcityDirectory / "settings.kts";
         public override IEnumerable<string> GeneratedFiles => new[] { PomFile, ConfigurationFile };
         private AbsolutePath TeamcityDirectory => NukeBuild.RootDirectory / ".teamcity";

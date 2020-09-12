@@ -29,7 +29,7 @@ namespace Nuke.Common.CI.AppVeyor
             _images = new[] { image }.Concat(images).ToArray();
         }
 
-        public override HostType HostType => HostType.AppVeyor;
+        public override Type HostType => typeof(AppVeyor);
         public override string ConfigurationFile => NukeBuild.RootDirectory / "appveyor.yml";
         public override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
 

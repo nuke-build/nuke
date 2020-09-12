@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.GitHubActions
@@ -15,19 +16,21 @@ namespace Nuke.Common.CI.GitHubActions
     /// Interface according to the <a href="https://docs.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables">official website</a>.
     /// </summary>
     [PublicAPI]
-    [CI]
     [ExcludeFromCodeCoverage]
-    public class GitHubActions
+    public class GitHubActions : Host, IBuildServer
     {
-        private static Lazy<GitHubActions> s_instance = new Lazy<GitHubActions>(() => new GitHubActions());
-
-        public static GitHubActions Instance => NukeBuild.Host == HostType.GitHubActions ? s_instance.Value : null;
-
         internal static bool IsRunningGitHubActions => EnvironmentInfo.GetVariable<bool>("GITHUB_ACTIONS");
+
+        public new static GitHubActions Instance => Host.Instance as GitHubActions;
 
         internal GitHubActions()
         {
         }
+
+        protected internal override OutputSink OutputSink => new GitHubActionsOutputSink(this);
+
+        string IBuildServer.Branch => GitHubRef;
+        string IBuildServer.Commit => GitHubSha;
 
         ///<summary>The path to the GitHub home directory used to store user data. For example, <code>/github/home</code>.</summary>
         public string Home => EnvironmentInfo.GetVariable<string>("HOME");
@@ -115,7 +118,7 @@ namespace Nuke.Common.CI.GitHubActions
 
         private void Write(string[] escapedTokens, [CanBeNull] string message)
         {
-            Console.WriteLine($"##[{escapedTokens.JoinSpace()}]{EscapeMessage(message)}");
+            System.Console.WriteLine($"##[{escapedTokens.JoinSpace()}]{EscapeMessage(message)}");
         }
 
         private string EscapeMessage([CanBeNull] string data)

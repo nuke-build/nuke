@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.Bitrise
@@ -14,14 +15,9 @@ namespace Nuke.Common.CI.Bitrise
     /// Interface according to the <a href="http://devcenter.bitrise.io/faq/available-environment-variables/#exposed-by-bitriseio">official website</a>.
     /// </summary>
     [PublicAPI]
-    [CI]
     [ExcludeFromCodeCoverage]
-    public class Bitrise
+    public class Bitrise : Host, IBuildServer
     {
-        private static Lazy<Bitrise> s_instance = new Lazy<Bitrise>(() => new Bitrise());
-
-        public static Bitrise Instance => NukeBuild.Host == HostType.Bitrise ? s_instance.Value : null;
-
         internal static bool IsRunningBitrise => !Environment.GetEnvironmentVariable("BITRISE_BUILD_URL").IsNullOrEmpty();
 
         private static DateTime ConvertUnixTimestamp(long timestamp)
@@ -34,6 +30,11 @@ namespace Nuke.Common.CI.Bitrise
         internal Bitrise()
         {
         }
+
+        protected internal override OutputSink OutputSink => new BitriseOutputSink();
+
+        string IBuildServer.Branch => GitBranch;
+        string IBuildServer.Commit => GitCommit;
 
         public string BuildUrl => EnvironmentInfo.GetVariable<string>("BITRISE_BUILD_URL");
         public long BuildNumber => EnvironmentInfo.GetVariable<long>("BITRISE_BUILD_NUMBER");

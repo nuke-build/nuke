@@ -49,7 +49,7 @@ namespace Nuke.Common.Execution
             ControlFlow.Assert(member.HasCustomAttribute<ValueInjectionAttributeBase>(),
                 $"Member '{member.Name}' is required {from}but not marked with an injection attribute.");
 
-            if (NukeBuild.Host == HostType.Console)
+            if (NukeBuild.Host is Terminal)
                 TryInjectValueInteractive(member, build);
 
             return member.GetValue(build) == null;

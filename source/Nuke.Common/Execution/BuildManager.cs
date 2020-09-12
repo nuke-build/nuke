@@ -53,7 +53,7 @@ namespace Nuke.Common.Execution
                 ExecuteExtension<IOnBeforeLogo>(x => x.OnBeforeLogo(build, build.ExecutableTargets));
                 build.OnBuildCreated();
 
-                Logger.OutputSink = build.OutputSink;
+                Logger.OutputSink = NukeBuild.Host.OutputSink;
 
                 ToolPathResolver.EmbeddedPackagesDirectory = NukeBuild.BuildProjectFile == null
                     ? Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)

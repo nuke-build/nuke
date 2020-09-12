@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -17,22 +18,29 @@ namespace Nuke.Common.CI.AzurePipelines
     /// <a href="https://github.com/Microsoft/azure-pipelines-tasks/blob/master/docs/authoring/commands.md">Azure Pipeline Tasks Documentation</a>
     /// </summary>
     [PublicAPI]
-    [CI]
     [ExcludeFromCodeCoverage]
-    public class AzurePipelines
+    public class AzurePipelines : Host, IBuildServer
     {
-        private static Lazy<AzurePipelines> s_instance = new Lazy<AzurePipelines>(() => new AzurePipelines());
-
-        public static AzurePipelines Instance => NukeBuild.Host == HostType.AzurePipelines ? s_instance.Value : null;
+        public new static AzurePipelines Instance => Host.Instance as AzurePipelines;
 
         internal static bool IsRunningAzurePipelines => !Environment.GetEnvironmentVariable("TF_BUILD").IsNullOrEmpty();
 
         private readonly Action<string> _messageSink;
 
-        internal AzurePipelines(Action<string> messageSink = null)
+        internal AzurePipelines()
+            : this(messageSink: null)
         {
-            _messageSink = messageSink ?? Console.WriteLine;
         }
+
+        internal AzurePipelines(Action<string> messageSink)
+        {
+            _messageSink = messageSink ?? System.Console.WriteLine;
+        }
+
+        protected internal override OutputSink OutputSink => new AzurePipelinesOutputSink(this);
+
+        string IBuildServer.Branch => SourceBranchName;
+        string IBuildServer.Commit => SourceVersion;
 
         public string AgentBuildDirectory => EnvironmentInfo.GetVariable<string>("AGENT_BUILDDIRECTORY");
         public string AgentHomeDirectory => EnvironmentInfo.GetVariable<string>("AGENT_HOMEDIRECTORY");

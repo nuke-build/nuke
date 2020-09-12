@@ -8,17 +8,6 @@ GitHubToken:
 GitterAuthToken: 
 Help: 
 Host:
-- AppVeyor
-- AzurePipelines
-- Bamboo
-- Bitrise
-- Console
-- GitHubActions
-- GitLab
-- Jenkins
-- SpaceAutomation
-- TeamCity
-- Travis
 IgnoreFailedSources: 
 NoLogo: 
 NuGetApiKey: 

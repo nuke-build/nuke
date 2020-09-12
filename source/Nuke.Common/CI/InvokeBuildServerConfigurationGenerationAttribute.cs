@@ -43,7 +43,7 @@ namespace Nuke.Common.CI
             var assembly = Assembly.GetEntryAssembly().NotNull("assembly != null");
             ProcessTasks.StartProcess(
                     assembly.Location,
-                    $"--{ConfigurationParameterName} {generator.Id} --host {generator.HostType}",
+                    $"--{ConfigurationParameterName} {generator.Id} --host {generator.HostName}",
                     logInvocation: false,
                     logOutput: true)
                 .AssertZeroExitCode();
@@ -55,7 +55,7 @@ namespace Nuke.Common.CI
             if (changedFiles.Count == 0)
                 return false;
 
-            Logger.Warn($"{generator.Name} configuration files have changed.");
+            Logger.Warn($"{generator.DisplayName} configuration files have changed.");
             changedFiles.ForEach(x => Logger.Trace($"Updated {x}"));
             return true;
         }

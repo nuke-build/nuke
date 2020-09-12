@@ -26,7 +26,7 @@ namespace Nuke.Common.CI.SpaceAutomation
             _image = image;
         }
 
-        public override HostType HostType => HostType.SpaceAutomation;
+        public override Type HostType => typeof(SpaceAutomation);
         public override string ConfigurationFile => NukeBuild.RootDirectory / ".space.kts";
         public override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
 

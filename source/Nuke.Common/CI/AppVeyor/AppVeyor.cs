@@ -7,6 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.OutputSinks;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 
@@ -33,22 +34,25 @@ namespace Nuke.Common.CI.AppVeyor
     /// Interface according to the <a href="https://www.appveyor.com/docs/environment-variables/">official website</a>.
     /// </summary>
     [PublicAPI]
-    [CI]
     [ExcludeFromCodeCoverage]
-    public class AppVeyor
+    public class AppVeyor : Host, IBuildServer
     {
-        private static Lazy<AppVeyor> s_instance = new Lazy<AppVeyor>(() => new AppVeyor());
-
-        public static AppVeyor Instance => NukeBuild.Host == HostType.AppVeyor ? s_instance.Value : null;
+        public new static AppVeyor Instance => Host.Instance as AppVeyor;
 
         internal static bool IsRunningAppVeyor => !Environment.GetEnvironmentVariable("APPVEYOR").IsNullOrEmpty();
 
+        private readonly Lazy<Tool> _cli = new Lazy<Tool>(() => IsRunningAppVeyor ? ToolResolver.GetPathTool("appveyor") : null);
+
         internal AppVeyor()
         {
-            _cli = ToolResolver.GetPathTool("appveyor");
         }
 
-        private readonly Tool _cli;
+        protected internal override OutputSink OutputSink => new AppVeyorOutputSink(this);
+
+        string IBuildServer.Branch => RepositoryBranch;
+        string IBuildServer.Commit => RepositoryCommitSha;
+
+        public Tool Cli => _cli.Value;
 
         public string Url => EnvironmentInfo.GetVariable<string>("APPVEYOR_URL");
         public string ApiUrl => EnvironmentInfo.GetVariable<string>("APPVEYOR_API_URL");
@@ -86,14 +90,14 @@ namespace Nuke.Common.CI.AppVeyor
 
         public void UpdateBuildVersion(string version)
         {
-            _cli.Invoke($"UpdateBuild -Version {version.DoubleQuote()}");
+            Cli?.Invoke($"UpdateBuild -Version {version.DoubleQuote()}");
             EnvironmentInfo.SetVariable("APPVEYOR_BUILD_VERSION", version);
         }
 
         public void PushArtifact(string path, string name = null)
         {
             name ??= Path.GetFileName(path);
-            _cli.Invoke($"PushArtifact {path} -FileName {name}");
+            Cli?.Invoke($"PushArtifact {path} -FileName {name}");
         }
 
         public void WriteInformation(string message, string details = null)
@@ -113,7 +117,7 @@ namespace Nuke.Common.CI.AppVeyor
 
         private void WriteMessage(AppVeyorMessageCategory category, string message, string details)
         {
-            _cli.Invoke($"AddMessage {message.DoubleQuote()} -Category {category} -Details {details.DoubleQuote()}",
+            Cli?.Invoke($"AddMessage {message.DoubleQuote()} -Category {category} -Details {details.DoubleQuote()}",
                 logInvocation: false,
                 logOutput: false);
         }

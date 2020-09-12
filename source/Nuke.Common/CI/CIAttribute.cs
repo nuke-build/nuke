@@ -17,8 +17,9 @@ namespace Nuke.Common.CI
     {
         public override object GetValue(MemberInfo member, object instance)
         {
+            // TODO: allow with conversion?
             var memberType = member.GetMemberType();
-            var instanceProperty = memberType.GetProperty(nameof(TeamCity.TeamCity.Instance), ReflectionService.Static);
+            var instanceProperty = memberType.GetProperty(nameof(Host.Instance), ReflectionService.Static);
             ControlFlow.Assert(instanceProperty != null,
                 $"Type '{memberType}' is not compatible for injection via '{nameof(CIAttribute)}'.");
             return instanceProperty.GetValue(obj: null);

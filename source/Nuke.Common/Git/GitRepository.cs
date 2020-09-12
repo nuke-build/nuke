@@ -8,15 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
-using Nuke.Common.CI.AppVeyor;
-using Nuke.Common.CI.AzurePipelines;
-using Nuke.Common.CI.Bitrise;
-using Nuke.Common.CI.GitHubActions;
-using Nuke.Common.CI.GitLab;
-using Nuke.Common.CI.Jenkins;
-using Nuke.Common.CI.SpaceAutomation;
-using Nuke.Common.CI.TeamCity;
-using Nuke.Common.CI.TravisCI;
+using Nuke.Common.CI;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 
@@ -59,14 +51,14 @@ namespace Nuke.Common.Git
 
             var (protocol, endpoint, identifier) = GetRemoteFromConfig(gitDirectory, remote ?? "origin");
             var head = GetHead(gitDirectory);
-            var commit = GetCommitFromCI() ?? GetCommitFromHead(gitDirectory, head);
+            var commit = (Host.Instance as IBuildServer)?.Commit ?? GetCommitFromHead(gitDirectory, head);
             var tags = GetTagsFromCommit(gitDirectory, commit);
 
             return new GitRepository(
                 protocol,
                 endpoint,
                 identifier,
-                branch ?? (GetBranchFromCI() ?? GetBranchFromHead(head)).TrimStart("refs/heads/").TrimStart("origin/"),
+                branch ?? ((Host.Instance as IBuildServer)?.Branch ?? GetBranchFromHead(head)).TrimStart("refs/heads/").TrimStart("origin/"),
                 rootDirectory,
                 head,
                 commit,
@@ -99,28 +91,12 @@ namespace Nuke.Common.Git
 
         internal static string GetBranchFromCI()
         {
-            return AppVeyor.Instance?.RepositoryBranch ??
-                   Bitrise.Instance?.GitBranch ??
-                   GitLab.Instance?.CommitRefName ??
-                   Jenkins.Instance?.GitBranch ?? Jenkins.Instance?.BranchName ??
-                   TeamCity.Instance?.BranchName ??
-                   AzurePipelines.Instance?.SourceBranchName ??
-                   TravisCI.Instance?.Branch ??
-                   GitHubActions.Instance?.GitHubRef ??
-                   SpaceAutomation.Instance?.GitBranch;
+            return (Host.Instance as IBuildServer)?.Branch;
         }
 
         internal static string GetCommitFromCI()
         {
-            return AppVeyor.Instance?.RepositoryCommitSha ??
-                   Bitrise.Instance?.GitCommit ??
-                   GitLab.Instance?.CommitSha ??
-                   Jenkins.Instance?.GitCommit ??
-                   TeamCity.Instance?.BuildVcsNumber ??
-                   AzurePipelines.Instance?.SourceVersion ??
-                   TravisCI.Instance?.Commit ??
-                   GitHubActions.Instance?.GitHubSha ??
-                   SpaceAutomation.Instance?.GitRevision;
+            return (Host.Instance as IBuildServer)?.Commit;
         }
 
         private static IReadOnlyCollection<string> GetTagsFromCommit(string gitDirectory, string commit)
