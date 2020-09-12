@@ -60,7 +60,7 @@ namespace Nuke.MSBuildTasks
         private IEnumerable<ExternalFilesData> GetExternalFilesInfo(ITaskItem item)
         {
             var externalFileIdentity = item.GetMetadata("Identity");
-            var externalFileBasePath = NormalizePath(Combine(EnvironmentInfo.WorkingDirectory, item.GetMetadataOrNull("BasePath")));
+            var externalFileBasePath = EnvironmentInfo.WorkingDirectory / item.GetMetadataOrNull("BasePath");
 
             var tokens = item
                 .MetadataNames.Cast<string>()

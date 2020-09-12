@@ -20,13 +20,13 @@ namespace Nuke.Common
         public static string NewLine => Environment.NewLine;
         public static string MachineName => Environment.MachineName;
 
-        public static string WorkingDirectory
+        public static AbsolutePath WorkingDirectory
         {
 #if NETCORE
-            get => Directory.GetCurrentDirectory();
+            get => (AbsolutePath) Directory.GetCurrentDirectory();
             set => Directory.SetCurrentDirectory(value);
 #else
-            get => Environment.CurrentDirectory;
+            get => (AbsolutePath) Environment.CurrentDirectory;
             set => Environment.CurrentDirectory = value;
 #endif
         }
@@ -38,7 +38,7 @@ namespace Nuke.Common
 
             var previousWorkingDirectory = WorkingDirectory;
             return DelegateDisposable.CreateBracket(
-                () => WorkingDirectory = workingDirectory,
+                () => WorkingDirectory = (AbsolutePath) workingDirectory,
                 () => WorkingDirectory = previousWorkingDirectory);
         }
 

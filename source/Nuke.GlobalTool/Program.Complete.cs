@@ -19,7 +19,7 @@ namespace Nuke.GlobalTool
         private const string CommandName = "nuke";
 
         [UsedImplicitly]
-        public static int Complete(string[] args, [CanBeNull] string rootDirectory, [CanBeNull] string buildScript)
+        public static int Complete(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
             if (rootDirectory == null)
                 return 0;
@@ -30,7 +30,7 @@ namespace Nuke.GlobalTool
 
             words = words.Substring(CommandName.Length).TrimStart();
 
-            var completionFile = GetCompletionFile((AbsolutePath) rootDirectory);
+            var completionFile = GetCompletionFile(rootDirectory);
             if (!File.Exists(completionFile))
             {
                 Build(buildScript.NotNull(), $"--{CompletionParameterName}");

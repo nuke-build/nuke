@@ -22,14 +22,14 @@ namespace Nuke.GlobalTool
         private const string PACKAGE_TYPE_REFERENCE = "PackageReference";
 
         [UsedImplicitly]
-        private static int Fix(string[] args, [CanBeNull] string rootDirectory, [CanBeNull] string buildScript)
+        private static int Fix(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
             PrintInfo();
 
             if (rootDirectory == null)
                 return 0;
 
-            var missingPackageFile = Constants.GetMissingPackageFile((AbsolutePath) rootDirectory);
+            var missingPackageFile = Constants.GetMissingPackageFile(rootDirectory);
             if (!File.Exists(missingPackageFile))
                 return 0;
 

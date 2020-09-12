@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common;
+using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 
@@ -26,7 +27,7 @@ namespace Nuke.GlobalTool
                 var rootDirectory = Constants.TryGetRootDirectoryFrom(Directory.GetCurrentDirectory());
 
                 var buildScript = rootDirectory != null
-                    ? new DirectoryInfo(rootDirectory)
+                    ? (AbsolutePath) new DirectoryInfo(rootDirectory)
                         .EnumerateFiles($"build.{(EnvironmentInfo.IsWin ? "ps1" : "sh")}", maxDepth: 2)
                         .FirstOrDefault()?.FullName.DoubleQuoteIfNeeded()
                     : null;
@@ -45,7 +46,7 @@ namespace Nuke.GlobalTool
             Logger.Info($"NUKE Global Tool {typeof(Program).Assembly.GetInformationalText()}");
         }
 
-        private static int Handle(string[] args, [CanBeNull] string rootDirectory, [CanBeNull] string buildScript)
+        private static int Handle(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
             var hasCommand = args.FirstOrDefault()?.StartsWithOrdinalIgnoreCase(CommandPrefix.ToString()) ?? false;
             if (hasCommand)

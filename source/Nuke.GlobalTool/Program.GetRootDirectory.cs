@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using JetBrains.Annotations;
 using Nuke.Common;
+using Nuke.Common.IO;
 using static Nuke.Common.Constants;
 
 namespace Nuke.GlobalTool
@@ -13,7 +14,7 @@ namespace Nuke.GlobalTool
     partial class Program
     {
         [UsedImplicitly]
-        public static int GetRootDirectory(string[] args, [CanBeNull] string rootDirectory, [CanBeNull] string buildScript)
+        public static int GetRootDirectory(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
             if (rootDirectory == null)
                 Console.Error.WriteLine("No root directory found.");
@@ -23,7 +24,7 @@ namespace Nuke.GlobalTool
         }
 
         [UsedImplicitly]
-        public static int GetParentRootDirectory(string[] args, [CanBeNull] string rootDirectory, [CanBeNull] string buildScript)
+        public static int GetParentRootDirectory(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
             if (rootDirectory == null)
             {

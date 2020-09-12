@@ -125,7 +125,7 @@ namespace Nuke.Common
                 return parameterValue;
 
             if (EnvironmentInfo.GetParameter<bool>(() => RootDirectory))
-                return (AbsolutePath) EnvironmentInfo.WorkingDirectory;
+                return EnvironmentInfo.WorkingDirectory;
 
             return TryGetRootDirectoryFrom(EnvironmentInfo.WorkingDirectory)
                 .NotNull(new[]

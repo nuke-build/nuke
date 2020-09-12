@@ -29,9 +29,9 @@ namespace Nuke.Common.IO
             {
                 if (value is string stringValue)
                 {
-                    return (AbsolutePath) (HasPathRoot(stringValue)
-                        ? stringValue
-                        : Combine(EnvironmentInfo.WorkingDirectory, stringValue));
+                    return HasPathRoot(stringValue)
+                        ? (AbsolutePath) stringValue
+                        : EnvironmentInfo.WorkingDirectory / stringValue;
                 }
 
                 if (value is null)
@@ -48,6 +48,7 @@ namespace Nuke.Common.IO
             _path = NormalizePath(path);
         }
 
+        [CanBeNull]
         public static explicit operator AbsolutePath([CanBeNull] string path)
         {
             if (path is null)
@@ -62,6 +63,7 @@ namespace Nuke.Common.IO
             return path?.ToString();
         }
 
+        [CanBeNull]
         public AbsolutePath Parent =>
             !IsWinRoot(_path.TrimEnd(WinSeparator)) && !IsUncRoot(_path) && !IsUnixRoot(_path)
                 ? this / ".."
