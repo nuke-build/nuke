@@ -28,13 +28,6 @@ namespace Nuke.Common
 
             Verbosity = EnvironmentInfo.GetParameter<Verbosity?>(() => Verbosity) ?? Verbosity.Normal;
             Host = EnvironmentInfo.GetParameter(() => Host) ?? Host.Default;
-            Continue = EnvironmentInfo.GetParameter(() => Continue);
-            Plan = EnvironmentInfo.GetParameter(() => Plan);
-            Help = EnvironmentInfo.GetParameter(() => Help);
-            NoLogo = EnvironmentInfo.GetParameter(() => NoLogo);
-
-            // LoadedProfiles = BuildProfileManagementAttributeBase.GetLoadProfiles();
-            // SaveProfile = BuildProfileManagementAttributeBase.GetSaveProfile();
         }
 
         /// <summary>
@@ -82,30 +75,6 @@ namespace Nuke.Common
         [Parameter("Host for execution. Default is 'automatic'.", ValueProviderMember = nameof(HostNames))]
         public static Host Host { get; }
 
-        /// <summary>
-        /// Gets a value whether to show the execution plan (HTML).
-        /// </summary>
-        [Parameter("Shows the execution plan (HTML).")]
-        public static bool Plan { get; }
-
-        /// <summary>
-        /// Gets a value whether to show the help text for this build assembly.
-        /// </summary>
-        [Parameter("Shows the help text for this build assembly.")]
-        public static bool Help { get; }
-
-        /// <summary>
-        /// Gets a value whether to display the NUKE logo.
-        /// </summary>
-        [Parameter("Disables displaying the NUKE logo.")]
-        public static bool NoLogo { get; set; }
-
-        // [Parameter("Defines the profiles to load.", Name = "LoadProfile")]
-        // public static string[] LoadedProfiles { get; }
-        //
-        // [Parameter("Defines the profile to save to.")]
-        // public static string SaveProfile { get; }
-
         public static bool IsLocalBuild => !IsServerBuild;
         public static bool IsServerBuild => Host is IBuildServer;
 
@@ -114,9 +83,6 @@ namespace Nuke.Common
             get => Logger.LogLevel;
             set => Logger.LogLevel = value;
         }
-
-        [Parameter("Indicates to continue a previously failed build attempt.")]
-        public static bool Continue { get; internal set; }
 
         private static AbsolutePath GetRootDirectory()
         {

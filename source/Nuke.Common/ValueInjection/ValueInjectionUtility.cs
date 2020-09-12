@@ -59,7 +59,15 @@ namespace Nuke.Common.ValueInjection
 
             foreach (var (member, attribute) in tuples)
             {
-                if (member.DeclaringType == typeof(NukeBuild))
+                if (member.DeclaringType == typeof(NukeBuild) &&
+                    !new[]
+                     {
+                         nameof(NukeBuild.Plan),
+                         nameof(NukeBuild.Help),
+                         nameof(NukeBuild.Continue),
+                         nameof(NukeBuild.NoLogo),
+                         nameof(NukeBuild.Verbosity)
+                     }.Contains(member.Name))
                     continue;
 
                 if (member.ReflectedType.NotNull().IsInterface)

@@ -61,7 +61,7 @@ namespace Nuke.Common.Execution
                 ToolPathResolver.NuGetPackagesConfigFile = build.NuGetPackagesConfigFile;
                 ToolPathResolver.NuGetAssetsConfigFile = build.NuGetAssetsConfigFile;
 
-                if (!NukeBuild.NoLogo)
+                if (!build.NoLogo)
                 {
                     Logger.Normal();
                     Logger.OutputSink.WriteLogo();

@@ -15,16 +15,16 @@ namespace Nuke.Common.Execution
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
-            if (NukeBuild.Help || executionPlan.Count == 0)
+            if (build.Help || executionPlan.Count == 0)
             {
                 Logger.Normal(HelpTextService.GetTargetsText(build.ExecutableTargets));
                 Logger.Normal(HelpTextService.GetParametersText(build));
             }
 
-            if (NukeBuild.Plan)
+            if (build.Plan)
                 ExecutionPlanHtmlService.ShowPlan(build.ExecutableTargets);
 
-            if (NukeBuild.Help || executionPlan.Count == 0 || NukeBuild.Plan)
+            if (build.Help || executionPlan.Count == 0 || build.Plan)
                 Environment.Exit(exitCode: 0);
         }
     }

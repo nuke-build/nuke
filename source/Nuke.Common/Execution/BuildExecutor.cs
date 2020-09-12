@@ -28,7 +28,7 @@ namespace Nuke.Common.Execution
         {
             MarkSkippedTargets(build, skippedTargets);
             RequirementService.ValidateRequirements(build, build.ExecutingTargets.ToList());
-            var previouslyExecutedTargets = UpdateInvocationHash();
+            var previouslyExecutedTargets = UpdateInvocationHash(build);
 
             BuildManager.CancellationHandler += ExecuteAssuredTargets;
 
@@ -49,9 +49,9 @@ namespace Nuke.Common.Execution
             }
         }
 
-        private static IReadOnlyCollection<string> UpdateInvocationHash()
+        private static IReadOnlyCollection<string> UpdateInvocationHash(NukeBuild build)
         {
-            var continueParameterName = ParameterService.GetParameterMemberName(() => NukeBuild.Continue);
+            var continueParameterName = ParameterService.GetParameterMemberName(() => build.Continue);
             var invocation = EnvironmentInfo.CommandLineArguments
                 .Where(x => !x.StartsWith("-") || x.TrimStart("-").EqualsOrdinalIgnoreCase(continueParameterName))
                 .JoinSpace();
@@ -59,7 +59,7 @@ namespace Nuke.Common.Execution
 
             IReadOnlyCollection<string> GetPreviouslyExecutedTargets()
             {
-                if (!NukeBuild.Continue ||
+                if (!build.Continue ||
                     !File.Exists(BuildAttemptFile))
                     return new string[0];
 

@@ -95,6 +95,30 @@ namespace Nuke.Common
         /// </summary>
         public IReadOnlyCollection<ExecutableTarget> ExecutingTargets => ExecutionPlan.Where(x => x.Status != ExecutionStatus.Skipped).ToList();
 
+        /// <summary>
+        /// Gets a value whether to show the execution plan (HTML).
+        /// </summary>
+        [Parameter("Shows the execution plan (HTML).")]
+        public bool Plan { get; }
+
+        /// <summary>
+        /// Gets a value whether to show the help text for this build assembly.
+        /// </summary>
+        [Parameter("Shows the help text for this build assembly.")]
+        public bool Help { get; }
+
+        /// <summary>
+        /// Gets a value whether to display the NUKE logo.
+        /// </summary>
+        [Parameter("Disables displaying the NUKE logo.")]
+        public bool NoLogo { get; set; }
+
+        /// <summary>
+        /// Gets a value whether a previous failed build should be continued.
+        /// </summary>
+        [Parameter("Indicates to continue a previously failed build attempt.")]
+        public bool Continue { get; internal set; }
+
         [CanBeNull]
         protected internal virtual string NuGetPackagesConfigFile =>
             BuildProjectDirectory != null
