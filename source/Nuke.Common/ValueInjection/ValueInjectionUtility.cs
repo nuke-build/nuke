@@ -8,7 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Common.Execution;
+using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.ValueInjection
@@ -86,8 +86,8 @@ namespace Nuke.Common.ValueInjection
         public static IReadOnlyCollection<(MemberInfo Member, ValueInjectionAttributeBase Attribute)> GetInjectionMembers(Type type)
         {
             return type
-                .GetMembers(ReflectionService.All)
-                .Concat(type.GetInterfaces().SelectMany(x => x.GetMembers(ReflectionService.All)))
+                .GetMembers(ReflectionUtility.All)
+                .Concat(type.GetInterfaces().SelectMany(x => x.GetMembers(ReflectionUtility.All)))
                 .Select(x => (Member: x, Attribute: x.GetCustomAttribute<ValueInjectionAttributeBase>()))
                 .Where(x => x.Attribute != null).ToList();
         }

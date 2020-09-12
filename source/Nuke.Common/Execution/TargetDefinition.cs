@@ -250,7 +250,7 @@ namespace Nuke.Common.Execution
 
         private PropertyInfo GetSingleTargetProperty<T>()
         {
-            var interfaceTargets = typeof(T).GetProperties(ReflectionService.Instance).Where(x => x.PropertyType == typeof(Target)).ToList();
+            var interfaceTargets = typeof(T).GetProperties(ReflectionUtility.Instance).Where(x => x.PropertyType == typeof(Target)).ToList();
             ControlFlow.Assert(interfaceTargets.Count == 1,
                 new[]
                 {

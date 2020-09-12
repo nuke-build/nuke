@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tools.AzureKeyVault.Attributes
 {
@@ -72,7 +73,7 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
 
         protected KeyVaultSettings GetSettings (object instance)
         {
-            var fieldsWithAttributes = instance.GetType().GetFields(ReflectionService.Instance)
+            var fieldsWithAttributes = instance.GetType().GetFields(ReflectionUtility.Instance)
                     .Select(x => new { Field = x, Attribute = x.GetCustomAttribute<KeyVaultSettingsAttribute>() })
                     .Where(x => x.Attribute != null)
                     .ToArray();

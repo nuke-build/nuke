@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using Nuke.Common;
+using Nuke.Common.Utilities;
 #if NETCOREAPP
 using System.Runtime.Loader;
 using Nuke.Common.Execution;

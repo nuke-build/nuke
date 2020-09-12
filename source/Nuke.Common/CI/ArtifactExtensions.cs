@@ -10,6 +10,7 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
+using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI

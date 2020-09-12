@@ -75,7 +75,7 @@ namespace Nuke.Common.Execution
                     ? ConsoleUtility.PromptForInput(text, defaultValue: null)
                     : ConsoleUtility.PromptForChoice(text, valueSet.Select(x => (x.Object, x.Text)).ToArray());
 
-                member.SetValue(build, ReflectionService.Convert(value, memberType));
+                member.SetValue(build, ReflectionUtility.Convert(value, memberType));
             }
         }
     }

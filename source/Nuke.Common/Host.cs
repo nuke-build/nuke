@@ -55,7 +55,7 @@ namespace Nuke.Common
         private static bool IsRunning(Type hostType)
         {
             var propertyName = $"IsRunning{hostType.Name}";
-            var member = hostType.GetProperty(propertyName, ReflectionService.Static);
+            var member = hostType.GetProperty(propertyName, ReflectionUtility.Static);
             ControlFlow.Assert(member != null, $"Host type '{hostType.Name}' does not define a property '{propertyName}'.");
             return member.GetValue<bool>();
         }

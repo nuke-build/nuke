@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
-using static Nuke.Common.Execution.ReflectionService;
+using static Nuke.Common.Utilities.ReflectionUtility;
 
 namespace Nuke.Common.ValueInjection
 {

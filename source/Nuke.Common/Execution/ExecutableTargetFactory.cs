@@ -91,11 +91,11 @@ namespace Nuke.Common.Execution
         {
             // TODO: static targets?
             var interfaceProperties = buildType.GetInterfaces()
-                .SelectMany(x => x.GetProperties(ReflectionService.Instance))
+                .SelectMany(x => x.GetProperties(ReflectionUtility.Instance))
                 .Where(x => x.PropertyType == typeof(Target))
                 .Where(x => buildType.GetProperty(x.Name) == null).ToLookup(x => x.Name);
             var classProperties = buildType
-                .GetProperties(ReflectionService.Instance)
+                .GetProperties(ReflectionUtility.Instance)
                 .Where(x => x.PropertyType == typeof(Target))
                 .Where(x => !x.Name.Contains(".")).ToDictionary(x => x.Name);
 

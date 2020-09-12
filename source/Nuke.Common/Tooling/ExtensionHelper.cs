@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common.Utilities;
-using static Nuke.Common.Execution.ReflectionService;
+using static Nuke.Common.Utilities.ReflectionUtility;
 
 namespace Nuke.Common.Tooling
 {

@@ -13,7 +13,7 @@ using Nuke.Common.IO;
 using Nuke.Common.Utilities.Collections;
 using Nuke.Common.ValueInjection;
 using Xunit;
-using static Nuke.Common.Execution.ReflectionService;
+using static Nuke.Common.Utilities.ReflectionUtility;
 
 namespace Nuke.Common.Tests
 {

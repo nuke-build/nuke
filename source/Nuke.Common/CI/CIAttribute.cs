@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
+using Nuke.Common.Utilities;
 using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.CI
@@ -19,7 +20,7 @@ namespace Nuke.Common.CI
         {
             // TODO: allow with conversion?
             var memberType = member.GetMemberType();
-            var instanceProperty = memberType.GetProperty(nameof(Host.Instance), ReflectionService.Static);
+            var instanceProperty = memberType.GetProperty(nameof(Host.Instance), ReflectionUtility.Static);
             ControlFlow.Assert(instanceProperty != null,
                 $"Type '{memberType}' is not compatible for injection via '{nameof(CIAttribute)}'.");
             return instanceProperty.GetValue(obj: null);

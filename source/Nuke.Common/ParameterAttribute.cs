@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
+using Nuke.Common.Utilities;
 using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common

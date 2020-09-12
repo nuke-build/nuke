@@ -5,11 +5,12 @@
 using System;
 using FluentAssertions;
 using Nuke.Common.Execution;
+using Nuke.Common.Utilities;
 using Xunit;
 
 namespace Nuke.Common.Tests.Execution
 {
-    public class ReflectionServiceTest
+    public class ReflectionUtilityTest
     {
         [Theory]
         [InlineData(typeof(string), true)]
@@ -18,7 +19,7 @@ namespace Nuke.Common.Tests.Execution
         [InlineData(typeof(object), true)]
         [InlineData(typeof(bool), false)]
         [InlineData(typeof(bool[]), true)]
-        [InlineData(typeof(ReflectionServiceTest), true)]
+        [InlineData(typeof(ReflectionUtilityTest), true)]
         public void TestIsNullableType(Type type, bool expected)
         {
             type.IsNullableType().Should().Be(expected);
@@ -29,7 +30,7 @@ namespace Nuke.Common.Tests.Execution
         [InlineData(typeof(bool?), typeof(bool?))]
         [InlineData(typeof(string), typeof(string))]
         [InlineData(typeof(object[]), typeof(object[]))]
-        [InlineData(typeof(ReflectionServiceTest), typeof(ReflectionServiceTest))]
+        [InlineData(typeof(ReflectionUtilityTest), typeof(ReflectionUtilityTest))]
         public void TestGetNullableType(Type type, Type expected)
         {
             type.GetNullableType().Should().Be(expected);

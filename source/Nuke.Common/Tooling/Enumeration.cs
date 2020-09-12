@@ -84,7 +84,7 @@ namespace Nuke.Common.Tooling
             {
                 if (value is string stringValue)
                 {
-                    var matchingFields = typeof(T).GetFields(ReflectionService.Static)
+                    var matchingFields = typeof(T).GetFields(ReflectionUtility.Static)
                         .Where(x => x.Name.EqualsOrdinalIgnoreCase(stringValue)).ToList();
                     ControlFlow.Assert(matchingFields.Count == 1, "matchingFields.Count == 1");
                     return matchingFields.Single().GetValue(obj: null);
