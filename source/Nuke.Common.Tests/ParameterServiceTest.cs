@@ -9,11 +9,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using FluentAssertions;
-using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities.Collections;
 using Nuke.Common.ValueInjection;
 using Xunit;
+using static Nuke.Common.Execution.ReflectionService;
 
 namespace Nuke.Common.Tests
 {
@@ -198,11 +198,6 @@ namespace Nuke.Common.Tests
 
             service.GetFromMemberInfo(GetMemberInfo(() => Set), destinationType: null, service.GetParameter)
                 .Should().BeOfType<int[]>().Subject.Should().BeEquivalentTo(1, 2, 3);
-        }
-
-        private MemberInfo GetMemberInfo<T>(Expression<Func<T>> expression)
-        {
-            return expression.GetMemberInfo();
         }
 
         [Parameter(Name = "root")] private string RootDirectory { get; }

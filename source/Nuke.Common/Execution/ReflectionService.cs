@@ -127,6 +127,11 @@ namespace Nuke.Common.Execution
             return parameter.GetCustomAttribute<T>() != null;
         }
 
+        public static MemberInfo GetMemberInfo<T>(Expression<Func<T>> expression)
+        {
+            return expression.GetMemberInfo();
+        }
+
         public static MemberInfo GetMemberInfo(this LambdaExpression expression)
         {
             if (expression.Body is MethodCallExpression methodCallExpression)
@@ -187,6 +192,18 @@ namespace Nuke.Common.Execution
                 FieldInfo field => field.IsAssembly,
                 MethodInfo method => method.IsAssembly,
                 PropertyInfo property => property.GetMethod.IsAssembly,
+                _ => throw new NotSupportedException(member.ToString())
+            };
+        }
+
+        public static bool IsStatic(this MemberInfo member)
+        {
+            return member switch
+            {
+                ConstructorInfo constructor => constructor.IsStatic,
+                FieldInfo field => field.IsStatic,
+                MethodInfo method => method.IsStatic,
+                PropertyInfo property => property.GetMethod.IsStatic,
                 _ => throw new NotSupportedException(member.ToString())
             };
         }
