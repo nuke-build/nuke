@@ -50,8 +50,6 @@ namespace Nuke.Common.Execution
             {
                 build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpressions);
 
-                Logger.LogLevel = NukeBuild.LogLevel;
-
                 ExecuteExtension<IOnBeforeLogo>(x => x.OnBeforeLogo(build, build.ExecutableTargets));
                 build.OnBuildCreated();
 

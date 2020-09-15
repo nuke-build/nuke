@@ -79,7 +79,11 @@ namespace Nuke.Common
         /// Gets the logging verbosity during build execution. Default is <see cref="Nuke.Common.Verbosity.Normal"/>.
         /// </summary>
         [Parameter("Logging verbosity during build execution. Default is 'Normal'.")]
-        public static Verbosity Verbosity { get; set; }
+        public static Verbosity Verbosity
+        {
+            get => (Verbosity) LogLevel;
+            set => LogLevel = (LogLevel) value;
+        }
 
         /// <summary>
         /// Gets the host for execution. Default is <em>automatic</em>.
@@ -114,7 +118,11 @@ namespace Nuke.Common
         public static bool IsLocalBuild => Host == HostType.Console;
         public static bool IsServerBuild => Host != HostType.Console;
 
-        public static LogLevel LogLevel => (LogLevel) Verbosity;
+        public static LogLevel LogLevel
+        {
+            get => Logger.LogLevel;
+            set => Logger.LogLevel = value;
+        }
 
         [Parameter("Indicates to continue a previously failed build attempt.")]
         public static bool Continue { get; internal set; }
