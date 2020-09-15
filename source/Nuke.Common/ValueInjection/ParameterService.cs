@@ -121,7 +121,7 @@ namespace Nuke.Common.ValueInjection
         }
 
         [CanBeNull]
-        public object GetFromMemberInfo(MemberInfo member, [CanBeNull] Type destinationType, Func<string, Type, char?, object> provider)
+        public static object GetFromMemberInfo(MemberInfo member, [CanBeNull] Type destinationType, Func<string, Type, char?, object> provider)
         {
             var attribute = member.GetCustomAttribute<ParameterAttribute>();
             var separator = (attribute.Separator ?? string.Empty).SingleOrDefault();

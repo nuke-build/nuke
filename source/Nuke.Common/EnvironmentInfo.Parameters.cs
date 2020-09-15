@@ -45,7 +45,7 @@ namespace Nuke.Common
         [CanBeNull]
         public static T GetParameter<T>(MemberInfo member, Type destinationType = null)
         {
-            return (T) ParameterService.Instance.GetFromMemberInfo(member, destinationType ?? typeof(T), ParameterService.Instance.GetParameter);
+            return (T) ParameterService.GetFromMemberInfo(member, destinationType ?? typeof(T), ParameterService.Instance.GetParameter);
         }
 
         [CanBeNull]
@@ -69,7 +69,7 @@ namespace Nuke.Common
         [CanBeNull]
         public static T GetNamedArgument<T>(MemberInfo member, Type destinationType = null)
         {
-            return (T) ParameterService.Instance.GetFromMemberInfo(member, destinationType ?? typeof(T), ParameterService.Instance.GetCommandLineArgument);
+            return (T) ParameterService.GetFromMemberInfo(member, destinationType ?? typeof(T), ParameterService.Instance.GetCommandLineArgument);
         }
 
         [CanBeNull]
@@ -99,7 +99,7 @@ namespace Nuke.Common
         [CanBeNull]
         public static T GetVariable<T>(MemberInfo member, Type destinationType = null)
         {
-            return (T) ParameterService.Instance.GetFromMemberInfo(member, destinationType ?? typeof(T), ParameterService.Instance.GetEnvironmentVariable);
+            return (T) ParameterService.GetFromMemberInfo(member, destinationType ?? typeof(T), ParameterService.Instance.GetEnvironmentVariable);
         }
 
         [CanBeNull]

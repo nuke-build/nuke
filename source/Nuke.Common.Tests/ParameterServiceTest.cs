@@ -190,13 +190,13 @@ namespace Nuke.Common.Tests
                     "3"
                 });
 
-            service.GetFromMemberInfo(GetMemberInfo(() => RootDirectory), typeof(AbsolutePath), service.GetParameter)
+            ParameterService.GetFromMemberInfo(GetMemberInfo(() => RootDirectory), typeof(AbsolutePath), service.GetParameter)
                 .Should().BeNull();
 
-            service.GetFromMemberInfo(GetMemberInfo(() => RootDirectory), typeof(bool), service.GetParameter)
+            ParameterService.GetFromMemberInfo(GetMemberInfo(() => RootDirectory), typeof(bool), service.GetParameter)
                 .Should().BeOfType<bool>().Subject.Should().BeTrue();
 
-            service.GetFromMemberInfo(GetMemberInfo(() => Set), destinationType: null, service.GetParameter)
+            ParameterService.GetFromMemberInfo(GetMemberInfo(() => Set), destinationType: null, service.GetParameter)
                 .Should().BeOfType<int[]>().Subject.Should().BeEquivalentTo(1, 2, 3);
         }
 
