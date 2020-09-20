@@ -14,7 +14,7 @@ namespace Nuke.Common.IO
     {
         public static void XmlSerializeToFile(object obj, string path)
         {
-            File.WriteAllText(path, XmlSerialize(obj));
+            TextTasks.WriteAllText(path, XmlSerialize(obj));
         }
 
         [Pure]
