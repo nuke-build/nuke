@@ -12,8 +12,8 @@
   "name": "Pulumi",
   "officialUrl": "https://www.pulumi.com/",
   "help": "<p>Pulumi is an <a href=\"https://github.com/pulumi/pulumi\">open source</a> infrastructure as code tool for creating, deploying and managing cloud infrastructure. Pulumi works with traditional infrastructure like VMs, networks, and databases, in addition to modern architectures, including containers, Kubernetes clusters, and serverless functions. Pulumi supports dozens of public, private, and hybrid cloud service providers.</p>",
-  "packageId": "Pulumi",
   "packageExecutable": "pulumi",
+  "customLogger": true,
   "tasks": [
     {
       "postfix": "Up",
