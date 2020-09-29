@@ -68,6 +68,7 @@ namespace Nuke.Common.Tooling
 
             var frameworks = packageExecutablePaths.ToLookup(GetFramework, x => x, StringComparer.OrdinalIgnoreCase);
 
+            // TODO: filter dll for .NET Framework
             static string GetPackageExecutable(IEnumerable<string> executables)
                 => executables
                     .OrderByDescending(x => x.EndsWithOrdinalIgnoreCase(".dll"))

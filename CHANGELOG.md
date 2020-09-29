@@ -6,28 +6,39 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 - Changed `InjectionAttribute` to catch exceptions and report as warnings
+- Changed `ToolPathResolver` to ignore casing
+- Changed property names in `Nuke.Common.targets`
 - Changed `ShutdownDotNetBuildServerOnFinish` to not log by default
 - Changed `ShutdownDotNetBuildServerOnFinish` to only shutdown on server build
 - Added support for interface default implementations
-- Added `Base` and `Inherit` target definition methods
 - Added `ToolSettings.Apply` for fluent configurator invocation
+- Added `ToolSettings.LogFile` and `LogTimestamp`
 - Added `nuke :fix` command to `Nuke.GlobalTool` for adding missing package downloads
-- Added `nuke :GetRootDirectory` and `nuke :GetParentRootDirectory` in `Nuke.GlobalTool` 
+- Added `nuke :GetRootDirectory` and `nuke :GetParentRootDirectory` in `Nuke.GlobalTool`
+- Added `GitRepository.Protocol`, `Commit`, and `Tags` properties
+- Added logger delegate to `ControlFlow.ExecuteWithRetry`
 - Added `BuildExtensionAttributeBase` with `Priority` property
+- Added `UnsetVisualStudioEnvironmentVariables` by default
+- Added `TeamCity.BuildVcsNumber` property
+- Added AzurePipelines variable groups, secret and access token import
+- Added `AppVeyor.Url` and `PushArtifact` members
+- Added warning when `GitVersion` is used with SSH endpoint and `NoFetch` is disabled
+- Added consolidated `ReSharperTasks` for `CleanupCode`, `InspectCode`, and `DupFinder`
+- Added `DotNetTasks.DotNetNuGetAddSource` task
 - Added `SignPathTasks`
 - Added `SignClientTasks`
 - Added `BenchmarkDotNetTasks`
 - Added `CleanupCodeTasks`
-- Added logger delegate to `ControlFlow.ExecuteWithRetry`
-- Added `TeamCity.BuildVcsNumber` property
-- Added `AppVeyor.Url` and `PushArtifact` members
-- Added verbosity mapping attributes for `NUnit`, `OpenCover`, and `ReportGenerator`
 - Added missing properties in `SonarScannerTasks`
-- Fixed tool path resolution consider all package execcutable names
+- Added verbosity mapping attributes for `NUnit`, `OpenCover`, and `ReportGenerator`
+- Fixed `ToolPathResolver` to consider all package executable names
+- Fixed `ToolPathResolver` to choose executable based on operating system
+- Fixed output/input encoding to use `UTF-8`
 - Fixed `NukeBuild.BuildProjectFile` property
+- Fixed AppVeyor generation for Unix images
 - Fixed `AzurePipelinensAttribute` to allow multiple use
 - Fixed `AppVeyor.UpdateBuildVersion` to set environment variable
-- Fixed `DiscardCost` property in `DupFinderTasks`
+- Fixed `DupFinderTasks.DiscardCost` property
 - Fixed `DotCoverTasks` to use double-dashes instead of slashes
 
 ## [0.24.11] / 2020-05-18
