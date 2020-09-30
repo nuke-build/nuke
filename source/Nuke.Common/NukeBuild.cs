@@ -70,13 +70,13 @@ namespace Nuke.Common
         /// When set to <value>null</value> (default), <see cref="Execute{T}"/> will return a <em>0</em> exit code on build success; or a <em>-1</em> exit code on build failure.
         /// When set to a non-null value, <see cref="Execute{T}"/> will return the value of <see cref="ExitCode"/>.
         /// </summary>
-        protected int? ExitCode { get; set; }
+        protected static int? ExitCode { get; set; }
         
         /// <summary>
         /// Executes the build. The provided expression defines the <em>default</em> target that is invoked,
         /// if no targets have been specified via command-line arguments.
         /// </summary>
-        protected int Execute<T>(params Expression<Func<T, Target>>[] defaultTargetExpressions)
+        protected static int Execute<T>(params Expression<Func<T, Target>>[] defaultTargetExpressions)
             where T : NukeBuild
         {
             var buildExitCode = BuildManager.Execute(defaultTargetExpressions);
