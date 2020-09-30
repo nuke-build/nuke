@@ -66,22 +66,13 @@ namespace Nuke.Common
     public abstract partial class NukeBuild : INukeBuild
     {
         /// <summary>
-        /// Gets or sets the build exit code.
-        /// When set to <value>null</value> (default), <see cref="Execute{T}"/> will return a <em>0</em> exit code on build success; or a <em>-1</em> exit code on build failure.
-        /// When set to a non-null value, <see cref="Execute{T}"/> will return the value of <see cref="ExitCode"/>.
-        /// </summary>
-        protected static int? ExitCode { get; set; }
-        
-        /// <summary>
         /// Executes the build. The provided expression defines the <em>default</em> target that is invoked,
         /// if no targets have been specified via command-line arguments.
         /// </summary>
         protected static int Execute<T>(params Expression<Func<T, Target>>[] defaultTargetExpressions)
             where T : NukeBuild
         {
-            var buildExitCode = BuildManager.Execute(defaultTargetExpressions);
-            
-            return ExitCode ?? buildExitCode;
+            return BuildManager.Execute(defaultTargetExpressions);
         }
 
         internal IReadOnlyCollection<ExecutableTarget> ExecutableTargets { get; set; }
@@ -135,5 +126,12 @@ namespace Nuke.Common
             .All(x => x.Status != ExecutionStatus.Failed &&
                       x.Status != ExecutionStatus.NotRun &&
                       x.Status != ExecutionStatus.Aborted);
+
+        /// <summary>
+        /// Gets or sets the build exit code.
+        /// When set to <value>null</value> (default), <see cref="Execute{T}"/> will return a <em>0</em> exit code on build success; or a <em>-1</em> exit code on build failure.
+        /// When set to a non-null value, <see cref="Execute{T}"/> will return the value of <see cref="ExitCode"/>.
+        /// </summary>
+        public int? ExitCode { get; set; }
     }
 }

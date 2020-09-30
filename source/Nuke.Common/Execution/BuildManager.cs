@@ -81,14 +81,14 @@ namespace Nuke.Common.Execution
                     build,
                     EnvironmentInfo.GetParameter<string[]>(() => build.SkippedTargets));
 
-                return build.IsSuccessful ? 0 : ErrorExitCode;
+                return build.ExitCode ?? (build.IsSuccessful ? 0 : ErrorExitCode);
             }
             catch (Exception exception)
             {
                 if (!(exception is TargetExecutionException))
                     Logger.Error(exception);
 
-                return ErrorExitCode;
+                return build.ExitCode ?? ErrorExitCode;
             }
             finally
             {
