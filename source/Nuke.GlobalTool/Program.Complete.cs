@@ -37,7 +37,6 @@ namespace Nuke.GlobalTool
                 return 1;
             }
 
-            var position = EnvironmentInfo.GetParameter<int?>("position");
             var completionItems = SerializationTasks.YamlDeserializeFromFile<Dictionary<string, string[]>>(completionFile);
             foreach (var item in CompletionUtility.GetRelevantCompletionItems(words, completionItems))
                 Console.WriteLine(item);
