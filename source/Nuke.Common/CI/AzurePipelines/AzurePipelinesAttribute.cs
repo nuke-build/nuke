@@ -124,7 +124,7 @@ namespace Nuke.Common.CI.AzurePipelines
 
             return new AzurePipelinesStage
                    {
-                       Name = image.GetValue().Replace("-", "_"),
+                       Name = image.GetValue().Replace("-", "_").Replace(".", "_"),
                        DisplayName = image.GetValue(),
                        Image = image,
                        Dependencies = new AzurePipelinesStage[0],
