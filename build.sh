@@ -18,8 +18,8 @@ DOTNET_CHANNEL="Current"
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+export DOTNET_MULTILEVEL_LOOKUP=0
 export NUGET_XMLDOC_MODE="skip"
-# Workaround according to https://github.com/dotnet/sdk/issues/335#issuecomment-371444503
 
 ###########################################################################
 # EXECUTION
