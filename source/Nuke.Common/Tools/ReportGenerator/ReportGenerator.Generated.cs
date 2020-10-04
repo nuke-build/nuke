@@ -128,8 +128,8 @@ namespace Nuke.Common.Tools.ReportGenerator
         /// <summary>
         ///   Path to the ReportGenerator executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => ReportGeneratorTasks.ReportGeneratorLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => ReportGeneratorTasks.ReportGeneratorLogger;
         /// <summary>
         ///   The coverage reports that should be parsed (separated by semicolon). Wildcards are allowed.
         /// </summary>
@@ -177,7 +177,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         /// </summary>
         public virtual ReportGeneratorVerbosity Verbosity { get; internal set; }
         public virtual string Framework { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("-reports:{value}", Reports, separator: ';')
@@ -190,7 +190,7 @@ namespace Nuke.Common.Tools.ReportGenerator
               .Add("-classfilters:{value}", FileFilters, separator: ';')
               .Add("-tag:{value}", Tag)
               .Add("-verbosity:{value}", Verbosity);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

@@ -170,8 +170,8 @@ namespace Nuke.Common.Tools.OpenCover
         /// <summary>
         ///   Path to the OpenCover executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? OpenCoverTasks.OpenCoverPath;
-        public override Action<OutputType, string> CustomLogger => OpenCoverTasks.OpenCoverLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? OpenCoverTasks.OpenCoverPath;
+        public override Action<OutputType, string> ProcessCustomLogger => OpenCoverTasks.OpenCoverLogger;
         /// <summary>
         ///   The name of the target application or service that will be started; this can also be a path to the target application.
         /// </summary>
@@ -275,7 +275,7 @@ namespace Nuke.Common.Tools.OpenCover
         ///   Return the target process exit code instead of the OpenCover console exit code. Use the offset to return the OpenCover console at a value outside the range returned by the target process.
         /// </summary>
         public virtual int? TargetExitCodeOffset { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("-target:{value}", TargetPath)
@@ -302,7 +302,7 @@ namespace Nuke.Common.Tools.OpenCover
               .Add("-threshold:{value}", MaximumVisitCount)
               .Add("-register:{value}", Registration)
               .Add("-returntargetcode:{value}", TargetExitCodeOffset);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

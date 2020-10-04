@@ -16,7 +16,7 @@ namespace Nuke.Common.Tools.GitVersion
 {
     partial class GitVersionSettings
     {
-        private string GetToolPath()
+        private string GetProcessToolPath()
         {
             return GitVersionTasks.GetToolPath(Framework);
         }

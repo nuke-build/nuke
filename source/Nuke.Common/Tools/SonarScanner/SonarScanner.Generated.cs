@@ -236,8 +236,8 @@ namespace Nuke.Common.Tools.SonarScanner
         /// <summary>
         ///   Path to the SonarScanner executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => SonarScannerTasks.SonarScannerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => SonarScannerTasks.SonarScannerLogger;
         /// <summary>
         ///   Specifies the key of the analyzed project in SonarQube.
         /// </summary>
@@ -371,7 +371,7 @@ namespace Nuke.Common.Tools.SonarScanner
         /// </summary>
         public virtual string PullRequestBase { get; internal set; }
         public virtual string Framework { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("begin")
@@ -405,7 +405,7 @@ namespace Nuke.Common.Tools.SonarScanner
               .Add("/d:sonar.pullrequest.key={value}", PullRequestKey)
               .Add("/d:sonar.pullrequest.branch={value}", PullRequestBranch)
               .Add("/d:sonar.pullrequest.base={value}", PullRequestBase);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -421,8 +421,8 @@ namespace Nuke.Common.Tools.SonarScanner
         /// <summary>
         ///   Path to the SonarScanner executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => SonarScannerTasks.SonarScannerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => SonarScannerTasks.SonarScannerLogger;
         /// <summary>
         ///   Specifies the username or access token to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added on the end step.
         /// </summary>
@@ -432,13 +432,13 @@ namespace Nuke.Common.Tools.SonarScanner
         /// </summary>
         public virtual string Password { get; internal set; }
         public virtual string Framework { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("end")
               .Add("/d:sonar.login={value}", Login)
               .Add("/d:sonar.password={value}", Password, secret: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

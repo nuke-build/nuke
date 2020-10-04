@@ -10,9 +10,9 @@ namespace Nuke.Common.Tools.Unity
 {
     public partial class UnityBaseSettings
     {
-        public override Action<OutputType, string> CustomLogger => UnityTasks.UnityLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => UnityTasks.UnityLogger;
 
-        public string GetToolPath()
+        public string GetProcessToolPath()
         {
             return UnityTasks.GetToolPath(HubVersion);
         }

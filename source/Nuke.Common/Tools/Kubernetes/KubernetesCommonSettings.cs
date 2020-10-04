@@ -12,9 +12,9 @@ namespace Nuke.Common.Tools.Kubernetes
     {
         internal Arguments CreateArguments()
         {
-            return ConfigureArguments(new Arguments());
+            return ConfigureProcessArguments(new Arguments());
         }
 
-        public override Action<OutputType, string> CustomLogger { get; }
+        public override Action<OutputType, string> ProcessCustomLogger { get; }
     }
 }

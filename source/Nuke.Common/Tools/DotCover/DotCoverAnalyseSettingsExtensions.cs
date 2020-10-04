@@ -13,9 +13,9 @@ namespace Nuke.Common.Tools.DotCover
         public static DotCoverAnalyseSettings SetTargetSettings(this DotCoverAnalyseSettings toolSettings, ToolSettings targetSettings)
         {
             return toolSettings
-                .SetTargetExecutable(targetSettings.ToolPath)
-                .SetTargetArguments(targetSettings.GetArguments().RenderForExecution())
-                .SetTargetWorkingDirectory(targetSettings.WorkingDirectory);
+                .SetTargetExecutable(targetSettings.ProcessToolPath)
+                .SetTargetArguments(targetSettings.GetProcessArguments().RenderForExecution())
+                .SetTargetWorkingDirectory(targetSettings.ProcessWorkingDirectory);
         }
 
         public static DotCoverAnalyseSettings ResetTargetSettings(this DotCoverAnalyseSettings toolSettings)

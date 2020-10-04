@@ -140,8 +140,8 @@ namespace Nuke.Common.Tools.MSpec
         /// <summary>
         ///   Path to the MSpec executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => MSpecTasks.MSpecLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => MSpecTasks.MSpecLogger;
         /// <summary>
         ///   Assemblies with tests to be executed.
         /// </summary>
@@ -202,7 +202,7 @@ namespace Nuke.Common.Tools.MSpec
         ///   Suppress colored console output.
         /// </summary>
         public virtual bool? NoColor { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("{value}", Assemblies, separator: ' ')
@@ -219,7 +219,7 @@ namespace Nuke.Common.Tools.MSpec
               .Add("--silent", Silent)
               .Add("--progress", DottedProgress)
               .Add("--no-color", NoColor);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

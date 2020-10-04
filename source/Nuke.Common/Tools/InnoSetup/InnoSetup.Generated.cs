@@ -128,8 +128,8 @@ namespace Nuke.Common.Tools.InnoSetup
         /// <summary>
         ///   Path to the InnoSetup executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? InnoSetupTasks.InnoSetupPath;
-        public override Action<OutputType, string> CustomLogger => InnoSetupTasks.InnoSetupLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? InnoSetupTasks.InnoSetupPath;
+        public override Action<OutputType, string> ProcessCustomLogger => InnoSetupTasks.InnoSetupLogger;
         /// <summary>
         ///   The .iss script file to compile
         /// </summary>
@@ -173,7 +173,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   Emulate <c>#pragma verboselevel {number}</c> (highest level is 9)
         /// </summary>
         public virtual int? Verbosity { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("{value}", ScriptFile)
@@ -186,7 +186,7 @@ namespace Nuke.Common.Tools.InnoSetup
               .Add("/D{value}", KeyValueDefinitions, "{key}={value}")
               .Add("/D{value}", KeyDefinitions)
               .Add("/V{value}", Verbosity);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

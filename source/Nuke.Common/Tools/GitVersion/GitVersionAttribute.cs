@@ -46,7 +46,7 @@ namespace Nuke.Common.Tools.GitVersion
             var gitVersion = GitVersionTasks.GitVersion(s => s
                     .SetFramework(Framework)
                     .SetNoFetch(NoFetch)
-                    .DisableLogOutput()
+                    .DisableProcessLogOutput()
                     .SetUpdateAssemblyInfo(UpdateAssemblyInfo))
                 .Result;
 

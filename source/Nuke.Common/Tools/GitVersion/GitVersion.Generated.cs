@@ -170,8 +170,8 @@ namespace Nuke.Common.Tools.GitVersion
         /// <summary>
         ///   Path to the GitVersion executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => GitVersionTasks.GitVersionLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => GitVersionTasks.GitVersionLogger;
         /// <summary>
         ///   The directory containing .git. If not defined current directory is used. (Must be first argument).
         /// </summary>
@@ -271,7 +271,7 @@ namespace Nuke.Common.Tools.GitVersion
         /// </summary>
         public virtual GitVersionVerbosity Verbosity { get; internal set; }
         public virtual string Framework { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("{value}", TargetPath)
@@ -298,7 +298,7 @@ namespace Nuke.Common.Tools.GitVersion
               .Add("/proj {value}", MSBuildProject)
               .Add("/projargs {value}", MSBuildProjectArguments)
               .Add("/verbosity {value}", Verbosity);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

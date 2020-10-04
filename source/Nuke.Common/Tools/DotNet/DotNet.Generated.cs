@@ -1101,8 +1101,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   Specifies a path to the test project. If omitted, it defaults to current directory.
         /// </summary>
@@ -1221,7 +1221,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.
         /// </summary>
         public virtual string Runtime { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("test")
@@ -1254,7 +1254,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--lock-file-path {value}", LockFilePath)
               .Add("--force-evaluate", ForceEvaluate)
               .Add("--runtime {value}", Runtime);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1270,8 +1270,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   Configuration to use for building the project. The default value is Debug.
         /// </summary>
@@ -1358,7 +1358,7 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("run")
@@ -1383,7 +1383,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--force-evaluate", ForceEvaluate)
               .Add("--runtime {value}", Runtime)
               .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1399,8 +1399,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   Optional path to the project file to restore.
         /// </summary>
@@ -1467,7 +1467,7 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("restore")
@@ -1487,7 +1487,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--force-evaluate", ForceEvaluate)
               .Add("--runtime {value}", Runtime)
               .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1503,8 +1503,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The project to pack. It's either a path to a csproj file or to a directory. If omitted, it defaults to the current directory.
         /// </summary>
@@ -1603,7 +1603,7 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("pack")
@@ -1631,7 +1631,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--force-evaluate", ForceEvaluate)
               .Add("--runtime {value}", Runtime)
               .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1647,8 +1647,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The project file to build. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in proj and uses that file.
         /// </summary>
@@ -1748,7 +1748,7 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("build")
@@ -1776,7 +1776,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--lock-file-path {value}", LockFilePath)
               .Add("--force-evaluate", ForceEvaluate)
               .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1792,8 +1792,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The MSBuild project to clean. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in <em>proj</em> and uses that file.
         /// </summary>
@@ -1827,7 +1827,7 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("clean")
@@ -1839,7 +1839,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--verbosity {value}", Verbosity)
               .Add("--nologo", NoLogo)
               .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1855,8 +1855,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The project to publish, which defaults to the current directory if not specified.
         /// </summary>
@@ -1951,7 +1951,7 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("publish")
@@ -1978,7 +1978,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--lock-file-path {value}", LockFilePath)
               .Add("--force-evaluate", ForceEvaluate)
               .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1994,8 +1994,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   Path of the package to push.
         /// </summary>
@@ -2040,7 +2040,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   Doesn't append <c>api/v2/package</c> to the source URL. Option available since .NET Core 2.1 SDK.
         /// </summary>
         public virtual bool? NoServiceEndpoint { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("nuget push")
@@ -2055,7 +2055,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--force-english-output", ForceEnglishOutput)
               .Add("--skip-duplicate", SkipDuplicate)
               .Add("--no-service-endpoint", NoServiceEndpoint);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -2071,8 +2071,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   URL of the source.
         /// </summary>
@@ -2098,7 +2098,7 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual IReadOnlyList<DotNetNuGetAuthentication> ValidAuthenticationTypes => ValidAuthenticationTypesInternal.AsReadOnly();
         internal List<DotNetNuGetAuthentication> ValidAuthenticationTypesInternal { get; set; } = new List<DotNetNuGetAuthentication>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("nuget add source")
@@ -2108,7 +2108,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--password {value}", Password, secret: true)
               .Add("--store-password-in-clear-text", StorePasswordInClearText)
               .Add("--valid-authentication-types", ValidAuthenticationTypes, separator: ',');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -2124,8 +2124,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The Name/ID of the NuGet package that contains the .NET Core Global Tool to install.
         /// </summary>
@@ -2159,7 +2159,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   The version of the tool to install. By default, the latest stable package version is installed. Use this option to install preview or older versions of the tool.
         /// </summary>
         public virtual string Version { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("tool install")
@@ -2171,7 +2171,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--tool-path {value}", ToolInstallationPath)
               .Add("--verbosity {value}", Verbosity)
               .Add("--version {value}", Version);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -2187,8 +2187,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The Name/ID of the NuGet package that contains the .NET Core Global Tool to uninstall. You can find the package name using the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-list">dotnet tool list</a> command.
         /// </summary>
@@ -2205,7 +2205,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.
         /// </summary>
         public virtual DotNetVerbosity Verbosity { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("tool uninstall")
@@ -2213,7 +2213,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--global", Global)
               .Add("--tool-path {value}", ToolInstallationPath)
               .Add("--verbosity {value}", Verbosity);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -2229,8 +2229,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The Name/ID of the NuGet package that contains the .NET Core Global Tool to install.
         /// </summary>
@@ -2260,7 +2260,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.
         /// </summary>
         public virtual DotNetVerbosity Verbosity { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("tool update")
@@ -2271,7 +2271,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--global", Global)
               .Add("--tool-path {value}", ToolInstallationPath)
               .Add("--verbosity {value}", Verbosity);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

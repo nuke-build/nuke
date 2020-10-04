@@ -22,7 +22,7 @@ namespace Nuke.Common.Tools.ReportGenerator
 
     partial class ReportGeneratorSettings
     {
-        private string GetToolPath()
+        private string GetProcessToolPath()
         {
             return ReportGeneratorTasks.GetToolPath(Framework);
         }

@@ -212,8 +212,8 @@ namespace Nuke.Common.Tools.NUnit
         /// <summary>
         ///   Path to the NUnit executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? NUnitTasks.NUnitPath;
-        public override Action<OutputType, string> CustomLogger => NUnitTasks.NUnitLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? NUnitTasks.NUnitPath;
+        public override Action<OutputType, string> ProcessCustomLogger => NUnitTasks.NUnitLogger;
         /// <summary>
         ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (<c>.nunit</c>) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
         /// </summary>
@@ -371,7 +371,7 @@ namespace Nuke.Common.Tools.NUnit
         ///   Displays console output without color.
         /// </summary>
         public virtual bool? NoColor { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("{value}", InputFiles)
@@ -412,7 +412,7 @@ namespace Nuke.Common.Tools.NUnit
               .Add("--set-principal-policy={value}", SetPrincipalPolicy)
               .Add("--noheader", NoHeader)
               .Add("--nocolor", NoColor);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

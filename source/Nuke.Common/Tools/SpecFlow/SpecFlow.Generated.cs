@@ -473,8 +473,8 @@ namespace Nuke.Common.Tools.SpecFlow
         /// <summary>
         ///   Path to the SpecFlow executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? SpecFlowTasks.SpecFlowPath;
-        public override Action<OutputType, string> CustomLogger => SpecFlowTasks.SpecFlowLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
+        public override Action<OutputType, string> ProcessCustomLogger => SpecFlowTasks.SpecFlowLogger;
         /// <summary>
         ///   A path of the project file containing the *.feature files. Required.
         /// </summary>
@@ -503,7 +503,7 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   The feature language to use. Optional. Default: en-US.
         /// </summary>
         public virtual string FeatureLanguage { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("nunitexecutionreport")
@@ -514,7 +514,7 @@ namespace Nuke.Common.Tools.SpecFlow
               .Add("--XsltFile {value}", XsltFile)
               .Add("--ProjectName {value}", ProjectName)
               .Add("--FeatureLanguage {value}", FeatureLanguage);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -530,8 +530,8 @@ namespace Nuke.Common.Tools.SpecFlow
         /// <summary>
         ///   Path to the SpecFlow executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? SpecFlowTasks.SpecFlowPath;
-        public override Action<OutputType, string> CustomLogger => SpecFlowTasks.SpecFlowLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
+        public override Action<OutputType, string> ProcessCustomLogger => SpecFlowTasks.SpecFlowLogger;
         /// <summary>
         ///   A path of the project file containing the *.feature files. Required.
         /// </summary>
@@ -548,7 +548,7 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   Custom XSLT file to use, defaults to built-in stylesheet if not provided. Optional. Default: not specified.
         /// </summary>
         public virtual string XsltFile { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("mstestexecutionreport")
@@ -556,7 +556,7 @@ namespace Nuke.Common.Tools.SpecFlow
               .Add("/testResult {value}", TestResult)
               .Add("/out {value}", OutputFile)
               .Add("/xsltFile {value}", XsltFile);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -572,8 +572,8 @@ namespace Nuke.Common.Tools.SpecFlow
         /// <summary>
         ///   Path to the SpecFlow executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? SpecFlowTasks.SpecFlowPath;
-        public override Action<OutputType, string> CustomLogger => SpecFlowTasks.SpecFlowLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
+        public override Action<OutputType, string> ProcessCustomLogger => SpecFlowTasks.SpecFlowLogger;
         /// <summary>
         ///   A path of the project file containing the *.feature files. Required.
         /// </summary>
@@ -590,7 +590,7 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   Custom XSLT file to use, defaults to built-in stylesheet if not provided. Optional. Default: not specified.
         /// </summary>
         public virtual string XsltFile { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stepdefinitionreport")
@@ -598,7 +598,7 @@ namespace Nuke.Common.Tools.SpecFlow
               .Add("/testResult {value}", BinFolder)
               .Add("/out {value}", OutputFile)
               .Add("/xsltFile {value}", XsltFile);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -614,8 +614,8 @@ namespace Nuke.Common.Tools.SpecFlow
         /// <summary>
         ///   Path to the SpecFlow executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? SpecFlowTasks.SpecFlowPath;
-        public override Action<OutputType, string> CustomLogger => SpecFlowTasks.SpecFlowLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
+        public override Action<OutputType, string> ProcessCustomLogger => SpecFlowTasks.SpecFlowLogger;
         /// <summary>
         ///   Supported values: <c>None, VS2010, VS2012, VS2013, TeamCity, TFS</c>.
         /// </summary>
@@ -644,7 +644,7 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   Applies a filter to your tests and only executes those that match your expression. This overrides the <c>filter</c> entry in your <c>.srprofile</c> file. An overview of the syntax can be found <a href="https://specflow.org/plus/documentation/Filter/">here</a>.
         /// </summary>
         public virtual string Filter { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("run")
@@ -655,7 +655,7 @@ namespace Nuke.Common.Tools.SpecFlow
               .Add("/log:{value}", LogFile)
               .Add("/report:{value}", ReportFile)
               .Add("/filter:{value}", Filter);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -671,8 +671,8 @@ namespace Nuke.Common.Tools.SpecFlow
         /// <summary>
         ///   Path to the SpecFlow executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? SpecFlowTasks.SpecFlowPath;
-        public override Action<OutputType, string> CustomLogger => SpecFlowTasks.SpecFlowLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
+        public override Action<OutputType, string> ProcessCustomLogger => SpecFlowTasks.SpecFlowLogger;
         /// <summary>
         ///   The assembly or test profile (<c>.srprofile</c> file) to be tested.
         /// </summary>
@@ -701,7 +701,7 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   Applies a filter to your tests and only executes those that match your expression. This overrides the <c>filter</c> entry in your <c>.srprofile</c> file. An overview of the syntax can be found <a href="https://specflow.org/plus/documentation/Filter/">here</a>.
         /// </summary>
         public virtual string Filter { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("buildserverrun")
@@ -712,7 +712,7 @@ namespace Nuke.Common.Tools.SpecFlow
               .Add("/log:{value}", LogFile)
               .Add("/report:{value}", ReportFile)
               .Add("/filter:{value}", Filter);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -728,8 +728,8 @@ namespace Nuke.Common.Tools.SpecFlow
         /// <summary>
         ///   Path to the SpecFlow executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? SpecFlowTasks.SpecFlowPath;
-        public override Action<OutputType, string> CustomLogger => SpecFlowTasks.SpecFlowLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
+        public override Action<OutputType, string> ProcessCustomLogger => SpecFlowTasks.SpecFlowLogger;
         /// <summary>
         ///   The license key you received when you purchased SpecFlow+.
         /// </summary>
@@ -738,13 +738,13 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   The name of the licensee. If you purchased your SpecFlow+ license online via SWREG, this is the email address you used to purchase the license. If you purchased SpecFlow+ directly from TechTalk, this is the value in the email you received containing your license information.
         /// </summary>
         public virtual string IssuedTo { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("register")
               .Add("{value}", LicenseKey, secret: true)
               .Add("{value}", IssuedTo);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -760,13 +760,13 @@ namespace Nuke.Common.Tools.SpecFlow
         /// <summary>
         ///   Path to the SpecFlow executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? SpecFlowTasks.SpecFlowPath;
-        public override Action<OutputType, string> CustomLogger => SpecFlowTasks.SpecFlowLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
+        public override Action<OutputType, string> ProcessCustomLogger => SpecFlowTasks.SpecFlowLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("register");
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -782,13 +782,13 @@ namespace Nuke.Common.Tools.SpecFlow
         /// <summary>
         ///   Path to the SpecFlow executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? SpecFlowTasks.SpecFlowPath;
-        public override Action<OutputType, string> CustomLogger => SpecFlowTasks.SpecFlowLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
+        public override Action<OutputType, string> ProcessCustomLogger => SpecFlowTasks.SpecFlowLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("register");
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

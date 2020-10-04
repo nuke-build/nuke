@@ -199,8 +199,8 @@ namespace Nuke.Common.Tools.GitLink
         /// <summary>
         ///   Path to the GitLink executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GitLinkTasks.GitLinkPath;
-        public override Action<OutputType, string> CustomLogger => GitLinkTasks.GitLinkLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GitLinkTasks.GitLinkPath;
+        public override Action<OutputType, string> ProcessCustomLogger => GitLinkTasks.GitLinkLogger;
         /// <summary>
         ///   The directory containing the solution with the pdb files.
         /// </summary>
@@ -253,7 +253,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   Enables debug mode with special dumps of msbuild.
         /// </summary>
         public virtual bool? Debug { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("{value}", SolutionDirectory)
@@ -269,7 +269,7 @@ namespace Nuke.Common.Tools.GitLink
               .Add("-errorsaswarnings", ErrorsAsWarnings)
               .Add("-skipverify", SkipVerification)
               .Add("-debug", Debug);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -285,8 +285,8 @@ namespace Nuke.Common.Tools.GitLink
         /// <summary>
         ///   Path to the GitLink executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GitLinkTasks.GitLinkPath;
-        public override Action<OutputType, string> CustomLogger => GitLinkTasks.GitLinkLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GitLinkTasks.GitLinkPath;
+        public override Action<OutputType, string> ProcessCustomLogger => GitLinkTasks.GitLinkLogger;
         /// <summary>
         ///   The PDB to add source indexing to.
         /// </summary>
@@ -311,7 +311,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   Skip verification that all source files are available in source control.
         /// </summary>
         public virtual bool? SkipVerification { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("{value}", PdbFile)
@@ -320,7 +320,7 @@ namespace Nuke.Common.Tools.GitLink
               .Add("--commit {value}", CommitSha)
               .Add("--baseDir {value}", BaseDirectory)
               .Add("--skipVerify", SkipVerification);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

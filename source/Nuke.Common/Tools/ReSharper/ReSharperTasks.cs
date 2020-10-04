@@ -28,7 +28,7 @@ namespace Nuke.Common.Tools.ReSharper
             var shadowDirectory = GetShadowDirectory(toolSettings, wave);
 
             FileSystemTasks.CopyDirectoryRecursively(
-                Path.GetDirectoryName(toolSettings.ToolPath).NotNull(),
+                Path.GetDirectoryName(toolSettings.ProcessToolPath).NotNull(),
                 shadowDirectory,
                 DirectoryExistsPolicy.Merge,
                 FileExistsPolicy.OverwriteIfNewer);
@@ -37,13 +37,13 @@ namespace Nuke.Common.Tools.ReSharper
                 $"http://resharper-plugins.jetbrains.com/dotnet/api/v2/curated-feeds/Wave_v{wave}.0/Packages(Id='{x.Key}',Version='{x.Value}')/Download",
                 Path.Combine(shadowDirectory, $"{x.Key}.nupkg")));
             
-            toolSettings = toolSettings.SetToolPath(Path.Combine(shadowDirectory, Path.GetFileName(toolSettings.ToolPath)));
+            toolSettings = toolSettings.SetProcessToolPath(Path.Combine(shadowDirectory, Path.GetFileName(toolSettings.ProcessToolPath)));
         }
 
         [CanBeNull]
         private static string GetWave(ReSharperSettingsBase toolSettings)
         {
-            return Directory.GetParent(toolSettings.ToolPath)
+            return Directory.GetParent(toolSettings.ProcessToolPath)
                 .DescendantsAndSelf(x => x.Parent)
                 .Select(x => Path.Combine(x.FullName, "jetbrains.resharper.globaltools.nuspec"))
                 .Where(File.Exists)
@@ -65,13 +65,13 @@ namespace Nuke.Common.Tools.ReSharper
 
         private static string GetShadowDirectory(ReSharperSettingsBase toolSettings, string wave)
         {
-            var hashCode = toolSettings.ToolPath.Concat(toolSettings.Plugins.Select(x => x.Key + x.Value)).OrderBy(x => x).JoinComma().GetMD5Hash();
+            var hashCode = toolSettings.ProcessToolPath.Concat(toolSettings.Plugins.Select(x => x.Key + x.Value)).OrderBy(x => x).JoinComma().GetMD5Hash();
             return Path.Combine(NukeBuild.TemporaryDirectory, $"ReSharper-{wave}-{hashCode.Substring(startIndex: 0, length: 4)}");
         }
     }
 
     partial class ReSharperSettingsBase
     {
-        public override Action<OutputType, string> CustomLogger => ProcessTasks.DefaultLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => ProcessTasks.DefaultLogger;
     }
 }

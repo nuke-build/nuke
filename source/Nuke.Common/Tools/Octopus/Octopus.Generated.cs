@@ -545,8 +545,8 @@ namespace Nuke.Common.Tools.Octopus
         /// <summary>
         ///   Path to the Octopus executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => OctopusTasks.OctopusLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => OctopusTasks.OctopusLogger;
         /// <summary>
         ///   The ID of the package. E.g. <c>MyCompany.MyApp</c>.
         /// </summary>
@@ -601,7 +601,7 @@ namespace Nuke.Common.Tools.Octopus
         /// </summary>
         public virtual bool? Overwrite { get; internal set; }
         public virtual string Framework { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("pack")
@@ -618,7 +618,7 @@ namespace Nuke.Common.Tools.Octopus
               .Add("--releaseNotesFile={value}", ReleaseNotesFile)
               .Add("--include={value}", Include)
               .Add("--overwrite", Overwrite);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -634,8 +634,8 @@ namespace Nuke.Common.Tools.Octopus
         /// <summary>
         ///   Path to the Octopus executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => OctopusTasks.OctopusLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => OctopusTasks.OctopusLogger;
         /// <summary>
         ///   Package file to push.
         /// </summary>
@@ -702,7 +702,7 @@ namespace Nuke.Common.Tools.Octopus
         /// </summary>
         public virtual string LogLevel { get; internal set; }
         public virtual string Framework { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("push")
@@ -722,7 +722,7 @@ namespace Nuke.Common.Tools.Octopus
               .Add("--proxyPass={value}", ProxyPassword, secret: true)
               .Add("--space={value}", Space)
               .Add("--logLevel={value}", LogLevel);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -738,8 +738,8 @@ namespace Nuke.Common.Tools.Octopus
         /// <summary>
         ///   Path to the Octopus executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => OctopusTasks.OctopusLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => OctopusTasks.OctopusLogger;
         /// <summary>
         ///   Name of the project.
         /// </summary>
@@ -917,7 +917,7 @@ namespace Nuke.Common.Tools.Octopus
         /// </summary>
         public virtual string LogLevel { get; internal set; }
         public virtual string Framework { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("create-release")
@@ -964,7 +964,7 @@ namespace Nuke.Common.Tools.Octopus
               .Add("--proxyPass={value}", ProxyPassword, secret: true)
               .Add("--space={value}", Space)
               .Add("--logLevel={value}", LogLevel);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -980,8 +980,8 @@ namespace Nuke.Common.Tools.Octopus
         /// <summary>
         ///   Path to the Octopus executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => OctopusTasks.OctopusLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => OctopusTasks.OctopusLogger;
         /// <summary>
         ///   Show progress of the deployment.
         /// </summary>
@@ -1126,7 +1126,7 @@ namespace Nuke.Common.Tools.Octopus
         /// </summary>
         public virtual string LogLevel { get; internal set; }
         public virtual string Framework { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("deploy-release")
@@ -1165,7 +1165,7 @@ namespace Nuke.Common.Tools.Octopus
               .Add("--proxyPass={value}", ProxyPassword, secret: true)
               .Add("--space={value}", Space)
               .Add("--logLevel={value}", LogLevel);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

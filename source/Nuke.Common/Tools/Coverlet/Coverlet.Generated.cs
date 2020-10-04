@@ -135,8 +135,8 @@ namespace Nuke.Common.Tools.Coverlet
         /// <summary>
         ///   Path to the Coverlet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? CoverletTasks.CoverletPath;
-        public override Action<OutputType, string> CustomLogger => CoverletTasks.CoverletLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? CoverletTasks.CoverletPath;
+        public override Action<OutputType, string> ProcessCustomLogger => CoverletTasks.CoverletLogger;
         /// <summary>
         ///   Path to the test assembly.
         /// </summary>
@@ -190,7 +190,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   Path to existing coverage result to merge.
         /// </summary>
         public virtual string MergeWith { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("{value}", Assembly)
@@ -205,7 +205,7 @@ namespace Nuke.Common.Tools.Coverlet
               .Add("--exclude-by-file {value}", ExcludeByFile)
               .Add("--version", Version)
               .Add("--merge-with {value}", MergeWith);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

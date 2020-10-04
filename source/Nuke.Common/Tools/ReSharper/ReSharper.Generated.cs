@@ -306,8 +306,8 @@ namespace Nuke.Common.Tools.ReSharper
         /// <summary>
         ///   Path to the ReSharper executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? ReSharperTasks.ReSharperPath;
-        public override Action<OutputType, string> CustomLogger => ReSharperTasks.ReSharperLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? ReSharperTasks.ReSharperPath;
+        public override Action<OutputType, string> ProcessCustomLogger => ReSharperTasks.ReSharperLogger;
         /// <summary>
         ///   Target path.
         /// </summary>
@@ -354,7 +354,7 @@ namespace Nuke.Common.Tools.ReSharper
         ///   Explicitly specified MsBuild Toolset version (12.0, 14.0, 15.0). For example, <c>--toolset=12.0</c>.
         /// </summary>
         public virtual ReSharperMSBuildToolset Toolset { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("inspectcode")
@@ -369,7 +369,7 @@ namespace Nuke.Common.Tools.ReSharper
               .Add("--properties={value}", Properties, "{key}={value}")
               .Add("--dumpIssuesTypes", DumpIssuesTypes)
               .Add("--toolset={value}", Toolset);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -385,8 +385,8 @@ namespace Nuke.Common.Tools.ReSharper
         /// <summary>
         ///   Path to the ReSharper executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? ReSharperTasks.ReSharperPath;
-        public override Action<OutputType, string> CustomLogger => ReSharperTasks.ReSharperLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? ReSharperTasks.ReSharperPath;
+        public override Action<OutputType, string> ProcessCustomLogger => ReSharperTasks.ReSharperLogger;
         /// <summary>
         ///   Target path.
         /// </summary>
@@ -453,7 +453,7 @@ namespace Nuke.Common.Tools.ReSharper
         ///   Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c>
         /// </summary>
         public virtual bool? NoBuiltinSettings { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("cleanupcode")
@@ -472,7 +472,7 @@ namespace Nuke.Common.Tools.ReSharper
               .Add("--caches-home={value}", CachesHome)
               .Add("--disable-settings-layers={value}", DisableSettingsLayers, separator: ';')
               .Add("--no-buildin-settings", NoBuiltinSettings);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -488,8 +488,8 @@ namespace Nuke.Common.Tools.ReSharper
         /// <summary>
         ///   Path to the ReSharper executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? ReSharperTasks.ReSharperPath;
-        public override Action<OutputType, string> CustomLogger => ReSharperTasks.ReSharperLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? ReSharperTasks.ReSharperPath;
+        public override Action<OutputType, string> ProcessCustomLogger => ReSharperTasks.ReSharperLogger;
         /// <summary>
         ///   Defines files included into the duplicates search. Use Visual Studio solution or project files, Ant-like wildcards or specific source file and folder names. Paths should be either absolute or relative to the working directory.
         /// </summary>
@@ -554,7 +554,7 @@ namespace Nuke.Common.Tools.ReSharper
         ///   Used to load the parameters described above from a configuration file.
         /// </summary>
         public virtual string ConfigFile { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("dupfinder")
@@ -573,7 +573,7 @@ namespace Nuke.Common.Tools.ReSharper
               .Add("--show-text={value}", ShowText)
               .Add("--config-create={value}", CreateConfigFile)
               .Add("--config={value}", ConfigFile);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

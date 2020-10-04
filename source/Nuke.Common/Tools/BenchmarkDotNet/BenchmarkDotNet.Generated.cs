@@ -245,8 +245,8 @@ namespace Nuke.Common.Tools.BenchmarkDotNet
         /// <summary>
         ///   Path to the BenchmarkDotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? BenchmarkDotNetTasks.BenchmarkDotNetPath;
-        public override Action<OutputType, string> CustomLogger => BenchmarkDotNetTasks.BenchmarkDotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? BenchmarkDotNetTasks.BenchmarkDotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => BenchmarkDotNetTasks.BenchmarkDotNetLogger;
         /// <summary>
         ///   The assembly with the benchmarks (required).
         /// </summary>
@@ -451,7 +451,7 @@ namespace Nuke.Common.Tools.BenchmarkDotNet
         ///   Max paramter column width, the default is <c>20</c>.
         /// </summary>
         public virtual int? MaxParameterColumnWidth { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("{value}", AssemblyFile)
@@ -503,7 +503,7 @@ namespace Nuke.Common.Tools.BenchmarkDotNet
               .Add("--statisticalTest {value}", StatisticalTestThreshold)
               .Add("--disableLogFile", DisableLogFile)
               .Add("--maxWidth {value}", MaxParameterColumnWidth);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

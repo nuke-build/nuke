@@ -764,8 +764,8 @@ namespace Nuke.Common.Tools.EntityFramework
         /// <summary>
         ///   Path to the EntityFramework executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
-        public override Action<OutputType, string> CustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
+        public override Action<OutputType, string> ProcessCustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
         /// <summary>
         ///   Don't confirm.
         /// </summary>
@@ -814,7 +814,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   Show verbose output.
         /// </summary>
         public virtual bool? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("ef database drop")
@@ -830,7 +830,7 @@ namespace Nuke.Common.Tools.EntityFramework
               .Add("--no-color", NoColor)
               .Add("--prefix-output", PrefixOutput)
               .Add("--verbose", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -846,8 +846,8 @@ namespace Nuke.Common.Tools.EntityFramework
         /// <summary>
         ///   Path to the EntityFramework executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
-        public override Action<OutputType, string> CustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
+        public override Action<OutputType, string> ProcessCustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
         /// <summary>
         ///   The target migration. Migrations may be identified by name or by ID. The number 0 is a special case that means before the first migration and causes all migrations to be reverted. If no migration is specified, the command defaults to the last migration.
         /// </summary>
@@ -896,7 +896,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   Show verbose output.
         /// </summary>
         public virtual bool? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("ef database update")
@@ -912,7 +912,7 @@ namespace Nuke.Common.Tools.EntityFramework
               .Add("--no-color", NoColor)
               .Add("--prefix-output", PrefixOutput)
               .Add("--verbose", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -928,8 +928,8 @@ namespace Nuke.Common.Tools.EntityFramework
         /// <summary>
         ///   Path to the EntityFramework executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
-        public override Action<OutputType, string> CustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
+        public override Action<OutputType, string> ProcessCustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
         /// <summary>
         ///   Show JSON output.
         /// </summary>
@@ -970,7 +970,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   Show verbose output.
         /// </summary>
         public virtual bool? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("ef dbcontext info")
@@ -984,7 +984,7 @@ namespace Nuke.Common.Tools.EntityFramework
               .Add("--no-color", NoColor)
               .Add("--prefix-output", PrefixOutput)
               .Add("--verbose", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1000,8 +1000,8 @@ namespace Nuke.Common.Tools.EntityFramework
         /// <summary>
         ///   Path to the EntityFramework executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
-        public override Action<OutputType, string> CustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
+        public override Action<OutputType, string> ProcessCustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
         /// <summary>
         ///   Show JSON output.
         /// </summary>
@@ -1042,7 +1042,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   Show verbose output.
         /// </summary>
         public virtual bool? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("ef dbcontext list")
@@ -1056,7 +1056,7 @@ namespace Nuke.Common.Tools.EntityFramework
               .Add("--no-color", NoColor)
               .Add("--prefix-output", PrefixOutput)
               .Add("--verbose", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1072,8 +1072,8 @@ namespace Nuke.Common.Tools.EntityFramework
         /// <summary>
         ///   Path to the EntityFramework executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
-        public override Action<OutputType, string> CustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
+        public override Action<OutputType, string> ProcessCustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
         /// <summary>
         ///   The connection string to the database. For ASP.NET Core 2.x projects, the value can be <em>name=&lt;name of connection string&gt;</em>. In that case the name comes from the configuration sources that are set up for the project.
         /// </summary>
@@ -1152,7 +1152,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   Show verbose output.
         /// </summary>
         public virtual bool? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("ef dbcontext scaffold")
@@ -1175,7 +1175,7 @@ namespace Nuke.Common.Tools.EntityFramework
               .Add("--no-color", NoColor)
               .Add("--prefix-output", PrefixOutput)
               .Add("--verbose", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1191,8 +1191,8 @@ namespace Nuke.Common.Tools.EntityFramework
         /// <summary>
         ///   Path to the EntityFramework executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
-        public override Action<OutputType, string> CustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
+        public override Action<OutputType, string> ProcessCustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
         /// <summary>
         ///   The name of the migration.
         /// </summary>
@@ -1241,7 +1241,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   Show verbose output.
         /// </summary>
         public virtual bool? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("ef migrations add")
@@ -1257,7 +1257,7 @@ namespace Nuke.Common.Tools.EntityFramework
               .Add("--no-color", NoColor)
               .Add("--prefix-output", PrefixOutput)
               .Add("--verbose", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1273,8 +1273,8 @@ namespace Nuke.Common.Tools.EntityFramework
         /// <summary>
         ///   Path to the EntityFramework executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
-        public override Action<OutputType, string> CustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
+        public override Action<OutputType, string> ProcessCustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
         /// <summary>
         ///   Show JSON output.
         /// </summary>
@@ -1315,7 +1315,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   Show verbose output.
         /// </summary>
         public virtual bool? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("ef migrations list")
@@ -1329,7 +1329,7 @@ namespace Nuke.Common.Tools.EntityFramework
               .Add("--no-color", NoColor)
               .Add("--prefix-output", PrefixOutput)
               .Add("--verbose", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1345,8 +1345,8 @@ namespace Nuke.Common.Tools.EntityFramework
         /// <summary>
         ///   Path to the EntityFramework executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
-        public override Action<OutputType, string> CustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
+        public override Action<OutputType, string> ProcessCustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
         /// <summary>
         ///   The directory (and sub-namespace) to use. Paths are relative to the project directory. Defaults to 'Migrations'.
         /// </summary>
@@ -1391,7 +1391,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   Show verbose output.
         /// </summary>
         public virtual bool? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("ef migrations remove")
@@ -1406,7 +1406,7 @@ namespace Nuke.Common.Tools.EntityFramework
               .Add("--no-color", NoColor)
               .Add("--prefix-output", PrefixOutput)
               .Add("--verbose", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1422,8 +1422,8 @@ namespace Nuke.Common.Tools.EntityFramework
         /// <summary>
         ///   Path to the EntityFramework executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
-        public override Action<OutputType, string> CustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
+        public override Action<OutputType, string> ProcessCustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
         /// <summary>
         ///   The starting migration. Migrations may be identified by name or by ID. The number 0 is a special case that means <em>before the first migration</em>. Defaults to 0.
         /// </summary>
@@ -1480,7 +1480,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   Show verbose output.
         /// </summary>
         public virtual bool? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("ef migrations script")
@@ -1498,7 +1498,7 @@ namespace Nuke.Common.Tools.EntityFramework
               .Add("--no-color", NoColor)
               .Add("--prefix-output", PrefixOutput)
               .Add("--verbose", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

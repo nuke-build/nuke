@@ -392,8 +392,8 @@ namespace Nuke.Common.Tools.Paket
         /// <summary>
         ///   Path to the Paket executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PaketTasks.PaketPath;
-        public override Action<OutputType, string> CustomLogger => PaketTasks.PaketLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PaketTasks.PaketPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PaketTasks.PaketLogger;
         /// <summary>
         ///   NuGet package ID.
         /// </summary>
@@ -462,7 +462,7 @@ namespace Nuke.Common.Tools.Paket
         ///   Call coming from the <c>--run</c> feature of the bootstrapper.
         /// </summary>
         public virtual bool? FromBootstrapper { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("update")
@@ -483,7 +483,7 @@ namespace Nuke.Common.Tools.Paket
               .Add("--verbose", Verbose)
               .Add("--log-file {value}", LogFile)
               .Add("--from-bootstrapper", FromBootstrapper);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -499,8 +499,8 @@ namespace Nuke.Common.Tools.Paket
         /// <summary>
         ///   Path to the Paket executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PaketTasks.PaketPath;
-        public override Action<OutputType, string> CustomLogger => PaketTasks.PaketLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PaketTasks.PaketPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PaketTasks.PaketLogger;
         /// <summary>
         ///   Force download and reinstallation of all dependencies.
         /// </summary>
@@ -554,7 +554,7 @@ namespace Nuke.Common.Tools.Paket
         ///   Call coming from the <c>--run</c> feature of the bootstrapper.
         /// </summary>
         public virtual bool? FromBootstrapper { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("restore")
@@ -571,7 +571,7 @@ namespace Nuke.Common.Tools.Paket
               .Add("--verbose", Verbose)
               .Add("--log-file {value}", LogFile)
               .Add("--from-bootstrapper", FromBootstrapper);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -587,8 +587,8 @@ namespace Nuke.Common.Tools.Paket
         /// <summary>
         ///   Path to the Paket executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PaketTasks.PaketPath;
-        public override Action<OutputType, string> CustomLogger => PaketTasks.PaketLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PaketTasks.PaketPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PaketTasks.PaketLogger;
         /// <summary>
         ///   Path to the package.
         /// </summary>
@@ -621,7 +621,7 @@ namespace Nuke.Common.Tools.Paket
         ///   Call coming from the <c>--run</c> feature of the bootstrapper.
         /// </summary>
         public virtual bool? FromBootstrapper { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("push")
@@ -633,7 +633,7 @@ namespace Nuke.Common.Tools.Paket
               .Add("--verbose", Verbose)
               .Add("--log-file {value}", LogFile)
               .Add("--from-bootstrapper", FromBootstrapper);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -649,8 +649,8 @@ namespace Nuke.Common.Tools.Paket
         /// <summary>
         ///   Path to the Paket executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PaketTasks.PaketPath;
-        public override Action<OutputType, string> CustomLogger => PaketTasks.PaketLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PaketTasks.PaketPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PaketTasks.PaketLogger;
         /// <summary>
         ///   Output directory for .nupkg files.
         /// </summary>
@@ -725,7 +725,7 @@ namespace Nuke.Common.Tools.Paket
         ///   Call coming from the <c>--run</c> feature of the bootstrapper.
         /// </summary>
         public virtual bool? FromBootstrapper { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("pack")
@@ -747,7 +747,7 @@ namespace Nuke.Common.Tools.Paket
               .Add("--verbose", Verbose)
               .Add("--log-file {value}", LogFile)
               .Add("--from-bootstrapper", FromBootstrapper);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

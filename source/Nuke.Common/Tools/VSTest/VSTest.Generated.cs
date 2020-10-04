@@ -152,8 +152,8 @@ namespace Nuke.Common.Tools.VSTest
         /// <summary>
         ///   Path to the VSTest executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? VSTestTasks.VSTestPath;
-        public override Action<OutputType, string> CustomLogger => VSTestTasks.VSTestLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? VSTestTasks.VSTestPath;
+        public override Action<OutputType, string> ProcessCustomLogger => VSTestTasks.VSTestLogger;
         /// <summary>
         ///   Run tests from the specified files. Separate multiple test file names with spaces.
         /// </summary>
@@ -229,7 +229,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   Writes diagnostic trace logs to the specified file.
         /// </summary>
         public virtual string DiagnosticsFile { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("{value}", TestAssemblies)
@@ -250,7 +250,7 @@ namespace Nuke.Common.Tools.VSTest
               .Add("/ListLoggers", ListLoggers)
               .Add("/ListSettingsProviders", ListSettingsProviders)
               .Add("/Diag:{value}", DiagnosticsFile);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

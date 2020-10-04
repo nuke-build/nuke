@@ -134,8 +134,8 @@ namespace Nuke.Common.Tools.TestCloud
         /// <summary>
         ///   Path to the TestCloud executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? TestCloudTasks.TestCloudPath;
-        public override Action<OutputType, string> CustomLogger => TestCloudTasks.TestCloudLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? TestCloudTasks.TestCloudPath;
+        public override Action<OutputType, string> ProcessCustomLogger => TestCloudTasks.TestCloudLogger;
         /// <summary>
         ///   The path to the folder holding the test assemblies.
         /// </summary>
@@ -188,7 +188,7 @@ namespace Nuke.Common.Tools.TestCloud
         /// </summary>
         public virtual IReadOnlyList<string> DataPaths => DataPathsInternal.AsReadOnly();
         internal List<string> DataPathsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("submit")
@@ -204,7 +204,7 @@ namespace Nuke.Common.Tools.TestCloud
               .Add("--test-chunk", TestChunk)
               .Add("--fixture-chunk", FixtureChunk)
               .Add("--data {value}", DataPaths);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

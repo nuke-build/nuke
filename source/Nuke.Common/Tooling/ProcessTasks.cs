@@ -27,18 +27,19 @@ namespace Nuke.Common.Tooling
 
         public static IProcess StartProcess(ToolSettings toolSettings)
         {
-            var arguments = toolSettings.GetArguments();
+            var arguments = toolSettings.GetProcessArguments();
 
-            return StartProcess(toolSettings.ToolPath,
+            return StartProcess(
+                toolSettings.ProcessToolPath,
                 arguments.RenderForExecution(),
-                toolSettings.WorkingDirectory,
-                toolSettings.EnvironmentVariables,
-                toolSettings.ExecutionTimeout,
-                toolSettings.LogOutput,
-                toolSettings.LogInvocation,
-                toolSettings.LogTimestamp,
-                toolSettings.LogFile,
-                toolSettings.CustomLogger,
+                toolSettings.ProcessWorkingDirectory,
+                toolSettings.ProcessEnvironmentVariables,
+                toolSettings.ProcessExecutionTimeout,
+                toolSettings.ProcessLogOutput,
+                toolSettings.ProcessLogInvocation,
+                toolSettings.ProcessLogTimestamp,
+                toolSettings.ProcessLogFile,
+                toolSettings.ProcessCustomLogger,
                 arguments.FilterSecrets);
         }
 

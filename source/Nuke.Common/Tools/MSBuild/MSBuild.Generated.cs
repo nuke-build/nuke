@@ -137,8 +137,8 @@ namespace Nuke.Common.Tools.MSBuild
         /// <summary>
         ///   Path to the MSBuild executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => MSBuildTasks.MSBuildLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => MSBuildTasks.MSBuildLogger;
         /// <summary>
         ///   The solution or project file on which MSBuild is executed.
         /// </summary>
@@ -202,7 +202,7 @@ namespace Nuke.Common.Tools.MSBuild
         ///   Disable the default console logger, and don't log events to the console.
         /// </summary>
         public virtual bool? NoConsoleLogger { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("{value}", TargetPath)
@@ -218,7 +218,7 @@ namespace Nuke.Common.Tools.MSBuild
               .Add("/verbosity:{value}", Verbosity)
               .Add("/logger:{value}", Loggers)
               .Add("/noconsolelogger", NoConsoleLogger);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

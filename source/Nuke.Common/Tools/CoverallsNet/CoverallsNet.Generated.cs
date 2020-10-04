@@ -155,8 +155,8 @@ namespace Nuke.Common.Tools.CoverallsNet
         /// <summary>
         ///   Path to the CoverallsNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? CoverallsNetTasks.CoverallsNetPath;
-        public override Action<OutputType, string> CustomLogger => CoverallsNetTasks.CoverallsNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? CoverallsNetTasks.CoverallsNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => CoverallsNetTasks.CoverallsNetLogger;
         /// <summary>
         ///   The coverage source file location.
         /// </summary>
@@ -233,7 +233,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   The github pull request id. Used for updating status on github PRs.
         /// </summary>
         public virtual int? PullRequest { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("--input {value}", Input)
@@ -255,7 +255,7 @@ namespace Nuke.Common.Tools.CoverallsNet
               .Add("--jobId {value}", JobId)
               .Add("--serviceName {value}", ServiceName)
               .Add("--pullRequest {value}", PullRequest);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
