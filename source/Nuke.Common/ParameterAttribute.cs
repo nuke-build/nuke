@@ -4,13 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
 using Nuke.Common.Execution;
 using Nuke.Common.ValueInjection;
 

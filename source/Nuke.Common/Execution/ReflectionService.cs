@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;

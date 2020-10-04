@@ -14,7 +14,6 @@ using Nuke.Common.CI.GitLab;
 using Nuke.Common.CI.Jenkins;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.CI.TravisCI;
-using Nuke.Common.Execution;
 using Nuke.Common.Tools.Git;
 using Nuke.Common.ValueInjection;
 
