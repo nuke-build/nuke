@@ -19,7 +19,8 @@ namespace Nuke.Common.Tools.VSWhere
 
         private static List<VSWhereResult> GetResult(IProcess process, VSWhereSettings toolSettings)
         {
-            if (!(toolSettings.UTF8 ?? false) || toolSettings.Format != VSWhereFormat.json || toolSettings.Property != null)
+            // RESHARPER: unintentional reference comparison
+            if (!(toolSettings.UTF8 ?? false) || toolSettings.Format.Equals(VSWhereFormat.json) || toolSettings.Property != null)
                 return null;
 
             var output = process.Output.EnsureOnlyStd().Select(x => x.Text).JoinNewLine();
