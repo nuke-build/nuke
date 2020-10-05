@@ -32,9 +32,6 @@ function FirstJsonValue {
 if [ -x "$(command -v dotnet)" ] && dotnet --version &>/dev/null; then
     export DOTNET_EXE="$(command -v dotnet)"
 else
-    DOTNET_DIRECTORY="$TEMP_DIRECTORY/dotnet-unix"
-    export DOTNET_EXE="$DOTNET_DIRECTORY/dotnet"
-
     # Download install script
     DOTNET_INSTALL_FILE="$TEMP_DIRECTORY/dotnet-install.sh"
     mkdir -p "$TEMP_DIRECTORY"
@@ -50,11 +47,13 @@ else
     fi
 
     # Install by channel or version
+    DOTNET_DIRECTORY="$TEMP_DIRECTORY/dotnet-unix"
     if [[ -z ${DOTNET_VERSION+x} ]]; then
         "$DOTNET_INSTALL_FILE" --install-dir "$DOTNET_DIRECTORY" --channel "$DOTNET_CHANNEL" --no-path
     else
         "$DOTNET_INSTALL_FILE" --install-dir "$DOTNET_DIRECTORY" --version "$DOTNET_VERSION" --no-path
     fi
+    export DOTNET_EXE="$DOTNET_DIRECTORY/dotnet"
 fi
 
 echo "Microsoft (R) .NET Core SDK version $("$DOTNET_EXE" --version)"

@@ -39,9 +39,6 @@ if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue) -and `
     $env:DOTNET_EXE = (Get-Command "dotnet").Path
 }
 else {
-    $DotNetDirectory = "$TempDirectory\dotnet-win"
-    $env:DOTNET_EXE = "$DotNetDirectory\dotnet.exe"
-
     # Download install script
     $DotNetInstallFile = "$TempDirectory\dotnet-install.ps1"
     New-Item -ItemType Directory -Path $TempDirectory -Force | Out-Null
@@ -57,11 +54,13 @@ else {
     }
 
     # Install by channel or version
+    $DotNetDirectory = "$TempDirectory\dotnet-win"
     if (!(Test-Path variable:DotNetVersion)) {
         ExecSafe { & $DotNetInstallFile -InstallDir $DotNetDirectory -Channel $DotNetChannel -NoPath }
     } else {
         ExecSafe { & $DotNetInstallFile -InstallDir $DotNetDirectory -Version $DotNetVersion -NoPath }
     }
+    $env:DOTNET_EXE = "$DotNetDirectory\dotnet.exe"
 }
 
 Write-Output "Microsoft (R) .NET Core SDK version $(& $env:DOTNET_EXE --version)"
