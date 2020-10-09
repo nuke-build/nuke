@@ -30,6 +30,7 @@ jobs:
             GitHubToken: ${{ secrets.GITHUB_TOKEN }}
             SlackWebhook: ${{ secrets.SlackWebhook }}
             GitterAuthToken: ${{ secrets.GitterAuthToken }}
+            NuGetApiKey: ${{ secrets.NuGetApiKey }}
       - uses: actions/upload-artifact@v1
         with:
           name: packages

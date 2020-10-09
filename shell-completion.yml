@@ -1,4 +1,3 @@
-ApiKey: 
 AutoStash: 
 Configuration:
 - Debug
@@ -20,6 +19,7 @@ Host:
 - Travis
 IgnoreFailedSources: 
 NoLogo: 
+NuGetApiKey: 
 Plan: 
 Root: 
 SignPathApiToken: 

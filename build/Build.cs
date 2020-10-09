@@ -52,7 +52,7 @@ using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
     On = new[] { GitHubActionsTrigger.Push },
     InvokedTargets = new[] { nameof(Publish) },
     ImportGitHubTokenAs = nameof(GitHubToken),
-    ImportSecrets = new[] { nameof(SlackWebhook), nameof(GitterAuthToken) })]
+    ImportSecrets = new[] { nameof(SlackWebhook), nameof(GitterAuthToken), nameof(NuGetApiKey) })]
 [AppVeyor(
     AppVeyorImage.VisualStudio2019,
     AppVeyorImage.Ubuntu1804,
@@ -239,7 +239,7 @@ partial class Build : NukeBuild
                 .AddPlugin("ReSharperPlugin.CognitiveComplexity", ReSharperPluginLatest));
         });
 
-    [Parameter("NuGet Api Key")] readonly string ApiKey;
+    [Parameter] readonly string NuGetApiKey;
     bool IsOriginalRepository => GitRepository.Identifier == "nuke-build/nuke";
 
     string Source => IsOriginalRepository
@@ -250,7 +250,7 @@ partial class Build : NukeBuild
         .ProceedAfterFailure()
         .DependsOn(Clean, Test, Pack)
         .Consumes(Pack)
-        .Requires(() => ApiKey != null || !IsOriginalRepository)
+        .Requires(() => !NuGetApiKey.IsNullOrEmpty() || !IsOriginalRepository)
         .Requires(() => GitHasCleanWorkingCopy())
         .Requires(() => Configuration.Equals(Configuration.Release))
         .Requires(() => !IsOriginalRepository ||
@@ -260,7 +260,7 @@ partial class Build : NukeBuild
                         GitRepository.Branch.StartsWithOrdinalIgnoreCase(HotfixBranchPrefix))
         .Executes(() =>
         {
-            if (GitHubActions != null)
+            if (!IsOriginalRepository)
             {
                 DotNetNuGetAddSource(_ => _
                     .SetSource($"https://nuget.pkg.github.com/{GitHubActions.GitHubRepositoryOwner}/index.json")
@@ -272,7 +272,7 @@ partial class Build : NukeBuild
 
             DotNetNuGetPush(_ => _
                     .SetSource(Source)
-                    .SetApiKey(ApiKey)
+                    .SetApiKey(NuGetApiKey)
                     .CombineWith(PackageFiles, (_, v) => _
                         .SetTargetPath(v)),
                 degreeOfParallelism: 5,
