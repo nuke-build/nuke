@@ -1039,6 +1039,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--global</c> via <see cref="DotNetToolUpdateSettings.Global"/></li>
         ///     <li><c>--tool-path</c> via <see cref="DotNetToolUpdateSettings.ToolInstallationPath"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetToolUpdateSettings.Verbosity"/></li>
+        ///     <li><c>--version</c> via <see cref="DotNetToolUpdateSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotNetToolUpdate(DotNetToolUpdateSettings toolSettings = null)
@@ -1062,6 +1063,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--global</c> via <see cref="DotNetToolUpdateSettings.Global"/></li>
         ///     <li><c>--tool-path</c> via <see cref="DotNetToolUpdateSettings.ToolInstallationPath"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetToolUpdateSettings.Verbosity"/></li>
+        ///     <li><c>--version</c> via <see cref="DotNetToolUpdateSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotNetToolUpdate(Configure<DotNetToolUpdateSettings> configurator)
@@ -1082,6 +1084,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--global</c> via <see cref="DotNetToolUpdateSettings.Global"/></li>
         ///     <li><c>--tool-path</c> via <see cref="DotNetToolUpdateSettings.ToolInstallationPath"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetToolUpdateSettings.Verbosity"/></li>
+        ///     <li><c>--version</c> via <see cref="DotNetToolUpdateSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(DotNetToolUpdateSettings Settings, IReadOnlyCollection<Output> Output)> DotNetToolUpdate(CombinatorialConfigure<DotNetToolUpdateSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -2260,6 +2263,10 @@ namespace Nuke.Common.Tools.DotNet
         ///   Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.
         /// </summary>
         public virtual DotNetVerbosity Verbosity { get; internal set; }
+        /// <summary>
+        ///   The version of the tool to install. By default, the latest stable package version is installed. Use this option to install preview or older versions of the tool.
+        /// </summary>
+        public virtual string Version { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
@@ -2270,7 +2277,8 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--framework {value}", Framework)
               .Add("--global", Global)
               .Add("--tool-path {value}", ToolInstallationPath)
-              .Add("--verbosity {value}", Verbosity);
+              .Add("--verbosity {value}", Verbosity)
+              .Add("--version {value}", Version);
             return base.ConfigureProcessArguments(arguments);
         }
     }
@@ -15479,6 +15487,30 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Version
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolUpdateSettings.Version"/></em></p>
+        ///   <p>The version of the tool to install. By default, the latest stable package version is installed. Use this option to install preview or older versions of the tool.</p>
+        /// </summary>
+        [Pure]
+        public static T SetVersion<T>(this T toolSettings, string version) where T : DotNetToolUpdateSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Version = version;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolUpdateSettings.Version"/></em></p>
+        ///   <p>The version of the tool to install. By default, the latest stable package version is installed. Use this option to install preview or older versions of the tool.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetVersion<T>(this T toolSettings) where T : DotNetToolUpdateSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Version = null;
             return toolSettings;
         }
         #endregion
