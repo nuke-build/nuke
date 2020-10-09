@@ -66,7 +66,7 @@ namespace Nuke.Common.Git
                 protocol,
                 endpoint,
                 identifier,
-                branch ?? GetBranchFromCI() ?? GetBranchFromHead(head),
+                branch ?? (GetBranchFromCI() ?? GetBranchFromHead(head)).TrimStart("refs/heads/").TrimStart("origin/"),
                 rootDirectory,
                 head,
                 commit,
