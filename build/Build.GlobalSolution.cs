@@ -54,7 +54,7 @@ partial class Build
         .Executes(() =>
         {
             var global = CreateSolution(
-                GlobalSolution,
+                fileName: GlobalSolution,
                 solutions: new[] { Solution }.Concat(ExternalSolutions),
                 folderNameProvider: x => x == Solution ? null : x.Name);
             global.Save();

@@ -43,9 +43,8 @@ project {
             options = listOf("Minimal" to "Minimal", "Normal" to "Normal", "Quiet" to "Quiet", "Verbose" to "Verbose"),
             display = ParameterDisplay.NORMAL)
         text (
-            "env.ApiKey",
-            label = "ApiKey",
-            description = "NuGet Api Key",
+            "env.NuGetApiKey",
+            label = "NuGetApiKey",
             value = "",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
