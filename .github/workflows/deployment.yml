@@ -28,17 +28,24 @@ jobs:
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v1
+      - name: Cache .tmp, ~/.nuget/packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            .tmp
+            ~/.nuget/packages
+          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
       - name: Run './build.cmd Publish'
         run: ./build.cmd Publish
         env:
             GitHubToken: ${{ secrets.GITHUB_TOKEN }}
-            NuGetApiKey: ${{ secrets.NuGetApiKey }}
-            SlackWebhook: ${{ secrets.SlackWebhook }}
-            GitterAuthToken: ${{ secrets.GitterAuthToken }}
-            TwitterConsumerKey: ${{ secrets.TwitterConsumerKey }}
-            TwitterConsumerSecret: ${{ secrets.TwitterConsumerSecret }}
-            TwitterAccessToken: ${{ secrets.TwitterAccessToken }}
-            TwitterAccessTokenSecret: ${{ secrets.TwitterAccessTokenSecret }}
+            NuGetApiKey: ${{ secrets.NUGET_API_KEY }}
+            SlackWebhook: ${{ secrets.SLACK_WEBHOOK }}
+            GitterAuthToken: ${{ secrets.GITTER_AUTH_TOKEN }}
+            TwitterConsumerKey: ${{ secrets.TWITTER_CONSUMER_KEY }}
+            TwitterConsumerSecret: ${{ secrets.TWITTER_CONSUMER_SECRET }}
+            TwitterAccessToken: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+            TwitterAccessTokenSecret: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
       - uses: actions/upload-artifact@v1
         with:
           name: packages
