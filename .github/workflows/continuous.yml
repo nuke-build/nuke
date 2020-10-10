@@ -34,7 +34,7 @@ jobs:
       - name: Run './build.cmd Test Pack'
         run: ./build.cmd Test Pack
         env:
-            CodecovToken: ${{ secrets.CodecovToken }}
+            CodecovToken: ${{ secrets.CODECOV_TOKEN }}
   ubuntu-latest:
     name: ubuntu-latest
     runs-on: ubuntu-latest
@@ -43,7 +43,7 @@ jobs:
       - name: Run './build.cmd Test Pack'
         run: ./build.cmd Test Pack
         env:
-            CodecovToken: ${{ secrets.CodecovToken }}
+            CodecovToken: ${{ secrets.CODECOV_TOKEN }}
   macOS-latest:
     name: macOS-latest
     runs-on: macOS-latest
@@ -52,4 +52,4 @@ jobs:
       - name: Run './build.cmd Test Pack'
         run: ./build.cmd Test Pack
         env:
-            CodecovToken: ${{ secrets.CodecovToken }}
+            CodecovToken: ${{ secrets.CODECOV_TOKEN }}

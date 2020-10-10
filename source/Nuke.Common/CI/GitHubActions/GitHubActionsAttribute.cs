@@ -133,7 +133,8 @@ namespace Nuke.Common.CI.GitHubActions
 
         protected virtual IEnumerable<(string Key, string Value)> GetImports()
         {
-            static string GetSecretValue(string secret) => $"${{{{ secrets.{secret} }}}}";
+            static string GetSecretValue(string secret)
+                => $"${{{{ secrets.{secret.SplitCamelHumpsWithSeparator("_", Constants.KnownWords).ToUpperInvariant()} }}}}";
 
             if (ImportGitHubTokenAs != null)
                 yield return (ImportGitHubTokenAs, GetSecretValue("GITHUB_TOKEN"));
