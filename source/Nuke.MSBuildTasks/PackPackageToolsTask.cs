@@ -9,6 +9,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
+using Nuke.Common;
 using Nuke.Common.Tooling;
 using static Nuke.Common.IO.PathConstruction;
 
@@ -38,11 +39,11 @@ namespace Nuke.MSBuildTasks
 
         private IEnumerable<ITaskItem> GetFiles(string packageId, string packageVersion)
         {
-            var packageToolsPath = Path.Combine(NuGetPackageRoot, packageId, packageVersion, "tools");
-            if (!Directory.Exists(packageToolsPath))
+            var packageToolsDirectory =  Path.Combine(NuGetPackageRoot, packageId.ToLowerInvariant(), packageVersion.ToLowerInvariant(), "tools");
+            if (!Directory.Exists(packageToolsDirectory))
                 yield break;
 
-            foreach (var file in Directory.GetFiles(packageToolsPath, "*", SearchOption.AllDirectories))
+            foreach (var file in Directory.GetFiles(packageToolsDirectory, "*", SearchOption.AllDirectories))
             {
                 var taskItem = new TaskItem(file);
                 taskItem.SetMetadata("BuildAction", "None");
@@ -52,7 +53,7 @@ namespace Nuke.MSBuildTasks
                         TargetFramework,
                         "any",
                         packageId,
-                        GetRelativePath(packageToolsPath, file)));
+                        GetRelativePath(packageToolsDirectory, file)));
                 yield return taskItem;
             }
         }
