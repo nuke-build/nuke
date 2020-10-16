@@ -1,6 +1,6 @@
-﻿// Copyright Sebastian Karasek, Matthias Koch 2018.
+﻿// Copyright 2020 Maintainers of NUKE.
 // Distributed under the MIT License.
-// https://github.com/nuke-build/azure-keyvault/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
     [PublicAPI]
     public class KeyVaultAttribute : KeyVaultSecretAttribute
     {
-        public override object GetValue (MemberInfo member, object instance)
+        public override object GetValue(MemberInfo member, object instance)
         {
             if (member.GetMemberType() != typeof(KeyVault))
                 throw new NotSupportedException();

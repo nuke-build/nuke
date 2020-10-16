@@ -1,6 +1,6 @@
-﻿// Copyright Sebastian Karasek, Matthias Koch 2018.
+﻿// Copyright 2020 Maintainers of NUKE.
 // Distributed under the MIT License.
-// https://github.com/nuke-build/azure-keyvault/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
@@ -15,21 +15,31 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
     {
         [CanBeNull]
         public string Secret { get; internal set; }
+
         [CanBeNull]
         public string ClientId { get; internal set; }
+
         [CanBeNull]
         public string BaseUrl { get; internal set; }
 
-        public bool IsValid ([CanBeNull]out string error)
+        [CanBeNull]
+        public string TenantId { get; internal set; }
+
+        public bool IsValid([CanBeNull] out string error)
         {
             error = null;
-            if (!IsPropertyValid(Secret, nameof(Secret), out var msg)) error += msg;
-            if (!IsPropertyValid(ClientId, nameof(ClientId), out msg)) error += msg;
-            if (!IsPropertyValid(BaseUrl, nameof(BaseUrl), out msg)) error += msg;
+            if (!IsPropertyValid(Secret, nameof(Secret), out var msg))
+                error += msg;
+            if (!IsPropertyValid(ClientId, nameof(ClientId), out msg))
+                error += msg;
+            if (!IsPropertyValid(BaseUrl, nameof(BaseUrl), out msg))
+                error += msg;
+            if (!IsPropertyValid(TenantId, nameof(TenantId), out msg))
+                error += msg;
             return error == null;
         }
 
-        private bool IsPropertyValid ([CanBeNull] string value, string name, [CanBeNull] out string error)
+        private bool IsPropertyValid([CanBeNull] string value, string name, [CanBeNull] out string error)
         {
             error = null;
             if (string.IsNullOrWhiteSpace(value))
@@ -45,7 +55,7 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
     /// <summary>Defines where the KeyVault login details can be found.</summary>
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Field)]
-    [MeansImplicitUse(ImplicitUseKindFlags.Assign)]
+    [MeansImplicitUse(ImplicitUseKindFlags.Assign | ImplicitUseKindFlags.Access)]
     public class KeyVaultSettingsAttribute : ValueInjectionAttributeBase
     {
         /// <summary><p>The base url of the Azure Key Vault. Either <see cref="BaseUrl"/> or <see cref="BaseUrlParameterName"/> must be set.</p></summary>
@@ -54,6 +64,9 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
         /// <summary><p>The client id of an AzureAd application with permissions for the required operations. Either <see cref="ClientId"/> or <see cref="ClientIdParameterName"/> must be set.</p></summary>
 
         [CanBeNull] public string ClientId { get; set; }
+
+        /// <summary><p>Azure Tenant id.</p></summary>
+        [CanBeNull] public string TenantId { get; set; }
 
         /// <summary><p>The name of the parameter or environment variable which contains the base url to the Azure Key Vault. Either <see cref='BaseUrl'/> or  <see cref='BaseUrlParameterName'/> must be set.</p></summary>
         [CanBeNull] public string BaseUrlParameterName { get; set; }
@@ -64,6 +77,9 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
         /// <summary><p>The name of the parameter or environment variable which contains the secret of the AzureAd application.</p></summary>
         [CanBeNull] public string ClientSecretParameterName { get; set; }
 
+        /// <summary><p>The name of the parameter or environment variable which contains the Azure Tenant id.</p></summary>
+        [CanBeNull] public string TenantIdParameterName { get; set; }
+
         /// <summary>Defines where the KeyVault login details can be found.</summary>
         public KeyVaultSettingsAttribute()
         {
@@ -71,13 +87,19 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
 
         /// <summary>Defines where the KeyVault login details can be found.</summary>
         /// <param name="baseUrlParameterName">The name of the parameter, commandline argument or environment variable which contains the base url to the Azure Key Vault.</param>
+        /// <param name="tenantIdParameterName">The name of the parameter or environment variable which contains the Azure Tenant id.</param>
         /// <param name="clientIdParameterName">The name of the parameter, commandline argument or environment variable which contains the id of an AzureAd application with permissions for the required operations.</param>
         /// <param name="clientSecretParameterName">The name of the parameter, commandline argument or environment variable which contains the secret of the AzureAd application.</param>
-        public KeyVaultSettingsAttribute(string baseUrlParameterName, string clientIdParameterName, string clientSecretParameterName)
+        public KeyVaultSettingsAttribute(
+            string baseUrlParameterName,
+            string tenantIdParameterName,
+            string clientIdParameterName,
+            string clientSecretParameterName)
         {
             BaseUrlParameterName = baseUrlParameterName;
             ClientIdParameterName = clientIdParameterName;
             ClientSecretParameterName = clientSecretParameterName;
+            TenantIdParameterName = tenantIdParameterName;
         }
 
         [NotNull]
@@ -91,6 +113,7 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
                    {
                        ClientId = string.IsNullOrWhiteSpace(ClientId) ? GetParameter(ClientIdParameterName, instance) : ClientId,
                        BaseUrl = string.IsNullOrWhiteSpace(BaseUrl) ? GetParameter(BaseUrlParameterName, instance) : BaseUrl,
+                       TenantId = string.IsNullOrWhiteSpace(TenantId) ? GetParameter(TenantIdParameterName, instance) : TenantId,
                        Secret = GetParameter(ClientSecretParameterName, instance)
                    };
         }
@@ -107,6 +130,8 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
                 error += EnvironmentInfo.NewLine + $"Either '{nameof(BaseUrl)}' or '{nameof(BaseUrlParameterName)}' must be defined";
             if (string.IsNullOrWhiteSpace(ClientId) && string.IsNullOrWhiteSpace(ClientIdParameterName))
                 error += EnvironmentInfo.NewLine + $"Either '{nameof(ClientId)}' or '{nameof(ClientIdParameterName)}' must be defined";
+            if (string.IsNullOrWhiteSpace(TenantId) && string.IsNullOrWhiteSpace(TenantIdParameterName))
+                error += EnvironmentInfo.NewLine + $"Either '{nameof(TenantId)}' or '{nameof(TenantIdParameterName)}' must be defined";
             if (string.IsNullOrWhiteSpace(ClientSecretParameterName))
                 error += EnvironmentInfo.NewLine + $"'{nameof(ClientSecretParameterName)}' must be defined";
             ControlFlow.Assert(error == string.Empty, error);
