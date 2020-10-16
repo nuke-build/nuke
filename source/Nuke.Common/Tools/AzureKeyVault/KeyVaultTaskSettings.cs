@@ -1,6 +1,6 @@
-﻿// Copyright Sebastian Karasek, Matthias Koch 2018.
+﻿// Copyright 2020 Maintainers of NUKE.
 // Distributed under the MIT License.
-// https://github.com/nuke-build/azure-keyvault/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
@@ -14,6 +14,9 @@ namespace Nuke.Common.Tools.AzureKeyVault
     [PublicAPI]
     public class KeyVaultTaskSettings : ISettingsEntity
     {
+        /// <summary><p>Azure Tenant id.</p></summary>
+        public string TenantId { get; internal set; }
+
         /// <summary><p>The client id of an AzureAd application with permissions for the required operations.</p></summary>
         public string ClientId { get; internal set; }
 
@@ -25,16 +28,18 @@ namespace Nuke.Common.Tools.AzureKeyVault
 
         /// <summary><p>The base url of the Azure Key Vault.</p></summary>
         public string VaultBaseUrl { get; internal set; }
-
-        public KeyVaultTaskSettings ()
+        
+        public KeyVaultTaskSettings()
         {
         }
 
-        public KeyVaultTaskSettings (KeyVaultSettings keyVaultSettings)
+        public KeyVaultTaskSettings(KeyVaultSettings keyVaultSettings)
         {
             ClientId = keyVaultSettings.ClientId;
             ClientSecret = keyVaultSettings.Secret;
             VaultBaseUrl = keyVaultSettings.BaseUrl;
+            TenantId = keyVaultSettings.TenantId;
         }
+
     }
 }

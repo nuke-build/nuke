@@ -1,6 +1,6 @@
-﻿// Copyright Sebastian Karasek, Matthias Koch 2018.
+﻿// Copyright 2020 Maintainers of NUKE.
 // Distributed under the MIT License.
-// https://github.com/nuke-build/azure-keyvault/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
@@ -16,23 +16,24 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
     [MeansImplicitUse(ImplicitUseKindFlags.Assign)]
     public class KeyVaultSecretAttribute : ParameterAttribute
     {
-        protected static KeyVaultTaskSettings CreateSettings (string secretName, KeyVaultSettings keyVaultSettings)
+        protected static KeyVaultTaskSettings CreateSettings(string secretName, KeyVaultSettings keyVaultSettings)
         {
             return new KeyVaultTaskSettings()
-                    .SetClientId(keyVaultSettings.ClientId)
-                    .SetVaultBaseUrl(keyVaultSettings.BaseUrl)
-                    .SetClientSecret(keyVaultSettings.Secret)
-                    .SetSecretName(secretName);
+                .SetClientId(keyVaultSettings.ClientId)
+                .SetVaultBaseUrl(keyVaultSettings.BaseUrl)
+                .SetClientSecret(keyVaultSettings.Secret)
+                .SetTenantId(keyVaultSettings.TenantId)
+                .SetSecretName(secretName);
         }
 
         /// <summary>Obtain the secret with the given name from the KeyVault defined by <see cref="KeyVaultSettingsAttribute"/></summary>
-        public KeyVaultSecretAttribute ()
+        public KeyVaultSecretAttribute()
         {
         }
 
         /// <summary>Obtain the secret with the given name from the KeyVault defined by <see cref="KeyVaultSettingsAttribute"/></summary>
         /// <param name="secretName">The name of the secret to obtain. If the name is null the name of the property is used.</param>
-        public KeyVaultSecretAttribute (string secretName)
+        public KeyVaultSecretAttribute(string secretName)
         {
             SecretName = secretName;
         }
@@ -45,7 +46,7 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
         public string SettingFieldName { get; set; }
 
         [CanBeNull]
-        public override object GetValue (MemberInfo member, object instance)
+        public override object GetValue(MemberInfo member, object instance)
         {
             var settings = GetSettings(instance);
             if (!settings.IsValid(out _))
@@ -58,8 +59,6 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
                 return EnvironmentInfo.GetParameter<string>(secretName) ?? KeyVaultTasks.GetSecret(CreateSettings(secretName, settings));
             if (memberType == typeof(KeyVaultKey))
                 return KeyVaultTasks.GetKeyBundle(CreateSettings(secretName, settings));
-            if (memberType == typeof(KeyVaultCertificate))
-                return KeyVaultTasks.GetCertificateBundle(CreateSettings(secretName, settings));
             if (memberType == typeof(KeyVault))
                 return KeyVaultTasks.LoadVault(CreateSettings(secretName, settings));
 
@@ -70,12 +69,12 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
             throw new NotSupportedException();
         }
 
-        protected KeyVaultSettings GetSettings (object instance)
+        protected KeyVaultSettings GetSettings(object instance)
         {
             var fieldsWithAttributes = instance.GetType().GetFields(ReflectionUtility.Instance)
-                    .Select(x => new { Field = x, Attribute = x.GetCustomAttribute<KeyVaultSettingsAttribute>() })
-                    .Where(x => x.Attribute != null)
-                    .ToArray();
+                .Select(x => new { Field = x, Attribute = x.GetCustomAttribute<KeyVaultSettingsAttribute>() })
+                .Where(x => x.Attribute != null)
+                .ToArray();
 
             ControlFlow.Assert(fieldsWithAttributes.Length > 0,
                 "A field of the type `KeyVaultSettings` with the 'KeyVaultSettingsAttribute' has to be defined in the build class when using Azure KeyVault.");

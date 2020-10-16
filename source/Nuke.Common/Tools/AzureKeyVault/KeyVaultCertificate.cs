@@ -1,6 +1,6 @@
-﻿// Copyright Sebastian Karasek, Matthias Koch 2018.
+﻿// Copyright 2020 Maintainers of NUKE.
 // Distributed under the MIT License.
-// https://github.com/nuke-build/azure-keyvault/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
@@ -12,5 +12,7 @@ namespace Nuke.Common.Tools.AzureKeyVault
         public byte[] Cer { get; internal set; }
         public byte[] X509Thumbprint { get; internal set; }
         public KeyVaultKey Key { get; internal set; }
+
+        public string KeySecret { get; internal set; }
     }
 }

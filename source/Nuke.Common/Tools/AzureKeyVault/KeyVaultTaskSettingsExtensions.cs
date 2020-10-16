@@ -1,6 +1,6 @@
-﻿// Copyright Sebastian Karasek, Matthias Koch 2018.
+﻿// Copyright 2020 Maintainers of NUKE.
 // Distributed under the MIT License.
-// https://github.com/nuke-build/azure-keyvault/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
@@ -15,7 +15,7 @@ namespace Nuke.Common.Tools.AzureKeyVault
     {
         /// <summary><p><em>Sets <see cref="KeyVaultTaskSettings.ClientId"/>.</em></p><p>The client id of an AzureAd application with permissions for the required operations.</p></summary>
         [Pure]
-        public static KeyVaultTaskSettings SetClientId (this KeyVaultTaskSettings keyVaultSettings, string clientId)
+        public static KeyVaultTaskSettings SetClientId(this KeyVaultTaskSettings keyVaultSettings, string clientId)
         {
             keyVaultSettings = keyVaultSettings.NewInstance();
             keyVaultSettings.ClientId = clientId;
@@ -24,7 +24,7 @@ namespace Nuke.Common.Tools.AzureKeyVault
 
         /// <summary><p><em>Sets <see cref="KeyVaultTaskSettings.ClientSecret"/>.</em></p><p>The secret of the AzureAd application.</p></summary>
         [Pure]
-        public static KeyVaultTaskSettings SetClientSecret (this KeyVaultTaskSettings keyVaultSettings, string clientSecret)
+        public static KeyVaultTaskSettings SetClientSecret(this KeyVaultTaskSettings keyVaultSettings, string clientSecret)
         {
             keyVaultSettings = keyVaultSettings.NewInstance();
             keyVaultSettings.ClientSecret = clientSecret;
@@ -33,16 +33,25 @@ namespace Nuke.Common.Tools.AzureKeyVault
 
         /// <summary><p><em>Sets <see cref="KeyVaultTaskSettings.SecretName"/>.</em></p><p>The name of the secret to obtain.</p></summary>
         [Pure]
-        public static KeyVaultTaskSettings SetSecretName (this KeyVaultTaskSettings keyVaultSettings, string secretName)
+        public static KeyVaultTaskSettings SetSecretName(this KeyVaultTaskSettings keyVaultSettings, string secretName)
         {
             keyVaultSettings = keyVaultSettings.NewInstance();
             keyVaultSettings.SecretName = secretName;
             return keyVaultSettings;
         }
 
+        /// <summary><p><em>Sets <see cref="KeyVaultTaskSettings.TenantId"/>.</em></p><p>The Azure tenant id..</p></summary>
+        [Pure]
+        public static KeyVaultTaskSettings SetTenantId(this KeyVaultTaskSettings keyVaultSettings, string tenantId)
+        {
+            keyVaultSettings = keyVaultSettings.NewInstance();
+            keyVaultSettings.TenantId = tenantId;
+            return keyVaultSettings;
+        }
+
         /// <summary><p><em>Sets <see cref="KeyVaultTaskSettings.VaultBaseUrl"/>.</em></p><p>The base url of the Azure Key Vault.</p></summary>
         [Pure]
-        public static KeyVaultTaskSettings SetVaultBaseUrl (this KeyVaultTaskSettings keyVaultSettings, string vaultBaseUrl)
+        public static KeyVaultTaskSettings SetVaultBaseUrl(this KeyVaultTaskSettings keyVaultSettings, string vaultBaseUrl)
         {
             keyVaultSettings = keyVaultSettings.NewInstance();
             keyVaultSettings.VaultBaseUrl = vaultBaseUrl;
@@ -51,12 +60,13 @@ namespace Nuke.Common.Tools.AzureKeyVault
 
         /// <summary><p><em>Sets <see cref="KeyVaultTaskSettings.VaultBaseUrl"/>, <see cref="KeyVaultTaskSettings.ClientSecret"/> and <see cref="KeyVaultTaskSettings.ClientId"/>.</em></p></summary>
         [Pure]
-        public static KeyVaultTaskSettings Set (this KeyVaultTaskSettings keyVaultTaskSettings, KeyVaultSettings settings)
+        public static KeyVaultTaskSettings Set(this KeyVaultTaskSettings keyVaultTaskSettings, KeyVaultSettings settings)
         {
             keyVaultTaskSettings = keyVaultTaskSettings.NewInstance();
             keyVaultTaskSettings.ClientId = settings.ClientId;
             keyVaultTaskSettings.ClientSecret = settings.Secret;
             keyVaultTaskSettings.VaultBaseUrl = settings.BaseUrl;
+            keyVaultTaskSettings.TenantId = settings.TenantId;
             return keyVaultTaskSettings;
         }
     }
