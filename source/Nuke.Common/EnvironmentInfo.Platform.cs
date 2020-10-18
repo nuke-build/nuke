@@ -71,7 +71,7 @@ namespace Nuke.Common
             
             try
             {
-                return File.Exists("/.dockerenv")
+                return File.Exists("/.dockerenv");
             }
             catch (IOException)
             {
