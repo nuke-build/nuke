@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Changed `HelmTasks` to support Helm v3.3.4
 - Changed `InjectionAttribute` to catch exceptions and report as warnings
 - Changed `ToolPathResolver` to ignore casing
 - Changed property names in `Nuke.Common.targets`
