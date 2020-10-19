@@ -242,9 +242,9 @@ partial class Build : NukeBuild
     [Parameter] readonly string NuGetApiKey;
     bool IsOriginalRepository => GitRepository.Identifier == "nuke-build/nuke";
 
-    string Source => IsOriginalRepository
-        ? "https://api.nuget.org/v3/index.json"
-        : $"https://nuget.pkg.github.com/{GitHubActions.GitHubRepositoryOwner}/index.json";
+    string NuGetPackageSource => "https://api.nuget.org/v3/index.json";
+    string GitHubPackageSource => $"https://nuget.pkg.github.com/{GitHubActions.GitHubRepositoryOwner}/index.json";
+    string Source => IsOriginalRepository ? NuGetPackageSource : GitHubPackageSource;
 
     Target Publish => _ => _
         .ProceedAfterFailure()
@@ -253,22 +253,20 @@ partial class Build : NukeBuild
         .Requires(() => !NuGetApiKey.IsNullOrEmpty() || !IsOriginalRepository)
         .Requires(() => GitHasCleanWorkingCopy())
         .Requires(() => Configuration.Equals(Configuration.Release))
-        .Requires(() => !IsOriginalRepository ||
-                        GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch) ||
-                        GitRepository.Branch.EqualsOrdinalIgnoreCase(DevelopBranch) ||
-                        GitRepository.Branch.StartsWithOrdinalIgnoreCase(ReleaseBranchPrefix) ||
-                        GitRepository.Branch.StartsWithOrdinalIgnoreCase(HotfixBranchPrefix))
+        .Requires(() => IsOriginalRepository && GitRepository.IsOnMasterBranch() ||
+                        IsOriginalRepository && GitRepository.IsOnReleaseBranch() ||
+                        !IsOriginalRepository && GitRepository.IsOnDevelopBranch())
         .Executes(() =>
         {
             if (!IsOriginalRepository)
             {
                 DotNetNuGetAddSource(_ => _
-                    .SetSource($"https://nuget.pkg.github.com/{GitHubActions.GitHubRepositoryOwner}/index.json")
+                    .SetSource(GitHubPackageSource)
                     .SetUsername(GitHubActions.GitHubActor)
                     .SetPassword(GitHubToken));
             }
 
-            Assert(PackageFiles.Count == 5, "packages.Count == 5");
+            Assert(PackageFiles.Count == 4, "packages.Count == 4");
 
             DotNetNuGetPush(_ => _
                     .SetSource(Source)
