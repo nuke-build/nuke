@@ -31,7 +31,7 @@ partial class Build
         YamlDeserializeFromFile<string[]>(ExternalRepositoriesFile).Select(x => GitRepository.FromUrl(x));
 
     Target CheckoutExternalRepositories => _ => _
-        .Executes(async () =>
+        .Executes(() =>
         {
             foreach (var repository in ExternalRepositories)
             {
