@@ -31,8 +31,8 @@ namespace Nuke.Common
             TemporaryDirectory = GetTemporaryDirectory(RootDirectory);
             FileSystemTasks.EnsureExistingDirectory(TemporaryDirectory);
             BuildAssemblyDirectory = GetBuildAssemblyDirectory();
-            BuildProjectDirectory = GetBuildProjectDirectory(BuildAssemblyDirectory);
             BuildProjectFile = GetBuildProjectFile(BuildAssemblyDirectory);
+            BuildProjectDirectory = BuildProjectFile?.Parent;
 
             Verbosity = EnvironmentInfo.GetParameter<Verbosity?>(() => Verbosity) ?? Verbosity.Normal;
             Host = EnvironmentInfo.GetParameter<HostType?>(() => Host) ?? GetHostType();
@@ -146,7 +146,7 @@ namespace Nuke.Common
         }
 
         [CanBeNull]
-        private static AbsolutePath GetBuildProjectDirectory([CanBeNull] AbsolutePath buildAssemblyDirectory)
+        private static AbsolutePath GetBuildProjectFile([CanBeNull] AbsolutePath buildAssemblyDirectory)
         {
             if (buildAssemblyDirectory == null)
                 return null;
@@ -156,13 +156,7 @@ namespace Nuke.Common
                 .Select(x => x.GetFiles("*.csproj", SearchOption.TopDirectoryOnly)
                     .SingleOrDefaultOrError($"Found multiple project files in '{x}'."))
                 .FirstOrDefault(x => x != null)
-                ?.DirectoryName;
-        }
-
-        [CanBeNull]
-        private static AbsolutePath GetBuildProjectFile([CanBeNull] AbsolutePath buildProjectDirectory)
-        {
-            return buildProjectDirectory?.GlobFiles("*.csproj").SingleOrDefault();
+                ?.FullName;
         }
 
         // ReSharper disable once CognitiveComplexity
