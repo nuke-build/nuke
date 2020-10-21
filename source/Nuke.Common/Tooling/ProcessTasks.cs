@@ -25,6 +25,32 @@ namespace Nuke.Common.Tooling
 
         private static readonly char[] s_pathSeparators = { EnvironmentInfo.IsWin ? ';' : ':' };
 
+        public static IProcess StartShell(
+            string command,
+            string workingDirectory = null,
+            IReadOnlyDictionary<string, string> environmentVariables = null,
+            int? timeout = null,
+            bool? logOutput = null,
+            bool? logInvocation = null,
+            bool? logTimestamp = null,
+            string logFile = null,
+            Action<OutputType, string> customLogger = null,
+            Func<string, string> outputFilter = null)
+        {
+            return StartProcess(
+                toolPath: ToolPathResolver.GetPathExecutable(EnvironmentInfo.IsWin ? "cmd" : "bash"),
+                arguments: $"{(EnvironmentInfo.IsWin ? "/c" : "-c")} {command.DoubleQuote()}",
+                workingDirectory,
+                environmentVariables,
+                timeout,
+                logOutput,
+                logInvocation,
+                logTimestamp,
+                logFile,
+                customLogger,
+                outputFilter);
+        }
+
         public static IProcess StartProcess(ToolSettings toolSettings)
         {
             var arguments = toolSettings.GetProcessArguments();
