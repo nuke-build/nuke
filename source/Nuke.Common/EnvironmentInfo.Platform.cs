@@ -59,6 +59,26 @@ namespace Nuke.Common
         /// </summary>
         public static bool IsWsl { get; } = GetIsWsl();
 
+        /// <summary>
+        /// Returns whether Nuke is running inside a docker container.
+        /// </summary>
+        public static bool IsDocker { get; } = GetIsDocker();
+        
+        private static bool GetIsDocker()
+        {
+            if (!IsLinux)
+                return false;
+            
+            try
+            {
+                return File.Exists("/.dockerenv");
+            }
+            catch (IOException)
+            {
+                return false;
+            }
+        }
+        
         private static bool GetIsWsl()
         {
             if (!IsLinux)
