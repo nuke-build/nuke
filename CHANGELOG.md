@@ -7,14 +7,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [vNext]
 - Changed `InjectionAttribute` to catch exceptions and report as warnings
 - Changed `ToolPathResolver` to ignore casing
+- Changed `ToolSettings` to prefix common properties with `Process`
 - Changed property names in `Nuke.Common.targets`
+- Changed `GitRepository` to trim `refs/heads/` and `origin/` from branch names
 - Changed `ShutdownDotNetBuildServerOnFinish` to not log by default
 - Changed `ShutdownDotNetBuildServerOnFinish` to only shutdown on server build
 - Added support for interface default implementations
+- Added `NukeBuild.ExitCode` for custom exit codes
 - Added `ToolSettings.Apply` for fluent configurator invocation
 - Added `ToolSettings.LogFile` and `LogTimestamp`
 - Added `nuke :fix` command to `Nuke.GlobalTool` for adding missing package downloads
 - Added `nuke :GetRootDirectory` and `nuke :GetParentRootDirectory` in `Nuke.GlobalTool`
+- Added `LatestPackageVersionAttribute`
 - Added `GitRepository.Protocol`, `Commit`, and `Tags` properties
 - Added logger delegate to `ControlFlow.ExecuteWithRetry`
 - Added `BuildExtensionAttributeBase` with `Priority` property
@@ -24,22 +28,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `AppVeyor.Url` and `PushArtifact` members
 - Added warning when `GitVersion` is used with SSH endpoint and `NoFetch` is disabled
 - Added consolidated `ReSharperTasks` for `CleanupCode`, `InspectCode`, and `DupFinder`
-- Added `DotNetTasks.DotNetNuGetAddSource` task
+- Added `TeamsTasks`
 - Added `SignPathTasks`
 - Added `SignClientTasks`
 - Added `BenchmarkDotNetTasks`
 - Added `CleanupCodeTasks`
+- Added `DotNetTasks.DotNetNuGetAddSource` task
+- Added `OctopusTasks.OctopusBuildInformation` task
 - Added missing properties in `SonarScannerTasks`
 - Added verbosity mapping attributes for `NUnit`, `OpenCover`, and `ReportGenerator`
+- Fixed version check in bootstrapping scripts to rely on dotnet CLI exit code
+- Fixed deactivation of multi-level lookup in bootstrapping scripts
+- Fixed deactivation of shared compilation in bootstrapping scripts
 - Fixed `ToolPathResolver` to consider all package executable names
 - Fixed `ToolPathResolver` to choose executable based on operating system
 - Fixed output/input encoding to use `UTF-8`
 - Fixed `NukeBuild.BuildProjectFile` property
 - Fixed AppVeyor generation for Unix images
 - Fixed `AzurePipelinensAttribute` to allow multiple use
+- Fixed AzurePipelines to replace dots in stage name with underscore
 - Fixed `AppVeyor.UpdateBuildVersion` to set environment variable
 - Fixed `DupFinderTasks.DiscardCost` property
 - Fixed `DotCoverTasks` to use double-dashes instead of slashes
+- Fixed `NpmTasks.CustomLogger` to detect warnings in error output
 
 ## [0.24.11] / 2020-05-18
 - Fixed transitive artifacts in configuration generation
