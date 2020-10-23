@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -16,7 +16,10 @@ namespace Nuke.Common.Tooling
         public static string GetLocalInstalledPackageDirectory(string packageId, string packagesConfigFile)
         {
             var packagesDirectory = GetPackagesDirectory(packagesConfigFile);
-            return Path.Combine(packagesDirectory, packageId);
+
+            var toolDir = Directory.EnumerateDirectories(packagesDirectory, packageId, SearchOption.AllDirectories).FirstOrDefault().NotNull($"searching for {packageId} in paket directory");
+
+            return Directory.GetParent(toolDir).FullName;
         }
 
         private static string GetPackagesDirectory(string packagesConfigFile)
