@@ -45,7 +45,9 @@ namespace Nuke.Common.CI.GitHubActions
 
         public GitHubActionsTrigger[] On { get; set; } = new GitHubActionsTrigger[0];
         public string[] OnPushBranches { get; set; } = new string[0];
+        public string[] OnPushBranchesIgnore { get; set; } = new string[0];
         public string[] OnPushTags { get; set; } = new string[0];
+        public string[] OnPushTagsIgnore { get; set; } = new string[0];
         public string[] OnPushIncludePaths { get; set; } = new string[0];
         public string[] OnPushExcludePaths { get; set; } = new string[0];
         public string[] OnPullRequestBranches { get; set; } = new string[0];
@@ -140,15 +142,23 @@ namespace Nuke.Common.CI.GitHubActions
         protected virtual IEnumerable<GitHubActionsDetailedTrigger> GetTriggers()
         {
             if (OnPushBranches.Length > 0 ||
+                OnPushBranchesIgnore.Length > 0 ||
                 OnPushTags.Length > 0 ||
+                OnPushTagsIgnore.Length > 0 ||
                 OnPushIncludePaths.Length > 0 ||
                 OnPushExcludePaths.Length > 0)
             {
+                ControlFlow.Assert(
+                    OnPushBranches.Length == 0 && OnPushTags.Length == 0 || OnPushBranchesIgnore.Length == 0 && OnPushTagsIgnore.Length == 0,
+                    $"Cannot use {nameof(OnPushBranches)}/{nameof(OnPushTags)} and {nameof(OnPushBranchesIgnore)}/{nameof(OnPushTagsIgnore)} in combination");
+
                 yield return new GitHubActionsVcsTrigger
                              {
                                  Kind = GitHubActionsTrigger.Push,
                                  Branches = OnPushBranches,
+                                 BranchesIgnore = OnPushBranchesIgnore,
                                  Tags = OnPushTags,
+                                 TagsIgnore = OnPushTagsIgnore,
                                  IncludePaths = OnPushIncludePaths,
                                  ExcludePaths = OnPushExcludePaths
                              };
@@ -163,7 +173,9 @@ namespace Nuke.Common.CI.GitHubActions
                              {
                                  Kind = GitHubActionsTrigger.PullRequest,
                                  Branches = OnPullRequestBranches,
+                                 BranchesIgnore = new string[0],
                                  Tags = OnPullRequestTags,
+                                 TagsIgnore = new string[0],
                                  IncludePaths = OnPullRequestIncludePaths,
                                  ExcludePaths = OnPullRequestExcludePaths
                              };
