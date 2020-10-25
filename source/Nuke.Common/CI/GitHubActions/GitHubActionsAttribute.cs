@@ -57,6 +57,8 @@ namespace Nuke.Common.CI.GitHubActions
         public string[] ImportSecrets { get; set; } = new string[0];
         public string ImportGitHubTokenAs { get; set; }
 
+        public bool PublishArtifacts { get; set; } = true;
+
         public string[] InvokedTargets { get; set; } = new string[0];
 
         public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
@@ -104,19 +106,23 @@ namespace Nuke.Common.CI.GitHubActions
                              Imports = GetImports().ToDictionary(x => x.Key, x => x.Value)
                          };
 
-            var artifacts = relevantTargets
-                .SelectMany(x => ArtifactExtensions.ArtifactProducts[x.Definition])
-                .Select(x => (AbsolutePath) x)
-                // TODO: https://github.com/actions/upload-artifact/issues/11
-                .Select(x => x.DescendantsAndSelf(y => y.Parent).FirstOrDefault(y => !y.ToString().ContainsOrdinalIgnoreCase("*")))
-                .Distinct().ToList();
-            foreach (var artifact in artifacts)
+            if (PublishArtifacts)
             {
-                yield return new GitHubActionsArtifactStep
-                             {
-                                 Name = artifact.ToString().TrimStart(artifact.Parent.ToString()).TrimStart('/', '\\'),
-                                 Path = NukeBuild.RootDirectory.GetUnixRelativePathTo(artifact)
-                             };
+                var artifacts = relevantTargets
+                    .SelectMany(x => ArtifactExtensions.ArtifactProducts[x.Definition])
+                    .Select(x => (AbsolutePath) x)
+                    // TODO: https://github.com/actions/upload-artifact/issues/11
+                    .Select(x => x.DescendantsAndSelf(y => y.Parent).FirstOrDefault(y => !y.ToString().ContainsOrdinalIgnoreCase("*")))
+                    .Distinct().ToList();
+
+                foreach (var artifact in artifacts)
+                {
+                    yield return new GitHubActionsArtifactStep
+                                 {
+                                     Name = artifact.ToString().TrimStart(artifact.Parent.ToString()).TrimStart('/', '\\'),
+                                     Path = NukeBuild.RootDirectory.GetUnixRelativePathTo(artifact)
+                                 };
+                }
             }
         }
 
