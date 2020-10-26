@@ -1,4 +1,4 @@
-// Generated from https://github.com/VolkmarR/nuke/blob/master/build/specifications/Teams.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Teams.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
