@@ -57,6 +57,7 @@ partial class Build
             await client.Tweets.PublishTweetAsync(
                 new PublishTweetParameters
                 {
+                    Text = "🔥 Check out the new release! 🏗",
                     Medias = new List<IMedia> { media }
                 });
 
