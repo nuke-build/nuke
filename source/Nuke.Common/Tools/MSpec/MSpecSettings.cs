@@ -9,7 +9,7 @@ namespace Nuke.Common.Tools.MSpec
 {
     public partial class MSpecSettings
     {
-        private string GetToolPath()
+        private string GetProcessToolPath()
         {
             return MSpecTasks.GetToolPath();
         }

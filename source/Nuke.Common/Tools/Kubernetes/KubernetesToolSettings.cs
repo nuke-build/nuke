@@ -17,11 +17,11 @@ namespace Nuke.Common.Tools.Kubernetes
     {
         public KubernetesCommonSettings CommonSettings { get; internal set; }
 
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             if (CommonSettings != null)
                 arguments.Concatenate(CommonSettings.CreateArguments());
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
 }

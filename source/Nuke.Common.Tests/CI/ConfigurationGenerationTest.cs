@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using ApprovalTests;
@@ -16,6 +17,7 @@ using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
+using Nuke.Common.Tooling;
 using Xunit;
 
 namespace Nuke.Common.Tests.CI
@@ -80,6 +82,9 @@ namespace Nuke.Common.Tests.CI
                         NonEntryTargets = new[] { nameof(Clean) },
                         InvokedTargets = new[] { nameof(Test) },
                         ExcludedTargets = new[] { nameof(Pack) },
+                        ImportSystemAccessTokenAs = nameof(AzurePipelinesSystemAccessToken),
+                        ImportVariableGroups = new[] { "variable-group-1" },
+                        ImportSecrets = new[] { nameof(GitHubToken) },
                         TriggerBatch = true,
                         TriggerBranchesInclude = new[] { "included_branch" },
                         TriggerBranchesExclude = new[] { "excluded_branch" },
@@ -186,6 +191,7 @@ namespace Nuke.Common.Tests.CI
             public readonly string Source = "https://api.nuget.org/v3/index.json";
 
             [Parameter("GitHub Token")] public readonly string GitHubToken;
+            [Parameter("Azure Pipelines System Access Token")] public readonly string AzurePipelinesSystemAccessToken;
 
             public Target Publish => _ => _
                 .DependsOn(Clean, Test, Pack)
@@ -195,6 +201,18 @@ namespace Nuke.Common.Tests.CI
             public Target Announce => _ => _
                 .TriggeredBy(Publish)
                 .AssuredAfterFailure();
+        }
+
+        [TypeConverter(typeof(TypeConverter<Configuration>))]
+        public class Configuration : Enumeration
+        {
+            public static Configuration Debug = new Configuration { Value = nameof(Debug) };
+            public static Configuration Release = new Configuration { Value = nameof(Release) };
+
+            public static implicit operator string(Configuration configuration)
+            {
+                return configuration.Value;
+            }
         }
     }
 }

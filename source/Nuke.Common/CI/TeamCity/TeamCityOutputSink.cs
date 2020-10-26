@@ -22,8 +22,6 @@ namespace Nuke.Common.CI.TeamCity
         public TeamCityOutputSink(TeamCity teamCity)
         {
             _teamCity = teamCity;
-
-            Console.OutputEncoding = Encoding.UTF8;
         }
 
         protected override string TraceCode => "90";

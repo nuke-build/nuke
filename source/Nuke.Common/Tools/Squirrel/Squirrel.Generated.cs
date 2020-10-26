@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p>
         ///   <p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Squirrel(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Squirrel(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(SquirrelPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, SquirrelLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(SquirrelPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, SquirrelLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -79,7 +79,7 @@ namespace Nuke.Common.Tools.Squirrel
         public static IReadOnlyCollection<Output> Squirrel(SquirrelSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SquirrelSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -170,8 +170,8 @@ namespace Nuke.Common.Tools.Squirrel
         /// <summary>
         ///   Path to the Squirrel executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? SquirrelTasks.SquirrelPath;
-        public override Action<OutputType, string> CustomLogger => SquirrelTasks.SquirrelLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? SquirrelTasks.SquirrelPath;
+        public override Action<OutputType, string> ProcessCustomLogger => SquirrelTasks.SquirrelLogger;
         /// <summary>
         ///   Install the app whose package is in the specified directory.
         /// </summary>
@@ -269,7 +269,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   Set the required .NET framework version, e.g. net461
         /// </summary>
         public virtual string FrameworkVersion { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("--install={value}", Install)
@@ -296,7 +296,7 @@ namespace Nuke.Common.Tools.Squirrel
               .Add("--no-msi", GenerateNoMsi)
               .Add("--no-delta", GenerateNoDelta)
               .Add("--framework-version={value}", FrameworkVersion);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Unity is usually launched by double-clicking its icon from the desktop. However, it is also possible to run it from the command line (from the macOS Terminal or the Windows Command Prompt). When launched in this way, Unity can receive commands and information on startup, which can be very useful for test suites, automated builds and other production tasks.</p>
         ///   <p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Unity(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Unity(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(UnityPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, UnityLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(UnityPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, UnityLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -63,7 +63,7 @@ namespace Nuke.Common.Tools.Unity
         {
             toolSettings = toolSettings ?? new UnityCreateManualActivationFileSettings();
             PreProcess(ref toolSettings);
-            var process = StartProcess(toolSettings);
+            using var process = StartProcess(toolSettings);
             AssertProcess(process, toolSettings);
             return process.Output;
         }
@@ -128,7 +128,7 @@ namespace Nuke.Common.Tools.Unity
         {
             toolSettings = toolSettings ?? new UnityManualLicenseFileSettings();
             PreProcess(ref toolSettings);
-            var process = StartProcess(toolSettings);
+            using var process = StartProcess(toolSettings);
             AssertProcess(process, toolSettings);
             return process.Output;
         }
@@ -229,7 +229,7 @@ namespace Nuke.Common.Tools.Unity
         {
             toolSettings = toolSettings ?? new UnitySettings();
             PreProcess(ref toolSettings);
-            var process = StartProcess(toolSettings);
+            using var process = StartProcess(toolSettings);
             AssertProcess(process, toolSettings);
             return process.Output;
         }
@@ -363,7 +363,7 @@ namespace Nuke.Common.Tools.Unity
         {
             toolSettings = toolSettings ?? new UnityReturnLicenseSettings();
             PreProcess(ref toolSettings);
-            var process = StartProcess(toolSettings);
+            using var process = StartProcess(toolSettings);
             AssertProcess(process, toolSettings);
             return process.Output;
         }
@@ -420,8 +420,8 @@ namespace Nuke.Common.Tools.Unity
         /// <summary>
         ///   Path to the Unity executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => UnityTasks.UnityLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => UnityTasks.UnityLogger;
         /// <summary>
         ///   Enter a username into the log-in form during activation of the Unity Editor.
         /// </summary>
@@ -450,7 +450,7 @@ namespace Nuke.Common.Tools.Unity
         ///   Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).
         /// </summary>
         public virtual bool? Quit { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("-createManualActivationFile")
@@ -461,7 +461,7 @@ namespace Nuke.Common.Tools.Unity
               .Add("-silent-crashes", SilentCrashes)
               .Add("-nographics", NoGraphics)
               .Add("-quit", Quit);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -477,8 +477,8 @@ namespace Nuke.Common.Tools.Unity
         /// <summary>
         ///   Path to the Unity executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => UnityTasks.UnityLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => UnityTasks.UnityLogger;
         /// <summary>
         ///   The path to the license file.
         /// </summary>
@@ -511,7 +511,7 @@ namespace Nuke.Common.Tools.Unity
         ///   Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).
         /// </summary>
         public virtual bool? Quit { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("-manualLicenseFile {value}", LicenseFile)
@@ -522,7 +522,7 @@ namespace Nuke.Common.Tools.Unity
               .Add("-silent-crashes", SilentCrashes)
               .Add("-nographics", NoGraphics)
               .Add("-quit", Quit);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -538,8 +538,8 @@ namespace Nuke.Common.Tools.Unity
         /// <summary>
         ///   Path to the Unity executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => UnityTasks.UnityLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => UnityTasks.UnityLogger;
         /// <summary>
         ///   Force an update of the project in the <a href="https://docs.unity3d.com/Manual/AssetServer.html">Asset Server</a> given by <c>IP:port</c>. The port is optional, and if not given it is assumed to be the standard one (10733). It is advisable to use this command in conjunction with the <c>-projectPath</c> argument to ensure you are working with the correct project. If no project name is given, then the last project opened by Unity is used. If no project exists at the path given by <c>-projectPath</c>, then one is created automatically.
         /// </summary>
@@ -713,7 +713,7 @@ namespace Nuke.Common.Tools.Unity
         ///   Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).
         /// </summary>
         public virtual bool? Quit { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("-assetServerUpdate {value}", AssetServerUpdate)
@@ -758,7 +758,7 @@ namespace Nuke.Common.Tools.Unity
               .Add("-silent-crashes", SilentCrashes)
               .Add("-nographics", NoGraphics)
               .Add("-quit", Quit);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -774,8 +774,8 @@ namespace Nuke.Common.Tools.Unity
         /// <summary>
         ///   Path to the Unity executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => UnityTasks.UnityLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => UnityTasks.UnityLogger;
         /// <summary>
         ///   Enter a username into the log-in form during activation of the Unity Editor.
         /// </summary>
@@ -804,7 +804,7 @@ namespace Nuke.Common.Tools.Unity
         ///   Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).
         /// </summary>
         public virtual bool? Quit { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("-returnlicense")
@@ -815,7 +815,7 @@ namespace Nuke.Common.Tools.Unity
               .Add("-silent-crashes", SilentCrashes)
               .Add("-nographics", NoGraphics)
               .Add("-quit", Quit);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -845,11 +845,11 @@ namespace Nuke.Common.Tools.Unity
         ///   Defines the Unity version to use. The version must be installed via Unity Hub.
         /// </summary>
         public virtual string HubVersion { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("-logFile {value}", GetLogFile(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

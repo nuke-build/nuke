@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p>
         ///   <p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> GitVersion(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> GitVersion(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(GitVersionPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, GitVersionLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(GitVersionPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, GitVersionLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -79,7 +79,7 @@ namespace Nuke.Common.Tools.GitVersion
         public static (GitVersion Result, IReadOnlyCollection<Output> Output) GitVersion(GitVersionSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new GitVersionSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return (GetResult(process, toolSettings), process.Output);
         }
@@ -170,8 +170,8 @@ namespace Nuke.Common.Tools.GitVersion
         /// <summary>
         ///   Path to the GitVersion executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => GitVersionTasks.GitVersionLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => GitVersionTasks.GitVersionLogger;
         /// <summary>
         ///   The directory containing .git. If not defined current directory is used. (Must be first argument).
         /// </summary>
@@ -271,7 +271,7 @@ namespace Nuke.Common.Tools.GitVersion
         /// </summary>
         public virtual GitVersionVerbosity Verbosity { get; internal set; }
         public virtual string Framework { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("{value}", TargetPath)
@@ -298,7 +298,7 @@ namespace Nuke.Common.Tools.GitVersion
               .Add("/proj {value}", MSBuildProject)
               .Add("/projargs {value}", MSBuildProjectArguments)
               .Add("/verbosity {value}", Verbosity);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

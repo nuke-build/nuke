@@ -1,6 +1,5 @@
-﻿// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Docker.json
-
 #pragma warning disable CS1574
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Docker.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -34,14 +33,14 @@ namespace Nuke.Common.Tools.Docker
         public static string DockerPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("DOCKER_EXE") ??
             ToolPathResolver.GetPathExecutable("docker");
-        public static Action<OutputType, string> DockerLogger { get; set; } = DockerTasks.CustomLogger;
+        public static Action<OutputType, string> DockerLogger { get; set; } = CustomLogger;
         /// <summary>
         ///   <p>Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications. By taking advantage of Docker’s methodologies for shipping, testing, and deploying code quickly, you can significantly reduce the delay between writing code and running it in production.</p>
         ///   <p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Docker(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Docker(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(DockerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, DockerLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(DockerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, DockerLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -59,7 +58,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerConfigRm(DockerConfigRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerConfigRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -108,7 +107,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerLoad(DockerLoadSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerLoadSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -159,7 +158,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerPrune(DockerContainerPruneSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerPruneSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -208,7 +207,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTrust(DockerTrustSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTrustSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -255,7 +254,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerStack(DockerStackSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerStackSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -306,7 +305,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTop(DockerTopSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTopSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -360,7 +359,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPull(DockerPullSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPullSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -415,7 +414,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTrustSign(DockerTrustSignSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTrustSignSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -460,7 +459,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerCheckpoint(DockerCheckpointSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerCheckpointSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -505,7 +504,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTrustSigner(DockerTrustSignerSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTrustSignerSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -553,7 +552,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerConfigInspect(DockerConfigInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerConfigInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -604,7 +603,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerService(DockerServiceSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerServiceSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -650,7 +649,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTrustKeyGenerate(DockerTrustKeyGenerateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTrustKeyGenerateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -697,7 +696,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSystem(DockerSystemSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSystemSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -745,7 +744,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerConfigLs(DockerConfigLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerConfigLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -801,7 +800,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContextUpdate(DockerContextUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContextUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -861,7 +860,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerStackServices(DockerStackServicesSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerStackServicesSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -918,7 +917,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerPort(DockerContainerPortSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerPortSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -969,7 +968,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerRename(DockerRenameSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerRenameSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1020,7 +1019,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTag(DockerTagSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTagSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1072,7 +1071,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSecretInspect(DockerSecretInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSecretInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1123,7 +1122,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSecret(DockerSecretSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSecretSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1170,7 +1169,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerExport(DockerContainerExportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerExportSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1224,7 +1223,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerHistory(DockerHistorySettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerHistorySettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1348,7 +1347,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerServiceCreate(DockerServiceCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerServiceCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1537,7 +1536,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerServicePs(DockerServicePsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerServicePsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1596,7 +1595,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerStop(DockerStopSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerStopSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1645,7 +1644,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNode(DockerNodeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNodeSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1706,7 +1705,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerUpdate(DockerUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1786,7 +1785,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPluginCreate(DockerPluginCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPluginCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1838,7 +1837,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSystemInfo(DockerSystemInfoSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSystemInfoSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1887,7 +1886,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerVolumePrune(DockerVolumePruneSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerVolumePruneSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1941,7 +1940,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPluginUpgrade(DockerPluginUpgradeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPluginUpgradeSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1996,7 +1995,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerBuilderPrune(DockerBuilderPruneSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerBuilderPruneSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2044,7 +2043,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSwarmJoinToken(DockerSwarmJoinTokenSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSwarmJoinTokenSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2100,7 +2099,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNodeUpdate(DockerNodeUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNodeUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2158,7 +2157,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTrustSignerAdd(DockerTrustSignerAddSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTrustSignerAddSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2216,7 +2215,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSwarmUpdate(DockerSwarmUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSwarmUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2285,7 +2284,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerServiceLogs(DockerServiceLogsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerServiceLogsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2353,7 +2352,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerServiceLs(DockerServiceLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerServiceLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2404,7 +2403,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSwarmUnlock(DockerSwarmUnlockSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSwarmUnlockSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2453,7 +2452,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNetworkLs(DockerNetworkLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNetworkLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2510,7 +2509,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPluginLs(DockerPluginLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPluginLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2565,7 +2564,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPluginRm(DockerPluginRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPluginRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2650,7 +2649,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImageBuild(DockerImageBuildSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImageBuildSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2769,7 +2768,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTrustRevoke(DockerTrustRevokeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTrustRevokeSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2821,7 +2820,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerRmi(DockerRmiSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerRmiSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2873,7 +2872,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNetworkRm(DockerNetworkRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNetworkRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2922,7 +2921,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerVersion(DockerVersionSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerVersionSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2976,7 +2975,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSecretCreate(DockerSecretCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSecretCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3032,7 +3031,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerServiceRm(DockerServiceRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerServiceRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3081,7 +3080,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTrustKeyLoad(DockerTrustKeyLoadSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTrustKeyLoadSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3131,7 +3130,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSecretRm(DockerSecretRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSecretRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3180,7 +3179,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImageInspect(DockerImageInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImageInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3231,7 +3230,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImageSave(DockerImageSaveSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImageSaveSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3280,7 +3279,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTrustKey(DockerTrustKeySettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTrustKeySettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3329,7 +3328,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerAttach(DockerContainerAttachSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerAttachSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3388,7 +3387,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContextCreate(DockerContextCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContextCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3449,7 +3448,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerConfigCreate(DockerConfigCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerConfigCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3504,7 +3503,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerVolumeInspect(DockerVolumeInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerVolumeInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3555,7 +3554,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerStop(DockerContainerStopSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerStopSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3606,7 +3605,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNetworkPrune(DockerNetworkPruneSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNetworkPruneSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3659,7 +3658,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerManifestInspect(DockerManifestInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerManifestInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3713,7 +3712,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerInfo(DockerInfoSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerInfoSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3766,7 +3765,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerCommit(DockerCommitSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerCommitSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3830,7 +3829,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerStackDeploy(DockerStackDeploySettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerStackDeploySettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3890,7 +3889,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerServiceScale(DockerServiceScaleSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerServiceScaleSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -4041,7 +4040,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerRun(DockerRunSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerRunSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -4395,7 +4394,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerCreate(DockerCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -4727,7 +4726,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerServiceUpdate(DockerServiceUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerServiceUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -4944,7 +4943,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPort(DockerPortSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPortSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -4993,7 +4992,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainer(DockerContainerSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5040,7 +5039,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImagePush(DockerImagePushSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImagePushSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5092,7 +5091,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerServiceInspect(DockerServiceInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerServiceInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5151,7 +5150,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNetworkConnect(DockerNetworkConnectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNetworkConnectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5215,7 +5214,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSecretLs(DockerSecretLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSecretLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5267,7 +5266,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSwarmLeave(DockerSwarmLeaveSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSwarmLeaveSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5321,7 +5320,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImages(DockerImagesSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImagesSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5384,7 +5383,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerEngineUpdate(DockerEngineUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerEngineUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5441,7 +5440,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSystemEvents(DockerSystemEventsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSystemEventsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5498,7 +5497,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerInspect(DockerInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5559,7 +5558,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerEngineCheck(DockerEngineCheckSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerEngineCheckSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5624,7 +5623,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerAttach(DockerAttachSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerAttachSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5678,7 +5677,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerWait(DockerContainerWaitSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerWaitSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5732,7 +5731,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSwarmCa(DockerSwarmCaSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSwarmCaSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5792,7 +5791,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerEngine(DockerEngineSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerEngineSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5843,7 +5842,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSystemPrune(DockerSystemPruneSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSystemPruneSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5896,7 +5895,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerBuilder(DockerBuilderSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerBuilderSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5942,7 +5941,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerPause(DockerContainerPauseSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerPauseSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -5995,7 +5994,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerCommit(DockerContainerCommitSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerCommitSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6054,7 +6053,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContextLs(DockerContextLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContextLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6104,7 +6103,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContextRm(DockerContextRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContextRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6158,7 +6157,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerStackPs(DockerStackPsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerStackPsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6318,7 +6317,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerCreate(DockerContainerCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6570,7 +6569,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerVolumeCreate(DockerVolumeCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerVolumeCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6625,7 +6624,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPlugin(DockerPluginSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPluginSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6673,7 +6672,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerLogin(DockerLoginSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerLoginSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6726,7 +6725,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSwarmUnlockKey(DockerSwarmUnlockKeySettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSwarmUnlockKeySettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6781,7 +6780,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerStart(DockerStartSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerStartSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6853,7 +6852,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSwarmInit(DockerSwarmInitSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSwarmInitSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6929,7 +6928,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerDiff(DockerContainerDiffSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerDiffSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -6978,7 +6977,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerRestart(DockerContainerRestartSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerRestartSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7027,7 +7026,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerConfig(DockerConfigSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerConfigSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7074,7 +7073,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPluginDisable(DockerPluginDisableSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPluginDisableSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7124,7 +7123,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerUnpause(DockerContainerUnpauseSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerUnpauseSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7173,7 +7172,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContextImport(DockerContextImportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContextImportSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7226,7 +7225,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerRm(DockerRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7286,7 +7285,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerDeploy(DockerDeploySettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerDeploySettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7347,7 +7346,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNodeRm(DockerNodeRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNodeRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7399,7 +7398,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerCheckpointRm(DockerCheckpointRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerCheckpointRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7452,7 +7451,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPush(DockerPushSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPushSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7518,7 +7517,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNetworkCreate(DockerNetworkCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNetworkCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7600,7 +7599,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerVolumeLs(DockerVolumeLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerVolumeLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7652,7 +7651,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTrustInspect(DockerTrustInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTrustInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7702,7 +7701,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNetworkInspect(DockerNetworkInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNetworkInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7761,7 +7760,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerEngineActivate(DockerEngineActivateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerEngineActivateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7823,7 +7822,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContextUse(DockerContextUseSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContextUseSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7872,7 +7871,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerVolumeRm(DockerVolumeRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerVolumeRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7923,7 +7922,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerManifestCreate(DockerManifestCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerManifestCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -7975,7 +7974,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerManifestPush(DockerManifestPushSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerManifestPushSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8028,7 +8027,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPluginEnable(DockerPluginEnableSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPluginEnableSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8082,7 +8081,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImport(DockerImportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImportSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8241,7 +8240,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerRun(DockerContainerRunSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerRunSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8497,7 +8496,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNodeInspect(DockerNodeInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNodeInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8550,7 +8549,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSave(DockerSaveSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSaveSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8604,7 +8603,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerStats(DockerContainerStatsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerStatsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8670,7 +8669,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerExec(DockerContainerExecSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerExecSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8740,7 +8739,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNodeLs(DockerNodeLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNodeLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8796,7 +8795,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSwarmJoin(DockerSwarmJoinSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSwarmJoinSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8858,7 +8857,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerLogs(DockerContainerLogsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerLogsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8919,7 +8918,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerCheckpointLs(DockerCheckpointLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerCheckpointLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -8970,7 +8969,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerKill(DockerContainerKillSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerKillSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9025,7 +9024,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPluginInstall(DockerPluginInstallSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPluginInstallSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9085,7 +9084,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImagePrune(DockerImagePruneSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImagePruneSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9141,7 +9140,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImageImport(DockerImageImportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImageImportSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9197,7 +9196,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerDiff(DockerDiffSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerDiffSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9245,7 +9244,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerUnpause(DockerUnpauseSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerUnpauseSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9300,7 +9299,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerLs(DockerContainerLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9367,7 +9366,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNodePs(DockerNodePsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNodePsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9426,7 +9425,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerTop(DockerContainerTopSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerTopSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9477,7 +9476,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerRename(DockerContainerRenameSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerRenameSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9531,7 +9530,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImageHistory(DockerImageHistorySettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImageHistorySettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9594,7 +9593,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPs(DockerPsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9657,7 +9656,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImageTag(DockerImageTagSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImageTagSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9708,7 +9707,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerExport(DockerExportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerExportSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9760,7 +9759,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNetworkDisconnect(DockerNetworkDisconnectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNetworkDisconnectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9847,7 +9846,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerBuilderBuild(DockerBuilderBuildSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerBuilderBuildSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -9969,7 +9968,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerStats(DockerStatsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerStatsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10031,7 +10030,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSearch(DockerSearchSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSearchSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10091,7 +10090,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerManifest(DockerManifestSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerManifestSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10140,7 +10139,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPluginPush(DockerPluginPushSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPluginPushSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10191,7 +10190,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImageLoad(DockerImageLoadSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImageLoadSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10240,7 +10239,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSwarm(DockerSwarmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSwarmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10289,7 +10288,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerRm(DockerContainerRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10358,7 +10357,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerUpdate(DockerContainerUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10437,7 +10436,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPluginSet(DockerPluginSetSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPluginSetSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10487,7 +10486,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerWait(DockerWaitSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerWaitSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10537,7 +10536,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContextExport(DockerContextExportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContextExportSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10594,7 +10593,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerManifestAnnotate(DockerManifestAnnotateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerManifestAnnotateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10656,7 +10655,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImagePull(DockerImagePullSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImagePullSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10715,7 +10714,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerEvents(DockerEventsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerEventsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10771,7 +10770,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerStackLs(DockerStackLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerStackLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10825,7 +10824,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerInspect(DockerContainerInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10878,7 +10877,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerKill(DockerKillSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerKillSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10931,7 +10930,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerCheckpointCreate(DockerCheckpointCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerCheckpointCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -10985,7 +10984,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPause(DockerPauseSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPauseSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11039,7 +11038,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerLogs(DockerLogsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerLogsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11101,7 +11100,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContextInspect(DockerContextInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContextInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11153,7 +11152,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNodePromote(DockerNodePromoteSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNodePromoteSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11201,7 +11200,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNodeDemote(DockerNodeDemoteSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNodeDemoteSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11259,7 +11258,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerExec(DockerExecSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerExecSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11329,7 +11328,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImageRm(DockerImageRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImageRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11380,7 +11379,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImage(DockerImageSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImageSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11425,7 +11424,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContext(DockerContextSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContextSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11471,7 +11470,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerVolume(DockerVolumeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerVolumeSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11524,7 +11523,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerContainerStart(DockerContainerStartSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerContainerStartSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11583,7 +11582,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerPluginInspect(DockerPluginInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerPluginInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11633,7 +11632,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerLogout(DockerLogoutSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerLogoutSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11680,7 +11679,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerNetwork(DockerNetworkSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerNetworkSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11732,7 +11731,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerImageLs(DockerImageLsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerImageLsSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11793,7 +11792,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerSystemDf(DockerSystemDfSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerSystemDfSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11845,7 +11844,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerServiceRollback(DockerServiceRollbackSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerServiceRollbackSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11898,7 +11897,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerRestart(DockerRestartSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerRestartSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -11950,7 +11949,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerTrustSignerRemove(DockerTrustSignerRemoveSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerTrustSignerRemoveSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -12003,7 +12002,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerStackRm(DockerStackRmSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerStackRmSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -12088,7 +12087,7 @@ namespace Nuke.Common.Tools.Docker
         public static IReadOnlyCollection<Output> DockerBuild(DockerBuildSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DockerBuildSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -12205,20 +12204,20 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   CONFIG
         /// </summary>
         public virtual IReadOnlyList<string> Configs => ConfigsInternal.AsReadOnly();
         internal List<string> ConfigsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("config rm")
               .Add("{value}", Configs, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12234,8 +12233,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Read from tar archive file, instead of STDIN.
         /// </summary>
@@ -12244,14 +12243,14 @@ namespace Nuke.Common.Tools.Docker
         ///   Suppress the load output.
         /// </summary>
         public virtual bool? Quiet { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("load")
               .Add("--input {value}", Input)
               .Add("--quiet", Quiet)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12267,8 +12266,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Provide filter values (e.g. 'until=&lt;timestamp&gt;').
         /// </summary>
@@ -12277,14 +12276,14 @@ namespace Nuke.Common.Tools.Docker
         ///   Do not prompt for confirmation.
         /// </summary>
         public virtual bool? Force { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container prune")
               .Add("--filter {value}", Filter)
               .Add("--force", Force)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12300,14 +12299,14 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("trust")
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12323,8 +12322,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Kubernetes config file.
         /// </summary>
@@ -12333,14 +12332,14 @@ namespace Nuke.Common.Tools.Docker
         ///   Orchestrator to use (swarm|kubernetes|all).
         /// </summary>
         public virtual string Orchestrator { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stack")
               .Add("--kubeconfig {value}", Kubeconfig)
               .Add("--orchestrator {value}", Orchestrator)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12356,8 +12355,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   CONTAINER
         /// </summary>
@@ -12366,14 +12365,14 @@ namespace Nuke.Common.Tools.Docker
         ///   OPTIONS]
         /// </summary>
         public virtual string Options { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("top [ps")
               .Add("{value}", Container)
               .Add("{value}", Options)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12389,8 +12388,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Download all tagged images in the repository.
         /// </summary>
@@ -12411,7 +12410,7 @@ namespace Nuke.Common.Tools.Docker
         ///   NAME[:TAG|@DIGEST]
         /// </summary>
         public virtual string Name { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("pull")
@@ -12421,7 +12420,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--quiet", Quiet)
               .Add("{value}", Name)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12437,14 +12436,14 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("trust sign IMAGE:TAG")
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12460,14 +12459,14 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("checkpoint")
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12483,14 +12482,14 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("trust signer")
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12506,8 +12505,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
@@ -12521,7 +12520,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Configs => ConfigsInternal.AsReadOnly();
         internal List<string> ConfigsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("config inspect")
@@ -12529,7 +12528,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--pretty", Pretty)
               .Add("{value}", Configs, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12545,14 +12544,14 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("service")
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12568,19 +12567,19 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   NAME
         /// </summary>
         public virtual string Name { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("trust key generate")
               .Add("{value}", Name)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12596,14 +12595,14 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("system")
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12619,8 +12618,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
@@ -12633,7 +12632,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Only display IDs.
         /// </summary>
         public virtual bool? Quiet { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("config ls")
@@ -12641,7 +12640,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--format {value}", Format)
               .Add("--quiet", Quiet)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12657,8 +12656,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Default orchestrator for stack operations to use with this context (swarm|kubernetes|all).
         /// </summary>
@@ -12679,7 +12678,7 @@ namespace Nuke.Common.Tools.Docker
         ///   CONTEXT
         /// </summary>
         public virtual string Context { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("context update")
@@ -12689,7 +12688,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--kubernetes {value}", Kubernetes)
               .Add("{value}", Context)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12705,8 +12704,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
@@ -12727,7 +12726,7 @@ namespace Nuke.Common.Tools.Docker
         ///   STACK
         /// </summary>
         public virtual string Stack { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stack services")
@@ -12737,7 +12736,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--quiet", Quiet)
               .Add("{value}", Stack)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12753,8 +12752,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   CONTAINER
         /// </summary>
@@ -12763,14 +12762,14 @@ namespace Nuke.Common.Tools.Docker
         ///   [PRIVATE_PORT[/PROTO]]
         /// </summary>
         public virtual string PrivatePort { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container port")
               .Add("{value}", Container)
               .Add("{value}", PrivatePort)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12786,8 +12785,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   CONTAINER
         /// </summary>
@@ -12796,14 +12795,14 @@ namespace Nuke.Common.Tools.Docker
         ///   NEW_NAME
         /// </summary>
         public virtual string NewName { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("rename")
               .Add("{value}", Container)
               .Add("{value}", NewName)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12819,8 +12818,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   SOURCE_IMAGE[:TAG]
         /// </summary>
@@ -12829,14 +12828,14 @@ namespace Nuke.Common.Tools.Docker
         ///   TARGET_IMAGE[:TAG]
         /// </summary>
         public virtual string TargetImage { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("tag")
               .Add("{value}", SourceImage)
               .Add("{value}", TargetImage)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12852,8 +12851,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
@@ -12867,7 +12866,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Secrets => SecretsInternal.AsReadOnly();
         internal List<string> SecretsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("secret inspect")
@@ -12875,7 +12874,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--pretty", Pretty)
               .Add("{value}", Secrets, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12891,14 +12890,14 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("secret")
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12914,8 +12913,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Write to a file, instead of STDOUT.
         /// </summary>
@@ -12924,14 +12923,14 @@ namespace Nuke.Common.Tools.Docker
         ///   CONTAINER
         /// </summary>
         public virtual string Container { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container export")
               .Add("--output {value}", Output)
               .Add("{value}", Container)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12947,8 +12946,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Pretty-print images using a Go template.
         /// </summary>
@@ -12969,7 +12968,7 @@ namespace Nuke.Common.Tools.Docker
         ///   IMAGE
         /// </summary>
         public virtual string Image { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("history")
@@ -12979,7 +12978,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--quiet", Quiet)
               .Add("{value}", Image)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -12995,8 +12994,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Specify configurations to expose to the service.
         /// </summary>
@@ -13287,7 +13286,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Args => ArgsInternal.AsReadOnly();
         internal List<string> ArgsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("service create")
@@ -13361,7 +13360,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", Command)
               .Add("{value}", Args, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -13377,8 +13376,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
@@ -13404,7 +13403,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Services => ServicesInternal.AsReadOnly();
         internal List<string> ServicesInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("service ps")
@@ -13415,7 +13414,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--quiet", Quiet)
               .Add("{value}", Services, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -13431,8 +13430,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Seconds to wait for stop before killing it.
         /// </summary>
@@ -13442,14 +13441,14 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stop")
               .Add("--time {value}", Time)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -13465,14 +13464,14 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("node")
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -13488,8 +13487,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0).
         /// </summary>
@@ -13555,7 +13554,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("update")
@@ -13576,7 +13575,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--restart {value}", Restart)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -13592,8 +13591,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Compress the context using gzip.
         /// </summary>
@@ -13606,7 +13605,7 @@ namespace Nuke.Common.Tools.Docker
         ///   PLUGIN-DATA-DIR
         /// </summary>
         public virtual string PluginDataDir { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("plugin create")
@@ -13614,7 +13613,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", Plugin)
               .Add("{value}", PluginDataDir)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -13630,19 +13629,19 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
         public virtual string Format { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("system info")
               .Add("--format {value}", Format)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -13658,8 +13657,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Provide filter values (e.g. 'label=&lt;label&gt;').
         /// </summary>
@@ -13668,14 +13667,14 @@ namespace Nuke.Common.Tools.Docker
         ///   Do not prompt for confirmation.
         /// </summary>
         public virtual bool? Force { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("volume prune")
               .Add("--filter {value}", Filter)
               .Add("--force", Force)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -13691,8 +13690,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Skip image verification.
         /// </summary>
@@ -13713,7 +13712,7 @@ namespace Nuke.Common.Tools.Docker
         ///   [REMOTE]
         /// </summary>
         public virtual string Remote { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("plugin upgrade")
@@ -13723,7 +13722,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", Plugin)
               .Add("{value}", Remote)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -13739,14 +13738,14 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("builder prune")
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -13762,8 +13761,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Only display token.
         /// </summary>
@@ -13776,7 +13775,7 @@ namespace Nuke.Common.Tools.Docker
         ///   (worker|manager)
         /// </summary>
         public virtual string Worker { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("swarm join-token")
@@ -13784,7 +13783,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--rotate", Rotate)
               .Add("{value}", Worker)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -13800,8 +13799,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Availability of the node ("active"|"pause"|"drain").
         /// </summary>
@@ -13824,7 +13823,7 @@ namespace Nuke.Common.Tools.Docker
         ///   NODE
         /// </summary>
         public virtual string Node { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("node update")
@@ -13834,7 +13833,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--role {value}", Role)
               .Add("{value}", Node)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -13850,8 +13849,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   OPTIONS
         /// </summary>
@@ -13865,7 +13864,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Repositories => RepositoriesInternal.AsReadOnly();
         internal List<string> RepositoriesInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("trust signer add")
@@ -13873,7 +13872,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", Name)
               .Add("{value}", Repositories, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -13889,8 +13888,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Change manager autolocking setting (true|false).
         /// </summary>
@@ -13919,7 +13918,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Task history retention limit.
         /// </summary>
         public virtual long? TaskHistoryLimit { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("swarm update")
@@ -13931,7 +13930,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--snapshot-interval {value}", SnapshotInterval)
               .Add("--task-history-limit {value}", TaskHistoryLimit)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -13947,8 +13946,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Show extra details provided to logs.
         /// </summary>
@@ -13989,7 +13988,7 @@ namespace Nuke.Common.Tools.Docker
         ///   SERVICE|TASK
         /// </summary>
         public virtual string Service { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("service logs")
@@ -14004,7 +14003,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--timestamps", Timestamps)
               .Add("{value}", Service)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14020,8 +14019,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
@@ -14034,7 +14033,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Only display IDs.
         /// </summary>
         public virtual bool? Quiet { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("service ls")
@@ -14042,7 +14041,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--format {value}", Format)
               .Add("--quiet", Quiet)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14058,14 +14057,14 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("swarm unlock")
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14081,8 +14080,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Provide filter values (e.g. 'driver=bridge').
         /// </summary>
@@ -14099,7 +14098,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Only display network IDs.
         /// </summary>
         public virtual bool? Quiet { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("network ls")
@@ -14108,7 +14107,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--no-trunc", NoTrunc)
               .Add("--quiet", Quiet)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14124,8 +14123,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Provide filter values (e.g. 'enabled=true').
         /// </summary>
@@ -14142,7 +14141,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Only display plugin IDs.
         /// </summary>
         public virtual bool? Quiet { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("plugin ls")
@@ -14151,7 +14150,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--no-trunc", NoTrunc)
               .Add("--quiet", Quiet)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14167,8 +14166,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Force the removal of an active plugin.
         /// </summary>
@@ -14178,14 +14177,14 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Plugins => PluginsInternal.AsReadOnly();
         internal List<string> PluginsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("plugin rm")
               .Add("--force", Force)
               .Add("{value}", Plugins, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14201,8 +14200,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Add a custom host-to-IP mapping (host:ip).
         /// </summary>
@@ -14353,7 +14352,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Path or url where the build context is located.
         /// </summary>
         public virtual string Path { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("image build")
@@ -14394,7 +14393,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--ulimit {value}", Ulimit)
               .Add("{value}", Path)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14410,8 +14409,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Do not prompt for confirmation.
         /// </summary>
@@ -14420,14 +14419,14 @@ namespace Nuke.Common.Tools.Docker
         ///   IMAGE[:TAG]
         /// </summary>
         public virtual string Image { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("trust revoke")
               .Add("--yes", Yes)
               .Add("{value}", Image)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14443,8 +14442,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Force removal of the image.
         /// </summary>
@@ -14458,7 +14457,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Images => ImagesInternal.AsReadOnly();
         internal List<string> ImagesInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("rmi")
@@ -14466,7 +14465,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--no-prune", NoPrune)
               .Add("{value}", Images, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14482,20 +14481,20 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   NETWORK
         /// </summary>
         public virtual IReadOnlyList<string> Networks => NetworksInternal.AsReadOnly();
         internal List<string> NetworksInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("network rm")
               .Add("{value}", Networks, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14511,8 +14510,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
@@ -14521,14 +14520,14 @@ namespace Nuke.Common.Tools.Docker
         ///   Kubernetes config file.
         /// </summary>
         public virtual string Kubeconfig { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("version")
               .Add("--format {value}", Format)
               .Add("--kubeconfig {value}", Kubeconfig)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14544,8 +14543,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Secret driver.
         /// </summary>
@@ -14567,7 +14566,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Path to file to create the secret from.
         /// </summary>
         public virtual string File { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("secret create")
@@ -14577,7 +14576,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", Secret)
               .Add("{value}", File)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14593,20 +14592,20 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   SERVICE
         /// </summary>
         public virtual IReadOnlyList<string> Services => ServicesInternal.AsReadOnly();
         internal List<string> ServicesInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("service rm")
               .Add("{value}", Services, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14622,8 +14621,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Name for the loaded key.
         /// </summary>
@@ -14632,14 +14631,14 @@ namespace Nuke.Common.Tools.Docker
         ///   KEYFILE
         /// </summary>
         public virtual string Keyfile { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("trust key load")
               .Add("--name {value}", Name)
               .Add("{value}", Keyfile)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14655,20 +14654,20 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   SECRET
         /// </summary>
         public virtual IReadOnlyList<string> Secrets => SecretsInternal.AsReadOnly();
         internal List<string> SecretsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("secret rm")
               .Add("{value}", Secrets, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14684,8 +14683,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
@@ -14695,14 +14694,14 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Images => ImagesInternal.AsReadOnly();
         internal List<string> ImagesInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("image inspect")
               .Add("--format {value}", Format)
               .Add("{value}", Images, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14718,8 +14717,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Write to a file, instead of STDOUT.
         /// </summary>
@@ -14729,14 +14728,14 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Images => ImagesInternal.AsReadOnly();
         internal List<string> ImagesInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("image save")
               .Add("--output {value}", Output)
               .Add("{value}", Images, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14752,14 +14751,14 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("trust key")
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14775,8 +14774,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Override the key sequence for detaching a container.
         /// </summary>
@@ -14793,7 +14792,7 @@ namespace Nuke.Common.Tools.Docker
         ///   CONTAINER
         /// </summary>
         public virtual string Container { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container attach")
@@ -14802,7 +14801,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--sig-proxy", SigProxy)
               .Add("{value}", Container)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14818,8 +14817,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Default orchestrator for stack operations to use with this context (swarm|kubernetes|all).
         /// </summary>
@@ -14844,7 +14843,7 @@ namespace Nuke.Common.Tools.Docker
         ///   CONTEXT
         /// </summary>
         public virtual string Context { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("context create")
@@ -14855,7 +14854,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--kubernetes {value}", Kubernetes)
               .Add("{value}", Context)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14871,8 +14870,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Config labels.
         /// </summary>
@@ -14890,7 +14889,7 @@ namespace Nuke.Common.Tools.Docker
         ///   file|-
         /// </summary>
         public virtual string File { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("config create")
@@ -14899,7 +14898,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", Config)
               .Add("{value}", File)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14915,8 +14914,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
@@ -14926,14 +14925,14 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Volumes => VolumesInternal.AsReadOnly();
         internal List<string> VolumesInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("volume inspect")
               .Add("--format {value}", Format)
               .Add("{value}", Volumes, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14949,8 +14948,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Seconds to wait for stop before killing it.
         /// </summary>
@@ -14960,14 +14959,14 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container stop")
               .Add("--time {value}", Time)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14983,8 +14982,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Provide filter values (e.g. 'until=&lt;timestamp&gt;').
         /// </summary>
@@ -14993,14 +14992,14 @@ namespace Nuke.Common.Tools.Docker
         ///   Do not prompt for confirmation.
         /// </summary>
         public virtual bool? Force { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("network prune")
               .Add("--filter {value}", Filter)
               .Add("--force", Force)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -15016,8 +15015,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Allow communication with an insecure registry.
         /// </summary>
@@ -15034,7 +15033,7 @@ namespace Nuke.Common.Tools.Docker
         ///   MANIFEST
         /// </summary>
         public virtual string Manifest { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("manifest inspect")
@@ -15043,7 +15042,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", ManifestList)
               .Add("{value}", Manifest)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -15059,19 +15058,19 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
         public virtual string Format { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("info")
               .Add("--format {value}", Format)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -15087,8 +15086,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Author (e.g., "John Hannibal Smith &lt;hannibal@a-team.com&gt;").
         /// </summary>
@@ -15114,7 +15113,7 @@ namespace Nuke.Common.Tools.Docker
         ///   [REPOSITORY[:TAG]]
         /// </summary>
         public virtual string Repository { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("commit")
@@ -15125,7 +15124,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", Container)
               .Add("{value}", Repository)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -15141,8 +15140,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Path to a Distributed Application Bundle file.
         /// </summary>
@@ -15172,7 +15171,7 @@ namespace Nuke.Common.Tools.Docker
         ///   STACK
         /// </summary>
         public virtual string Stack { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stack deploy")
@@ -15184,7 +15183,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--with-registry-auth", WithRegistryAuth)
               .Add("{value}", Stack)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -15200,20 +15199,20 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   SERVICE=REPLICAS
         /// </summary>
         public virtual IReadOnlyDictionary<string, string> ServiceReplicas => ServiceReplicasInternal.AsReadOnly();
         internal Dictionary<string,string> ServiceReplicasInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("service scale")
               .Add("{value}", ServiceReplicas, "{key=value}")
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -15229,8 +15228,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Add a custom host-to-IP mapping (host:ip).
         /// </summary>
@@ -15681,7 +15680,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Args => ArgsInternal.AsReadOnly();
         internal List<string> ArgsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("run")
@@ -15790,7 +15789,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", Command)
               .Add("{value}", Args, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -15806,8 +15805,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Add a custom host-to-IP mapping (host:ip).
         /// </summary>
@@ -16246,7 +16245,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Args => ArgsInternal.AsReadOnly();
         internal List<string> ArgsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("create")
@@ -16352,7 +16351,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", Command)
               .Add("{value}", Args, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -16368,8 +16367,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Service command args.
         /// </summary>
@@ -16737,7 +16736,7 @@ namespace Nuke.Common.Tools.Docker
         ///   SERVICE
         /// </summary>
         public virtual string Service { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("service update")
@@ -16827,7 +16826,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--workdir {value}", Workdir)
               .Add("{value}", Service)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -16843,8 +16842,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   CONTAINER
         /// </summary>
@@ -16853,14 +16852,14 @@ namespace Nuke.Common.Tools.Docker
         ///   [PRIVATE_PORT[/PROTO]]
         /// </summary>
         public virtual string PrivatePort { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("port")
               .Add("{value}", Container)
               .Add("{value}", PrivatePort)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -16876,14 +16875,14 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container")
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -16899,8 +16898,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Skip image signing.
         /// </summary>
@@ -16909,14 +16908,14 @@ namespace Nuke.Common.Tools.Docker
         ///   NAME[:TAG]
         /// </summary>
         public virtual string Name { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("image push")
               .Add("--disable-content-trust", DisableContentTrust)
               .Add("{value}", Name)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -16932,8 +16931,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
@@ -16947,7 +16946,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Services => ServicesInternal.AsReadOnly();
         internal List<string> ServicesInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("service inspect")
@@ -16955,7 +16954,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--pretty", Pretty)
               .Add("{value}", Services, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -16971,8 +16970,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Add network-scoped alias for the container.
         /// </summary>
@@ -17009,7 +17008,7 @@ namespace Nuke.Common.Tools.Docker
         ///   CONTAINER
         /// </summary>
         public virtual string Container { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("network connect")
@@ -17022,7 +17021,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", Network)
               .Add("{value}", Container)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -17038,8 +17037,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
@@ -17052,7 +17051,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Only display IDs.
         /// </summary>
         public virtual bool? Quiet { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("secret ls")
@@ -17060,7 +17059,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--format {value}", Format)
               .Add("--quiet", Quiet)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -17076,19 +17075,19 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Force this node to leave the swarm, ignoring warnings.
         /// </summary>
         public virtual bool? Force { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("swarm leave")
               .Add("--force", Force)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -17104,8 +17103,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Show all images (default hides intermediate images).
         /// </summary>
@@ -17134,7 +17133,7 @@ namespace Nuke.Common.Tools.Docker
         ///   [REPOSITORY[:TAG]]
         /// </summary>
         public virtual string Repository { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("images")
@@ -17146,7 +17145,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--quiet", Quiet)
               .Add("{value}", Repository)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -17162,8 +17161,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   override default location of containerd endpoint.
         /// </summary>
@@ -17180,7 +17179,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Specify engine version.
         /// </summary>
         public virtual string Version { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("engine update")
@@ -17189,7 +17188,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--registry-prefix {value}", RegistryPrefix)
               .Add("--version {value}", Version)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -17205,8 +17204,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
@@ -17223,7 +17222,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Stream events until this timestamp.
         /// </summary>
         public virtual string Until { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("system events")
@@ -17232,7 +17231,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--since {value}", Since)
               .Add("--until {value}", Until)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -17248,8 +17247,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
@@ -17267,7 +17266,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Names => NamesInternal.AsReadOnly();
         internal List<string> NamesInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("inspect")
@@ -17276,7 +17275,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--type {value}", Type)
               .Add("{value}", Names, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -17292,8 +17291,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   override default location of containerd endpoint.
         /// </summary>
@@ -17326,7 +17325,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Report available upgrades.
         /// </summary>
         public virtual bool? Upgrades { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("engine check")
@@ -17339,7 +17338,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--registry-prefix {value}", RegistryPrefix)
               .Add("--upgrades", Upgrades)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -17355,8 +17354,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Override the key sequence for detaching a container.
         /// </summary>
@@ -17373,7 +17372,7 @@ namespace Nuke.Common.Tools.Docker
         ///   CONTAINER
         /// </summary>
         public virtual string Container { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("attach")
@@ -17382,7 +17381,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--sig-proxy", SigProxy)
               .Add("{value}", Container)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -17398,20 +17397,20 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   CONTAINER
         /// </summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container wait")
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -17427,8 +17426,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Path to the PEM-formatted root CA certificate to use for the new cluster.
         /// </summary>
@@ -17457,7 +17456,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Rotate the swarm CA - if no certificate or key are provided, new ones will be generated.
         /// </summary>
         public virtual bool? Rotate { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("swarm ca")
@@ -17469,7 +17468,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--quiet", Quiet)
               .Add("--rotate", Rotate)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -17485,19 +17484,19 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   COMMAND
         /// </summary>
         public virtual string Command { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("engine")
               .Add("{value}", Command)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -17513,8 +17512,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Remove all unused images not just dangling ones.
         /// </summary>
@@ -17531,7 +17530,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Prune volumes.
         /// </summary>
         public virtual bool? Volumes { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("system prune")
@@ -17540,7 +17539,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--force", Force)
               .Add("--volumes", Volumes)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -17556,14 +17555,14 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("builder")
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -17579,20 +17578,20 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   CONTAINER
         /// </summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container pause")
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -17608,8 +17607,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Author (e.g., "John Hannibal Smith &lt;hannibal@a-team.com&gt;").
         /// </summary>
@@ -17635,7 +17634,7 @@ namespace Nuke.Common.Tools.Docker
         ///   [REPOSITORY[:TAG]]
         /// </summary>
         public virtual string Repository { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container commit")
@@ -17646,7 +17645,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", Container)
               .Add("{value}", Repository)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -17662,8 +17661,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Pretty-print contexts using a Go template.
         /// </summary>
@@ -17672,14 +17671,14 @@ namespace Nuke.Common.Tools.Docker
         ///   Only show context names.
         /// </summary>
         public virtual bool? Quiet { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("context ls")
               .Add("--format {value}", Format)
               .Add("--quiet", Quiet)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -17695,20 +17694,20 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   CONTEXT
         /// </summary>
         public virtual IReadOnlyList<string> Contexts => ContextsInternal.AsReadOnly();
         internal List<string> ContextsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("context rm")
               .Add("{value}", Contexts, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -17724,8 +17723,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
@@ -17754,7 +17753,7 @@ namespace Nuke.Common.Tools.Docker
         ///   STACK
         /// </summary>
         public virtual string Stack { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stack ps")
@@ -17766,7 +17765,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--quiet", Quiet)
               .Add("{value}", Stack)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -17782,8 +17781,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Add a custom host-to-IP mapping (host:ip).
         /// </summary>
@@ -18222,7 +18221,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Args => ArgsInternal.AsReadOnly();
         internal List<string> ArgsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container create")
@@ -18328,7 +18327,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", Command)
               .Add("{value}", Args, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -18344,8 +18343,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Specify volume driver name.
         /// </summary>
@@ -18368,7 +18367,7 @@ namespace Nuke.Common.Tools.Docker
         ///   [VOLUME]
         /// </summary>
         public virtual string Volume { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("volume create")
@@ -18378,7 +18377,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--opt {value}", Opt, "{key}:{value}")
               .Add("{value}", Volume)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -18394,14 +18393,14 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("plugin")
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -18417,8 +18416,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Password.
         /// </summary>
@@ -18431,7 +18430,7 @@ namespace Nuke.Common.Tools.Docker
         ///   [SERVER]
         /// </summary>
         public virtual string Server { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("login")
@@ -18439,7 +18438,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--username {value}", Username)
               .Add("{value}", Server)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -18455,8 +18454,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Only display token.
         /// </summary>
@@ -18465,14 +18464,14 @@ namespace Nuke.Common.Tools.Docker
         ///   Rotate unlock key.
         /// </summary>
         public virtual bool? Rotate { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("swarm unlock-key")
               .Add("--quiet", Quiet)
               .Add("--rotate", Rotate)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -18488,8 +18487,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Attach STDOUT/STDERR and forward signals.
         /// </summary>
@@ -18515,7 +18514,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("start")
@@ -18526,7 +18525,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--interactive", Interactive)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -18542,8 +18541,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Advertised address (format: &lt;ip|interface&gt;[:port]).
         /// </summary>
@@ -18604,7 +18603,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Task history retention limit.
         /// </summary>
         public virtual long? TaskHistoryLimit { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("swarm init")
@@ -18624,7 +18623,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--snapshot-interval {value}", SnapshotInterval)
               .Add("--task-history-limit {value}", TaskHistoryLimit)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -18640,19 +18639,19 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   CONTAINER
         /// </summary>
         public virtual string Container { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container diff")
               .Add("{value}", Container)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -18668,8 +18667,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Seconds to wait for stop before killing the container.
         /// </summary>
@@ -18679,14 +18678,14 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container restart")
               .Add("--time {value}", Time)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -18702,14 +18701,14 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("config")
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -18725,8 +18724,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Force the disable of an active plugin.
         /// </summary>
@@ -18735,14 +18734,14 @@ namespace Nuke.Common.Tools.Docker
         ///   PLUGIN
         /// </summary>
         public virtual string Plugin { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("plugin disable")
               .Add("--force", Force)
               .Add("{value}", Plugin)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -18758,20 +18757,20 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   CONTAINER
         /// </summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container unpause")
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -18787,8 +18786,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   CONTEXT
         /// </summary>
@@ -18797,14 +18796,14 @@ namespace Nuke.Common.Tools.Docker
         ///   FILE|-
         /// </summary>
         public virtual string File { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("context import")
               .Add("{value}", Context)
               .Add("{value}", File)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -18820,8 +18819,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Force the removal of a running container (uses SIGKILL).
         /// </summary>
@@ -18839,7 +18838,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("rm")
@@ -18848,7 +18847,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--volumes", Volumes)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -18864,8 +18863,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Path to a Distributed Application Bundle file.
         /// </summary>
@@ -18895,7 +18894,7 @@ namespace Nuke.Common.Tools.Docker
         ///   STACK
         /// </summary>
         public virtual string Stack { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("deploy")
@@ -18907,7 +18906,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--with-registry-auth", WithRegistryAuth)
               .Add("{value}", Stack)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -18923,8 +18922,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Force remove a node from the swarm.
         /// </summary>
@@ -18934,14 +18933,14 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Nodes => NodesInternal.AsReadOnly();
         internal List<string> NodesInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("node rm")
               .Add("--force", Force)
               .Add("{value}", Nodes, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -18957,8 +18956,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Use a custom checkpoint storage directory.
         /// </summary>
@@ -18971,7 +18970,7 @@ namespace Nuke.Common.Tools.Docker
         ///   CHECKPOINT
         /// </summary>
         public virtual string Checkpoint { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("checkpoint rm")
@@ -18979,7 +18978,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", Container)
               .Add("{value}", Checkpoint)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -18995,8 +18994,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Skip image signing.
         /// </summary>
@@ -19005,14 +19004,14 @@ namespace Nuke.Common.Tools.Docker
         ///   NAME[:TAG]
         /// </summary>
         public virtual string Name { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("push")
               .Add("--disable-content-trust", DisableContentTrust)
               .Add("{value}", Name)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -19028,8 +19027,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Enable manual container attachment.
         /// </summary>
@@ -19105,7 +19104,7 @@ namespace Nuke.Common.Tools.Docker
         ///   NETWORK
         /// </summary>
         public virtual string Network { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("network create")
@@ -19127,7 +19126,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--subnet {value}", Subnet)
               .Add("{value}", Network)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -19143,8 +19142,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Provide filter values (e.g. 'dangling=true').
         /// </summary>
@@ -19157,7 +19156,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Only display volume names.
         /// </summary>
         public virtual bool? Quiet { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("volume ls")
@@ -19165,7 +19164,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--format {value}", Format)
               .Add("--quiet", Quiet)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -19181,20 +19180,20 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   IMAGE[:TAG]
         /// </summary>
         public virtual IReadOnlyList<string> Images => ImagesInternal.AsReadOnly();
         internal List<string> ImagesInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("trust inspect")
               .Add("{value}", Images, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -19210,8 +19209,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
@@ -19225,7 +19224,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Networks => NetworksInternal.AsReadOnly();
         internal List<string> NetworksInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("network inspect")
@@ -19233,7 +19232,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--verbose", Verbose)
               .Add("{value}", Networks, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -19249,8 +19248,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   override default location of containerd endpoint.
         /// </summary>
@@ -19283,7 +19282,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Specify engine version (default is to use currently running version).
         /// </summary>
         public virtual string Version { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("engine activate")
@@ -19296,7 +19295,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--registry-prefix {value}", RegistryPrefix)
               .Add("--version {value}", Version)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -19312,19 +19311,19 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   CONTEXT
         /// </summary>
         public virtual string Context { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("context use")
               .Add("{value}", Context)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -19340,8 +19339,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Force the removal of one or more volumes.
         /// </summary>
@@ -19351,14 +19350,14 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Volumes => VolumesInternal.AsReadOnly();
         internal List<string> VolumesInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("volume rm")
               .Add("--force", Force)
               .Add("{value}", Volumes, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -19374,8 +19373,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   MANIFEST_LIST
         /// </summary>
@@ -19385,14 +19384,14 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Manifests => ManifestsInternal.AsReadOnly();
         internal List<string> ManifestsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("manifest create")
               .Add("{value}", ManifestList)
               .Add("{value}", Manifests, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -19408,8 +19407,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Allow push to an insecure registry.
         /// </summary>
@@ -19422,7 +19421,7 @@ namespace Nuke.Common.Tools.Docker
         ///   MANIFEST_LIST
         /// </summary>
         public virtual string ManifestList { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("manifest push")
@@ -19430,7 +19429,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--purge", Purge)
               .Add("{value}", ManifestList)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -19446,8 +19445,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   HTTP client timeout (in seconds).
         /// </summary>
@@ -19456,14 +19455,14 @@ namespace Nuke.Common.Tools.Docker
         ///   PLUGIN
         /// </summary>
         public virtual string Plugin { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("plugin enable")
               .Add("--timeout {value}", Timeout)
               .Add("{value}", Plugin)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -19479,8 +19478,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Apply Dockerfile instruction to the created image.
         /// </summary>
@@ -19502,7 +19501,7 @@ namespace Nuke.Common.Tools.Docker
         ///   [REPOSITORY[:TAG]]
         /// </summary>
         public virtual string Repository { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("import")
@@ -19512,7 +19511,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", File)
               .Add("{value}", Repository)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -19528,8 +19527,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Add a custom host-to-IP mapping (host:ip).
         /// </summary>
@@ -19980,7 +19979,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Args => ArgsInternal.AsReadOnly();
         internal List<string> ArgsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container run")
@@ -20089,7 +20088,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", Command)
               .Add("{value}", Args, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -20105,8 +20104,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
@@ -20120,7 +20119,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Selves => SelvesInternal.AsReadOnly();
         internal List<string> SelvesInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("node inspect")
@@ -20128,7 +20127,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--pretty", Pretty)
               .Add("{value}", Selves, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -20144,8 +20143,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Write to a file, instead of STDOUT.
         /// </summary>
@@ -20155,14 +20154,14 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Images => ImagesInternal.AsReadOnly();
         internal List<string> ImagesInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("save")
               .Add("--output {value}", Output)
               .Add("{value}", Images, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -20178,8 +20177,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Show all containers (default shows just running).
         /// </summary>
@@ -20201,7 +20200,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container stats")
@@ -20211,7 +20210,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--no-trunc", NoTrunc)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -20227,8 +20226,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Detached mode: run command in the background.
         /// </summary>
@@ -20275,7 +20274,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Args => ArgsInternal.AsReadOnly();
         internal List<string> ArgsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container exec")
@@ -20291,7 +20290,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", Command)
               .Add("{value}", Args, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -20307,8 +20306,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
@@ -20321,7 +20320,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Only display IDs.
         /// </summary>
         public virtual bool? Quiet { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("node ls")
@@ -20329,7 +20328,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--format {value}", Format)
               .Add("--quiet", Quiet)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -20345,8 +20344,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Advertised address (format: &lt;ip|interface&gt;[:port]).
         /// </summary>
@@ -20367,7 +20366,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Token for entry into the swarm.
         /// </summary>
         public virtual string Token { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("swarm join HOST:PORT")
@@ -20377,7 +20376,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--listen-addr {value}", ListenAddr)
               .Add("--token {value}", Token)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -20393,8 +20392,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Show extra details provided to logs.
         /// </summary>
@@ -20423,7 +20422,7 @@ namespace Nuke.Common.Tools.Docker
         ///   CONTAINER
         /// </summary>
         public virtual string Container { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container logs")
@@ -20435,7 +20434,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--until {value}", Until)
               .Add("{value}", Container)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -20451,8 +20450,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Use a custom checkpoint storage directory.
         /// </summary>
@@ -20461,14 +20460,14 @@ namespace Nuke.Common.Tools.Docker
         ///   CONTAINER
         /// </summary>
         public virtual string Container { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("checkpoint ls")
               .Add("--checkpoint-dir {value}", CheckpointDir)
               .Add("{value}", Container)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -20484,8 +20483,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Signal to send to the container.
         /// </summary>
@@ -20495,14 +20494,14 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container kill")
               .Add("--signal {value}", Signal)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -20518,8 +20517,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Local name for plugin.
         /// </summary>
@@ -20545,7 +20544,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyDictionary<string, string> KeyValues => KeyValuesInternal.AsReadOnly();
         internal Dictionary<string,string> KeyValuesInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("plugin install")
@@ -20556,7 +20555,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", Plugin)
               .Add("{value}", KeyValues, "{key=value}")
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -20572,8 +20571,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Remove all unused images, not just dangling ones.
         /// </summary>
@@ -20586,7 +20585,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Do not prompt for confirmation.
         /// </summary>
         public virtual bool? Force { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("image prune")
@@ -20594,7 +20593,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--filter {value}", Filter)
               .Add("--force", Force)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -20610,8 +20609,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Apply Dockerfile instruction to the created image.
         /// </summary>
@@ -20633,7 +20632,7 @@ namespace Nuke.Common.Tools.Docker
         ///   [REPOSITORY[:TAG]]
         /// </summary>
         public virtual string Repository { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("image import")
@@ -20643,7 +20642,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", File)
               .Add("{value}", Repository)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -20659,19 +20658,19 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   CONTAINER
         /// </summary>
         public virtual string Container { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("diff")
               .Add("{value}", Container)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -20687,20 +20686,20 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   CONTAINER
         /// </summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("unpause")
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -20716,8 +20715,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Show all containers (default shows just running).
         /// </summary>
@@ -20750,7 +20749,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Display total file sizes.
         /// </summary>
         public virtual bool? Size { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container ls")
@@ -20763,7 +20762,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--quiet", Quiet)
               .Add("--size", Size)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -20779,8 +20778,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
@@ -20806,7 +20805,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Nodes => NodesInternal.AsReadOnly();
         internal List<string> NodesInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("node ps")
@@ -20817,7 +20816,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--quiet", Quiet)
               .Add("{value}", Nodes, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -20833,8 +20832,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   CONTAINER
         /// </summary>
@@ -20843,14 +20842,14 @@ namespace Nuke.Common.Tools.Docker
         ///   OPTIONS]
         /// </summary>
         public virtual string Options { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container top [ps")
               .Add("{value}", Container)
               .Add("{value}", Options)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -20866,8 +20865,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   CONTAINER
         /// </summary>
@@ -20876,14 +20875,14 @@ namespace Nuke.Common.Tools.Docker
         ///   NEW_NAME
         /// </summary>
         public virtual string NewName { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container rename")
               .Add("{value}", Container)
               .Add("{value}", NewName)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -20899,8 +20898,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Pretty-print images using a Go template.
         /// </summary>
@@ -20921,7 +20920,7 @@ namespace Nuke.Common.Tools.Docker
         ///   IMAGE
         /// </summary>
         public virtual string Image { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("image history")
@@ -20931,7 +20930,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--quiet", Quiet)
               .Add("{value}", Image)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -20947,8 +20946,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Show all containers (default shows just running).
         /// </summary>
@@ -20981,7 +20980,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Display total file sizes.
         /// </summary>
         public virtual bool? Size { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("ps")
@@ -20994,7 +20993,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--quiet", Quiet)
               .Add("--size", Size)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -21010,8 +21009,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   SOURCE_IMAGE[:TAG]
         /// </summary>
@@ -21020,14 +21019,14 @@ namespace Nuke.Common.Tools.Docker
         ///   TARGET_IMAGE[:TAG]
         /// </summary>
         public virtual string TargetImage { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("image tag")
               .Add("{value}", SourceImage)
               .Add("{value}", TargetImage)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -21043,8 +21042,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Write to a file, instead of STDOUT.
         /// </summary>
@@ -21053,14 +21052,14 @@ namespace Nuke.Common.Tools.Docker
         ///   CONTAINER
         /// </summary>
         public virtual string Container { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("export")
               .Add("--output {value}", Output)
               .Add("{value}", Container)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -21076,8 +21075,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Force the container to disconnect from a network.
         /// </summary>
@@ -21090,7 +21089,7 @@ namespace Nuke.Common.Tools.Docker
         ///   CONTAINER
         /// </summary>
         public virtual string Container { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("network disconnect")
@@ -21098,7 +21097,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", Network)
               .Add("{value}", Container)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -21114,8 +21113,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Add a custom host-to-IP mapping (host:ip).
         /// </summary>
@@ -21266,7 +21265,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Path or url where the build context is located.
         /// </summary>
         public virtual string Path { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("builder build")
@@ -21307,7 +21306,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--ulimit {value}", Ulimit)
               .Add("{value}", Path)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -21323,8 +21322,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Show all containers (default shows just running).
         /// </summary>
@@ -21346,7 +21345,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stats")
@@ -21356,7 +21355,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--no-trunc", NoTrunc)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -21372,8 +21371,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Only show automated builds.
         /// </summary>
@@ -21402,7 +21401,7 @@ namespace Nuke.Common.Tools.Docker
         ///   TERM
         /// </summary>
         public virtual string Term { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("search")
@@ -21414,7 +21413,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--stars {value}", Stars)
               .Add("{value}", Term)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -21430,19 +21429,19 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   COMMAND
         /// </summary>
         public virtual string Command { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("manifest")
               .Add("{value}", Command)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -21458,8 +21457,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Skip image signing.
         /// </summary>
@@ -21468,14 +21467,14 @@ namespace Nuke.Common.Tools.Docker
         ///   PLUGIN[:TAG]
         /// </summary>
         public virtual string Plugin { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("plugin push")
               .Add("--disable-content-trust", DisableContentTrust)
               .Add("{value}", Plugin)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -21491,8 +21490,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Read from tar archive file, instead of STDIN.
         /// </summary>
@@ -21501,14 +21500,14 @@ namespace Nuke.Common.Tools.Docker
         ///   Suppress the load output.
         /// </summary>
         public virtual bool? Quiet { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("image load")
               .Add("--input {value}", Input)
               .Add("--quiet", Quiet)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -21524,14 +21523,14 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("swarm")
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -21547,8 +21546,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Force the removal of a running container (uses SIGKILL).
         /// </summary>
@@ -21566,7 +21565,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container rm")
@@ -21575,7 +21574,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--volumes", Volumes)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -21591,8 +21590,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0).
         /// </summary>
@@ -21658,7 +21657,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container update")
@@ -21679,7 +21678,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--restart {value}", Restart)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -21695,8 +21694,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   PLUGIN
         /// </summary>
@@ -21706,14 +21705,14 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyDictionary<string, string> KeyValues => KeyValuesInternal.AsReadOnly();
         internal Dictionary<string,string> KeyValuesInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("plugin set")
               .Add("{value}", Plugin)
               .Add("{value}", KeyValues, "{key=value}")
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -21729,20 +21728,20 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   CONTAINER
         /// </summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("wait")
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -21758,8 +21757,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Export as a kubeconfig file.
         /// </summary>
@@ -21772,7 +21771,7 @@ namespace Nuke.Common.Tools.Docker
         ///   [FILE|-]
         /// </summary>
         public virtual string File { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("context export")
@@ -21780,7 +21779,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", Context)
               .Add("{value}", File)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -21796,8 +21795,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Set architecture.
         /// </summary>
@@ -21823,7 +21822,7 @@ namespace Nuke.Common.Tools.Docker
         ///   MANIFEST
         /// </summary>
         public virtual string Manifest { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("manifest annotate")
@@ -21834,7 +21833,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", ManifestList)
               .Add("{value}", Manifest)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -21850,8 +21849,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Download all tagged images in the repository.
         /// </summary>
@@ -21872,7 +21871,7 @@ namespace Nuke.Common.Tools.Docker
         ///   NAME[:TAG|@DIGEST]
         /// </summary>
         public virtual string Name { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("image pull")
@@ -21882,7 +21881,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--quiet", Quiet)
               .Add("{value}", Name)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -21898,8 +21897,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
@@ -21916,7 +21915,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Stream events until this timestamp.
         /// </summary>
         public virtual string Until { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("events")
@@ -21925,7 +21924,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--since {value}", Since)
               .Add("--until {value}", Until)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -21941,8 +21940,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   List stacks from all Kubernetes namespaces.
         /// </summary>
@@ -21956,7 +21955,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Namespace => NamespaceInternal.AsReadOnly();
         internal List<string> NamespaceInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stack ls")
@@ -21964,7 +21963,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--format {value}", Format)
               .Add("--namespace {value}", Namespace)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -21980,8 +21979,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
@@ -21995,7 +21994,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container inspect")
@@ -22003,7 +22002,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--size", Size)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22019,8 +22018,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Signal to send to the container.
         /// </summary>
@@ -22030,14 +22029,14 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("kill")
               .Add("--signal {value}", Signal)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22053,8 +22052,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Use a custom checkpoint storage directory.
         /// </summary>
@@ -22071,7 +22070,7 @@ namespace Nuke.Common.Tools.Docker
         ///   CHECKPOINT
         /// </summary>
         public virtual string Checkpoint { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("checkpoint create")
@@ -22080,7 +22079,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", Container)
               .Add("{value}", Checkpoint)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22096,20 +22095,20 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   CONTAINER
         /// </summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("pause")
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22125,8 +22124,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Show extra details provided to logs.
         /// </summary>
@@ -22155,7 +22154,7 @@ namespace Nuke.Common.Tools.Docker
         ///   CONTAINER
         /// </summary>
         public virtual string Container { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("logs")
@@ -22167,7 +22166,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--until {value}", Until)
               .Add("{value}", Container)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22183,8 +22182,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
@@ -22198,7 +22197,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Contexts => ContextsInternal.AsReadOnly();
         internal List<string> ContextsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("context inspect")
@@ -22206,7 +22205,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", Context)
               .Add("{value}", Contexts, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22222,20 +22221,20 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   NODE
         /// </summary>
         public virtual IReadOnlyList<string> Nodes => NodesInternal.AsReadOnly();
         internal List<string> NodesInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("node promote")
               .Add("{value}", Nodes, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22251,20 +22250,20 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   NODE
         /// </summary>
         public virtual IReadOnlyList<string> Nodes => NodesInternal.AsReadOnly();
         internal List<string> NodesInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("node demote")
               .Add("{value}", Nodes, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22280,8 +22279,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Detached mode: run command in the background.
         /// </summary>
@@ -22328,7 +22327,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Args => ArgsInternal.AsReadOnly();
         internal List<string> ArgsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("exec")
@@ -22344,7 +22343,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", Command)
               .Add("{value}", Args, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22360,8 +22359,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Force removal of the image.
         /// </summary>
@@ -22375,7 +22374,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Images => ImagesInternal.AsReadOnly();
         internal List<string> ImagesInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("image rm")
@@ -22383,7 +22382,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--no-prune", NoPrune)
               .Add("{value}", Images, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22399,14 +22398,14 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("image")
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22422,14 +22421,14 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("context")
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22445,19 +22444,19 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   COMMAND
         /// </summary>
         public virtual string Command { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("volume")
               .Add("{value}", Command)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22473,8 +22472,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Attach STDOUT/STDERR and forward signals.
         /// </summary>
@@ -22500,7 +22499,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("container start")
@@ -22511,7 +22510,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--interactive", Interactive)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22527,8 +22526,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
@@ -22538,14 +22537,14 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Plugins => PluginsInternal.AsReadOnly();
         internal List<string> PluginsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("plugin inspect")
               .Add("--format {value}", Format)
               .Add("{value}", Plugins, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22561,19 +22560,19 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   [SERVER]
         /// </summary>
         public virtual string Server { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("logout")
               .Add("{value}", Server)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22589,14 +22588,14 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("network")
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22612,8 +22611,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Show all images (default hides intermediate images).
         /// </summary>
@@ -22642,7 +22641,7 @@ namespace Nuke.Common.Tools.Docker
         ///   [REPOSITORY[:TAG]]
         /// </summary>
         public virtual string Repository { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("image ls")
@@ -22654,7 +22653,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--quiet", Quiet)
               .Add("{value}", Repository)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22670,8 +22669,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Pretty-print images using a Go template.
         /// </summary>
@@ -22680,14 +22679,14 @@ namespace Nuke.Common.Tools.Docker
         ///   Show detailed information on space usage.
         /// </summary>
         public virtual bool? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("system df")
               .Add("--format {value}", Format)
               .Add("--verbose", Verbose)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22703,8 +22702,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Exit immediately instead of waiting for the service to converge.
         /// </summary>
@@ -22717,7 +22716,7 @@ namespace Nuke.Common.Tools.Docker
         ///   SERVICE
         /// </summary>
         public virtual string Service { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("service rollback")
@@ -22725,7 +22724,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--quiet", Quiet)
               .Add("{value}", Service)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22741,8 +22740,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Seconds to wait for stop before killing the container.
         /// </summary>
@@ -22752,14 +22751,14 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("restart")
               .Add("--time {value}", Time)
               .Add("{value}", Containers, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22775,8 +22774,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Do not prompt for confirmation before removing the most recent signer.
         /// </summary>
@@ -22790,7 +22789,7 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Repositories => RepositoriesInternal.AsReadOnly();
         internal List<string> RepositoriesInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("trust signer remove")
@@ -22798,7 +22797,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("{value}", Name)
               .Add("{value}", Repositories, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22814,8 +22813,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Kubernetes namespace to use.
         /// </summary>
@@ -22825,14 +22824,14 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual IReadOnlyList<string> Stacks => StacksInternal.AsReadOnly();
         internal List<string> StacksInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stack rm")
               .Add("--namespace {value}", Namespace)
               .Add("{value}", Stacks, separator: ' ')
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -22848,8 +22847,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DockerTasks.DockerPath;
-        public override Action<OutputType, string> CustomLogger => DockerTasks.DockerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
         ///   Add a custom host-to-IP mapping (host:ip).
         /// </summary>
@@ -23000,7 +22999,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Path or url where the build context is located.
         /// </summary>
         public virtual string Path { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("build")
@@ -23041,7 +23040,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--ulimit {value}", Ulimit)
               .Add("{value}", Path)
               .Add("{value}", GetCliSettings(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -23086,7 +23085,7 @@ namespace Nuke.Common.Tools.Docker
         ///   Path to TLS key file (default ~/.docker/key.pem).
         /// </summary>
         public virtual string TLSKey { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("--log-level {value}", LogLevel)
@@ -23097,7 +23096,7 @@ namespace Nuke.Common.Tools.Docker
               .Add("--tlscacert {value}", TLSCaCert)
               .Add("--tlscert {value}", TLSCert)
               .Add("--tlskey {value}", TLSKey);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

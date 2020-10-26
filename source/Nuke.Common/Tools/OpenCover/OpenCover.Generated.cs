@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.OpenCover
         ///   <p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p>
         ///   <p>For more details, visit the <a href="https://github.com/OpenCover/opencover">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> OpenCover(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> OpenCover(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(OpenCoverPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, OpenCoverLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(OpenCoverPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, OpenCoverLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -79,7 +79,7 @@ namespace Nuke.Common.Tools.OpenCover
         public static IReadOnlyCollection<Output> OpenCover(OpenCoverSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new OpenCoverSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -170,8 +170,8 @@ namespace Nuke.Common.Tools.OpenCover
         /// <summary>
         ///   Path to the OpenCover executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? OpenCoverTasks.OpenCoverPath;
-        public override Action<OutputType, string> CustomLogger => OpenCoverTasks.OpenCoverLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? OpenCoverTasks.OpenCoverPath;
+        public override Action<OutputType, string> ProcessCustomLogger => OpenCoverTasks.OpenCoverLogger;
         /// <summary>
         ///   The name of the target application or service that will be started; this can also be a path to the target application.
         /// </summary>
@@ -275,7 +275,7 @@ namespace Nuke.Common.Tools.OpenCover
         ///   Return the target process exit code instead of the OpenCover console exit code. Use the offset to return the OpenCover console at a value outside the range returned by the target process.
         /// </summary>
         public virtual int? TargetExitCodeOffset { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("-target:{value}", TargetPath)
@@ -302,7 +302,7 @@ namespace Nuke.Common.Tools.OpenCover
               .Add("-threshold:{value}", MaximumVisitCount)
               .Add("-register:{value}", Registration)
               .Add("-returntargetcode:{value}", TargetExitCodeOffset);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

@@ -19,37 +19,39 @@ namespace Nuke.Common.Tooling
     {
         protected ToolSettings()
         {
-            EnvironmentVariablesInternal = EnvironmentInfo.Variables.ToDictionary(x => x.Key, x => x.Value);
+            ProcessEnvironmentVariablesInternal = EnvironmentInfo.Variables.ToDictionary(x => x.Key, x => x.Value);
             VerbosityMapping.Apply(this);
         }
 
-        public virtual string ToolPath { get; internal set; }
-        public virtual string WorkingDirectory { get; internal set; }
+        public virtual string ProcessToolPath { get; internal set; }
+        public virtual string ProcessWorkingDirectory { get; internal set; }
 
-        public IReadOnlyDictionary<string, string> EnvironmentVariables => EnvironmentVariablesInternal.AsReadOnly();
-        internal Dictionary<string, string> EnvironmentVariablesInternal { get; set; }
-        public int? ExecutionTimeout { get; internal set; }
-        public bool? LogOutput { get; internal set; }
-        public bool? LogInvocation { get; internal set; }
+        public IReadOnlyDictionary<string, string> ProcessEnvironmentVariables => ProcessEnvironmentVariablesInternal.AsReadOnly();
+        internal Dictionary<string, string> ProcessEnvironmentVariablesInternal { get; set; }
+        public int? ProcessExecutionTimeout { get; internal set; }
+        public bool? ProcessLogOutput { get; internal set; }
+        public bool? ProcessLogInvocation { get; internal set; }
+        public bool? ProcessLogTimestamp { get; internal set; }
+        public string ProcessLogFile { get; internal set; }
 
-        public abstract Action<OutputType, string> CustomLogger { get; }
+        public abstract Action<OutputType, string> ProcessCustomLogger { get; }
 
         [NonSerialized]
-        private Func<Arguments, Arguments> _argumentConfigurator = x => x;
+        private Func<Arguments, Arguments> _processArgumentConfigurator = x => x;
 
-        public virtual Func<Arguments, Arguments> ArgumentConfigurator
+        public virtual Func<Arguments, Arguments> ProcessArgumentConfigurator
         {
-            get => _argumentConfigurator;
-            internal set => _argumentConfigurator = value;
+            get => _processArgumentConfigurator;
+            internal set => _processArgumentConfigurator = value;
         }
 
-        public virtual IArguments GetArguments()
+        public virtual IArguments GetProcessArguments()
         {
             AssertValid();
 
             var arguments = new Arguments();
-            arguments = ConfigureArguments(arguments);
-            arguments = ArgumentConfigurator(arguments);
+            arguments = ConfigureProcessArguments(arguments);
+            arguments = ProcessArgumentConfigurator(arguments);
             return arguments;
         }
 
@@ -57,7 +59,7 @@ namespace Nuke.Common.Tooling
         {
             try
             {
-                ControlFlow.Assert(File.Exists(ToolPath), "File.Exists(ToolPath)");
+                ControlFlow.Assert(File.Exists(ProcessToolPath), "File.Exists(ProcessToolPath)");
                 return true;
             }
             catch
@@ -66,12 +68,12 @@ namespace Nuke.Common.Tooling
             }
         }
 
-        protected virtual Arguments ConfigureArguments(Arguments arguments)
+        protected virtual Arguments ConfigureProcessArguments(Arguments arguments)
         {
             return arguments;
         }
 
-        protected virtual Arguments GetArgumentsInternal()
+        protected virtual Arguments GetProcessArgumentsInternal()
         {
             return new Arguments();
         }

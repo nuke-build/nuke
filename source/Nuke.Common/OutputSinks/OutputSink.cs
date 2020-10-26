@@ -59,10 +59,11 @@ namespace Nuke.Common.OutputSinks
         {
             if (SevereMessages.Count > 0)
             {
-                WriteSevereMessages();
                 WriteNormal();
+                WriteSevereMessages();
             }
 
+            WriteNormal();
             WriteSummaryTable(build);
             WriteNormal();
 
@@ -132,7 +133,7 @@ namespace Nuke.Common.OutputSinks
 
         protected virtual void WriteSevereMessages()
         {
-            WriteNormal("Repeating warnings and errors:");
+            WriteInformation("Repeating warnings and errors:");
 
             foreach (var (level, message) in SevereMessages.ToList())
             {

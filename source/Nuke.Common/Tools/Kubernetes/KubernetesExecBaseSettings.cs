@@ -20,12 +20,12 @@ namespace Nuke.Common.Tools.Kubernetes
         public virtual IReadOnlyList<string> Arguments => ArgumentsInternal.AsReadOnly();
         internal List<string> ArgumentsInternal { get; set; } = new List<string>();
 
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             var args = new Arguments()
                 .Add("-- {value}", Command)
                 .Add("{value}", Arguments, separator: ' ');
-            return base.ConfigureArguments(arguments).Concatenate(args);
+            return base.ConfigureProcessArguments(arguments).Concatenate(args);
         }
     }
 }

@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Common.Execution;
+using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.Tooling
 {
@@ -30,7 +30,7 @@ namespace Nuke.Common.Tooling
     ///     });
     ///     </code>
     /// </example>
-    public class PackageExecutableAttribute : InjectionAttributeBase
+    public class PackageExecutableAttribute : ValueInjectionAttributeBase
     {
         private readonly string _packageId;
         private readonly string _packageExecutable;

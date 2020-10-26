@@ -11,7 +11,7 @@ namespace Nuke.Common.Tools.Xunit
 {
     partial class Xunit2Settings
     {
-        private string GetToolPath()
+        private string GetProcessToolPath()
         {
             return XunitTasks.GetToolPath(Framework);
         }

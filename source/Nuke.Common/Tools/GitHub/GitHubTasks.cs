@@ -57,6 +57,14 @@ namespace Nuke.Common.Tools.GitHub
             return repo.DefaultBranch;
         }
 
+        public static async Task<string> GetLatestRelease(this GitRepository repository, bool includePrerelease = false, bool trimPrefix = false)
+        {
+            ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
+
+            var releases = await Client.Repository.Release.GetAll(repository.GetGitHubOwner(), repository.GetGitHubName());
+            return releases.First(x => !x.Prerelease || includePrerelease).TagName.TrimStart(trimPrefix ? "v" : string.Empty);
+        }
+
         [ItemCanBeNull]
         public static async Task<Milestone> GetGitHubMilestone(this GitRepository repository, string name)
         {

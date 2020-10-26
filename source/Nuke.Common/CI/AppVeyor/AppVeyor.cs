@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Tooling;
@@ -49,6 +50,7 @@ namespace Nuke.Common.CI.AppVeyor
 
         private readonly Tool _cli;
 
+        public string Url => EnvironmentInfo.GetVariable<string>("APPVEYOR_URL");
         public string ApiUrl => EnvironmentInfo.GetVariable<string>("APPVEYOR_API_URL");
         public string AccountName => EnvironmentInfo.GetVariable<string>("APPVEYOR_ACCOUNT_NAME");
         public int ProjectId => EnvironmentInfo.GetVariable<int>("APPVEYOR_PROJECT_ID");
@@ -59,7 +61,7 @@ namespace Nuke.Common.CI.AppVeyor
         public int BuildNumber => EnvironmentInfo.GetVariable<int>("APPVEYOR_BUILD_NUMBER");
         public string BuildVersion => EnvironmentInfo.GetVariable<string>("APPVEYOR_BUILD_VERSION");
         public string BuildWorkerImage => EnvironmentInfo.GetVariable<string>("APPVEYOR_BUILD_WORKER_IMAGE");
-        public int PullRequestNumber => EnvironmentInfo.GetVariable<int>("APPVEYOR_PULL_REQUEST_NUMBER");
+        [CanBeNull] public int? PullRequestNumber => EnvironmentInfo.GetVariable<int?>("APPVEYOR_PULL_REQUEST_NUMBER");
         [CanBeNull] public string PullRequestTitle => EnvironmentInfo.GetVariable<string>("APPVEYOR_PULL_REQUEST_TITLE");
         public string JobId => EnvironmentInfo.GetVariable<string>("APPVEYOR_JOB_ID");
         [CanBeNull] public string JobName => EnvironmentInfo.GetVariable<string>("APPVEYOR_JOB_NAME");
@@ -82,9 +84,16 @@ namespace Nuke.Common.CI.AppVeyor
         [CanBeNull] public string Platform => EnvironmentInfo.GetVariable<string>("PLATFORM");
         [CanBeNull] public string Configuration => EnvironmentInfo.GetVariable<string>("CONFIGURATION");
 
-        public void UpdateBuildNumber(string version)
+        public void UpdateBuildVersion(string version)
         {
             _cli.Invoke($"UpdateBuild -Version {version.DoubleQuote()}");
+            EnvironmentInfo.SetVariable("APPVEYOR_BUILD_VERSION", version);
+        }
+
+        public void PushArtifact(string path, string name = null)
+        {
+            name ??= Path.GetFileName(path);
+            _cli.Invoke($"PushArtifact {path} -FileName {name}");
         }
 
         public void WriteInformation(string message, string details = null)

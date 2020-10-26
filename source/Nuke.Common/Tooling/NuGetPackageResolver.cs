@@ -24,14 +24,20 @@ namespace Nuke.Common.Tooling
         private const int DefaultTimeout = 2000;
 
         [ItemCanBeNull]
-        public static async Task<string> GetLatestPackageVersion(string packageId, bool includePrereleases, int? timeout = null)
+        public static async Task<string> GetLatestPackageVersion(string packageId, bool includePrereleases, bool includeUnlisted = false, int? timeout = null)
         {
             try
             {
-                var url = $"https://api-v2v3search-0.nuget.org/query?q=packageid:{packageId}&prerelease={includePrereleases}";
-                var response = await HttpTasks.HttpDownloadStringAsync(url, requestConfigurator: x => x.Timeout = timeout ?? DefaultTimeout);
-                var packageObject = JsonConvert.DeserializeObject<JObject>(response);
-                return packageObject["data"].NotNull().Single()["version"].NotNull().ToString();
+                var url = includeUnlisted
+                    ? $"https://api.nuget.org/v3/flatcontainer/{packageId.ToLowerInvariant()}/index.json"
+                    : $"https://api-v2v3search-0.nuget.org/query?q=packageid:{packageId}&prerelease={includePrereleases}";
+                var jsonString = await HttpTasks.HttpDownloadStringAsync(url, requestConfigurator: x => x.Timeout = timeout ?? DefaultTimeout);
+                var jsonObject = JsonConvert.DeserializeObject<JObject>(jsonString);
+                return includeUnlisted
+                    ? jsonObject.First.NotNull().First.NotNull().Children()
+                        .Select(x => x.Value<string>())
+                        .Last(x => includePrereleases || !x.Contains("-"))
+                    : jsonObject["data"].NotNull().Single()["version"].NotNull().ToString();
             }
             catch (Exception)
             {
@@ -240,7 +246,7 @@ namespace Nuke.Common.Tooling
             var projectDirectoryInfo = new DirectoryInfo(projectDirectory);
             var packagesConfigFile = projectDirectoryInfo.GetFiles("packages.config").SingleOrDefault()
                                      ?? projectDirectoryInfo.GetFiles("*.csproj")
-                                         .SingleOrDefaultOrError("Directory contains multiple project files.");
+                                         .SingleOrDefaultOrError($"Directory '{projectDirectory}' contains multiple project files.");
             return packagesConfigFile?.FullName;
         }
 

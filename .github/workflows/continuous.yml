@@ -16,121 +16,34 @@
 
 name: continuous
 
-on: [push]
+on:
+  push:
+    branches-ignore:
+      - master
+      - release/*
+  pull_request:
+    branches:
+      - develop
 
 jobs:
-  macOS-10_14:
-    name: macOS-10_14
-    runs-on: macOS-10.14
+  windows-latest:
+    name: windows-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v1
       - name: Run './build.cmd Test Pack'
         run: ./build.cmd Test Pack
-        env:
-            GitHubToken: ${{ secrets.GITHUB_TOKEN }}
-            SlackWebhook: ${{ secrets.SlackWebhook }}
-            GitterAuthToken: ${{ secrets.GitterAuthToken }}
-      - uses: actions/upload-artifact@v1
-        with:
-          name: test-results
-          path: output/test-results
-      - uses: actions/upload-artifact@v1
-        with:
-          name: coverage-report.zip
-          path: output/coverage-report.zip
-      - uses: actions/upload-artifact@v1
-        with:
-          name: packages
-          path: output/packages
-  ubuntu-16_04:
-    name: ubuntu-16_04
-    runs-on: ubuntu-16.04
+  ubuntu-latest:
+    name: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - name: Run './build.cmd Test Pack'
         run: ./build.cmd Test Pack
-        env:
-            GitHubToken: ${{ secrets.GITHUB_TOKEN }}
-            SlackWebhook: ${{ secrets.SlackWebhook }}
-            GitterAuthToken: ${{ secrets.GitterAuthToken }}
-      - uses: actions/upload-artifact@v1
-        with:
-          name: test-results
-          path: output/test-results
-      - uses: actions/upload-artifact@v1
-        with:
-          name: coverage-report.zip
-          path: output/coverage-report.zip
-      - uses: actions/upload-artifact@v1
-        with:
-          name: packages
-          path: output/packages
-  ubuntu-18_04:
-    name: ubuntu-18_04
-    runs-on: ubuntu-18.04
+  macOS-latest:
+    name: macOS-latest
+    runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v1
       - name: Run './build.cmd Test Pack'
         run: ./build.cmd Test Pack
-        env:
-            GitHubToken: ${{ secrets.GITHUB_TOKEN }}
-            SlackWebhook: ${{ secrets.SlackWebhook }}
-            GitterAuthToken: ${{ secrets.GitterAuthToken }}
-      - uses: actions/upload-artifact@v1
-        with:
-          name: test-results
-          path: output/test-results
-      - uses: actions/upload-artifact@v1
-        with:
-          name: coverage-report.zip
-          path: output/coverage-report.zip
-      - uses: actions/upload-artifact@v1
-        with:
-          name: packages
-          path: output/packages
-  windows-2016:
-    name: windows-2016
-    runs-on: windows-2016
-    steps:
-      - uses: actions/checkout@v1
-      - name: Run './build.cmd Test Pack'
-        run: ./build.cmd Test Pack
-        env:
-            GitHubToken: ${{ secrets.GITHUB_TOKEN }}
-            SlackWebhook: ${{ secrets.SlackWebhook }}
-            GitterAuthToken: ${{ secrets.GitterAuthToken }}
-      - uses: actions/upload-artifact@v1
-        with:
-          name: test-results
-          path: output/test-results
-      - uses: actions/upload-artifact@v1
-        with:
-          name: coverage-report.zip
-          path: output/coverage-report.zip
-      - uses: actions/upload-artifact@v1
-        with:
-          name: packages
-          path: output/packages
-  windows-2019:
-    name: windows-2019
-    runs-on: windows-2019
-    steps:
-      - uses: actions/checkout@v1
-      - name: Run './build.cmd Test Pack'
-        run: ./build.cmd Test Pack
-        env:
-            GitHubToken: ${{ secrets.GITHUB_TOKEN }}
-            SlackWebhook: ${{ secrets.SlackWebhook }}
-            GitterAuthToken: ${{ secrets.GitterAuthToken }}
-      - uses: actions/upload-artifact@v1
-        with:
-          name: test-results
-          path: output/test-results
-      - uses: actions/upload-artifact@v1
-        with:
-          name: coverage-report.zip
-          path: output/coverage-report.zip
-      - uses: actions/upload-artifact@v1
-        with:
-          name: packages
-          path: output/packages

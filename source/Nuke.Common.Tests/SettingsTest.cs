@@ -22,7 +22,7 @@ namespace Nuke.Common.Tests
         private static void Assert<T>(Configure<T> configurator, string arguments)
             where T : ToolSettings, new()
         {
-            configurator.Invoke(new T()).GetArguments().RenderForOutput().Should().Be(arguments);
+            configurator.Invoke(new T()).GetProcessArguments().RenderForOutput().Should().Be(arguments);
         }
 
         [Fact]

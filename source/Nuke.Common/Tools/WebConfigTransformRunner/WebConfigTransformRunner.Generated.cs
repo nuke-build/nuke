@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         ///   <p>This is a commandline tool to run an ASP.Net web.config tranformation.</p>
         ///   <p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> WebConfigTransformRunner(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> WebConfigTransformRunner(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(WebConfigTransformRunnerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, WebConfigTransformRunnerLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(WebConfigTransformRunnerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, WebConfigTransformRunnerLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -58,7 +58,7 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         public static IReadOnlyCollection<Output> WebConfigTransformRunner(WebConfigTransformRunnerSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new WebConfigTransformRunnerSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -107,8 +107,8 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         /// <summary>
         ///   Path to the WebConfigTransformRunner executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? WebConfigTransformRunnerTasks.WebConfigTransformRunnerPath;
-        public override Action<OutputType, string> CustomLogger => WebConfigTransformRunnerTasks.WebConfigTransformRunnerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? WebConfigTransformRunnerTasks.WebConfigTransformRunnerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => WebConfigTransformRunnerTasks.WebConfigTransformRunnerLogger;
         /// <summary>
         ///   The base web.config file
         /// </summary>
@@ -121,13 +121,13 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         ///   The path to the output web.config file
         /// </summary>
         public virtual string OutputFilename { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("{value}", WebConfigFilename)
               .Add("{value}", TransformFilename)
               .Add("{value}", OutputFilename);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

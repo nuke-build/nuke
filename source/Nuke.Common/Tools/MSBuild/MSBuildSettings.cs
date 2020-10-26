@@ -10,6 +10,7 @@ using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tools.MSBuild
 {
+    [PublicAPI]
     public class MSBuildVerbosityMappingAttribute : VerbosityMappingAttribute
     {
         public MSBuildVerbosityMappingAttribute()
@@ -40,7 +41,7 @@ namespace Nuke.Common.Tools.MSBuild
             return TargetPlatform.ToString();
         }
 
-        private string GetToolPath()
+        private string GetProcessToolPath()
         {
             return MSBuildToolPathResolver.Resolve(MSBuildVersion, MSBuildPlatform);
         }

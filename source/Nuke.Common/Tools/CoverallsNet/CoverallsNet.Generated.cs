@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.</p>
         ///   <p>For more details, visit the <a href="https://coverallsnet.readthedocs.io">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> CoverallsNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> CoverallsNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(CoverallsNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, CoverallsNetLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(CoverallsNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, CoverallsNetLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -74,7 +74,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         public static IReadOnlyCollection<Output> CoverallsNet(CoverallsNetSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CoverallsNetSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -155,8 +155,8 @@ namespace Nuke.Common.Tools.CoverallsNet
         /// <summary>
         ///   Path to the CoverallsNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? CoverallsNetTasks.CoverallsNetPath;
-        public override Action<OutputType, string> CustomLogger => CoverallsNetTasks.CoverallsNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? CoverallsNetTasks.CoverallsNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => CoverallsNetTasks.CoverallsNetLogger;
         /// <summary>
         ///   The coverage source file location.
         /// </summary>
@@ -233,7 +233,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   The github pull request id. Used for updating status on github PRs.
         /// </summary>
         public virtual int? PullRequest { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("--input {value}", Input)
@@ -255,7 +255,7 @@ namespace Nuke.Common.Tools.CoverallsNet
               .Add("--jobId {value}", JobId)
               .Add("--serviceName {value}", ServiceName)
               .Add("--pullRequest {value}", PullRequest);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

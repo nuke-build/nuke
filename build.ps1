@@ -22,6 +22,7 @@ $DotNetChannel = "Current"
 
 $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1
 $env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
+$env:DOTNET_MULTILEVEL_LOOKUP = 0
 $env:NUGET_XMLDOC_MODE = "skip"
 
 ###########################################################################
@@ -75,5 +76,5 @@ if (Test-Path $DotNetGlobalFile) {
 
 Write-Output "Microsoft (R) .NET Core SDK version $(& $env:DOTNET_EXE --version)"
 
-ExecSafe { & $env:DOTNET_EXE build $BuildProjectFile /nodeReuse:false --ignore-failed-sources }
+ExecSafe { & $env:DOTNET_EXE build $BuildProjectFile /nodeReuse:false /p:UseSharedCompilation=false --ignore-failed-sources }
 ExecSafe { & $env:DOTNET_EXE run --project $BuildProjectFile --no-build -- $BuildArguments }

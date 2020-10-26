@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo $(bash --version 2>&1 | head -n 1)
+bash --version 2>&1 | head -n 1
 
 set -eo pipefail
 SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
@@ -18,15 +18,15 @@ DOTNET_CHANNEL="Current"
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+export DOTNET_MULTILEVEL_LOOKUP=0
 export NUGET_XMLDOC_MODE="skip"
-# Workaround according to https://github.com/dotnet/sdk/issues/335#issuecomment-371444503
 
 ###########################################################################
 # EXECUTION
 ###########################################################################
 
 function FirstJsonValue {
-    perl -nle 'print $1 if m{"'$1'": "([^"]+)",?}' <<< ${@:2}
+    perl -nle 'print $1 if m{"'"$1"'": "([^"]+)",?}' <<< "${@:2}"
 }
 
 # Print environment variables
@@ -39,7 +39,7 @@ fi
 
 # If global.json exists, load expected version
 if [[ -f "$DOTNET_GLOBAL_FILE" ]]; then
-    DOTNET_VERSION=$(FirstJsonValue "version" $(cat "$DOTNET_GLOBAL_FILE"))
+    DOTNET_VERSION=$(FirstJsonValue "version" "$(cat "$DOTNET_GLOBAL_FILE")")
     if [[ "$DOTNET_VERSION" == ""  ]]; then
         unset DOTNET_VERSION
     fi
@@ -69,5 +69,5 @@ fi
 
 echo "Microsoft (R) .NET Core SDK version $("$DOTNET_EXE" --version)"
 
-"$DOTNET_EXE" build "$BUILD_PROJECT_FILE" /nodeReuse:false --ignore-failed-sources
+"$DOTNET_EXE" build "$BUILD_PROJECT_FILE" /nodeReuse:false /p:UseSharedCompilation=false --ignore-failed-sources
 "$DOTNET_EXE" run --project "$BUILD_PROJECT_FILE" --no-build -- "$@"

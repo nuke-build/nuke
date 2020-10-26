@@ -8,7 +8,7 @@ namespace Nuke.Common.Tools.SonarScanner
 {
     partial class SonarScannerBeginSettings
     {
-        private string GetToolPath()
+        private string GetProcessToolPath()
         {
             return SonarScannerTasks.GetToolPath(Framework);
         }
@@ -16,7 +16,7 @@ namespace Nuke.Common.Tools.SonarScanner
 
     partial class SonarScannerEndSettings
     {
-        private string GetToolPath()
+        private string GetProcessToolPath()
         {
             return SonarScannerTasks.GetToolPath(Framework);
         }

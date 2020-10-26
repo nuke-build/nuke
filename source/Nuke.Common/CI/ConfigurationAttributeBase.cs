@@ -10,7 +10,7 @@ using JetBrains.Annotations;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
-using static Nuke.Common.CI.HandleConfigurationGenerationAttribute;
+using static Nuke.Common.CI.BuildServerConfigurationGenerationAttributeBase;
 
 namespace Nuke.Common.CI
 {

@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
@@ -37,6 +36,45 @@ namespace Nuke.Common.Execution
                 MethodInfo methodInfo => methodInfo.Invoke(obj, args),
                 _ => throw new NotSupportedException()
             };
+        }
+
+        public static IEnumerable<object> GetArguments(this MethodCallExpression methodCall)
+        {
+            return methodCall.Arguments.Cast<ConstantExpression>().Select(x => x.Value);
+        }
+
+        public static TResult GetValueNonVirtual<TResult>(this MemberInfo member, object obj, params object[] arguments)
+        {
+            ControlFlow.Assert(member is PropertyInfo || member is MethodInfo, "member is PropertyInfo || member is MethodInfo");
+            var method = member is PropertyInfo property
+                ? property.GetMethod
+                : (MethodInfo) member;
+
+            var funcType = Expression.GetFuncType(method.GetParameters().Select(x => x.ParameterType)
+                .Concat(method.ReturnType).ToArray());
+            var functionPointer = method.NotNull("method != null").MethodHandle.GetFunctionPointer();
+            var nonVirtualDelegate = (Delegate) Activator.CreateInstance(funcType, obj, functionPointer)
+                .NotNull("nonVirtualDelegate != null");
+
+            return (TResult) nonVirtualDelegate.DynamicInvoke(arguments);
+
+            // var method = (MethodInfo) func.GetMemberInfo();
+            //
+            // var dynamicMethod = new DynamicMethod(
+            //     name: $"Own{method.Name}",
+            //     returnType: typeof(TResult),
+            //     parameterTypes: new[] { typeof(TObject) }.Concat(method.GetParameters().Select(x => x.ParameterType)).ToArray(),
+            //     owner: typeof(TObject));
+            //
+            // var generator = dynamicMethod.GetILGenerator();
+            // dynamicMethod.GetParameters().ForEach((x, i) => generator.Emit(OpCodes.Ldarg_S, i));
+            // generator.Emit(OpCodes.Call, method);
+            // generator.Emit(OpCodes.Ret);
+            //
+            // var methodCallExpression = (MethodCallExpression) func.Body;
+            // var arguments = obj.Concat(methodCallExpression.Arguments.Cast<ConstantExpression>().Select(x => x.Value)).ToArray();
+            //
+            // return (TResult) dynamicMethod.Invoke(obj: null, arguments);
         }
 
         public static void SetValue(this MemberInfo member, object instance, object value)
@@ -119,6 +157,7 @@ namespace Nuke.Common.Execution
                 ConstructorInfo constructor => constructor.IsPublic,
                 FieldInfo field => field.IsPublic,
                 MethodInfo method => method.IsPublic,
+                PropertyInfo property => property.GetMethod.IsPublic,
                 _ => throw new NotSupportedException(member.ToString())
             };
         }
@@ -130,6 +169,7 @@ namespace Nuke.Common.Execution
                 ConstructorInfo constructor => constructor.IsFamily,
                 FieldInfo field => field.IsFamily,
                 MethodInfo method => method.IsFamily,
+                PropertyInfo property => property.GetMethod.IsFamily,
                 _ => throw new NotSupportedException(member.ToString())
             };
         }
@@ -141,6 +181,7 @@ namespace Nuke.Common.Execution
                 ConstructorInfo constructor => constructor.IsAssembly,
                 FieldInfo field => field.IsAssembly,
                 MethodInfo method => method.IsAssembly,
+                PropertyInfo property => property.GetMethod.IsAssembly,
                 _ => throw new NotSupportedException(member.ToString())
             };
         }
@@ -311,27 +352,6 @@ namespace Nuke.Common.Execution
             params object[] args)
         {
             return (T) type.InvokeMember(memberName, target, bindingFlags, args);
-        }
-
-        public static TResult InvokeNonVirtual<TObject, TResult>(this TObject obj, Expression<Func<TObject, TResult>> func)
-        {
-            var method = (MethodInfo) func.GetMemberInfo();
-
-            var dynamicMethod = new DynamicMethod(
-                name: $"Own{method.Name}",
-                returnType: typeof(TResult),
-                parameterTypes: new[] { typeof(TObject) }.Concat(method.GetParameters().Select(x => x.ParameterType)).ToArray(),
-                owner: typeof(TObject));
-
-            var generator = dynamicMethod.GetILGenerator();
-            dynamicMethod.GetParameters().ForEach((x, i) => generator.Emit(OpCodes.Ldarg_S, i));
-            generator.Emit(OpCodes.Call, method);
-            generator.Emit(OpCodes.Ret);
-
-            var methodCallExpression = (MethodCallExpression) func.Body;
-            var arguments = obj.Concat(methodCallExpression.Arguments.Cast<ConstantExpression>().Select(x => x.Value)).ToArray();
-
-            return (TResult) dynamicMethod.Invoke(obj: null, arguments);
         }
     }
 }

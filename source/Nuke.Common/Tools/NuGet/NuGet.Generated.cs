@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.NuGet
         ///   <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> NuGet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> NuGet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(NuGetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, NuGetLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(NuGetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, NuGetLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -67,7 +67,7 @@ namespace Nuke.Common.Tools.NuGet
         public static IReadOnlyCollection<Output> NuGetPush(NuGetPushSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetPushSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -153,7 +153,7 @@ namespace Nuke.Common.Tools.NuGet
         public static IReadOnlyCollection<Output> NuGetPack(NuGetPackSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetPackSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -254,7 +254,7 @@ namespace Nuke.Common.Tools.NuGet
         public static IReadOnlyCollection<Output> NuGetRestore(NuGetRestoreSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetRestoreSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -352,7 +352,7 @@ namespace Nuke.Common.Tools.NuGet
         public static IReadOnlyCollection<Output> NuGetInstall(NuGetInstallSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetInstallSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -439,7 +439,7 @@ namespace Nuke.Common.Tools.NuGet
         public static IReadOnlyCollection<Output> NuGetSourcesAdd(NuGetSourcesAddSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetSourcesAddSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -508,7 +508,7 @@ namespace Nuke.Common.Tools.NuGet
         public static IReadOnlyCollection<Output> NuGetSourcesUpdate(NuGetSourcesUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetSourcesUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -573,7 +573,7 @@ namespace Nuke.Common.Tools.NuGet
         public static IReadOnlyCollection<Output> NuGetSourcesRemove(NuGetSourcesRemoveSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetSourcesRemoveSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -630,7 +630,7 @@ namespace Nuke.Common.Tools.NuGet
         public static IReadOnlyCollection<Output> NuGetSourcesEnable(NuGetSourcesEnableSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetSourcesEnableSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -687,7 +687,7 @@ namespace Nuke.Common.Tools.NuGet
         public static IReadOnlyCollection<Output> NuGetSourcesDisable(NuGetSourcesDisableSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetSourcesDisableSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -744,7 +744,7 @@ namespace Nuke.Common.Tools.NuGet
         public static IReadOnlyCollection<Output> NuGetSourcesList(NuGetSourcesListSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetSourcesListSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -797,8 +797,8 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary>
         ///   Path to the NuGet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
-        public override Action<OutputType, string> CustomLogger => NuGetTasks.NuGetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => NuGetTasks.NuGetLogger;
         /// <summary>
         ///   Path of the package to push.
         /// </summary>
@@ -847,7 +847,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   Specifies the timeout, in seconds, for pushing to a server. The default is 300 seconds (5 minutes).
         /// </summary>
         public virtual int? Timeout { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("push")
@@ -863,7 +863,7 @@ namespace Nuke.Common.Tools.NuGet
               .Add("-ForceEnglishOutput", ForceEnglishOutput)
               .Add("-NonInteractive", NonInteractive)
               .Add("-Timeout {value}", Timeout);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -879,8 +879,8 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary>
         ///   Path to the NuGet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
-        public override Action<OutputType, string> CustomLogger => NuGetTasks.NuGetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => NuGetTasks.NuGetLogger;
         /// <summary>
         ///   The <c>.nuspec</c> or <c>.csproj</c> file.
         /// </summary>
@@ -962,7 +962,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   Format for packaging symbols.
         /// </summary>
         public virtual NuGetSymbolPackageFormat SymbolPackageFormat { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("pack")
@@ -986,7 +986,7 @@ namespace Nuke.Common.Tools.NuGet
               .Add("-Verbosity {value}", Verbosity)
               .Add("-Version {value}", Version)
               .Add("-SymbolPackageFormat {value}", SymbolPackageFormat);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1002,8 +1002,8 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary>
         ///   Path to the NuGet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
-        public override Action<OutputType, string> CustomLogger => NuGetTasks.NuGetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => NuGetTasks.NuGetLogger;
         /// <summary>
         ///   Defines the project to restore. I.e., the location of a solution file, a <c>packages.config</c>, or a <c>project.json</c> file.
         /// </summary>
@@ -1083,7 +1083,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.
         /// </summary>
         public virtual NuGetVerbosity Verbosity { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("restore")
@@ -1106,7 +1106,7 @@ namespace Nuke.Common.Tools.NuGet
               .Add("-SolutionDirectory {value}", SolutionDirectory)
               .Add("-Source {value}", Source, separator: ';')
               .Add("-Verbosity {value}", Verbosity);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1122,8 +1122,8 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary>
         ///   Path to the NuGet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
-        public override Action<OutputType, string> CustomLogger => NuGetTasks.NuGetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => NuGetTasks.NuGetLogger;
         /// <summary>
         ///   Name of the package to install.
         /// </summary>
@@ -1199,7 +1199,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.
         /// </summary>
         public virtual NuGetVerbosity Verbosity { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("install")
@@ -1221,7 +1221,7 @@ namespace Nuke.Common.Tools.NuGet
               .Add("-ForceEnglishOutput", ForceEnglishOutput)
               .Add("-NonInteractive", NonInteractive)
               .Add("-Verbosity {value}", Verbosity);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1237,8 +1237,8 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary>
         ///   Path to the NuGet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
-        public override Action<OutputType, string> CustomLogger => NuGetTasks.NuGetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => NuGetTasks.NuGetLogger;
         /// <summary>
         ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
         /// </summary>
@@ -1275,7 +1275,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   Specifies the user name for authenticating with the source.
         /// </summary>
         public virtual string UserName { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("sources add")
@@ -1288,7 +1288,7 @@ namespace Nuke.Common.Tools.NuGet
               .Add("-Password {value}", Password, secret: true)
               .Add("-StorePasswordInClearText", StorePasswordInClearText)
               .Add("-UserName {value}", UserName);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1304,8 +1304,8 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary>
         ///   Path to the NuGet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
-        public override Action<OutputType, string> CustomLogger => NuGetTasks.NuGetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => NuGetTasks.NuGetLogger;
         /// <summary>
         ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
         /// </summary>
@@ -1342,7 +1342,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   Specifies the user name for authenticating with the source.
         /// </summary>
         public virtual string UserName { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("sources update")
@@ -1355,7 +1355,7 @@ namespace Nuke.Common.Tools.NuGet
               .Add("-Password {value}", Password, secret: true)
               .Add("-StorePasswordInClearText", StorePasswordInClearText)
               .Add("-UserName {value}", UserName);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1371,8 +1371,8 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary>
         ///   Path to the NuGet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
-        public override Action<OutputType, string> CustomLogger => NuGetTasks.NuGetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => NuGetTasks.NuGetLogger;
         /// <summary>
         ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
         /// </summary>
@@ -1393,7 +1393,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   Name of the source.
         /// </summary>
         public virtual string Name { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("sources remove")
@@ -1402,7 +1402,7 @@ namespace Nuke.Common.Tools.NuGet
               .Add("-NonInteractive", NonInteractive)
               .Add("-Verbosity {value}", Verbosity)
               .Add("-Name {value}", Name);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1418,8 +1418,8 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary>
         ///   Path to the NuGet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
-        public override Action<OutputType, string> CustomLogger => NuGetTasks.NuGetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => NuGetTasks.NuGetLogger;
         /// <summary>
         ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
         /// </summary>
@@ -1440,7 +1440,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   Name of the source.
         /// </summary>
         public virtual string Name { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("sources enable")
@@ -1449,7 +1449,7 @@ namespace Nuke.Common.Tools.NuGet
               .Add("-NonInteractive", NonInteractive)
               .Add("-Verbosity {value}", Verbosity)
               .Add("-Name {value}", Name);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1465,8 +1465,8 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary>
         ///   Path to the NuGet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
-        public override Action<OutputType, string> CustomLogger => NuGetTasks.NuGetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => NuGetTasks.NuGetLogger;
         /// <summary>
         ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
         /// </summary>
@@ -1487,7 +1487,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   Name of the source.
         /// </summary>
         public virtual string Name { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("sources disable")
@@ -1496,7 +1496,7 @@ namespace Nuke.Common.Tools.NuGet
               .Add("-NonInteractive", NonInteractive)
               .Add("-Verbosity {value}", Verbosity)
               .Add("-Name {value}", Name);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1512,8 +1512,8 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary>
         ///   Path to the NuGet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
-        public override Action<OutputType, string> CustomLogger => NuGetTasks.NuGetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => NuGetTasks.NuGetLogger;
         /// <summary>
         ///   Can be <c>Detailed</c> (the default) or <c>Short</c>.
         /// </summary>
@@ -1534,7 +1534,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.
         /// </summary>
         public virtual NuGetVerbosity Verbosity { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("sources list")
@@ -1543,7 +1543,7 @@ namespace Nuke.Common.Tools.NuGet
               .Add("-ForceEnglishOutput", ForceEnglishOutput)
               .Add("-NonInteractive", NonInteractive)
               .Add("-Verbosity {value}", Verbosity);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

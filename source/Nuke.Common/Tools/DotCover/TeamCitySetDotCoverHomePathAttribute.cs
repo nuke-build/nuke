@@ -12,8 +12,7 @@ using Nuke.Common.Execution;
 namespace Nuke.Common.Tools.DotCover
 {
     [PublicAPI]
-    [AttributeUsage(AttributeTargets.Class)]
-    public class TeamCitySetDotCoverHomePathAttribute : Attribute, IOnAfterLogo
+    public class TeamCitySetDotCoverHomePathAttribute : BuildExtensionAttributeBase, IOnAfterLogo
     {
         public void OnAfterLogo(
             NukeBuild build,

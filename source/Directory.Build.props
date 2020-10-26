@@ -5,7 +5,7 @@
     <NoWarn>1701;1702;1591</NoWarn>
     <DefineConstants>$(DefineConstants);JETBRAINS_ANNOTATIONS</DefineConstants>
     <DebugSymbols>True</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugType>portable</DebugType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -18,7 +18,6 @@
     <PackageTags>build automation continuous-integration tools orchestration</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://nuke.build</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/nuke-build/nuke</RepositoryUrl>
     <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
