@@ -88,7 +88,7 @@ partial class Build
                     location: new PointF(image.Width / 2f, image.Height / 2f - 100),
                     options: graphicsOptions)
                 .DrawText(
-                    text: "0.24.0",
+                    text: GitVersion.NuGetVersionV2,
                     font: robotoFont.CreateFont(150),
                     color: Color.WhiteSmoke,
                     location: new PointF(image.Width / 2f, image.Height / 2f),
