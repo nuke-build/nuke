@@ -23,6 +23,7 @@ namespace Nuke.Common.Execution
             foreach (var requirement in target.Requirements)
             {
                 if (requirement is Expression<Func<bool>> boolExpression)
+                    // TODO: same as HasSkippingCondition.GetSkipReason
                     ControlFlow.Assert(boolExpression.Compile().Invoke(), $"Target '{target.Name}' requires '{requirement.Body}'.");
                 else if (IsMemberNull(requirement.GetMemberInfo(), build, target))
                     ControlFlow.Fail($"Target '{target.Name}' requires member '{requirement.GetMemberInfo().Name}' to be not null.");

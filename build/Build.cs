@@ -38,6 +38,23 @@ using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
 [DotNetVerbosityMapping]
 [ShutdownDotNetAfterServerBuild]
 [TeamCitySetDotCoverHomePath]
+[GitHubActions(
+    "deployment",
+    GitHubActionsImage.MacOsLatest,
+    OnPushBranches = new[] { MasterBranch, ReleaseBranchPrefix + "/*" },
+    InvokedTargets = new[] { nameof(Publish) },
+    ImportGitHubTokenAs = nameof(GitHubToken),
+    ImportSecrets =
+        new[]
+        {
+            nameof(NuGetApiKey),
+            nameof(SlackWebhook),
+            nameof(GitterAuthToken),
+            nameof(TwitterConsumerKey),
+            nameof(TwitterConsumerSecret),
+            nameof(TwitterAccessToken),
+            nameof(TwitterAccessTokenSecret)
+        })]
 [TeamCity(
     TeamCityAgentPlatform.Windows,
     Version = "2019.2",
@@ -49,10 +66,12 @@ using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
 [GitHubActions(
     "continuous",
     GitHubActionsImage.WindowsLatest,
-    On = new[] { GitHubActionsTrigger.Push },
-    InvokedTargets = new[] { nameof(Publish) },
-    ImportGitHubTokenAs = nameof(GitHubToken),
-    ImportSecrets = new[] { nameof(SlackWebhook), nameof(GitterAuthToken), nameof(NuGetApiKey) })]
+    GitHubActionsImage.UbuntuLatest,
+    GitHubActionsImage.MacOsLatest,
+    OnPushBranchesIgnore = new[] { MasterBranch, ReleaseBranchPrefix + "/*" },
+    OnPullRequestBranches = new[] { DevelopBranch },
+    PublishArtifacts = false,
+    InvokedTargets = new[] { nameof(Test), nameof(Pack) })]
 [AppVeyor(
     AppVeyorImage.VisualStudio2019,
     AppVeyorImage.Ubuntu1804,

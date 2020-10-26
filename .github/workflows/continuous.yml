@@ -16,7 +16,14 @@
 
 name: continuous
 
-on: [push]
+on:
+  push:
+    branches-ignore:
+      - master
+      - release/*
+  pull_request:
+    branches:
+      - develop
 
 jobs:
   windows-latest:
@@ -24,22 +31,19 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Run './build.cmd Publish'
-        run: ./build.cmd Publish
-        env:
-            GitHubToken: ${{ secrets.GITHUB_TOKEN }}
-            SlackWebhook: ${{ secrets.SlackWebhook }}
-            GitterAuthToken: ${{ secrets.GitterAuthToken }}
-            NuGetApiKey: ${{ secrets.NuGetApiKey }}
-      - uses: actions/upload-artifact@v1
-        with:
-          name: packages
-          path: output/packages
-      - uses: actions/upload-artifact@v1
-        with:
-          name: test-results
-          path: output/test-results
-      - uses: actions/upload-artifact@v1
-        with:
-          name: coverage-report.zip
-          path: output/coverage-report.zip
+      - name: Run './build.cmd Test Pack'
+        run: ./build.cmd Test Pack
+  ubuntu-latest:
+    name: ubuntu-latest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run './build.cmd Test Pack'
+        run: ./build.cmd Test Pack
+  macOS-latest:
+    name: macOS-latest
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run './build.cmd Test Pack'
+        run: ./build.cmd Test Pack

@@ -35,7 +35,7 @@ partial class Build
         .OnlyWhenDynamic(() => FontDownloadUrls.Length != FontArchives.Count)
         .Executes(() =>
         {
-            FontDownloadUrls.ForEach(x => HttpDownloadFile(x, FontDirectory / new Uri(x).Segments.Last()));
+            FontDownloadUrls.ForEach(x => HttpDownloadFile(x, FontDirectory / new Uri(x).Segments.Last(), requestConfigurator: x => x.Timeout = 120000));
             FontArchives.ForEach(x => Uncompress(x, FontDirectory / Path.GetFileNameWithoutExtension(x)));
         });
 
@@ -88,7 +88,7 @@ partial class Build
                     location: new PointF(image.Width / 2f, image.Height / 2f - 100),
                     options: graphicsOptions)
                 .DrawText(
-                    text: "0.24.0",
+                    text: GitVersion.NuGetVersionV2,
                     font: robotoFont.CreateFont(150),
                     color: Color.WhiteSmoke,
                     location: new PointF(image.Width / 2f, image.Height / 2f),

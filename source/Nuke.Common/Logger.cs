@@ -303,7 +303,7 @@ namespace Nuke.Common
             {
                 case AggregateException ex:
                     var exceptions = ex.Flatten().InnerExceptions;
-                    exceptions.ForEach((x, i) => HandleException(x, exceptionOutput, $"#{i + 1}/{exceptions.Count}: "));
+                    exceptions.ForEach((x, i) => HandleException(x, exceptionOutput, $"[{i + 1}/{exceptions.Count}] "));
                     break;
                 case TargetInvocationException ex:
                     HandleException(ex.InnerException, exceptionOutput);
@@ -312,7 +312,7 @@ namespace Nuke.Common
                     HandleException(ex.InnerException, exceptionOutput);
                     break;
                 default:
-                    exceptionOutput(prefix + exception.Message, exception.StackTrace + EnvironmentInfo.NewLine);
+                    exceptionOutput($"{prefix}{exception.GetType().Name}: {exception.Message}", exception.StackTrace + EnvironmentInfo.NewLine);
                     break;
             }
         }
