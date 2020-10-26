@@ -35,7 +35,7 @@ partial class Build
         .OnlyWhenDynamic(() => FontDownloadUrls.Length != FontArchives.Count)
         .Executes(() =>
         {
-            FontDownloadUrls.ForEach(x => HttpDownloadFile(x, FontDirectory / new Uri(x).Segments.Last()));
+            FontDownloadUrls.ForEach(x => HttpDownloadFile(x, FontDirectory / new Uri(x).Segments.Last(), requestConfigurator: x => x.Timeout = 120000));
             FontArchives.ForEach(x => Uncompress(x, FontDirectory / Path.GetFileNameWithoutExtension(x)));
         });
 
