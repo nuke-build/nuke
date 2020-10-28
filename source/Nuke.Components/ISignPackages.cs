@@ -25,8 +25,8 @@ namespace Nuke.Components
         [Parameter] string SignPathPolicyKey => ValueInjectionUtility.TryGetValue(() => SignPathPolicyKey);
 
         AbsolutePath SignPathTemporaryDirectory => TemporaryDirectory / $"signpath";
-        AbsolutePath SignPathRequestDirectory => SignPathTemporaryDirectory / "sign-request";
-        AbsolutePath SignPathResponseDirectory => SignPathTemporaryDirectory / "sign-response";
+        AbsolutePath SignPathRequestDirectory => SignPathTemporaryDirectory / "signing-request";
+        AbsolutePath SignPathResponseDirectory => SignPathTemporaryDirectory / "signing-response";
         string SignPathRequestArchive => Path.ChangeExtension(SignPathRequestDirectory, ".zip");
         string SignPathResponseArchive => Path.ChangeExtension(SignPathRequestDirectory, ".zip");
 
