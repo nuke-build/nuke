@@ -53,7 +53,6 @@ namespace Nuke.MSBuildTasks
             return ExternalFiles
                 .SelectMany(GetExternalFilesInfo)
                 .Select(DownloadExternalFile)
-                .ToList()
                 .All(x => x.Result);
         }
 

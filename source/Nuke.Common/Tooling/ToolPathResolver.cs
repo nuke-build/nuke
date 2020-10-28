@@ -73,7 +73,7 @@ namespace Nuke.Common.Tooling
                 => executables
                     .OrderByDescending(x => x.EndsWithOrdinalIgnoreCase(".dll"))
                     .ThenByDescending(x => EnvironmentInfo.IsWin && x.EndsWithOrdinalIgnoreCase(".exe"))
-                    .ThenByDescending(x => EnvironmentInfo.IsUnix && x.EndsWithOrdinalIgnoreCase(".sh")).ToList()
+                    .ThenByDescending(x => EnvironmentInfo.IsUnix && x.EndsWithOrdinalIgnoreCase(".sh"))
                     .First();
 
             ControlFlow.Assert(frameworks.Count > 0, "frameworks.Count > 0");

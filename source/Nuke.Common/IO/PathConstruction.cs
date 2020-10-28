@@ -111,7 +111,7 @@ namespace Nuke.Common.IO
 
             var sameParts = baseParts.Zip(destinationParts, (a, b) => new { Base = a, Destination = b })
                 .Count(x => x.Base.EqualsOrdinalIgnoreCase(x.Destination));
-            return Enumerable.Repeat("..", baseParts.Length - sameParts).ToList()
+            return Enumerable.Repeat("..", baseParts.Length - sameParts)
                 .Concat(destinationParts.Skip(sameParts).ToList()).Join(separator);
         }
 
