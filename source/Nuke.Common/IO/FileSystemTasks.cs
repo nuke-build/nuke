@@ -294,7 +294,7 @@ namespace Nuke.Common.IO
                 EnsureExistingParentDirectory(path);
 
             if (!File.Exists(path))
-                File.WriteAllBytes(path, new byte[0]);
+                File.WriteAllBytes(path, Array.Empty<byte>());
 
             File.SetLastWriteTime(path, time ?? DateTime.UtcNow);
         }
@@ -365,7 +365,7 @@ namespace Nuke.Common.IO
                 md5.TransformBlock(contentBytes, inputOffset: 0, inputCount: contentBytes.Length, outputBuffer: contentBytes, outputOffset: 0);
             }
 
-            md5.TransformFinalBlock(new byte[0], inputOffset: 0, inputCount: 0);
+            md5.TransformFinalBlock(Array.Empty<byte>(), inputOffset: 0, inputCount: 0);
 
             return BitConverter.ToString(md5.Hash).Replace("-", "").ToLower();
         }

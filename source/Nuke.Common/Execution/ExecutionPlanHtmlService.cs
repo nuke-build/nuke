@@ -68,7 +68,7 @@ namespace Nuke.Common.Execution
             var defaultTarget = executableTargets.SingleOrDefault(x => x.IsDefault);
             var defaultPlan = defaultTarget != null
                 ? ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { defaultTarget.Name })
-                : new ExecutableTarget[0];
+                : Array.Empty<ExecutableTarget>();
             defaultPlan.ForEach(x => builder.AppendLine($@"  $(""#{x.Name}"").addClass('highlight');"));
 
             foreach (var executableTarget in executableTargets)

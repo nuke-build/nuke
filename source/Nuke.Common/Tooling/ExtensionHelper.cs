@@ -46,7 +46,7 @@ namespace Nuke.Common.Tooling
         {
             return (dictionary.Contains(key)
                     ? ((string) dictionary[key]).Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries)
-                    : new string[0])
+                    : Array.Empty<string>())
                 .Select(Convert<TValue>).ToList();
         }
 

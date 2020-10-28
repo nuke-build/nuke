@@ -50,25 +50,25 @@ namespace Nuke.Common.CI.AzurePipelines
 
         public override IEnumerable<string> RelevantTargetNames => InvokedTargets;
 
-        public string[] InvokedTargets { get; set; } = new string[0];
+        public string[] InvokedTargets { get; set; } = Array.Empty<string>();
 
         public bool TriggerDisabled { get; set; }
         public bool? TriggerBatch { get; set; }
-        public string[] TriggerBranchesInclude { get; set; } = new string[0];
-        public string[] TriggerBranchesExclude { get; set; } = new string[0];
-        public string[] TriggerTagsInclude { get; set; } = new string[0];
-        public string[] TriggerTagsExclude { get; set; } = new string[0];
-        public string[] TriggerPathsInclude { get; set; } = new string[0];
-        public string[] TriggerPathsExclude { get; set; } = new string[0];
+        public string[] TriggerBranchesInclude { get; set; } = Array.Empty<string>();
+        public string[] TriggerBranchesExclude { get; set; } = Array.Empty<string>();
+        public string[] TriggerTagsInclude { get; set; } = Array.Empty<string>();
+        public string[] TriggerTagsExclude { get; set; } = Array.Empty<string>();
+        public string[] TriggerPathsInclude { get; set; } = Array.Empty<string>();
+        public string[] TriggerPathsExclude { get; set; } = Array.Empty<string>();
 
         public bool PullRequestsAutoCancel { get; set; }
-        public string[] PullRequestsBranchesInclude { get; set; } = new string[0];
-        public string[] PullRequestsBranchesExclude { get; set; } = new string[0];
-        public string[] PullRequestsPathsInclude { get; set; } = new string[0];
-        public string[] PullRequestsPathsExclude { get; set; } = new string[0];
+        public string[] PullRequestsBranchesInclude { get; set; } = Array.Empty<string>();
+        public string[] PullRequestsBranchesExclude { get; set; } = Array.Empty<string>();
+        public string[] PullRequestsPathsInclude { get; set; } = Array.Empty<string>();
+        public string[] PullRequestsPathsExclude { get; set; } = Array.Empty<string>();
 
-        public string[] ImportVariableGroups { get; set; } = new string[0];
-        public string[] ImportSecrets { get; set; } = new string[0];
+        public string[] ImportVariableGroups { get; set; } = Array.Empty<string>();
+        public string[] ImportSecrets { get; set; } = Array.Empty<string>();
         public string ImportSystemAccessTokenAs { get; set; }
 
         public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
@@ -127,7 +127,7 @@ namespace Nuke.Common.CI.AzurePipelines
                        Name = image.GetValue().Replace("-", "_").Replace(".", "_"),
                        DisplayName = image.GetValue(),
                        Image = image,
-                       Dependencies = new AzurePipelinesStage[0],
+                       Dependencies = Array.Empty<AzurePipelinesStage>(),
                        Jobs = jobs
                    };
         }

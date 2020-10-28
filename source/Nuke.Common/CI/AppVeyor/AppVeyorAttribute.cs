@@ -34,20 +34,20 @@ namespace Nuke.Common.CI.AppVeyor
         public override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
 
         public override IEnumerable<string> RelevantTargetNames => InvokedTargets;
-        public override IEnumerable<string> IrrelevantTargetNames => new string[0];
+        public override IEnumerable<string> IrrelevantTargetNames => Array.Empty<string>();
 
-        public AppVeyorService[] Services { get; set; } = new AppVeyorService[0];
-        public string[] InvokedTargets { get; set; } = new string[0];
-        public string[] BranchesOnly { get; set; } = new string[0];
-        public string[] BranchesExcept { get; set; } = new string[0];
+        public AppVeyorService[] Services { get; set; } = Array.Empty<AppVeyorService>();
+        public string[] InvokedTargets { get; set; } = Array.Empty<string>();
+        public string[] BranchesOnly { get; set; } = Array.Empty<string>();
+        public string[] BranchesExcept { get; set; } = Array.Empty<string>();
         public bool SkipTags { get; set; }
         public bool SkipBranchesWithPullRequest { get; set; }
         public string OnlyCommitsMessage { get; set; }
         public string OnlyCommitsAuthor { get; set; }
         public string SkipCommitsMessage { get; set; }
         public string SkipCommitsAuthor { get; set; }
-        public string[] Init { get; set; } = new string[0];
-        public string[] Cache { get; set; } = new string[0];
+        public string[] Init { get; set; } = Array.Empty<string>();
+        public string[] Cache { get; set; } = Array.Empty<string>();
 
         public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
         {

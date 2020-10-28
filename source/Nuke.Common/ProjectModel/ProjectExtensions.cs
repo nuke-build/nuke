@@ -67,7 +67,7 @@ namespace Nuke.Common.ProjectModel
             if (targetFrameworksProperty != null)
                 return targetFrameworksProperty.EvaluatedValue.Split(';');
 
-            return new string[0];
+            return Array.Empty<string>();
         }
 
         public static string GetOutputType(this Project project)

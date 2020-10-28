@@ -198,7 +198,7 @@ namespace Nuke.Common.ValueInjection
             ControlFlow.Assert(values.Length == 1 || !separator.HasValue || values.All(x => !x.Contains(separator.Value)),
                 $"Command-line argument '{argumentName}' with value [ {values.JoinComma()} ] cannot be split with separator '{separator}'.");
             values = separator.HasValue && values.Any(x => x.Contains(separator.Value))
-                ? values.SingleOrDefault()?.Split(separator.Value) ?? new string[0]
+                ? values.SingleOrDefault()?.Split(separator.Value) ?? Array.Empty<string>()
                 : values;
 
             try

@@ -61,13 +61,13 @@ namespace Nuke.Common.Execution
             {
                 if (!NukeBuild.Continue ||
                     !File.Exists(BuildAttemptFile))
-                    return new string[0];
+                    return Array.Empty<string>();
 
                 var previousBuild = File.ReadAllLines(BuildAttemptFile);
                 if (previousBuild.FirstOrDefault() != invocationHash)
                 {
                     Logger.Warn("Build invocation changed. Starting over...");
-                    return new string[0];
+                    return Array.Empty<string>();
                 }
 
                 return previousBuild.Skip(1).ToArray();

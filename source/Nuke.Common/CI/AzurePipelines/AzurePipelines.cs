@@ -214,7 +214,7 @@ namespace Nuke.Common.CI.AzurePipelines
                 dictionaryConfigurator?
                     .Invoke(new Dictionary<string, object>())
                     .Select(x => $"{x.Key}={EscapeValue(x.Value.ToString())}").ToArray()
-                ?? new string[0];
+                ?? Array.Empty<string>();
 
             Write(command, escapedTokens, message);
         }

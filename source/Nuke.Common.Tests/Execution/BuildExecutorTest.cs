@@ -42,7 +42,7 @@ namespace Nuke.Common.Tests.Execution
         [Fact]
         public void TestUserSkipped()
         {
-            ExecuteBuild(skippedTargets: new ExecutableTarget[0]);
+            ExecuteBuild(skippedTargets: Array.Empty<ExecutableTarget>());
             AssertSkipped(A, B, C);
 
             ExecuteBuild(skippedTargets: new[] { A });

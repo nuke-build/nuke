@@ -21,7 +21,7 @@ namespace Nuke.Common.Tests
     {
         private ParameterService GetService(string[] commandLineArguments = null, IDictionary<string, string> environmentVariables = null)
         {
-            commandLineArguments ??= new string[0];
+            commandLineArguments ??= Array.Empty<string>();
             environmentVariables ??= new Dictionary<string, string>();
 
             return new ParameterService(

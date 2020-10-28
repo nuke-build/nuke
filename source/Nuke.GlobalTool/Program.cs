@@ -70,7 +70,7 @@ namespace Nuke.GlobalTool
                     : "build.ps1/sh";
 
                 return UserConfirms($"Could not find {missingFile} file. Do you want to setup a build?")
-                    ? Setup(new string[0], rootDirectory, buildScript: null)
+                    ? Setup(Array.Empty<string>(), rootDirectory, buildScript: null)
                     : 0;
             }
 

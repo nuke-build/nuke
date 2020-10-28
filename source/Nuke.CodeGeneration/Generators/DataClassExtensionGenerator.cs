@@ -320,7 +320,7 @@ namespace Nuke.CodeGeneration.Generators
 
         private static DataClassWriter WriteMethod(this DataClassWriter writer, string name, string[] modifications)
         {
-            return writer.WriteMethod(name, new string[0], modifications);
+            return writer.WriteMethod(name, Array.Empty<string>(), modifications);
         }
 
         private static DataClassWriter WriteMethod(

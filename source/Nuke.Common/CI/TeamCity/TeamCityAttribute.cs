@@ -35,7 +35,7 @@ namespace Nuke.Common.CI.TeamCity
         private AbsolutePath TeamcityDirectory => NukeBuild.RootDirectory / ".teamcity";
         private string PomFile => TeamcityDirectory / "pom.xml";
 
-        public override IEnumerable<string> RelevantTargetNames => new string[0]
+        public override IEnumerable<string> RelevantTargetNames => Array.Empty<string>()
             .Concat(VcsTriggeredTargets)
             .Concat(NightlyTriggeredTargets)
             .Concat(ManuallyTriggeredTargets);
@@ -46,16 +46,16 @@ namespace Nuke.Common.CI.TeamCity
         public string Description { get; set; }
         public bool CleanCheckoutDirectory { get; set; } = true;
 
-        public string[] VcsTriggerBranchFilters { get; set; } = new string[0];
+        public string[] VcsTriggerBranchFilters { get; set; } = Array.Empty<string>();
         public string[] VcsTriggerRules { get; set; } = { "+:**" };
-        public string[] VcsTriggeredTargets { get; set; } = new string[0];
+        public string[] VcsTriggeredTargets { get; set; } = Array.Empty<string>();
 
         public bool NightlyBuildAlways { get; set; } = true;
-        public string[] NightlyTriggerBranchFilters { get; set; } = new string[0];
+        public string[] NightlyTriggerBranchFilters { get; set; } = Array.Empty<string>();
         public string[] NightlyTriggerRules { get; set; } = { "+:**" };
-        public string[] NightlyTriggeredTargets { get; set; } = new string[0];
+        public string[] NightlyTriggeredTargets { get; set; } = Array.Empty<string>();
 
-        public string[] ManuallyTriggeredTargets { get; set; } = new string[0];
+        public string[] ManuallyTriggeredTargets { get; set; } = Array.Empty<string>();
 
         protected override StreamWriter CreateStream()
         {

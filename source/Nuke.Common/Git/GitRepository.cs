@@ -124,7 +124,7 @@ namespace Nuke.Common.Git
         private static IReadOnlyCollection<string> GetTagsFromCommit(string gitDirectory, string commit)
         {
             if (commit == null)
-                return new string[0];
+                return Array.Empty<string>();
 
             var packedRefsFile = (AbsolutePath) gitDirectory / "packed-refs";
             var packedTags = File.Exists(packedRefsFile)
@@ -134,7 +134,7 @@ namespace Nuke.Common.Git
                     .Select(x => (Commit: x[0], Reference: x[1]))
                     .Where(x => x.Commit == commit && x.Reference.StartsWithOrdinalIgnoreCase("refs/tags"))
                     .Select(x => x.Reference.TrimStart("refs/tags/"))
-                : new string[0];
+                : Array.Empty<string>();
 
             var tagsDirectory = (AbsolutePath) gitDirectory / "refs" / "tags";
             var localTags = tagsDirectory

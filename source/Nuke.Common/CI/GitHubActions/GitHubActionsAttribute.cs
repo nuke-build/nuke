@@ -41,27 +41,27 @@ namespace Nuke.Common.CI.GitHubActions
         public override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
 
         public override IEnumerable<string> RelevantTargetNames => InvokedTargets;
-        public override IEnumerable<string> IrrelevantTargetNames => new string[0];
+        public override IEnumerable<string> IrrelevantTargetNames => Array.Empty<string>();
 
-        public GitHubActionsTrigger[] On { get; set; } = new GitHubActionsTrigger[0];
-        public string[] OnPushBranches { get; set; } = new string[0];
-        public string[] OnPushBranchesIgnore { get; set; } = new string[0];
-        public string[] OnPushTags { get; set; } = new string[0];
-        public string[] OnPushTagsIgnore { get; set; } = new string[0];
-        public string[] OnPushIncludePaths { get; set; } = new string[0];
-        public string[] OnPushExcludePaths { get; set; } = new string[0];
-        public string[] OnPullRequestBranches { get; set; } = new string[0];
-        public string[] OnPullRequestTags { get; set; } = new string[0];
-        public string[] OnPullRequestIncludePaths { get; set; } = new string[0];
-        public string[] OnPullRequestExcludePaths { get; set; } = new string[0];
+        public GitHubActionsTrigger[] On { get; set; } = Array.Empty<GitHubActionsTrigger>();
+        public string[] OnPushBranches { get; set; } = Array.Empty<string>();
+        public string[] OnPushBranchesIgnore { get; set; } = Array.Empty<string>();
+        public string[] OnPushTags { get; set; } = Array.Empty<string>();
+        public string[] OnPushTagsIgnore { get; set; } = Array.Empty<string>();
+        public string[] OnPushIncludePaths { get; set; } = Array.Empty<string>();
+        public string[] OnPushExcludePaths { get; set; } = Array.Empty<string>();
+        public string[] OnPullRequestBranches { get; set; } = Array.Empty<string>();
+        public string[] OnPullRequestTags { get; set; } = Array.Empty<string>();
+        public string[] OnPullRequestIncludePaths { get; set; } = Array.Empty<string>();
+        public string[] OnPullRequestExcludePaths { get; set; } = Array.Empty<string>();
         public string OnCronSchedule { get; set; }
 
-        public string[] ImportSecrets { get; set; } = new string[0];
+        public string[] ImportSecrets { get; set; } = Array.Empty<string>();
         public string ImportGitHubTokenAs { get; set; }
 
         public bool PublishArtifacts { get; set; } = true;
 
-        public string[] InvokedTargets { get; set; } = new string[0];
+        public string[] InvokedTargets { get; set; } = Array.Empty<string>();
 
         public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
         {
@@ -173,9 +173,9 @@ namespace Nuke.Common.CI.GitHubActions
                              {
                                  Kind = GitHubActionsTrigger.PullRequest,
                                  Branches = OnPullRequestBranches,
-                                 BranchesIgnore = new string[0],
+                                 BranchesIgnore = Array.Empty<string>(),
                                  Tags = OnPullRequestTags,
-                                 TagsIgnore = new string[0],
+                                 TagsIgnore = Array.Empty<string>(),
                                  IncludePaths = OnPullRequestIncludePaths,
                                  ExcludePaths = OnPullRequestExcludePaths
                              };

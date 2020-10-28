@@ -47,7 +47,7 @@ namespace Nuke.Common.Utilities
                     .Select(ParameterService.GetParameterMemberName);
 
                 var items = completionItems.GetValueOrDefault(parameter)?.Except(passedItems, StringComparer.OrdinalIgnoreCase) ??
-                            new string[0];
+                            Array.Empty<string>();
 
                 if (parameter.EqualsOrdinalIgnoreCase(Constants.InvokedTargetsParameterName))
                     items = items.Select(x => x.SplitCamelHumpsWithSeparator("-", Constants.KnownWords));

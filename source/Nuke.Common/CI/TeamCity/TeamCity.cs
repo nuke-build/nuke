@@ -97,7 +97,7 @@ namespace Nuke.Common.CI.TeamCity
                 var file = SystemProperties?["teamcity.tests.recentlyFailedTests.file"];
                 return File.Exists(file)
                     ? TextTasks.ReadAllLines(file).ToImmutableList() as IReadOnlyCollection<string>
-                    : new string[0];
+                    : Array.Empty<string>();
             });
 
             _restClient = GetLazy(() => CreateRestClient<ITeamCityRestClient>());

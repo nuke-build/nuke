@@ -16,8 +16,8 @@ namespace Nuke.Common.CI
     {
         public override IEnumerable<string> IrrelevantTargetNames => NonEntryTargets.Concat(ExcludedTargets);
 
-        public string[] NonEntryTargets { get; set; } = new string[0];
-        public string[] ExcludedTargets { get; set; } = new string[0];
+        public string[] NonEntryTargets { get; set; } = Array.Empty<string>();
+        public string[] ExcludedTargets { get; set; } = Array.Empty<string>();
 
         protected IEnumerable<ExecutableTarget> GetInvokedTargets(ExecutableTarget executableTarget, IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
