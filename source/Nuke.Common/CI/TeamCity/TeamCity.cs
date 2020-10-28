@@ -63,7 +63,7 @@ namespace Nuke.Common.CI.TeamCity
                     .Replace("\\:", ":")
                     .Replace("\\=", "=")
                     .Replace("\\\\", "\\");
-                if (line[index: 0] == '#' || string.IsNullOrWhiteSpace(line))
+                if (string.IsNullOrWhiteSpace(line) || line[index: 0] == '#')
                     continue;
 
                 var index = line.IndexOfRegex(@"[^\.]=") + 1;
