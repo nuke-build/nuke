@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [vNext]
 
 ## [0.25.0] / 2020-10-26
+- Removed `Configuration`. If updating you can simply copy https://github.com/nuke-build/nuke/blob/develop/build/Configuration.cs.
 - Changed `InjectionAttribute` to catch exceptions and report as warnings
 - Changed `ToolPathResolver` to ignore casing
 - Changed `ToolSettings` to prefix common properties with `Process`
