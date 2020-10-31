@@ -235,6 +235,7 @@ partial class Build : NukeBuild
     Target Coverage => _ => _
         .DependsOn(Test)
         .TriggeredBy(Test)
+        .OnlyWhenStatic(() => GitHubActions == null)
         .Consumes(Test)
         .Produces(CoverageReportArchive)
         .Requires(() => !PublishCodecov || CodecovToken != null)
