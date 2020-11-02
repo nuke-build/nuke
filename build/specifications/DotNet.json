@@ -520,6 +520,12 @@
             "type": "string",
             "format": "--version-suffix {value}",
             "help": "Defines the version suffix for an asterisk (<c>*</c>) in the version field of the project file. The format follows NuGet's version guidelines."
+          },
+          {
+            "name": "NoLogo",
+            "type": "bool",
+            "format": "--nologo",
+            "help": "Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK."
           }
         ]
       }
