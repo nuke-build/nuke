@@ -289,7 +289,7 @@
             "help": "Sets the serviceable flag in the package. For more information, see <a href=\"https://aka.ms/nupkgservicing\">.NET Blog: .NET 4.5.1 Supports Microsoft Security Updates for .NET NuGet Libraries</a>."
           },
           {
-            "name": "Verbostiy",
+            "name": "Verbosity",
             "type": "DotNetVerbosity",
             "format": "--verbosity {value}",
             "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
