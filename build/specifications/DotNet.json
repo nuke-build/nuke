@@ -910,6 +910,25 @@
           "name": "SymbolPackageFormat",
           "type": "DotNetSymbolPackageFormat",
           "help": "Format for packaging symbols."
+        },
+        {
+          "name": "PublishReadyToRun",
+          "type": "bool",
+          "help": "Compiles application assemblies as ReadyToRun (R2R) format. R2R is a form of ahead-of-time (AOT) compilation. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/ready-to-run\">ReadyToRun images</a>. Available since .NET Core 3.0 SDK.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild\">MSBuild</a>."
+        },
+        {
+          "name": "PublishSingleFile",
+          "type": "bool",
+          "help": "Packages the app into a platform-specific single-file executable. The executable is self-extracting and contains all dependencies (including native) that are required to run the app. When the app is first run, the application is extracted to a directory based on the app name and build identifier. Startup is faster when the application is run again. The application doesn't need to extract itself a second time unless a new version is used. Available since .NET Core 3.0 SDK.<para/> For more information about single-file publishing, see the <a href=\"https://github.com/dotnet/designs/blob/master/accepted/2020/single-file/design.md\">single-file bundler design document</a>.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild\">MSBuild</a>."
+        },
+        {
+          "name": "PublishTrimmed",
+          "type": "bool",
+          "help": "Trims unused libraries to reduce the deployment size of an app when publishing a self-contained executable. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/trim-self-contained\">Trim self-contained deployments and executables</a>. Available since .NET Core 3.0 SDK as a preview feature.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild\">MSBuild</a>."
+        },
+        {
+          "name": "PublishProfile",
+          "type": "string"
         }
       ]
     }
