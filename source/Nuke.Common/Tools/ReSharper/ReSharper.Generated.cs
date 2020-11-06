@@ -30,7 +30,7 @@ namespace Nuke.Common.Tools.ReSharper
         /// </summary>
         public static string ReSharperPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("RESHARPER_EXE") ??
-            ToolPathResolver.GetPackageExecutable("JetBrains.ReSharper.GlobalTools", "JetBrains.CommandLine.Products.exe");
+            ToolPathResolver.GetPackageExecutable("JetBrains.ReSharper.GlobalTools", "JetBrains.CommandLine.Products.dll");
         public static Action<OutputType, string> ReSharperLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/ReSharper_Command_Line_Tools.html">official website</a>.</p>
