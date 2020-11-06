@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Nuke.Common;
+using Nuke.Common.CI;
 using Nuke.Common.Execution;
 using Nuke.Common.Git;                                                                          // GIT
 using Nuke.Common.IO;
