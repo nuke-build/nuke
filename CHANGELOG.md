@@ -6,7 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [5.0.0] / 2020-11-12
+- Fixed version number
+
 ## [0.25.0] / 2020-10-26
+- Removed `Configuration` from `Nuke.Common` and moved it to template
 - Changed `InjectionAttribute` to catch exceptions and report as warnings
 - Changed `ToolPathResolver` to ignore casing
 - Changed `ToolSettings` to prefix common properties with `Process`
@@ -635,7 +639,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: git@github.com:nuke-build/nuke/compare/0.25.0...HEAD
+[vNext]: git@github.com:nuke-build/nuke/compare/5.0.0...HEAD
+[5.0.0]: git@github.com:nuke-build/nuke/compare/0.25.0...5.0.0
 [0.25.0]: git@github.com:nuke-build/nuke/compare/0.24.11...0.25.0
 [0.24.11]: git@github.com:nuke-build/nuke/compare/0.24.10...0.24.11
 [0.24.10]: git@github.com:nuke-build/nuke/compare/0.24.9...0.24.10
