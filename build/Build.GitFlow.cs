@@ -19,13 +19,14 @@ using static Nuke.Common.Tools.GitVersion.GitVersionTasks;
 partial class Build
 {
     [Parameter] readonly bool AutoStash = true;
+    string MajorMinorPatchVersion => GitVersion.MajorMinorPatch;
 
     Target Milestone => _ => _
         .Unlisted()
         .OnlyWhenStatic(() => GitRepository.IsOnReleaseBranch() || GitRepository.IsOnHotfixBranch())
         .Executes(async () =>
         {
-            var milestoneTitle = $"v{GitVersion.MajorMinorPatch}";
+            var milestoneTitle = $"v{MajorMinorPatchVersion}";
             var milestone = (await GitRepository.GetGitHubMilestone(milestoneTitle)).NotNull("milestone != null");
             Assert(milestone.OpenIssues == 0, "milestone.OpenIssues == 0");
             Assert(milestone.ClosedIssues != 0, "milestone.ClosedIssues != 0");
@@ -38,12 +39,12 @@ partial class Build
         .OnlyWhenStatic(() => GitRepository.IsOnReleaseBranch() || GitRepository.IsOnHotfixBranch())
         .Executes(() =>
         {
-            FinalizeChangelog(ChangelogFile, GitVersion.MajorMinorPatch, GitRepository);
+            FinalizeChangelog(ChangelogFile, MajorMinorPatchVersion, GitRepository);
             Logger.Info("Please review CHANGELOG.md and press any key to continue...");
             System.Console.ReadKey();
 
             Git($"add {ChangelogFile}");
-            Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.MajorMinorPatch}\"");
+            Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {MajorMinorPatchVersion}\"");
         });
 
     [UsedImplicitly]
@@ -53,7 +54,7 @@ partial class Build
         .Executes(() =>
         {
             if (!GitRepository.IsOnReleaseBranch())
-                Checkout($"{ReleaseBranchPrefix}/{GitVersion.MajorMinorPatch}", start: DevelopBranch);
+                Checkout($"{ReleaseBranchPrefix}/{MajorMinorPatchVersion}", start: DevelopBranch);
             else
                 FinishReleaseOrHotfix();
         });
@@ -81,14 +82,14 @@ partial class Build
     {
         Git($"checkout {MasterBranch}");
         Git($"merge --no-ff --no-edit {GitRepository.Branch}");
-        Git($"tag {GitVersion.MajorMinorPatch}");
+        Git($"tag {MajorMinorPatchVersion}");
 
         Git($"checkout {DevelopBranch}");
         Git($"merge --no-ff --no-edit {GitRepository.Branch}");
 
         Git($"branch -D {GitRepository.Branch}");
 
-        Git($"push origin {MasterBranch} {DevelopBranch} {GitVersion.MajorMinorPatch}");
+        Git($"push origin {MasterBranch} {DevelopBranch} {MajorMinorPatchVersion}");
     }
 
     void Checkout(string branch, string start)
