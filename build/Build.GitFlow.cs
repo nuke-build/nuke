@@ -66,7 +66,7 @@ partial class Build
         .Executes(() =>
         {
             var masterVersion = GitVersion(s => s
-                .SetFramework("netcoreapp3.0")
+                .SetFramework("netcoreapp3.1")
                 .SetUrl(RootDirectory)
                 .SetBranch(MasterBranch)
                 .EnableNoFetch()
