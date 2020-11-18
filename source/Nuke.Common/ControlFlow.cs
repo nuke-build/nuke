@@ -55,7 +55,7 @@ namespace Nuke.Common
         public static void AssertWarn(bool condition, string text)
         {
             if (!condition)
-                Logger.Warn($"Assertion failed: {text}");
+                Logger.Warn($"Check failed: {text}");
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Nuke.Common
         public static IReadOnlyCollection<T> NotEmpty<T>([CanBeNull] this IEnumerable<T> enumerable, string message = null)
         {
             var collection = enumerable.NotNull("enumerable != null").ToList().AsReadOnly();
-            Assert(collection.Count > 0, message ?? $"IEnumerable{typeof(T).FullName}.Count > 0");
+            Assert(collection.Count > 0, message ?? $"IEnumerable<{typeof(T).FullName}>.Count > 0");
             return collection;
         }
 
@@ -119,7 +119,7 @@ namespace Nuke.Common
         public static IReadOnlyCollection<T> NoNullItems<T>([CanBeNull] this IEnumerable<T> enumerable)
         {
             var collection = enumerable.NotNull("enumerable != null").ToList().AsReadOnly();
-            Assert(collection.All(x => x != null), $"IEnumerable{typeof(T).FullName}.All(x => x != null)");
+            Assert(collection.All(x => x != null), $"IEnumerable<{typeof(T).FullName}>.All(x => x != null)");
             return collection;
         }
 
