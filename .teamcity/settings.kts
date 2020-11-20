@@ -95,14 +95,14 @@ project {
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         text (
-            "env.SignPathProjectKey",
-            label = "SignPathProjectKey",
+            "env.SignPathProjectSlug",
+            label = "SignPathProjectSlug",
             value = "",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         text (
-            "env.SignPathPolicyKey",
-            label = "SignPathPolicyKey",
+            "env.SignPathPolicySlug",
+            label = "SignPathPolicySlug",
             value = "",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)

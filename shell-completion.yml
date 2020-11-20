@@ -24,8 +24,8 @@ Plan:
 Root: 
 SignPathApiToken: 
 SignPathOrganizationId: 
-SignPathPolicyKey: 
-SignPathProjectKey: 
+SignPathPolicySlug: 
+SignPathProjectSlug: 
 Skip:
 - Analysis
 - Announce
