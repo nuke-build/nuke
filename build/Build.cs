@@ -44,7 +44,7 @@ using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
 [GitHubActions(
     "deployment",
     GitHubActionsImage.MacOsLatest,
-    OnPushBranches = new[] { MasterBranch, ReleaseBranchPrefix + "/*" },
+    OnPushBranches = new[] { MasterBranch, ReleaseBranchPrefix + "/*", DevelopBranch },
     InvokedTargets = new[] { nameof(Publish) },
     ImportGitHubTokenAs = nameof(GitHubToken),
     ImportSecrets =
@@ -293,6 +293,8 @@ partial class Build : NukeBuild
         .ProceedAfterFailure()
         .DependsOn(Clean, Test, Pack)
         .Consumes(Pack)
+        .OnlyWhenStatic(() => GitRepository.IsOnMasterBranch() || GitRepository.IsOnReleaseBranch() || !IsOriginalRepository)
+        .WhenSkipped(DependencyBehavior.Skip)
         .Requires(() => !NuGetApiKey.IsNullOrEmpty() || !IsOriginalRepository)
         .Requires(() => GitHasCleanWorkingCopy())
         .Requires(() => Configuration.Equals(Configuration.Release))
@@ -306,7 +308,8 @@ partial class Build : NukeBuild
                 DotNetNuGetAddSource(_ => _
                     .SetSource(GitHubPackageSource)
                     .SetUsername(GitHubActions.GitHubActor)
-                    .SetPassword(GitHubToken));
+                    .SetPassword(GitHubToken)
+                    .EnableStorePasswordInClearText());
             }
 
             Assert(PackageFiles.Count == 4, "packages.Count == 4");
