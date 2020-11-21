@@ -98,6 +98,13 @@ namespace Nuke.Common.OutputSinks
                    + duration.PadLeft(thirdColumn, paddingChar: ' ')
                    + (appendix != null ? $"   // {appendix}" : string.Empty);
 
+            static string GetDurationOrBlank(ExecutableTarget target)
+                => target.Status == ExecutionStatus.Executed ||
+                   target.Status == ExecutionStatus.Failed ||
+                   target.Status == ExecutionStatus.Aborted
+                    ? GetDuration(target.Duration)
+                    : string.Empty;
+
             static string GetDuration(TimeSpan duration)
                 => $"{(int) duration.TotalMinutes}:{duration:ss}".Replace("0:00", "< 1sec");
 
@@ -107,7 +114,7 @@ namespace Nuke.Common.OutputSinks
             WriteNormal(new string(c: '─', count: allColumns));
             foreach (var target in build.ExecutionPlan)
             {
-                var line = CreateLine(target.Name, target.Status.ToString(), GetDuration(target.Duration), target.SkipReason);
+                var line = CreateLine(target.Name, target.Status.ToString(), GetDurationOrBlank(target), target.SkipReason);
                 switch (target.Status)
                 {
                     case ExecutionStatus.Skipped:
