@@ -98,6 +98,7 @@ This project is driven by contributors investing their private free time. If it 
 - [avivasolutionsnl/sitecore-docker](https://github.com/avivasolutionsnl/sitecore-docker/tree/master/build)
 - [fluentassertions/fluentassertions](https://github.com/fluentassertions/fluentassertions/tree/master/Build) ⭐️
 - [GeorgDangl/LightQuery](https://github.com/GeorgDangl/LightQuery/tree/dev/build)
+- [ChilliCream/HotChocolate](https://github.com/ChilliCream/hotchocolate/tree/main/.build)
 - [JetBrains/YouTrackSharp](https://github.com/JetBrains/YouTrackSharp)
 - [joaomatossilva/DateTimeExtensions](https://github.com/joaomatossilva/DateTimeExtensions)
 - [JoshClose/CsvHelper](https://github.com/JoshClose/CsvHelper/tree/master/build) ⭐️
