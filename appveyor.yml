@@ -36,3 +36,7 @@ environment:
   SignPathOrganizationId: 0fdaf334-6910-41f4-83d2-e58e4cccb087
   SignPathProjectKey: nuke
   SignPathPolicyKey: test-signing
+
+on_failure:
+  - ps: Get-ChildItem *.received.* -recurse | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+

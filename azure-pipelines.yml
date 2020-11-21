@@ -41,6 +41,13 @@ stages:
             inputs:
               artifactName: test-results
               pathtoPublish: 'output/test-results'
+      - name: Upload Verify Test Results
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: verify-test-results
+          path: |
+            **/*.received.*
       - job: Pack
         displayName: '📦 Pack'
         dependsOn: [ Compile ]
@@ -78,6 +85,13 @@ stages:
             inputs:
               artifactName: test-results
               pathtoPublish: 'output/test-results'
+      - name: Upload Verify Test Results
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: verify-test-results
+          path: |
+            **/*.received.*
       - job: Pack
         displayName: '📦 Pack'
         dependsOn: [ Compile ]
@@ -115,6 +129,13 @@ stages:
             inputs:
               artifactName: test-results
               pathtoPublish: 'output/test-results'
+      - name: Upload Verify Test Results
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: verify-test-results
+          path: |
+            **/*.received.*
       - job: Pack
         displayName: '📦 Pack'
         dependsOn: [ Compile ]
