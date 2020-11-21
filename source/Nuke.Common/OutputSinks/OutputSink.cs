@@ -98,8 +98,8 @@ namespace Nuke.Common.OutputSinks
                    + duration.PadLeft(thirdColumn, paddingChar: ' ')
                    + (appendix != null ? $"   // {appendix}" : string.Empty);
 
-            static string ToMinutesAndSeconds(TimeSpan duration)
-                => $"{(int) duration.TotalMinutes}:{duration:ss}";
+            static string GetDuration(TimeSpan duration)
+                => $"{(int) duration.TotalMinutes}:{duration:ss}".Replace("0:00", "< 1sec");
 
             WriteNormal(new string(c: '═', count: allColumns));
             WriteInformation(CreateLine("Target", "Status", "Duration"));
@@ -107,7 +107,7 @@ namespace Nuke.Common.OutputSinks
             WriteNormal(new string(c: '─', count: allColumns));
             foreach (var target in build.ExecutionPlan)
             {
-                var line = CreateLine(target.Name, target.Status.ToString(), ToMinutesAndSeconds(target.Duration), target.SkipReason);
+                var line = CreateLine(target.Name, target.Status.ToString(), GetDuration(target.Duration), target.SkipReason);
                 switch (target.Status)
                 {
                     case ExecutionStatus.Skipped:
@@ -127,7 +127,7 @@ namespace Nuke.Common.OutputSinks
             }
 
             WriteNormal(new string(c: '─', count: allColumns));
-            WriteInformation(CreateLine("Total", "", ToMinutesAndSeconds(totalDuration)));
+            WriteInformation(CreateLine("Total", string.Empty, GetDuration(totalDuration)));
             WriteNormal(new string(c: '═', count: allColumns));
         }
 
