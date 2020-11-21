@@ -36,7 +36,7 @@ trigger:
       - excluded_path
 
 stages:
-  - stage: ubuntu_18.04
+  - stage: ubuntu_18_04
     displayName: 'ubuntu-18.04'
     dependsOn: [  ]
     pool:

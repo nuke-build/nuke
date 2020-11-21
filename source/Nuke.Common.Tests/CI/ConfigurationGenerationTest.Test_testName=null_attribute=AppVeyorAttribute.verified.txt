@@ -28,7 +28,8 @@ skip_tags: true
 skip_branch_with_pr: true
 
 build_script:
-  - ps: .\build.ps1 Test
+  - cmd: .\build.cmd Test
+  - sh: ./build.cmd Test
 
 artifacts:
   - path: output/test-results/*.trx
