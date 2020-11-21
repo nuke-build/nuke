@@ -53,7 +53,7 @@ project {
         select (
             "env.Configuration",
             label = "Configuration",
-            description = "Configuration to build - Default is 'Debug' (local) or 'Release' (server)",
+            description = "Configuration for compilation",
             value = "Debug",
             options = listOf("Debug" to "Debug", "Release" to "Release"),
             display = ParameterDisplay.NORMAL)
