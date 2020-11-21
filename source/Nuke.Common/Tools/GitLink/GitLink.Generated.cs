@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p>
         ///   <p>For more details, visit the <a href="https://github.com/GitTools/GitLink/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> GitLink(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> GitLink(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(GitLinkPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, GitLinkLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(GitLinkPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, GitLinkLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -69,7 +69,7 @@ namespace Nuke.Common.Tools.GitLink
         {
             toolSettings = toolSettings ?? new GitLink2Settings();
             PreProcess(ref toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -144,7 +144,7 @@ namespace Nuke.Common.Tools.GitLink
         {
             toolSettings = toolSettings ?? new GitLink3Settings();
             PreProcess(ref toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -199,8 +199,8 @@ namespace Nuke.Common.Tools.GitLink
         /// <summary>
         ///   Path to the GitLink executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GitLinkTasks.GitLinkPath;
-        public override Action<OutputType, string> CustomLogger => GitLinkTasks.GitLinkLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GitLinkTasks.GitLinkPath;
+        public override Action<OutputType, string> ProcessCustomLogger => GitLinkTasks.GitLinkLogger;
         /// <summary>
         ///   The directory containing the solution with the pdb files.
         /// </summary>
@@ -253,7 +253,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   Enables debug mode with special dumps of msbuild.
         /// </summary>
         public virtual bool? Debug { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("{value}", SolutionDirectory)
@@ -269,7 +269,7 @@ namespace Nuke.Common.Tools.GitLink
               .Add("-errorsaswarnings", ErrorsAsWarnings)
               .Add("-skipverify", SkipVerification)
               .Add("-debug", Debug);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -285,8 +285,8 @@ namespace Nuke.Common.Tools.GitLink
         /// <summary>
         ///   Path to the GitLink executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GitLinkTasks.GitLinkPath;
-        public override Action<OutputType, string> CustomLogger => GitLinkTasks.GitLinkLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GitLinkTasks.GitLinkPath;
+        public override Action<OutputType, string> ProcessCustomLogger => GitLinkTasks.GitLinkLogger;
         /// <summary>
         ///   The PDB to add source indexing to.
         /// </summary>
@@ -311,7 +311,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   Skip verification that all source files are available in source control.
         /// </summary>
         public virtual bool? SkipVerification { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("{value}", PdbFile)
@@ -320,7 +320,7 @@ namespace Nuke.Common.Tools.GitLink
               .Add("--commit {value}", CommitSha)
               .Add("--baseDir {value}", BaseDirectory)
               .Add("--skipVerify", SkipVerification);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

@@ -8,10 +8,11 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
-using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.CI.TeamCity;
-using Nuke.Common.Execution;
+using Nuke.Common.Git;
 using Nuke.Common.Tooling;
+using Nuke.Common.ValueInjection;
+using static Nuke.Common.ControlFlow;
 
 namespace Nuke.Common.Tools.GitVersion
 {
@@ -20,7 +21,7 @@ namespace Nuke.Common.Tools.GitVersion
     /// </summary>
     [PublicAPI]
     [UsedImplicitly(ImplicitUseKindFlags.Default)]
-    public class GitVersionAttribute : InjectionAttributeBase
+    public class GitVersionAttribute : ValueInjectionAttributeBase
     {
         public string Framework { get; set; } = "netcoreapp3.0";
         public bool DisableOnUnix { get; set; }
@@ -37,10 +38,14 @@ namespace Nuke.Common.Tools.GitVersion
                 return null;
             }
 
+            var repository = SuppressErrors(() => GitRepository.FromLocalDirectory(NukeBuild.RootDirectory));
+            AssertWarn(repository == null || repository.Protocol != GitProtocol.Ssh || NoFetch,
+                $"{nameof(GitVersion)} does not support fetching SSH endpoints. Enable {nameof(NoFetch)} to skip fetching.");
+
             var gitVersion = GitVersionTasks.GitVersion(s => s
                     .SetFramework(Framework)
                     .SetNoFetch(NoFetch)
-                    .DisableLogOutput()
+                    .DisableProcessLogOutput()
                     .SetUpdateAssemblyInfo(UpdateAssemblyInfo))
                 .Result;
 
@@ -48,7 +53,7 @@ namespace Nuke.Common.Tools.GitVersion
             {
                 AzurePipelines.Instance?.UpdateBuildNumber(gitVersion.FullSemVer);
                 TeamCity.Instance?.SetBuildNumber(gitVersion.FullSemVer);
-                AppVeyor.Instance?.UpdateBuildNumber($"{gitVersion.FullSemVer}.build.{AppVeyor.Instance.BuildNumber}");
+                AppVeyor.Instance?.UpdateBuildVersion($"{gitVersion.FullSemVer}.build.{AppVeyor.Instance.BuildNumber}");
             }
 
             return gitVersion;

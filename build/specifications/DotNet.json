@@ -603,6 +603,54 @@
       }
     },
     {
+      "help": "Adds a NuGet source.",
+      "postfix": "NuGetAddSource",
+      "omitCommonProperties": true,
+      "definiteArgument": "nuget add source",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Source",
+            "type": "string",
+            "format": "{value}",
+            "help": "URL of the source."
+          },
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "--name {value}",
+            "help": "Name of the source."
+          },
+          {
+            "name": "Username",
+            "type": "string",
+            "format": "--username {value}",
+            "help": "Username to be used when connecting to an authenticated source."
+          },
+          {
+            "name": "Password",
+            "type": "string",
+            "format": "--password {value}",
+            "secret": true,
+            "help": "Password to be used when connecting to an authenticated source."
+          },
+          {
+            "name": "StorePasswordInClearText",
+            "type": "bool",
+            "format": "--store-password-in-clear-text",
+            "help": "Enables storing portable package source credentials by disabling password encryption."
+          },
+          {
+            "name": "ValidAuthenticationTypes",
+            "type": "List<DotNetNuGetAuthentication>",
+            "format": "--valid-authentication-types",
+            "separator": ",",
+            "help": "List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful."
+          }
+        ]
+      }
+    },
+    {
       "help": "The <c>dotnet tool install</c> command provides a way for you to install .NET Core Global Tools on your machine. To use the command, you either have to specify that you want a user-wide installation using the <c>--global</c> option or you specify a path to install it using the <c>--tool-path</c> option.<para/>Global Tools are installed in the following directories by default when you specify the <c>-g</c> (or <c>--global</c>) option:<ul><li>Linux/macOS: <c>$HOME/.dotnet/tools</c></li><li>Windows: <c>%USERPROFILE%\\.dotnet\\tools</c></li></ul>",
       "postfix": "ToolInstall",
       "omitCommonProperties": true,
@@ -742,6 +790,12 @@
             "type": "DotNetVerbosity",
             "format": "--verbosity {value}",
             "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "--version {value}",
+            "help": "The version of the tool to install. By default, the latest stable package version is installed. Use this option to install preview or older versions of the tool."
           }
         ]
       }
@@ -954,6 +1008,16 @@
       "values": [
         "symbols.nupkg",
         "snupkg"
+      ]
+    },
+    {
+      "name": "DotNetNuGetAuthentication",
+      "values": [
+        "basic",
+        "negotiate",
+        "kerberos",
+        "ntlm",
+        "digest"
       ]
     }
   ]

@@ -118,6 +118,7 @@ namespace Nuke.Common.CI.TeamCity
         public string BuildConfiguration => SystemProperties["teamcity.buildConfName"];
         public string BuildTypeId => SystemProperties["teamcity.buildType.id"];
         [NoConvert] public string BuildNumber => SystemProperties["build.number"];
+        public string BuildVcsNumber => SystemProperties["build.vcs.number"];
         public string Version => SystemProperties["teamcity.version"];
         public string ProjectName => SystemProperties["teamcity.projectName"];
         public string ServerUrl => ConfigurationProperties["teamcity.serverUrl"];
@@ -146,8 +147,8 @@ namespace Nuke.Common.CI.TeamCity
                 type != TeamCityImportType.dotNetCoverage || tool != null,
                 $"Importing data of type '{type}' requires to specify the tool.");
             ControlFlow.AssertWarn(
-                tool == TeamCityImportTool.dotcover &&
-                ConfigurationProperties["teamcity.dotCover.home"].EndsWithOrdinalIgnoreCase("bundled"),
+                !(tool == TeamCityImportTool.dotcover &&
+                ConfigurationProperties["teamcity.dotCover.home"].EndsWithOrdinalIgnoreCase("bundled")),
                 new[]
                 {
                     "Configuration parameter 'teamcity.dotCover.home' is set to the bundled version.",

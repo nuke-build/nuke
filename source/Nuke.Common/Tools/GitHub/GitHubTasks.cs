@@ -23,7 +23,7 @@ namespace Nuke.Common.Tools.GitHub
         private static GitHubClient Client =>
             GitHubClient ??= new GitHubClient(new ProductHeaderValue(nameof(NukeBuild)));
 
-        public static async Task<IEnumerable<(string RelativePath, string DownloadUrl)>> GetGitHubDownloadUrls(
+        public static async Task<IEnumerable<(string DownloadUrl, string RelativePath)>> GetGitHubDownloadUrls(
             this GitRepository repository,
             string directory = null,
             string branch = null)
@@ -46,7 +46,7 @@ namespace Nuke.Common.Tools.GitHub
             return treeResponse.Tree
                 .Where(x => x.Type == TreeType.Blob)
                 .Where(x => x.Path.StartsWithOrdinalIgnoreCase(relativeDirectory))
-                .Select(x => (x.Path.TrimStart(relativeDirectory), repository.GetGitHubDownloadUrl(x.Path, branch)));
+                .Select(x => (repository.GetGitHubDownloadUrl(x.Path, branch), x.Path.TrimStart(relativeDirectory)));
         }
 
         public static async Task<string> GetDefaultBranch(this GitRepository repository)
@@ -57,6 +57,14 @@ namespace Nuke.Common.Tools.GitHub
             return repo.DefaultBranch;
         }
 
+        public static async Task<string> GetLatestRelease(this GitRepository repository, bool includePrerelease = false, bool trimPrefix = false)
+        {
+            ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
+
+            var releases = await Client.Repository.Release.GetAll(repository.GetGitHubOwner(), repository.GetGitHubName());
+            return releases.First(x => !x.Prerelease || includePrerelease).TagName.TrimStart(trimPrefix ? "v" : string.Empty);
+        }
+
         [ItemCanBeNull]
         public static async Task<Milestone> GetGitHubMilestone(this GitRepository repository, string name)
         {
@@ -64,7 +72,8 @@ namespace Nuke.Common.Tools.GitHub
 
             var milestones = await Client.Issue.Milestone.GetAllForRepository(
                 repository.GetGitHubOwner(),
-                repository.GetGitHubName());
+                repository.GetGitHubName(),
+                new MilestoneRequest { State = ItemStateFilter.All });
             return milestones.FirstOrDefault(x => x.Title == name);
         }
 

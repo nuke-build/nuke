@@ -30,17 +30,17 @@ namespace Nuke.Common
             Trace("Trace");
             Success("Success");
 
-            const string ESC = "\u001b[";
-            const string RESET = "\u001b[0m";
+            const string Esc = "\u001b[";
+            const string Reset = "\u001b[0m";
 
             for (var i = 0; i < 200; i++)
             {
-                Console.Write($"{ESC}{i}m{i}{RESET}  ");
-                Console.Write($"{ESC}{i};1m{i};1{RESET}  ");
-                Console.Write($"{ESC}{i};2m{i};1{RESET}  ");
-                Console.Write($"{ESC}{i};3m{i};1{RESET}  ");
-                Console.Write($"{ESC}{i};4m{i};1{RESET}  ");
-                Console.Write($"{ESC}{i};5m{i};1{RESET}  ");
+                Console.Write($"{Esc}{i}m{i}{Reset}  ");
+                Console.Write($"{Esc}{i};1m{i};1{Reset}  ");
+                Console.Write($"{Esc}{i};2m{i};1{Reset}  ");
+                Console.Write($"{Esc}{i};3m{i};1{Reset}  ");
+                Console.Write($"{Esc}{i};4m{i};1{Reset}  ");
+                Console.Write($"{Esc}{i};5m{i};1{Reset}  ");
                 if (i % 10 == 0)
                     Console.WriteLine();
             }
@@ -303,7 +303,7 @@ namespace Nuke.Common
             {
                 case AggregateException ex:
                     var exceptions = ex.Flatten().InnerExceptions;
-                    exceptions.ForEach((x, i) => HandleException(x, exceptionOutput, $"#{i + 1}/{exceptions.Count}: "));
+                    exceptions.ForEach((x, i) => HandleException(x, exceptionOutput, $"[{i + 1}/{exceptions.Count}] "));
                     break;
                 case TargetInvocationException ex:
                     HandleException(ex.InnerException, exceptionOutput);
@@ -312,7 +312,7 @@ namespace Nuke.Common
                     HandleException(ex.InnerException, exceptionOutput);
                     break;
                 default:
-                    exceptionOutput(prefix + exception.Message, exception.StackTrace + EnvironmentInfo.NewLine);
+                    exceptionOutput($"{prefix}{exception.GetType().Name}: {exception.Message}", exception.StackTrace + EnvironmentInfo.NewLine);
                     break;
             }
         }

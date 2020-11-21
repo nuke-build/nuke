@@ -20,11 +20,11 @@ namespace Nuke.Common.Tools.Docker
             return string.Empty;
         }
 
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             if (CliSettings != null)
                 arguments = CliSettings.CreateArguments().Concatenate(arguments);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
 }

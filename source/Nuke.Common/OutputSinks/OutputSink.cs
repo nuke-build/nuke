@@ -59,10 +59,11 @@ namespace Nuke.Common.OutputSinks
         {
             if (SevereMessages.Count > 0)
             {
-                WriteSevereMessages();
                 WriteNormal();
+                WriteSevereMessages();
             }
 
+            WriteNormal();
             WriteSummaryTable(build);
             WriteNormal();
 
@@ -97,7 +98,7 @@ namespace Nuke.Common.OutputSinks
                    + duration.PadLeft(thirdColumn, paddingChar: ' ')
                    + (appendix != null ? $"   // {appendix}" : string.Empty);
 
-            string ToMinutesAndSeconds(TimeSpan duration)
+            static string ToMinutesAndSeconds(TimeSpan duration)
                 => $"{(int) duration.TotalMinutes}:{duration:ss}";
 
             WriteNormal(new string(c: '═', count: allColumns));
@@ -132,17 +133,17 @@ namespace Nuke.Common.OutputSinks
 
         protected virtual void WriteSevereMessages()
         {
-            WriteNormal("Repeating warnings and errors:");
+            WriteInformation("Repeating warnings and errors:");
 
-            foreach (var severeMessage in SevereMessages.ToList())
+            foreach (var (level, message) in SevereMessages.ToList())
             {
-                switch (severeMessage.Item1)
+                switch (level)
                 {
                     case LogLevel.Warning:
-                        WriteWarning(severeMessage.Item2);
+                        WriteWarning(message);
                         break;
                     case LogLevel.Error:
-                        WriteError(severeMessage.Item2);
+                        WriteError(message);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

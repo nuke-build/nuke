@@ -50,7 +50,7 @@ namespace Nuke.Common.IO
             {
                 GlobbingCaseSensitivity.CaseSensitive => GlobOptions.None,
                 GlobbingCaseSensitivity.CaseInsensitive => GlobOptions.CaseInsensitive,
-                _ => (EnvironmentInfo.IsWin ? GlobOptions.CaseInsensitive : GlobOptions.None)
+                _ => EnvironmentInfo.IsWin ? GlobOptions.CaseInsensitive : GlobOptions.None
             };
 
         [Pure]
@@ -243,7 +243,7 @@ namespace Nuke.Common.IO
             return $"{left}{separator}{right}";
         }
 
-        // ReSharper disable once CyclomaticComplexity
+        // ReSharper disable once CognitiveComplexity
         public static string NormalizePath([CanBeNull] string path, char? separator = null)
         {
             AssertSeparatorChoice(path, separator);

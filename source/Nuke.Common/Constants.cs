@@ -12,7 +12,14 @@ namespace Nuke.Common
 {
     internal static class Constants
     {
-        internal static readonly string[] KnownWords = { "GitHub", "NuGet", "MSBuild", "GitVersion" };
+        internal static readonly string[] KnownWords =
+        {
+            "GitHub",
+            "GitVersion",
+            "MSBuild",
+            "NuGet",
+            "ReSharper"
+        };
 
         internal const string ConfigurationFileName = ".nuke";
 
@@ -52,6 +59,11 @@ namespace Nuke.Common
         public static AbsolutePath GetVisualStudioDebugFile(AbsolutePath rootDirectory)
         {
             return GetTemporaryDirectory(rootDirectory) / $"{VisualStudioDebugParameterName}.log";
+        }
+
+        internal static AbsolutePath GetMissingPackageFile(AbsolutePath rootDirectory)
+        {
+            return GetTemporaryDirectory(rootDirectory) / "missing-package.log";
         }
     }
 }

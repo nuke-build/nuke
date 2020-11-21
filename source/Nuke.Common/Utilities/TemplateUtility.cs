@@ -49,54 +49,55 @@ namespace Nuke.Common.Utilities
             where T : class
         {
             return obj != null
-                ? obj.ToPropertyDictionary(
-                    x => $"_{x.Name.SplitCamelHumpsWithSeparator("_").ToUpper()}_",
-                    x => x?.ToString() ?? string.Empty)
+                ? obj.ToPropertyDictionary(x => GetTokenName(x.Name), x => x?.ToString() ?? string.Empty)
                 : new Dictionary<string, string>();
+        }
+
+        public static string GetTokenName(string name)
+        {
+            return name.SplitCamelHumpsWithSeparator("_", exclusions: Constants.KnownWords).ToUpper();
         }
 
         public static void FillTemplateDirectoryRecursively(
             string directory,
-            IReadOnlyCollection<string> definitions = null,
-            IReadOnlyDictionary<string, string> replacements = null,
+            IReadOnlyDictionary<string, string> tokens = null,
             Func<DirectoryInfo, bool> excludeDirectory = null,
             Func<FileInfo, bool> excludeFile = null)
         {
             Logger.Info($"Recursively filling out template directory '{directory}'...");
-            FillTemplateDirectoryRecursivelyInternal(new DirectoryInfo(directory), definitions, replacements, excludeDirectory, excludeFile);
+            FillTemplateDirectoryRecursivelyInternal(new DirectoryInfo(directory), tokens, excludeDirectory, excludeFile);
         }
 
         private static void FillTemplateDirectoryRecursivelyInternal(
             DirectoryInfo directory,
-            [CanBeNull] IReadOnlyCollection<string> definitions,
-            [CanBeNull] IReadOnlyDictionary<string, string> replacements,
+            [CanBeNull] IReadOnlyDictionary<string, string> tokens,
             [CanBeNull] Func<DirectoryInfo, bool> excludeDirectory,
             [CanBeNull] Func<FileInfo, bool> excludeFile = null)
         {
             if (excludeDirectory != null && excludeDirectory(directory))
                 return;
 
-            bool ShouldMove(FileSystemInfo info) => replacements?.Keys.Any(x => info.Name.Contains(x)) ?? false;
+            bool ShouldMove(FileSystemInfo file) => tokens?.Keys.Any(x => file.Name.Contains(x)) ?? false;
 
             foreach (var file in directory.GetFiles())
             {
                 if (excludeFile != null && excludeFile(file))
                     continue;
 
-                FillTemplateFile(file.FullName, definitions, replacements);
+                FillTemplateFile(file.FullName, tokens);
 
                 if (ShouldMove(file))
-                    FileSystemTasks.RenameFile(file.FullName, file.Name.Replace(replacements), FileExistsPolicy.OverwriteIfNewer);
+                    FileSystemTasks.RenameFile(file.FullName, file.Name.Replace(tokens), FileExistsPolicy.OverwriteIfNewer);
             }
 
             directory.GetDirectories()
-                .ForEach(x => FillTemplateDirectoryRecursivelyInternal(x, definitions, replacements, excludeDirectory, excludeFile));
+                .ForEach(x => FillTemplateDirectoryRecursivelyInternal(x, tokens, excludeDirectory, excludeFile));
 
             if (ShouldMove(directory))
             {
                 FileSystemTasks.RenameDirectory(
                     directory.FullName,
-                    directory.Name.Replace(replacements),
+                    directory.Name.Replace(tokens),
                     DirectoryExistsPolicy.Merge,
                     FileExistsPolicy.OverwriteIfNewer);
             }
@@ -104,19 +105,17 @@ namespace Nuke.Common.Utilities
 
         public static void FillTemplateFile(
             string file,
-            IReadOnlyCollection<string> definitions = null,
-            IReadOnlyDictionary<string, string> replacements = null)
+            IReadOnlyDictionary<string, string> tokens = null)
         {
-            TextTasks.WriteAllLines(file, FillTemplate(TextTasks.ReadAllLines(file), definitions, replacements));
+            TextTasks.WriteAllLines(file, FillTemplate(TextTasks.ReadAllLines(file), tokens));
         }
 
         public static string[] FillTemplate(
             IEnumerable<string> template,
-            IReadOnlyCollection<string> definitions = null,
-            IReadOnlyDictionary<string, string> replacements = null)
+            IReadOnlyDictionary<string, string> tokens = null)
         {
-            definitions ??= new List<string>();
-            replacements ??= new Dictionary<string, string>();
+            tokens = (tokens ?? new Dictionary<string, string>())
+                .ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
 
             // TODO: checked build?
             // definitions.ForEach(x => ControlFlow.Assert(template.Contains(x),
@@ -125,7 +124,7 @@ namespace Nuke.Common.Utilities
             //     $"Replacement for '{x}' is not contained in template."));
 
             var lines = template
-                .Select(x => HandleLine(x, definitions, replacements))
+                .Select(x => HandleLine(x, tokens))
                 .WhereNotNull()
                 .ToList();
 
@@ -136,32 +135,31 @@ namespace Nuke.Common.Utilities
 
         private static string HandleLine(
             string line,
-            IReadOnlyCollection<string> definitions,
-            IReadOnlyDictionary<string, string> replacements)
+            IReadOnlyDictionary<string, string> tokens)
         {
             var commentIndex = line.LastIndexOf("  // ", StringComparison.OrdinalIgnoreCase);
-            if (!ShouldIncludeLine(line, commentIndex, definitions))
+            if (!ShouldIncludeLine(line, commentIndex, tokens))
                 return null;
 
             return (commentIndex == -1
                     ? line
                     : line.Substring(startIndex: 0, commentIndex).TrimEnd())
-                .Replace(replacements);
+                .Replace(tokens);
         }
 
-        private static bool ShouldIncludeLine(string line, int commentIndex, IReadOnlyCollection<string> definitions)
+        private static bool ShouldIncludeLine(string line, int commentIndex, IReadOnlyDictionary<string, string> tokens)
         {
             if (commentIndex == -1)
                 return true;
 
-            var requiredDefinitionText = line.Substring(commentIndex + 4).Replace(" ", string.Empty);
-            var requiredDefinitions = requiredDefinitionText.Split(new[] { "||", "&&" }, StringSplitOptions.RemoveEmptyEntries);
-            var orConjunction = requiredDefinitionText.Contains("||");
-            var andConjunction = requiredDefinitionText.Contains("&&");
+            var requiredTokensText = line.Substring(commentIndex + 4).Replace(" ", string.Empty);
+            var requiredTokens = requiredTokensText.Split(new[] { "||", "&&" }, StringSplitOptions.RemoveEmptyEntries);
+            var orConjunction = requiredTokensText.Contains("||");
+            var andConjunction = requiredTokensText.Contains("&&");
             ControlFlow.Assert(!orConjunction || !andConjunction, "Conjunctions AND and OR can only be used mutually exclusively.");
 
-            return andConjunction && requiredDefinitions.All(x => definitions.Contains(x)) ||
-                   !andConjunction && requiredDefinitions.Any(x => definitions.Contains(x));
+            return andConjunction && requiredTokens.All(tokens.ContainsKey) ||
+                   !andConjunction && requiredTokens.Any(tokens.ContainsKey);
         }
 
         private static void RemoveDoubleEmptyLines(IList<string> lines)
@@ -178,9 +176,9 @@ namespace Nuke.Common.Utilities
             }
         }
 
-        private static string Replace(this string str, [CanBeNull] IReadOnlyDictionary<string, string> replacements)
+        private static string Replace(this string str, [CanBeNull] IReadOnlyDictionary<string, string> tokens)
         {
-            return replacements?.Aggregate(str, (t, r) => t.Replace(r.Key, r.Value));
+            return tokens?.Aggregate(str, (t, r) => t.Replace($"_{r.Key}_", r.Value));
         }
     }
 }

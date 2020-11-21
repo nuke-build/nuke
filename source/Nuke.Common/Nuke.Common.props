@@ -3,12 +3,6 @@
 
   <PropertyGroup>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <RootNamespace></RootNamespace>
-    <IsPackable>false</IsPackable>
   </PropertyGroup>
-
-  <ItemDefinitionGroup>
-    <PackageDownload Visible="false" />
-  </ItemDefinitionGroup>
 
 </Project>

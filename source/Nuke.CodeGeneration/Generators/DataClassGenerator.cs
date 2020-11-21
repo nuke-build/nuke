@@ -42,8 +42,8 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLine("[Serializable]")
                 .WriteLine($"public partial class {dataClass.Name} : {baseType}")
                 .WriteBlock(w => w
-                    .WriteToolPath()
-                    .WriteLogger()
+                    .WriteProcessToolPath()
+                    .WriteProcessCustomLogger()
                     .ForEach(dataClass.Properties, WritePropertyDeclaration)
                     .WriteConfigureArguments())
                 .WriteLine("#endregion");
@@ -76,7 +76,7 @@ namespace Nuke.CodeGeneration.Generators
             Logger.Warn($"Property {property.DataClass.Name}.{property.Name} should have explicit secret definition.");
         }
 
-        private static DataClassWriter WriteToolPath(this DataClassWriter writer)
+        private static DataClassWriter WriteProcessToolPath(this DataClassWriter writer)
         {
             if (!(writer.DataClass is SettingsClass settingsClass))
                 return writer;
@@ -84,21 +84,21 @@ namespace Nuke.CodeGeneration.Generators
             var tool = settingsClass.Tool.NotNull();
             var resolver = !tool.CustomExecutable
                 ? $"{tool.GetClassName()}.{tool.Name}Path"
-                : "GetToolPath()";
+                : "GetProcessToolPath()";
 
             return writer
                 .WriteSummary($"Path to the {tool.Name} executable.")
-                .WriteLine($"public override string ToolPath => base.ToolPath ?? {resolver};");
+                .WriteLine($"public override string ProcessToolPath => base.ProcessToolPath ?? {resolver};");
         }
 
-        private static DataClassWriter WriteLogger(this DataClassWriter writer)
+        private static DataClassWriter WriteProcessCustomLogger(this DataClassWriter writer)
         {
             if (!writer.DataClass.IsToolSettingsClass)
                 return writer;
 
             var tool = writer.DataClass.Tool;
             var logger = $"{tool.GetClassName()}.{tool.Name}Logger";
-            return writer.WriteLine($"public override Action<OutputType, string> CustomLogger => {logger};");
+            return writer.WriteLine($"public override Action<OutputType, string> ProcessCustomLogger => {logger};");
         }
 
         private static void WritePropertyDeclaration(DataClassWriter writer, Property property)
@@ -181,11 +181,6 @@ namespace Nuke.CodeGeneration.Generators
             return property.GetNullableType();
         }
 
-        private static string AssertionWithValue(string assertion, string propertyName)
-        {
-            return $"{assertion} [{propertyName} = {{{propertyName}}}]".DoubleQuoteInterpolated();
-        }
-
         private static DataClassWriter WriteConfigureArguments(this DataClassWriter writer)
         {
             var formatProperties = writer.DataClass.Properties.Where(x => x.Format != null).ToList();
@@ -203,11 +198,11 @@ namespace Nuke.CodeGeneration.Generators
                 argumentAdditions[argumentAdditions.Count - 1] += ";";
 
             return writer
-                .WriteLine("protected override Arguments ConfigureArguments(Arguments arguments)")
+                .WriteLine("protected override Arguments ConfigureProcessArguments(Arguments arguments)")
                 .WriteBlock(w => w
                     .WriteLine("arguments")
                     .ForEachWriteLine(argumentAdditions)
-                    .WriteLine("return base.ConfigureArguments(arguments);"));
+                    .WriteLine("return base.ConfigureProcessArguments(arguments);"));
         }
 
         private static string GetArgumentAddition(Property property)

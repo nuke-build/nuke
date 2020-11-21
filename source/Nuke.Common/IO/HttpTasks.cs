@@ -55,7 +55,7 @@ namespace Nuke.Common.IO
             Action<WebHeaderCollection> headerConfigurator = null,
             Action<WebRequest> requestConfigurator = null)
         {
-            var webClient = new WebClient();
+            WebClient webClient = new CustomWebClient(requestConfigurator);
             webClient = clientConfigurator.InvokeSafe(webClient);
             headerConfigurator?.Invoke(webClient.Headers);
 

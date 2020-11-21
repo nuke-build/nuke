@@ -14,8 +14,8 @@ using Nuke.Common.CI.GitLab;
 using Nuke.Common.CI.Jenkins;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.CI.TravisCI;
-using Nuke.Common.Execution;
 using Nuke.Common.Tools.Git;
+using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.Git
 {
@@ -24,7 +24,7 @@ namespace Nuke.Common.Git
     /// </summary>
     [PublicAPI]
     [UsedImplicitly(ImplicitUseKindFlags.Default)]
-    public class GitRepositoryAttribute : InjectionAttributeBase
+    public class GitRepositoryAttribute : ValueInjectionAttributeBase
     {
         [CanBeNull]
         public string Branch { get; set; }
@@ -34,25 +34,7 @@ namespace Nuke.Common.Git
 
         public override object GetValue(MemberInfo member, object instance)
         {
-            return GitRepository.FromLocalDirectory(
-                NukeBuild.RootDirectory,
-                Branch ?? GetBranch(),
-                Remote ?? "origin");
-        }
-
-        private string GetBranch()
-        {
-            return
-                AppVeyor.Instance?.RepositoryBranch ??
-                Bitrise.Instance?.GitBranch ??
-                GitLab.Instance?.CommitRefName ??
-                Jenkins.Instance?.GitBranch ??
-                Jenkins.Instance?.BranchName ??
-                TeamCity.Instance?.BranchName ??
-                AzurePipelines.Instance?.SourceBranchName ??
-                TravisCI.Instance?.Branch ??
-                GitHubActions.Instance?.GitHubRef ??
-                GitTasks.GitCurrentBranch();
+            return GitRepository.FromLocalDirectory(NukeBuild.RootDirectory, Branch, Remote);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Nuke.Common.CI.TravisCI
 
         public static TravisCI Instance => NukeBuild.Host == HostType.Travis ? s_instance.Value : null;
 
-        internal static bool IsRunningTravis => !Environment.GetEnvironmentVariable("TRAVIS").IsNullOrEmpty();
+        internal static bool IsRunningTravisCI => !Environment.GetEnvironmentVariable("TRAVIS").IsNullOrEmpty();
 
         internal TravisCI()
         {
@@ -35,11 +35,6 @@ namespace Nuke.Common.CI.TravisCI
         /// Whether you have defined any encrypted variables, including variables defined in the Repository Settings.
         /// </summary>
         public bool SecureEnvVars => EnvironmentInfo.GetVariable<bool>("TRAVIS_SECURE_ENV_VARS");
-
-        /// <summary>
-        /// Set to <c>true</c> if the job is allowed to fail otherwhise <c>false</c>.
-        /// </summary>
-        public bool AllowFailure => EnvironmentInfo.GetVariable<bool>("TRAVIS_ALLOW_FAILURE");
 
         /// <summary>
         /// For push builds, or builds not triggered by a pull request, this is the name of the branch.

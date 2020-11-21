@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <NukeTasksAssembly>$(MSBuildThisFileDirectory)\$(MSBuildThisFileName).dll</NukeTasksAssembly>
+  </PropertyGroup>
+
+  <UsingTask TaskName="$(MSBuildThisFileName).CodeGenerationTask" AssemblyFile="$(NukeTasksAssembly)" />
+  <UsingTask TaskName="$(MSBuildThisFileName).ExternalFilesTask" AssemblyFile="$(NukeTasksAssembly)" />
+  <UsingTask TaskName="$(MSBuildThisFileName).PackPackageToolsTask" AssemblyFile="$(NukeTasksAssembly)" />
+
+  <PropertyGroup>
+    <NukeContinueOnError Condition="'$(NukeContinueOnError)' == ''">False</NukeContinueOnError>
+    <NukeTaskTimeout Condition="'$(NukeTimeout)' == ''">5000</NukeTaskTimeout>
+
+    <NukeBaseDirectory Condition="'$(NukeBaseDirectory)' == ''">$(MSBuildProjectDirectory)</NukeBaseDirectory>
+    <NukeUseNestedNamespaces Condition="'$(NukeUseNestedNamespaces)' == ''">False</NukeUseNestedNamespaces>
+    <NukeRepositoryUrl Condition="'$(NukeRepositoryUrl)' == ''">$(RepositoryUrl)</NukeRepositoryUrl>
+    <NukeUpdateReferences Condition="'$(NukeUpdateReferences)' == ''">True</NukeUpdateReferences>
+  </PropertyGroup>
+
+  <Target Name="NukeExternalFiles" BeforeTargets="Restore" Condition="'@(NukeExternalFiles)' != ''">
+    <ExternalFilesTask
+      ExternalFiles="@(NukeExternalFiles)"
+      Timeout="$(NukeTaskTimeout)"
+      ContinueOnError="$(NukeContinueOnError)" />
+  </Target>
+
+  <Target Name="NukePackPackageTools" BeforeTargets="GenerateNuspec" Condition="'$(PackAsTool)' == 'True'">
+    <PackPackageToolsTask
+      TargetFramework="$(TargetFramework)"
+      ProjectAssetsFile="$(ProjectAssetsFile)"
+      NuGetPackageRoot="$(NuGetPackageRoot)">
+      <Output TaskParameter="TargetOutputs" ItemName="_PackageToolFiles" />
+    </PackPackageToolsTask>
+    <ItemGroup>
+      <_PackageFiles Include="@(_PackageToolFiles)" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="NukeCodeGeneration" BeforeTargets="CoreCompile" Condition="'@(NukeSpecificationFiles)' != ''">
+    <CodeGenerationTask
+      SpecificationFiles="@(NukeSpecificationFiles)"
+      BaseDirectory="$(NukeBaseDirectory)"
+      UseNestedNamespaces="$(NukeUseNestedNamespaces)"
+      BaseNamespace="$(NukeBaseNamespace)"
+      UpdateReferences="$(NukeUpdateReferences)"/>
+  </Target>
+
+</Project>

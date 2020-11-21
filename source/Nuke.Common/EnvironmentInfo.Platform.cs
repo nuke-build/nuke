@@ -25,12 +25,8 @@ namespace Nuke.Common
         /// <summary>
         /// Returns whether the operating system is x64 or not.
         /// </summary>
-        public static bool Is64Bit
-#if NETCORE
-            => RuntimeInformation.OSArchitecture == Architecture.X64 || RuntimeInformation.OSArchitecture == Architecture.Arm64;
-#else
-            => Environment.Is64BitOperatingSystem;
-#endif
+        public static bool Is64Bit => RuntimeInformation.OSArchitecture == Architecture.X64 ||
+                                      RuntimeInformation.OSArchitecture == Architecture.Arm64;
 
         /// <summary>
         /// Returns whether the operating system is x86 or not.
@@ -40,7 +36,8 @@ namespace Nuke.Common
         /// <summary>
         /// Returns whether the operating system is a UNIX system.
         /// </summary>
-        public static bool IsUnix => Platform == PlatformFamily.Linux || Platform == PlatformFamily.OSX;
+        public static bool IsUnix => Platform == PlatformFamily.Linux ||
+                                     Platform == PlatformFamily.OSX;
 
         /// <summary>
         /// Returns whether the operating system is a Windows system.
@@ -89,10 +86,8 @@ namespace Nuke.Common
         /// </summary>
         public static PlatformFamily Platform
         {
-            // ReSharper disable once CyclomaticComplexity
             get
             {
-#if NETCORE
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                     return PlatformFamily.OSX;
 
@@ -101,65 +96,9 @@ namespace Nuke.Common
 
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                     return PlatformFamily.Windows;
-#else
-                var platform = (int) Environment.OSVersion.Platform;
-
-                if (platform <= 3 || platform == 5)
-                    return PlatformFamily.Windows;
-
-                if (platform == (int) PlatformID.MacOSX || MacOSX.IsRunningOnMac())
-                    return PlatformFamily.OSX;
-
-                if (platform == 4 || platform == 6 || platform == 128)
-                    return PlatformFamily.Linux;
-#endif
 
                 return PlatformFamily.Unknown;
             }
         }
-
-#if !NETCORE
-        /////////////////////////////////////////////////////////////////////////////////////////////////////
-        // This code was taken and adapted from the MonoDevelop project.
-        // https://github.com/mono/monodevelop/blob/master/main/src/core/Mono.Texteditor/Mono.TextEditor/Platform.cs
-        // Copyright (c) 2009 Novell, Inc. (http://www.novell.com)
-        // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-        /////////////////////////////////////////////////////////////////////////////////////////////////////
-        private static class MacOSX
-        {
-            [DllImport("libc")]
-            private static extern int uname(IntPtr buf);
-
-            // ReSharper disable once CyclomaticComplexity
-            public static bool IsRunningOnMac()
-            {
-                try
-                {
-                    var buf = IntPtr.Zero;
-                    try
-                    {
-                        buf = Marshal.AllocHGlobal(cb: 8192);
-                        if (uname(buf) == 0)
-                        {
-                            var os = Marshal.PtrToStringAnsi(buf);
-                            if (os == "Darwin")
-                                return true;
-                        }
-                    }
-                    finally
-                    {
-                        if (buf != IntPtr.Zero)
-                            Marshal.FreeHGlobal(buf);
-                    }
-                }
-                catch
-                {
-                    // Ignore any other possible failures on non-OSX platforms
-                }
-
-                return false;
-            }
-        }
-#endif
     }
 }

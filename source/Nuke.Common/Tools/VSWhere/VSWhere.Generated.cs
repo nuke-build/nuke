@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p>
         ///   <p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> VSWhere(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> VSWhere(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(VSWherePath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, VSWhereLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(VSWherePath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, VSWhereLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -67,7 +67,7 @@ namespace Nuke.Common.Tools.VSWhere
         public static (List<VSWhereResult> Result, IReadOnlyCollection<Output> Output) VSWhere(VSWhereSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new VSWhereSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return (GetResult(process, toolSettings), process.Output);
         }
@@ -134,14 +134,14 @@ namespace Nuke.Common.Tools.VSWhere
         /// <summary>
         ///   Path to the VSWhere executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? VSWhereTasks.VSWherePath;
-        public override Action<OutputType, string> CustomLogger => VSWhereTasks.VSWhereLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? VSWhereTasks.VSWherePath;
+        public override Action<OutputType, string> ProcessCustomLogger => VSWhereTasks.VSWhereLogger;
         /// <summary>
         ///    Return only the newest version and last installed.
         /// </summary>
         public virtual bool? Latest { get; internal set; }
         /// <summary>
-        ///   A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.
+        ///   Return information about instances found in a format described below:<ul><li><c>text</c>: Colon-delimited properties in separate blocks for each instance (default).</li><li><c>json</c>: An array of JSON objects for each instance (no logo).</li><li><c>value</c>: A single property specified by the -property parameter (no logo).</li><li><c>xml</c>: An XML data set containing instances (no logo).</li></ul>
         /// </summary>
         public virtual VSWhereFormat Format { get; internal set; }
         /// <summary>
@@ -186,7 +186,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   The name of a property to return. Use delimiters <c>'.'</c>, <c>'/'</c>, or <c>'_'</c> to separate object and property names. Example: <c>properties.nickname</c> will return the <em>nickname</em> property under <em>properties</em>.
         /// </summary>
         public virtual string Property { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("-latest", Latest)
@@ -201,7 +201,7 @@ namespace Nuke.Common.Tools.VSWhere
               .Add("-requiresAny", RequiresAny)
               .Add("-version {value}", Version)
               .Add("-property {value}", Property);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -331,7 +331,7 @@ namespace Nuke.Common.Tools.VSWhere
         #region Format
         /// <summary>
         ///   <p><em>Sets <see cref="VSWhereSettings.Format"/></em></p>
-        ///   <p>A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.</p>
+        ///   <p>Return information about instances found in a format described below:<ul><li><c>text</c>: Colon-delimited properties in separate blocks for each instance (default).</li><li><c>json</c>: An array of JSON objects for each instance (no logo).</li><li><c>value</c>: A single property specified by the -property parameter (no logo).</li><li><c>xml</c>: An XML data set containing instances (no logo).</li></ul></p>
         /// </summary>
         [Pure]
         public static T SetFormat<T>(this T toolSettings, VSWhereFormat format) where T : VSWhereSettings
@@ -342,7 +342,7 @@ namespace Nuke.Common.Tools.VSWhere
         }
         /// <summary>
         ///   <p><em>Resets <see cref="VSWhereSettings.Format"/></em></p>
-        ///   <p>A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.</p>
+        ///   <p>Return information about instances found in a format described below:<ul><li><c>text</c>: Colon-delimited properties in separate blocks for each instance (default).</li><li><c>json</c>: An array of JSON objects for each instance (no logo).</li><li><c>value</c>: A single property specified by the -property parameter (no logo).</li><li><c>xml</c>: An XML data set containing instances (no logo).</li></ul></p>
         /// </summary>
         [Pure]
         public static T ResetFormat<T>(this T toolSettings) where T : VSWhereSettings

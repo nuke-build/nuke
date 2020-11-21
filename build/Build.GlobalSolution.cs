@@ -12,17 +12,15 @@ using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.GitHub;
-using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.ControlFlow;
 using static Nuke.Common.IO.FileSystemTasks;
-using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.IO.SerializationTasks;
 using static Nuke.Common.ProjectModel.ProjectModelTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
 
 partial class Build
 {
-    [Parameter] readonly bool UseSSH;
+    [Parameter] readonly bool UseHttps;
 
     AbsolutePath GlobalSolution => RootDirectory / "nuke-global.sln";
     AbsolutePath ExternalRepositoriesDirectory => RootDirectory / "external";
@@ -33,15 +31,15 @@ partial class Build
         YamlDeserializeFromFile<string[]>(ExternalRepositoriesFile).Select(x => GitRepository.FromUrl(x));
 
     Target CheckoutExternalRepositories => _ => _
-        .Executes(async () =>
+        .Executes(() =>
         {
             foreach (var repository in ExternalRepositories)
             {
                 var repositoryDirectory = ExternalRepositoriesDirectory / repository.GetGitHubName();
-                var origin = UseSSH ? repository.SshUrl : repository.HttpsUrl;
+                var origin = UseHttps ? repository.HttpsUrl : repository.SshUrl;
 
                 if (!Directory.Exists(repositoryDirectory))
-                    Git($"clone {origin} {repositoryDirectory} --branch {await repository.GetDefaultBranch()} --progress");
+                    Git($"clone {origin} {repositoryDirectory} --progress");
                 else
                 {
                     SuppressErrors(() => Git($"remote add origin {origin}", repositoryDirectory));
@@ -56,9 +54,10 @@ partial class Build
         .Executes(() =>
         {
             var global = CreateSolution(
+                fileName: GlobalSolution,
                 solutions: new[] { Solution }.Concat(ExternalSolutions),
                 folderNameProvider: x => x == Solution ? null : x.Name);
-            global.SaveAs(GlobalSolution);
+            global.Save();
 
             if (File.Exists(RootDirectory / $"{Solution.FileName}.DotSettings"))
             {

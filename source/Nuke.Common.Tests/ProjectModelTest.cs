@@ -9,7 +9,6 @@ using FluentAssertions;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Xunit;
-using static Nuke.Common.IO.PathConstruction;
 
 namespace Nuke.Common.Tests
 {
@@ -25,7 +24,7 @@ namespace Nuke.Common.Tests
             var solution = ProjectModelTasks.ParseSolution(SolutionFile);
 
             solution.SolutionFolders.Select(x => x.Name).Should().BeEquivalentTo("misc");
-            solution.AllProjects.Where(x => x.Is(ProjectType.CSharpProject)).Should().HaveCount(8);
+            solution.AllProjects.Where(x => x.Is(ProjectType.CSharpProject)).Should().HaveCount(9);
 
             var buildProject = solution.AllProjects.SingleOrDefault(x => x.Name == "_build");
             buildProject.Should().NotBeNull();

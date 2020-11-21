@@ -14,13 +14,15 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
     {
         public GitHubActionsTrigger Kind { get; set; }
         public string[] Branches { get; set; }
+        public string[] BranchesIgnore { get; set; }
         public string[] Tags { get; set; }
+        public string[] TagsIgnore { get; set; }
         public string[] IncludePaths { get; set; }
         public string[] ExcludePaths { get; set; }
 
         public override void Write(CustomFileWriter writer)
         {
-            writer.WriteLine(Kind.GetValue());
+            writer.WriteLine($"{Kind.GetValue()}:");
 
             using (writer.Indent())
             {
@@ -33,12 +35,30 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
                     }
                 }
 
+                if (BranchesIgnore.Length > 0)
+                {
+                    writer.WriteLine("branches-ignore:");
+                    using (writer.Indent())
+                    {
+                        BranchesIgnore.ForEach(x => writer.WriteLine($"- {x}"));
+                    }
+                }
+
                 if (Tags.Length > 0)
                 {
                     writer.WriteLine("tags:");
                     using (writer.Indent())
                     {
                         Tags.ForEach(x => writer.WriteLine($"- {x}"));
+                    }
+                }
+
+                if (TagsIgnore.Length > 0)
+                {
+                    writer.WriteLine("tags-ignore:");
+                    using (writer.Indent())
+                    {
+                        TagsIgnore.ForEach(x => writer.WriteLine($"- {x}"));
                     }
                 }
 

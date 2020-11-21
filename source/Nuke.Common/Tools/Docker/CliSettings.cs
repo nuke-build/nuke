@@ -12,9 +12,9 @@ namespace Nuke.Common.Tools.Docker
     {
         public Arguments CreateArguments()
         {
-            return ConfigureArguments(new Arguments());
+            return ConfigureProcessArguments(new Arguments());
         }
 
-        public override Action<OutputType, string> CustomLogger => throw new NotSupportedException();
+        public override Action<OutputType, string> ProcessCustomLogger => throw new NotSupportedException();
     }
 }

@@ -21,8 +21,8 @@ namespace Nuke.Common.Tooling
     // TODO: extract {value} and {key} into constants
     public sealed class Arguments : IArguments
     {
-        private const string c_hiddenString = "[hidden]";
-        private const char c_space = ' ';
+        private const string HiddenString = "[hidden]";
+        private const char Space = ' ';
 
         private readonly List<string> _secrets = new List<string>();
         private readonly List<KeyValuePair<string, List<string>>> _arguments = new List<KeyValuePair<string, List<string>>>();
@@ -59,7 +59,7 @@ namespace Nuke.Common.Tooling
                 _secrets.Add(value);
 
             argumentFormat = argumentFormat.Replace("{value}", "{0}");
-            AddInternal(argumentFormat, customValue ? value : value.DoubleQuoteIfNeeded(disallowed, c_space));
+            AddInternal(argumentFormat, customValue ? value : value.DoubleQuoteIfNeeded(disallowed, Space));
 
             return this;
         }
@@ -77,7 +77,7 @@ namespace Nuke.Common.Tooling
 
             argumentFormat = argumentFormat.Replace("{value}", "{0}");
 
-            string Format(T value) => value.ToString().DoubleQuoteIfNeeded(separator, disallowed, c_space);
+            string Format(T value) => value.ToString().DoubleQuoteIfNeeded(separator, disallowed, Space);
 
             AddInternal(
                 argumentFormat,
@@ -103,7 +103,7 @@ namespace Nuke.Common.Tooling
             var keyValueSeparator = itemFormat.Replace("{key}", string.Empty).Replace("{value}", string.Empty);
             ControlFlow.Assert(keyValueSeparator.Length == 1, "keyValueSeparator.Length == 1");
 
-            string Format(object value) => value.ToString().DoubleQuoteIfNeeded(separator, keyValueSeparator.Single(), disallowed, c_space);
+            string Format(object value) => value.ToString().DoubleQuoteIfNeeded(separator, keyValueSeparator.Single(), disallowed, Space);
 
             string FormatPair(KeyValuePair<TKey, TValue> pair)
                 => itemFormat
@@ -136,7 +136,7 @@ namespace Nuke.Common.Tooling
             var listSeparator = itemFormat.Replace("{key}", string.Empty).Replace("{value}", string.Empty);
             ControlFlow.Assert(listSeparator.Length == 1, "listSeparator.Length == 1");
 
-            string Format(object value) => value?.ToString().DoubleQuoteIfNeeded(separator, listSeparator.Single(), disallowed, c_space);
+            string Format(object value) => value?.ToString().DoubleQuoteIfNeeded(separator, listSeparator.Single(), disallowed, Space);
 
             string FormatLookup(TKey key, string values)
                 => itemFormat
@@ -184,7 +184,7 @@ namespace Nuke.Common.Tooling
 
         public string FilterSecrets(string text)
         {
-            return _secrets.Aggregate(text, (str, s) => str.Replace(s, c_hiddenString));
+            return _secrets.Aggregate(text, (str, s) => str.Replace(s, HiddenString));
         }
 
         private string Render(bool forOutput)
@@ -192,12 +192,12 @@ namespace Nuke.Common.Tooling
             string Format(string argument)
                 => !_secrets.Contains(argument) || !forOutput
                     ? argument
-                    : c_hiddenString;
+                    : HiddenString;
 
             var builder = new StringBuilder();
             foreach (var argumentPair in _arguments)
             foreach (var argument in argumentPair.Value)
-                builder.AppendFormat(argumentPair.Key, Format(argument)).Append(c_space);
+                builder.AppendFormat(argumentPair.Key, Format(argument)).Append(Space);
 
             return builder.ToString().TrimEnd();
         }

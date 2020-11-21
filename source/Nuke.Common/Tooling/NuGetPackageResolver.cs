@@ -21,17 +21,23 @@ namespace Nuke.Common.Tooling
     [PublicAPI]
     public static class NuGetPackageResolver
     {
-        private const int c_defaultTimeout = 2000;
+        private const int DefaultTimeout = 2000;
 
         [ItemCanBeNull]
-        public static async Task<string> GetLatestPackageVersion(string packageId, bool includePrereleases, int? timeout = null)
+        public static async Task<string> GetLatestPackageVersion(string packageId, bool includePrereleases, bool includeUnlisted = false, int? timeout = null)
         {
             try
             {
-                var url = $"https://api-v2v3search-0.nuget.org/query?q=packageid:{packageId}&prerelease={includePrereleases}";
-                var response = await HttpTasks.HttpDownloadStringAsync(url, requestConfigurator: x => x.Timeout = timeout ?? c_defaultTimeout);
-                var packageObject = JsonConvert.DeserializeObject<JObject>(response);
-                return packageObject["data"].Single()["version"].ToString();
+                var url = includeUnlisted
+                    ? $"https://api.nuget.org/v3/flatcontainer/{packageId.ToLowerInvariant()}/index.json"
+                    : $"https://api-v2v3search-0.nuget.org/query?q=packageid:{packageId}&prerelease={includePrereleases}";
+                var jsonString = await HttpTasks.HttpDownloadStringAsync(url, requestConfigurator: x => x.Timeout = timeout ?? DefaultTimeout);
+                var jsonObject = JsonConvert.DeserializeObject<JObject>(jsonString);
+                return includeUnlisted
+                    ? jsonObject.First.NotNull().First.NotNull().Children()
+                        .Select(x => x.Value<string>())
+                        .Last(x => includePrereleases || !x.Contains("-"))
+                    : jsonObject["data"].NotNull().Single()["version"].NotNull().ToString();
             }
             catch (Exception)
             {
@@ -46,7 +52,10 @@ namespace Nuke.Common.Tooling
             string version = null,
             bool resolveDependencies = true)
         {
-            return GetLocalInstalledPackages(packagesConfigFile, resolveDependencies)
+            return GetLocalInstalledPackages(
+                    packagesConfigFile,
+                    resolveDependencies,
+                    x => x.PackageId.EqualsOrdinalIgnoreCase(packageId))
                 .SingleOrDefaultOrError(
                     x => x.Id.EqualsOrdinalIgnoreCase(packageId) && (x.Version.ToString() == version || version == null),
                     $"Package '{packageId}' is referenced with multiple versions. Use NuGetPackageResolver and SetToolPath.");
@@ -55,47 +64,65 @@ namespace Nuke.Common.Tooling
         // TODO: add HasLocalInstalledPackage() ?
         public static IEnumerable<InstalledPackage> GetLocalInstalledPackages(
             string packagesConfigFile,
-            bool resolveDependencies = true)
+            bool resolveDependencies = true,
+            Func<(string PackageId, string Version), bool> preFilter = null)
         {
             return packagesConfigFile.EndsWithOrdinalIgnoreCase("json")
-                ? GetLocalInstalledPackagesFromAssetsFile(packagesConfigFile, resolveDependencies)
+                ? GetLocalInstalledPackagesFromAssetsFile(packagesConfigFile, resolveDependencies, preFilter)
                 : GetLocalInstalledPackagesFromConfigFile(packagesConfigFile, resolveDependencies);
         }
 
-        [ItemNotNull]
-        private static IEnumerable<InstalledPackage> GetLocalInstalledPackagesFromAssetsFile(
+        private static IEnumerable<(string PackageId, string Version)> GetLocalInstalledPackagesFromAssetsFileWithoutLoading(
             string packagesConfigFile,
             bool resolveDependencies = true)
         {
             var assetsObject = SerializationTasks.JsonDeserializeFromFile<JObject>(packagesConfigFile);
 
             // ReSharper disable HeapView.BoxingAllocation
-            var directReferences =
-                assetsObject["project"]["frameworks"]
+            var directPackageReferences =
+                assetsObject["project"].NotNull()["frameworks"].NotNull()
                     .Single().Single()["dependencies"]
                     ?.Children<JProperty>()
                     .Select(x => x.Name).ToList()
                 ?? new List<string>();
 
-            var allReferences =
-                assetsObject["libraries"]
+            var packageReferences =
+                assetsObject["libraries"].NotNull()
                     .Children<JProperty>()
-                    .Where(x => x.Value["type"].ToString() == "package")
+                    .Where(x => x.Value["type"].NotNull().ToString() == "package")
                     .Select(x => x.Name.Split('/'))
-                    .Select(x => (PackageId: x.First(), Version: x.Last())).ToList();
+                    .Select(x => (
+                        PackageId: x.First(),
+                        Version: x.Last()
+                    ))
+                    .Where(x => resolveDependencies || directPackageReferences.Contains(x.PackageId))
+                    .OrderByDescending(x => directPackageReferences.Contains(x.PackageId))
+                    .ToList();
+
+            var packageDownloads =
+                assetsObject["project"].NotNull()["frameworks"].NotNull()
+                    .Single().Single()["downloadDependencies"]
+                    ?.Children<JObject>()
+                    .Select(x => (
+                        PackageId: x.Property("name").NotNull().Value.ToString(),
+                        Version: x.Property("version").NotNull().Value.ToString().Trim('[', ']').Split(',').First().Trim()
+                    )).ToList()
+                ?? new List<(string, string)>();
             // ReSharper restore HeapView.BoxingAllocation
 
-            foreach (var (name, version) in allReferences)
-            {
-                if (!resolveDependencies && !directReferences.Contains(name))
-                    continue;
+            return packageDownloads.Concat(packageReferences);
+        }
 
-                var package = GetGlobalInstalledPackage(name, version, packagesConfigFile);
-                if (package == null)
-                    continue;
-
-                yield return package;
-            }
+        [ItemNotNull]
+        private static IEnumerable<InstalledPackage> GetLocalInstalledPackagesFromAssetsFile(
+            string packagesConfigFile,
+            bool resolveDependencies = true,
+            Func<(string PackageId, string Version), bool> preFilter = null)
+        {
+            return GetLocalInstalledPackagesFromAssetsFileWithoutLoading(packagesConfigFile, resolveDependencies)
+                .Where(x => preFilter == null || preFilter.Invoke(x))
+                .Select(x => GetGlobalInstalledPackage(x.PackageId, x.Version, packagesConfigFile))
+                .WhereNotNull();
         }
 
         [ItemNotNull]
@@ -198,6 +225,7 @@ namespace Nuke.Common.Tooling
                 .Concat(packagesDirectoryInfo
                     .GetDirectories($"{packageId}*")
                     .SelectMany(x => x.GetFiles($"{packageId}*.nupkg")))
+                .Where(x => x.Name.StartsWithOrdinalIgnoreCase(packageId))
                 .Select(x => x.FullName);
 
             var candidatePackages = packages.Select(x => new InstalledPackage(x))
@@ -218,7 +246,7 @@ namespace Nuke.Common.Tooling
             var projectDirectoryInfo = new DirectoryInfo(projectDirectory);
             var packagesConfigFile = projectDirectoryInfo.GetFiles("packages.config").SingleOrDefault()
                                      ?? projectDirectoryInfo.GetFiles("*.csproj")
-                                         .SingleOrDefaultOrError("Directory contains multiple project files.");
+                                         .SingleOrDefaultOrError($"Directory '{projectDirectory}' contains multiple project files.");
             return packagesConfigFile?.FullName;
         }
 

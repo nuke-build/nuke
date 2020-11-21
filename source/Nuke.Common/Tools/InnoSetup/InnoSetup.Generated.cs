@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Inno Setup is a free installer for Windows programs by Jordan Russell and Martijn Laan. First introduced in 1997, Inno Setup today rivals and even surpasses many commercial installers in feature set and stability.</p>
         ///   <p>For more details, visit the <a href="http://www.jrsoftware.org/isinfo.php">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> InnoSetup(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> InnoSetup(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(InnoSetupPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, InnoSetupLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(InnoSetupPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, InnoSetupLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -65,7 +65,7 @@ namespace Nuke.Common.Tools.InnoSetup
         public static IReadOnlyCollection<Output> InnoSetup(InnoSetupSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new InnoSetupSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -128,8 +128,8 @@ namespace Nuke.Common.Tools.InnoSetup
         /// <summary>
         ///   Path to the InnoSetup executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? InnoSetupTasks.InnoSetupPath;
-        public override Action<OutputType, string> CustomLogger => InnoSetupTasks.InnoSetupLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? InnoSetupTasks.InnoSetupPath;
+        public override Action<OutputType, string> ProcessCustomLogger => InnoSetupTasks.InnoSetupLogger;
         /// <summary>
         ///   The .iss script file to compile
         /// </summary>
@@ -173,7 +173,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   Emulate <c>#pragma verboselevel {number}</c> (highest level is 9)
         /// </summary>
         public virtual int? Verbosity { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("{value}", ScriptFile)
@@ -186,7 +186,7 @@ namespace Nuke.Common.Tools.InnoSetup
               .Add("/D{value}", KeyValueDefinitions, "{key}={value}")
               .Add("/D{value}", KeyDefinitions)
               .Add("/V{value}", Verbosity);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

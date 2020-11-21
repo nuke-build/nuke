@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -42,9 +42,29 @@ namespace Nuke.Common
         ITargetDefinition DependsOn(params Target[] targets);
 
         /// <summary>
+        ///   Adds a set of dependent targets that will be executed before this target.
+        /// </summary>
+        ITargetDefinition DependsOn<T>(params Func<T, Target>[] targets);
+
+        /// <summary>
+        ///   Adds a set of dependent targets that will be executed before this target.
+        /// </summary>
+        ITargetDefinition TryDependsOn<T>(params Func<T, Target>[] targets);
+
+        /// <summary>
         ///   Adds a set of targets that are dependent for this target.
         /// </summary>
         ITargetDefinition DependentFor(params Target[] targets);
+
+        /// <summary>
+        ///   Adds a set of targets that are dependent for this target.
+        /// </summary>
+        ITargetDefinition DependentFor<T>(params Func<T, Target>[] targets);
+
+        /// <summary>
+        ///   Adds a set of targets that are dependent for this target.
+        /// </summary>
+        ITargetDefinition TryDependentFor<T>(params Func<T, Target>[] targets);
 
         /// <summary>
         ///   Adds a set of conditions that will be checked before executing this target.
@@ -84,9 +104,29 @@ namespace Nuke.Common
         ITargetDefinition Before(params Target[] targets);
 
         /// <summary>
+        ///  Defines if this target should run before other targets.
+        /// </summary>
+        ITargetDefinition Before<T>(params Func<T, Target>[] targets);
+
+        /// <summary>
+        ///  Defines if this target should run before other targets.
+        /// </summary>
+        ITargetDefinition TryBefore<T>(params Func<T, Target>[] targets);
+
+        /// <summary>
         ///  Defines if this target should run after other targets.
         /// </summary>
         ITargetDefinition After(params Target[] targets);
+
+        /// <summary>
+        ///  Defines if this target should run after other targets.
+        /// </summary>
+        ITargetDefinition After<T>(params Func<T, Target>[] targets);
+
+        /// <summary>
+        ///  Defines if this target should run after other targets.
+        /// </summary>
+        ITargetDefinition TryAfter<T>(params Func<T, Target>[] targets);
 
         /// <summary>
         ///  Defines targets that will be triggered after this target.
@@ -94,9 +134,29 @@ namespace Nuke.Common
         ITargetDefinition Triggers(params Target[] targets);
 
         /// <summary>
+        ///  Defines targets that will be triggered after this target.
+        /// </summary>
+        ITargetDefinition Triggers<T>(params Func<T, Target>[] targets);
+
+        /// <summary>
+        ///  Defines targets that will be triggered after this target.
+        /// </summary>
+        ITargetDefinition TryTriggers<T>(params Func<T, Target>[] targets);
+
+        /// <summary>
         ///  Defines targets that will trigger this target.
         /// </summary>
         ITargetDefinition TriggeredBy(params Target[] targets);
+
+        /// <summary>
+        ///  Defines targets that will trigger this target.
+        /// </summary>
+        ITargetDefinition TriggeredBy<T>(params Func<T, Target>[] targets);
+
+        /// <summary>
+        ///  Defines targets that will trigger this target.
+        /// </summary>
+        ITargetDefinition TryTriggeredBy<T>(params Func<T, Target>[] targets);
 
         /// <summary>
         ///  Defines that this target is guaranteed to be executed, even if other targets fail.
@@ -112,6 +172,21 @@ namespace Nuke.Common
         ///  Defines that this target should not be listed.
         /// </summary>
         ITargetDefinition Unlisted();
+
+        /// <summary>
+        ///  Inherits base target definition.
+        /// </summary>
+        ITargetDefinition Base();
+
+        /// <summary>
+        ///   Inherits target definition.
+        /// </summary>
+        ITargetDefinition Inherit(params Target[] targets);
+
+        /// <summary>
+        ///   Inherits target definition.
+        /// </summary>
+        ITargetDefinition Inherit<T>(params Expression<Func<T, Target>>[] targets);
     }
 
     /// <summary>

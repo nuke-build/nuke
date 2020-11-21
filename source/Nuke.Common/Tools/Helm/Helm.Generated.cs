@@ -35,9 +35,9 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   <p>For more details, visit the <a href="https://helm.sh/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Helm(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Helm(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(HelmPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, HelmLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(HelmPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, HelmLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -55,7 +55,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmCompletion(HelmCompletionSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmCompletionSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -104,7 +104,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmCreate(HelmCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmCreateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -165,7 +165,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmDelete(HelmDeleteSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmDeleteSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -237,7 +237,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmDependencyBuild(HelmDependencyBuildSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmDependencyBuildSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -289,7 +289,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmDependencyList(HelmDependencyListSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmDependencyListSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -340,7 +340,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmDependencyUpdate(HelmDependencyUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmDependencyUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -408,7 +408,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmFetch(HelmFetchSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmFetchSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -491,7 +491,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmGet(HelmGetSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmGetSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -560,7 +560,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmGetHooks(HelmGetHooksSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmGetHooksSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -629,7 +629,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmGetManifest(HelmGetManifestSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmGetManifestSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -698,7 +698,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmGetNotes(HelmGetNotesSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmGetNotesSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -769,7 +769,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmGetValues(HelmGetValuesSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmGetValuesSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -844,7 +844,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmHistory(HelmHistorySettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmHistorySettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -909,7 +909,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmHome(HelmHomeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmHomeSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -978,7 +978,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmInit(HelmInitSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmInitSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1082,7 +1082,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmInspect(HelmInspectSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmInspectSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1160,7 +1160,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmInspectChart(HelmInspectChartSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmInspectChartSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1236,7 +1236,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmInspectReadme(HelmInspectReadmeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmInspectReadmeSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1310,7 +1310,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmInspectValues(HelmInspectValuesSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmInspectValuesSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1411,7 +1411,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmInstall(HelmInstallSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmInstallSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1531,7 +1531,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmLint(HelmLintSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmLintSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1612,7 +1612,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmList(HelmListSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmListSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1710,7 +1710,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmPackage(HelmPackageSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmPackageSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1776,7 +1776,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmPluginInstall(HelmPluginInstallSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmPluginInstallSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1827,7 +1827,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmPluginList(HelmPluginListSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmPluginListSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1873,7 +1873,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmPluginRemove(HelmPluginRemoveSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmPluginRemoveSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1921,7 +1921,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmPluginUpdate(HelmPluginUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmPluginUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1976,7 +1976,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmRepoAdd(HelmRepoAddSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmRepoAddSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2040,7 +2040,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmRepoIndex(HelmRepoIndexSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmRepoIndexSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2091,7 +2091,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmRepoList(HelmRepoListSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmRepoListSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2137,7 +2137,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmRepoRemove(HelmRepoRemoveSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmRepoRemoveSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2185,7 +2185,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmRepoUpdate(HelmRepoUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmRepoUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2240,7 +2240,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmReset(HelmResetSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmResetSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2316,7 +2316,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmRollback(HelmRollbackSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmRollbackSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2396,7 +2396,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmSearch(HelmSearchSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmSearchSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2454,7 +2454,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmServe(HelmServeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmServeSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2514,7 +2514,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmStatus(HelmStatusSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmStatusSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2590,7 +2590,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmTemplate(HelmTemplateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmTemplateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2671,7 +2671,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmTest(HelmTestSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmTestSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2771,7 +2771,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmUpgrade(HelmUpgradeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmUpgradeSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2888,7 +2888,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmVerify(HelmVerifySettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmVerifySettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -2947,7 +2947,7 @@ namespace Nuke.Common.Tools.Helm
         public static IReadOnlyCollection<Output> HelmVersion(HelmVersionSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new HelmVersionSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3012,20 +3012,20 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for completion.
         /// </summary>
         public virtual bool? Help { get; internal set; }
         public virtual string Shell { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("completion")
               .Add("--help", Help)
               .Add("{value}", Shell);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3041,8 +3041,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for create.
         /// </summary>
@@ -3055,14 +3055,14 @@ namespace Nuke.Common.Tools.Helm
         ///   The name of chart directory to create.
         /// </summary>
         public virtual string Name { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("create")
               .Add("--help", Help)
               .Add("--starter {value}", Starter)
               .Add("{value}", Name);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3078,8 +3078,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Specify a description for the release.
         /// </summary>
@@ -3133,7 +3133,7 @@ namespace Nuke.Common.Tools.Helm
         /// </summary>
         public virtual IReadOnlyList<string> ReleaseNames => ReleaseNamesInternal.AsReadOnly();
         internal List<string> ReleaseNamesInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("delete")
@@ -3150,7 +3150,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--tls-key {value}", TlsKey)
               .Add("--tls-verify", TlsVerify)
               .Add("{value}", ReleaseNames, separator: ' ');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3166,8 +3166,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for build.
         /// </summary>
@@ -3184,7 +3184,7 @@ namespace Nuke.Common.Tools.Helm
         ///   The name of the chart to build.
         /// </summary>
         public virtual string Chart { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("dependency build")
@@ -3192,7 +3192,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--keyring {value}", Keyring)
               .Add("--verify", Verify)
               .Add("{value}", Chart);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3208,8 +3208,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for list.
         /// </summary>
@@ -3218,13 +3218,13 @@ namespace Nuke.Common.Tools.Helm
         ///   The name of the chart to list.
         /// </summary>
         public virtual string Chart { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("dependency list")
               .Add("--help", Help)
               .Add("{value}", Chart);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3240,8 +3240,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for update.
         /// </summary>
@@ -3262,7 +3262,7 @@ namespace Nuke.Common.Tools.Helm
         ///   The name of the chart to update.
         /// </summary>
         public virtual string Chart { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("dependency update")
@@ -3271,7 +3271,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--skip-refresh", SkipRefresh)
               .Add("--verify", Verify)
               .Add("{value}", Chart);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3287,8 +3287,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Verify certificates of HTTPS-enabled servers using this CA bundle.
         /// </summary>
@@ -3354,7 +3354,7 @@ namespace Nuke.Common.Tools.Helm
         /// </summary>
         public virtual IReadOnlyList<string> Charts => ChartsInternal.AsReadOnly();
         internal List<string> ChartsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("fetch")
@@ -3374,7 +3374,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--verify", Verify)
               .Add("--version {value}", Version)
               .Add("{value}", Charts, separator: ' ');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3390,8 +3390,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for get.
         /// </summary>
@@ -3428,7 +3428,7 @@ namespace Nuke.Common.Tools.Helm
         ///   The name of the release to get.
         /// </summary>
         public virtual string ReleaseName { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("get")
@@ -3441,7 +3441,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--tls-key {value}", TlsKey)
               .Add("--tls-verify", TlsVerify)
               .Add("{value}", ReleaseName);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3457,8 +3457,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for hooks.
         /// </summary>
@@ -3495,7 +3495,7 @@ namespace Nuke.Common.Tools.Helm
         ///   The name of the release to get the hooks for.
         /// </summary>
         public virtual string ReleaseName { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("get hooks")
@@ -3508,7 +3508,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--tls-key {value}", TlsKey)
               .Add("--tls-verify", TlsVerify)
               .Add("{value}", ReleaseName);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3524,8 +3524,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for manifest.
         /// </summary>
@@ -3562,7 +3562,7 @@ namespace Nuke.Common.Tools.Helm
         ///   The name of the release to get the manifest for.
         /// </summary>
         public virtual string ReleaseName { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("get manifest")
@@ -3575,7 +3575,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--tls-key {value}", TlsKey)
               .Add("--tls-verify", TlsVerify)
               .Add("{value}", ReleaseName);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3591,8 +3591,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for notes.
         /// </summary>
@@ -3626,7 +3626,7 @@ namespace Nuke.Common.Tools.Helm
         /// </summary>
         public virtual bool? TlsVerify { get; internal set; }
         public virtual string ReleaseName { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("get notes")
@@ -3639,7 +3639,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--tls-key {value}", TlsKey)
               .Add("--tls-verify", TlsVerify)
               .Add("{value}", ReleaseName);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3655,8 +3655,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Dump all (computed) values.
         /// </summary>
@@ -3701,7 +3701,7 @@ namespace Nuke.Common.Tools.Helm
         ///   The name of the release to get the values for.
         /// </summary>
         public virtual string ReleaseName { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("get values")
@@ -3716,7 +3716,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--tls-key {value}", TlsKey)
               .Add("--tls-verify", TlsVerify)
               .Add("{value}", ReleaseName);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3732,8 +3732,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Specifies the max column width of output (default 60).
         /// </summary>
@@ -3778,7 +3778,7 @@ namespace Nuke.Common.Tools.Helm
         ///   The name of the release to get the history for.
         /// </summary>
         public virtual string ReleaseName { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("history")
@@ -3793,7 +3793,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--tls-key {value}", TlsKey)
               .Add("--tls-verify", TlsVerify)
               .Add("{value}", ReleaseName);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3809,18 +3809,18 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for home.
         /// </summary>
         public virtual bool? Help { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("home")
               .Add("--help", Help);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3836,8 +3836,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Auto-mount the given service account to tiller (default true).
         /// </summary>
@@ -3939,7 +3939,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Block until Tiller is running and ready to receive requests.
         /// </summary>
         public virtual bool? Wait { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("init")
@@ -3968,7 +3968,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--tls-ca-cert {value}", TlsCaCert)
               .Add("--upgrade", Upgrade)
               .Add("--wait", Wait);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3984,8 +3984,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Chart repository url where to locate the requested chart.
         /// </summary>
@@ -4034,7 +4034,7 @@ namespace Nuke.Common.Tools.Helm
         ///   The name of the chart to inspect.
         /// </summary>
         public virtual string Chart { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("inspect")
@@ -4050,7 +4050,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--verify", Verify)
               .Add("--version {value}", Version)
               .Add("{value}", Chart);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4066,8 +4066,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Chart repository url where to locate the requested chart.
         /// </summary>
@@ -4116,7 +4116,7 @@ namespace Nuke.Common.Tools.Helm
         ///   The name of the chart to inspect.
         /// </summary>
         public virtual string Chart { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("inspect chart")
@@ -4132,7 +4132,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--verify", Verify)
               .Add("--version {value}", Version)
               .Add("{value}", Chart);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4148,8 +4148,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Chart repository url where to locate the requested chart.
         /// </summary>
@@ -4190,7 +4190,7 @@ namespace Nuke.Common.Tools.Helm
         ///   The name of the chart to inspect.
         /// </summary>
         public virtual string Chart { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("inspect readme")
@@ -4204,7 +4204,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--verify", Verify)
               .Add("--version {value}", Version)
               .Add("{value}", Chart);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4220,8 +4220,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Chart repository url where to locate the requested chart.
         /// </summary>
@@ -4270,7 +4270,7 @@ namespace Nuke.Common.Tools.Helm
         ///   The name of the chart to inspect.
         /// </summary>
         public virtual string Chart { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("inspect values")
@@ -4286,7 +4286,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--verify", Verify)
               .Add("--version {value}", Version)
               .Add("{value}", Chart);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4302,8 +4302,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   If set, installation process purges chart on fail, also sets --wait flag.
         /// </summary>
@@ -4448,7 +4448,7 @@ namespace Nuke.Common.Tools.Helm
         ///   The name of the chart to install.
         /// </summary>
         public virtual string Chart { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("install")
@@ -4487,7 +4487,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--version {value}", Version)
               .Add("--wait", Wait)
               .Add("{value}", Chart);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4503,8 +4503,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for lint.
         /// </summary>
@@ -4541,7 +4541,7 @@ namespace Nuke.Common.Tools.Helm
         ///   The Path to a chart.
         /// </summary>
         public virtual string Path { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("lint")
@@ -4553,7 +4553,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--strict", Strict)
               .Add("--values {value}", Values)
               .Add("{value}", Path);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4569,8 +4569,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Show all releases, not just the ones marked DEPLOYED.
         /// </summary>
@@ -4663,7 +4663,7 @@ namespace Nuke.Common.Tools.Helm
         ///   The filter to use.
         /// </summary>
         public virtual string Filter { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("list")
@@ -4690,7 +4690,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--tls-key {value}", TlsKey)
               .Add("--tls-verify", TlsVerify)
               .Add("{value}", Filter);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4706,8 +4706,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Set the appVersion on the chart to this version.
         /// </summary>
@@ -4749,7 +4749,7 @@ namespace Nuke.Common.Tools.Helm
         /// </summary>
         public virtual IReadOnlyList<string> ChartPaths => ChartPathsInternal.AsReadOnly();
         internal List<string> ChartPathsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("package")
@@ -4763,7 +4763,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--sign", Sign)
               .Add("--version {value}", Version)
               .Add("{value}", ChartPaths, separator: ' ');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4779,8 +4779,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for install.
         /// </summary>
@@ -4795,7 +4795,7 @@ namespace Nuke.Common.Tools.Helm
         /// </summary>
         public virtual IReadOnlyList<string> Paths => PathsInternal.AsReadOnly();
         internal List<string> PathsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("plugin install")
@@ -4803,7 +4803,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--version {value}", Version)
               .Add("{value}", Options)
               .Add("{value}", Paths, separator: ' ');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4819,18 +4819,18 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for list.
         /// </summary>
         public virtual bool? Help { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("plugin list")
               .Add("--help", Help);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4846,8 +4846,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for remove.
         /// </summary>
@@ -4857,13 +4857,13 @@ namespace Nuke.Common.Tools.Helm
         /// </summary>
         public virtual IReadOnlyList<string> Plugins => PluginsInternal.AsReadOnly();
         internal List<string> PluginsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("plugin remove")
               .Add("--help", Help)
               .Add("{value}", Plugins, separator: ' ');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4879,8 +4879,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for update.
         /// </summary>
@@ -4890,13 +4890,13 @@ namespace Nuke.Common.Tools.Helm
         /// </summary>
         public virtual IReadOnlyList<string> Plugins => PluginsInternal.AsReadOnly();
         internal List<string> PluginsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("plugin update")
               .Add("--help", Help)
               .Add("{value}", Plugins, separator: ' ');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4912,8 +4912,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Verify certificates of HTTPS-enabled servers using this CA bundle.
         /// </summary>
@@ -4950,7 +4950,7 @@ namespace Nuke.Common.Tools.Helm
         ///   The url of the repository to add.
         /// </summary>
         public virtual string Url { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("repo add")
@@ -4963,7 +4963,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--username {value}", Username)
               .Add("{value}", Name)
               .Add("{value}", Url);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4979,8 +4979,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for index.
         /// </summary>
@@ -4997,7 +4997,7 @@ namespace Nuke.Common.Tools.Helm
         ///   The directory of the repository.
         /// </summary>
         public virtual string Directory { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("repo index")
@@ -5005,7 +5005,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--merge {value}", Merge)
               .Add("--url {value}", Url)
               .Add("{value}", Directory);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5021,18 +5021,18 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for list.
         /// </summary>
         public virtual bool? Help { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("repo list")
               .Add("--help", Help);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5048,8 +5048,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for remove.
         /// </summary>
@@ -5058,13 +5058,13 @@ namespace Nuke.Common.Tools.Helm
         ///   The name of the repository.
         /// </summary>
         public virtual string Name { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("repo remove")
               .Add("--help", Help)
               .Add("{value}", Name);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5080,8 +5080,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for update.
         /// </summary>
@@ -5090,13 +5090,13 @@ namespace Nuke.Common.Tools.Helm
         ///   Fail on update warnings.
         /// </summary>
         public virtual bool? Strict { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("repo update")
               .Add("--help", Help)
               .Add("--strict", Strict);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5112,8 +5112,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Forces Tiller uninstall even if there are releases installed, or if Tiller is not in ready state. Releases are not deleted.).
         /// </summary>
@@ -5150,7 +5150,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Enable TLS for request and verify remote.
         /// </summary>
         public virtual bool? TlsVerify { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("reset")
@@ -5163,7 +5163,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--tls-hostname {value}", TlsHostname)
               .Add("--tls-key {value}", TlsKey)
               .Add("--tls-verify", TlsVerify);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5179,8 +5179,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Specify a description for the release.
         /// </summary>
@@ -5245,7 +5245,7 @@ namespace Nuke.Common.Tools.Helm
         ///   The revison to roll back.
         /// </summary>
         public virtual string Revision { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("rollback")
@@ -5265,7 +5265,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--wait", Wait)
               .Add("{value}", Release)
               .Add("{value}", Revision);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5281,8 +5281,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Specifies the max column width of output (default 60).
         /// </summary>
@@ -5307,7 +5307,7 @@ namespace Nuke.Common.Tools.Helm
         ///   The keyword to search for.
         /// </summary>
         public virtual string Keyword { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("search")
@@ -5317,7 +5317,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--version {value}", Version)
               .Add("--versions", Versions)
               .Add("{value}", Keyword);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5333,8 +5333,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Address to listen on (default "127.0.0.1:8879").
         /// </summary>
@@ -5351,7 +5351,7 @@ namespace Nuke.Common.Tools.Helm
         ///   External URL of chart repository.
         /// </summary>
         public virtual string Url { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("serve")
@@ -5359,7 +5359,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--help", Help)
               .Add("--repo-path {value}", RepoPath)
               .Add("--url {value}", Url);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5375,8 +5375,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for status.
         /// </summary>
@@ -5417,7 +5417,7 @@ namespace Nuke.Common.Tools.Helm
         ///   The name of the release to get the status for.
         /// </summary>
         public virtual string ReleaseName { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("status")
@@ -5431,7 +5431,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--tls-key {value}", TlsKey)
               .Add("--tls-verify", TlsVerify)
               .Add("{value}", ReleaseName);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5447,8 +5447,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Only execute the given templates.
         /// </summary>
@@ -5507,7 +5507,7 @@ namespace Nuke.Common.Tools.Helm
         public virtual IReadOnlyList<string> Values => ValuesInternal.AsReadOnly();
         internal List<string> ValuesInternal { get; set; } = new List<string>();
         public virtual string Chart { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("template")
@@ -5525,7 +5525,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--set-string {value}", SetString, "{key}={value}", separator: ',')
               .Add("--values {value}", Values)
               .Add("{value}", Chart);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5541,8 +5541,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Delete test pods upon completion.
         /// </summary>
@@ -5587,7 +5587,7 @@ namespace Nuke.Common.Tools.Helm
         ///   The name of the release to test.
         /// </summary>
         public virtual string Release { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("test")
@@ -5602,7 +5602,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--tls-key {value}", TlsKey)
               .Add("--tls-verify", TlsVerify)
               .Add("{value}", Release);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5618,8 +5618,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   If set, upgrade process rolls back changes made in case of failed upgrade, also sets --wait flag.
         /// </summary>
@@ -5768,7 +5768,7 @@ namespace Nuke.Common.Tools.Helm
         ///   The name of the chart to upgrade.
         /// </summary>
         public virtual string Chart { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("upgrade")
@@ -5808,7 +5808,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--wait", Wait)
               .Add("{value}", Release)
               .Add("{value}", Chart);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5824,8 +5824,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Help for verify.
         /// </summary>
@@ -5838,14 +5838,14 @@ namespace Nuke.Common.Tools.Helm
         ///   The path to the chart to verify.
         /// </summary>
         public virtual string Path { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("verify")
               .Add("--help", Help)
               .Add("--keyring {value}", Keyring)
               .Add("{value}", Path);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5861,8 +5861,8 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? HelmTasks.HelmPath;
-        public override Action<OutputType, string> CustomLogger => HelmTasks.HelmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => HelmTasks.HelmLogger;
         /// <summary>
         ///   Client version only.
         /// </summary>
@@ -5907,7 +5907,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Enable TLS for request and verify remote.
         /// </summary>
         public virtual bool? TlsVerify { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("version")
@@ -5922,7 +5922,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--tls-hostname {value}", TlsHostname)
               .Add("--tls-key {value}", TlsKey)
               .Add("--tls-verify", TlsVerify);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5967,7 +5967,7 @@ namespace Nuke.Common.Tools.Helm
         ///   Namespace of Tiller (default "kube-system").
         /// </summary>
         public virtual string TillerNamespace { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("--debug", Debug)
@@ -5978,7 +5978,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--kubeconfig {value}", Kubeconfig)
               .Add("--tiller-connection-timeout {value}", TillerConnectionTimeout)
               .Add("--tiller-namespace {value}", TillerNamespace);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

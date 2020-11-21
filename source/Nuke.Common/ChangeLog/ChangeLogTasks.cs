@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -177,15 +177,15 @@ namespace Nuke.Common.ChangeLog
 
         private static IEnumerable<ReleaseSection> GetReleaseSections(List<string> content)
         {
-            bool IsReleaseHead(string str)
+            static bool IsReleaseHead(string str)
                 => str.StartsWith("## ");
 
-            bool IsReleaseContent(string str) => str.StartsWith("###")
+            static bool IsReleaseContent(string str) => str.StartsWith("###")
                                               || str.Trim().StartsWith("-")
                                               || str.Trim().StartsWith("*")
                                               || str.Trim().StartsWith("+");
 
-            string GetCaption(string str)
+            static string GetCaption(string str)
                 => str
                     .TrimStart('#', ' ', '[')
                     .Split(' ')

@@ -20,10 +20,10 @@ namespace Nuke.Common.Tooling
                     continue;
 
                 var mappings = Mappings[property.PropertyType];
-                foreach (var mapping in mappings)
+                foreach (var (verbosity, mappedVerbosity) in mappings)
                 {
-                    if (mapping.Verbosity == NukeBuild.Verbosity)
-                        property.SetValue(obj, mapping.MappedVerbosity);
+                    if (verbosity == NukeBuild.Verbosity)
+                        property.SetValue(obj, mappedVerbosity);
                 }
             }
         }

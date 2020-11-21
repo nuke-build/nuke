@@ -14,8 +14,7 @@ using Nuke.Common.Utilities.Collections;
 namespace Nuke.Common.Execution
 {
     [PublicAPI]
-    [AttributeUsage(AttributeTargets.Class)]
-    public class CheckBuildProjectConfigurationsAttribute : Attribute, IOnAfterLogo
+    public class CheckBuildProjectConfigurationsAttribute : BuildExtensionAttributeBase, IOnAfterLogo
     {
         public int TimeoutInMilliseconds { get; set; } = 500;
 
@@ -27,7 +26,7 @@ namespace Nuke.Common.Execution
             ControlFlow.AssertWarn(Task.Run(CheckConfiguration).Wait(TimeoutInMilliseconds),
                 $"Could not complete checking build configurations within {TimeoutInMilliseconds} milliseconds.");
 
-            Task CheckConfiguration()
+            static Task CheckConfiguration()
             {
                 var rootDirectory = new DirectoryInfo(NukeBuild.RootDirectory);
                 new[] { rootDirectory }

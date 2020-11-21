@@ -19,8 +19,8 @@ namespace Nuke.Common.Tools.Coverlet
         public static CoverletSettings SetTargetSettings(this CoverletSettings toolSettings, ToolSettings targetSettings)
         {
             return toolSettings
-                .SetTarget(targetSettings.ToolPath)
-                .SetTargetArgs(targetSettings.GetArguments().RenderForExecution());
+                .SetTarget(targetSettings.ProcessToolPath)
+                .SetTargetArgs(targetSettings.GetProcessArguments().RenderForExecution());
         }
 
         /// <summary>

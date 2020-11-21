@@ -12,6 +12,7 @@ using JetBrains.Annotations;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.Execution
 {
@@ -167,7 +168,7 @@ namespace Nuke.Common.Execution
         private static bool HasSkippingCondition(ExecutableTarget target, IEnumerable<Expression<Func<bool>>> conditions)
         {
             // TODO: trim outer parenthesis
-            string GetSkipReason(Expression<Func<bool>> condition) =>
+            static string GetSkipReason(Expression<Func<bool>> condition) =>
                 condition.Body.ToString()
                     .Replace("False", "false")
                     .Replace("True", "true")

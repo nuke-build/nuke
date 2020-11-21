@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -6,7 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using NuGet.Packaging;
+using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Execution
 {
@@ -20,17 +23,21 @@ namespace Nuke.Common.Execution
             params Expression<Func<T, Target>>[] defaultTargetExpressions)
             where T : NukeBuild
         {
+            var buildType = build.GetType();
+            var targetProperties = GetTargetProperties(buildType);
             var defaultTargets = defaultTargetExpressions.Select(x => x.Compile().Invoke(build)).ToList();
-            var properties = build.GetType()
-                .GetProperties(ReflectionService.Instance)
-                .Where(x => x.PropertyType == typeof(Target)).ToList();
 
             var executables = new List<ExecutableTarget>();
-
-            foreach (var property in properties)
+            foreach (var property in targetProperties)
             {
+                var baseMembers = buildType
+                    .Descendants(x => x.BaseType)
+                    .Select(x => x.GetProperty(property.Name))
+                    .Where(x => x != null && x.DeclaringType == x.ReflectedType)
+                    .Reverse().ToList();
+                var definition = new TargetDefinition(build, new Stack<PropertyInfo>(baseMembers));
+
                 var factory = (Target) property.GetValue(build);
-                var definition = new TargetDefinition();
                 factory.Invoke(definition);
 
                 var target = new ExecutableTarget
@@ -78,6 +85,36 @@ namespace Nuke.Common.Execution
             }
 
             return executables;
+        }
+
+        private static IEnumerable<PropertyInfo> GetTargetProperties(Type buildType)
+        {
+            // TODO: static targets?
+            var interfaceProperties = buildType.GetInterfaces()
+                .SelectMany(x => x.GetProperties(ReflectionService.Instance))
+                .Where(x => x.PropertyType == typeof(Target))
+                .Where(x => buildType.GetProperty(x.Name) == null).ToLookup(x => x.Name);
+            var classProperties = buildType
+                .GetProperties(ReflectionService.Instance)
+                .Where(x => x.PropertyType == typeof(Target))
+                .Where(x => !x.Name.Contains(".")).ToDictionary(x => x.Name);
+
+            foreach (var interfacePropertiesByName in interfaceProperties)
+            {
+                var propertyName = interfacePropertiesByName.Key;
+                var classProperty = classProperties.GetValueOrDefault(propertyName);
+                ControlFlow.Assert(interfacePropertiesByName.Count() == 1 || classProperty != null,
+                    new[] { $"Target '{propertyName}' must be implemented explicitly because it is inherited from multiple interfaces:" }
+                        .Concat(interfacePropertiesByName.Select(x => $" - {x.DeclaringType.NotNull().Name}"))
+                        .JoinNewLine());
+                ControlFlow.Assert(classProperty == null || classProperty.IsPublic(),
+                    new[] { $"Target '{propertyName}' must be marked public to override inherited member from:" }
+                        .Concat(interfacePropertiesByName.Select(x => $" - {x.DeclaringType.NotNull().Name}"))
+                        .JoinNewLine());
+            }
+
+            return classProperties.Values
+                .Concat(interfaceProperties.SelectMany(x => x)).ToList();
         }
     }
 }

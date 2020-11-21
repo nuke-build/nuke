@@ -21,21 +21,21 @@ namespace Nuke.Common.Tools.NSwag
 
         private bool IsNetCore => NSwagRuntime != null && NSwagRuntime.StartsWith("NetCore", StringComparison.OrdinalIgnoreCase);
 
-        public override Action<OutputType, string> CustomLogger { get; }
+        public override Action<OutputType, string> ProcessCustomLogger { get; }
 
         [NotNull]
-        protected override Arguments ConfigureArguments([NotNull] Arguments arguments)
+        protected override Arguments ConfigureProcessArguments([NotNull] Arguments arguments)
         {
             if (!IsNetCore)
-                return base.ConfigureArguments(arguments);
+                return base.ConfigureProcessArguments(arguments);
 
             var args = new Arguments();
             args.Add($"{GetNetCoreDllPath(NSwagRuntime).DoubleQuoteIfNeeded()}");
             args.Concatenate(arguments);
-            return base.ConfigureArguments(args);
+            return base.ConfigureProcessArguments(args);
         }
 
-        protected string GetToolPath()
+        protected string GetProcessToolPath()
         {
             if (IsNetCore)
                 return DotNetTasks.DotNetPath;

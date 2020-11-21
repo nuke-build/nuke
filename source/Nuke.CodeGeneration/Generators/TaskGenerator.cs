@@ -30,7 +30,7 @@ namespace Nuke.CodeGeneration.Generators
                 {
                     w
                         .WriteToolPath()
-                        .WriteLogger()
+                        .WriteToolLogger()
                         .WriteGenericTask();
 
                     tool.Tasks.ForEach(x => new TaskWriter(x, toolWriter)
@@ -51,6 +51,8 @@ namespace Nuke.CodeGeneration.Generators
                                  "int? timeout = null",
                                  "bool? logOutput = null",
                                  "bool? logInvocation = null",
+                                 "bool? logTimestamp = null",
+                                 "string logFile = null",
                                  "Func<string, string> outputFilter = null"
                              };
             var arguments = new[]
@@ -62,6 +64,8 @@ namespace Nuke.CodeGeneration.Generators
                                 "timeout",
                                 "logOutput",
                                 "logInvocation",
+                                "logTimestamp",
+                                "logFile",
                                 $"{tool.Name}Logger",
                                 "outputFilter"
                             };
@@ -70,7 +74,7 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteObsoleteAttributeWhenObsolete(tool)
                 .WriteLine($"public static IReadOnlyCollection<Output> {tool.Name}({parameters.JoinComma()})")
                 .WriteBlock(w => w
-                    .WriteLine($"var process = ProcessTasks.StartProcess({arguments.JoinComma()});")
+                    .WriteLine($"using var process = ProcessTasks.StartProcess({arguments.JoinComma()});")
                     .WriteLine("process.AssertZeroExitCode();")
                     .WriteLine("return process.Output;"));
         }
@@ -90,7 +94,7 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteBlock(w => w
                     .WriteLine($"toolSettings = toolSettings ?? new {task.SettingsClass.Name}();")
                     .WriteLineIfTrue(task.PreProcess, "PreProcess(ref toolSettings);")
-                    .WriteLine($"var process = {GetProcessStart(task)};")
+                    .WriteLine($"using var process = {GetProcessStart(task)};")
                     .WriteLine(GetProcessAssertion(task))
                     .WriteLineIfTrue(task.PostProcess, "PostProcess(toolSettings);")
                     .WriteLine(task.HasReturnValue()
@@ -180,7 +184,7 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLine($"    {resolvers.Single()};");
         }
 
-        private static ToolWriter WriteLogger(this ToolWriter writer)
+        private static ToolWriter WriteToolLogger(this ToolWriter writer)
         {
             var tool = writer.Tool;
             var logger = tool.CustomLogger ? "CustomLogger" : "ProcessTasks.DefaultLogger";

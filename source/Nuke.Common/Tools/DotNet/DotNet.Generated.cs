@@ -35,9 +35,9 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> DotNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> DotNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(DotNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, DotNetLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(DotNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, DotNetLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -82,7 +82,7 @@ namespace Nuke.Common.Tools.DotNet
         public static IReadOnlyCollection<Output> DotNetTest(DotNetTestSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotNetTestSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -203,7 +203,7 @@ namespace Nuke.Common.Tools.DotNet
         public static IReadOnlyCollection<Output> DotNetRun(DotNetRunSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotNetRunSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -303,7 +303,7 @@ namespace Nuke.Common.Tools.DotNet
         public static IReadOnlyCollection<Output> DotNetRestore(DotNetRestoreSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotNetRestoreSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -401,7 +401,7 @@ namespace Nuke.Common.Tools.DotNet
         public static IReadOnlyCollection<Output> DotNetPack(DotNetPackSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotNetPackSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -515,7 +515,7 @@ namespace Nuke.Common.Tools.DotNet
         public static IReadOnlyCollection<Output> DotNetBuild(DotNetBuildSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotNetBuildSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -613,7 +613,7 @@ namespace Nuke.Common.Tools.DotNet
         public static IReadOnlyCollection<Output> DotNetClean(DotNetCleanSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotNetCleanSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -694,7 +694,7 @@ namespace Nuke.Common.Tools.DotNet
         public static IReadOnlyCollection<Output> DotNetPublish(DotNetPublishSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotNetPublishSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -793,7 +793,7 @@ namespace Nuke.Common.Tools.DotNet
         public static IReadOnlyCollection<Output> DotNetNuGetPush(DotNetNuGetPushSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotNetNuGetPushSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -846,6 +846,66 @@ namespace Nuke.Common.Tools.DotNet
             return configurator.Invoke(DotNetNuGetPush, DotNetLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary>
+        ///   <p>Adds a NuGet source.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;source&gt;</c> via <see cref="DotNetNuGetAddSourceSettings.Source"/></li>
+        ///     <li><c>--name</c> via <see cref="DotNetNuGetAddSourceSettings.Name"/></li>
+        ///     <li><c>--password</c> via <see cref="DotNetNuGetAddSourceSettings.Password"/></li>
+        ///     <li><c>--store-password-in-clear-text</c> via <see cref="DotNetNuGetAddSourceSettings.StorePasswordInClearText"/></li>
+        ///     <li><c>--username</c> via <see cref="DotNetNuGetAddSourceSettings.Username"/></li>
+        ///     <li><c>--valid-authentication-types</c> via <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> DotNetNuGetAddSource(DotNetNuGetAddSourceSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new DotNetNuGetAddSourceSettings();
+            using var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary>
+        ///   <p>Adds a NuGet source.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;source&gt;</c> via <see cref="DotNetNuGetAddSourceSettings.Source"/></li>
+        ///     <li><c>--name</c> via <see cref="DotNetNuGetAddSourceSettings.Name"/></li>
+        ///     <li><c>--password</c> via <see cref="DotNetNuGetAddSourceSettings.Password"/></li>
+        ///     <li><c>--store-password-in-clear-text</c> via <see cref="DotNetNuGetAddSourceSettings.StorePasswordInClearText"/></li>
+        ///     <li><c>--username</c> via <see cref="DotNetNuGetAddSourceSettings.Username"/></li>
+        ///     <li><c>--valid-authentication-types</c> via <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> DotNetNuGetAddSource(Configure<DotNetNuGetAddSourceSettings> configurator)
+        {
+            return DotNetNuGetAddSource(configurator(new DotNetNuGetAddSourceSettings()));
+        }
+        /// <summary>
+        ///   <p>Adds a NuGet source.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;source&gt;</c> via <see cref="DotNetNuGetAddSourceSettings.Source"/></li>
+        ///     <li><c>--name</c> via <see cref="DotNetNuGetAddSourceSettings.Name"/></li>
+        ///     <li><c>--password</c> via <see cref="DotNetNuGetAddSourceSettings.Password"/></li>
+        ///     <li><c>--store-password-in-clear-text</c> via <see cref="DotNetNuGetAddSourceSettings.StorePasswordInClearText"/></li>
+        ///     <li><c>--username</c> via <see cref="DotNetNuGetAddSourceSettings.Username"/></li>
+        ///     <li><c>--valid-authentication-types</c> via <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(DotNetNuGetAddSourceSettings Settings, IReadOnlyCollection<Output> Output)> DotNetNuGetAddSource(CombinatorialConfigure<DotNetNuGetAddSourceSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+        {
+            return configurator.Invoke(DotNetNuGetAddSource, DotNetLogger, degreeOfParallelism, completeOnFailure);
+        }
+        /// <summary>
         ///   <p>The <c>dotnet tool install</c> command provides a way for you to install .NET Core Global Tools on your machine. To use the command, you either have to specify that you want a user-wide installation using the <c>--global</c> option or you specify a path to install it using the <c>--tool-path</c> option.<para/>Global Tools are installed in the following directories by default when you specify the <c>-g</c> (or <c>--global</c>) option:<ul><li>Linux/macOS: <c>$HOME/.dotnet/tools</c></li><li>Windows: <c>%USERPROFILE%\.dotnet\tools</c></li></ul></p>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
         /// </summary>
@@ -865,7 +925,7 @@ namespace Nuke.Common.Tools.DotNet
         public static IReadOnlyCollection<Output> DotNetToolInstall(DotNetToolInstallSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotNetToolInstallSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -927,7 +987,7 @@ namespace Nuke.Common.Tools.DotNet
         public static IReadOnlyCollection<Output> DotNetToolUninstall(DotNetToolUninstallSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotNetToolUninstallSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -979,12 +1039,13 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--global</c> via <see cref="DotNetToolUpdateSettings.Global"/></li>
         ///     <li><c>--tool-path</c> via <see cref="DotNetToolUpdateSettings.ToolInstallationPath"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetToolUpdateSettings.Verbosity"/></li>
+        ///     <li><c>--version</c> via <see cref="DotNetToolUpdateSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotNetToolUpdate(DotNetToolUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotNetToolUpdateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -1002,6 +1063,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--global</c> via <see cref="DotNetToolUpdateSettings.Global"/></li>
         ///     <li><c>--tool-path</c> via <see cref="DotNetToolUpdateSettings.ToolInstallationPath"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetToolUpdateSettings.Verbosity"/></li>
+        ///     <li><c>--version</c> via <see cref="DotNetToolUpdateSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotNetToolUpdate(Configure<DotNetToolUpdateSettings> configurator)
@@ -1022,6 +1084,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--global</c> via <see cref="DotNetToolUpdateSettings.Global"/></li>
         ///     <li><c>--tool-path</c> via <see cref="DotNetToolUpdateSettings.ToolInstallationPath"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetToolUpdateSettings.Verbosity"/></li>
+        ///     <li><c>--version</c> via <see cref="DotNetToolUpdateSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(DotNetToolUpdateSettings Settings, IReadOnlyCollection<Output> Output)> DotNetToolUpdate(CombinatorialConfigure<DotNetToolUpdateSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -1041,8 +1104,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   Specifies a path to the test project. If omitted, it defaults to current directory.
         /// </summary>
@@ -1161,7 +1224,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.
         /// </summary>
         public virtual string Runtime { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("test")
@@ -1194,7 +1257,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--lock-file-path {value}", LockFilePath)
               .Add("--force-evaluate", ForceEvaluate)
               .Add("--runtime {value}", Runtime);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1210,8 +1273,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   Configuration to use for building the project. The default value is Debug.
         /// </summary>
@@ -1298,7 +1361,7 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("run")
@@ -1323,7 +1386,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--force-evaluate", ForceEvaluate)
               .Add("--runtime {value}", Runtime)
               .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1339,8 +1402,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   Optional path to the project file to restore.
         /// </summary>
@@ -1407,7 +1470,7 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("restore")
@@ -1427,7 +1490,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--force-evaluate", ForceEvaluate)
               .Add("--runtime {value}", Runtime)
               .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1443,8 +1506,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The project to pack. It's either a path to a csproj file or to a directory. If omitted, it defaults to the current directory.
         /// </summary>
@@ -1543,7 +1606,7 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("pack")
@@ -1571,7 +1634,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--force-evaluate", ForceEvaluate)
               .Add("--runtime {value}", Runtime)
               .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1587,8 +1650,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The project file to build. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in proj and uses that file.
         /// </summary>
@@ -1688,7 +1751,7 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("build")
@@ -1716,7 +1779,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--lock-file-path {value}", LockFilePath)
               .Add("--force-evaluate", ForceEvaluate)
               .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1732,8 +1795,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The MSBuild project to clean. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in <em>proj</em> and uses that file.
         /// </summary>
@@ -1767,7 +1830,7 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("clean")
@@ -1779,7 +1842,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--verbosity {value}", Verbosity)
               .Add("--nologo", NoLogo)
               .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1795,8 +1858,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The project to publish, which defaults to the current directory if not specified.
         /// </summary>
@@ -1891,7 +1954,7 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("publish")
@@ -1918,7 +1981,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--lock-file-path {value}", LockFilePath)
               .Add("--force-evaluate", ForceEvaluate)
               .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1934,8 +1997,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   Path of the package to push.
         /// </summary>
@@ -1980,7 +2043,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   Doesn't append <c>api/v2/package</c> to the source URL. Option available since .NET Core 2.1 SDK.
         /// </summary>
         public virtual bool? NoServiceEndpoint { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("nuget push")
@@ -1995,7 +2058,60 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--force-english-output", ForceEnglishOutput)
               .Add("--skip-duplicate", SkipDuplicate)
               .Add("--no-service-endpoint", NoServiceEndpoint);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
+        }
+    }
+    #endregion
+    #region DotNetNuGetAddSourceSettings
+    /// <summary>
+    ///   Used within <see cref="DotNetTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class DotNetNuGetAddSourceSettings : ToolSettings
+    {
+        /// <summary>
+        ///   Path to the DotNet executable.
+        /// </summary>
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
+        /// <summary>
+        ///   URL of the source.
+        /// </summary>
+        public virtual string Source { get; internal set; }
+        /// <summary>
+        ///   Name of the source.
+        /// </summary>
+        public virtual string Name { get; internal set; }
+        /// <summary>
+        ///   Username to be used when connecting to an authenticated source.
+        /// </summary>
+        public virtual string Username { get; internal set; }
+        /// <summary>
+        ///   Password to be used when connecting to an authenticated source.
+        /// </summary>
+        public virtual string Password { get; internal set; }
+        /// <summary>
+        ///   Enables storing portable package source credentials by disabling password encryption.
+        /// </summary>
+        public virtual bool? StorePasswordInClearText { get; internal set; }
+        /// <summary>
+        ///   List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.
+        /// </summary>
+        public virtual IReadOnlyList<DotNetNuGetAuthentication> ValidAuthenticationTypes => ValidAuthenticationTypesInternal.AsReadOnly();
+        internal List<DotNetNuGetAuthentication> ValidAuthenticationTypesInternal { get; set; } = new List<DotNetNuGetAuthentication>();
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
+        {
+            arguments
+              .Add("nuget add source")
+              .Add("{value}", Source)
+              .Add("--name {value}", Name)
+              .Add("--username {value}", Username)
+              .Add("--password {value}", Password, secret: true)
+              .Add("--store-password-in-clear-text", StorePasswordInClearText)
+              .Add("--valid-authentication-types", ValidAuthenticationTypes, separator: ',');
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -2011,8 +2127,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The Name/ID of the NuGet package that contains the .NET Core Global Tool to install.
         /// </summary>
@@ -2046,7 +2162,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   The version of the tool to install. By default, the latest stable package version is installed. Use this option to install preview or older versions of the tool.
         /// </summary>
         public virtual string Version { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("tool install")
@@ -2058,7 +2174,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--tool-path {value}", ToolInstallationPath)
               .Add("--verbosity {value}", Verbosity)
               .Add("--version {value}", Version);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -2074,8 +2190,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The Name/ID of the NuGet package that contains the .NET Core Global Tool to uninstall. You can find the package name using the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-list">dotnet tool list</a> command.
         /// </summary>
@@ -2092,7 +2208,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.
         /// </summary>
         public virtual DotNetVerbosity Verbosity { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("tool uninstall")
@@ -2100,7 +2216,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--global", Global)
               .Add("--tool-path {value}", ToolInstallationPath)
               .Add("--verbosity {value}", Verbosity);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -2116,8 +2232,8 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
         /// <summary>
         ///   The Name/ID of the NuGet package that contains the .NET Core Global Tool to install.
         /// </summary>
@@ -2147,7 +2263,11 @@ namespace Nuke.Common.Tools.DotNet
         ///   Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.
         /// </summary>
         public virtual DotNetVerbosity Verbosity { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        /// <summary>
+        ///   The version of the tool to install. By default, the latest stable package version is installed. Use this option to install preview or older versions of the tool.
+        /// </summary>
+        public virtual string Version { get; internal set; }
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("tool update")
@@ -2157,8 +2277,9 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--framework {value}", Framework)
               .Add("--global", Global)
               .Add("--tool-path {value}", ToolInstallationPath)
-              .Add("--verbosity {value}", Verbosity);
-            return base.ConfigureArguments(arguments);
+              .Add("--verbosity {value}", Verbosity)
+              .Add("--version {value}", Version);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -14428,6 +14549,250 @@ namespace Nuke.Common.Tools.DotNet
         #endregion
     }
     #endregion
+    #region DotNetNuGetAddSourceSettingsExtensions
+    /// <summary>
+    ///   Used within <see cref="DotNetTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class DotNetNuGetAddSourceSettingsExtensions
+    {
+        #region Source
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetNuGetAddSourceSettings.Source"/></em></p>
+        ///   <p>URL of the source.</p>
+        /// </summary>
+        [Pure]
+        public static T SetSource<T>(this T toolSettings, string source) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Source = source;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetNuGetAddSourceSettings.Source"/></em></p>
+        ///   <p>URL of the source.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetSource<T>(this T toolSettings) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Source = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Name
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetNuGetAddSourceSettings.Name"/></em></p>
+        ///   <p>Name of the source.</p>
+        /// </summary>
+        [Pure]
+        public static T SetName<T>(this T toolSettings, string name) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Name = name;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetNuGetAddSourceSettings.Name"/></em></p>
+        ///   <p>Name of the source.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetName<T>(this T toolSettings) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Name = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Username
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetNuGetAddSourceSettings.Username"/></em></p>
+        ///   <p>Username to be used when connecting to an authenticated source.</p>
+        /// </summary>
+        [Pure]
+        public static T SetUsername<T>(this T toolSettings, string username) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Username = username;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetNuGetAddSourceSettings.Username"/></em></p>
+        ///   <p>Username to be used when connecting to an authenticated source.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetUsername<T>(this T toolSettings) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Username = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Password
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetNuGetAddSourceSettings.Password"/></em></p>
+        ///   <p>Password to be used when connecting to an authenticated source.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPassword<T>(this T toolSettings, string password) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Password = password;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetNuGetAddSourceSettings.Password"/></em></p>
+        ///   <p>Password to be used when connecting to an authenticated source.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPassword<T>(this T toolSettings) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Password = null;
+            return toolSettings;
+        }
+        #endregion
+        #region StorePasswordInClearText
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetNuGetAddSourceSettings.StorePasswordInClearText"/></em></p>
+        ///   <p>Enables storing portable package source credentials by disabling password encryption.</p>
+        /// </summary>
+        [Pure]
+        public static T SetStorePasswordInClearText<T>(this T toolSettings, bool? storePasswordInClearText) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.StorePasswordInClearText = storePasswordInClearText;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetNuGetAddSourceSettings.StorePasswordInClearText"/></em></p>
+        ///   <p>Enables storing portable package source credentials by disabling password encryption.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetStorePasswordInClearText<T>(this T toolSettings) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.StorePasswordInClearText = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetNuGetAddSourceSettings.StorePasswordInClearText"/></em></p>
+        ///   <p>Enables storing portable package source credentials by disabling password encryption.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableStorePasswordInClearText<T>(this T toolSettings) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.StorePasswordInClearText = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetNuGetAddSourceSettings.StorePasswordInClearText"/></em></p>
+        ///   <p>Enables storing portable package source credentials by disabling password encryption.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableStorePasswordInClearText<T>(this T toolSettings) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.StorePasswordInClearText = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetNuGetAddSourceSettings.StorePasswordInClearText"/></em></p>
+        ///   <p>Enables storing portable package source credentials by disabling password encryption.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleStorePasswordInClearText<T>(this T toolSettings) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.StorePasswordInClearText = !toolSettings.StorePasswordInClearText;
+            return toolSettings;
+        }
+        #endregion
+        #region ValidAuthenticationTypes
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/> to a new list</em></p>
+        ///   <p>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</p>
+        /// </summary>
+        [Pure]
+        public static T SetValidAuthenticationTypes<T>(this T toolSettings, params DotNetNuGetAuthentication[] validAuthenticationTypes) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ValidAuthenticationTypesInternal = validAuthenticationTypes.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/> to a new list</em></p>
+        ///   <p>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</p>
+        /// </summary>
+        [Pure]
+        public static T SetValidAuthenticationTypes<T>(this T toolSettings, IEnumerable<DotNetNuGetAuthentication> validAuthenticationTypes) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ValidAuthenticationTypesInternal = validAuthenticationTypes.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/></em></p>
+        ///   <p>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</p>
+        /// </summary>
+        [Pure]
+        public static T AddValidAuthenticationTypes<T>(this T toolSettings, params DotNetNuGetAuthentication[] validAuthenticationTypes) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ValidAuthenticationTypesInternal.AddRange(validAuthenticationTypes);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/></em></p>
+        ///   <p>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</p>
+        /// </summary>
+        [Pure]
+        public static T AddValidAuthenticationTypes<T>(this T toolSettings, IEnumerable<DotNetNuGetAuthentication> validAuthenticationTypes) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ValidAuthenticationTypesInternal.AddRange(validAuthenticationTypes);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/></em></p>
+        ///   <p>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearValidAuthenticationTypes<T>(this T toolSettings) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ValidAuthenticationTypesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/></em></p>
+        ///   <p>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveValidAuthenticationTypes<T>(this T toolSettings, params DotNetNuGetAuthentication[] validAuthenticationTypes) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<DotNetNuGetAuthentication>(validAuthenticationTypes);
+            toolSettings.ValidAuthenticationTypesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/></em></p>
+        ///   <p>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveValidAuthenticationTypes<T>(this T toolSettings, IEnumerable<DotNetNuGetAuthentication> validAuthenticationTypes) where T : DotNetNuGetAddSourceSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<DotNetNuGetAuthentication>(validAuthenticationTypes);
+            toolSettings.ValidAuthenticationTypesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
     #region DotNetToolInstallSettingsExtensions
     /// <summary>
     ///   Used within <see cref="DotNetTasks"/>.
@@ -15125,6 +15490,30 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region Version
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolUpdateSettings.Version"/></em></p>
+        ///   <p>The version of the tool to install. By default, the latest stable package version is installed. Use this option to install preview or older versions of the tool.</p>
+        /// </summary>
+        [Pure]
+        public static T SetVersion<T>(this T toolSettings, string version) where T : DotNetToolUpdateSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Version = version;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolUpdateSettings.Version"/></em></p>
+        ///   <p>The version of the tool to install. By default, the latest stable package version is installed. Use this option to install preview or older versions of the tool.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetVersion<T>(this T toolSettings) where T : DotNetToolUpdateSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Version = null;
+            return toolSettings;
+        }
+        #endregion
     }
     #endregion
     #region DotNetVerbosity
@@ -15163,6 +15552,27 @@ namespace Nuke.Common.Tools.DotNet
         public static explicit operator DotNetSymbolPackageFormat(string value)
         {
             return new DotNetSymbolPackageFormat { Value = value };
+        }
+    }
+    #endregion
+    #region DotNetNuGetAuthentication
+    /// <summary>
+    ///   Used within <see cref="DotNetTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [Serializable]
+    [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<DotNetNuGetAuthentication>))]
+    public partial class DotNetNuGetAuthentication : Enumeration
+    {
+        public static DotNetNuGetAuthentication basic = (DotNetNuGetAuthentication) "basic";
+        public static DotNetNuGetAuthentication negotiate = (DotNetNuGetAuthentication) "negotiate";
+        public static DotNetNuGetAuthentication kerberos = (DotNetNuGetAuthentication) "kerberos";
+        public static DotNetNuGetAuthentication ntlm = (DotNetNuGetAuthentication) "ntlm";
+        public static DotNetNuGetAuthentication digest = (DotNetNuGetAuthentication) "digest";
+        public static explicit operator DotNetNuGetAuthentication(string value)
+        {
+            return new DotNetNuGetAuthentication { Value = value };
         }
     }
     #endregion

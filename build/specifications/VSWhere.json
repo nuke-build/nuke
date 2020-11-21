@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
   "references": [
-    "https://raw.githubusercontent.com/Microsoft/vswhere/develop/README.md"
+    "https://github.com/microsoft/vswhere/blob/master/src/vswhere.lib/vswhere.lib.rc"
   ],
   "name": "VSWhere",
   "officialUrl": "https://github.com/Microsoft/vswhere",
@@ -23,7 +23,7 @@
             "name": "Format",
             "type": "VSWhereFormat",
             "format": "-format {value}",
-            "help": "A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>."
+            "help": "Return information about instances found in a format described below:<ul><li><c>text</c>: Colon-delimited properties in separate blocks for each instance (default).</li><li><c>json</c>: An array of JSON objects for each instance (no logo).</li><li><c>value</c>: A single property specified by the -property parameter (no logo).</li><li><c>xml</c>: An XML data set containing instances (no logo).</li></ul>"
           },
           {
             "name": "NoLogo",

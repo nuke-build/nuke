@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.DocFX
         ///   <p>DocFX is an API documentation generator for .NET, and currently it supports C# and VB. It generates API reference documentation from triple-slash comments in your source code. It also allows you to use Markdown files to create additional topics such as tutorials and how-tos, and to customize the generated reference documentation. DocFX builds a static HTML website from your source code and Markdown files, which can be easily hosted on any web servers (for example, <em>github.io</em>). Also, DocFX provides you the flexibility to customize the layout and style of your website through templates. If you are interested in creating your own website with your own styles, you can follow <a href="http://dotnet.github.io/docfx/tutorial/howto_create_custom_template.html">how to create custom template</a> to create custom templates.</p>
         ///   <p>For more details, visit the <a href="https://dotnet.github.io/docfx/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> DocFX(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> DocFX(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(DocFXPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, DocFXLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(DocFXPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, DocFXLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -99,7 +99,7 @@ namespace Nuke.Common.Tools.DocFX
         public static IReadOnlyCollection<Output> DocFXBuild(DocFXBuildSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DocFXBuildSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -233,7 +233,7 @@ namespace Nuke.Common.Tools.DocFX
         public static IReadOnlyCollection<Output> DocFXDependency(DocFXDependencySettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DocFXDependencySettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -286,7 +286,7 @@ namespace Nuke.Common.Tools.DocFX
         public static IReadOnlyCollection<Output> DocFXDownload(DocFXDownloadSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DocFXDownloadSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -335,7 +335,7 @@ namespace Nuke.Common.Tools.DocFX
         public static IReadOnlyCollection<Output> DocFXHelp(DocFXHelpSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DocFXHelpSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -386,7 +386,7 @@ namespace Nuke.Common.Tools.DocFX
         public static IReadOnlyCollection<Output> DocFXInit(DocFXInitSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DocFXInitSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -454,7 +454,7 @@ namespace Nuke.Common.Tools.DocFX
         public static IReadOnlyCollection<Output> DocFXMerge(DocFXMergeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DocFXMergeSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -536,7 +536,7 @@ namespace Nuke.Common.Tools.DocFX
         public static IReadOnlyCollection<Output> DocFXMetadata(DocFXMetadataSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DocFXMetadataSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -666,7 +666,7 @@ namespace Nuke.Common.Tools.DocFX
         public static IReadOnlyCollection<Output> DocFXPdf(DocFXPdfSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DocFXPdfSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -824,7 +824,7 @@ namespace Nuke.Common.Tools.DocFX
         public static IReadOnlyCollection<Output> DocFXServe(DocFXServeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DocFXServeSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -878,7 +878,7 @@ namespace Nuke.Common.Tools.DocFX
         public static IReadOnlyCollection<Output> DocFXTemplate(DocFXTemplateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DocFXTemplateSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
+            using var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -929,8 +929,8 @@ namespace Nuke.Common.Tools.DocFX
         /// <summary>
         ///   Path to the DocFX executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DocFXTasks.DocFXPath;
-        public override Action<OutputType, string> CustomLogger => DocFXTasks.DocFXLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   Set changes file.
@@ -1113,7 +1113,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   Specify if warnings should be treated as errors.
         /// </summary>
         public virtual bool? WarningsAsErrors { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("build")
@@ -1161,7 +1161,7 @@ namespace Nuke.Common.Tools.DocFX
               .Add("--logLevel={value}", LogLevel)
               .Add("--repositoryRoot={value}", RepoRoot)
               .Add("--warningsAsErrors", WarningsAsErrors);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1177,8 +1177,8 @@ namespace Nuke.Common.Tools.DocFX
         /// <summary>
         ///   Path to the DocFX executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DocFXTasks.DocFXPath;
-        public override Action<OutputType, string> CustomLogger => DocFXTasks.DocFXLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
         public virtual string DependencyFile { get; internal set; }
         /// <summary>
         ///   The intermediate folder that store cache files.
@@ -1192,7 +1192,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   The version name of the content.
         /// </summary>
         public virtual string VersionName { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("dependency")
@@ -1200,7 +1200,7 @@ namespace Nuke.Common.Tools.DocFX
               .Add("--intermediateFolder={value}", IntermediateFolder)
               .Add("--help", PrintHelpMessage)
               .Add("--version={value}", VersionName);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1216,8 +1216,8 @@ namespace Nuke.Common.Tools.DocFX
         /// <summary>
         ///   Path to the DocFX executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DocFXTasks.DocFXPath;
-        public override Action<OutputType, string> CustomLogger => DocFXTasks.DocFXLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
         public virtual string ArchiveFile { get; internal set; }
         /// <summary>
         ///   Print help message for this sub-command.
@@ -1227,14 +1227,14 @@ namespace Nuke.Common.Tools.DocFX
         ///   Specify the url of xrefmap.
         /// </summary>
         public virtual string Uri { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("download")
               .Add("{value}", ArchiveFile)
               .Add("--help", PrintHelpMessage)
               .Add("--xref={value}", Uri);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1250,15 +1250,15 @@ namespace Nuke.Common.Tools.DocFX
         /// <summary>
         ///   Path to the DocFX executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DocFXTasks.DocFXPath;
-        public override Action<OutputType, string> CustomLogger => DocFXTasks.DocFXLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
         public virtual string Command { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("help")
               .Add("{value}", Command);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1274,8 +1274,8 @@ namespace Nuke.Common.Tools.DocFX
         /// <summary>
         ///   Path to the DocFX executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DocFXTasks.DocFXPath;
-        public override Action<OutputType, string> CustomLogger => DocFXTasks.DocFXLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
         /// <summary>
         ///   Specify the source working folder for source project files to start glob search.
         /// </summary>
@@ -1304,7 +1304,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   Quietly generate the default docfx.json.
         /// </summary>
         public virtual bool? Quiet { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("init")
@@ -1315,7 +1315,7 @@ namespace Nuke.Common.Tools.DocFX
               .Add("--overwrite", Overwrite)
               .Add("--help", PrintHelpMessage)
               .Add("--quiet", Quiet);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1331,8 +1331,8 @@ namespace Nuke.Common.Tools.DocFX
         /// <summary>
         ///   Path to the DocFX executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DocFXTasks.DocFXPath;
-        public override Action<OutputType, string> CustomLogger => DocFXTasks.DocFXLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   Specifies content files for generating documentation.
@@ -1380,7 +1380,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   Specify if warnings should be treated as errors.
         /// </summary>
         public virtual bool? WarningsAsErrors { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("merge")
@@ -1396,7 +1396,7 @@ namespace Nuke.Common.Tools.DocFX
               .Add("--logLevel={value}", LogLevel)
               .Add("--repositoryRoot={value}", RepoRoot)
               .Add("--warningsAsErrors", WarningsAsErrors);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1412,8 +1412,8 @@ namespace Nuke.Common.Tools.DocFX
         /// <summary>
         ///   Path to the DocFX executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DocFXTasks.DocFXPath;
-        public override Action<OutputType, string> CustomLogger => DocFXTasks.DocFXLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
         /// <summary>
         ///   The projects for which the metadata should be built.
         /// </summary>
@@ -1480,7 +1480,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   Specify if warnings should be treated as errors.
         /// </summary>
         public virtual bool? WarningsAsErrors { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("metadata")
@@ -1500,7 +1500,7 @@ namespace Nuke.Common.Tools.DocFX
               .Add("--logLevel={value}", LogLevel)
               .Add("--repositoryRoot={value}", RepoRoot)
               .Add("--warningsAsErrors", WarningsAsErrors);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1516,8 +1516,8 @@ namespace Nuke.Common.Tools.DocFX
         /// <summary>
         ///   Path to the DocFX executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DocFXTasks.DocFXPath;
-        public override Action<OutputType, string> CustomLogger => DocFXTasks.DocFXLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
         /// <summary>
         ///   Specify the base path to generate external link, {host}/{locale}/{basePath}.
         /// </summary>
@@ -1749,7 +1749,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   Specify if warnings should be treated as errors.
         /// </summary>
         public virtual bool? WarningsAsErrors { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("pdf")
@@ -1809,7 +1809,7 @@ namespace Nuke.Common.Tools.DocFX
               .Add("--logLevel={value}", LogLevel)
               .Add("--repositoryRoot={value}", RepoRoot)
               .Add("--warningsAsErrors", WarningsAsErrors);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1825,8 +1825,8 @@ namespace Nuke.Common.Tools.DocFX
         /// <summary>
         ///   Path to the DocFX executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DocFXTasks.DocFXPath;
-        public override Action<OutputType, string> CustomLogger => DocFXTasks.DocFXLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
         public virtual string Folder { get; internal set; }
         /// <summary>
         ///   Specify the hostname of the hosted website [localhost].
@@ -1840,7 +1840,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   Print help message for this sub-command.
         /// </summary>
         public virtual bool? PrintHelpMessage { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("serve")
@@ -1848,7 +1848,7 @@ namespace Nuke.Common.Tools.DocFX
               .Add("--hostname={value}", Host)
               .Add("--port={value}", Port)
               .Add("--help", PrintHelpMessage);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -1864,8 +1864,8 @@ namespace Nuke.Common.Tools.DocFX
         /// <summary>
         ///   Path to the DocFX executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DocFXTasks.DocFXPath;
-        public override Action<OutputType, string> CustomLogger => DocFXTasks.DocFXLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
         /// <summary>
         ///   The command to execute.
         /// </summary>
@@ -1882,7 +1882,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   Print help message for this sub-command.
         /// </summary>
         public virtual bool? PrintHelpMessage { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("template")
@@ -1890,7 +1890,7 @@ namespace Nuke.Common.Tools.DocFX
               .Add("--all", All)
               .Add("--output={value}", OutputFolder)
               .Add("--help", PrintHelpMessage);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

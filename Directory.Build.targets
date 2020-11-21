@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-    <!-- Thanks to Thomas Frenzel (https://github.com/dotnet/sdk/issues/1151#issuecomment-385133284) -->
-    <PropertyGroup>
-        <ReplacePackageReferences Condition="$(ReplacePackageReferences) == ''">false</ReplacePackageReferences>
-        <SolutionPath>$(MSBuildThisFileDirectory)\nuke.sln</SolutionPath>
-    </PropertyGroup>
+  <!-- Thanks to Thomas Frenzel (https://github.com/dotnet/sdk/issues/1151#issuecomment-385133284) -->
+  <PropertyGroup>
+    <ReplacePackageReferences Condition="$(ReplacePackageReferences) == ''">true</ReplacePackageReferences>
+    <SolutionPath>$(MSBuildThisFileDirectory)\nuke.sln</SolutionPath>
+  </PropertyGroup>
 
-    <Choose>
-        <When Condition="$(ReplacePackageReferences) AND '$(SolutionPath)' != '' AND '$(SolutionPath)' != '*undefined*' AND Exists('$(SolutionPath)')">
+  <Choose>
+    <When Condition="$(ReplacePackageReferences) AND '$(SolutionPath)' != '' AND '$(SolutionPath)' != '*undefined*' AND Exists('$(SolutionPath)')">
 
-        <PropertyGroup>
-            <SolutionFileContent>$([System.IO.File]::ReadAllText($(SolutionPath)))</SolutionFileContent>
-            <SmartSolutionDir>$([System.IO.Path]::GetDirectoryName( $(SolutionPath) ))</SmartSolutionDir>
-            <RegexPattern>(?&lt;="[PackageName]", ")(.*)(?=", ")</RegexPattern>
-        </PropertyGroup>
+      <PropertyGroup>
+        <SolutionFileContent>$([System.IO.File]::ReadAllText($(SolutionPath)))</SolutionFileContent>
+        <SmartSolutionDir>$([System.IO.Path]::GetDirectoryName( $(SolutionPath) ))</SmartSolutionDir>
+        <RegexPattern>(?&lt;="[PackageName]", ")(.*)(?=", ")</RegexPattern>
+      </PropertyGroup>
 
-        <ItemGroup>
-            <!-- Keep the identity of the package reference -->
-            <SmartPackageReference Include="@(PackageReference)">
-            <PackageName>%(Identity)</PackageName>
-            <InSolution>$(SolutionFileContent.Contains('\%(Identity).csproj'))</InSolution>
-            </SmartPackageReference>
+      <ItemGroup>
+        <!-- Keep the identity of the package reference -->
+        <SmartPackageReference Include="@(PackageReference)">
+          <PackageName>%(Identity)</PackageName>
+          <InSolution>$(SolutionFileContent.Contains('\%(Identity).csproj'))</InSolution>
+        </SmartPackageReference>
 
-            <!-- Filter them by mapping them to another itemGroup using the WithMetadataValue item function -->
-            <PackageInSolution Include="@(SmartPackageReference -> WithMetadataValue('InSolution', True) )">
-            <Pattern>$(RegexPattern.Replace('[PackageName]','%(PackageName)') )</Pattern>
-            <SmartPath>$([System.Text.RegularExpressions.Regex]::Match( '$(SolutionFileContent)', '%(Pattern)' ))</SmartPath>
-            </PackageInSolution>
+        <!-- Filter them by mapping them to another itemGroup using the WithMetadataValue item function -->
+        <PackageInSolution Include="@(SmartPackageReference -> WithMetadataValue('InSolution', True) )">
+          <Pattern>$(RegexPattern.Replace('[PackageName]','%(PackageName)') )</Pattern>
+          <SmartPath>$([System.Text.RegularExpressions.Regex]::Match( '$(SolutionFileContent)', '%(Pattern)' ))</SmartPath>
+        </PackageInSolution>
 
-            <ProjectReference  Include="@(PackageInSolution -> '$(SmartSolutionDir)\%(SmartPath)' )"/>
+        <ProjectReference  Include="@(PackageInSolution -> '$(SmartSolutionDir)\%(SmartPath)' )"/>
 
-            <!-- Remove the package references that are now referenced as projects -->
-            <PackageReference Remove="@(PackageInSolution -> '%(PackageName)' )"/>
-        </ItemGroup>
+        <!-- Remove the package references that are now referenced as projects -->
+        <PackageReference Remove="@(PackageInSolution -> '%(PackageName)' )"/>
+      </ItemGroup>
 
-        </When>
-    </Choose>
+    </When>
+  </Choose>
 
 </Project>

@@ -1,26 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <PropertyGroup>
-    <NukeScriptDirectory Condition="$(NukeScriptDirectory) == ''">$(NukeRootDirectory)</NukeScriptDirectory>
+  <PropertyGroup Condition="'$(NukeTasksDirectory)' == ''">
+    <NukeTasksDirectory Condition="'$(MSBuildRuntimeType)' == 'Core'">$(MSBuildThisFileDirectory)\netcore</NukeTasksDirectory>
+    <NukeTasksDirectory Condition="'$(MSBuildRuntimeType)' != 'Core'">$(MSBuildThisFileDirectory)\netfx</NukeTasksDirectory>
   </PropertyGroup>
 
-  <ItemGroup Condition="$(NukeDefaultIncludes) != 'False'">
-    <NukeSpecificationFiles Include="**\*.json" Exclude="bin\**;obj\**" />
-    <NukeExternalFiles Include="**\*.*.ext" Exclude="bin\**;obj\**" />
-  </ItemGroup>
+  <Import Project="$(NukeTasksDirectory)\Nuke.MSBuildTasks.targets" Condition="'$(NukeTasksEnabled)' != 'False'" />
 
-  <ItemGroup Condition="$(NukeDefaultExcludes) != 'False'">
+  <PropertyGroup>
+    <NukeScriptDirectory Condition="'$(NukeScriptDirectory)' == ''">$(NukeRootDirectory)</NukeScriptDirectory>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(NukeDefaultExcludes)' != 'False'">
     <None Remove="*.csproj.DotSettings;.editorconfig" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(NukeScriptDirectory) != ''">
+  <ItemGroup Condition="'$(NukeScriptDirectory)' != ''">
     <None Include="$(NukeScriptDirectory)\build.cmd" LinkBase="boot" Condition="Exists('$(NukeScriptDirectory)\build.cmd')" />
     <None Include="$(NukeScriptDirectory)\build.ps1" LinkBase="boot" Condition="Exists('$(NukeScriptDirectory)\build.ps1')" />
     <None Include="$(NukeScriptDirectory)\build.sh" LinkBase="boot" Condition="Exists('$(NukeScriptDirectory)\build.sh')" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(NukeRootDirectory) != ''">
+  <ItemGroup Condition="'$(NukeRootDirectory)' != ''">
     <None Include="$(NukeRootDirectory)\.nuke" LinkBase="config" />
     <None Include="$(NukeRootDirectory)\global.json" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\global.json')" />
     <None Include="$(NukeRootDirectory)\nuget.config" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\nuget.config')" />

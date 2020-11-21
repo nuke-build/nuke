@@ -27,6 +27,7 @@ namespace Nuke.CodeGeneration
             }
             catch (Exception exception)
             {
+                // TODO: update metadata -> specification
                 Logger.Error($"Couldn't load metadata file '{Path.GetFileName(file)}'.");
                 Logger.Error(exception.Message);
                 throw;
@@ -50,6 +51,7 @@ namespace Nuke.CodeGeneration
 
         private class CustomContractResolver : CamelCasePropertyNamesContractResolver
         {
+            // ReSharper disable once CognitiveComplexity
             protected override JsonProperty CreateProperty([NotNull] MemberInfo member, MemberSerialization memberSerialization)
             {
                 var property = base.CreateProperty(member, memberSerialization);

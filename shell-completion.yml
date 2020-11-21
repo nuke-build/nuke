@@ -1,4 +1,3 @@
-ApiKey: 
 AutoStash: 
 Configuration:
 - Debug
@@ -20,8 +19,13 @@ Host:
 - Travis
 IgnoreFailedSources: 
 NoLogo: 
+NuGetApiKey: 
 Plan: 
 Root: 
+SignPathApiToken: 
+SignPathOrganizationId: 
+SignPathPolicyKey: 
+SignPathProjectKey: 
 Skip:
 - Analysis
 - Announce
@@ -30,21 +34,24 @@ Skip:
 - Clean
 - Compile
 - Coverage
+- DownloadFonts
 - GenerateGlobalSolution
 - GeneratePublicApi
 - GenerateTools
 - Hotfix
 - Install
+- InstallFonts
 - Milestone
 - Pack
 - Publish
 - References
 - Release
+- ReleaseImage
 - Restore
+- SignPackages
 - Test
 - UpdateContributors
 SlackWebhook: 
-Source: 
 Target:
 - Analysis
 - Announce
@@ -52,19 +59,27 @@ Target:
 - Clean
 - Compile
 - Coverage
+- DownloadFonts
 - GenerateGlobalSolution
 - GeneratePublicApi
 - GenerateTools
 - Hotfix
 - Install
+- InstallFonts
 - Pack
 - Publish
 - References
 - Release
+- ReleaseImage
 - Restore
+- SignPackages
 - Test
 - UpdateContributors
-UseSSH: 
+TwitterAccessToken: 
+TwitterAccessTokenSecret: 
+TwitterConsumerKey: 
+TwitterConsumerSecret: 
+UseHttps: 
 Verbosity:
 - Minimal
 - Normal

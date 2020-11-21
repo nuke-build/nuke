@@ -4,8 +4,8 @@
 
 using System;
 using System.Linq;
-using Nuke.Common.Execution;
 using Nuke.Common.Utilities;
+using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.CI.TeamCity.Configuration
 {
@@ -108,7 +108,10 @@ namespace Nuke.Common.CI.TeamCity.Configuration
 
                 using (writer.WriteBlock("exec"))
                 {
-                    writer.WriteLine($"path = {BuildCmdPath.DoubleQuote()}");
+                    var path = Platform == TeamCityAgentPlatform.Windows
+                        ? BuildCmdPath
+                        : BuildCmdPath.Replace(".cmd", ".sh");
+                    writer.WriteLine($"path = {path.DoubleQuote()}");
                     writer.WriteLine($"arguments = {arguments.DoubleQuote()}");
                 }
             }

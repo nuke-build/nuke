@@ -4,18 +4,19 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.CI.TeamCity.Configuration;
 using Nuke.Common.Execution;
-using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Nuke.Common.ValueInjection;
 using static Nuke.Common.IO.PathConstruction;
 
 namespace Nuke.Common.CI.TeamCity
@@ -28,12 +29,11 @@ namespace Nuke.Common.CI.TeamCity
             Platform = platform;
         }
 
-        private AbsolutePath TeamcityDirectory => NukeBuild.RootDirectory / ".teamcity";
-        private string SettingsFile => TeamcityDirectory / "settings.kts";
-        private string PomFile => TeamcityDirectory / "pom.xml";
-
         public override HostType HostType => HostType.TeamCity;
-        public override IEnumerable<string> GeneratedFiles => new[] { PomFile, SettingsFile };
+        public override string ConfigurationFile => TeamcityDirectory / "settings.kts";
+        public override IEnumerable<string> GeneratedFiles => new[] { PomFile, ConfigurationFile };
+        private AbsolutePath TeamcityDirectory => NukeBuild.RootDirectory / ".teamcity";
+        private string PomFile => TeamcityDirectory / "pom.xml";
 
         public override IEnumerable<string> RelevantTargetNames => new string[0]
             .Concat(VcsTriggeredTargets)
@@ -57,17 +57,22 @@ namespace Nuke.Common.CI.TeamCity
 
         public string[] ManuallyTriggeredTargets { get; set; } = new string[0];
 
-        public override CustomFileWriter CreateWriter()
-        {
-            return new CustomFileWriter(SettingsFile, indentationFactor: 4, commentPrefix: "//");
-        }
-
-        public override ConfigurationEntity GetConfiguration(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        protected override StreamWriter CreateStream()
         {
             TextTasks.WriteAllLines(
                 PomFile,
                 ResourceUtility.GetResourceAllLines<TeamCityConfiguration>("pom.xml"));
 
+            return base.CreateStream();
+        }
+
+        public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
+        {
+            return new CustomFileWriter(streamWriter, indentationFactor: 4, commentPrefix: "//");
+        }
+
+        public override ConfigurationEntity GetConfiguration(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        {
             return new TeamCityConfiguration
                    {
                        Version = Version,
@@ -90,11 +95,11 @@ namespace Nuke.Common.CI.TeamCity
             var vcsRoot = GetVcsRoot(build);
             var lookupTable = new LookupTable<ExecutableTarget, TeamCityBuildType>();
             var buildTypes = relevantTargets
-                .SelectMany(x => GetBuildTypes(build, x, vcsRoot, lookupTable), (x, y) => (ExecutableTarget: x, BuildType: y))
+                .SelectMany(x => GetBuildTypes(build, x, vcsRoot, lookupTable, relevantTargets), (x, y) => (ExecutableTarget: x, BuildType: y))
                 .ForEachLazy(x => lookupTable.Add(x.ExecutableTarget, x.BuildType))
                 .Select(x => x.BuildType).ToArray();
 
-            var parameters = GetGlobalParameters(build);
+            var parameters = GetGlobalParameters(build, relevantTargets);
             if (Platform == TeamCityAgentPlatform.Windows)
             {
                 parameters = parameters
@@ -117,24 +122,27 @@ namespace Nuke.Common.CI.TeamCity
             NukeBuild build,
             ExecutableTarget executableTarget,
             TeamCityVcsRoot vcsRoot,
-            LookupTable<ExecutableTarget, TeamCityBuildType> buildTypes)
+            LookupTable<ExecutableTarget, TeamCityBuildType> buildTypes,
+            IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
+            var chainLinkTargets = GetInvokedTargets(executableTarget, relevantTargets).ToArray();
             var isPartitioned = ArtifactExtensions.Partitions.ContainsKey(executableTarget.Definition);
-            var artifactRules = ArtifactExtensions.ArtifactProducts[executableTarget.Definition].Select(GetArtifactRule).ToArray();
-            var artifactDependencies = (
-                from artifactDependency in ArtifactExtensions.ArtifactDependencies[executableTarget.Definition]
-                let dependency = executableTarget.ExecutionDependencies.Single(x => x.Factory == artifactDependency.Item1)
+
+            var artifactRules = chainLinkTargets.SelectMany(x =>
+                ArtifactExtensions.ArtifactProducts[x.Definition].Select(GetArtifactRule)).ToArray();
+            var artifactDependencies = chainLinkTargets.SelectMany(x => (
+                from artifactDependency in ArtifactExtensions.ArtifactDependencies[x.Definition]
+                let dependency = x.ExecutionDependencies.Single(y => y.Factory == artifactDependency.Item1)
                 let rules = (artifactDependency.Item2.Any()
                         ? artifactDependency.Item2
                         : ArtifactExtensions.ArtifactProducts[dependency.Definition])
                     .Select(GetArtifactRule).ToArray()
                 select new TeamCityArtifactDependency
                        {
-                           BuildType = buildTypes[dependency].Single(x => x.Partition == null),
+                           BuildType = buildTypes[dependency].Single(y => y.Partition == null),
                            ArtifactRules = rules
-                       }).ToArray<TeamCityDependency>();
+                       })).ToArray<TeamCityDependency>();
 
-            var chainLinkNames = GetInvokedTargets(executableTarget).ToArray();
             var snapshotDependencies = GetTargetDependencies(executableTarget)
                 .SelectMany(x => buildTypes[x])
                 .Where(x => x.Partition == null)
@@ -161,7 +169,7 @@ namespace Nuke.Common.CI.TeamCity
                                      ArtifactRules = artifactRules,
                                      Partition = partition,
                                      PartitionName = partitionName,
-                                     InvokedTargets = chainLinkNames,
+                                     InvokedTargets = chainLinkTargets.Select(x => x.Name).ToArray(),
                                      VcsRoot = new TeamCityBuildTypeVcsRoot { Root = vcsRoot, CleanCheckoutDirectory = CleanCheckoutDirectory },
                                      Dependencies = snapshotDependencies.Concat(artifactDependencies).ToArray()
                                  };
@@ -203,7 +211,7 @@ namespace Nuke.Common.CI.TeamCity
                                        },
                              IsComposite = isPartitioned,
                              IsDeployment = ManuallyTriggeredTargets.Contains(executableTarget.Name),
-                             InvokedTargets = chainLinkNames,
+                             InvokedTargets = chainLinkTargets.Select(x => x.Name).ToArray(),
                              ArtifactRules = artifactRules,
                              Dependencies = snapshotDependencies.Concat(artifactDependencies).ToArray(),
                              Parameters = parameters,
@@ -250,10 +258,10 @@ namespace Nuke.Common.CI.TeamCity
             return new TeamCityVcsRoot();
         }
 
-        protected virtual IEnumerable<TeamCityParameter> GetGlobalParameters(NukeBuild build)
+        protected virtual IEnumerable<TeamCityParameter> GetGlobalParameters(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
-            return InjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false)
-                .Except(build.ExecutableTargets.SelectMany(x => x.Requirements
+            return ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false)
+                .Except(relevantTargets.SelectMany(x => x.Requirements
                     .Where(y => !(y is Expression<Func<bool>>))
                     .Select(y => y.GetMemberInfo())))
                 .Where(x => x.DeclaringType != typeof(NukeBuild) || x.Name == nameof(NukeBuild.Verbosity))
