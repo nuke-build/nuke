@@ -94,7 +94,7 @@ namespace Nuke.Common.Execution
             }
             finally
             {
-                if (build.ExecutionPlan != null)
+                if (build.ExecutionPlan?.Any(x => x.Status != ExecutionStatus.NotRun) ?? false)
                     Finish();
             }
 
