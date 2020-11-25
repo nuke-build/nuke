@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common;
+using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using static Nuke.Common.Constants;
@@ -30,15 +31,15 @@ namespace Nuke.GlobalTool
 
             words = words.Substring(CommandName.Length).TrimStart();
 
-            var completionFile = GetCompletionFile(rootDirectory);
-            if (!File.Exists(completionFile))
+            var schemaFile = GetBuildSchemaFile(rootDirectory);
+            if (!File.Exists(schemaFile))
             {
                 Build(buildScript.NotNull(), $"--{CompletionParameterName}");
                 return 1;
             }
 
             var position = EnvironmentInfo.GetParameter<int?>("position");
-            var completionItems = SerializationTasks.YamlDeserializeFromFile<Dictionary<string, string[]>>(completionFile);
+            var completionItems = SchemaUtility.GetCompletionItemsFromSchema(schemaFile);
             foreach (var item in CompletionUtility.GetRelevantCompletionItems(words, completionItems))
                 Console.WriteLine(item);
 

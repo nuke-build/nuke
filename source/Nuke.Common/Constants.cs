@@ -65,5 +65,10 @@ namespace Nuke.Common
         {
             return GetTemporaryDirectory(rootDirectory) / "missing-package.log";
         }
+
+        internal static AbsolutePath GetBuildSchemaFile(AbsolutePath rootDirectory)
+        {
+            return GetTemporaryDirectory(rootDirectory) / "build.schema.json";
+        }
     }
 }
