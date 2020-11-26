@@ -5,6 +5,25 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed configuration generation to wait for user input after file changes
+- Fixed build summary for durations smaller than 1 second
+- Fixed build summary and `IBuildExtension` instances to be skipped if no targets were started
+- Fixed build summary to hide irrelevant durations
+- Fixed setting of `EmbeddedPackagesDirectory` for global tools
+- Fixed `PackPackageToolsTask` to use lower-case package ids
+- Fixed `ParameterAttribute.ValueProvider` to allow members of type `IEnumerable<string>`
+- Fixed `Logger` to remove `ControlFlow` from stacktrace
+- Fixed assertion messages for warnings
+- Fixed path and quoting in `build.cmd`
+- Fixed `GitVersion.Tool` version in project templates
+- Fixed `LatestMyGetVersionAttribute` to handle new RSS feed format
+- Fixed missing arguments `PublishReadyToRun`, `PublishSingleFile`, `PublishTrimmed`, `PublishProfile`, `NoLogo` for `DotNetPublish`
+- Fixed parameter name `Verbosity` in `DotNetPack`
+- Fixed enumeration value `lcov` in `CoverletTasks`
+- Fixed `ReSharperTasks` to use correct tool path
+- Fixed `ChangelogTasks` to respect additional markdown-linting rules
+- Fixed TeamCity generator to consider artifact products from all relevant targets
+- Fixed condition for skipping lines in TeamCity parameter files
 
 ## [5.0.0] / 2020-11-12
 - Fixed version number
@@ -639,7 +658,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: git@github.com:nuke-build/nuke/compare/5.0.0...HEAD
+[vNext]: git@github.com:nuke-build/nuke/compare/5.0.1...HEAD
+[5.0.1]: git@github.com:nuke-build/nuke/compare/5.0.0...5.0.1
 [5.0.0]: git@github.com:nuke-build/nuke/compare/0.25.0...5.0.0
 [0.25.0]: git@github.com:nuke-build/nuke/compare/0.24.11...0.25.0
 [0.24.11]: git@github.com:nuke-build/nuke/compare/0.24.10...0.24.11
