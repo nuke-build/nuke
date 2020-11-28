@@ -21,9 +21,9 @@ namespace Nuke.Common.Utilities
         {
             return member switch
             {
-                FieldInfo fieldInfo => fieldInfo.GetValue(obj),
-                PropertyInfo propertyInfo => propertyInfo.GetValue(obj),
-                MethodInfo methodInfo => methodInfo.Invoke(obj, args),
+                FieldInfo fieldInfo => fieldInfo.GetValue(fieldInfo.IsStatic ? null : obj),
+                PropertyInfo propertyInfo => propertyInfo.GetValue(propertyInfo.IsStatic() ? null : obj),
+                MethodInfo methodInfo => methodInfo.Invoke(methodInfo.IsStatic ? null : obj, args),
                 _ => throw new NotSupportedException()
             };
         }
