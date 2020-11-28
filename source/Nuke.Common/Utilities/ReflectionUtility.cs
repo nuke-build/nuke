@@ -36,6 +36,13 @@ namespace Nuke.Common.Utilities
             return type.IsNullableType() ? type : typeof(Nullable<>).MakeGenericType(type);
         }
 
+        public static bool IsCollectionLike(this Type type)
+        {
+            return type != typeof(string) &&
+                   new[] { type }.Concat(type.GetInterfaces())
+                       .Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IEnumerable<>));
+        }
+
         public static bool HasCustomAttribute<T>(this MemberInfo member)
             where T : Attribute
         {

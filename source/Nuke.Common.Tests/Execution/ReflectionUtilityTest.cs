@@ -3,8 +3,8 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using FluentAssertions;
-using Nuke.Common.Execution;
 using Nuke.Common.Utilities;
 using Xunit;
 
@@ -34,6 +34,19 @@ namespace Nuke.Common.Tests.Execution
         public void TestGetNullableType(Type type, Type expected)
         {
             type.GetNullableType().Should().Be(expected);
+        }
+
+        [Theory]
+        [InlineData(typeof(string[]), true)]
+        [InlineData(typeof(IEnumerable<string>), true)]
+        [InlineData(typeof(List<string>), true)]
+        [InlineData(typeof(IReadOnlyCollection<string>), true)]
+        [InlineData(typeof(int), false)]
+        [InlineData(typeof(string), false)]
+        [InlineData(typeof(Func<string>), false)]
+        public void TestIsCollectionLike(Type type, bool expected)
+        {
+            type.IsCollectionLike().Should().Be(expected);
         }
     }
 }
