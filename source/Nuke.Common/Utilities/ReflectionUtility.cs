@@ -68,7 +68,13 @@ namespace Nuke.Common.Utilities
 
         public static Type GetScalarType(this Type type)
         {
-            return type.IsArray ? type.GetElementType() : type;
+            return Nullable.GetUnderlyingType(type) is { } underlyingType
+                ? underlyingType
+                : type.IsArray
+                    ? type.GetElementType()
+                    : type.IsCollectionLike()
+                        ? type.GetGenericArguments().Single()
+                        : type;
         }
 
         public static bool IsPublic(this MemberInfo member)
