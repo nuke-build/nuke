@@ -79,7 +79,7 @@ namespace Nuke.Common
         /// <summary>
         /// Gets the host for execution. Default is <em>automatic</em>.
         /// </summary>
-        [Parameter("Host for execution. Default is 'automatic'.")]
+        [Parameter("Host for execution. Default is 'automatic'.", ValueProviderMember = nameof(HostNames))]
         public static Host Host { get; }
 
         /// <summary>

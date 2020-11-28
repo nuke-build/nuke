@@ -15,7 +15,20 @@
         },
         "Host": {
           "type": "string",
-          "description": "Host for execution. Default is 'automatic'"
+          "description": "Host for execution. Default is 'automatic'",
+          "enum": [
+            "AppVeyor",
+            "AzurePipelines",
+            "Bamboo",
+            "Bitrise",
+            "GitHubActions",
+            "GitLab",
+            "Jenkins",
+            "SpaceAutomation",
+            "TeamCity",
+            "Terminal",
+            "TravisCI"
+          ]
         },
         "Target": {
           "type": "array",

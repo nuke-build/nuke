@@ -87,7 +87,7 @@ namespace Nuke.Common.Execution
             return executables;
         }
 
-        private static IEnumerable<PropertyInfo> GetTargetProperties(Type buildType)
+        internal static IEnumerable<PropertyInfo> GetTargetProperties(Type buildType)
         {
             // TODO: static targets?
             var interfaceProperties = buildType.GetInterfaces()

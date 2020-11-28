@@ -77,7 +77,8 @@ namespace Nuke.Common
         /// </summary>
         [Parameter("List of targets to be executed. Default is '{default_target}'.",
             Name = InvokedTargetsParameterName,
-            Separator = TargetsSeparator)]
+            Separator = TargetsSeparator,
+            ValueProviderMember = nameof(TargetNames))]
         public IReadOnlyCollection<ExecutableTarget> InvokedTargets => ExecutionPlan.Where(x => x.Invoked).ToList();
 
         /// <summary>
@@ -85,7 +86,8 @@ namespace Nuke.Common
         /// </summary>
         [Parameter("List of targets to be skipped. Empty list skips all dependencies.",
             Name = SkippedTargetsParameterName,
-            Separator = TargetsSeparator)]
+            Separator = TargetsSeparator,
+            ValueProviderMember = nameof(TargetNames))]
         public IReadOnlyCollection<ExecutableTarget> SkippedTargets => ExecutionPlan.Where(x => x.Status == ExecutionStatus.Skipped).ToList();
 
         /// <summary>
@@ -104,6 +106,9 @@ namespace Nuke.Common
             BuildProjectDirectory != null
                 ? BuildProjectDirectory / "obj" / "project.assets.json"
                 : null;
+
+        internal IEnumerable<string> TargetNames => ExecutableTargetFactory.GetTargetProperties(GetType()).Select(x => x.Name);
+        internal IEnumerable<string> HostNames => Host.AvailableTypes.Select(x => x.Name);
 
         public bool IsSuccessful => (!ExitCode.HasValue || ExitCode == 0) && ExecutionPlan
             .All(x => x.Status != ExecutionStatus.Failed &&

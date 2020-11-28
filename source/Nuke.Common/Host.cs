@@ -47,7 +47,7 @@ namespace Nuke.Common
                 .Select(CreateHost)
                 .First();
 
-        private static IEnumerable<Type> AvailableTypes
+        internal static IEnumerable<Type> AvailableTypes
             => AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(x => x.GetTypes())
                 .Where(x => x.IsSubclassOf(typeof(Host)));
