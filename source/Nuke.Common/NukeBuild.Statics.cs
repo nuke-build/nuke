@@ -28,6 +28,7 @@ namespace Nuke.Common
 
             Verbosity = EnvironmentInfo.GetParameter<Verbosity?>(() => Verbosity) ?? Verbosity.Normal;
             Host = EnvironmentInfo.GetParameter(() => Host) ?? Host.Default;
+            LoadedLocalProfiles = EnvironmentInfo.GetParameter(() => LoadedLocalProfiles) ?? new string[0];
         }
 
         /// <summary>
@@ -74,6 +75,9 @@ namespace Nuke.Common
         /// </summary>
         [Parameter("Host for execution. Default is 'automatic'.", ValueProviderMember = nameof(HostNames))]
         public static Host Host { get; }
+
+        [Parameter("Defines the profiles to load.", Name = LoadedLocalProfilesParameterName)]
+        public static string[] LoadedLocalProfiles { get; }
 
         public static bool IsLocalBuild => !IsServerBuild;
         public static bool IsServerBuild => Host is IBuildServer;

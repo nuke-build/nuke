@@ -26,6 +26,7 @@ namespace Nuke.Common
         internal const string TargetsSeparator = "+";
         internal const string InvokedTargetsParameterName = "Target";
         internal const string SkippedTargetsParameterName = "Skip";
+        internal const string LoadedLocalProfilesParameterName = "Profile";
 
         public const string VisualStudioDebugParameterName = "visual-studio-debug";
         internal const string CompletionParameterName = "shell-completion";
@@ -69,6 +70,16 @@ namespace Nuke.Common
         internal static AbsolutePath GetBuildSchemaFile(AbsolutePath rootDirectory)
         {
             return GetTemporaryDirectory(rootDirectory) / "build.schema.json";
+        }
+
+        internal static AbsolutePath GetLocalParametersFile(AbsolutePath rootDirectory)
+        {
+            return GetTemporaryDirectory(rootDirectory) / "parameters.local.json";
+        }
+
+        internal static AbsolutePath GetLocalParametersUserFile(AbsolutePath rootDirectory)
+        {
+            return GetTemporaryDirectory(rootDirectory) / "parameters.local.user.json";
         }
     }
 }

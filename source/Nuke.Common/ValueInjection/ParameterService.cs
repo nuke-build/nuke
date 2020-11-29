@@ -18,21 +18,23 @@ namespace Nuke.Common.ValueInjection
     internal class ParameterService
     {
         internal static ParameterService Instance = new ParameterService(
-            () => EnvironmentInfo.CommandLineArguments.Skip(count: 1).ToArray(),
+            () => EnvironmentInfo.CommandLineArguments.Skip(count: 1),
             () => EnvironmentInfo.Variables);
 
-        private readonly Func<string[]> _commandLineArgumentsProvider;
+        internal ParameterService ArgumentsFromFilesService;
+
+        private readonly Func<IEnumerable<string>> _commandLineArgumentsProvider;
         private readonly Func<IReadOnlyDictionary<string, string>> _environmentVariablesProvider;
 
         public ParameterService(
-            [CanBeNull] Func<string[]> commandLineArgumentsProvider,
+            [CanBeNull] Func<IEnumerable<string>> commandLineArgumentsProvider,
             [CanBeNull] Func<IReadOnlyDictionary<string, string>> environmentVariablesProvider)
         {
             _commandLineArgumentsProvider = commandLineArgumentsProvider;
             _environmentVariablesProvider = environmentVariablesProvider;
         }
 
-        private string[] Arguments => _commandLineArgumentsProvider.Invoke();
+        private string[] Arguments => _commandLineArgumentsProvider.Invoke().ToArray();
         private IReadOnlyDictionary<string, string> Variables => _environmentVariablesProvider.Invoke();
 
         public static bool IsParameter(string value)
@@ -144,9 +146,14 @@ namespace Nuke.Common.ValueInjection
             object TryFromEnvironmentVariables() =>
                 GetEnvironmentVariable(parameterName, destinationType, separator);
 
+            // TODO: nuke <target> ?
+            object TryFromProfileArguments() =>
+                ArgumentsFromFilesService?.GetCommandLineArgument(parameterName, destinationType, separator);
+
             return TryFromCommandLineArguments() ??
                    TryFromCommandLinePositionalArguments() ??
-                   TryFromEnvironmentVariables();
+                   TryFromEnvironmentVariables() ??
+                   TryFromProfileArguments();
         }
 
         [CanBeNull]
