@@ -24,6 +24,30 @@ namespace Nuke.Common.Utilities
         }
 
         [Pure]
+        public static bool ContainsAnyOrdinalIgnoreCase(this string str, params string[] others)
+        {
+            return others.Any(str.ContainsOrdinalIgnoreCase);
+        }
+
+        [Pure]
+        public static bool ContainsAnyOrdinalIgnoreCase(this string str, IEnumerable<string> others)
+        {
+            return others.Any(str.ContainsOrdinalIgnoreCase);
+        }
+
+        [Pure]
+        public static bool EqualsAnyOrdinalIgnoreCase(this string str, params string[] others)
+        {
+            return others.Any(str.EqualsOrdinalIgnoreCase);
+        }
+
+        [Pure]
+        public static bool EqualsAnyOrdinalIgnoreCase(this string str, IEnumerable<string> others)
+        {
+            return others.Any(str.EqualsOrdinalIgnoreCase);
+        }
+
+        [Pure]
         public static bool StartsWithOrdinalIgnoreCase(this string str, string other)
         {
             return str.StartsWith(other, StringComparison.OrdinalIgnoreCase);
