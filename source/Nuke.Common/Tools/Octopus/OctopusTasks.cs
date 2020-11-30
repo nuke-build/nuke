@@ -10,7 +10,7 @@ namespace Nuke.Common.Tools.Octopus
     {
         private string GetProcessToolPath()
         {
-            return OctopusTasks.GetProcessToolPath(Framework);
+            return OctopusTasks.GetToolPath(Framework);
         }
     }
 
@@ -18,7 +18,7 @@ namespace Nuke.Common.Tools.Octopus
     {
         private string GetProcessToolPath()
         {
-            return OctopusTasks.GetProcessToolPath(Framework);
+            return OctopusTasks.GetToolPath(Framework);
         }
     }
 
@@ -26,7 +26,7 @@ namespace Nuke.Common.Tools.Octopus
     {
         private string GetProcessToolPath()
         {
-            return OctopusTasks.GetProcessToolPath(Framework);
+            return OctopusTasks.GetToolPath(Framework);
         }
     }
 
@@ -34,7 +34,7 @@ namespace Nuke.Common.Tools.Octopus
     {
         private string GetProcessToolPath()
         {
-            return OctopusTasks.GetProcessToolPath(Framework);
+            return OctopusTasks.GetToolPath(Framework);
         }
     }
 
@@ -42,13 +42,13 @@ namespace Nuke.Common.Tools.Octopus
     {
         private string GetProcessToolPath()
         {
-            return OctopusTasks.GetProcessToolPath(Framework);
+            return OctopusTasks.GetToolPath(Framework);
         }
     }
 
     public partial class OctopusTasks
     {
-        internal static string GetProcessToolPath(string framework = null)
+        internal static string GetToolPath(string framework = null)
         {
             return ToolPathResolver.GetPackageExecutable(
                 packageId: "OctopusTools|Octopus.DotNet.Cli",

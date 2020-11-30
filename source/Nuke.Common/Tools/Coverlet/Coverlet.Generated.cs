@@ -1034,7 +1034,7 @@ namespace Nuke.Common.Tools.Coverlet
     public partial class CoverletOutputFormat : Enumeration
     {
         public static CoverletOutputFormat json = (CoverletOutputFormat) "json";
-        public static CoverletOutputFormat Icov = (CoverletOutputFormat) "Icov";
+        public static CoverletOutputFormat lcov = (CoverletOutputFormat) "lcov";
         public static CoverletOutputFormat opencover = (CoverletOutputFormat) "opencover";
         public static CoverletOutputFormat cobertura = (CoverletOutputFormat) "cobertura";
         public static CoverletOutputFormat teamcity = (CoverletOutputFormat) "teamcity";
