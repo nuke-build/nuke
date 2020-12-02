@@ -31,6 +31,8 @@ namespace Nuke.Common
         public const string VisualStudioDebugParameterName = "visual-studio-debug";
         internal const string CompletionParameterName = "shell-completion";
 
+        internal static AbsolutePath GlobalTemporaryDirectory => (AbsolutePath) Path.GetTempPath();
+
         [CanBeNull]
         internal static AbsolutePath TryGetRootDirectoryFrom(string startDirectory)
         {
