@@ -52,6 +52,10 @@ stages:
             env:
               AzurePipelinesSystemAccessToken: $(System.AccessToken)
               GitHubToken: $(GitHubToken)
+          - task: PublishBuildArtifacts@1
+            inputs:
+              artifactName: src
+              pathtoPublish: 'src'
       - job: Compile
         displayName: 'Compile'
         dependsOn: [ Restore ]
@@ -62,6 +66,10 @@ stages:
             env:
               AzurePipelinesSystemAccessToken: $(System.AccessToken)
               GitHubToken: $(GitHubToken)
+          - task: PublishBuildArtifacts@1
+            inputs:
+              artifactName: src
+              pathtoPublish: 'src'
       - job: Test
         displayName: 'Test'
         dependsOn: [ Compile ]
@@ -108,6 +116,10 @@ stages:
             env:
               AzurePipelinesSystemAccessToken: $(System.AccessToken)
               GitHubToken: $(GitHubToken)
+          - task: PublishBuildArtifacts@1
+            inputs:
+              artifactName: src
+              pathtoPublish: 'src'
       - job: Compile
         displayName: 'Compile'
         dependsOn: [ Restore ]
@@ -118,6 +130,10 @@ stages:
             env:
               AzurePipelinesSystemAccessToken: $(System.AccessToken)
               GitHubToken: $(GitHubToken)
+          - task: PublishBuildArtifacts@1
+            inputs:
+              artifactName: src
+              pathtoPublish: 'src'
       - job: Test
         displayName: 'Test'
         dependsOn: [ Compile ]

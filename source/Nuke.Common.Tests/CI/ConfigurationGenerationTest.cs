@@ -144,12 +144,15 @@ namespace Nuke.Common.Tests.CI
                 );
             }
 
+            public AbsolutePath SourceDirectory => RootDirectory / "src";
+
             public Target Clean => _ => _
                 .Before(Restore);
 
             [Parameter] public readonly bool IgnoreFailedSources;
 
-            public Target Restore => _ => _;
+            public Target Restore => _ => _
+                .Produces(SourceDirectory / "*/obj/**");
 
             [Parameter("Configuration for compilation")]
             public readonly Configuration Configuration = Configuration.Debug;
@@ -157,12 +160,15 @@ namespace Nuke.Common.Tests.CI
             public AbsolutePath OutputDirectory => RootDirectory / "output";
 
             public Target Compile => _ => _
-                .DependsOn(Restore);
+                .DependsOn(Restore)
+                .Produces(SourceDirectory / "*/bin/**");
+
 
             public AbsolutePath PackageDirectory => OutputDirectory / "packages";
 
             public Target Pack => _ => _
                 .DependsOn(Compile)
+                .Consumes(Restore, Compile)
                 .Produces(PackageDirectory / "*.nupkg");
 
             [Partition(2)] public readonly Partition TestPartition;

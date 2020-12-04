@@ -132,7 +132,7 @@ namespace Nuke.Common.CI.TeamCity
                 ArtifactExtensions.ArtifactProducts[x.Definition].Select(GetArtifactRule)).ToArray();
             var artifactDependencies = chainLinkTargets.SelectMany(x => (
                 from artifactDependency in ArtifactExtensions.ArtifactDependencies[x.Definition]
-                let dependency = x.ExecutionDependencies.Single(y => y.Factory == artifactDependency.Item1)
+                let dependency = relevantTargets.Single(y => y.Factory == artifactDependency.Item1)
                 let rules = (artifactDependency.Item2.Any()
                         ? artifactDependency.Item2
                         : ArtifactExtensions.ArtifactProducts[dependency.Definition])
