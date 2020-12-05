@@ -282,7 +282,7 @@ partial class Build : NukeBuild
                 .AddPlugin("ReSharperPlugin.CognitiveComplexity", ReSharperPluginLatest));
         });
 
-    [Parameter] readonly string NuGetApiKey;
+    [Parameter] [Secret] readonly string NuGetApiKey;
     bool IsOriginalRepository => GitRepository.Identifier == "nuke-build/nuke";
 
     string NuGetPackageSource => "https://api.nuget.org/v3/index.json";

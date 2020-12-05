@@ -19,14 +19,14 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
 
 partial class Build
 {
-    [Parameter] readonly string GitHubToken;
-    [Parameter] readonly string GitterAuthToken;
-    [Parameter] readonly string SlackWebhook;
+    [Parameter] [Secret] readonly string GitHubToken;
+    [Parameter] [Secret] readonly string GitterAuthToken;
+    [Parameter] [Secret] readonly string SlackWebhook;
 
-    [Parameter] readonly string TwitterConsumerKey;
-    [Parameter] readonly string TwitterConsumerSecret;
-    [Parameter] readonly string TwitterAccessToken;
-    [Parameter] readonly string TwitterAccessTokenSecret;
+    [Parameter] [Secret] readonly string TwitterConsumerKey;
+    [Parameter] [Secret] readonly string TwitterConsumerSecret;
+    [Parameter] [Secret] readonly string TwitterAccessToken;
+    [Parameter] [Secret] readonly string TwitterAccessTokenSecret;
 
     Target Announce => _ => _
         .DependsOn(ReleaseImage)
