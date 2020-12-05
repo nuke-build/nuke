@@ -18,8 +18,8 @@ namespace Nuke.Common.Execution
     {
         public void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
-            var schema = SchemaUtility.GetBuildSchema(build);
-            File.WriteAllText(GetBuildSchemaFile(NukeBuild.RootDirectory), schema.ToString());
+            SchemaUtility.WriteBuildSchemaFile(build);
+            SchemaUtility.WriteParametersSchemaFile();
 
             if (EnvironmentInfo.GetParameter<bool>(CompletionParameterName))
                 Environment.Exit(exitCode: 0);

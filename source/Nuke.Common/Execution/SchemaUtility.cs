@@ -9,11 +9,19 @@ using System.Linq;
 using Newtonsoft.Json.Linq;
 using Nuke.Common.Utilities;
 using Nuke.Common.ValueInjection;
+using static Nuke.Common.Constants;
 
 namespace Nuke.Common.Execution
 {
     public class SchemaUtility
     {
+        public static void WriteBuildSchemaFile(NukeBuild build)
+        {
+            var buildSchemaFile = GetBuildSchemaFile(NukeBuild.RootDirectory);
+            var buildSchema = GetBuildSchema(build);
+            File.WriteAllText(buildSchemaFile, buildSchema.ToString());
+        }
+
         public static JObject GetBuildSchema(NukeBuild build)
         {
             var parameters = ValueInjectionUtility
@@ -76,6 +84,33 @@ namespace Nuke.Common.Execution
             }
 
             return schema;
+        }
+
+        public static void WriteParametersSchemaFile()
+        {
+            var parametersSchemaFile = GetParametersSchemaFile(NukeBuild.RootDirectory);
+            var buildSchemaFile = GetBuildSchemaFile(NukeBuild.RootDirectory);
+            var parametersSchema = GetParametersSchema(Path.GetFileName(buildSchemaFile));
+            File.WriteAllText(parametersSchemaFile, parametersSchema.ToString());
+        }
+
+        public static JObject GetParametersSchema(string buildSchemaFile)
+        {
+            return JObject.Parse($@"
+{{
+  ""$schema"": ""http://json-schema.org/draft-04/schema#"",
+  ""title"": ""NUKE Profile Schema"",
+  ""$ref"": ""{buildSchemaFile}#/definitions/build"",
+  ""properties"": {{
+    ""$profiles"": {{
+      ""type"": ""object"",
+      ""additionalProperties"": {{
+        ""$ref"": ""{buildSchemaFile}#/definitions/build""
+      }}
+    }}
+  }}
+}}
+");
         }
 
         public static IReadOnlyDictionary<string, string[]> GetCompletionItemsFromSchema(string schemaFile)

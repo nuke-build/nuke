@@ -74,6 +74,11 @@ namespace Nuke.Common
             return GetTemporaryDirectory(rootDirectory) / "build.schema.json";
         }
 
+        internal static AbsolutePath GetParametersSchemaFile(AbsolutePath rootDirectory)
+        {
+            return GetTemporaryDirectory(rootDirectory) / "parameters.schema.json";
+        }
+
         internal static AbsolutePath GetLocalParametersFile(AbsolutePath rootDirectory)
         {
             return GetTemporaryDirectory(rootDirectory) / "parameters.local.json";
