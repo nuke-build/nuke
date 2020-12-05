@@ -61,7 +61,7 @@ namespace Nuke.Common.Tests
   }
 }
 ");
-            var items = SchemaUtility.GetCompletionItemsFromSchema(schema);
+            var items = SchemaUtility.GetCompletionItemsForBuildSchema(schema);
             items.Should().BeEquivalentTo(
                 new Dictionary<string, string[]>
                 {

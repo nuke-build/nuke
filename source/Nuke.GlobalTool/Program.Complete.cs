@@ -31,15 +31,16 @@ namespace Nuke.GlobalTool
 
             words = words.Substring(CommandName.Length).TrimStart();
 
-            var schemaFile = GetBuildSchemaFile(rootDirectory);
-            if (!File.Exists(schemaFile))
+            var buildSchemaFile = GetBuildSchemaFile(rootDirectory);
+            var localParametersFile = GetLocalParametersFile(rootDirectory);
+            if (!File.Exists(buildSchemaFile))
             {
                 Build(buildScript.NotNull(), $"--{CompletionParameterName}");
                 return 1;
             }
 
             var position = EnvironmentInfo.GetParameter<int?>("position");
-            var completionItems = SchemaUtility.GetCompletionItemsFromSchema(schemaFile);
+            var completionItems = SchemaUtility.GetCompletionItems(buildSchemaFile, localParametersFile);
             foreach (var item in CompletionUtility.GetRelevantCompletionItems(words, completionItems))
                 Console.WriteLine(item);
 

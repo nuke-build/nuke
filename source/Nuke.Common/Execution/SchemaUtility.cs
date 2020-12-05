@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 using Nuke.Common.ValueInjection;
 using static Nuke.Common.Constants;
 
@@ -113,14 +114,19 @@ namespace Nuke.Common.Execution
 ");
         }
 
-        public static IReadOnlyDictionary<string, string[]> GetCompletionItemsFromSchema(string schemaFile)
+
+        public static IReadOnlyDictionary<string, string[]> GetCompletionItems(string buildSchemaFile, string localParametersFile)
         {
-            var json = File.ReadAllText(schemaFile);
-            var schema = JObject.Parse(json);
-            return GetCompletionItemsFromSchema(schema);
+            var schema = JObject.Parse(File.ReadAllText(buildSchemaFile));
+            var parameters = JObject.Parse(File.ReadAllText(localParametersFile));
+
+            var completionItems = new Dictionary<string, string[]>();
+            completionItems.AddDictionary(GetCompletionItemsForBuildSchema(schema));
+            completionItems[LoadedLocalProfilesParameterName] = GetCompletionItemsForLocalProfiles(parameters).ToArray();
+            return completionItems;
         }
 
-        public static IReadOnlyDictionary<string, string[]> GetCompletionItemsFromSchema(JObject schema)
+        public static IReadOnlyDictionary<string, string[]> GetCompletionItemsForBuildSchema(JObject schema)
         {
             string[] GetEnumValues(JObject property)
                 => property["enum"] is { } enumProperty
@@ -131,6 +137,11 @@ namespace Nuke.Common.Execution
 
             var properties = schema["definitions"].NotNull()["build"].NotNull()["properties"].NotNull().Value<JObject>().Properties();
             return properties.ToDictionary(x => x.Name, x => GetEnumValues((JObject) x.Value));
+        }
+
+        private static string[] GetCompletionItemsForLocalProfiles(JObject obj)
+        {
+            return obj["$profiles"]?.Children<JProperty>().Select(x => x.Name).ToArray() ?? new string[0];
         }
     }
 }
