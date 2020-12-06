@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [5.0.1] / 2020-12-06
 - Fixed configuration generation to wait for user input after file changes
 - Fixed build summary for durations smaller than 1 second
 - Fixed build summary and `IBuildExtension` instances to be skipped if no targets were started
