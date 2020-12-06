@@ -30,7 +30,7 @@ namespace Nuke.Common.Tooling
             HttpTasks.HttpDownloadFile($"https://www.myget.org/RSS/{_feed}", rssFile);
             return XmlTasks.XmlPeek(rssFile, ".//title")
                 // TODO: regex?
-                .First(x => x.Contains($" {_package} "))
+                .First(x => x.Contains($"/{_package} "))
                 .Split('(').Last()
                 .Split(')').First()
                 .TrimStart("version ");

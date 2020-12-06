@@ -32,6 +32,11 @@ function FirstJsonValue {
 # Print environment variables
 env | sort
 
+# Check if any dotnet is installed
+if [[ -x "$(command -v dotnet)" ]]; then
+    dotnet --info
+fi
+
 # If dotnet CLI is installed globally and it matches requested version, use for execution
 if [ -x "$(command -v dotnet)" ] && dotnet --version &>/dev/null; then
     export DOTNET_EXE="$(command -v dotnet)"

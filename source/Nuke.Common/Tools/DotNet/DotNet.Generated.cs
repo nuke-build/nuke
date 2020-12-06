@@ -393,7 +393,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--serviceable</c> via <see cref="DotNetPackSettings.Serviceable"/></li>
         ///     <li><c>--source</c> via <see cref="DotNetPackSettings.Sources"/></li>
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetPackSettings.UseLockFile"/></li>
-        ///     <li><c>--verbosity</c> via <see cref="DotNetPackSettings.Verbostiy"/></li>
+        ///     <li><c>--verbosity</c> via <see cref="DotNetPackSettings.Verbosity"/></li>
         ///     <li><c>--version-suffix</c> via <see cref="DotNetPackSettings.VersionSuffix"/></li>
         ///     <li><c>/property</c> via <see cref="DotNetPackSettings.Properties"/></li>
         ///   </ul>
@@ -433,7 +433,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--serviceable</c> via <see cref="DotNetPackSettings.Serviceable"/></li>
         ///     <li><c>--source</c> via <see cref="DotNetPackSettings.Sources"/></li>
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetPackSettings.UseLockFile"/></li>
-        ///     <li><c>--verbosity</c> via <see cref="DotNetPackSettings.Verbostiy"/></li>
+        ///     <li><c>--verbosity</c> via <see cref="DotNetPackSettings.Verbosity"/></li>
         ///     <li><c>--version-suffix</c> via <see cref="DotNetPackSettings.VersionSuffix"/></li>
         ///     <li><c>/property</c> via <see cref="DotNetPackSettings.Properties"/></li>
         ///   </ul>
@@ -470,7 +470,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--serviceable</c> via <see cref="DotNetPackSettings.Serviceable"/></li>
         ///     <li><c>--source</c> via <see cref="DotNetPackSettings.Sources"/></li>
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetPackSettings.UseLockFile"/></li>
-        ///     <li><c>--verbosity</c> via <see cref="DotNetPackSettings.Verbostiy"/></li>
+        ///     <li><c>--verbosity</c> via <see cref="DotNetPackSettings.Verbosity"/></li>
         ///     <li><c>--version-suffix</c> via <see cref="DotNetPackSettings.VersionSuffix"/></li>
         ///     <li><c>/property</c> via <see cref="DotNetPackSettings.Properties"/></li>
         ///   </ul>
@@ -680,6 +680,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--no-cache</c> via <see cref="DotNetPublishSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetPublishSettings.NoDependencies"/></li>
         ///     <li><c>--no-restore</c> via <see cref="DotNetPublishSettings.NoRestore"/></li>
+        ///     <li><c>--nologo</c> via <see cref="DotNetPublishSettings.NoLogo"/></li>
         ///     <li><c>--output</c> via <see cref="DotNetPublishSettings.Output"/></li>
         ///     <li><c>--packages</c> via <see cref="DotNetPublishSettings.PackageDirectory"/></li>
         ///     <li><c>--runtime</c> via <see cref="DotNetPublishSettings.Runtime"/></li>
@@ -719,6 +720,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--no-cache</c> via <see cref="DotNetPublishSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetPublishSettings.NoDependencies"/></li>
         ///     <li><c>--no-restore</c> via <see cref="DotNetPublishSettings.NoRestore"/></li>
+        ///     <li><c>--nologo</c> via <see cref="DotNetPublishSettings.NoLogo"/></li>
         ///     <li><c>--output</c> via <see cref="DotNetPublishSettings.Output"/></li>
         ///     <li><c>--packages</c> via <see cref="DotNetPublishSettings.PackageDirectory"/></li>
         ///     <li><c>--runtime</c> via <see cref="DotNetPublishSettings.Runtime"/></li>
@@ -755,6 +757,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--no-cache</c> via <see cref="DotNetPublishSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetPublishSettings.NoDependencies"/></li>
         ///     <li><c>--no-restore</c> via <see cref="DotNetPublishSettings.NoRestore"/></li>
+        ///     <li><c>--nologo</c> via <see cref="DotNetPublishSettings.NoLogo"/></li>
         ///     <li><c>--output</c> via <see cref="DotNetPublishSettings.Output"/></li>
         ///     <li><c>--packages</c> via <see cref="DotNetPublishSettings.PackageDirectory"/></li>
         ///     <li><c>--runtime</c> via <see cref="DotNetPublishSettings.Runtime"/></li>
@@ -1543,7 +1546,7 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.
         /// </summary>
-        public virtual DotNetVerbosity Verbostiy { get; internal set; }
+        public virtual DotNetVerbosity Verbosity { get; internal set; }
         /// <summary>
         ///   Defines the value for the <c>$(VersionSuffix)</c> MSBuild property in the project.
         /// </summary>
@@ -1618,7 +1621,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--no-restore", NoRestore)
               .Add("--output {value}", OutputDirectory)
               .Add("--serviceable", Serviceable)
-              .Add("--verbosity {value}", Verbostiy)
+              .Add("--verbosity {value}", Verbosity)
               .Add("--version-suffix {value}", VersionSuffix)
               .Add("--nologo", NoLogo)
               .Add("--disable-parallel", DisableParallel)
@@ -1905,6 +1908,10 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual string VersionSuffix { get; internal set; }
         /// <summary>
+        ///   Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.
+        /// </summary>
+        public virtual bool? NoLogo { get; internal set; }
+        /// <summary>
         ///   Disables restoring multiple projects in parallel.
         /// </summary>
         public virtual bool? DisableParallel { get; internal set; }
@@ -1969,6 +1976,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--runtime {value}", Runtime)
               .Add("--verbosity {value}", Verbosity)
               .Add("--version-suffix {value}", VersionSuffix)
+              .Add("--nologo", NoLogo)
               .Add("--disable-parallel", DisableParallel)
               .Add("--force", Force)
               .Add("--ignore-failed-sources", IgnoreFailedSources)
@@ -5334,6 +5342,201 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region PublishReadyToRun
+        /// <summary>
+        ///   <p><em>Sets <c>PublishReadyToRun</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
+        ///   <p>Compiles application assemblies as ReadyToRun (R2R) format. R2R is a form of ahead-of-time (AOT) compilation. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/ready-to-run">ReadyToRun images</a>. Available since .NET Core 3.0 SDK.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishReadyToRun<T>(this T toolSettings, bool? publishReadyToRun) where T : DotNetRunSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishReadyToRun"] = publishReadyToRun;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishReadyToRun</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
+        ///   <p>Compiles application assemblies as ReadyToRun (R2R) format. R2R is a form of ahead-of-time (AOT) compilation. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/ready-to-run">ReadyToRun images</a>. Available since .NET Core 3.0 SDK.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishReadyToRun<T>(this T toolSettings) where T : DotNetRunSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishReadyToRun");
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <c>PublishReadyToRun</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T EnablePublishReadyToRun<T>(this T toolSettings) where T : DotNetRunSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishReadyToRun"] = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <c>PublishReadyToRun</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T DisablePublishReadyToRun<T>(this T toolSettings) where T : DotNetRunSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishReadyToRun"] = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <c>PublishReadyToRun</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T TogglePublishReadyToRun<T>(this T toolSettings) where T : DotNetRunSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PublishReadyToRun");
+            return toolSettings;
+        }
+        #endregion
+        #region PublishSingleFile
+        /// <summary>
+        ///   <p><em>Sets <c>PublishSingleFile</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
+        ///   <p>Packages the app into a platform-specific single-file executable. The executable is self-extracting and contains all dependencies (including native) that are required to run the app. When the app is first run, the application is extracted to a directory based on the app name and build identifier. Startup is faster when the application is run again. The application doesn't need to extract itself a second time unless a new version is used. Available since .NET Core 3.0 SDK.<para/> For more information about single-file publishing, see the <a href="https://github.com/dotnet/designs/blob/master/accepted/2020/single-file/design.md">single-file bundler design document</a>.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishSingleFile<T>(this T toolSettings, bool? publishSingleFile) where T : DotNetRunSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishSingleFile"] = publishSingleFile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishSingleFile</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
+        ///   <p>Packages the app into a platform-specific single-file executable. The executable is self-extracting and contains all dependencies (including native) that are required to run the app. When the app is first run, the application is extracted to a directory based on the app name and build identifier. Startup is faster when the application is run again. The application doesn't need to extract itself a second time unless a new version is used. Available since .NET Core 3.0 SDK.<para/> For more information about single-file publishing, see the <a href="https://github.com/dotnet/designs/blob/master/accepted/2020/single-file/design.md">single-file bundler design document</a>.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishSingleFile<T>(this T toolSettings) where T : DotNetRunSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishSingleFile");
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <c>PublishSingleFile</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T EnablePublishSingleFile<T>(this T toolSettings) where T : DotNetRunSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishSingleFile"] = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <c>PublishSingleFile</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T DisablePublishSingleFile<T>(this T toolSettings) where T : DotNetRunSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishSingleFile"] = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <c>PublishSingleFile</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T TogglePublishSingleFile<T>(this T toolSettings) where T : DotNetRunSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PublishSingleFile");
+            return toolSettings;
+        }
+        #endregion
+        #region PublishTrimmed
+        /// <summary>
+        ///   <p><em>Sets <c>PublishTrimmed</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
+        ///   <p>Trims unused libraries to reduce the deployment size of an app when publishing a self-contained executable. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/trim-self-contained">Trim self-contained deployments and executables</a>. Available since .NET Core 3.0 SDK as a preview feature.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishTrimmed<T>(this T toolSettings, bool? publishTrimmed) where T : DotNetRunSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishTrimmed"] = publishTrimmed;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishTrimmed</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
+        ///   <p>Trims unused libraries to reduce the deployment size of an app when publishing a self-contained executable. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/trim-self-contained">Trim self-contained deployments and executables</a>. Available since .NET Core 3.0 SDK as a preview feature.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishTrimmed<T>(this T toolSettings) where T : DotNetRunSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishTrimmed");
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <c>PublishTrimmed</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T EnablePublishTrimmed<T>(this T toolSettings) where T : DotNetRunSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishTrimmed"] = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <c>PublishTrimmed</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T DisablePublishTrimmed<T>(this T toolSettings) where T : DotNetRunSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishTrimmed"] = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <c>PublishTrimmed</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T TogglePublishTrimmed<T>(this T toolSettings) where T : DotNetRunSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PublishTrimmed");
+            return toolSettings;
+        }
+        #endregion
+        #region PublishProfile
+        /// <summary>
+        ///   <p><em>Sets <c>PublishProfile</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishProfile<T>(this T toolSettings, string publishProfile) where T : DotNetRunSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishProfile"] = publishProfile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishProfile</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishProfile<T>(this T toolSettings) where T : DotNetRunSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishProfile");
+            return toolSettings;
+        }
+        #endregion
         #endregion
     }
     #endregion
@@ -6977,6 +7180,201 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region PublishReadyToRun
+        /// <summary>
+        ///   <p><em>Sets <c>PublishReadyToRun</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
+        ///   <p>Compiles application assemblies as ReadyToRun (R2R) format. R2R is a form of ahead-of-time (AOT) compilation. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/ready-to-run">ReadyToRun images</a>. Available since .NET Core 3.0 SDK.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishReadyToRun<T>(this T toolSettings, bool? publishReadyToRun) where T : DotNetRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishReadyToRun"] = publishReadyToRun;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishReadyToRun</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
+        ///   <p>Compiles application assemblies as ReadyToRun (R2R) format. R2R is a form of ahead-of-time (AOT) compilation. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/ready-to-run">ReadyToRun images</a>. Available since .NET Core 3.0 SDK.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishReadyToRun<T>(this T toolSettings) where T : DotNetRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishReadyToRun");
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <c>PublishReadyToRun</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T EnablePublishReadyToRun<T>(this T toolSettings) where T : DotNetRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishReadyToRun"] = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <c>PublishReadyToRun</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T DisablePublishReadyToRun<T>(this T toolSettings) where T : DotNetRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishReadyToRun"] = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <c>PublishReadyToRun</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T TogglePublishReadyToRun<T>(this T toolSettings) where T : DotNetRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PublishReadyToRun");
+            return toolSettings;
+        }
+        #endregion
+        #region PublishSingleFile
+        /// <summary>
+        ///   <p><em>Sets <c>PublishSingleFile</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
+        ///   <p>Packages the app into a platform-specific single-file executable. The executable is self-extracting and contains all dependencies (including native) that are required to run the app. When the app is first run, the application is extracted to a directory based on the app name and build identifier. Startup is faster when the application is run again. The application doesn't need to extract itself a second time unless a new version is used. Available since .NET Core 3.0 SDK.<para/> For more information about single-file publishing, see the <a href="https://github.com/dotnet/designs/blob/master/accepted/2020/single-file/design.md">single-file bundler design document</a>.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishSingleFile<T>(this T toolSettings, bool? publishSingleFile) where T : DotNetRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishSingleFile"] = publishSingleFile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishSingleFile</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
+        ///   <p>Packages the app into a platform-specific single-file executable. The executable is self-extracting and contains all dependencies (including native) that are required to run the app. When the app is first run, the application is extracted to a directory based on the app name and build identifier. Startup is faster when the application is run again. The application doesn't need to extract itself a second time unless a new version is used. Available since .NET Core 3.0 SDK.<para/> For more information about single-file publishing, see the <a href="https://github.com/dotnet/designs/blob/master/accepted/2020/single-file/design.md">single-file bundler design document</a>.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishSingleFile<T>(this T toolSettings) where T : DotNetRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishSingleFile");
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <c>PublishSingleFile</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T EnablePublishSingleFile<T>(this T toolSettings) where T : DotNetRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishSingleFile"] = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <c>PublishSingleFile</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T DisablePublishSingleFile<T>(this T toolSettings) where T : DotNetRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishSingleFile"] = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <c>PublishSingleFile</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T TogglePublishSingleFile<T>(this T toolSettings) where T : DotNetRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PublishSingleFile");
+            return toolSettings;
+        }
+        #endregion
+        #region PublishTrimmed
+        /// <summary>
+        ///   <p><em>Sets <c>PublishTrimmed</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
+        ///   <p>Trims unused libraries to reduce the deployment size of an app when publishing a self-contained executable. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/trim-self-contained">Trim self-contained deployments and executables</a>. Available since .NET Core 3.0 SDK as a preview feature.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishTrimmed<T>(this T toolSettings, bool? publishTrimmed) where T : DotNetRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishTrimmed"] = publishTrimmed;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishTrimmed</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
+        ///   <p>Trims unused libraries to reduce the deployment size of an app when publishing a self-contained executable. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/trim-self-contained">Trim self-contained deployments and executables</a>. Available since .NET Core 3.0 SDK as a preview feature.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishTrimmed<T>(this T toolSettings) where T : DotNetRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishTrimmed");
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <c>PublishTrimmed</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T EnablePublishTrimmed<T>(this T toolSettings) where T : DotNetRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishTrimmed"] = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <c>PublishTrimmed</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T DisablePublishTrimmed<T>(this T toolSettings) where T : DotNetRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishTrimmed"] = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <c>PublishTrimmed</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T TogglePublishTrimmed<T>(this T toolSettings) where T : DotNetRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PublishTrimmed");
+            return toolSettings;
+        }
+        #endregion
+        #region PublishProfile
+        /// <summary>
+        ///   <p><em>Sets <c>PublishProfile</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishProfile<T>(this T toolSettings, string publishProfile) where T : DotNetRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishProfile"] = publishProfile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishProfile</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishProfile<T>(this T toolSettings) where T : DotNetRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishProfile");
+            return toolSettings;
+        }
+        #endregion
         #endregion
     }
     #endregion
@@ -7345,27 +7743,27 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
-        #region Verbostiy
+        #region Verbosity
         /// <summary>
-        ///   <p><em>Sets <see cref="DotNetPackSettings.Verbostiy"/></em></p>
+        ///   <p><em>Sets <see cref="DotNetPackSettings.Verbosity"/></em></p>
         ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
         /// </summary>
         [Pure]
-        public static T SetVerbostiy<T>(this T toolSettings, DotNetVerbosity verbostiy) where T : DotNetPackSettings
+        public static T SetVerbosity<T>(this T toolSettings, DotNetVerbosity verbosity) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Verbostiy = verbostiy;
+            toolSettings.Verbosity = verbosity;
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Resets <see cref="DotNetPackSettings.Verbostiy"/></em></p>
+        ///   <p><em>Resets <see cref="DotNetPackSettings.Verbosity"/></em></p>
         ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
         /// </summary>
         [Pure]
-        public static T ResetVerbostiy<T>(this T toolSettings) where T : DotNetPackSettings
+        public static T ResetVerbosity<T>(this T toolSettings) where T : DotNetPackSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Verbostiy = null;
+            toolSettings.Verbosity = null;
             return toolSettings;
         }
         #endregion
@@ -9007,6 +9405,201 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
+            return toolSettings;
+        }
+        #endregion
+        #region PublishReadyToRun
+        /// <summary>
+        ///   <p><em>Sets <c>PublishReadyToRun</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
+        ///   <p>Compiles application assemblies as ReadyToRun (R2R) format. R2R is a form of ahead-of-time (AOT) compilation. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/ready-to-run">ReadyToRun images</a>. Available since .NET Core 3.0 SDK.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishReadyToRun<T>(this T toolSettings, bool? publishReadyToRun) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishReadyToRun"] = publishReadyToRun;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishReadyToRun</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
+        ///   <p>Compiles application assemblies as ReadyToRun (R2R) format. R2R is a form of ahead-of-time (AOT) compilation. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/ready-to-run">ReadyToRun images</a>. Available since .NET Core 3.0 SDK.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishReadyToRun<T>(this T toolSettings) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishReadyToRun");
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <c>PublishReadyToRun</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T EnablePublishReadyToRun<T>(this T toolSettings) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishReadyToRun"] = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <c>PublishReadyToRun</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T DisablePublishReadyToRun<T>(this T toolSettings) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishReadyToRun"] = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <c>PublishReadyToRun</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T TogglePublishReadyToRun<T>(this T toolSettings) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PublishReadyToRun");
+            return toolSettings;
+        }
+        #endregion
+        #region PublishSingleFile
+        /// <summary>
+        ///   <p><em>Sets <c>PublishSingleFile</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
+        ///   <p>Packages the app into a platform-specific single-file executable. The executable is self-extracting and contains all dependencies (including native) that are required to run the app. When the app is first run, the application is extracted to a directory based on the app name and build identifier. Startup is faster when the application is run again. The application doesn't need to extract itself a second time unless a new version is used. Available since .NET Core 3.0 SDK.<para/> For more information about single-file publishing, see the <a href="https://github.com/dotnet/designs/blob/master/accepted/2020/single-file/design.md">single-file bundler design document</a>.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishSingleFile<T>(this T toolSettings, bool? publishSingleFile) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishSingleFile"] = publishSingleFile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishSingleFile</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
+        ///   <p>Packages the app into a platform-specific single-file executable. The executable is self-extracting and contains all dependencies (including native) that are required to run the app. When the app is first run, the application is extracted to a directory based on the app name and build identifier. Startup is faster when the application is run again. The application doesn't need to extract itself a second time unless a new version is used. Available since .NET Core 3.0 SDK.<para/> For more information about single-file publishing, see the <a href="https://github.com/dotnet/designs/blob/master/accepted/2020/single-file/design.md">single-file bundler design document</a>.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishSingleFile<T>(this T toolSettings) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishSingleFile");
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <c>PublishSingleFile</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T EnablePublishSingleFile<T>(this T toolSettings) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishSingleFile"] = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <c>PublishSingleFile</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T DisablePublishSingleFile<T>(this T toolSettings) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishSingleFile"] = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <c>PublishSingleFile</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T TogglePublishSingleFile<T>(this T toolSettings) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PublishSingleFile");
+            return toolSettings;
+        }
+        #endregion
+        #region PublishTrimmed
+        /// <summary>
+        ///   <p><em>Sets <c>PublishTrimmed</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
+        ///   <p>Trims unused libraries to reduce the deployment size of an app when publishing a self-contained executable. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/trim-self-contained">Trim self-contained deployments and executables</a>. Available since .NET Core 3.0 SDK as a preview feature.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishTrimmed<T>(this T toolSettings, bool? publishTrimmed) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishTrimmed"] = publishTrimmed;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishTrimmed</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
+        ///   <p>Trims unused libraries to reduce the deployment size of an app when publishing a self-contained executable. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/trim-self-contained">Trim self-contained deployments and executables</a>. Available since .NET Core 3.0 SDK as a preview feature.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishTrimmed<T>(this T toolSettings) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishTrimmed");
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <c>PublishTrimmed</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T EnablePublishTrimmed<T>(this T toolSettings) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishTrimmed"] = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <c>PublishTrimmed</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T DisablePublishTrimmed<T>(this T toolSettings) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishTrimmed"] = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <c>PublishTrimmed</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T TogglePublishTrimmed<T>(this T toolSettings) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PublishTrimmed");
+            return toolSettings;
+        }
+        #endregion
+        #region PublishProfile
+        /// <summary>
+        ///   <p><em>Sets <c>PublishProfile</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishProfile<T>(this T toolSettings, string publishProfile) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishProfile"] = publishProfile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishProfile</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishProfile<T>(this T toolSettings) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishProfile");
             return toolSettings;
         }
         #endregion
@@ -11034,6 +11627,201 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region PublishReadyToRun
+        /// <summary>
+        ///   <p><em>Sets <c>PublishReadyToRun</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
+        ///   <p>Compiles application assemblies as ReadyToRun (R2R) format. R2R is a form of ahead-of-time (AOT) compilation. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/ready-to-run">ReadyToRun images</a>. Available since .NET Core 3.0 SDK.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishReadyToRun<T>(this T toolSettings, bool? publishReadyToRun) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishReadyToRun"] = publishReadyToRun;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishReadyToRun</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
+        ///   <p>Compiles application assemblies as ReadyToRun (R2R) format. R2R is a form of ahead-of-time (AOT) compilation. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/ready-to-run">ReadyToRun images</a>. Available since .NET Core 3.0 SDK.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishReadyToRun<T>(this T toolSettings) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishReadyToRun");
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <c>PublishReadyToRun</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T EnablePublishReadyToRun<T>(this T toolSettings) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishReadyToRun"] = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <c>PublishReadyToRun</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T DisablePublishReadyToRun<T>(this T toolSettings) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishReadyToRun"] = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <c>PublishReadyToRun</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T TogglePublishReadyToRun<T>(this T toolSettings) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PublishReadyToRun");
+            return toolSettings;
+        }
+        #endregion
+        #region PublishSingleFile
+        /// <summary>
+        ///   <p><em>Sets <c>PublishSingleFile</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
+        ///   <p>Packages the app into a platform-specific single-file executable. The executable is self-extracting and contains all dependencies (including native) that are required to run the app. When the app is first run, the application is extracted to a directory based on the app name and build identifier. Startup is faster when the application is run again. The application doesn't need to extract itself a second time unless a new version is used. Available since .NET Core 3.0 SDK.<para/> For more information about single-file publishing, see the <a href="https://github.com/dotnet/designs/blob/master/accepted/2020/single-file/design.md">single-file bundler design document</a>.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishSingleFile<T>(this T toolSettings, bool? publishSingleFile) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishSingleFile"] = publishSingleFile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishSingleFile</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
+        ///   <p>Packages the app into a platform-specific single-file executable. The executable is self-extracting and contains all dependencies (including native) that are required to run the app. When the app is first run, the application is extracted to a directory based on the app name and build identifier. Startup is faster when the application is run again. The application doesn't need to extract itself a second time unless a new version is used. Available since .NET Core 3.0 SDK.<para/> For more information about single-file publishing, see the <a href="https://github.com/dotnet/designs/blob/master/accepted/2020/single-file/design.md">single-file bundler design document</a>.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishSingleFile<T>(this T toolSettings) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishSingleFile");
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <c>PublishSingleFile</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T EnablePublishSingleFile<T>(this T toolSettings) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishSingleFile"] = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <c>PublishSingleFile</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T DisablePublishSingleFile<T>(this T toolSettings) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishSingleFile"] = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <c>PublishSingleFile</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T TogglePublishSingleFile<T>(this T toolSettings) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PublishSingleFile");
+            return toolSettings;
+        }
+        #endregion
+        #region PublishTrimmed
+        /// <summary>
+        ///   <p><em>Sets <c>PublishTrimmed</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
+        ///   <p>Trims unused libraries to reduce the deployment size of an app when publishing a self-contained executable. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/trim-self-contained">Trim self-contained deployments and executables</a>. Available since .NET Core 3.0 SDK as a preview feature.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishTrimmed<T>(this T toolSettings, bool? publishTrimmed) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishTrimmed"] = publishTrimmed;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishTrimmed</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
+        ///   <p>Trims unused libraries to reduce the deployment size of an app when publishing a self-contained executable. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/trim-self-contained">Trim self-contained deployments and executables</a>. Available since .NET Core 3.0 SDK as a preview feature.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishTrimmed<T>(this T toolSettings) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishTrimmed");
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <c>PublishTrimmed</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T EnablePublishTrimmed<T>(this T toolSettings) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishTrimmed"] = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <c>PublishTrimmed</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T DisablePublishTrimmed<T>(this T toolSettings) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishTrimmed"] = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <c>PublishTrimmed</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T TogglePublishTrimmed<T>(this T toolSettings) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PublishTrimmed");
+            return toolSettings;
+        }
+        #endregion
+        #region PublishProfile
+        /// <summary>
+        ///   <p><em>Sets <c>PublishProfile</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishProfile<T>(this T toolSettings, string publishProfile) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishProfile"] = publishProfile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishProfile</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishProfile<T>(this T toolSettings) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishProfile");
+            return toolSettings;
+        }
+        #endregion
         #endregion
     }
     #endregion
@@ -12197,6 +12985,201 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region PublishReadyToRun
+        /// <summary>
+        ///   <p><em>Sets <c>PublishReadyToRun</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
+        ///   <p>Compiles application assemblies as ReadyToRun (R2R) format. R2R is a form of ahead-of-time (AOT) compilation. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/ready-to-run">ReadyToRun images</a>. Available since .NET Core 3.0 SDK.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishReadyToRun<T>(this T toolSettings, bool? publishReadyToRun) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishReadyToRun"] = publishReadyToRun;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishReadyToRun</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
+        ///   <p>Compiles application assemblies as ReadyToRun (R2R) format. R2R is a form of ahead-of-time (AOT) compilation. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/ready-to-run">ReadyToRun images</a>. Available since .NET Core 3.0 SDK.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishReadyToRun<T>(this T toolSettings) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishReadyToRun");
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <c>PublishReadyToRun</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T EnablePublishReadyToRun<T>(this T toolSettings) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishReadyToRun"] = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <c>PublishReadyToRun</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T DisablePublishReadyToRun<T>(this T toolSettings) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishReadyToRun"] = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <c>PublishReadyToRun</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T TogglePublishReadyToRun<T>(this T toolSettings) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PublishReadyToRun");
+            return toolSettings;
+        }
+        #endregion
+        #region PublishSingleFile
+        /// <summary>
+        ///   <p><em>Sets <c>PublishSingleFile</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
+        ///   <p>Packages the app into a platform-specific single-file executable. The executable is self-extracting and contains all dependencies (including native) that are required to run the app. When the app is first run, the application is extracted to a directory based on the app name and build identifier. Startup is faster when the application is run again. The application doesn't need to extract itself a second time unless a new version is used. Available since .NET Core 3.0 SDK.<para/> For more information about single-file publishing, see the <a href="https://github.com/dotnet/designs/blob/master/accepted/2020/single-file/design.md">single-file bundler design document</a>.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishSingleFile<T>(this T toolSettings, bool? publishSingleFile) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishSingleFile"] = publishSingleFile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishSingleFile</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
+        ///   <p>Packages the app into a platform-specific single-file executable. The executable is self-extracting and contains all dependencies (including native) that are required to run the app. When the app is first run, the application is extracted to a directory based on the app name and build identifier. Startup is faster when the application is run again. The application doesn't need to extract itself a second time unless a new version is used. Available since .NET Core 3.0 SDK.<para/> For more information about single-file publishing, see the <a href="https://github.com/dotnet/designs/blob/master/accepted/2020/single-file/design.md">single-file bundler design document</a>.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishSingleFile<T>(this T toolSettings) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishSingleFile");
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <c>PublishSingleFile</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T EnablePublishSingleFile<T>(this T toolSettings) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishSingleFile"] = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <c>PublishSingleFile</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T DisablePublishSingleFile<T>(this T toolSettings) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishSingleFile"] = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <c>PublishSingleFile</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T TogglePublishSingleFile<T>(this T toolSettings) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PublishSingleFile");
+            return toolSettings;
+        }
+        #endregion
+        #region PublishTrimmed
+        /// <summary>
+        ///   <p><em>Sets <c>PublishTrimmed</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
+        ///   <p>Trims unused libraries to reduce the deployment size of an app when publishing a self-contained executable. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/trim-self-contained">Trim self-contained deployments and executables</a>. Available since .NET Core 3.0 SDK as a preview feature.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishTrimmed<T>(this T toolSettings, bool? publishTrimmed) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishTrimmed"] = publishTrimmed;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishTrimmed</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
+        ///   <p>Trims unused libraries to reduce the deployment size of an app when publishing a self-contained executable. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/trim-self-contained">Trim self-contained deployments and executables</a>. Available since .NET Core 3.0 SDK as a preview feature.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishTrimmed<T>(this T toolSettings) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishTrimmed");
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <c>PublishTrimmed</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T EnablePublishTrimmed<T>(this T toolSettings) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishTrimmed"] = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <c>PublishTrimmed</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T DisablePublishTrimmed<T>(this T toolSettings) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishTrimmed"] = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <c>PublishTrimmed</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T TogglePublishTrimmed<T>(this T toolSettings) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PublishTrimmed");
+            return toolSettings;
+        }
+        #endregion
+        #region PublishProfile
+        /// <summary>
+        ///   <p><em>Sets <c>PublishProfile</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishProfile<T>(this T toolSettings, string publishProfile) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishProfile"] = publishProfile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishProfile</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishProfile<T>(this T toolSettings) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishProfile");
+            return toolSettings;
+        }
+        #endregion
         #endregion
     }
     #endregion
@@ -12568,6 +13551,63 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VersionSuffix = null;
+            return toolSettings;
+        }
+        #endregion
+        #region NoLogo
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetPublishSettings.NoLogo"/></em></p>
+        ///   <p>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoLogo<T>(this T toolSettings, bool? noLogo) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = noLogo;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetPublishSettings.NoLogo"/></em></p>
+        ///   <p>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoLogo<T>(this T toolSettings) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetPublishSettings.NoLogo"/></em></p>
+        ///   <p>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoLogo<T>(this T toolSettings) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetPublishSettings.NoLogo"/></em></p>
+        ///   <p>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoLogo<T>(this T toolSettings) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetPublishSettings.NoLogo"/></em></p>
+        ///   <p>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoLogo<T>(this T toolSettings) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = !toolSettings.NoLogo;
             return toolSettings;
         }
         #endregion
@@ -14104,6 +15144,201 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
+            return toolSettings;
+        }
+        #endregion
+        #region PublishReadyToRun
+        /// <summary>
+        ///   <p><em>Sets <c>PublishReadyToRun</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
+        ///   <p>Compiles application assemblies as ReadyToRun (R2R) format. R2R is a form of ahead-of-time (AOT) compilation. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/ready-to-run">ReadyToRun images</a>. Available since .NET Core 3.0 SDK.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishReadyToRun<T>(this T toolSettings, bool? publishReadyToRun) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishReadyToRun"] = publishReadyToRun;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishReadyToRun</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
+        ///   <p>Compiles application assemblies as ReadyToRun (R2R) format. R2R is a form of ahead-of-time (AOT) compilation. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/ready-to-run">ReadyToRun images</a>. Available since .NET Core 3.0 SDK.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishReadyToRun<T>(this T toolSettings) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishReadyToRun");
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <c>PublishReadyToRun</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T EnablePublishReadyToRun<T>(this T toolSettings) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishReadyToRun"] = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <c>PublishReadyToRun</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T DisablePublishReadyToRun<T>(this T toolSettings) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishReadyToRun"] = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <c>PublishReadyToRun</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T TogglePublishReadyToRun<T>(this T toolSettings) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PublishReadyToRun");
+            return toolSettings;
+        }
+        #endregion
+        #region PublishSingleFile
+        /// <summary>
+        ///   <p><em>Sets <c>PublishSingleFile</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
+        ///   <p>Packages the app into a platform-specific single-file executable. The executable is self-extracting and contains all dependencies (including native) that are required to run the app. When the app is first run, the application is extracted to a directory based on the app name and build identifier. Startup is faster when the application is run again. The application doesn't need to extract itself a second time unless a new version is used. Available since .NET Core 3.0 SDK.<para/> For more information about single-file publishing, see the <a href="https://github.com/dotnet/designs/blob/master/accepted/2020/single-file/design.md">single-file bundler design document</a>.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishSingleFile<T>(this T toolSettings, bool? publishSingleFile) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishSingleFile"] = publishSingleFile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishSingleFile</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
+        ///   <p>Packages the app into a platform-specific single-file executable. The executable is self-extracting and contains all dependencies (including native) that are required to run the app. When the app is first run, the application is extracted to a directory based on the app name and build identifier. Startup is faster when the application is run again. The application doesn't need to extract itself a second time unless a new version is used. Available since .NET Core 3.0 SDK.<para/> For more information about single-file publishing, see the <a href="https://github.com/dotnet/designs/blob/master/accepted/2020/single-file/design.md">single-file bundler design document</a>.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishSingleFile<T>(this T toolSettings) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishSingleFile");
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <c>PublishSingleFile</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T EnablePublishSingleFile<T>(this T toolSettings) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishSingleFile"] = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <c>PublishSingleFile</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T DisablePublishSingleFile<T>(this T toolSettings) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishSingleFile"] = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <c>PublishSingleFile</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T TogglePublishSingleFile<T>(this T toolSettings) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PublishSingleFile");
+            return toolSettings;
+        }
+        #endregion
+        #region PublishTrimmed
+        /// <summary>
+        ///   <p><em>Sets <c>PublishTrimmed</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
+        ///   <p>Trims unused libraries to reduce the deployment size of an app when publishing a self-contained executable. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/trim-self-contained">Trim self-contained deployments and executables</a>. Available since .NET Core 3.0 SDK as a preview feature.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishTrimmed<T>(this T toolSettings, bool? publishTrimmed) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishTrimmed"] = publishTrimmed;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishTrimmed</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
+        ///   <p>Trims unused libraries to reduce the deployment size of an app when publishing a self-contained executable. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/trim-self-contained">Trim self-contained deployments and executables</a>. Available since .NET Core 3.0 SDK as a preview feature.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild">MSBuild</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishTrimmed<T>(this T toolSettings) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishTrimmed");
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <c>PublishTrimmed</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T EnablePublishTrimmed<T>(this T toolSettings) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishTrimmed"] = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <c>PublishTrimmed</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T DisablePublishTrimmed<T>(this T toolSettings) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishTrimmed"] = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <c>PublishTrimmed</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T TogglePublishTrimmed<T>(this T toolSettings) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PublishTrimmed");
+            return toolSettings;
+        }
+        #endregion
+        #region PublishProfile
+        /// <summary>
+        ///   <p><em>Sets <c>PublishProfile</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetPublishProfile<T>(this T toolSettings, string publishProfile) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PublishProfile"] = publishProfile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PublishProfile</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetPublishProfile<T>(this T toolSettings) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PublishProfile");
             return toolSettings;
         }
         #endregion

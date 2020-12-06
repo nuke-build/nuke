@@ -32,7 +32,7 @@ artifacts:
 
 environment:
   SignPathApiToken:
-    secure: 8qQa3PGEnzXnm1sqqcHZyonFZ/ONlg6nsnFjbkhADU9fJyhSV+0daA/mqWhO9yAb
+    secure: zYFzA/7H1MDXDlpX6SAyv41kiBmu8Vh3kvWC7tPfk7eVdhh9mGQgXC7AzgcGnpsg
   SignPathOrganizationId: 0fdaf334-6910-41f4-83d2-e58e4cccb087
-  SignPathProjectKey: nuke
-  SignPathPolicyKey: test-signing
+  SignPathProjectSlug: nuke
+  SignPathPolicySlug: release-signing
