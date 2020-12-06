@@ -8,6 +8,8 @@ using System.Globalization;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
+using Nuke.Common.Git;
+using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -68,9 +70,25 @@ namespace Nuke.Common.OutputSinks
             WriteNormal();
 
             if (build.IsSuccessful)
+            {
                 WriteSuccessfulBuild();
+
+                if (!GitRepository.FromLocalDirectory(NukeBuild.RootDirectory)?.IsGitHubRepository() ?? false)
+                {
+                    WriteNormal();
+                    WriteInformation("If you like NUKE, you'll love what is coming! 🤓");
+                    WriteInformation("We're currently waiting for more sponsors to release a new version.");
+                    WriteInformation("Please check out our tiers: https://github.com/sponsors/matkoch");
+                    WriteInformation("As a sponsor you'll also gain access to numerous perks. 🚀");
+                    WriteNormal();
+                    WriteInformation("Happy building! 🌟");
+                }
+            }
             else
+            {
                 WriteFailedBuild();
+            }
+
             WriteNormal();
         }
 
