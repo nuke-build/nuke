@@ -27,7 +27,10 @@ partial class Build
         .Executes(async () =>
         {
             var milestoneTitle = $"v{MajorMinorPatchVersion}";
-            var milestone = (await GitRepository.GetGitHubMilestone(milestoneTitle)).NotNull("milestone != null");
+            var milestone = await GitRepository.GetGitHubMilestone(milestoneTitle);
+            if (milestone == null)
+                return;
+
             Assert(milestone.OpenIssues == 0, "milestone.OpenIssues == 0");
             Assert(milestone.ClosedIssues != 0, "milestone.ClosedIssues != 0");
             Assert(milestone.State == ItemState.Closed, "milestone.State == ItemState.Closed");
