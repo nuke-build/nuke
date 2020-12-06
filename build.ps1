@@ -37,6 +37,11 @@ function ExecSafe([scriptblock] $cmd) {
 # Print environment variables
 Get-Item -Path Env:* | Sort-Object -Property Name | ForEach-Object {"{0}={1}" -f $_.Name,$_.Value}
 
+# Check if any dotnet is installed
+if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue)) {
+    ExecSafe { & dotnet --info }
+}
+
 # If dotnet CLI is installed globally and it matches requested version, use for execution
 if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue) -and `
     $(dotnet --version) -and $LASTEXITCODE -eq 0) {

@@ -8,6 +8,8 @@ using System.Globalization;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
+using Nuke.Common.Git;
+using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -68,9 +70,25 @@ namespace Nuke.Common.OutputSinks
             WriteNormal();
 
             if (build.IsSuccessful)
+            {
                 WriteSuccessfulBuild();
+
+                if (!GitRepository.FromLocalDirectory(NukeBuild.RootDirectory)?.IsGitHubRepository() ?? false)
+                {
+                    WriteNormal();
+                    WriteInformation("If you like NUKE, you'll love what is coming! 🤓");
+                    WriteInformation("We're currently waiting for more sponsors to release a new version.");
+                    WriteInformation("Please check out our tiers: https://github.com/sponsors/matkoch");
+                    WriteInformation("As a sponsor you'll also gain access to numerous perks. 🚀");
+                    WriteNormal();
+                    WriteInformation("Happy building! 🌟");
+                }
+            }
             else
+            {
                 WriteFailedBuild();
+            }
+
             WriteNormal();
         }
 
@@ -98,8 +116,15 @@ namespace Nuke.Common.OutputSinks
                    + duration.PadLeft(thirdColumn, paddingChar: ' ')
                    + (appendix != null ? $"   // {appendix}" : string.Empty);
 
-            static string ToMinutesAndSeconds(TimeSpan duration)
-                => $"{(int) duration.TotalMinutes}:{duration:ss}";
+            static string GetDurationOrBlank(ExecutableTarget target)
+                => target.Status == ExecutionStatus.Executed ||
+                   target.Status == ExecutionStatus.Failed ||
+                   target.Status == ExecutionStatus.Aborted
+                    ? GetDuration(target.Duration)
+                    : string.Empty;
+
+            static string GetDuration(TimeSpan duration)
+                => $"{(int) duration.TotalMinutes}:{duration:ss}".Replace("0:00", "< 1sec");
 
             WriteNormal(new string(c: '═', count: allColumns));
             WriteInformation(CreateLine("Target", "Status", "Duration"));
@@ -107,7 +132,7 @@ namespace Nuke.Common.OutputSinks
             WriteNormal(new string(c: '─', count: allColumns));
             foreach (var target in build.ExecutionPlan)
             {
-                var line = CreateLine(target.Name, target.Status.ToString(), ToMinutesAndSeconds(target.Duration), target.SkipReason);
+                var line = CreateLine(target.Name, target.Status.ToString(), GetDurationOrBlank(target), target.SkipReason);
                 switch (target.Status)
                 {
                     case ExecutionStatus.Skipped:
@@ -127,7 +152,7 @@ namespace Nuke.Common.OutputSinks
             }
 
             WriteNormal(new string(c: '─', count: allColumns));
-            WriteInformation(CreateLine("Total", "", ToMinutesAndSeconds(totalDuration)));
+            WriteInformation(CreateLine("Total", string.Empty, GetDuration(totalDuration)));
             WriteNormal(new string(c: '═', count: allColumns));
         }
 

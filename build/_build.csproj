@@ -36,7 +36,7 @@
   <ItemGroup>
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0008" />
     <PackageReference Include="tweetinviapi" Version="5.0.0-alpha-6" />
-    <PackageDownload Include="GitVersion.Tool" Version="[5.3.7]" />
+    <PackageDownload Include="GitVersion.Tool" Version="[5.5.1]" />
     <PackageDownload Include="JetBrains.dotCover.CommandLineTools" Version="[2020.1.3]" />
     <PackageDownload Include="JetBrains.ReSharper.GlobalTools" Version="[2020.2.0-eap05]" />
     <PackageDownload Include="OpenCover" Version="[4.7.922]" />

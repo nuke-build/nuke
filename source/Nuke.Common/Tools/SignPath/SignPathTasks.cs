@@ -47,16 +47,16 @@ namespace Nuke.Common.Tools.SignPath
             return $"{SignPathApiUrl}/{organizationId}/SignRequests/{signingRequestId}";
         }
 
-        private static string GetSignPathAppVeyorIntegrationUrl(string organizationId, string projectKey, string signingPolicyKey)
+        private static string GetSignPathAppVeyorIntegrationUrl(string organizationId, string projectSlug, string signingPolicySlug)
         {
-            return $"{SignPathApiUrl}/{organizationId}/Integrations/AppVeyor?ProjectKey={projectKey}&SigningPolicyKey={signingPolicyKey}";
+            return $"{SignPathApiUrl}/{organizationId}/Integrations/AppVeyor?ProjectSlug={projectSlug}&SigningPolicySlug={signingPolicySlug}";
         }
 
         public static async Task<string> GetSigningRequestUrlViaAppVeyor(
             string authToken,
             string organizationId,
-            string projectKey,
-            string signingPolicyKey)
+            string projectSlug,
+            string signingPolicySlug)
         {
             using (SwitchSecurityProtocol())
             {
@@ -72,9 +72,9 @@ namespace Nuke.Common.Tools.SignPath
 
                 using var httpClient = CreateAuthorizedHttpClient(authToken, DefaultHttpClientTimeout);
                 var response = await httpClient.PostAsync(
-                    GetSignPathAppVeyorIntegrationUrl(organizationId, projectKey, signingPolicyKey),
+                    GetSignPathAppVeyorIntegrationUrl(organizationId, projectSlug, signingPolicySlug),
                     new StringContent(JsonSerialize(content), Encoding.UTF8, contentType));
-                Assert(response.StatusCode == HttpStatusCode.Created, $"{response.StatusCode} == HttpStatusCode.Created");
+                Assert(response.StatusCode == HttpStatusCode.Created, response.Content.ReadAsStringAsync().GetAwaiter().GetResult());
 
                 Logger.Info($"Signing request created: {response.Headers.Location.AbsoluteUri.Replace("api/v1", "Web")}");
                 return response.Headers.Location.AbsoluteUri;
@@ -86,9 +86,9 @@ namespace Nuke.Common.Tools.SignPath
         //     string organizationId,
         //     string artifactConfigurationId,
         //     string signingPolicyId,
-        //     string projectKey,
-        //     string artifactConfigurationKey,
-        //     string signingPolicyKey,
+        //     string projectSlug,
+        //     string artifactConfigurationSlug,
+        //     string signingPolicySlug,
         //     string inputArtifactPath,
         //     string description,
         //     string apiUrl = "https://app.signpath.io/api/v1")
@@ -106,7 +106,7 @@ namespace Nuke.Common.Tools.SignPath
         //                     var submitUrl = $"{apiUrl}/{organizationId}/SigningRequests";
         //                     var getUrl = SubmitVia(
         //                         uploadAndDownloadHttpClient,
-        //                         submitUrl, projectKey, signingPolicyKey, signingPolicyId, description, artifactConfigurationId, artifactConfigurationKey,
+        //                         submitUrl, projectSlug, signingPolicySlug, signingPolicyId, description, artifactConfigurationId, artifactConfigurationSlug,
         //                         inputArtifactPath);
         //
         //                     var downloadUrl = GetSignedArtifactUrl(
@@ -216,12 +216,12 @@ namespace Nuke.Common.Tools.SignPath
         private static string SubmitVia(
             HttpClient httpClient,
             string url,
-            [CanBeNull] string projectKey,
-            [CanBeNull] string signingPolicyKey,
+            [CanBeNull] string projectSlug,
+            [CanBeNull] string signingPolicySlug,
             [CanBeNull] string signingPolicyId,
             string description,
             [CanBeNull] string artifactConfigurationId,
-            [CanBeNull] string artifactConfigurationKey,
+            [CanBeNull] string artifactConfigurationSlug,
             string artifactFile)
         {
             StreamContent GetStreamContent()
@@ -241,9 +241,9 @@ namespace Nuke.Common.Tools.SignPath
                            {
                                (nameof(artifactConfigurationId), artifactConfigurationId),
                                (nameof(signingPolicyId), signingPolicyId),
-                               (nameof(projectKey), projectKey),
-                               (nameof(artifactConfigurationKey), artifactConfigurationKey),
-                               (nameof(signingPolicyKey), signingPolicyKey),
+                               (nameof(projectSlug), projectSlug),
+                               (nameof(artifactConfigurationSlug), artifactConfigurationSlug),
+                               (nameof(signingPolicySlug), signingPolicySlug),
                                (nameof(description), description)
                            }
                     .Where(x => x.Item2 != null).ToList();

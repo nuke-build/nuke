@@ -55,9 +55,9 @@ namespace Nuke.Common.Execution
 
                 Logger.OutputSink = build.OutputSink;
 
-                if (NukeBuild.BuildProjectDirectory != null)
-                    ToolPathResolver.ExecutingAssemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
+                ToolPathResolver.EmbeddedPackagesDirectory = NukeBuild.BuildProjectFile == null
+                    ? Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
+                    : null;
                 ToolPathResolver.NuGetPackagesConfigFile = build.NuGetPackagesConfigFile;
                 ToolPathResolver.NuGetAssetsConfigFile = build.NuGetAssetsConfigFile;
 
@@ -94,7 +94,7 @@ namespace Nuke.Common.Execution
             }
             finally
             {
-                if (build.ExecutionPlan != null)
+                if (build.ExecutionPlan?.Any(x => x.Status != ExecutionStatus.NotRun) ?? false)
                     Finish();
             }
 

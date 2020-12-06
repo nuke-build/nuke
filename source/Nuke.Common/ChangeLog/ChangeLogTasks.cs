@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -22,7 +22,11 @@ namespace Nuke.Common.ChangeLog
         public static string GetNuGetReleaseNotes(string changelogFile, GitRepository repository = null)
         {
             var changelogSectionNotes = ExtractChangelogSectionNotes(changelogFile)
-                .Select(x => x.Replace("- ", "\u2022 ").Replace("`", string.Empty).Replace(",", "%2C")).ToList();
+                .Select(x => x.Replace("- ", "\u2022 ")
+                              .Replace("* ", "\u2022 ")
+                              .Replace("+ ", "\u2022 ")
+                              .Replace("`", string.Empty)
+                              .Replace(",", "%2C")).ToList();
 
             if (repository.IsGitHubRepository())
             {
@@ -160,7 +164,7 @@ namespace Nuke.Common.ChangeLog
         [Pure]
         public static IEnumerable<string> ExtractChangelogSectionNotes(string changelogFile, string tag = null)
         {
-            var content = TextTasks.ReadAllLines(changelogFile).ToList();
+            var content = TextTasks.ReadAllLines(changelogFile).Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
             var sections = GetReleaseSections(content);
             var section = tag == null
                 ? sections.First(x => x.StartIndex < x.EndIndex)
@@ -176,8 +180,10 @@ namespace Nuke.Common.ChangeLog
             static bool IsReleaseHead(string str)
                 => str.StartsWith("## ");
 
-            static bool IsReleaseContent(string str)
-                => str.StartsWith("###") || str.Trim().StartsWith("-");
+            static bool IsReleaseContent(string str) => str.StartsWith("###")
+                                              || str.Trim().StartsWith("-")
+                                              || str.Trim().StartsWith("*")
+                                              || str.Trim().StartsWith("+");
 
             static string GetCaption(string str)
                 => str

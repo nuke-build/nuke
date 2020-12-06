@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.OutputSinks;
+using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common
@@ -299,6 +300,11 @@ namespace Nuke.Common
 
         private static void HandleException(Exception exception, Action<string, string> exceptionOutput, string prefix = null)
         {
+            static string GetTrimmedStackTrace(Exception exception)
+                => exception.StackTrace.SplitLineBreaks()
+                    .Where(x => !x.TrimStart().StartsWith($"at {typeof(ControlFlow).FullName}"))
+                    .JoinNewLine();
+
             switch (exception)
             {
                 case AggregateException ex:
@@ -312,7 +318,9 @@ namespace Nuke.Common
                     HandleException(ex.InnerException, exceptionOutput);
                     break;
                 default:
-                    exceptionOutput($"{prefix}{exception.GetType().Name}: {exception.Message}", exception.StackTrace + EnvironmentInfo.NewLine);
+                    exceptionOutput.Invoke(
+                        $"{prefix}{exception.GetType().Name}: ".TrimStart("Exception: ") + exception.Message,
+                        GetTrimmedStackTrace(exception) + EnvironmentInfo.NewLine);
                     break;
             }
         }

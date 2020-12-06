@@ -7,14 +7,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Nuke.Common;
+using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Components;
 
 partial class Build : ISignPackages
 {
-    // https://ci.appveyor.com/tools/encrypt
-
     public IEnumerable<AbsolutePath> SignPathPackages => PackageFiles
         .Where(x => Path.GetFileName(x).StartsWithAny(
             "Nuke.Common",
@@ -24,5 +23,7 @@ partial class Build : ISignPackages
 
     public Target SignPackages => _ => _
         .Inherit<ISignPackages>(x => x.SignPackages)
+        .OnlyWhenStatic(() => GitRepository.IsOnMasterBranch())
+        .OnlyWhenStatic(() => EnvironmentInfo.IsWin)
         .TriggeredBy(Pack);
 }

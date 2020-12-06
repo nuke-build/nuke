@@ -53,12 +53,12 @@ namespace Nuke.Common
     // Before logo
     [InjectParameterValues(Priority = 100)]
     [GenerateBuildServerConfigurations(Priority = 50)]
+    [InvokeBuildServerConfigurationGeneration(Priority = 45)]
     [HandleShellCompletion(Priority = 40)]
     [UnsetVisualStudioEnvironmentVariables]
     // [SaveBuildProfile(Priority = 30)]
     // [LoadBuildProfiles(Priority = 25)]
     // After logo
-    [InvokeBuildServerConfigurationGeneration(Priority = 50)]
     [HandleHelpRequests(Priority = 5)]
     [HandleVisualStudioDebugging]
     [InjectNonParameterValues(Priority = -100)]
