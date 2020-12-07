@@ -49,6 +49,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;projectFile&gt;</c> via <see cref="DotNetTestSettings.ProjectFile"/></li>
+        ///     <li><c>--</c> via <see cref="DotNetTestSettings.RunSettings"/></li>
         ///     <li><c>--blame</c> via <see cref="DotNetTestSettings.BlameMode"/></li>
         ///     <li><c>--collect</c> via <see cref="DotNetTestSettings.DataCollector"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetTestSettings.Configuration"/></li>
@@ -94,6 +95,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;projectFile&gt;</c> via <see cref="DotNetTestSettings.ProjectFile"/></li>
+        ///     <li><c>--</c> via <see cref="DotNetTestSettings.RunSettings"/></li>
         ///     <li><c>--blame</c> via <see cref="DotNetTestSettings.BlameMode"/></li>
         ///     <li><c>--collect</c> via <see cref="DotNetTestSettings.DataCollector"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetTestSettings.Configuration"/></li>
@@ -136,6 +138,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;projectFile&gt;</c> via <see cref="DotNetTestSettings.ProjectFile"/></li>
+        ///     <li><c>--</c> via <see cref="DotNetTestSettings.RunSettings"/></li>
         ///     <li><c>--blame</c> via <see cref="DotNetTestSettings.BlameMode"/></li>
         ///     <li><c>--collect</c> via <see cref="DotNetTestSettings.DataCollector"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetTestSettings.Configuration"/></li>
@@ -1227,6 +1230,8 @@ namespace Nuke.Common.Tools.DotNet
         ///   Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.
         /// </summary>
         public virtual string Runtime { get; internal set; }
+        public virtual IReadOnlyDictionary<string, object> RunSettings => RunSettingsInternal.AsReadOnly();
+        internal Dictionary<string, object> RunSettingsInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
@@ -1259,7 +1264,8 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--locked-mode", LockedMode)
               .Add("--lock-file-path {value}", LockFilePath)
               .Add("--force-evaluate", ForceEvaluate)
-              .Add("--runtime {value}", Runtime);
+              .Add("--runtime {value}", Runtime)
+              .Add("-- {value}", RunSettings, "{key}={value}", separator: ' ');
             return base.ConfigureProcessArguments(arguments);
         }
     }
@@ -1306,10 +1312,6 @@ namespace Nuke.Common.Tools.DotNet
         ///   Specifies the path and name of the project file. (See the NOTE.) It defaults to the current directory if not specified.
         /// </summary>
         public virtual string ProjectFile { get; internal set; }
-        /// <summary>
-        ///   Arguments passed to the application being run.
-        /// </summary>
-        public virtual string ApplicationArguments { get; internal set; }
         /// <summary>
         ///   Disables restoring multiple projects in parallel.
         /// </summary>
@@ -1364,6 +1366,10 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+        /// <summary>
+        ///   Arguments passed to the application being run.
+        /// </summary>
+        public virtual string ApplicationArguments { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
@@ -1375,7 +1381,6 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--no-launch-profile", NoLaunchProfile)
               .Add("--no-restore", NoRestore)
               .Add("--project {value}", ProjectFile)
-              .Add("-- {value}", GetApplicationArguments(), customValue: true)
               .Add("--disable-parallel", DisableParallel)
               .Add("--force", Force)
               .Add("--ignore-failed-sources", IgnoreFailedSources)
@@ -1388,7 +1393,8 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--lock-file-path {value}", LockFilePath)
               .Add("--force-evaluate", ForceEvaluate)
               .Add("--runtime {value}", Runtime)
-              .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
+              .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';')
+              .Add("-- {value}", GetApplicationArguments(), customValue: true);
             return base.ConfigureProcessArguments(arguments);
         }
     }
@@ -3481,6 +3487,58 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region RunSettings
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetTestSettings.RunSettings"/> to a new dictionary</em></p>
+        /// </summary>
+        [Pure]
+        public static T SetRunSettings<T>(this T toolSettings, IDictionary<string, object> runSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RunSettingsInternal = runSettings.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DotNetTestSettings.RunSettings"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T ClearRunSettings<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RunSettingsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds a new key-value-pair <see cref="DotNetTestSettings.RunSettings"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T AddRunSetting<T>(this T toolSettings, string runSettingKey, object runSettingValue) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RunSettingsInternal.Add(runSettingKey, runSettingValue);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes a key-value-pair from <see cref="DotNetTestSettings.RunSettings"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T RemoveRunSetting<T>(this T toolSettings, string runSettingKey) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RunSettingsInternal.Remove(runSettingKey);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets a key-value-pair in <see cref="DotNetTestSettings.RunSettings"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T SetRunSetting<T>(this T toolSettings, string runSettingKey, object runSettingValue) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RunSettingsInternal[runSettingKey] = runSettingValue;
+            return toolSettings;
+        }
+        #endregion
     }
     #endregion
     #region DotNetRunSettingsExtensions
@@ -3755,30 +3813,6 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProjectFile = null;
-            return toolSettings;
-        }
-        #endregion
-        #region ApplicationArguments
-        /// <summary>
-        ///   <p><em>Sets <see cref="DotNetRunSettings.ApplicationArguments"/></em></p>
-        ///   <p>Arguments passed to the application being run.</p>
-        /// </summary>
-        [Pure]
-        public static T SetApplicationArguments<T>(this T toolSettings, string applicationArguments) where T : DotNetRunSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ApplicationArguments = applicationArguments;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <see cref="DotNetRunSettings.ApplicationArguments"/></em></p>
-        ///   <p>Arguments passed to the application being run.</p>
-        /// </summary>
-        [Pure]
-        public static T ResetApplicationArguments<T>(this T toolSettings) where T : DotNetRunSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ApplicationArguments = null;
             return toolSettings;
         }
         #endregion
@@ -5537,6 +5571,30 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #endregion
+        #region ApplicationArguments
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetRunSettings.ApplicationArguments"/></em></p>
+        ///   <p>Arguments passed to the application being run.</p>
+        /// </summary>
+        [Pure]
+        public static T SetApplicationArguments<T>(this T toolSettings, string applicationArguments) where T : DotNetRunSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ApplicationArguments = applicationArguments;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetRunSettings.ApplicationArguments"/></em></p>
+        ///   <p>Arguments passed to the application being run.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetApplicationArguments<T>(this T toolSettings) where T : DotNetRunSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ApplicationArguments = null;
+            return toolSettings;
+        }
         #endregion
     }
     #endregion

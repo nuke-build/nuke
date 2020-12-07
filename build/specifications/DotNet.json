@@ -131,6 +131,14 @@
             "type": "bool",
             "format": "--blame",
             "help": "Runs the tests in blame mode. This option is helpful in isolating the problematic tests causing test host to crash. It creates an output file in the current directory as <em>Sequence.xml</em> that captures the order of tests execution before the crash."
+          },
+          {
+            "name": "RunSettings",
+            "type": "Dictionary<string, object>",
+            "format": "-- {value}",
+            "itemFormat": "{key}={value}",
+            "separator": " ",
+            "isTailArgument": true
           }
         ]
       }
@@ -192,7 +200,8 @@
             "type": "string",
             "format": "-- {value}",
             "customValue": true,
-            "help": "Arguments passed to the application being run."
+            "help": "Arguments passed to the application being run.",
+            "isTailArgument": true
           }
         ]
       }

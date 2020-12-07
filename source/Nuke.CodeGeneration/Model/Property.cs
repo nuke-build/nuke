@@ -84,5 +84,7 @@ namespace Nuke.CodeGeneration.Model
         public string DeprecationMessage { get; set; }
 
         public bool OnlyDelegates { get; set; }
+
+        public bool IsTailArgument { get; set; }
     }
 }
