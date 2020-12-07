@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed `ChangelogTasks` to use HTTPS links in history
+- Fixed `DotNetRun` and `DotNetTest` run settings
+- Fixed conditions for informational text
 
 ## [5.0.1] / 2020-12-06
 - Fixed configuration generation to wait for user input after file changes
