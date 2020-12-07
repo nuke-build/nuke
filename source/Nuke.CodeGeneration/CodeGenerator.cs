@@ -97,6 +97,8 @@ namespace Nuke.CodeGeneration
                     foreach (var delegateProperty in property.Delegates)
                         delegateProperty.DataClass = task.SettingsClass;
                 }
+
+                task.SettingsClass.Properties = task.SettingsClass.Properties.OrderBy(x => x.IsTailArgument).ToList();
             }
 
             foreach (var dataClass in tool.DataClasses)

@@ -6,7 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
+using Nuke.Common.CI;
 using Nuke.Common.Execution;
 using Nuke.Common.Git;
 using Nuke.Common.Tools.GitHub;
@@ -70,26 +72,48 @@ namespace Nuke.Common.OutputSinks
             WriteNormal();
 
             if (build.IsSuccessful)
-            {
                 WriteSuccessfulBuild();
+            else
+                WriteFailedBuild();
 
-                if (!GitRepository.FromLocalDirectory(NukeBuild.RootDirectory)?.IsGitHubRepository() ?? false)
+            bool HasHighUsage()
+                => // global tool
+                   build.GetType().GetInterfaces().Length > 1 ||
+                   // configuration generation
+                   build.GetType().GetCustomAttributes<ConfigurationAttributeBase>().Any() ||
+                   // interface implementations
+                   NukeBuild.BuildProjectFile == null;
+
+            T TryGetValue<T>(Func<T> func)
+            {
+                try
                 {
-                    WriteNormal();
-                    WriteInformation("If you like NUKE, you'll love what is coming! 🤓");
-                    WriteInformation("We're currently waiting for more sponsors to release a new version.");
-                    WriteInformation("Please check out our tiers: https://github.com/sponsors/matkoch");
-                    WriteInformation("As a sponsor you'll also gain access to numerous perks. 🚀");
-                    WriteNormal();
-                    WriteInformation("Happy building! 🌟");
+                    return func.Invoke();
+                }
+                catch
+                {
+                    return default;
                 }
             }
-            else
-            {
-                WriteFailedBuild();
-            }
 
+            if (build.IsSuccessful &&
+                HasHighUsage() &&
+                TryGetValue(() => GitRepository.FromLocalDirectory(NukeBuild.RootDirectory)) is { } repository &&
+                TryGetValue(() => repository.GetDefaultBranch().GetAwaiter().GetResult()) == null)
+            {
+                WriteNormal();
+                WriteSponsorshipInfo();
+            }
+        }
+
+        private void WriteSponsorshipInfo()
+        {
+            WriteInformation("If you like NUKE, you'll love what's coming! 🤓");
+            WriteInformation("We're currently looking for more sponsors to release a new version.");
+            WriteInformation("Please check out our tiers: https://github.com/sponsors/matkoch");
+            WriteInformation("With a sponsorship you'll also gain access to various perks. 🚀");
             WriteNormal();
+            WriteInformation("Happy building! 🌟");
         }
 
         protected virtual void WriteSuccessfulBuild()

@@ -141,6 +141,9 @@
         },
         "onlyDelegates": {
           "type": "boolean"
+        },
+        "isTailArgument": {
+          "type": "boolean"
         }
       },
       "required": [
