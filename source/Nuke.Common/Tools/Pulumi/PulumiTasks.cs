@@ -11,7 +11,7 @@ namespace Nuke.Common.Tools.Pulumi
         public static void CustomLogger(OutputType type, string text)
         {
             var output = text.TrimStart();
-            
+
             switch (type)
             {
                 case OutputType.Std:

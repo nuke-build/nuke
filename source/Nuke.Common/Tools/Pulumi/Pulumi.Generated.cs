@@ -31,7 +31,7 @@ namespace Nuke.Common.Tools.Pulumi
         /// </summary>
         public static string PulumiPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("PULUMI_EXE") ??
-            GetToolPath();
+            ToolPathResolver.GetPathExecutable("pulumi");
         public static Action<OutputType, string> PulumiLogger { get; set; } = CustomLogger;
         /// <summary>
         ///   <p>Pulumi is an <a href="https://github.com/pulumi/pulumi">open source</a> infrastructure as code tool for creating, deploying and managing cloud infrastructure. Pulumi works with traditional infrastructure like VMs, networks, and databases, in addition to modern architectures, including containers, Kubernetes clusters, and serverless functions. Pulumi supports dozens of public, private, and hybrid cloud service providers.</p>
@@ -2333,8 +2333,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   Config to use during the update.
         /// </summary>
@@ -2481,7 +2481,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("up")
@@ -2520,7 +2520,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -2536,8 +2536,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   Config to use during the update.
         /// </summary>
@@ -2676,7 +2676,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("preview")
@@ -2713,7 +2713,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -2729,8 +2729,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   Use the configuration values in the specified file rather than detecting the file name.
         /// </summary>
@@ -2787,7 +2787,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("config")
@@ -2805,7 +2805,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -2821,8 +2821,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   The name of the new stack to copy the config to.
         /// </summary>
@@ -2871,7 +2871,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("config cp")
@@ -2887,7 +2887,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -2903,8 +2903,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   The key to the key-value pair in the configuration.
         /// </summary>
@@ -2957,7 +2957,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("config get")
@@ -2974,7 +2974,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -2990,8 +2990,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   Overwrite configuration file, if it exists, without creating a backup.
         /// </summary>
@@ -3036,7 +3036,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("config refresh")
@@ -3051,7 +3051,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3067,8 +3067,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   The key to the key-value pair in the configuration.
         /// </summary>
@@ -3117,7 +3117,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("config rm")
@@ -3133,7 +3133,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3149,8 +3149,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   The key to the key-value pair in the configuration.
         /// </summary>
@@ -3211,7 +3211,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("config set")
@@ -3230,7 +3230,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3246,8 +3246,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   Display each resource's provider-assigned unique ID.
         /// </summary>
@@ -3308,7 +3308,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stack")
@@ -3327,7 +3327,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3343,8 +3343,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   The name of the new secrets provider.
         /// </summary>
@@ -3389,7 +3389,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stack change-secrets-provider")
@@ -3404,7 +3404,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3420,8 +3420,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   A filename to write stack output to.
         /// </summary>
@@ -3474,7 +3474,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stack export")
@@ -3491,7 +3491,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3507,8 +3507,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   A file that will have a Graphviz DOT graph written to it.
         /// </summary>
@@ -3569,7 +3569,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stack graph")
@@ -3588,7 +3588,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3604,8 +3604,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   Serialize the preview diffs, operations, and overall output as JSON.
         /// </summary>
@@ -3654,7 +3654,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stack history")
@@ -3670,7 +3670,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3686,8 +3686,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   A filename to read stack input from.
         /// </summary>
@@ -3736,7 +3736,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stack import")
@@ -3752,7 +3752,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3768,8 +3768,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   The stack name, optionally preceded by the organization name and a slash: [<org-name>/]<stack-name>
         /// </summary>
@@ -3822,7 +3822,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stack init")
@@ -3839,7 +3839,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3855,8 +3855,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   List all stacks instead of just stacks for the current project.
         /// </summary>
@@ -3917,7 +3917,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stack ls")
@@ -3936,7 +3936,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3952,8 +3952,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   The name of the property whose output value should be listed. This is optional.
         /// </summary>
@@ -4006,7 +4006,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stack output")
@@ -4023,7 +4023,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4039,8 +4039,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   The new name for the stack.
         /// </summary>
@@ -4085,7 +4085,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stack rename")
@@ -4100,7 +4100,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4116,8 +4116,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   The name for the stack to be removed.
         /// </summary>
@@ -4174,7 +4174,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stack rm")
@@ -4192,7 +4192,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4208,8 +4208,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   The name of the stack that should be selected.
         /// </summary>
@@ -4262,7 +4262,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stack select")
@@ -4279,7 +4279,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4295,8 +4295,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   The name of the tag to be set.
         /// </summary>
@@ -4345,7 +4345,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stack tag set")
@@ -4361,7 +4361,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4377,8 +4377,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   The name of the tag to be set.
         /// </summary>
@@ -4423,7 +4423,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stack tag get")
@@ -4438,7 +4438,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4454,8 +4454,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   The name of the tag to be set.
         /// </summary>
@@ -4500,7 +4500,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stack tag rm")
@@ -4515,7 +4515,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4531,8 +4531,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   Emit output as JSON.
         /// </summary>
@@ -4577,7 +4577,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("stack tag ls")
@@ -4592,7 +4592,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4608,8 +4608,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   The template or URL to base the new stack off of.
         /// </summary>
@@ -4699,7 +4699,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("new")
@@ -4725,7 +4725,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4741,8 +4741,8 @@ namespace Nuke.Common.Tools.Pulumi
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? PulumiTasks.PulumiPath;
-        public override Action<OutputType, string> CustomLogger => PulumiTasks.PulumiLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
+        public override Action<OutputType, string> ProcessCustomLogger => PulumiTasks.PulumiLogger;
         /// <summary>
         ///   Use the configuration values in the specified file rather than detecting the file name.
         /// </summary>
@@ -4848,7 +4848,7 @@ namespace Nuke.Common.Tools.Pulumi
         ///   Enable verbose logging (e.g., v=3); anything >3 is very verbose.
         /// </summary>
         public virtual int? Verbose { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("destroy")
@@ -4878,7 +4878,7 @@ namespace Nuke.Common.Tools.Pulumi
               .Add("--profiling {value}", Profiling)
               .Add("--tracing {value}", Tracing)
               .Add("--verbose {value}", Verbose);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
