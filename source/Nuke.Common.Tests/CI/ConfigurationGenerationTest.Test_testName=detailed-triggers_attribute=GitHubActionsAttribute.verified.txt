@@ -46,6 +46,10 @@ jobs:
         run: ./build.cmd Test
       - uses: actions/upload-artifact@v1
         with:
+          name: src
+          path: src
+      - uses: actions/upload-artifact@v1
+        with:
           name: test-results
           path: output/test-results
       - uses: actions/upload-artifact@v1
@@ -61,6 +65,10 @@ jobs:
         run: ./build.cmd Test
       - uses: actions/upload-artifact@v1
         with:
+          name: src
+          path: src
+      - uses: actions/upload-artifact@v1
+        with:
           name: test-results
           path: output/test-results
       - uses: actions/upload-artifact@v1
@@ -74,6 +82,10 @@ jobs:
       - uses: actions/checkout@v1
       - name: Run './build.cmd Test'
         run: ./build.cmd Test
+      - uses: actions/upload-artifact@v1
+        with:
+          name: src
+          path: src
       - uses: actions/upload-artifact@v1
         with:
           name: test-results

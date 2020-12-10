@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Nuke.Common;
+using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Components;
@@ -14,9 +15,15 @@ using Nuke.Components;
 partial class Build : ISignPackages
 {
     public IEnumerable<AbsolutePath> SignPathPackages => PackageFiles
-        .Where(x => Path.GetFileName(x).StartsWithAny("Nuke.Common", "Nuke.Components", "Nuke.CodeGeneration"));
+        .Where(x => Path.GetFileName(x).StartsWithAny(
+            "Nuke.Common",
+            "Nuke.Components",
+            "Nuke.CodeGeneration",
+            "Nuke.GlobalTool"));
 
     public Target SignPackages => _ => _
         .Inherit<ISignPackages>(x => x.SignPackages)
+        .OnlyWhenStatic(() => GitRepository.IsOnMasterBranch())
+        .OnlyWhenStatic(() => EnvironmentInfo.IsWin)
         .TriggeredBy(Pack);
 }

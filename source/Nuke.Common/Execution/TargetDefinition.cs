@@ -74,6 +74,11 @@ namespace Nuke.Common.Execution
             return DependsOn(targets.Select(x => x((T) (object) Build)).ToArray());
         }
 
+        public ITargetDefinition TryDependsOn<T>(params Func<T, Target>[] targets)
+        {
+            return Build is T ? DependsOn(targets) : this;
+        }
+
         public ITargetDefinition DependentFor(params Target[] targets)
         {
             DependentForTargets.AddRange(targets);
@@ -83,6 +88,11 @@ namespace Nuke.Common.Execution
         public ITargetDefinition DependentFor<T>(params Func<T, Target>[] targets)
         {
             return DependentFor(targets.Select(x => x((T) (object) Build)).ToArray());
+        }
+
+        public ITargetDefinition TryDependentFor<T>(params Func<T, Target>[] targets)
+        {
+            return Build is T ? DependentFor(targets) : this;
         }
 
         public ITargetDefinition OnlyWhenDynamic(params Expression<Func<bool>>[] conditions)
@@ -134,6 +144,11 @@ namespace Nuke.Common.Execution
             return Before(targets.Select(x => x((T) (object) Build)).ToArray());
         }
 
+        public ITargetDefinition TryBefore<T>(params Func<T, Target>[] targets)
+        {
+            return Build is T ? Before(targets) : this;
+        }
+
         public ITargetDefinition After(params Target[] targets)
         {
             AfterTargets.AddRange(targets);
@@ -143,6 +158,11 @@ namespace Nuke.Common.Execution
         public ITargetDefinition After<T>(params Func<T, Target>[] targets)
         {
             return After(targets.Select(x => x((T) (object) Build)).ToArray());
+        }
+
+        public ITargetDefinition TryAfter<T>(params Func<T, Target>[] targets)
+        {
+            return Build is T ? After(targets) : this;
         }
 
         public ITargetDefinition Triggers(params Target[] targets)
@@ -156,6 +176,11 @@ namespace Nuke.Common.Execution
             return Triggers(targets.Select(x => x((T) (object) Build)).ToArray());
         }
 
+        public ITargetDefinition TryTriggers<T>(params Func<T, Target>[] targets)
+        {
+            return Build is T ? Triggers(targets) : this;
+        }
+
         public ITargetDefinition TriggeredBy(params Target[] targets)
         {
             TriggeredByTargets.AddRange(targets);
@@ -165,6 +190,11 @@ namespace Nuke.Common.Execution
         public ITargetDefinition TriggeredBy<T>(params Func<T, Target>[] targets)
         {
             return TriggeredBy(targets.Select(x => x((T) (object) Build)).ToArray());
+        }
+
+        public ITargetDefinition TryTriggeredBy<T>(params Func<T, Target>[] targets)
+        {
+            return Build is T ? TriggeredBy(targets) : this;
         }
 
         public ITargetDefinition AssuredAfterFailure()

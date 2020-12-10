@@ -22,7 +22,7 @@ namespace Nuke.Common.Tooling
 
             var newInstance = (T) binaryFormatter.Deserialize(memoryStream);
             if (newInstance is ToolSettings toolSettings)
-                toolSettings.ArgumentConfigurator = ((ToolSettings) (object) settingsEntity).ArgumentConfigurator;
+                toolSettings.ProcessArgumentConfigurator = ((ToolSettings) (object) settingsEntity).ProcessArgumentConfigurator;
 
             return newInstance;
         }

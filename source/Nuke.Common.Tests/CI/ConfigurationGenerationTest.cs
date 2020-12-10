@@ -1,4 +1,4 @@
-// Copyright 2020 Maintainers of NUKE.
+﻿// Copyright 2020 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -7,9 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using ApprovalTests;
-using ApprovalTests.Namers;
-using ApprovalTests.Reporters;
+using System.Threading.Tasks;
 using Nuke.Common.CI;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
@@ -18,17 +16,18 @@ using Nuke.Common.CI.TeamCity;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
+using VerifyXunit;
+using VerifyTests;
 using Xunit;
 
 namespace Nuke.Common.Tests.CI
 {
-    [UseReporter(typeof(DiffReporter))]
+    [UsesVerify]
     public class ConfigurationGenerationTest
     {
-        // TODO: https://github.com/approvals/ApprovalTests.Net/issues/134
-        [Theory(Skip = "Line ending")]
+        [Theory]
         [MemberData(nameof(GetAttributes))]
-        public void Test(string testName, ITestConfigurationGenerator attribute)
+        public Task Test(string testName, ITestConfigurationGenerator attribute)
         {
             var build = new TestBuild();
             var relevantTargets = ExecutableTargetFactory.CreateAll(build, x => x.Compile);
@@ -41,10 +40,8 @@ namespace Nuke.Common.Tests.CI
             var reader = new StreamReader(stream);
             var str = reader.ReadToEnd();
 
-            NamerFactory.AdditionalInformation = attribute.GetType().BaseType.NotNull().Name;
-            if (testName != null)
-                NamerFactory.AdditionalInformation += "." + testName;
-            Approvals.Verify(str);
+            return Verifier.Verify(str)
+                .UseParameters(testName, attribute.GetType().BaseType.NotNull().Name);
         }
 
         public static IEnumerable<object[]> GetAttributes()
@@ -82,6 +79,9 @@ namespace Nuke.Common.Tests.CI
                         NonEntryTargets = new[] { nameof(Clean) },
                         InvokedTargets = new[] { nameof(Test) },
                         ExcludedTargets = new[] { nameof(Pack) },
+                        ImportSystemAccessTokenAs = nameof(AzurePipelinesSystemAccessToken),
+                        ImportVariableGroups = new[] { "variable-group-1" },
+                        ImportSecrets = new[] { nameof(GitHubToken) },
                         TriggerBatch = true,
                         TriggerBranchesInclude = new[] { "included_branch" },
                         TriggerBranchesExclude = new[] { "excluded_branch" },
@@ -144,25 +144,31 @@ namespace Nuke.Common.Tests.CI
                 );
             }
 
+            public AbsolutePath SourceDirectory => RootDirectory / "src";
+
             public Target Clean => _ => _
                 .Before(Restore);
 
             [Parameter] public readonly bool IgnoreFailedSources;
 
-            public Target Restore => _ => _;
+            public Target Restore => _ => _
+                .Produces(SourceDirectory / "*/obj/**");
 
-            [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
-            public readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
+            [Parameter("Configuration for compilation")]
+            public readonly Configuration Configuration = Configuration.Debug;
 
             public AbsolutePath OutputDirectory => RootDirectory / "output";
 
             public Target Compile => _ => _
-                .DependsOn(Restore);
+                .DependsOn(Restore)
+                .Produces(SourceDirectory / "*/bin/**");
+
 
             public AbsolutePath PackageDirectory => OutputDirectory / "packages";
 
             public Target Pack => _ => _
                 .DependsOn(Compile)
+                .Consumes(Restore, Compile)
                 .Produces(PackageDirectory / "*.nupkg");
 
             [Partition(2)] public readonly Partition TestPartition;
@@ -188,6 +194,7 @@ namespace Nuke.Common.Tests.CI
             public readonly string Source = "https://api.nuget.org/v3/index.json";
 
             [Parameter("GitHub Token")] public readonly string GitHubToken;
+            [Parameter("Azure Pipelines System Access Token")] public readonly string AzurePipelinesSystemAccessToken;
 
             public Target Publish => _ => _
                 .DependsOn(Clean, Test, Pack)

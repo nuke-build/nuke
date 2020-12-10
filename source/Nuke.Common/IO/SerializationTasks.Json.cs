@@ -16,7 +16,7 @@ namespace Nuke.Common.IO
     {
         public static void JsonSerializeToFile(object obj, string path)
         {
-            File.WriteAllText(path, JsonSerialize(obj));
+            TextTasks.WriteAllText(path, JsonSerialize(obj));
         }
 
         [Pure]

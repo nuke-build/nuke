@@ -28,7 +28,7 @@ namespace Nuke.GlobalTool
         private const string PLATFORM_NETCORE = "netcore";
         private const string PLATFORM_NETFX = "netfx";
         private const string FRAMEWORK_NETFX = "net472";
-        private const string FRAMEWORK_NETCORE = "netcoreapp3.0";
+        private const string FRAMEWORK_NETCORE = "netcoreapp3.1";
         private const string FORMAT_SDK = "sdk";
         private const string FORMAT_LEGACY = "legacy";
 

@@ -45,7 +45,9 @@ namespace Nuke.Common.CI.GitHubActions
 
         public GitHubActionsTrigger[] On { get; set; } = new GitHubActionsTrigger[0];
         public string[] OnPushBranches { get; set; } = new string[0];
+        public string[] OnPushBranchesIgnore { get; set; } = new string[0];
         public string[] OnPushTags { get; set; } = new string[0];
+        public string[] OnPushTagsIgnore { get; set; } = new string[0];
         public string[] OnPushIncludePaths { get; set; } = new string[0];
         public string[] OnPushExcludePaths { get; set; } = new string[0];
         public string[] OnPullRequestBranches { get; set; } = new string[0];
@@ -56,6 +58,8 @@ namespace Nuke.Common.CI.GitHubActions
 
         public string[] ImportSecrets { get; set; } = new string[0];
         public string ImportGitHubTokenAs { get; set; }
+
+        public bool PublishArtifacts { get; set; } = true;
 
         public string[] InvokedTargets { get; set; } = new string[0];
 
@@ -101,26 +105,30 @@ namespace Nuke.Common.CI.GitHubActions
             yield return new GitHubActionsRunStep
                          {
                              Command = $"./{BuildCmdPath} {InvokedTargets.JoinSpace()}",
-                             Imports = GetImports().ToDictionary(x => x.key, x => x.value)
+                             Imports = GetImports().ToDictionary(x => x.Key, x => x.Value)
                          };
 
-            var artifacts = relevantTargets
-                .SelectMany(x => ArtifactExtensions.ArtifactProducts[x.Definition])
-                .Select(x => (AbsolutePath) x)
-                // TODO: https://github.com/actions/upload-artifact/issues/11
-                .Select(x => x.DescendantsAndSelf(y => y.Parent).FirstOrDefault(y => !y.ToString().ContainsOrdinalIgnoreCase("*")))
-                .Distinct().ToList();
-            foreach (var artifact in artifacts)
+            if (PublishArtifacts)
             {
-                yield return new GitHubActionsArtifactStep
-                             {
-                                 Name = artifact.ToString().TrimStart(artifact.Parent.ToString()).TrimStart('/', '\\'),
-                                 Path = NukeBuild.RootDirectory.GetUnixRelativePathTo(artifact)
-                             };
+                var artifacts = relevantTargets
+                    .SelectMany(x => ArtifactExtensions.ArtifactProducts[x.Definition])
+                    .Select(x => (AbsolutePath) x)
+                    // TODO: https://github.com/actions/upload-artifact/issues/11
+                    .Select(x => x.DescendantsAndSelf(y => y.Parent).FirstOrDefault(y => !y.ToString().ContainsOrdinalIgnoreCase("*")))
+                    .Distinct().ToList();
+
+                foreach (var artifact in artifacts)
+                {
+                    yield return new GitHubActionsArtifactStep
+                                 {
+                                     Name = artifact.ToString().TrimStart(artifact.Parent.ToString()).TrimStart('/', '\\'),
+                                     Path = NukeBuild.RootDirectory.GetUnixRelativePathTo(artifact)
+                                 };
+                }
             }
         }
 
-        protected virtual IEnumerable<(string key, string value)> GetImports()
+        protected virtual IEnumerable<(string Key, string Value)> GetImports()
         {
             static string GetSecretValue(string secret) => $"${{{{ secrets.{secret} }}}}";
 
@@ -134,15 +142,23 @@ namespace Nuke.Common.CI.GitHubActions
         protected virtual IEnumerable<GitHubActionsDetailedTrigger> GetTriggers()
         {
             if (OnPushBranches.Length > 0 ||
+                OnPushBranchesIgnore.Length > 0 ||
                 OnPushTags.Length > 0 ||
+                OnPushTagsIgnore.Length > 0 ||
                 OnPushIncludePaths.Length > 0 ||
                 OnPushExcludePaths.Length > 0)
             {
+                ControlFlow.Assert(
+                    OnPushBranches.Length == 0 && OnPushTags.Length == 0 || OnPushBranchesIgnore.Length == 0 && OnPushTagsIgnore.Length == 0,
+                    $"Cannot use {nameof(OnPushBranches)}/{nameof(OnPushTags)} and {nameof(OnPushBranchesIgnore)}/{nameof(OnPushTagsIgnore)} in combination");
+
                 yield return new GitHubActionsVcsTrigger
                              {
                                  Kind = GitHubActionsTrigger.Push,
                                  Branches = OnPushBranches,
+                                 BranchesIgnore = OnPushBranchesIgnore,
                                  Tags = OnPushTags,
+                                 TagsIgnore = OnPushTagsIgnore,
                                  IncludePaths = OnPushIncludePaths,
                                  ExcludePaths = OnPushExcludePaths
                              };
@@ -157,7 +173,9 @@ namespace Nuke.Common.CI.GitHubActions
                              {
                                  Kind = GitHubActionsTrigger.PullRequest,
                                  Branches = OnPullRequestBranches,
+                                 BranchesIgnore = new string[0],
                                  Tags = OnPullRequestTags,
+                                 TagsIgnore = new string[0],
                                  IncludePaths = OnPullRequestIncludePaths,
                                  ExcludePaths = OnPullRequestExcludePaths
                              };

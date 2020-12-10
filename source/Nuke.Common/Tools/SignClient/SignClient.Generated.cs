@@ -131,8 +131,8 @@ namespace Nuke.Common.Tools.SignClient
         /// <summary>
         ///   Path to the SignClient executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? SignClientTasks.SignClientPath;
-        public override Action<OutputType, string> CustomLogger => SignClientTasks.SignClientLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? SignClientTasks.SignClientPath;
+        public override Action<OutputType, string> ProcessCustomLogger => SignClientTasks.SignClientLogger;
         /// <summary>
         ///   Path to config json file
         /// </summary>
@@ -177,7 +177,7 @@ namespace Nuke.Common.Tools.SignClient
         ///   Maximum concurrency (default is 4)
         /// </summary>
         public virtual string MaxConcurrency { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("sign")
@@ -192,7 +192,7 @@ namespace Nuke.Common.Tools.SignClient
               .Add("--description {value}", Description)
               .Add("--descriptionUrl {value}", DescriptionUrl)
               .Add("--maxConcurrency {value}", MaxConcurrency);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

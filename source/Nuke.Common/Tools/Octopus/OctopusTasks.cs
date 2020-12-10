@@ -6,9 +6,17 @@ using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.Octopus
 {
+    public partial class OctopusBuildInformationSettings
+    {
+        private string GetProcessToolPath()
+        {
+            return OctopusTasks.GetToolPath(Framework);
+        }
+    }
+
     public partial class OctopusPackSettings
     {
-        private string GetToolPath()
+        private string GetProcessToolPath()
         {
             return OctopusTasks.GetToolPath(Framework);
         }
@@ -16,7 +24,7 @@ namespace Nuke.Common.Tools.Octopus
 
     public partial class OctopusPushSettings
     {
-        private string GetToolPath()
+        private string GetProcessToolPath()
         {
             return OctopusTasks.GetToolPath(Framework);
         }
@@ -24,7 +32,7 @@ namespace Nuke.Common.Tools.Octopus
 
     public partial class OctopusCreateReleaseSettings
     {
-        private string GetToolPath()
+        private string GetProcessToolPath()
         {
             return OctopusTasks.GetToolPath(Framework);
         }
@@ -32,7 +40,7 @@ namespace Nuke.Common.Tools.Octopus
 
     public partial class OctopusDeployReleaseSettings
     {
-        private string GetToolPath()
+        private string GetProcessToolPath()
         {
             return OctopusTasks.GetToolPath(Framework);
         }

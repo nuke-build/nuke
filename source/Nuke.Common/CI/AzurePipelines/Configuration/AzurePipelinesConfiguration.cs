@@ -10,6 +10,8 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
 {
     public class AzurePipelinesConfiguration : ConfigurationEntity
     {
+        public string[] VariableGroups { get; set; }
+
         [CanBeNull]
         public AzurePipelinesVcsPushTrigger VcsPushTrigger { get; set; }
 
@@ -17,6 +19,15 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
 
         public override void Write(CustomFileWriter writer)
         {
+            if (VariableGroups.Length > 0)
+            {
+                using (writer.WriteBlock("variables:"))
+                {
+                    VariableGroups.ForEach(x => writer.WriteLine($"- group: {x}"));
+                    writer.WriteLine();
+                }
+            }
+
             if (VcsPushTrigger != null)
             {
                 using (writer.WriteBlock("trigger:"))

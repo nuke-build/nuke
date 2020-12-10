@@ -95,6 +95,33 @@ namespace Nuke.Common.Tests.Execution
             Assert.Throws<InvalidCastException>(() => ExecutableTargetFactory.CreateAll(build, x => x.E));
         }
 
+        [Fact]
+        public void TestNonPublicTarget()
+        {
+            var build = new NonPublicTargetTestBuild();
+            var exception = Assert.Throws<Exception>(() => ExecutableTargetFactory.CreateAll(build));
+            exception.Message.Should()
+                .StartWith("Assertion failed: Target 'D' must be marked public to override inherited member from:");
+        }
+
+        [Fact]
+        public void TestDuplicatedTarget()
+        {
+            var build = new DuplicatedTargetTestBuild();
+            var exception = Assert.Throws<Exception>(() => ExecutableTargetFactory.CreateAll(build));
+            exception.Message.Should()
+                .StartWith("Assertion failed: Target 'D' must be implemented explicitly because it is inherited from multiple interfaces");
+        }
+
+        [Fact]
+        public void TestOverriddenDuplicatedTarget()
+        {
+            var build = new OverriddenDuplicatedTargetTestBuild();
+            var targets = ExecutableTargetFactory.CreateAll(build);
+
+            targets.Count(x => x.Name == nameof(ITestBuild.D)).Should().Be(1);
+        }
+
         private interface IParameterInterface
         {
             [Parameter] string StringParameter => ValueInjectionUtility.TryGetValue(() => StringParameter);
@@ -127,6 +154,22 @@ namespace Nuke.Common.Tests.Execution
         {
             public Target E => _ => _
                 .DependsOn<ITestBuild>(x => x.A)
+                .Executes(() => { });
+        }
+
+        private class NonPublicTargetTestBuild : NukeBuild, ITestBuild
+        {
+            private Target D => _ => _
+                .Executes(() => { });
+        }
+
+        private class DuplicatedTargetTestBuild : NukeBuild, ITestBuild, IDuplicatedTargetBuild
+        {
+        }
+
+        private class OverriddenDuplicatedTargetTestBuild : NukeBuild, ITestBuild, IDuplicatedTargetBuild
+        {
+            public Target D => _ => _
                 .Executes(() => { });
         }
 
@@ -164,6 +207,12 @@ namespace Nuke.Common.Tests.Execution
         {
             public Target F => _ => _
                 .Triggers<ITestBuild>(x => x.A);
+        }
+
+        private interface IDuplicatedTargetBuild
+        {
+            public Target D => _ => _
+                .Executes(() => { });
         }
     }
 }

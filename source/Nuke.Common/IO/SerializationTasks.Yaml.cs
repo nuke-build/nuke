@@ -16,7 +16,7 @@ namespace Nuke.Common.IO
     {
         public static void YamlSerializeToFile(object obj, string path, Configure<SerializerBuilder> configurator = null)
         {
-            File.WriteAllText(path, YamlSerialize(obj, configurator));
+            TextTasks.WriteAllText(path, YamlSerialize(obj, configurator));
         }
 
         [Pure]

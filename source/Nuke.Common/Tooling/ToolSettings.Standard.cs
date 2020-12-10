@@ -14,184 +14,184 @@ namespace Nuke.Common.Tooling
     public static partial class ToolSettingsExtensions
     {
         [Pure]
-        public static T AddEnvironmentVariable<T>(
+        public static T AddProcessEnvironmentVariable<T>(
             this T toolSettings,
             string environmentVariableKey,
             string environmentVariableValue)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.EnvironmentVariablesInternal.Add(environmentVariableKey, environmentVariableValue);
+            newToolSettings.ProcessEnvironmentVariablesInternal.Add(environmentVariableKey, environmentVariableValue);
             return newToolSettings;
         }
 
         [Pure]
-        public static T RemoveEnvironmentVariable<T>(this T toolSettings, string environmentVariableKey)
+        public static T RemoveProcessEnvironmentVariable<T>(this T toolSettings, string environmentVariableKey)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.EnvironmentVariablesInternal.Remove(environmentVariableKey);
+            newToolSettings.ProcessEnvironmentVariablesInternal.Remove(environmentVariableKey);
             return newToolSettings;
         }
 
         [Pure]
-        public static T SetEnvironmentVariable<T>(
+        public static T SetProcessEnvironmentVariable<T>(
             this T toolSettings,
             string environmentVariableKey,
             string environmentVariableValue)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.EnvironmentVariablesInternal[environmentVariableKey] = environmentVariableValue;
+            newToolSettings.ProcessEnvironmentVariablesInternal[environmentVariableKey] = environmentVariableValue;
             return newToolSettings;
         }
 
         [Pure]
-        public static T ClearEnvironmentVariables<T>(this T toolSettings)
+        public static T ClearProcessEnvironmentVariables<T>(this T toolSettings)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.EnvironmentVariablesInternal.Clear();
+            newToolSettings.ProcessEnvironmentVariablesInternal.Clear();
             return newToolSettings;
         }
 
-        ///<summary>Sets <see cref="ToolSettings.ExecutionTimeout"/> -- <inheritdoc cref="ToolSettings.ExecutionTimeout" /></summary>
+        ///<summary>Sets <see cref="ToolSettings.ProcessExecutionTimeout"/> -- <inheritdoc cref="ToolSettings.ProcessExecutionTimeout" /></summary>
         [Pure]
-        public static T SetExecutionTimeout<T>(this T toolSettings, [CanBeNull] int? executionTimeout)
+        public static T SetProcessExecutionTimeout<T>(this T toolSettings, [CanBeNull] int? executionTimeout)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.ExecutionTimeout = executionTimeout;
+            newToolSettings.ProcessExecutionTimeout = executionTimeout;
             return newToolSettings;
         }
 
-        ///<summary>Sets <see cref="ToolSettings.LogOutput"/> -- <inheritdoc cref="ToolSettings.LogOutput" /></summary>
+        ///<summary>Sets <see cref="ToolSettings.ProcessLogOutput"/> -- <inheritdoc cref="ToolSettings.ProcessLogOutput" /></summary>
         [Pure]
-        public static T SetLogOutput<T>(this T toolSettings, bool enableOutput)
+        public static T SetProcessLogOutput<T>(this T toolSettings, bool enableOutput)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.LogOutput = enableOutput;
+            newToolSettings.ProcessLogOutput = enableOutput;
             return newToolSettings;
         }
 
-        ///<summary>Enables <see cref="ToolSettings.LogOutput"/> -- <inheritdoc cref="ToolSettings.LogOutput" /></summary>
+        ///<summary>Enables <see cref="ToolSettings.ProcessLogOutput"/> -- <inheritdoc cref="ToolSettings.ProcessLogOutput" /></summary>
         [Pure]
-        public static T EnableLogOutput<T>(this T toolSettings)
+        public static T EnableProcessLogOutput<T>(this T toolSettings)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.LogOutput = true;
+            newToolSettings.ProcessLogOutput = true;
             return newToolSettings;
         }
 
-        ///<summary>Disables <see cref="ToolSettings.LogOutput"/> -- <inheritdoc cref="ToolSettings.LogOutput" /></summary>
+        ///<summary>Disables <see cref="ToolSettings.ProcessLogOutput"/> -- <inheritdoc cref="ToolSettings.ProcessLogOutput" /></summary>
         [Pure]
-        public static T DisableLogOutput<T>(this T toolSettings)
+        public static T DisableProcessLogOutput<T>(this T toolSettings)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.LogOutput = false;
+            newToolSettings.ProcessLogOutput = false;
             return newToolSettings;
         }
 
-        ///<summary>Sets <see cref="ToolSettings.LogInvocation"/> -- <inheritdoc cref="ToolSettings.LogInvocation" /></summary>
+        ///<summary>Sets <see cref="ToolSettings.ProcessLogInvocation"/> -- <inheritdoc cref="ToolSettings.ProcessLogInvocation" /></summary>
         [Pure]
-        public static T SetLogInvocation<T>(this T toolSettings, bool enableInvocation)
+        public static T SetProcessLogInvocation<T>(this T toolSettings, bool enableInvocation)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.LogInvocation = enableInvocation;
+            newToolSettings.ProcessLogInvocation = enableInvocation;
             return newToolSettings;
         }
 
-        ///<summary>Enables <see cref="ToolSettings.LogInvocation"/> -- <inheritdoc cref="ToolSettings.LogInvocation" /></summary>
+        ///<summary>Enables <see cref="ToolSettings.ProcessLogInvocation"/> -- <inheritdoc cref="ToolSettings.ProcessLogInvocation" /></summary>
         [Pure]
-        public static T EnableLogInvocation<T>(this T toolSettings)
+        public static T EnableProcessLogInvocation<T>(this T toolSettings)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.LogInvocation = true;
+            newToolSettings.ProcessLogInvocation = true;
             return newToolSettings;
         }
 
-        ///<summary>Disables <see cref="ToolSettings.LogInvocation"/> -- <inheritdoc cref="ToolSettings.LogInvocation" /></summary>
+        ///<summary>Disables <see cref="ToolSettings.ProcessLogInvocation"/> -- <inheritdoc cref="ToolSettings.ProcessLogInvocation" /></summary>
         [Pure]
-        public static T DisableLogInvocation<T>(this T toolSettings)
+        public static T DisableProcessLogInvocation<T>(this T toolSettings)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.LogInvocation = false;
+            newToolSettings.ProcessLogInvocation = false;
             return newToolSettings;
         }
 
-        ///<summary>Sets <see cref="ToolSettings.LogTimestamp"/> -- <inheritdoc cref="ToolSettings.LogTimestamp" /></summary>
+        ///<summary>Sets <see cref="ToolSettings.ProcessLogTimestamp"/> -- <inheritdoc cref="ToolSettings.ProcessLogTimestamp" /></summary>
         [Pure]
-        public static T SetLogTimestamp<T>(this T toolSettings, bool logTimestamp)
+        public static T SetProcessLogTimestamp<T>(this T toolSettings, bool logTimestamp)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.LogTimestamp = logTimestamp;
+            newToolSettings.ProcessLogTimestamp = logTimestamp;
             return newToolSettings;
         }
 
-        ///<summary>Enables <see cref="ToolSettings.LogTimestamp"/> -- <inheritdoc cref="ToolSettings.LogTimestamp" /></summary>
+        ///<summary>Enables <see cref="ToolSettings.ProcessLogTimestamp"/> -- <inheritdoc cref="ToolSettings.ProcessLogTimestamp" /></summary>
         [Pure]
-        public static T EnableLogTimestamp<T>(this T toolSettings)
+        public static T EnableProcessLogTimestamp<T>(this T toolSettings)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.LogTimestamp = true;
+            newToolSettings.ProcessLogTimestamp = true;
             return newToolSettings;
         }
 
-        ///<summary>Disables <see cref="ToolSettings.LogTimestamp"/> -- <inheritdoc cref="ToolSettings.LogTimestamp" /></summary>
+        ///<summary>Disables <see cref="ToolSettings.ProcessLogTimestamp"/> -- <inheritdoc cref="ToolSettings.ProcessLogTimestamp" /></summary>
         [Pure]
-        public static T DisableLogTimestamp<T>(this T toolSettings)
+        public static T DisableProcessLogTimestamp<T>(this T toolSettings)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.LogTimestamp = false;
+            newToolSettings.ProcessLogTimestamp = false;
             return newToolSettings;
         }
 
-        ///<summary>Sets <see cref="ToolSettings.LogFile"/> -- <inheritdoc cref="ToolSettings.LogFile" /></summary>
+        ///<summary>Sets <see cref="ToolSettings.ProcessLogFile"/> -- <inheritdoc cref="ToolSettings.ProcessLogFile" /></summary>
         [Pure]
-        public static T SetLogFile<T>(this T toolSettings, string logFile)
+        public static T SetProcessLogFile<T>(this T toolSettings, string logFile)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.LogFile = logFile;
+            newToolSettings.ProcessLogFile = logFile;
             return newToolSettings;
         }
 
-        ///<summary>Sets <see cref="ToolSettings.ToolPath"/> -- <inheritdoc cref="ToolSettings.ToolPath" /></summary>
+        ///<summary>Sets <see cref="ToolSettings.ProcessToolPath"/> -- <inheritdoc cref="ToolSettings.ProcessToolPath" /></summary>
         [Pure]
-        public static T SetToolPath<T>(this T toolSettings, [CanBeNull] string toolPath)
+        public static T SetProcessToolPath<T>(this T toolSettings, [CanBeNull] string toolPath)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.ToolPath = toolPath;
+            newToolSettings.ProcessToolPath = toolPath;
             return newToolSettings;
         }
 
-        ///<summary>Sets <see cref="ToolSettings.WorkingDirectory"/> -- <inheritdoc cref="ToolSettings.WorkingDirectory" /></summary>
+        ///<summary>Sets <see cref="ToolSettings.ProcessWorkingDirectory"/> -- <inheritdoc cref="ToolSettings.ProcessWorkingDirectory" /></summary>
         [Pure]
-        public static T SetWorkingDirectory<T>(this T toolSettings, [CanBeNull] string workingDirectory)
+        public static T SetProcessWorkingDirectory<T>(this T toolSettings, [CanBeNull] string workingDirectory)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.WorkingDirectory = workingDirectory;
+            newToolSettings.ProcessWorkingDirectory = workingDirectory;
             return newToolSettings;
         }
 
-        ///<summary>Sets <see cref="ToolSettings.ArgumentConfigurator"/> -- <inheritdoc cref="ToolSettings.ArgumentConfigurator" /></summary>
+        ///<summary>Sets <see cref="ToolSettings.ProcessArgumentConfigurator"/> -- <inheritdoc cref="ToolSettings.ProcessArgumentConfigurator" /></summary>
         [Pure]
-        public static T SetArgumentConfigurator<T>(this T toolSettings, [CanBeNull] Func<Arguments, Arguments> argumentConfigurator)
+        public static T SetProcessArgumentConfigurator<T>(this T toolSettings, [CanBeNull] Func<Arguments, Arguments> argumentConfigurator)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.ArgumentConfigurator = argumentConfigurator;
+            newToolSettings.ProcessArgumentConfigurator = argumentConfigurator;
             return newToolSettings;
         }
     }

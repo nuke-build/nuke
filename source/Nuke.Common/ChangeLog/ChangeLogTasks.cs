@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -22,7 +22,11 @@ namespace Nuke.Common.ChangeLog
         public static string GetNuGetReleaseNotes(string changelogFile, GitRepository repository = null)
         {
             var changelogSectionNotes = ExtractChangelogSectionNotes(changelogFile)
-                .Select(x => x.Replace("- ", "\u2022 ").Replace("`", string.Empty).Replace(",", "%2C")).ToList();
+                .Select(x => x.Replace("- ", "\u2022 ")
+                              .Replace("* ", "\u2022 ")
+                              .Replace("+ ", "\u2022 ")
+                              .Replace("`", string.Empty)
+                              .Replace(",", "%2C")).ToList();
 
             if (repository.IsGitHubRepository())
             {
@@ -160,7 +164,7 @@ namespace Nuke.Common.ChangeLog
         [Pure]
         public static IEnumerable<string> ExtractChangelogSectionNotes(string changelogFile, string tag = null)
         {
-            var content = TextTasks.ReadAllLines(changelogFile).ToList();
+            var content = TextTasks.ReadAllLines(changelogFile).Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
             var sections = GetReleaseSections(content);
             var section = tag == null
                 ? sections.First(x => x.StartIndex < x.EndIndex)
@@ -176,8 +180,10 @@ namespace Nuke.Common.ChangeLog
             static bool IsReleaseHead(string str)
                 => str.StartsWith("## ");
 
-            static bool IsReleaseContent(string str)
-                => str.StartsWith("###") || str.Trim().StartsWith("-");
+            static bool IsReleaseContent(string str) => str.StartsWith("###")
+                                              || str.Trim().StartsWith("-")
+                                              || str.Trim().StartsWith("*")
+                                              || str.Trim().StartsWith("+");
 
             static string GetCaption(string str)
                 => str
@@ -227,10 +233,10 @@ namespace Nuke.Common.ChangeLog
                 content.RemoveRange(lastSection.EndIndex + 1, content.Count - lastSection.EndIndex - 1);
 
                 content.Add(string.Empty);
-                content.Add($"[{firstSection.Caption}]: {repository}/compare/{tag}...HEAD");
+                content.Add($"[{firstSection.Caption}]: {repository.HttpsUrl}/compare/{tag}...HEAD");
                 for (var i = 1; i + 1 < sections.Count; i++)
-                    content.Add($"[{sections[i].Caption}]: {repository}/compare/{sections[i + 1].Caption}...{sections[i].Caption}");
-                content.Add($"[{lastSection.Caption}]: {repository}/tree/{lastSection.Caption}");
+                    content.Add($"[{sections[i].Caption}]: {repository.HttpsUrl}/compare/{sections[i + 1].Caption}...{sections[i].Caption}");
+                content.Add($"[{lastSection.Caption}]: {repository.HttpsUrl}/tree/{lastSection.Caption}");
             }
         }
 

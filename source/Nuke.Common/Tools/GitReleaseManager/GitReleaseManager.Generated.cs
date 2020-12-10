@@ -392,8 +392,8 @@ namespace Nuke.Common.Tools.GitReleaseManager
         /// <summary>
         ///   Path to the GitReleaseManager executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
-        public override Action<OutputType, string> CustomLogger => GitReleaseManagerTasks.GitReleaseManagerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => GitReleaseManagerTasks.GitReleaseManagerLogger;
         /// <summary>
         ///   Paths to the files to include in the release.
         /// </summary>
@@ -427,7 +427,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   Path to where log file should be created. Defaults is <em>logging to console</em>.
         /// </summary>
         public virtual string LogFilePath { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("addasset")
@@ -439,7 +439,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
               .Add("--repository {value}", RepositoryName)
               .Add("--targetDirectory {value}", TargetDirectory)
               .Add("--logFilePath {value}", LogFilePath);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -455,8 +455,8 @@ namespace Nuke.Common.Tools.GitReleaseManager
         /// <summary>
         ///   Path to the GitReleaseManager executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
-        public override Action<OutputType, string> CustomLogger => GitReleaseManagerTasks.GitReleaseManagerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => GitReleaseManagerTasks.GitReleaseManagerLogger;
         /// <summary>
         ///   The milestone to use.
         /// </summary>
@@ -485,7 +485,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   Path to where log file should be created. Defaults is <em>logging to console</em>.
         /// </summary>
         public virtual string LogFilePath { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("close")
@@ -496,7 +496,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
               .Add("--repository {value}", RepositoryName)
               .Add("--targetDirectory {value}", TargetDirectory)
               .Add("--logFilePath {value}", LogFilePath);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -512,8 +512,8 @@ namespace Nuke.Common.Tools.GitReleaseManager
         /// <summary>
         ///   Path to the GitReleaseManager executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
-        public override Action<OutputType, string> CustomLogger => GitReleaseManagerTasks.GitReleaseManagerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => GitReleaseManagerTasks.GitReleaseManagerLogger;
         /// <summary>
         ///   Paths to the files to include in the release.
         /// </summary>
@@ -563,7 +563,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   Path to where log file should be created. Defaults is <em>logging to console</em>.
         /// </summary>
         public virtual string LogFilePath { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("create")
@@ -579,7 +579,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
               .Add("--repository {value}", RepositoryName)
               .Add("--targetDirectory {value}", TargetDirectory)
               .Add("--logFilePath {value}", LogFilePath);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -595,8 +595,8 @@ namespace Nuke.Common.Tools.GitReleaseManager
         /// <summary>
         ///   Path to the GitReleaseManager executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
-        public override Action<OutputType, string> CustomLogger => GitReleaseManagerTasks.GitReleaseManagerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => GitReleaseManagerTasks.GitReleaseManagerLogger;
         /// <summary>
         ///   The name of the release. Typically this is the generated SemVer Version Number.
         /// </summary>
@@ -629,7 +629,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   Path to where log file should be created. Defaults is <em>logging to console</em>.
         /// </summary>
         public virtual string LogFilePath { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("export")
@@ -641,7 +641,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
               .Add("--repository {value}", RepositoryName)
               .Add("--targetDirectory {value}", TargetDirectory)
               .Add("--logFilePath {value}", LogFilePath);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -657,8 +657,8 @@ namespace Nuke.Common.Tools.GitReleaseManager
         /// <summary>
         ///   Path to the GitReleaseManager executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
-        public override Action<OutputType, string> CustomLogger => GitReleaseManagerTasks.GitReleaseManagerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => GitReleaseManagerTasks.GitReleaseManagerLogger;
         /// <summary>
         ///   The name of the release. Typically this is the generated SemVer Version Number.
         /// </summary>
@@ -687,7 +687,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   Path to where log file should be created. Defaults is <em>logging to console</em>.
         /// </summary>
         public virtual string LogFilePath { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("publish")
@@ -698,7 +698,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
               .Add("--repository {value}", RepositoryName)
               .Add("--targetDirectory {value}", TargetDirectory)
               .Add("--logFilePath {value}", LogFilePath);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

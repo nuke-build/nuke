@@ -53,11 +53,12 @@ namespace Nuke.Common
     // Before logo
     [InjectParameterValues(Priority = 100)]
     [GenerateBuildServerConfigurations(Priority = 50)]
+    [InvokeBuildServerConfigurationGeneration(Priority = 45)]
     [HandleShellCompletion(Priority = 40)]
+    [UnsetVisualStudioEnvironmentVariables]
     // [SaveBuildProfile(Priority = 30)]
     // [LoadBuildProfiles(Priority = 25)]
     // After logo
-    [InvokeBuildServerConfigurationGeneration(Priority = 50)]
     [HandleHelpRequests(Priority = 5)]
     [HandleVisualStudioDebugging]
     [InjectNonParameterValues(Priority = -100)]
@@ -122,9 +123,16 @@ namespace Nuke.Common
                 ? BuildProjectDirectory / "obj" / "project.assets.json"
                 : null;
 
-        public bool IsSuccessful => ExecutionPlan
+        public bool IsSuccessful => (!ExitCode.HasValue || ExitCode == 0) && ExecutionPlan
             .All(x => x.Status != ExecutionStatus.Failed &&
                       x.Status != ExecutionStatus.NotRun &&
                       x.Status != ExecutionStatus.Aborted);
+
+        /// <summary>
+        /// Gets or sets the build exit code.
+        /// When set to <value>null</value> (default), <see cref="Execute{T}"/> will return a <em>0</em> exit code on build success; or a <em>-1</em> exit code on build failure.
+        /// When set to a non-null value, <see cref="Execute{T}"/> will return the value of <see cref="ExitCode"/>.
+        /// </summary>
+        public int? ExitCode { get; set; }
     }
 }

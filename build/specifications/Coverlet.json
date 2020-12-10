@@ -135,7 +135,7 @@
       "name": "CoverletOutputFormat",
       "values": [
         "json",
-        "Icov",
+        "lcov",
         "opencover",
         "cobertura",
         "teamcity"

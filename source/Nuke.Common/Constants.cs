@@ -12,7 +12,14 @@ namespace Nuke.Common
 {
     internal static class Constants
     {
-        internal static readonly string[] KnownWords = { "GitHub", "NuGet", "MSBuild", "GitVersion" };
+        internal static readonly string[] KnownWords =
+        {
+            "GitHub",
+            "GitVersion",
+            "MSBuild",
+            "NuGet",
+            "ReSharper"
+        };
 
         internal const string ConfigurationFileName = ".nuke";
 

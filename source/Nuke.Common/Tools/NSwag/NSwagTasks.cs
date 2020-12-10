@@ -9,7 +9,7 @@ namespace Nuke.Common.Tools.NSwag
 {
     public static partial class NSwagTasks
     {
-        public static string GetToolPath()
+        internal static string GetToolPath()
         {
             ControlFlow.Fail("Settings.NSwagRuntime must be defined to detect the proper nswag executable.");
             return null;

@@ -1,6 +1,6 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -18,6 +18,7 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
         public string PartitionName { get; set; }
         public string BuildCmdPath { get; set; }
         public string[] InvokedTargets { get; set; }
+        public Dictionary<string, string> Imports { get; set; }
         public string[] DownloadArtifacts { get; set; }
         public string[] PublishArtifacts { get; set; }
 
@@ -72,6 +73,14 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
                 using (writer.WriteBlock("inputs:"))
                 {
                     writer.WriteLine($"script: './{BuildCmdPath} {arguments}'");
+                }
+
+                if (Imports.Count > 0)
+                {
+                    using (writer.WriteBlock("env:"))
+                    {
+                        Imports.ForEach(x => writer.WriteLine($"{x.Key}: {x.Value}"));
+                    }
                 }
             }
 

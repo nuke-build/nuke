@@ -1,4 +1,4 @@
-// Copyright 2020 Maintainers of NUKE.
+﻿// Copyright 2020 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -17,7 +17,7 @@ namespace Nuke.Common.Tools.Npm
                     break;
                 case OutputType.Err:
                 {
-                    if (output.StartsWith("npmWARN"))
+                    if (output.StartsWith("npmWARN") || output.StartsWith("npm WARN"))
                         Logger.Warn(output);
                     else
                         Logger.Error(output);

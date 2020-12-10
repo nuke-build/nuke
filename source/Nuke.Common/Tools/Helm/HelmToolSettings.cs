@@ -18,13 +18,13 @@ namespace Nuke.Common.Tools.Helm
         /// </summary>
         public HelmCommonSettings CommonSettings { get; internal set; }
 
-        public override Action<OutputType, string> CustomLogger { get; }
+        public override Action<OutputType, string> ProcessCustomLogger { get; }
 
-        protected override Arguments ConfigureArguments([NotNull] Arguments arguments)
+        protected override Arguments ConfigureProcessArguments([NotNull] Arguments arguments)
         {
             if (CommonSettings != null)
                 arguments.Concatenate(CommonSettings.CreateArguments());
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
 }

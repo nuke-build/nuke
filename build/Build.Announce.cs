@@ -30,8 +30,9 @@ partial class Build
 
     Target Announce => _ => _
         .DependsOn(ReleaseImage)
+        .WhenSkipped(DependencyBehavior.Skip)
         .TriggeredBy(Publish)
-        .OnlyWhenStatic(() => GitRepository.IsOnMasterBranch())
+        .OnlyWhenStatic(() => IsOriginalRepository && GitRepository.IsOnMasterBranch())
         .Requires(() => TwitterConsumerKey)
         .Requires(() => TwitterConsumerSecret)
         .Requires(() => TwitterAccessToken)
@@ -56,6 +57,7 @@ partial class Build
             await client.Tweets.PublishTweetAsync(
                 new PublishTweetParameters
                 {
+                    Text = "🔥 Check out the new release! 🏗",
                     Medias = new List<IMedia> { media }
                 });
 

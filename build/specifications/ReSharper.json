@@ -1,0 +1,342 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://www.jetbrains.com/help/resharper/dupFinder.html#//div[@class='chapter'][2]/ul"
+  ],
+  "name": "ReSharper",
+  "officialUrl": "https://www.jetbrains.com/help/resharper/ReSharper_Command_Line_Tools.html",
+  "packageId": "JetBrains.ReSharper.GlobalTools",
+  "packageExecutable": "JetBrains.CommandLine.Products.dll",
+  "tasks": [
+    {
+      "help": "One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.",
+      "postfix": "InspectCode",
+      "preProcess": true,
+      "postProcess": true,
+      "customStart": true,
+      "definiteArgument": "inspectcode",
+      "settingsClass": {
+        "baseClass": "ReSharperSettingsBase",
+        "properties": [
+          {
+            "name": "TargetPath",
+            "type": "string",
+            "format": "{value}",
+            "createOverload": true,
+            "help": "Target path."
+          },
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "--output={value}",
+            "createOverload": true,
+            "help": "Lets you set the output file. By default, the output file is saved in the <em>%TEMP%</em> directory."
+          },
+          {
+            "name": "NoSwea",
+            "type": "bool",
+            "format": "--no-swea",
+            "help": "Disables solution-wide analysis."
+          },
+          {
+            "name": "Profile",
+            "type": "string",
+            "format": "--profile={value}",
+            "help": "Specifies an additional .DotSettings file used for inspection settings."
+          },
+          {
+            "name": "Project",
+            "type": "string",
+            "format": "--project={value}",
+            "help": "Allows analyzing particular project(s) instead of the whole solution. After this parameter, you can type a project name or a wildcard that matches several projects within your solution. For example, <c>--project=*Billing</c>"
+          },
+          {
+            "name": "DisableSettingsLayers",
+            "type": "List<ReSharperSettingsLayers>",
+            "format": "--disable-settings-layers={value}",
+            "separator": ";",
+            "help": "Disables specified <a href=\"https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers\">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>."
+          },
+          {
+            "name": "NoBuiltinSettings",
+            "type": "bool",
+            "format": "--no-buildin-settings",
+            "help": "Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c>"
+          },
+          {
+            "name": "CachesHome",
+            "type": "string",
+            "format": "--caches-home={value}",
+            "help": "Lets you specify a custom location for the data that InspectCode caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place."
+          },
+          {
+            "name": "Properties",
+            "type": "Dictionary<string, string>",
+            "format": "--properties={value}",
+            "itemFormat": "{key}={value}",
+            "help": "Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters."
+          },
+          {
+            "name": "DumpIssuesTypes",
+            "type": "bool",
+            "format": "--dumpIssuesTypes",
+            "help": "Use this option to dump all existing <a href=\"https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html\">code inspections</a> to the <a href=\"https://www.jetbrains.com/help/resharper/InspectCode.html#output\">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument."
+          },
+          {
+            "name": "Toolset",
+            "type": "ReSharperMSBuildToolset",
+            "format": "--toolset={value}",
+            "help": "Explicitly specified MsBuild Toolset version (12.0, 14.0, 15.0). For example, <c>--toolset=12.0</c>."
+          }
+        ]
+      }
+    },
+    {
+      "help": "CleanupCode is a free command-line tool that can perform code cleanup to instantly eliminate code style violations in a project or solution and ensure a uniform code base.",
+      "postfix": "CleanupCode",
+      "preProcess": true,
+      "customStart": true,
+      "definiteArgument": "cleanupcode",
+      "settingsClass": {
+        "baseClass": "ReSharperSettingsBase",
+        "properties": [
+          {
+            "name": "TargetPath",
+            "type": "string",
+            "format": "{value}",
+            "createOverload": true,
+            "help": "Target path."
+          },
+          {
+            "name": "Profile",
+            "type": "string",
+            "format": "--profile={value}",
+            "help": "A code cleanup profile that lists cleanup tasks to execute.<p/>By default, CleanupCode will apply code cleanup tasks specified in the <a href=\"https://www.jetbrains.com/help/resharper/Code_Cleanup__Index.html#profiles\">Built-in: Full Cleanup profile</a>, that is all <a href=\"https://www.jetbrains.com/help/resharper/Code_Cleanup__Index.html#tasks\">available cleanup tasks</a> tasks except <a href=\"https://www.jetbrains.com/help/resharper/File_Header_Style.html\">updating file header</a>. "
+          },
+          {
+            "name": "Include",
+            "type": "List<string>",
+            "format": "--include={value}",
+            "separator": ";",
+            "help": "Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times."
+          },
+          {
+            "name": "Exclude",
+            "type": "List<string>",
+            "format": "--exclude={value}",
+            "separator": ";",
+            "help": "Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times."
+          },
+          {
+            "name": "Properties",
+            "type": "Dictionary<string, string>",
+            "format": "--properties={value}",
+            "itemFormat": "{key}={value}",
+            "help": "Lets you override MSBuild properties. You can set each property separately ( <c>--properties:prop1=val1</c> <c>--properties:prop2=val2</c>), or use a semicolon to separate multiple properties <c>--properties:prop1=val1;prop2=val2</c>.<para/>Note that the semicolon cannot be used inside values, for example: <c>--properties:ReferencePath=\"r:\\reference1\\;r:\\reference2\\\"</c>. In such cases, add each value separately using another <c>--properties</c> parameter — the values will be combined.<para/>The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in CleanupCode parameters."
+          },
+          {
+            "name": "Toolset",
+            "type": "ReSharperMSBuildToolset",
+            "format": "--toolset={value}",
+            "help": "Use this option to specify the exact MSBuild version. For example 12.0: <c>--toolset=12.0</c>. By default the highest available MSBuild version is used. This option might not work if you have several installations with the same version, for example 16.0 from Visual Studio 2019 and 16.0 from .NET Core 3.x."
+          },
+          {
+            "name": "ToolsetPath",
+            "type": "string",
+            "format": "--toolset-path={value}",
+            "help": "Use this option to specify the exact path to MSBuild. This might be helpful if you have a custom MSBuild installation and want to use it with CleanupCode, for example: <c>--toolset-path=\"C:\\tools\\msbuild\\bin\\MsBuild.exe\"</c>"
+          },
+          {
+            "name": "DotNetCore",
+            "type": "string",
+            "format": "--dotnetcore={value}",
+            "help": "By default, .NET Core installation is auto-detected. You can use this option to point to the specific .NET Core installation if the auto-detection results in a conflict. Use it without arguments to ignore .NET Core. Example: <c>--dotnetcore=/usr/local/share/dotnet/dotnet</c>."
+          },
+          {
+            "name": "DotNetCoreSdk",
+            "type": "string",
+            "format": "--dotnetcoresdk={value}",
+            "help": "Use this option to specify .NET Core SDK version that should provide MSBuild. For example, if you have installed .NET Core with SDKs 2.0.3 and 3.0.100, CleanupCode will prefer 3.0.100 (the latest, including preview versions). Now if you want to run CleanupCode with .NET Core SDK 2.0.3, add <c>--dotnetcoresdk=2.0.3</c> to the command line."
+          },
+          {
+            "name": "MonoPath",
+            "type": "string",
+            "format": "--mono={value}",
+            "help": "Mono path. Empty to ignore Mono. Not specified for autodetect. Example: <c>--mono=/Library/Frameworks/Mono.framework/Versions/Current/bin/mono.</c>"
+          },
+          {
+            "name": "ReferenceTargets",
+            "type": "List<string>",
+            "format": "--targets-for-references={value}",
+            "separator": ";",
+            "help": "Names of custom MSBuild targets that will be executed to get referenced assemblies of projects. The targets are defined either in the project file or in the <c>.targets</c> file. Multiple values are separated with the semicolon. For example, <c>--targets-for-references=\"GetReferences\"</c>."
+          },
+          {
+            "name": "ItemTargets",
+            "type": "List<string>",
+            "format": "--targets-for-items={value}",
+            "separator": ";",
+            "help": "Names of custom MSBuild targets that will be executed to get other items (for example, a Compile item) of projects. The targets are defined either in the project file or in the <c>.targets</c> file. Multiple values are separated with the semicolon. For example, <c>--targets-for-items=\"GetCompileItems\"</c>."
+          },
+          {
+            "name": "CachesHome",
+            "type": "string",
+            "format": "--caches-home={value}",
+            "help": "Lets you specify a custom location for the data that CleanupCode caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place."
+          },
+          {
+            "name": "DisableSettingsLayers",
+            "type": "List<ReSharperSettingsLayers>",
+            "format": "--disable-settings-layers={value}",
+            "separator": ";",
+            "help": "Disables specified <a href=\"https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers\">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>."
+          },
+          {
+            "name": "NoBuiltinSettings",
+            "type": "bool",
+            "format": "--no-buildin-settings",
+            "help": "Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c>"
+          }
+        ]
+      }
+    },
+    {
+      "help": "dupFinder is a free command line tool that finds duplicates in C# and Visual Basic .NET code - no more, no less. But being a JetBrains tool, dupFinder does it in a smart way. By default, it considers code fragments as duplicates not only if they are identical, but also if they are structurally similar, even if they contain different variables, fields, methods, types or literals. Of course, you can configure the allowed similarity as well as the minimum relative size of duplicated fragments.",
+      "postfix": "DupFinder",
+      "omitCommonProperties": true,
+      "definiteArgument": "dupfinder",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Source",
+            "type": "string",
+            "format": "{value}",
+            "help": "Defines files included into the duplicates search. Use Visual Studio solution or project files, Ant-like wildcards or specific source file and folder names. Paths should be either absolute or relative to the working directory."
+          },
+          {
+            "name": "OutputFile",
+            "type": "string",
+            "format": "--output={value}",
+            "help": "Lets you set the output file."
+          },
+          {
+            "name": "ExcludeFiles",
+            "type": "List<string>",
+            "format": "--exclude={value}",
+            "separator": ";",
+            "help": "Allows excluding files from the duplicates search. Wildcards can be used; for example, <c>*Generated.cs</c>. Note that the paths should be either absolute or relative to the working directory."
+          },
+          {
+            "name": "ExcludeComments",
+            "type": "List<string>",
+            "format": "--exclude-by-comment={value}",
+            "separator": ";",
+            "help": "Allows excluding files that have a matching substrings in the opening comments."
+          },
+          {
+            "name": "ExcludeCodeRegions",
+            "type": "List<string>",
+            "format": "--exclude-code-regions={value}",
+            "separator": ";",
+            "help": "Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>)."
+          },
+          {
+            "name": "DiscardFields",
+            "type": "bool",
+            "format": "--discard-fields={value}",
+            "help": "Whether to consider similar fragments as duplicates if they have different fields. The default value is <c>false</c>."
+          },
+          {
+            "name": "DiscardLiterals",
+            "type": "bool",
+            "format": "--discard-literals={value}",
+            "help": "Whether to consider similar fragments as duplicates if they have different literals. The default value is <c>false</c>."
+          },
+          {
+            "name": "DiscardLocalVars",
+            "type": "bool",
+            "format": "--discard-local-vars={value}",
+            "help": "Whether to consider similar fragments as duplicates if they have different local variables. The default value is <c>false</c>."
+          },
+          {
+            "name": "DiscardTypes",
+            "type": "bool",
+            "format": "--discard-types={value}",
+            "help": "Whether to consider similar fragments as duplicates if they have different types. The default value is <c>false</c>."
+          },
+          {
+            "name": "DiscardCost",
+            "type": "int",
+            "format": "--discard-cost={value}",
+            "help": "Allows setting a threshold for code complexity of the duplicated fragments. The fragments with lower complexity are discarded as non-duplicates. The value for this option is provided in relative units. Using this option, you can filter out equal code fragments that present no semantic duplication. E.g. you can often have the following statements in tests: <c>Assert.AreEqual(gold, result);</c>. If the <c>discard-cost</c> value is less than 10, statements like that will appear as duplicates, which is obviously unhelpful. You'll need to play a bit with this value to find a balance between avoiding false positives and missing real duplicates. The proper values will differ for different codebases."
+          },
+          {
+            "name": "Properties",
+            "type": "Dictionary<string, string>",
+            "format": "--properties:{value}",
+            "itemFormat": "{key}={value}",
+            "help": "Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters."
+          },
+          {
+            "name": "NormalizeTypes",
+            "type": "bool",
+            "format": "--normalize-types={value}",
+            "help": "Allows normalizing type names to the last subtype in the output (default: <c>false</c>)."
+          },
+          {
+            "name": "ShowText",
+            "type": "bool",
+            "format": "--show-text={value}",
+            "help": "If you use this parameter, the detected duplicate fragments will be embedded into the report."
+          },
+          {
+            "name": "CreateConfigFile",
+            "type": "string",
+            "format": "--config-create={value}",
+            "help": "Used to save the current parameters to a configuration file."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--config={value}",
+            "help": "Used to load the parameters described above from a configuration file."
+          }
+        ]
+      }
+    }
+  ],
+  "dataClasses": [
+    {
+      "name": "ReSharperSettingsBase",
+      "baseClass": "ToolSettings",
+      "extensionMethods": true,
+      "properties": [
+        {
+          "name": "Plugins",
+          "type": "Dictionary<string, string>",
+          "noArgument": true,
+          "help": "Allows adding ReSharper plugins that will get included during execution. To add a plugin, specify its ID and version. Available plugins are listed in the <a href=\"https://resharper-plugins.jetbrains.com/\">Plugin Repository</a>. The ID can be grabbed from the download URL. Using <c>ReSharperPluginLatest</c> or <c>null</c> will download the latest version."
+        }
+      ]
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "ReSharperSettingsLayers",
+      "values": [
+        "GlobalAll",
+        "GlobalPerProduct",
+        "SolutionShared",
+        "SolutionPersonal"
+      ]
+    },
+    {
+      "name": "ReSharperMSBuildToolset",
+      "values": [
+        "12.0",
+        "14.0",
+        "15.0"
+      ]
+    }
+  ]
+}

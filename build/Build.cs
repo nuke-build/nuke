@@ -21,8 +21,8 @@ using Nuke.Common.Tools.Coverlet;
 using Nuke.Common.Tools.DotCover;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
-using Nuke.Common.Tools.InspectCode;
 using Nuke.Common.Tools.ReportGenerator;
+using Nuke.Common.Tools.ReSharper;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
@@ -30,18 +30,34 @@ using static Nuke.Common.ControlFlow;
 using static Nuke.Common.IO.CompressionTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
-using static Nuke.Common.Tools.InspectCode.InspectCodeTasks;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
+using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
 
 [CheckBuildProjectConfigurations]
 [DotNetVerbosityMapping]
-[UnsetVisualStudioEnvironmentVariables]
 [ShutdownDotNetAfterServerBuild]
 [TeamCitySetDotCoverHomePath]
+[GitHubActions(
+    "deployment",
+    GitHubActionsImage.MacOsLatest,
+    OnPushBranches = new[] { MasterBranch, ReleaseBranchPrefix + "/*" },
+    InvokedTargets = new[] { nameof(Publish) },
+    ImportGitHubTokenAs = nameof(GitHubToken),
+    ImportSecrets =
+        new[]
+        {
+            nameof(NuGetApiKey),
+            nameof(SlackWebhook),
+            nameof(GitterAuthToken),
+            nameof(TwitterConsumerKey),
+            nameof(TwitterConsumerSecret),
+            nameof(TwitterAccessToken),
+            nameof(TwitterAccessTokenSecret)
+        })]
 [TeamCity(
-    TeamCityAgentPlatform.Windows,
-    Version = "2019.2",
+    TeamCityAgentPlatform.Unix,
+    Version = "2020.1",
     VcsTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
     NightlyTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
     ManuallyTriggeredTargets = new[] { nameof(Publish) },
@@ -49,15 +65,13 @@ using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
     ExcludedTargets = new[] { nameof(Clean), nameof(SignPackages) })]
 [GitHubActions(
     "continuous",
-    GitHubActionsImage.MacOs1014,
-    GitHubActionsImage.Ubuntu1604,
-    GitHubActionsImage.Ubuntu1804,
-    GitHubActionsImage.WindowsServer2016R2,
-    GitHubActionsImage.WindowsServer2019,
-    On = new[] { GitHubActionsTrigger.Push },
-    InvokedTargets = new[] { nameof(Test), nameof(Pack) },
-    ImportGitHubTokenAs = nameof(GitHubToken),
-    ImportSecrets = new[] { nameof(SlackWebhook), nameof(GitterAuthToken) })]
+    GitHubActionsImage.WindowsLatest,
+    GitHubActionsImage.UbuntuLatest,
+    GitHubActionsImage.MacOsLatest,
+    OnPushBranchesIgnore = new[] { MasterBranch, ReleaseBranchPrefix + "/*" },
+    OnPullRequestBranches = new[] { DevelopBranch },
+    PublishArtifacts = false,
+    InvokedTargets = new[] { nameof(Test), nameof(Pack) })]
 [AppVeyor(
     AppVeyorImage.VisualStudio2019,
     AppVeyorImage.Ubuntu1804,
@@ -83,6 +97,7 @@ partial class Build : NukeBuild
 
     [CI] readonly TeamCity TeamCity;
     [CI] readonly AzurePipelines AzurePipelines;
+    [CI] readonly GitHubActions GitHubActions;
 
     [Required] [GitVersion(Framework = "netcoreapp3.1", NoFetch = true)] readonly GitVersion GitVersion;
     [Required] [GitRepository] readonly GitRepository GitRepository;
@@ -128,6 +143,7 @@ partial class Build : NukeBuild
                 .SetProjectFile(Solution)
                 .SetNoRestore(InvokedTargets.Contains(Restore))
                 .SetConfiguration(Configuration)
+                .SetRepositoryUrl(GitRepository.HttpsUrl)
                 .SetAssemblyVersion(GitVersion.AssemblySemVer)
                 .SetFileVersion(GitVersion.AssemblySemFileVer)
                 .SetInformationalVersion(GitVersion.InformationalVersion));
@@ -140,6 +156,7 @@ partial class Build : NukeBuild
             DotNetPublish(_ => _
                     .SetNoRestore(InvokedTargets.Contains(Restore))
                     .SetConfiguration(Configuration)
+                    .SetRepositoryUrl(GitRepository.HttpsUrl)
                     .SetAssemblyVersion(GitVersion.AssemblySemVer)
                     .SetFileVersion(GitVersion.AssemblySemFileVer)
                     .SetInformationalVersion(GitVersion.InformationalVersion)
@@ -235,37 +252,44 @@ partial class Build : NukeBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
-            InspectCode(_ => _
+            ReSharperInspectCode(_ => _
                 .SetTargetPath(Solution)
                 .SetOutput(OutputDirectory / "inspectCode.xml")
-                .AddPlugin("EtherealCode.ReSpeller", InspectCodePluginLatest)
-                .AddPlugin("PowerToys.CyclomaticComplexity", InspectCodePluginLatest)
-                .AddPlugin("ReSharper.ImplicitNullability", InspectCodePluginLatest)
-                .AddPlugin("ReSharper.SerializationInspections", InspectCodePluginLatest)
-                .AddPlugin("ReSharper.XmlDocInspections", InspectCodePluginLatest));
+                .AddPlugin("ReSharperPlugin.CognitiveComplexity", ReSharperPluginLatest));
         });
 
-    [Parameter("NuGet Api Key")] readonly string ApiKey;
-    [Parameter("NuGet Source for Packages")] readonly string Source = "https://api.nuget.org/v3/index.json";
+    [Parameter] readonly string NuGetApiKey;
+    bool IsOriginalRepository => GitRepository.Identifier == "nuke-build/nuke";
+
+    string NuGetPackageSource => "https://api.nuget.org/v3/index.json";
+    string GitHubPackageSource => $"https://nuget.pkg.github.com/{GitHubActions.GitHubRepositoryOwner}/index.json";
+    string Source => IsOriginalRepository ? NuGetPackageSource : GitHubPackageSource;
 
     Target Publish => _ => _
         .ProceedAfterFailure()
         .DependsOn(Clean, Test, Pack)
         .Consumes(Pack)
-        .Requires(() => ApiKey)
+        .Requires(() => !NuGetApiKey.IsNullOrEmpty() || !IsOriginalRepository)
         .Requires(() => GitHasCleanWorkingCopy())
         .Requires(() => Configuration.Equals(Configuration.Release))
-        .Requires(() => GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch) ||
-                        GitRepository.Branch.EqualsOrdinalIgnoreCase(DevelopBranch) ||
-                        GitRepository.Branch.StartsWithOrdinalIgnoreCase(ReleaseBranchPrefix) ||
-                        GitRepository.Branch.StartsWithOrdinalIgnoreCase(HotfixBranchPrefix))
+        .Requires(() => IsOriginalRepository && GitRepository.IsOnMasterBranch() ||
+                        IsOriginalRepository && GitRepository.IsOnReleaseBranch() ||
+                        !IsOriginalRepository && GitRepository.IsOnDevelopBranch())
         .Executes(() =>
         {
-            Assert(PackageFiles.Count == 5, "packages.Count == 5");
+            if (!IsOriginalRepository)
+            {
+                DotNetNuGetAddSource(_ => _
+                    .SetSource(GitHubPackageSource)
+                    .SetUsername(GitHubActions.GitHubActor)
+                    .SetPassword(GitHubToken));
+            }
+
+            Assert(PackageFiles.Count == 4, "packages.Count == 4");
 
             DotNetNuGetPush(_ => _
                     .SetSource(Source)
-                    .SetApiKey(ApiKey)
+                    .SetApiKey(NuGetApiKey)
                     .CombineWith(PackageFiles, (_, v) => _
                         .SetTargetPath(v)),
                 degreeOfParallelism: 5,

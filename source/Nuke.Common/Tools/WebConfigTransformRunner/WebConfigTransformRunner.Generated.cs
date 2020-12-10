@@ -107,8 +107,8 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         /// <summary>
         ///   Path to the WebConfigTransformRunner executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? WebConfigTransformRunnerTasks.WebConfigTransformRunnerPath;
-        public override Action<OutputType, string> CustomLogger => WebConfigTransformRunnerTasks.WebConfigTransformRunnerLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? WebConfigTransformRunnerTasks.WebConfigTransformRunnerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => WebConfigTransformRunnerTasks.WebConfigTransformRunnerLogger;
         /// <summary>
         ///   The base web.config file
         /// </summary>
@@ -121,13 +121,13 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         ///   The path to the output web.config file
         /// </summary>
         public virtual string OutputFilename { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("{value}", WebConfigFilename)
               .Add("{value}", TransformFilename)
               .Add("{value}", OutputFilename);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

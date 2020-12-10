@@ -20,7 +20,7 @@ import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.*
 import jetbrains.buildServer.configs.kotlin.v2018_1.triggers.*
 import jetbrains.buildServer.configs.kotlin.v2018_1.vcs.*
 
-version = "2019.2"
+version = "2020.1"
 
 project {
     buildType(Compile)
@@ -42,6 +42,12 @@ project {
             value = "Normal",
             options = listOf("Minimal" to "Minimal", "Normal" to "Normal", "Quiet" to "Quiet", "Verbose" to "Verbose"),
             display = ParameterDisplay.NORMAL)
+        text (
+            "env.NuGetApiKey",
+            label = "NuGetApiKey",
+            value = "",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
         select (
             "env.Configuration",
             label = "Configuration",
@@ -62,13 +68,6 @@ project {
             checked = "True",
             unchecked = "False",
             display = ParameterDisplay.NORMAL)
-        text (
-            "env.Source",
-            label = "Source",
-            description = "NuGet Source for Packages",
-            value = "https://api.nuget.org/v3/index.json",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
         checkbox (
             "env.AutoStash",
             label = "AutoStash",
@@ -77,8 +76,8 @@ project {
             unchecked = "False",
             display = ParameterDisplay.NORMAL)
         checkbox (
-            "env.UseSSH",
-            label = "UseSSH",
+            "env.UseHttps",
+            label = "UseHttps",
             value = "False",
             checked = "True",
             unchecked = "False",
@@ -96,21 +95,17 @@ project {
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         text (
-            "env.SignPathProjectKey",
-            label = "SignPathProjectKey",
+            "env.SignPathProjectSlug",
+            label = "SignPathProjectSlug",
             value = "",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         text (
-            "env.SignPathPolicyKey",
-            label = "SignPathPolicyKey",
+            "env.SignPathPolicySlug",
+            label = "SignPathPolicySlug",
             value = "",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
-        param(
-            "teamcity.runner.commandline.stdstreams.encoding",
-            "UTF-8"
-        )
     }
 }
 object Compile : BuildType({
@@ -121,7 +116,7 @@ object Compile : BuildType({
     }
     steps {
         exec {
-            path = "build.cmd"
+            path = "build.sh"
             arguments = "Restore Compile --skip"
         }
     }
@@ -135,7 +130,7 @@ object Pack : BuildType({
     artifactRules = "output/packages/*.nupkg => output/packages"
     steps {
         exec {
-            path = "build.cmd"
+            path = "build.sh"
             arguments = "Pack --skip"
         }
     }
@@ -173,7 +168,7 @@ object Test_P1T2 : BuildType({
     """.trimIndent()
     steps {
         exec {
-            path = "build.cmd"
+            path = "build.sh"
             arguments = "Test --skip --test-partition 1"
         }
     }
@@ -196,7 +191,7 @@ object Test_P2T2 : BuildType({
     """.trimIndent()
     steps {
         exec {
-            path = "build.cmd"
+            path = "build.sh"
             arguments = "Test --skip --test-partition 2"
         }
     }
@@ -257,7 +252,7 @@ object Coverage : BuildType({
     artifactRules = "output/coverage-report.zip => output"
     steps {
         exec {
-            path = "build.cmd"
+            path = "build.sh"
             arguments = "Coverage --skip"
         }
     }
@@ -288,18 +283,9 @@ object Publish : BuildType({
     }
     steps {
         exec {
-            path = "build.cmd"
+            path = "build.sh"
             arguments = "Publish --skip"
         }
-    }
-    params {
-        text (
-            "env.ApiKey",
-            label = "ApiKey",
-            description = "NuGet Api Key",
-            value = "",
-            allowEmpty = false,
-            display = ParameterDisplay.PROMPT)
     }
     dependencies {
         snapshot(Test) {
@@ -323,7 +309,7 @@ object Announce : BuildType({
     }
     steps {
         exec {
-            path = "build.cmd"
+            path = "build.sh"
             arguments = "DownloadFonts InstallFonts ReleaseImage Announce --skip"
         }
     }

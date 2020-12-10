@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Nuke.Common;
+using Nuke.Common.CI;
 using Nuke.Common.Execution;
 using Nuke.Common.Git;                                                                          // GIT
 using Nuke.Common.IO;
@@ -20,7 +21,7 @@ using static Nuke.Common.Tools.MSBuild.MSBuildTasks;                            
 using static Nuke.Common.Tools.NuGet.NuGetTasks;                                                // NUGET && MSBUILD
 
 [CheckBuildProjectConfigurations]                                                               // SOLUTION_FILE
-[UnsetVisualStudioEnvironmentVariables]
+[ShutdownDotNetAfterServerBuild]                                                                // DOTNET
 class Build : NukeBuild
 {
     /// Support plugins are available for:

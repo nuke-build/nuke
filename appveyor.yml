@@ -21,7 +21,8 @@ image:
 skip_tags: true
 
 build_script:
-  - ps: .\build.ps1 Test Pack
+  - cmd: .\build.cmd Test Pack
+  - sh: ./build.cmd Test Pack
 
 artifacts:
   - path: output/test-results/*.trx
@@ -31,7 +32,7 @@ artifacts:
 
 environment:
   SignPathApiToken:
-    secure: A7xODEf8xLS3iaUyZScRx2NNCDWaODbWHk30FmncIH3NtXU77bR74FAsTQGwRCIe
-  SignPathOrganizationId: 09e500c8-00f7-4f3b-95f6-e33f77e67410
-  SignPathProjectKey: nuke
-  SignPathPolicyKey: test-signing
+    secure: zYFzA/7H1MDXDlpX6SAyv41kiBmu8Vh3kvWC7tPfk7eVdhh9mGQgXC7AzgcGnpsg
+  SignPathOrganizationId: 0fdaf334-6910-41f4-83d2-e58e4cccb087
+  SignPathProjectSlug: nuke
+  SignPathPolicySlug: release-signing

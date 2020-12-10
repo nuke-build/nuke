@@ -20,7 +20,7 @@ using static Nuke.Common.Tools.Git.GitTasks;
 
 partial class Build
 {
-    [Parameter] readonly bool UseSSH;
+    [Parameter] readonly bool UseHttps;
 
     AbsolutePath GlobalSolution => RootDirectory / "nuke-global.sln";
     AbsolutePath ExternalRepositoriesDirectory => RootDirectory / "external";
@@ -31,15 +31,15 @@ partial class Build
         YamlDeserializeFromFile<string[]>(ExternalRepositoriesFile).Select(x => GitRepository.FromUrl(x));
 
     Target CheckoutExternalRepositories => _ => _
-        .Executes(async () =>
+        .Executes(() =>
         {
             foreach (var repository in ExternalRepositories)
             {
                 var repositoryDirectory = ExternalRepositoriesDirectory / repository.GetGitHubName();
-                var origin = UseSSH ? repository.SshUrl : repository.HttpsUrl;
+                var origin = UseHttps ? repository.HttpsUrl : repository.SshUrl;
 
                 if (!Directory.Exists(repositoryDirectory))
-                    Git($"clone {origin} {repositoryDirectory} --branch {await repository.GetDefaultBranch()} --progress");
+                    Git($"clone {origin} {repositoryDirectory} --progress");
                 else
                 {
                     SuppressErrors(() => Git($"remote add origin {origin}", repositoryDirectory));
@@ -54,7 +54,7 @@ partial class Build
         .Executes(() =>
         {
             var global = CreateSolution(
-                GlobalSolution,
+                fileName: GlobalSolution,
                 solutions: new[] { Solution }.Concat(ExternalSolutions),
                 folderNameProvider: x => x == Solution ? null : x.Name);
             global.Save();

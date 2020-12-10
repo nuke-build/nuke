@@ -134,8 +134,8 @@ namespace Nuke.Common.Tools.VSWhere
         /// <summary>
         ///   Path to the VSWhere executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? VSWhereTasks.VSWherePath;
-        public override Action<OutputType, string> CustomLogger => VSWhereTasks.VSWhereLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? VSWhereTasks.VSWherePath;
+        public override Action<OutputType, string> ProcessCustomLogger => VSWhereTasks.VSWhereLogger;
         /// <summary>
         ///    Return only the newest version and last installed.
         /// </summary>
@@ -186,7 +186,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   The name of a property to return. Use delimiters <c>'.'</c>, <c>'/'</c>, or <c>'_'</c> to separate object and property names. Example: <c>properties.nickname</c> will return the <em>nickname</em> property under <em>properties</em>.
         /// </summary>
         public virtual string Property { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("-latest", Latest)
@@ -201,7 +201,7 @@ namespace Nuke.Common.Tools.VSWhere
               .Add("-requiresAny", RequiresAny)
               .Add("-version {value}", Version)
               .Add("-property {value}", Property);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

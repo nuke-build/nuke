@@ -2994,8 +2994,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   Limit to resources in the specified API group.
         /// </summary>
@@ -3021,7 +3021,7 @@ namespace Nuke.Common.Tools.Kubernetes
         /// </summary>
         public virtual IReadOnlyList<string> Verbs => VerbsInternal.AsReadOnly();
         internal List<string> VerbsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("api-resources")
@@ -3031,7 +3031,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--no-headers={value}", NoHeaders)
               .Add("--output={value}", Output)
               .Add("--verbs={value}", Verbs, separator: ',');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3047,8 +3047,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   Continue even if there are pods using emptyDir (local data that will be deleted when the node is drained).
         /// </summary>
@@ -3081,7 +3081,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   The length of time to wait before giving up, zero means infinite.
         /// </summary>
         public virtual TimeSpan? Timeout { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("drain")
@@ -3093,7 +3093,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--pod-selector={value}", PodSelector)
               .Add("--selector={value}", Selector)
               .Add("--timeout={value}", Timeout);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3109,8 +3109,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The name of the container.
         /// </summary>
@@ -3269,7 +3269,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   If true, wait for resources to be gone before returning. This waits for finalizers.
         /// </summary>
         public virtual bool? Wait { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("run")
@@ -3312,7 +3312,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--timeout={value}", Timeout)
               .Add("--tty={value}", Tty)
               .Add("--wait={value}", Wait);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3328,8 +3328,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
@@ -3429,7 +3429,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Watch for changes to the requested object(s), without listing/getting first.
         /// </summary>
         public virtual bool? WatchOnly { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("get")
@@ -3457,7 +3457,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--use-openapi-print-columns={value}", UseOpenapiPrintColumns)
               .Add("--watch={value}", Watch)
               .Add("--watch-only={value}", WatchOnly);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3473,8 +3473,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   Client version only (no server required).
         /// </summary>
@@ -3487,14 +3487,14 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Print just the version number.
         /// </summary>
         public virtual bool? Short { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("version")
               .Add("--client={value}", Client)
               .Add("--output={value}", Output)
               .Add("--short={value}", Short);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3510,13 +3510,13 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("top");
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3532,13 +3532,13 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("config");
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3554,8 +3554,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The name of the pod.
         /// </summary>
@@ -3576,7 +3576,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Stdin is a TTY.
         /// </summary>
         public virtual bool? Tty { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("exec")
@@ -3585,7 +3585,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--pod={value}", Pod)
               .Add("--stdin={value}", Stdin)
               .Add("--tty={value}", Tty);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3601,8 +3601,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
@@ -3660,7 +3660,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   If true, use a schema to validate the input before sending it.
         /// </summary>
         public virtual bool? Validate { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("rolling-update")
@@ -3678,7 +3678,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--timeout={value}", Timeout)
               .Add("--update-period={value}", UpdatePeriod)
               .Add("--validate={value}", Validate);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3694,8 +3694,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
@@ -3767,7 +3767,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
         /// </summary>
         public virtual string Template { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("label")
@@ -3788,7 +3788,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--resource-version={value}", ResourceVersion)
               .Add("--selector={value}", Selector)
               .Add("--template={value}", Template);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3804,8 +3804,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
@@ -3873,7 +3873,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
         /// </summary>
         public virtual string Template { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("annotate")
@@ -3893,7 +3893,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--resource-version={value}", ResourceVersion)
               .Add("--selector={value}", Selector)
               .Add("--template={value}", Template);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3909,8 +3909,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   Delete all resources, including uninitialized ones, in the namespace of the specified resource types.
         /// </summary>
@@ -3968,7 +3968,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   If true, wait for resources to be gone before returning. This waits for finalizers.
         /// </summary>
         public virtual bool? Wait { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("delete")
@@ -3986,7 +3986,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--selector={value}", Selector)
               .Add("--timeout={value}", Timeout)
               .Add("--wait={value}", Wait);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4002,8 +4002,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
@@ -4093,7 +4093,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Type for this service: ClusterIP, NodePort, LoadBalancer, or ExternalName. Default is 'ClusterIP'.
         /// </summary>
         public virtual string Type { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("expose")
@@ -4119,7 +4119,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--target-port={value}", TargetPort)
               .Add("--template={value}", Template)
               .Add("--type={value}", Type);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4135,13 +4135,13 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("options");
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4157,8 +4157,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The type or/and name of the pod.
         /// </summary>
@@ -4180,7 +4180,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Stdin is a TTY.
         /// </summary>
         public virtual bool? Tty { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("attach")
@@ -4189,7 +4189,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--pod-running-timeout={value}", PodRunningTimeout)
               .Add("--stdin={value}", Stdin)
               .Add("--tty={value}", Tty);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4205,8 +4205,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   Regular expression for hosts that the proxy should accept.
         /// </summary>
@@ -4251,7 +4251,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Prefix to serve static files under, if static file directory is specified.
         /// </summary>
         public virtual string WwwPrefix { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("proxy")
@@ -4266,7 +4266,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--unix-socket={value}", UnixSocket)
               .Add("--www={value}", Www)
               .Add("--www-prefix={value}", WwwPrefix);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4282,13 +4282,13 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("alpha");
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4304,13 +4304,13 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("kubectl");
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4326,13 +4326,13 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("completion");
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4348,8 +4348,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
@@ -4396,7 +4396,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   The type of patch being provided; one of [json merge strategic].
         /// </summary>
         public virtual KubernetesPatchType Type { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("patch")
@@ -4411,7 +4411,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--recursive={value}", Recursive)
               .Add("--template={value}", Template)
               .Add("--type={value}", Type);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4427,8 +4427,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
@@ -4478,7 +4478,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   If true, wait for resources to be gone before returning. This waits for finalizers.
         /// </summary>
         public virtual bool? Wait { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("replace")
@@ -4494,7 +4494,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--timeout={value}", Timeout)
               .Add("--validate={value}", Validate)
               .Add("--wait={value}", Wait);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4510,8 +4510,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
@@ -4550,7 +4550,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   If true, use a schema to validate the input before sending it.
         /// </summary>
         public virtual bool? Validate { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("taint")
@@ -4563,7 +4563,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--selector={value}", Selector)
               .Add("--template={value}", Template)
               .Add("--validate={value}", Validate);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4579,8 +4579,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
@@ -4611,7 +4611,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   If true, display events related to the described object.
         /// </summary>
         public virtual bool? ShowEvents { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("describe")
@@ -4622,7 +4622,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--recursive={value}", Recursive)
               .Add("--selector={value}", Selector)
               .Add("--show-events={value}", ShowEvents);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4638,19 +4638,19 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The subcommand to run.
         /// </summary>
         public virtual IReadOnlyList<string> Subcommand => SubcommandInternal.AsReadOnly();
         internal List<string> SubcommandInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("set")
               .Add("{value}", Subcommand, separator: ' ');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4666,18 +4666,18 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The subcommand to run.
         /// </summary>
         public virtual string Subcommand { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("auth")
               .Add("{value}", Subcommand);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4693,19 +4693,19 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The subcommand to run.
         /// </summary>
         public virtual IReadOnlyList<string> Subcommand => SubcommandInternal.AsReadOnly();
         internal List<string> SubcommandInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("certificate")
               .Add("{value}", Subcommand, separator: ' ');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4721,19 +4721,19 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The subcommand to run.
         /// </summary>
         public virtual IReadOnlyList<string> Subcommand => SubcommandInternal.AsReadOnly();
         internal List<string> SubcommandInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("rollout")
               .Add("{value}", Subcommand, separator: ' ');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4749,8 +4749,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   Select all resources in the namespace of the specified resource types.
         /// </summary>
@@ -4833,7 +4833,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   If true, wait for resources to be gone before returning. This waits for finalizers.
         /// </summary>
         public virtual bool? Wait { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("apply")
@@ -4857,7 +4857,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--timeout={value}", Timeout)
               .Add("--validate={value}", Validate)
               .Add("--wait={value}", Wait);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4873,8 +4873,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The namne of the Node.
         /// </summary>
@@ -4887,14 +4887,14 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Selector (label query) to filter on.
         /// </summary>
         public virtual string Selector { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("cordon")
               .Add("{value}", Node)
               .Add("--dry-run={value}", DryRun)
               .Add("--selector={value}", Selector);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4910,8 +4910,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The file specification of the source. '[namespace/]pod-name:/file/path'. for a remote file '/file/path' for a local file.
         /// </summary>
@@ -4924,14 +4924,14 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Container name. If omitted, the first container in the pod will be chosen.
         /// </summary>
         public virtual string Container { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("cp")
               .Add("{value}", SrcFileSpec)
               .Add("{value}", DestFileSpec)
               .Add("--container={value}", Container);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4947,13 +4947,13 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("api-versions");
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4969,8 +4969,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The name of the node.
         /// </summary>
@@ -4983,14 +4983,14 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Selector (label query) to filter on.
         /// </summary>
         public virtual string Selector { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("uncordon")
               .Add("{value}", Node)
               .Add("--dry-run={value}", DryRun)
               .Add("--selector={value}", Selector);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5006,8 +5006,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
@@ -5061,7 +5061,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
         /// </summary>
         public virtual string Template { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("autoscale")
@@ -5078,7 +5078,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--recursive={value}", Recursive)
               .Add("--save-config={value}", SaveConfig)
               .Add("--template={value}", Template);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5094,18 +5094,18 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The name of the plugin.
         /// </summary>
         public virtual string Name { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("plugin")
               .Add("{value}", Name);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5121,13 +5121,13 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("cluster-info");
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5143,8 +5143,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.
         /// </summary>
@@ -5182,7 +5182,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   The length of time to wait before giving up.  Zero means check once and don't wait, negative means wait for a week.
         /// </summary>
         public virtual TimeSpan? Timeout { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("wait")
@@ -5195,7 +5195,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--selector={value}", Selector)
               .Add("--template={value}", Template)
               .Add("--timeout={value}", Timeout);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5211,8 +5211,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
@@ -5246,7 +5246,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   If true, use a schema to validate the input before sending it.
         /// </summary>
         public virtual bool? Validate { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("convert")
@@ -5258,7 +5258,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--recursive={value}", Recursive)
               .Add("--template={value}", Template)
               .Add("--validate={value}", Validate);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5274,8 +5274,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
@@ -5329,7 +5329,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Only relevant if --edit=true. Defaults to the line ending native to your platform.
         /// </summary>
         public virtual bool? WindowsLineEndings { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("create")
@@ -5346,7 +5346,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--template={value}", Template)
               .Add("--validate={value}", Validate)
               .Add("--windows-line-endings={value}", WindowsLineEndings);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5362,8 +5362,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
@@ -5378,14 +5378,14 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running.
         /// </summary>
         public virtual TimeSpan? PodRunningTimeout { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("port-forward")
               .Add("{value}", TypeName, separator: ' ')
               .Add("{value}", Ports, "{key}={value}", separator: ' ')
               .Add("--pod-running-timeout={value}", PodRunningTimeout);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5401,8 +5401,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
@@ -5557,7 +5557,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   If true, wait for resources to be gone before returning. This waits for finalizers.
         /// </summary>
         public virtual bool? Wait { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("run-container")
@@ -5599,7 +5599,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--timeout={value}", Timeout)
               .Add("--tty={value}", Tty)
               .Add("--wait={value}", Wait);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5615,8 +5615,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
@@ -5667,7 +5667,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Defaults to the line ending native to your platform.
         /// </summary>
         public virtual bool? WindowsLineEndings { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("edit")
@@ -5683,7 +5683,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--template={value}", Template)
               .Add("--validate={value}", Validate)
               .Add("--windows-line-endings={value}", WindowsLineEndings);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5699,8 +5699,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   Select all resources in the namespace of the specified resource types.
         /// </summary>
@@ -5750,7 +5750,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   The length of time to wait before giving up on a scale operation, zero means don't wait. Any other values should contain a corresponding time unit (e.g. 1s, 2m, 3h).
         /// </summary>
         public virtual TimeSpan? Timeout { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("scale")
@@ -5766,7 +5766,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--selector={value}", Selector)
               .Add("--template={value}", Template)
               .Add("--timeout={value}", Timeout);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5782,8 +5782,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   Get different explanations for particular API version.
         /// </summary>
@@ -5797,14 +5797,14 @@ namespace Nuke.Common.Tools.Kubernetes
         /// </summary>
         public virtual IReadOnlyList<string> Resource => ResourceInternal.AsReadOnly();
         internal List<string> ResourceInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("explain")
               .Add("--api-version={value}", ApiVersion)
               .Add("--recursive={value}", Recursive)
               .Add("{value}", Resource, separator: ' ');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5820,8 +5820,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> CustomLogger => KubernetesTasks.KubernetesLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
@@ -5875,7 +5875,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Include timestamps on each line in the log output.
         /// </summary>
         public virtual bool? Timestamps { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("logs")
@@ -5892,7 +5892,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--since-time={value}", SinceTime)
               .Add("--tail={value}", Tail)
               .Add("--timestamps={value}", Timestamps);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5999,7 +5999,7 @@ namespace Nuke.Common.Tools.Kubernetes
         /// </summary>
         public virtual IReadOnlyDictionary<string, string> Vmodule => VmoduleInternal.AsReadOnly();
         internal Dictionary<string,string> VmoduleInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("--alsologtostderr={value}", Alsologtostderr)
@@ -6025,7 +6025,7 @@ namespace Nuke.Common.Tools.Kubernetes
               .Add("--user={value}", User)
               .Add("--v={value}", V)
               .Add("--vmodule={value}", Vmodule, "{key}={value}", separator: ',');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

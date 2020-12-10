@@ -79,7 +79,7 @@ namespace Nuke.Common.Tooling
                     {
                         try
                         {
-                            invocations.Add((x, executor(x.SetLogOutput(singleExecution)), default));
+                            invocations.Add((x, executor(x.SetProcessLogOutput(singleExecution)), default));
                         }
                         catch (Exception exception)
                         {
@@ -100,7 +100,7 @@ namespace Nuke.Common.Tooling
                 if (!singleExecution)
                 {
                     invocations
-                        .Where(x => x.Settings.LogOutput ?? ProcessTasks.DefaultLogOutput)
+                        .Where(x => x.Settings.ProcessLogOutput ?? ProcessTasks.DefaultLogOutput)
                         .SelectMany(x =>
                             !(x.Exception is ProcessException processException)
                                 ? outputSelector(x.Result)

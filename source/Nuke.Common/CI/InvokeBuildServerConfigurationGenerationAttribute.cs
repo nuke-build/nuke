@@ -15,23 +15,25 @@ using Nuke.Common.Utilities.Collections;
 namespace Nuke.Common.CI
 {
     public class InvokeBuildServerConfigurationGenerationAttribute
-        : BuildServerConfigurationGenerationAttributeBase, IOnAfterLogo
+        : BuildServerConfigurationGenerationAttributeBase, IOnBeforeLogo
     {
-        public void OnAfterLogo(
-            NukeBuild build,
-            IReadOnlyCollection<ExecutableTarget> executableTargets,
-            IReadOnlyCollection<ExecutableTarget> executionPlan)
+        public void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             if (NukeBuild.IsServerBuild)
                 return;
 
-            GetGenerators(build)
+            var hasConfigurationChanged = GetGenerators(build)
                 .Where(x => x.AutoGenerate)
                 .AsParallel()
-                .ForAll(InvokeGeneration);
+                .Select(HasConfigurationChanged).ToList();
+            if (hasConfigurationChanged.All(x => !x))
+                return;
+
+            Logger.Info("Press any key to continue...");
+            Console.ReadKey();
         }
 
-        private void InvokeGeneration(IConfigurationGenerator generator)
+        private bool HasConfigurationChanged(IConfigurationGenerator generator)
         {
             generator.GeneratedFiles.ForEach(FileSystemTasks.EnsureExistingParentDirectory);
             var previousHashes = generator.GeneratedFiles
@@ -50,11 +52,12 @@ namespace Nuke.Common.CI
                 .Where(x => FileSystemTasks.GetFileHash(x) != previousHashes.GetValueOrDefault(x))
                 .Select(x => NukeBuild.RootDirectory.GetRelativePathTo(x)).ToList();
 
-            if (changedFiles.Count > 0)
-            {
-                Logger.Warn($"{generator.Name} configuration files have changed.");
-                changedFiles.ForEach(x => Logger.Trace($"Updated {x}"));
-            }
+            if (changedFiles.Count == 0)
+                return false;
+
+            Logger.Warn($"{generator.Name} configuration files have changed.");
+            changedFiles.ForEach(x => Logger.Trace($"Updated {x}"));
+            return true;
         }
     }
 }

@@ -1,6 +1,5 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/NSwag.json
-
 #pragma warning disable CS1574
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/NSwag.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -2515,14 +2514,14 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Path to the NSwag executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => NSwagTasks.NSwagLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("version")
               .Add("{value}", GetNSwagRuntime(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -2538,8 +2537,8 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Path to the NSwag executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => NSwagTasks.NSwagLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The nswag.json configuration file path.
         /// </summary>
@@ -2564,7 +2563,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Determines if local Nuget's cache folder should be put in the ReferencePaths by default
         /// </summary>
         public virtual bool? UseNuGetCache { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("list-types")
@@ -2575,7 +2574,7 @@ namespace Nuke.Common.Tools.NSwag
               .Add("/ReferencePaths:{value}", ReferencePaths)
               .Add("/UseNuGetCache:{value}", UseNuGetCache)
               .Add("{value}", GetNSwagRuntime(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -2591,8 +2590,8 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Path to the NSwag executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => NSwagTasks.NSwagLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The nswag.json configuration file path.
         /// </summary>
@@ -2617,7 +2616,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Determines if local Nuget's cache folder should be put in the ReferencePaths by default
         /// </summary>
         public virtual bool? UseNuGetCache { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("list-controllers")
@@ -2628,7 +2627,7 @@ namespace Nuke.Common.Tools.NSwag
               .Add("/ReferencePaths:{value}", ReferencePaths)
               .Add("/UseNuGetCache:{value}", UseNuGetCache)
               .Add("{value}", GetNSwagRuntime(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -2644,8 +2643,8 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Path to the NSwag executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => NSwagTasks.NSwagLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The output file path (optional).
         /// </summary>
@@ -2672,7 +2671,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Determines if local Nuget's cache folder should be put in the ReferencePaths by default
         /// </summary>
         public virtual bool? UseNuGetCache { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("types2openapi")
@@ -2683,7 +2682,7 @@ namespace Nuke.Common.Tools.NSwag
               .Add("/ReferencePaths:{value}", ReferencePaths)
               .Add("/UseNuGetCache:{value}", UseNuGetCache)
               .Add("{value}", GetNSwagRuntime(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -2699,8 +2698,8 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Path to the NSwag executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => NSwagTasks.NSwagLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
         /// <summary>
         ///   Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).
         /// </summary>
@@ -2768,7 +2767,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Determines if local Nuget's cache folder should be put in the ReferencePaths by default
         /// </summary>
         public virtual bool? UseNuGetCache { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("types2swagger")
@@ -2789,7 +2788,7 @@ namespace Nuke.Common.Tools.NSwag
               .Add("/ReferencePaths:{value}", ReferencePaths)
               .Add("/UseNuGetCache:{value}", UseNuGetCache)
               .Add("{value}", GetNSwagRuntime(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -2805,8 +2804,8 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Path to the NSwag executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => NSwagTasks.NSwagLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
         /// <summary>
         ///   Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available (ASP.NET Core 2.0+), default: true).
         /// </summary>
@@ -2969,7 +2968,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Determines if local Nuget's cache folder should be put in the ReferencePaths by default
         /// </summary>
         public virtual bool? UseNuGetCache { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("webapi2openapi")
@@ -3013,7 +3012,7 @@ namespace Nuke.Common.Tools.NSwag
               .Add("/ReferencePaths:{value}", ReferencePaths)
               .Add("/UseNuGetCache:{value}", UseNuGetCache)
               .Add("{value}", GetNSwagRuntime(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3029,8 +3028,8 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Path to the NSwag executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => NSwagTasks.NSwagLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
         /// <summary>
         ///   Specifies whether to add path parameters which are missing in the action method (default: true).
         /// </summary>
@@ -3223,7 +3222,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Determines if local Nuget's cache folder should be put in the ReferencePaths by default
         /// </summary>
         public virtual bool? UseNuGetCache { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("webapi2swagger")
@@ -3274,7 +3273,7 @@ namespace Nuke.Common.Tools.NSwag
               .Add("/ReferencePaths:{value}", ReferencePaths)
               .Add("/UseNuGetCache:{value}", UseNuGetCache)
               .Add("{value}", GetNSwagRuntime(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3290,8 +3289,8 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Path to the NSwag executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => NSwagTasks.NSwagLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
         /// <summary>
         ///   Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available (ASP.NET Core 2.0+), default: true).
         /// </summary>
@@ -3454,7 +3453,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Determines if local Nuget's cache folder should be put in the ReferencePaths by default
         /// </summary>
         public virtual bool? UseNuGetCache { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("aspnetcore2openapi")
@@ -3498,7 +3497,7 @@ namespace Nuke.Common.Tools.NSwag
               .Add("/ReferencePaths:{value}", ReferencePaths)
               .Add("/UseNuGetCache:{value}", UseNuGetCache)
               .Add("{value}", GetNSwagRuntime(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3514,8 +3513,8 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Path to the NSwag executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => NSwagTasks.NSwagLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The ASP.NET Core API Explorer group names to include (comma separated, default: empty = all).
         /// </summary>
@@ -3719,7 +3718,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Determines if local Nuget's cache folder should be put in the ReferencePaths by default
         /// </summary>
         public virtual bool? UseNuGetCache { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("aspnetcore2swagger")
@@ -3773,7 +3772,7 @@ namespace Nuke.Common.Tools.NSwag
               .Add("/ReferencePaths:{value}", ReferencePaths)
               .Add("/UseNuGetCache:{value}", UseNuGetCache)
               .Add("{value}", GetNSwagRuntime(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3789,14 +3788,14 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Path to the NSwag executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => NSwagTasks.NSwagLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("new")
               .Add("{value}", GetNSwagRuntime(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3812,19 +3811,19 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Path to the NSwag executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => NSwagTasks.NSwagLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
         public virtual string Input { get; internal set; }
         public virtual IReadOnlyDictionary<string, object> Variables => VariablesInternal.AsReadOnly();
         internal Dictionary<string,object> VariablesInternal { get; set; } = new Dictionary<string,object>(StringComparer.OrdinalIgnoreCase);
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("run")
               .Add("/Input:{value}", Input)
               .Add("/Variables:{value}", Variables, "{key}={value}")
               .Add("{value}", GetNSwagRuntime(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3840,8 +3839,8 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Path to the NSwag executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => NSwagTasks.NSwagLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The any .NET type (default: 'object').
         /// </summary>
@@ -3899,7 +3898,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   The output file path (optional).
         /// </summary>
         public virtual string Output { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("jsonschema2csclient")
@@ -3918,7 +3917,7 @@ namespace Nuke.Common.Tools.NSwag
               .Add("/ServiceSchemes:{value}", ServiceSchemes)
               .Add("/Output:{value}", Output)
               .Add("{value}", GetNSwagRuntime(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3934,8 +3933,8 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Path to the NSwag executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => NSwagTasks.NSwagLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The type name of the root schema.
         /// </summary>
@@ -3957,7 +3956,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   The output file path (optional).
         /// </summary>
         public virtual string Output { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("jsonschema2tsclient")
@@ -3967,7 +3966,7 @@ namespace Nuke.Common.Tools.NSwag
               .Add("/ServiceSchemes:{value}", ServiceSchemes)
               .Add("/Output:{value}", Output)
               .Add("{value}", GetNSwagRuntime(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -3983,8 +3982,8 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Path to the NSwag executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => NSwagTasks.NSwagLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The additional contract namespace usages.
         /// </summary>
@@ -4200,7 +4199,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   The output file path (optional).
         /// </summary>
         public virtual string Output { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("openapi2csclient")
@@ -4257,7 +4256,7 @@ namespace Nuke.Common.Tools.NSwag
               .Add("/ServiceSchemes:{value}", ServiceSchemes)
               .Add("/Output:{value}", Output)
               .Add("{value}", GetNSwagRuntime(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4273,8 +4272,8 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Path to the NSwag executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => NSwagTasks.NSwagLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The client base class (empty for no base class).
         /// </summary>
@@ -4599,7 +4598,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   The output file path (optional).
         /// </summary>
         public virtual string Output { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("swagger2csclient")
@@ -4683,7 +4682,7 @@ namespace Nuke.Common.Tools.NSwag
               .Add("/ServiceSchemes:{value}", ServiceSchemes)
               .Add("/Output:{value}", Output)
               .Add("{value}", GetNSwagRuntime(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4699,8 +4698,8 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Path to the NSwag executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => NSwagTasks.NSwagLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The additional contract namespace usages.
         /// </summary>
@@ -4916,7 +4915,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   The output file path (optional).
         /// </summary>
         public virtual string Output { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("openapi2cscontroller")
@@ -4973,7 +4972,7 @@ namespace Nuke.Common.Tools.NSwag
               .Add("/ServiceSchemes:{value}", ServiceSchemes)
               .Add("/Output:{value}", Output)
               .Add("{value}", GetNSwagRuntime(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -4989,8 +4988,8 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Path to the NSwag executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => NSwagTasks.NSwagLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The Base path on which the API is served, which is relative to the Host
         /// </summary>
@@ -5238,7 +5237,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   The output file path (optional).
         /// </summary>
         public virtual string Output { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("swagger2cscontroller")
@@ -5303,7 +5302,7 @@ namespace Nuke.Common.Tools.NSwag
               .Add("/ServiceSchemes:{value}", ServiceSchemes)
               .Add("/Output:{value}", Output)
               .Add("{value}", GetNSwagRuntime(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5319,8 +5318,8 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Path to the NSwag executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => NSwagTasks.NSwagLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
@@ -5354,7 +5353,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   The output file path (optional).
         /// </summary>
         public virtual string Output { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("openapi2tsclient")
@@ -5367,7 +5366,7 @@ namespace Nuke.Common.Tools.NSwag
               .Add("/ServiceSchemes:{value}", ServiceSchemes)
               .Add("/Output:{value}", Output)
               .Add("{value}", GetNSwagRuntime(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -5383,8 +5382,8 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Path to the NSwag executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => NSwagTasks.NSwagLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The token name for injecting the API base URL string (used in the Angular template, default: 'API_BASE_URL').
         /// </summary>
@@ -5612,7 +5611,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   The output file path (optional).
         /// </summary>
         public virtual string Output { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("swagger2tsclient")
@@ -5672,7 +5671,7 @@ namespace Nuke.Common.Tools.NSwag
               .Add("/ServiceSchemes:{value}", ServiceSchemes)
               .Add("/Output:{value}", Output)
               .Add("{value}", GetNSwagRuntime(), customValue: true);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

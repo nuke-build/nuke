@@ -16,7 +16,7 @@ namespace Nuke.Common.Tooling
     [PublicAPI]
     public static class ToolPathResolver
     {
-        public static string ExecutingAssemblyDirectory;
+        public static string EmbeddedPackagesDirectory;
         public static string NuGetPackagesConfigFile;
         public static string NuGetAssetsConfigFile;
         public static string PaketPackagesConfigFile;
@@ -68,6 +68,7 @@ namespace Nuke.Common.Tooling
 
             var frameworks = packageExecutablePaths.ToLookup(GetFramework, x => x, StringComparer.OrdinalIgnoreCase);
 
+            // TODO: filter dll for .NET Framework
             static string GetPackageExecutable(IEnumerable<string> executables)
                 => executables
                     .OrderByDescending(x => x.EndsWithOrdinalIgnoreCase(".dll"))
@@ -93,8 +94,8 @@ namespace Nuke.Common.Tooling
                     .SelectMany(x =>
                         new Func<string>[]
                         {
-                            () => ExecutingAssemblyDirectory != null
-                                ? Path.Combine(ExecutingAssemblyDirectory, x)
+                            () => EmbeddedPackagesDirectory != null
+                                ? Path.Combine(EmbeddedPackagesDirectory, x)
                                 : null,
                             () => NuGetAssetsConfigFile != null
                                 ? NuGetPackageResolver.GetLocalInstalledPackage(x, NuGetAssetsConfigFile, version)?.Directory
@@ -119,7 +120,7 @@ namespace Nuke.Common.Tooling
                                 new[]
                                 {
                                     NukeBuild.BuildProjectDirectory == null
-                                        ? $"Embedded packages directory at '{ExecutingAssemblyDirectory}'"
+                                        ? $"Embedded packages directory at '{EmbeddedPackagesDirectory}'"
                                         : null,
                                     NuGetAssetsConfigFile != null
                                         ? $"Project assets file '{NuGetAssetsConfigFile}'"

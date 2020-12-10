@@ -221,13 +221,13 @@ namespace Nuke.Common.Tools.Npm
         /// <summary>
         ///   Path to the Npm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? NpmTasks.NpmPath;
-        public override Action<OutputType, string> CustomLogger => NpmTasks.NpmLogger;
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        public override string ProcessToolPath => base.ProcessToolPath ?? NpmTasks.NpmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => NpmTasks.NpmLogger;
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("ci");
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -243,8 +243,8 @@ namespace Nuke.Common.Tools.Npm
         /// <summary>
         ///   Path to the Npm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? NpmTasks.NpmPath;
-        public override Action<OutputType, string> CustomLogger => NpmTasks.NpmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? NpmTasks.NpmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => NpmTasks.NpmLogger;
         /// <summary>
         ///   List of packages to be installed.
         /// </summary>
@@ -298,7 +298,7 @@ namespace Nuke.Common.Tools.Npm
         ///   Causes either only <c>devDependencies</c> or only non-<c>devDependencies</c> to be installed regardless of the <c>NODE_ENV</c>.
         /// </summary>
         public virtual NpmOnlyMode Only { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("install")
@@ -315,7 +315,7 @@ namespace Nuke.Common.Tools.Npm
               .Add("--no-shrinkwrap", NoShrinkWrap)
               .Add("--nodedir={value}", NodeDir)
               .Add("--only={value}", Only);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -331,8 +331,8 @@ namespace Nuke.Common.Tools.Npm
         /// <summary>
         ///   Path to the Npm executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? NpmTasks.NpmPath;
-        public override Action<OutputType, string> CustomLogger => NpmTasks.NpmLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? NpmTasks.NpmPath;
+        public override Action<OutputType, string> ProcessCustomLogger => NpmTasks.NpmLogger;
         /// <summary>
         ///   The command to be executed.
         /// </summary>
@@ -342,13 +342,13 @@ namespace Nuke.Common.Tools.Npm
         /// </summary>
         public virtual IReadOnlyList<string> Arguments => ArgumentsInternal.AsReadOnly();
         internal List<string> ArgumentsInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("run")
               .Add("{value}", Command)
               .Add("-- {value}", Arguments, separator: ' ');
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

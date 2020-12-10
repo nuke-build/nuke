@@ -164,8 +164,8 @@ namespace Nuke.Common.Tools.Xunit
         /// <summary>
         ///   Path to the Xunit executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? GetToolPath();
-        public override Action<OutputType, string> CustomLogger => XunitTasks.XunitLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
+        public override Action<OutputType, string> ProcessCustomLogger => XunitTasks.XunitLogger;
         /// <summary>
         ///   Assemblies to test, and their related related configuration files (ending with .json or .config).
         /// </summary>
@@ -262,7 +262,7 @@ namespace Nuke.Common.Tools.Xunit
         public virtual IReadOnlyDictionary<Xunit2ResultFormat, string> ResultReports => ResultReportsInternal.AsReadOnly();
         internal Dictionary<Xunit2ResultFormat, string> ResultReportsInternal { get; set; } = new Dictionary<Xunit2ResultFormat, string>(EqualityComparer<Xunit2ResultFormat>.Default);
         public virtual string Framework { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("{value}", TargetAssemblyWithConfigs, "{key} {value}")
@@ -287,7 +287,7 @@ namespace Nuke.Common.Tools.Xunit
               .Add("-noautoreporters", NoAutoReporters)
               .Add("-{value}", Reporter)
               .Add("-{value}", ResultReports, "{key} {value}");
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

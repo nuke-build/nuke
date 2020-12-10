@@ -473,8 +473,8 @@ namespace Nuke.Common.Tools.DotCover
         /// <summary>
         ///   Path to the DotCover executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotCoverTasks.DotCoverPath;
-        public override Action<OutputType, string> CustomLogger => DotCoverTasks.DotCoverLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotCoverTasks.DotCoverLogger;
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   A type of the report. The default value is <c>XML</c>.
@@ -553,7 +553,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   Enables logging and specifies log file name.
         /// </summary>
         public virtual string LogFile { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("analyse")
@@ -576,7 +576,7 @@ namespace Nuke.Common.Tools.DotCover
               .Add("--ReturnTargetExitCode", ReturnTargetExitCode)
               .Add("--ProcessFilters={value}", ProcessFilters, separator: ';')
               .Add("--LogFile={value}", LogFile);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -592,8 +592,8 @@ namespace Nuke.Common.Tools.DotCover
         /// <summary>
         ///   Path to the DotCover executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotCoverTasks.DotCoverPath;
-        public override Action<OutputType, string> CustomLogger => DotCoverTasks.DotCoverLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotCoverTasks.DotCoverLogger;
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   Path to the resulting coverage snapshot.
@@ -668,7 +668,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   Enables logging and specifies log file name.
         /// </summary>
         public virtual string LogFile { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("cover")
@@ -690,7 +690,7 @@ namespace Nuke.Common.Tools.DotCover
               .Add("--ReturnTargetExitCode", ReturnTargetExitCode)
               .Add("--ProcessFilters={value}", ProcessFilters, separator: ';')
               .Add("--LogFile={value}", LogFile);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -706,8 +706,8 @@ namespace Nuke.Common.Tools.DotCover
         /// <summary>
         ///   Path to the DotCover executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotCoverTasks.DotCoverPath;
-        public override Action<OutputType, string> CustomLogger => DotCoverTasks.DotCoverLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotCoverTasks.DotCoverLogger;
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   List of snapshot files.
@@ -718,14 +718,14 @@ namespace Nuke.Common.Tools.DotCover
         ///   Enables logging and specifies log file name.
         /// </summary>
         public virtual string LogFile { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("delete")
               .Add("{value}", Configuration)
               .Add("--Source={value}", Source, separator: ';')
               .Add("--LogFile={value}", LogFile);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -741,8 +741,8 @@ namespace Nuke.Common.Tools.DotCover
         /// <summary>
         ///   Path to the DotCover executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotCoverTasks.DotCoverPath;
-        public override Action<OutputType, string> CustomLogger => DotCoverTasks.DotCoverLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotCoverTasks.DotCoverLogger;
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   List of snapshot files.
@@ -761,7 +761,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   Enables logging and specifies log file name.
         /// </summary>
         public virtual string LogFile { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("merge")
@@ -770,7 +770,7 @@ namespace Nuke.Common.Tools.DotCover
               .Add("--Output={value}", OutputFile)
               .Add("--TempDir={value}", TempDirectory)
               .Add("--LogFile={value}", LogFile);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -786,8 +786,8 @@ namespace Nuke.Common.Tools.DotCover
         /// <summary>
         ///   Path to the DotCover executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotCoverTasks.DotCoverPath;
-        public override Action<OutputType, string> CustomLogger => DotCoverTasks.DotCoverLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotCoverTasks.DotCoverLogger;
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   List of snapshot files.
@@ -810,7 +810,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   Enables logging and specifies log file name.
         /// </summary>
         public virtual string LogFile { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("report")
@@ -820,7 +820,7 @@ namespace Nuke.Common.Tools.DotCover
               .Add("--ReportType={value}", ReportType)
               .Add("--HideAutoProperties", HideAutoProperties)
               .Add("--LogFile={value}", LogFile);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion
@@ -836,8 +836,8 @@ namespace Nuke.Common.Tools.DotCover
         /// <summary>
         ///   Path to the DotCover executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? DotCoverTasks.DotCoverPath;
-        public override Action<OutputType, string> CustomLogger => DotCoverTasks.DotCoverLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotCoverTasks.DotCoverLogger;
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   Coverage snapshot file name.
@@ -851,7 +851,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   Enables logging and specifies log file name.
         /// </summary>
         public virtual string LogFile { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("zip")
@@ -859,7 +859,7 @@ namespace Nuke.Common.Tools.DotCover
               .Add("--Source={value}", Source)
               .Add("--Output={value}", OutputFile)
               .Add("--LogFile={value}", LogFile);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

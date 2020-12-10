@@ -230,8 +230,8 @@ namespace Nuke.Common.Tools.SignTool
         /// <summary>
         ///   Path to the SignTool executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? SignToolTasks.SignToolPath;
-        public override Action<OutputType, string> CustomLogger => SignToolTasks.SignToolLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? SignToolTasks.SignToolPath;
+        public override Action<OutputType, string> ProcessCustomLogger => SignToolTasks.SignToolLogger;
         /// <summary>
         ///   Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.
         /// </summary>
@@ -410,7 +410,7 @@ namespace Nuke.Common.Tools.SignTool
         /// </summary>
         public virtual IReadOnlyList<string> Files => FilesInternal.AsReadOnly();
         internal List<string> FilesInternal { get; set; } = new List<string>();
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("sign")
@@ -458,7 +458,7 @@ namespace Nuke.Common.Tools.SignTool
               .Add("/v", Verbose)
               .Add("/debug", Debug)
               .Add("{value}", Files);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

@@ -170,8 +170,8 @@ namespace Nuke.Common.Tools.Squirrel
         /// <summary>
         ///   Path to the Squirrel executable.
         /// </summary>
-        public override string ToolPath => base.ToolPath ?? SquirrelTasks.SquirrelPath;
-        public override Action<OutputType, string> CustomLogger => SquirrelTasks.SquirrelLogger;
+        public override string ProcessToolPath => base.ProcessToolPath ?? SquirrelTasks.SquirrelPath;
+        public override Action<OutputType, string> ProcessCustomLogger => SquirrelTasks.SquirrelLogger;
         /// <summary>
         ///   Install the app whose package is in the specified directory.
         /// </summary>
@@ -269,7 +269,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   Set the required .NET framework version, e.g. net461
         /// </summary>
         public virtual string FrameworkVersion { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("--install={value}", Install)
@@ -296,7 +296,7 @@ namespace Nuke.Common.Tools.Squirrel
               .Add("--no-msi", GenerateNoMsi)
               .Add("--no-delta", GenerateNoDelta)
               .Add("--framework-version={value}", FrameworkVersion);
-            return base.ConfigureArguments(arguments);
+            return base.ConfigureProcessArguments(arguments);
         }
     }
     #endregion

@@ -5,7 +5,6 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Nuke.Common.Execution;
 using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.Tooling

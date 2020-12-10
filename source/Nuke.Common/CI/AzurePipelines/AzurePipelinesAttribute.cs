@@ -67,6 +67,10 @@ namespace Nuke.Common.CI.AzurePipelines
         public string[] PullRequestsPathsInclude { get; set; } = new string[0];
         public string[] PullRequestsPathsExclude { get; set; } = new string[0];
 
+        public string[] ImportVariableGroups { get; set; } = new string[0];
+        public string[] ImportSecrets { get; set; } = new string[0];
+        public string ImportSystemAccessTokenAs { get; set; }
+
         public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
         {
             return new CustomFileWriter(streamWriter, indentationFactor: 2, commentPrefix: "#");
@@ -76,6 +80,7 @@ namespace Nuke.Common.CI.AzurePipelines
         {
             return new AzurePipelinesConfiguration
                    {
+                       VariableGroups = ImportVariableGroups,
                        VcsPushTrigger = GetVcsPushTrigger(),
                        Stages = _images.Select(x => GetStage(x, relevantTargets)).ToArray()
                    };
@@ -119,7 +124,7 @@ namespace Nuke.Common.CI.AzurePipelines
 
             return new AzurePipelinesStage
                    {
-                       Name = image.GetValue().Replace("-", "_"),
+                       Name = image.GetValue().Replace("-", "_").Replace(".", "_"),
                        DisplayName = image.GetValue(),
                        Image = image,
                        Dependencies = new AzurePipelinesStage[0],
@@ -168,9 +173,19 @@ namespace Nuke.Common.CI.AzurePipelines
                        Dependencies = dependencies,
                        Parallel = totalPartitions,
                        PartitionName = partitionName,
+                       Imports = GetImports().ToDictionary(x => x.Key, x => x.Value),
                        InvokedTargets = chainLinkTargets.Select(x => x.Name).ToArray(),
                        PublishArtifacts = publishedArtifacts
                    };
+        }
+
+        protected virtual IEnumerable<(string Key, string Value)> GetImports()
+        {
+            if (ImportSystemAccessTokenAs != null)
+                yield return (ImportSystemAccessTokenAs, "$(System.AccessToken)");
+
+            foreach (var secret in ImportSecrets)
+                yield return (secret, $"$({secret})");
         }
 
         protected virtual string GetArtifact(string artifact)

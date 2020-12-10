@@ -53,7 +53,7 @@ project {
         select (
             "env.Configuration",
             label = "Configuration",
-            description = "Configuration to build - Default is 'Debug' (local) or 'Release' (server)",
+            description = "Configuration for compilation",
             value = "Debug",
             options = listOf("Debug" to "Debug", "Release" to "Release"),
             display = ParameterDisplay.NORMAL)
@@ -71,6 +71,13 @@ project {
             value = "",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
+        text (
+            "env.AzurePipelinesSystemAccessToken",
+            label = "AzurePipelinesSystemAccessToken",
+            description = "Azure Pipelines System Access Token",
+            value = "",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
     }
 }
 object Restore : BuildType({
@@ -79,6 +86,7 @@ object Restore : BuildType({
         root(DslContext.settingsRoot)
         cleanCheckout = true
     }
+    artifactRules = "src/*/obj/** => src"
     steps {
         exec {
             path = "build.sh"
@@ -92,6 +100,7 @@ object Compile : BuildType({
         root(DslContext.settingsRoot)
         cleanCheckout = true
     }
+    artifactRules = "src/*/bin/** => src"
     steps {
         exec {
             path = "build.sh"
@@ -237,6 +246,12 @@ object Pack : BuildType({
         snapshot(Compile) {
             onDependencyFailure = FailureAction.FAIL_TO_START
             onDependencyCancel = FailureAction.CANCEL
+        }
+        artifacts(Restore) {
+            artifactRules = "src/*/obj/** => src"
+        }
+        artifacts(Compile) {
+            artifactRules = "src/*/bin/** => src"
         }
     }
 })

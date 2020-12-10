@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Nuke.Common.CI;
+using System.Text;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -30,6 +30,8 @@ namespace Nuke.Common.Execution
         public static int Execute<T>(Expression<Func<T, Target>>[] defaultTargetExpressions)
             where T : NukeBuild
         {
+            Console.OutputEncoding = Encoding.UTF8;
+            Console.InputEncoding = Encoding.UTF8;
             Console.CancelKeyPress += (s, e) => s_cancellationHandlers.ForEach(x => x());
 
             var build = Create<T>();
@@ -53,9 +55,9 @@ namespace Nuke.Common.Execution
 
                 Logger.OutputSink = build.OutputSink;
 
-                if (NukeBuild.BuildProjectDirectory != null)
-                    ToolPathResolver.ExecutingAssemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
+                ToolPathResolver.EmbeddedPackagesDirectory = NukeBuild.BuildProjectFile == null
+                    ? Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
+                    : null;
                 ToolPathResolver.NuGetPackagesConfigFile = build.NuGetPackagesConfigFile;
                 ToolPathResolver.NuGetAssetsConfigFile = build.NuGetAssetsConfigFile;
 
@@ -81,18 +83,18 @@ namespace Nuke.Common.Execution
                     build,
                     EnvironmentInfo.GetParameter<string[]>(() => build.SkippedTargets));
 
-                return build.IsSuccessful ? 0 : ErrorExitCode;
+                return build.ExitCode ?? (build.IsSuccessful ? 0 : ErrorExitCode);
             }
             catch (Exception exception)
             {
                 if (!(exception is TargetExecutionException))
                     Logger.Error(exception);
 
-                return ErrorExitCode;
+                return build.ExitCode ?? ErrorExitCode;
             }
             finally
             {
-                if (build.ExecutionPlan != null)
+                if (build.ExecutionPlan?.Any(x => x.Status != ExecutionStatus.NotRun) ?? false)
                     Finish();
             }
 

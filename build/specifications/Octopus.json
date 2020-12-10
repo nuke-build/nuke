@@ -445,6 +445,39 @@
           }
         ]
       }
+    },
+    {
+      "help": "The <c>Octo.exe build-information</c> command push build information to Octopus Server.",
+      "postfix": "BuildInformation",
+      "definiteArgument": "build-information",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "PackageId",
+            "type": "List<string>",
+            "format": "--package-id={value}",
+            "help": "Id of the package."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "--version={value}",
+            "help": "Version number of the package."
+          },
+          {
+            "name": "File",
+            "type": "string",
+            "format": "--file={value}",
+            "help": "Octopus build information json file."
+          },
+          {
+            "name": "OverwriteMode",
+            "type": "OctopusOverwriteMode",
+            "format": "--overwrite-mode={value}",
+            "help": "Overwrite policy when the information already exists."
+          }
+        ]
+      }
     }
   ],
   "commonTaskProperties": [
@@ -547,6 +580,14 @@
       "values": [
         "NuPkg",
         "Zip"
+      ]
+    },
+    {
+      "name": "OctopusOverwriteMode",
+      "values": [
+        "FailIfExists",
+        "OverwriteExisting",
+        "IgnoreIfExists"
       ]
     }
   ]

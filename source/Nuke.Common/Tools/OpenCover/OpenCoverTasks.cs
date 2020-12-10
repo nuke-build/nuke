@@ -25,9 +25,9 @@ namespace Nuke.Common.Tools.OpenCover
         public static OpenCoverSettings SetTargetSettings(this OpenCoverSettings toolSettings, ToolSettings targetSettings)
         {
             return toolSettings
-                .SetTargetPath(targetSettings.ToolPath)
-                .SetTargetArguments(targetSettings.GetArguments().RenderForExecution())
-                .SetTargetDirectory(targetSettings.WorkingDirectory);
+                .SetTargetPath(targetSettings.ProcessToolPath)
+                .SetTargetArguments(targetSettings.GetProcessArguments().RenderForExecution())
+                .SetTargetDirectory(targetSettings.ProcessWorkingDirectory);
         }
 
         public static OpenCoverSettings ResetTargetSettings(this OpenCoverSettings toolSettings)

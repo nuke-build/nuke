@@ -30,7 +30,7 @@ namespace Nuke.CodeGeneration.Generators
                 {
                     w
                         .WriteToolPath()
-                        .WriteLogger()
+                        .WriteToolLogger()
                         .WriteGenericTask();
 
                     tool.Tasks.ForEach(x => new TaskWriter(x, toolWriter)
@@ -184,7 +184,7 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLine($"    {resolvers.Single()};");
         }
 
-        private static ToolWriter WriteLogger(this ToolWriter writer)
+        private static ToolWriter WriteToolLogger(this ToolWriter writer)
         {
             var tool = writer.Tool;
             var logger = tool.CustomLogger ? "CustomLogger" : "ProcessTasks.DefaultLogger";

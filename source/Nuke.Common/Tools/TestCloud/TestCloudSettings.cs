@@ -9,7 +9,7 @@ namespace Nuke.Common.Tools.TestCloud
 {
     public partial class TestCloudSettings
     {
-        private string GetToolPath()
+        private string GetProcessToolPath()
         {
             throw new NotImplementedException();
         }

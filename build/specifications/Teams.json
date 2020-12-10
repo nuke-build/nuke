@@ -1,0 +1,33 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://docs.microsoft.com/en-us/microsoftteams/platform/task-modules-and-cards/cards/cards-reference#office-365-connector-card",
+    "https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook"
+  ],
+  "name": "Teams",
+  "officialUrl": "https://www.microsoft.com/en-us/microsoft-365/microsoft-teams/group-chat-software",
+  "help": "Microsoft Teams is a proprietary business communication platform developed by Microsoft, as part of the Microsoft 365 family of products. Teams offers workspace chat and videoconferencing, file storage, and application integration. Teams is replacing other Microsoft-operated business messaging and collaboration platforms, including Skype for Business and Microsoft Classroom.",
+  "dataClasses": [
+    {
+      "name": "TeamsMessage",
+      "extensionMethods": true,
+      "properties": [
+        {
+          "name": "Title",
+          "type": "string",
+          "json": "title"
+        },
+        {
+          "name": "Text",
+          "type": "string",
+          "json": "text"
+        },
+        {
+          "name": "ThemeColor",
+          "type": "string",
+          "json": "themeColor"
+        }
+      ]
+    }
+  ]
+}
