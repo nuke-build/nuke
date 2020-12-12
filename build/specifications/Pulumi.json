@@ -66,7 +66,7 @@
             "name": "Parallel",
             "type": "int",
             "format": "--parallel {value}",
-            "help": "Allow P resource operations to run in parallel at once (1 for no parallelism). Defaults to unbounded. (default 2147483647)."
+            "help": "Allow P resource operations to run in parallel at once (1 for no parallelism). Defaults to unbounded. (default <c>2147483647</c>)."
           },
           {
             "name": "PolicyPack",
@@ -78,7 +78,7 @@
             "name": "PolicyPackConfig",
             "type": "List<string>",
             "format": "--policy-pack-config {value}",
-            "help": "Path to JSON file containing the config for the policy pack of the corresponding \"--policy-pack\" flag."
+            "help": "Path to JSON file containing the config for the policy pack of the corresponding <c>--policy-pack</c> flag."
           },
           {
             "name": "Refresh",
@@ -90,13 +90,13 @@
             "name": "Replace",
             "type": "List<string>",
             "format": "--replace {value}",
-            "help": "Specify resources to replace. Multiple resources can be specified using --replace urn1 --replace urn2."
+            "help": "Specify resources to replace. Multiple resources can be specified using <c>--replace urn1 --replace urn2</c>."
           },
           {
             "name": "SecretsProvider",
-            "type": "string",
-            "format": "--secrets-provider",
-            "help": "The type of the provider that should be used to encrypt and decrypt secrets (possible choices: default, passphrase, awskms, azurekeyvault, gcpkms, hashivault). Onlyused when creating a new stack from an existing template (default \"default\")."
+            "type": "PulumiSecretsProvider",
+            "format": "--secrets-provider {value}",
+            "help": "The type of the provider that should be used to encrypt and decrypt secrets (possible choices: <c>default</c>, <c>passphrase</c>, <c>awskms</c>, <c>azurekeyvault</c>, <c>gcpkms</c>, <c>hashivault</c>). Only used when creating a new stack from an existing template (default <c>default</c>)."
           },
           {
             "name": "ShowConfig",
@@ -150,19 +150,19 @@
             "name": "Target",
             "type": "List<string>",
             "format": "--target {value}",
-            "help": "Specify a single resource URN to update. Other resources will not be updated. Multiple resources can be specified using --target urn1 --target urn2."
+            "help": "Specify a single resource URN to update. Other resources will not be updated. Multiple resources can be specified using <c>--target urn1 --target urn2</c>."
           },
           {
             "name": "TargetDependents",
             "type": "bool",
             "format": "--target-dependents",
-            "help": "Allows updating of dependent targets discovered but not specified in --target list."
+            "help": "Allows updating of dependent targets discovered but not specified in <c>--target</c> list."
           },
           {
             "name": "TargetReplace",
             "type": "List<string>",
             "format": "--target-replace {value}",
-            "help": "Specify a single resource URN to replace. Other resources will not be updated. Shorthand for --target urn --replace urn."
+            "help": "Specify a single resource URN to replace. Other resources will not be updated. Shorthand for <c>--target urn --replace urn</c>."
           },
           {
             "name": "Yes",
@@ -230,7 +230,7 @@
             "name": "Parallel",
             "type": "int",
             "format": "--parallel {value}",
-            "help": "Allow P resource operations to run in parallel at once (1 for no parallelism). Defaults to unbounded. (default 2147483647)."
+            "help": "Allow P resource operations to run in parallel at once (1 for no parallelism). Defaults to unbounded. (default <c>2147483647</c>)."
           },
           {
             "name": "PolicyPack",
@@ -242,7 +242,7 @@
             "name": "PolicyPackConfig",
             "type": "List<string>",
             "format": "--policy-pack-config {value}",
-            "help": "Path to JSON file containing the config for the policy pack of the corresponding \"--policy-pack\" flag."
+            "help": "Path to JSON file containing the config for the policy pack of the corresponding <c>--policy-pack</c> flag."
           },
           {
             "name": "Refresh",
@@ -253,8 +253,8 @@
           {
             "name": "Replace",
             "type": "List<string>",
-            "format": "--replace",
-            "help": "Specify resources to replace. Multiple resources can be specified using --replace urn1 --replace urn2."
+            "format": "--replace {value}",
+            "help": "Specify resources to replace. Multiple resources can be specified using <c>--replace urn1 --replace urn2</c>."
           },
           {
             "name": "ShowConfig",
@@ -308,13 +308,13 @@
             "name": "TargetDependents",
             "type": "bool",
             "format": "--target-dependents",
-            "help": "Allows updating of dependent targets discovered but not specified in --target list."
+            "help": "Allows updating of dependent targets discovered but not specified in <c>--target</c> list."
           },
           {
             "name": "TargetReplace",
             "type": "List<string>",
             "format": "--target-replace {value}",
-            "help": "Specify a single resource URN to replace. Other resources will not be updated. Shorthand for --target urn --replace urn."
+            "help": "Specify a single resource URN to replace. Other resources will not be updated. Shorthand for <c>--target urn --replace urn</c>."
           }
         ]
       }
@@ -562,7 +562,7 @@
             "name": "DependencyEdgeColor",
             "type": "string",
             "format": "--dependency-edge-color {value}",
-            "help": "Sets the color of dependency edges in the graph (default \"#246C60\")."
+            "help": "Sets the color of dependency edges in the graph (default <c>#246C60</c>)."
           },
           {
             "name": "IgnoreDependencyEdges",
@@ -580,7 +580,7 @@
             "name": "ParentEdgeColor",
             "type": "string",
             "format": "--parent-edge-color {value}",
-            "help": "Sets the color of parent edges in the graph (default \"#AA6639\")."
+            "help": "Sets the color of parent edges in the graph (default <c>#AA6639</c>)."
           }
         ]
       }
@@ -634,7 +634,7 @@
             "name": "OrganizationAndName",
             "type": "string",
             "format": "{value}",
-            "help": "The stack name, optionally preceded by the organization name and a slash: [<org-name>/]<stack-name>"
+            "help": "The stack name, optionally preceded by the organization name and a slash: <c>[<org-name>/]<stack-name></c>"
           },
           {
             "name": "CopyConfigFrom",
@@ -644,9 +644,9 @@
           },
           {
             "name": "SecretsProvider",
-            "type": "string",
-            "format": "--secrets-provider",
-            "help": "The type of the provider that should be used to encrypt and decrypt secrets (possible choices: default, passphrase, awskms, azurekeyvault, gcpkms, hashivault) (default \"default\")."
+            "type": "PulumiSecretsProvider",
+            "format": "--secrets-provider {value}",
+            "help": "The type of the provider that should be used to encrypt and decrypt secrets (possible choices: <c>default</c>, <c>passphrase</c>, <c>awskms</c>, <c>azurekeyvault</c>, <c>gcpkms</c>, <c>hashivault</c>) (default <c>default</c>)."
           }
         ]
       }
@@ -665,7 +665,7 @@
           {
             "name": "Json",
             "type": "bool",
-            "format": "--json}",
+            "format": "--json",
             "help": "Emit output as JSON."
           },
           {
@@ -684,7 +684,7 @@
             "name": "Tag",
             "type": "string",
             "format": "--tag {value}",
-            "help": "Filter returned stacks to those in a specific tag (tag-name or tag-name=tag-value)."
+            "help": "Filter returned stacks to those in a specific tag (<c>tag-name</c> or <c>tag-name=tag-value</c>)."
           }
         ]
       }
@@ -703,7 +703,7 @@
           {
             "name": "Json",
             "type": "bool",
-            "format": "--json}",
+            "format": "--json",
             "help": "Emit output as JSON."
           },
           {
@@ -780,9 +780,9 @@
           },
           {
             "name": "SecretsProvider",
-            "type": "string",
+            "type": "PulumiSecretsProvider",
             "format": "--secrets-provider {value}",
-            "help": "Use with --create flag, The type of the provider that should be used to encrypt and decrypt secrets (possible choices: default, passphrase, awskms, azurekeyvault, gcpkms, hashivault) (default \"default\")."
+            "help": "Use with --create flag, The type of the provider that should be used to encrypt and decrypt secrets (possible choices: <c>default</c>, <c>passphrase</c>, <c>awskms</c>, <c>azurekeyvault</c>, <c>gcpkms</c>, <c>hashivault</c>) (default <c>default</c>)."
           }
         ]
       }
@@ -910,9 +910,9 @@
           },
           {
             "name": "SecretsProvider",
-            "type": "string",
+            "type": "PulumiSecretsProvider",
             "format": "--secrets-provider {value}",
-            "help": "The type of the provider that should be used to encrypt and decrypt secrets (possible choices: default, passphrase, awskms, azurekeyvault, gcpkms, hashivault) (default \"default\")."
+            "help": "The type of the provider that should be used to encrypt and decrypt secrets (possible choices: <c>default</c>, <c>passphrase</c>, <c>awskms</c>, <c>azurekeyvault</c>, <c>gcpkms</c>, <c>hashivault</c>) (default <c>default</c>)."
           },
           {
             "name": "Stack",
@@ -962,7 +962,7 @@
             "name": "Parallel",
             "type": "int",
             "format": "--parallel {value}",
-            "help": "Allow P resource operations to run in parallel at once (1 for no parallelism). Defaults to unbounded. (default 2147483647)."
+            "help": "Allow P resource operations to run in parallel at once (1 for no parallelism). Defaults to unbounded. (default <c>2147483647</c>)."
           },
           {
             "name": "Refresh",
@@ -1016,13 +1016,13 @@
             "name": "Target",
             "type": "List<string>",
             "format": "--target {value}",
-            "help": "Specify a single resource URN to destroy. All resources necessary to destroy this target will also be destroyed. Multiple resources can be specified using: --target urn1 --target urn2."
+            "help": "Specify a single resource URN to destroy. All resources necessary to destroy this target will also be destroyed. Multiple resources can be specified using: <c>--target urn1 --target urn2</c>."
           },
           {
             "name": "TargetDependents",
             "type": "bool",
             "format": "--target-dependents",
-            "help": "Allows destroying of dependent targets discovered but not specified in --target list."
+            "help": "Allows destroying of dependent targets discovered but not specified in <c>--target</c> list."
           },
           {
             "name": "Yes",
@@ -1039,7 +1039,7 @@
       "name": "Color",
       "type": "string",
       "format": "--color {value}",
-      "help": "Colorize output. Choices are: always, never, raw, auto (default \"auto\")."
+      "help": "Colorize output. Choices are: always, never, raw, auto (default <c>auto</c>)."
     },
     {
       "name": "Cwd",
@@ -1081,7 +1081,7 @@
       "name": "Profiling",
       "type": "string",
       "format": "--profiling {value}",
-      "help": "Emit CPU and memory profiles and an execution trace to '[filename].[pid].{cpu,mem,trace}', respectively."
+      "help": "Emit CPU and memory profiles and an execution trace to <c>[filename].[pid].{cpu,mem,trace}</c>, respectively."
     },
     {
       "name": "Tracing",
@@ -1093,7 +1093,20 @@
       "name": "Verbose",
       "type": "int",
       "format": "--verbose {value}",
-      "help": "Enable verbose logging (e.g., v=3); anything >3 is very verbose."
+      "help": "Enable verbose logging (e.g., <c>v=3</c>); anything >3 is very verbose."
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "PulumiSecretsProvider",
+      "values": [
+        "default",
+        "passphrase",
+        "awskms",
+        "azurekeyvault",
+        "gcpkms",
+        "hashivault"
+      ]
     }
   ]
 }
