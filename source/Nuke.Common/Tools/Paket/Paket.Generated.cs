@@ -102,6 +102,7 @@ namespace Nuke.Common.Tools.Paket
         ///     <li><c>--version</c> via <see cref="PaketUpdateSettings.PackageVersion"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("update")]
         public static IReadOnlyCollection<Output> PaketUpdate(Configure<PaketUpdateSettings> configurator)
         {
             return PaketUpdate(configurator(new PaketUpdateSettings()));
@@ -187,6 +188,7 @@ namespace Nuke.Common.Tools.Paket
         ///     <li><c>--verbose</c> via <see cref="PaketRestoreSettings.Verbose"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("restore")]
         public static IReadOnlyCollection<Output> PaketRestore(Configure<PaketRestoreSettings> configurator)
         {
             return PaketRestore(configurator(new PaketRestoreSettings()));
@@ -258,6 +260,7 @@ namespace Nuke.Common.Tools.Paket
         ///     <li><c>file</c> via <see cref="PaketPushSettings.File"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("push")]
         public static IReadOnlyCollection<Output> PaketPush(Configure<PaketPushSettings> configurator)
         {
             return PaketPush(configurator(new PaketPushSettings()));
@@ -344,6 +347,7 @@ namespace Nuke.Common.Tools.Paket
         ///     <li><c>--version</c> via <see cref="PaketPackSettings.PackageVersion"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("pack")]
         public static IReadOnlyCollection<Output> PaketPack(Configure<PaketPackSettings> configurator)
         {
             return PaketPack(configurator(new PaketPackSettings()));
@@ -397,70 +401,87 @@ namespace Nuke.Common.Tools.Paket
         /// <summary>
         ///   NuGet package ID.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string PackageId { get; internal set; }
         /// <summary>
         ///   Dependency version constraint.
         /// </summary>
+        [ArgumentFormat("--version {value}")]
         public virtual string PackageVersion { get; internal set; }
         /// <summary>
         ///   Dependency group to update. Default is <em>all groups</em>.
         /// </summary>
+        [ArgumentFormat("--group {value}")]
         public virtual string DependencyGroup { get; internal set; }
         /// <summary>
         ///   Creates binding redirect files if needed.
         /// </summary>
+        [ArgumentFormat("--create-new-binding-files")]
         public virtual bool? CreateNewBindingFiles { get; internal set; }
         /// <summary>
         ///   Force download and reinstallation of all dependencies.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Create binding redirects.
         /// </summary>
+        [ArgumentFormat("--redirects")]
         public virtual bool? Redirects { get; internal set; }
         /// <summary>
         ///   Remove binding redirects that were not created by Paket.
         /// </summary>
+        [ArgumentFormat("--clean-redirects")]
         public virtual bool? CleanRedirects { get; internal set; }
         /// <summary>
         ///   Do not modify projects.
         /// </summary>
+        [ArgumentFormat("--no-install")]
         public virtual bool? NoInstall { get; internal set; }
         /// <summary>
         ///   Only allow updates that preserve the major version.
         /// </summary>
+        [ArgumentFormat("--keep-major")]
         public virtual bool? KeepMajor { get; internal set; }
         /// <summary>
         ///   Only allow updates that preserve the minor version.
         /// </summary>
+        [ArgumentFormat("--keep-minor")]
         public virtual bool? KeepMinor { get; internal set; }
         /// <summary>
         ///   Only allow updates that preserve the patch version.
         /// </summary>
+        [ArgumentFormat("--keep-patch")]
         public virtual bool? KeepPatch { get; internal set; }
         /// <summary>
         ///   Treat the NuGet package ID as a regex to filter packages.
         /// </summary>
+        [ArgumentFormat("--filter")]
         public virtual bool? Filter { get; internal set; }
         /// <summary>
         ///   Touch project files referencing affected dependencies, to help incremental build tools detecting the change.
         /// </summary>
+        [ArgumentFormat("--touch-affected-refs")]
         public virtual bool? TouchAffectedReferences { get; internal set; }
         /// <summary>
         ///   Suppress console output.
         /// </summary>
+        [ArgumentFormat("--silent")]
         public virtual bool? Silent { get; internal set; }
         /// <summary>
         ///   Print detailed information to the console.
         /// </summary>
+        [ArgumentFormat("--verbose")]
         public virtual bool? Verbose { get; internal set; }
         /// <summary>
         ///   Print output to a file.
         /// </summary>
+        [ArgumentFormat("--log-file {value}")]
         public virtual string LogFile { get; internal set; }
         /// <summary>
         ///   Call coming from the <c>--run</c> feature of the bootstrapper.
         /// </summary>
+        [ArgumentFormat("--from-bootstrapper")]
         public virtual bool? FromBootstrapper { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -504,55 +525,68 @@ namespace Nuke.Common.Tools.Paket
         /// <summary>
         ///   Force download and reinstallation of all dependencies.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Only restore packages that are referenced by paket.references files.
         /// </summary>
+        [ArgumentFormat("--only-referenced")]
         public virtual bool? OnlyReferenced { get; internal set; }
         /// <summary>
         ///   Touches project files referencing packages which are being restored, to help incremental build tools detecting the change.
         /// </summary>
+        [ArgumentFormat("--touch-affected-refs")]
         public virtual bool? TouchAffectedRefs { get; internal set; }
         /// <summary>
         ///   Do not check if paket.dependencies and paket.lock are in sync.
         /// </summary>
+        [ArgumentFormat("--ignore-checks")]
         public virtual bool? IgnoreChecks { get; internal set; }
         /// <summary>
         ///   Abort if any checks fail.
         /// </summary>
+        [ArgumentFormat("--fail-on-checks")]
         public virtual bool? FailOnChecks { get; internal set; }
         /// <summary>
         ///   Restore dependencies of a single group.
         /// </summary>
+        [ArgumentFormat("--group {value}")]
         public virtual string DependencyGroup { get; internal set; }
         /// <summary>
         ///   Restore dependencies of a single project.
         /// </summary>
+        [ArgumentFormat("--project {value}")]
         public virtual string ProjectFile { get; internal set; }
         /// <summary>
         ///   Restore packages from a paket.references file.
         /// </summary>
+        [ArgumentFormat("--references-files {value}")]
         public virtual IReadOnlyList<string> ReferencesFiles => ReferencesFilesInternal.AsReadOnly();
         internal List<string> ReferencesFilesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Restore only for the specified target framework.
         /// </summary>
+        [ArgumentFormat("--target-framework {value}")]
         public virtual string TargetFramework { get; internal set; }
         /// <summary>
         ///   Suppress console output.
         /// </summary>
+        [ArgumentFormat("--silent")]
         public virtual bool? Silent { get; internal set; }
         /// <summary>
         ///   Print detailed information to the console.
         /// </summary>
+        [ArgumentFormat("--verbose")]
         public virtual bool? Verbose { get; internal set; }
         /// <summary>
         ///   Print output to a file.
         /// </summary>
+        [ArgumentFormat("--log-file {value}")]
         public virtual string LogFile { get; internal set; }
         /// <summary>
         ///   Call coming from the <c>--run</c> feature of the bootstrapper.
         /// </summary>
+        [ArgumentFormat("--from-bootstrapper")]
         public virtual bool? FromBootstrapper { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -592,34 +626,42 @@ namespace Nuke.Common.Tools.Paket
         /// <summary>
         ///   Path to the package.
         /// </summary>
+        [ArgumentFormat("file {value}")]
         public virtual string File { get; internal set; }
         /// <summary>
         ///   URL of the NuGet feed.
         /// </summary>
+        [ArgumentFormat("--url {value}")]
         public virtual string Url { get; internal set; }
         /// <summary>
         ///   API key for the URL. Default is the <c>NUGET_KEY</c> environment variable.
         /// </summary>
+        [ArgumentFormat("--api-key {value}")]
         public virtual string ApiKey { get; internal set; }
         /// <summary>
         ///   API endpoint to push to. Default is <em>/api/v2/package</em>.
         /// </summary>
+        [ArgumentFormat("--endpoint {value}")]
         public virtual string Endpoint { get; internal set; }
         /// <summary>
         ///   Suppress console output.
         /// </summary>
+        [ArgumentFormat("--silent")]
         public virtual bool? Silent { get; internal set; }
         /// <summary>
         ///   Print detailed information to the console.
         /// </summary>
+        [ArgumentFormat("--verbose")]
         public virtual bool? Verbose { get; internal set; }
         /// <summary>
         ///   Print output to a file.
         /// </summary>
+        [ArgumentFormat("--log-file {value}")]
         public virtual string LogFile { get; internal set; }
         /// <summary>
         ///   Call coming from the <c>--run</c> feature of the bootstrapper.
         /// </summary>
+        [ArgumentFormat("--from-bootstrapper")]
         public virtual bool? FromBootstrapper { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -654,76 +696,95 @@ namespace Nuke.Common.Tools.Paket
         /// <summary>
         ///   Output directory for .nupkg files.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string OutputDirectory { get; internal set; }
         /// <summary>
         ///   Build configuration that should be packaged. Default is <em>Release</em>.
         /// </summary>
+        [ArgumentFormat("--build-config {value}")]
         public virtual string BuildConfiguration { get; internal set; }
         /// <summary>
         ///   Build platform that should be packaged. Default is <em>check all known platform targets</em>.
         /// </summary>
+        [ArgumentFormat("--build-platform {value}")]
         public virtual string BuildPlatform { get; internal set; }
         /// <summary>
         ///   Version of the package.
         /// </summary>
+        [ArgumentFormat("--version {value}")]
         public virtual string PackageVersion { get; internal set; }
         /// <summary>
         ///   Pack a single paket.template file.
         /// </summary>
+        [ArgumentFormat("--template {value}")]
         public virtual string TemplateFile { get; internal set; }
         /// <summary>
         ///   Exclude paket.template file by package ID.
         /// </summary>
+        [ArgumentFormat("--exclude {value}")]
         public virtual IReadOnlyList<string> Exclude => ExcludeInternal.AsReadOnly();
         internal List<string> ExcludeInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Package IDs with version numbers.
         /// </summary>
+        [ArgumentFormat("--specific-version {value}")]
+        [ItemFormat("{key} {value}")]
         public virtual IReadOnlyDictionary<string, string> SpecificVersions => SpecificVersionsInternal.AsReadOnly();
         internal Dictionary<string, string> SpecificVersionsInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Specify release notes for the package.
         /// </summary>
+        [ArgumentFormat("--release-notes {value}")]
         public virtual string ReleaseNotes { get; internal set; }
         /// <summary>
         ///   Use version requirements from paket.lock instead of paket.dependencies.
         /// </summary>
+        [ArgumentFormat("--lock-dependencies")]
         public virtual bool? LockDependencies { get; internal set; }
         /// <summary>
         ///   Use version requirements from paket.lock instead of paket.dependencies, and add them as a minimum version. <c>--lock-dependencies</c> will over-ride this option.
         /// </summary>
+        [ArgumentFormat("--minimum-from-lock-file")]
         public virtual bool? MinimumFromLockFile { get; internal set; }
         /// <summary>
         ///   Pin dependencies generated from project references (=) instead of using minimum (>=) for version specification.  If <c>--lock-dependencies</c> is specified, project references will be pinned even if this option is not specified.
         /// </summary>
+        [ArgumentFormat("--pin-project-references")]
         public virtual bool? PinProjectReferences { get; internal set; }
         /// <summary>
         ///   Build symbol/source packages in addition to library/content packages.
         /// </summary>
+        [ArgumentFormat("--symbols")]
         public virtual bool? Symbols { get; internal set; }
         /// <summary>
         ///   Include symbol/source from referenced projects.
         /// </summary>
+        [ArgumentFormat("--include-referenced-projects")]
         public virtual bool? IncludeReferencedProjects { get; internal set; }
         /// <summary>
         ///   Url to the projects home page.
         /// </summary>
+        [ArgumentFormat("--project-url {value}")]
         public virtual string ProjectUrl { get; internal set; }
         /// <summary>
         ///   Suppress console output.
         /// </summary>
+        [ArgumentFormat("--silent")]
         public virtual bool? Silent { get; internal set; }
         /// <summary>
         ///   Print detailed information to the console.
         /// </summary>
+        [ArgumentFormat("--verbose")]
         public virtual bool? Verbose { get; internal set; }
         /// <summary>
         ///   Print output to a file.
         /// </summary>
+        [ArgumentFormat("--log-file {value}")]
         public virtual string LogFile { get; internal set; }
         /// <summary>
         ///   Call coming from the <c>--run</c> feature of the bootstrapper.
         /// </summary>
+        [ArgumentFormat("--from-bootstrapper")]
         public virtual bool? FromBootstrapper { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

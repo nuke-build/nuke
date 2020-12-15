@@ -96,6 +96,7 @@ namespace Nuke.Common.Tools.MSpec
         ///     <li><c>-x</c> via <see cref="MSpecSettings.Excludes"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("")]
         public static IReadOnlyCollection<Output> MSpec(Configure<MSpecSettings> configurator)
         {
             return MSpec(configurator(new MSpecSettings()));
@@ -145,62 +146,80 @@ namespace Nuke.Common.Tools.MSpec
         /// <summary>
         ///   Assemblies with tests to be executed.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Assemblies => AssembliesInternal.AsReadOnly();
         internal List<string> AssembliesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.
         /// </summary>
+        [ArgumentFormat("-f={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Filters => FiltersInternal.AsReadOnly();
         internal List<string> FiltersInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.
         /// </summary>
+        [ArgumentFormat("-i={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Includes => IncludesInternal.AsReadOnly();
         internal List<string> IncludesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.
         /// </summary>
+        [ArgumentFormat("-x={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Excludes => ExcludesInternal.AsReadOnly();
         internal List<string> ExcludesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Outputs the HTML report to path, one-per-assembly w/ index.html (if directory, otherwise all are in one file). Ex. <c>--html=output/reports/</c>
         /// </summary>
+        [ArgumentFormat("--html={value}")]
         public virtual string HtmlOutput { get; internal set; }
         /// <summary>
         ///   Outputs the XML report to the file referenced by the path. Ex. <c>--xml=output/reports/MSpecResults.xml</c>
         /// </summary>
+        [ArgumentFormat("--xml={value}")]
         public virtual string XmlOutput { get; internal set; }
         /// <summary>
         ///   Reporting for TeamCity CI integration (also auto-detected).
         /// </summary>
+        [ArgumentFormat("--teamcity")]
         public virtual bool? TeamCity { get; internal set; }
         /// <summary>
         ///   Disables TeamCity autodetection.
         /// </summary>
+        [ArgumentFormat("--no-teamcity-autodetect")]
         public virtual bool? NoTeamCity { get; internal set; }
         /// <summary>
         ///   Reporting for AppVeyor CI integration (also auto-detected).
         /// </summary>
+        [ArgumentFormat("--appveyor")]
         public virtual bool? AppVeyor { get; internal set; }
         /// <summary>
         ///   Disables AppVeyor autodetection.
         /// </summary>
+        [ArgumentFormat("--no-appveyor-autodetect")]
         public virtual bool? NoAppVeyor { get; internal set; }
         /// <summary>
         ///   Shows time-related information in HTML output.
         /// </summary>
+        [ArgumentFormat("--timeinfo")]
         public virtual bool? TimeInfo { get; internal set; }
         /// <summary>
         ///   Suppress progress output (print fatal errors, failures and summary).
         /// </summary>
+        [ArgumentFormat("--silent")]
         public virtual bool? Silent { get; internal set; }
         /// <summary>
         ///   Print dotted progress output.
         /// </summary>
+        [ArgumentFormat("--progress")]
         public virtual bool? DottedProgress { get; internal set; }
         /// <summary>
         ///   Suppress colored console output.
         /// </summary>
+        [ArgumentFormat("--no-color")]
         public virtual bool? NoColor { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

@@ -95,6 +95,7 @@ namespace Nuke.Common.Tools.GitLink
         ///     <li><c>-u</c> via <see cref="GitLink2Settings.RepositoryUrl"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("")]
         public static IReadOnlyCollection<Output> GitLink2(Configure<GitLink2Settings> configurator)
         {
             return GitLink2(configurator(new GitLink2Settings()));
@@ -163,6 +164,7 @@ namespace Nuke.Common.Tools.GitLink
         ///     <li><c>--url</c> via <see cref="GitLink3Settings.RepositoryUrl"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("")]
         public static IReadOnlyCollection<Output> GitLink3(Configure<GitLink3Settings> configurator)
         {
             return GitLink3(configurator(new GitLink3Settings()));
@@ -204,54 +206,67 @@ namespace Nuke.Common.Tools.GitLink
         /// <summary>
         ///   The directory containing the solution with the pdb files.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string SolutionDirectory { get; internal set; }
         /// <summary>
         ///   Url to remote git repository.
         /// </summary>
+        [ArgumentFormat("-u {value}")]
         public virtual string RepositoryUrl { get; internal set; }
         /// <summary>
         ///   Solution file name.
         /// </summary>
+        [ArgumentFormat("-f {value}")]
         public virtual string File { get; internal set; }
         /// <summary>
         ///   Name of the configuration, default value is 'Release'.
         /// </summary>
+        [ArgumentFormat("-c {value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   Name of the platform, default value is 'AnyCPU'.
         /// </summary>
+        [ArgumentFormat("-p {value}")]
         public virtual string Platform { get; internal set; }
         /// <summary>
         ///   Name of the branch to use on the remote repository.
         /// </summary>
+        [ArgumentFormat("-b {value}")]
         public virtual string BranchName { get; internal set; }
         /// <summary>
         ///   The log file to write to.
         /// </summary>
+        [ArgumentFormat("-l {value}")]
         public virtual string LogFile { get; internal set; }
         /// <summary>
         ///   The SHA-1 hash of the commit.
         /// </summary>
+        [ArgumentFormat("-s {value}")]
         public virtual string CommitSha { get; internal set; }
         /// <summary>
         ///   The directory where pdb files exists, default value is the normal project output directory.
         /// </summary>
+        [ArgumentFormat("-d {value}")]
         public virtual string PdbDirectory { get; internal set; }
         /// <summary>
         ///   Use an indexing strategy that won't rely on SRCSRV http support, but use a powershell command for URL download instead.
         /// </summary>
+        [ArgumentFormat("-powershell")]
         public virtual bool? UsePowershell { get; internal set; }
         /// <summary>
         ///   Don't fail on errors, but treat them as warnings instead.
         /// </summary>
+        [ArgumentFormat("-errorsaswarnings")]
         public virtual bool? ErrorsAsWarnings { get; internal set; }
         /// <summary>
         ///   Skip pdb verification in case it causes issues (it's a formality anyway)
         /// </summary>
+        [ArgumentFormat("-skipverify")]
         public virtual bool? SkipVerification { get; internal set; }
         /// <summary>
         ///   Enables debug mode with special dumps of msbuild.
         /// </summary>
+        [ArgumentFormat("-debug")]
         public virtual bool? Debug { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -290,26 +305,32 @@ namespace Nuke.Common.Tools.GitLink
         /// <summary>
         ///   The PDB to add source indexing to.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string PdbFile { get; internal set; }
         /// <summary>
         ///   The method for SRCSRV to retrieve source code. One of &lt;Http|Powershell&gt;. Default is Http.
         /// </summary>
+        [ArgumentFormat("--method {value}")]
         public virtual GitLinkSourceCodeRetrieval Method { get; internal set; }
         /// <summary>
         ///   Url to remote git repository.
         /// </summary>
+        [ArgumentFormat("--url {value}")]
         public virtual string RepositoryUrl { get; internal set; }
         /// <summary>
         ///   The git ref to assume all the source code belongs to.
         /// </summary>
+        [ArgumentFormat("--commit {value}")]
         public virtual string CommitSha { get; internal set; }
         /// <summary>
         ///   The path to the root of the git repo.
         /// </summary>
+        [ArgumentFormat("--baseDir {value}")]
         public virtual string BaseDirectory { get; internal set; }
         /// <summary>
         ///   Skip verification that all source files are available in source control.
         /// </summary>
+        [ArgumentFormat("--skipVerify")]
         public virtual bool? SkipVerification { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

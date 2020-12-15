@@ -64,6 +64,7 @@ namespace Nuke.Common.Tools.Npm
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         /// </remarks>
+        [CommandFormat("ci")]
         public static IReadOnlyCollection<Output> NpmCi(Configure<NpmCiSettings> configurator)
         {
             return NpmCi(configurator(new NpmCiSettings()));
@@ -130,6 +131,7 @@ namespace Nuke.Common.Tools.Npm
         ///     <li><c>--production</c> via <see cref="NpmInstallSettings.Production"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("install")]
         public static IReadOnlyCollection<Output> NpmInstall(Configure<NpmInstallSettings> configurator)
         {
             return NpmInstall(configurator(new NpmInstallSettings()));
@@ -189,6 +191,7 @@ namespace Nuke.Common.Tools.Npm
         ///     <li><c>--</c> via <see cref="NpmRunSettings.Arguments"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("run")]
         public static IReadOnlyCollection<Output> NpmRun(Configure<NpmRunSettings> configurator)
         {
             return NpmRun(configurator(new NpmRunSettings()));
@@ -248,55 +251,68 @@ namespace Nuke.Common.Tools.Npm
         /// <summary>
         ///   List of packages to be installed.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual IReadOnlyList<string> Packages => PackagesInternal.AsReadOnly();
         internal List<string> PackagesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Causes npm to not install modules listed in devDependencies.
         /// </summary>
+        [ArgumentFormat("--production")]
         public virtual bool? Production { get; internal set; }
         /// <summary>
         ///   Forces npm to fetch remote resources even if a local copy exists on disk.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Causes npm to install the package globally rather than locally. See <a href="https://docs.npmjs.com/files/folders">npm-folders</a>.
         /// </summary>
+        [ArgumentFormat("--global")]
         public virtual bool? Global { get; internal set; }
         /// <summary>
         ///   Causes npm to install the package into your local <c>node_modules</c> folder with the same layout it uses with the global <c>node_modules</c> folder. Only your direct dependencies will show in <c>node_modules</c> and everything they depend on will be flattened in their <c>node_modules</c> folders. This obviously will eliminate some deduping.
         /// </summary>
+        [ArgumentFormat("--global-style")]
         public virtual bool? GlobalStyle { get; internal set; }
         /// <summary>
         ///   Causes npm to not execute any scripts defined in the package.json. See <a href="https://docs.npmjs.com/misc/scripts">npm-scripts</a>.
         /// </summary>
+        [ArgumentFormat("--ignore-scripts")]
         public virtual bool? IgnoreScripts { get; internal set; }
         /// <summary>
         ///   Causes npm to install the package such that versions of npm prior to 1.4, such as the one included with node 0.8, can install the package. This eliminates all automatic deduping.
         /// </summary>
+        [ArgumentFormat("--legacy-bundling")]
         public virtual bool? LegacyBundling { get; internal set; }
         /// <summary>
         ///   Cause npm to link global installs into the local space in some cases.
         /// </summary>
+        [ArgumentFormat("--link")]
         public virtual bool? Link { get; internal set; }
         /// <summary>
         ///   Prevents npm from creating symlinks for any binaries the package might contain.
         /// </summary>
+        [ArgumentFormat("--no-bin-links")]
         public virtual bool? NoBinLinks { get; internal set; }
         /// <summary>
         ///   Prevents optional dependencies from being installed.
         /// </summary>
+        [ArgumentFormat("--no-optional")]
         public virtual bool? NoOptional { get; internal set; }
         /// <summary>
         ///   Ignores an available shrinkwrap file and use the package.json instead.
         /// </summary>
+        [ArgumentFormat("--no-shrinkwrap")]
         public virtual bool? NoShrinkWrap { get; internal set; }
         /// <summary>
         ///   Allows npm to find the node source code so that npm can compile native modules.
         /// </summary>
+        [ArgumentFormat("--nodedir={value}")]
         public virtual string NodeDir { get; internal set; }
         /// <summary>
         ///   Causes either only <c>devDependencies</c> or only non-<c>devDependencies</c> to be installed regardless of the <c>NODE_ENV</c>.
         /// </summary>
+        [ArgumentFormat("--only={value}")]
         public virtual NpmOnlyMode Only { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -336,10 +352,13 @@ namespace Nuke.Common.Tools.Npm
         /// <summary>
         ///   The command to be executed.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Command { get; internal set; }
         /// <summary>
         ///   Arguments passed to the script.
         /// </summary>
+        [ArgumentFormat("-- {value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Arguments => ArgumentsInternal.AsReadOnly();
         internal List<string> ArgumentsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)

@@ -106,6 +106,7 @@ namespace Nuke.Common.Tools.DotCover
         ///     <li><c>--TempDir</c> via <see cref="DotCoverAnalyseSettings.TempDirectory"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("analyse")]
         public static IReadOnlyCollection<Output> DotCoverAnalyse(Configure<DotCoverAnalyseSettings> configurator)
         {
             return DotCoverAnalyse(configurator(new DotCoverAnalyseSettings()));
@@ -203,6 +204,7 @@ namespace Nuke.Common.Tools.DotCover
         ///     <li><c>--TempDir</c> via <see cref="DotCoverCoverSettings.TempDirectory"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("cover")]
         public static IReadOnlyCollection<Output> DotCoverCover(Configure<DotCoverCoverSettings> configurator)
         {
             return DotCoverCover(configurator(new DotCoverCoverSettings()));
@@ -269,6 +271,7 @@ namespace Nuke.Common.Tools.DotCover
         ///     <li><c>--Source</c> via <see cref="DotCoverDeleteSettings.Source"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("delete")]
         public static IReadOnlyCollection<Output> DotCoverDelete(Configure<DotCoverDeleteSettings> configurator)
         {
             return DotCoverDelete(configurator(new DotCoverDeleteSettings()));
@@ -324,6 +327,7 @@ namespace Nuke.Common.Tools.DotCover
         ///     <li><c>--TempDir</c> via <see cref="DotCoverMergeSettings.TempDirectory"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("merge")]
         public static IReadOnlyCollection<Output> DotCoverMerge(Configure<DotCoverMergeSettings> configurator)
         {
             return DotCoverMerge(configurator(new DotCoverMergeSettings()));
@@ -383,6 +387,7 @@ namespace Nuke.Common.Tools.DotCover
         ///     <li><c>--Source</c> via <see cref="DotCoverReportSettings.Source"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("report")]
         public static IReadOnlyCollection<Output> DotCoverReport(Configure<DotCoverReportSettings> configurator)
         {
             return DotCoverReport(configurator(new DotCoverReportSettings()));
@@ -439,6 +444,7 @@ namespace Nuke.Common.Tools.DotCover
         ///     <li><c>--Source</c> via <see cref="DotCoverZipSettings.Source"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("zip")]
         public static IReadOnlyCollection<Output> DotCoverZip(Configure<DotCoverZipSettings> configurator)
         {
             return DotCoverZip(configurator(new DotCoverZipSettings()));
@@ -475,83 +481,107 @@ namespace Nuke.Common.Tools.DotCover
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
         public override Action<OutputType, string> ProcessCustomLogger => DotCoverTasks.DotCoverLogger;
+        [ArgumentFormat("{value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   A type of the report. The default value is <c>XML</c>.
         /// </summary>
+        [ArgumentFormat("--ReportType={value}")]
         public virtual DotCoverReportType ReportType { get; internal set; }
         /// <summary>
         ///   Resulting report file name.
         /// </summary>
+        [ArgumentFormat("--Output={value}")]
         public virtual string OutputFile { get; internal set; }
         /// <summary>
         ///   Remove auto-implemented properties from report.
         /// </summary>
+        [ArgumentFormat("--HideAutoProperties")]
         public virtual bool? HideAutoProperties { get; internal set; }
         /// <summary>
         ///   File name of the program to analyse.
         /// </summary>
+        [ArgumentFormat("--TargetExecutable={value}")]
         public virtual string TargetExecutable { get; internal set; }
         /// <summary>
         ///   Program arguments.
         /// </summary>
+        [ArgumentFormat("--TargetArguments={value}")]
         public virtual string TargetArguments { get; internal set; }
         /// <summary>
         ///   Program working directory.
         /// </summary>
+        [ArgumentFormat("--TargetWorkingDir={value}")]
         public virtual string TargetWorkingDirectory { get; internal set; }
         /// <summary>
         ///   Directory for auxiliary files. Set to the system temp by default.
         /// </summary>
+        [ArgumentFormat("--TempDir={value}")]
         public virtual string TempDirectory { get; internal set; }
         /// <summary>
         ///   Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.
         /// </summary>
+        [ArgumentFormat("--InheritConsole={value}")]
         public virtual bool? InheritConsole { get; internal set; } = true;
         /// <summary>
         ///   Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.
         /// </summary>
+        [ArgumentFormat("--AnalyseTargetArguments={value}")]
         public virtual bool? AnalyseTargetArguments { get; internal set; } = true;
         /// <summary>
         ///   Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).
         /// </summary>
+        [ArgumentFormat("--Scope={value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> Scope => ScopeInternal.AsReadOnly();
         internal List<string> ScopeInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.
         /// </summary>
+        [ArgumentFormat("--Filters={value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> Filters => FiltersInternal.AsReadOnly();
         internal List<string> FiltersInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.
         /// </summary>
+        [ArgumentFormat("--AttributeFilters={value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> AttributeFilters => AttributeFiltersInternal.AsReadOnly();
         internal List<string> AttributeFiltersInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Disables default (automatically added) filters.
         /// </summary>
+        [ArgumentFormat("--DisableDefaultFilters")]
         public virtual bool? DisableDefaultFilters { get; internal set; }
         /// <summary>
         ///   Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.
         /// </summary>
+        [ArgumentFormat("--SymbolSearchPaths={value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> SymbolSearchPaths => SymbolSearchPathsInternal.AsReadOnly();
         internal List<string> SymbolSearchPathsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Allows dotCover to search for PDB files on a symbol server.
         /// </summary>
+        [ArgumentFormat("--AllowSymbolServerAccess")]
         public virtual bool? AllowSymbolServerAccess { get; internal set; }
         /// <summary>
         ///   Returns the exit code of the target executable in case coverage analysis succeeded.
         /// </summary>
+        [ArgumentFormat("--ReturnTargetExitCode")]
         public virtual bool? ReturnTargetExitCode { get; internal set; }
         /// <summary>
         ///   Specifies process filters. Syntax: <c>+:process1;-:process2</c>.
         /// </summary>
+        [ArgumentFormat("--ProcessFilters={value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> ProcessFilters => ProcessFiltersInternal.AsReadOnly();
         internal List<string> ProcessFiltersInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Enables logging and specifies log file name.
         /// </summary>
+        [ArgumentFormat("--LogFile={value}")]
         public virtual string LogFile { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -594,79 +624,102 @@ namespace Nuke.Common.Tools.DotCover
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
         public override Action<OutputType, string> ProcessCustomLogger => DotCoverTasks.DotCoverLogger;
+        [ArgumentFormat("{value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   Path to the resulting coverage snapshot.
         /// </summary>
+        [ArgumentFormat("--Output={value}")]
         public virtual string OutputFile { get; internal set; }
         /// <summary>
         ///   A type of the report. The default value is <c>XML</c>.
         /// </summary>
+        [ArgumentFormat("--ReportType={value}")]
         public virtual DotCoverReportType ReportType { get; internal set; }
         /// <summary>
         ///   File name of the program to analyse.
         /// </summary>
+        [ArgumentFormat("--TargetExecutable={value}")]
         public virtual string TargetExecutable { get; internal set; }
         /// <summary>
         ///   Program arguments.
         /// </summary>
+        [ArgumentFormat("--TargetArguments={value}")]
         public virtual string TargetArguments { get; internal set; }
         /// <summary>
         ///   Program working directory.
         /// </summary>
+        [ArgumentFormat("--TargetWorkingDir={value}")]
         public virtual string TargetWorkingDirectory { get; internal set; }
         /// <summary>
         ///   Directory for auxiliary files. Set to the system temp by default.
         /// </summary>
+        [ArgumentFormat("--TempDir={value}")]
         public virtual string TempDirectory { get; internal set; }
         /// <summary>
         ///   Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.
         /// </summary>
+        [ArgumentFormat("--InheritConsole={value}")]
         public virtual bool? InheritConsole { get; internal set; } = true;
         /// <summary>
         ///   Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.
         /// </summary>
+        [ArgumentFormat("--AnalyseTargetArguments={value}")]
         public virtual bool? AnalyseTargetArguments { get; internal set; } = true;
         /// <summary>
         ///   Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).
         /// </summary>
+        [ArgumentFormat("--Scope={value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> Scope => ScopeInternal.AsReadOnly();
         internal List<string> ScopeInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.
         /// </summary>
+        [ArgumentFormat("--Filters={value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> Filters => FiltersInternal.AsReadOnly();
         internal List<string> FiltersInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.
         /// </summary>
+        [ArgumentFormat("--AttributeFilters={value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> AttributeFilters => AttributeFiltersInternal.AsReadOnly();
         internal List<string> AttributeFiltersInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Disables default (automatically added) filters.
         /// </summary>
+        [ArgumentFormat("--DisableDefaultFilters")]
         public virtual bool? DisableDefaultFilters { get; internal set; }
         /// <summary>
         ///   Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.
         /// </summary>
+        [ArgumentFormat("--SymbolSearchPaths={value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> SymbolSearchPaths => SymbolSearchPathsInternal.AsReadOnly();
         internal List<string> SymbolSearchPathsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Allows dotCover to search for PDB files on a symbol server.
         /// </summary>
+        [ArgumentFormat("--AllowSymbolServerAccess")]
         public virtual bool? AllowSymbolServerAccess { get; internal set; }
         /// <summary>
         ///   Returns the exit code of the target executable in case coverage analysis succeeded.
         /// </summary>
+        [ArgumentFormat("--ReturnTargetExitCode")]
         public virtual bool? ReturnTargetExitCode { get; internal set; }
         /// <summary>
         ///   Specifies process filters. Syntax: <c>+:process1;-:process2</c>.
         /// </summary>
+        [ArgumentFormat("--ProcessFilters={value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> ProcessFilters => ProcessFiltersInternal.AsReadOnly();
         internal List<string> ProcessFiltersInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Enables logging and specifies log file name.
         /// </summary>
+        [ArgumentFormat("--LogFile={value}")]
         public virtual string LogFile { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -708,15 +761,19 @@ namespace Nuke.Common.Tools.DotCover
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
         public override Action<OutputType, string> ProcessCustomLogger => DotCoverTasks.DotCoverLogger;
+        [ArgumentFormat("{value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   List of snapshot files.
         /// </summary>
+        [ArgumentFormat("--Source={value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> Source => SourceInternal.AsReadOnly();
         internal List<string> SourceInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Enables logging and specifies log file name.
         /// </summary>
+        [ArgumentFormat("--LogFile={value}")]
         public virtual string LogFile { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -743,23 +800,29 @@ namespace Nuke.Common.Tools.DotCover
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
         public override Action<OutputType, string> ProcessCustomLogger => DotCoverTasks.DotCoverLogger;
+        [ArgumentFormat("{value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   List of snapshot files.
         /// </summary>
+        [ArgumentFormat("--Source={value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> Source => SourceInternal.AsReadOnly();
         internal List<string> SourceInternal { get; set; } = new List<string>();
         /// <summary>
         ///   File name for the merged snapshot.
         /// </summary>
+        [ArgumentFormat("--Output={value}")]
         public virtual string OutputFile { get; internal set; }
         /// <summary>
         ///   Directory for auxiliary files. Set to the system temp by default.
         /// </summary>
+        [ArgumentFormat("--TempDir={value}")]
         public virtual string TempDirectory { get; internal set; }
         /// <summary>
         ///   Enables logging and specifies log file name.
         /// </summary>
+        [ArgumentFormat("--LogFile={value}")]
         public virtual string LogFile { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -788,27 +851,34 @@ namespace Nuke.Common.Tools.DotCover
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
         public override Action<OutputType, string> ProcessCustomLogger => DotCoverTasks.DotCoverLogger;
+        [ArgumentFormat("{value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   List of snapshot files.
         /// </summary>
+        [ArgumentFormat("--Source={value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> Source => SourceInternal.AsReadOnly();
         internal List<string> SourceInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Resulting report file name.
         /// </summary>
+        [ArgumentFormat("--Output={value}")]
         public virtual string OutputFile { get; internal set; }
         /// <summary>
         ///   A type of the report. The default value is <c>XML</c>.
         /// </summary>
+        [ArgumentFormat("--ReportType={value}")]
         public virtual DotCoverReportType ReportType { get; internal set; }
         /// <summary>
         ///   Remove auto-implemented properties from report.
         /// </summary>
+        [ArgumentFormat("--HideAutoProperties")]
         public virtual bool? HideAutoProperties { get; internal set; }
         /// <summary>
         ///   Enables logging and specifies log file name.
         /// </summary>
+        [ArgumentFormat("--LogFile={value}")]
         public virtual string LogFile { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -838,18 +908,22 @@ namespace Nuke.Common.Tools.DotCover
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
         public override Action<OutputType, string> ProcessCustomLogger => DotCoverTasks.DotCoverLogger;
+        [ArgumentFormat("{value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   Coverage snapshot file name.
         /// </summary>
+        [ArgumentFormat("--Source={value}")]
         public virtual string Source { get; internal set; }
         /// <summary>
         ///   Zipped snapshot file name.
         /// </summary>
+        [ArgumentFormat("--Output={value}")]
         public virtual string OutputFile { get; internal set; }
         /// <summary>
         ///   Enables logging and specifies log file name.
         /// </summary>
+        [ArgumentFormat("--LogFile={value}")]
         public virtual string LogFile { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

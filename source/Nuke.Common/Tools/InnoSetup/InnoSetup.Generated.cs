@@ -88,6 +88,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///     <li><c>/V</c> via <see cref="InnoSetupSettings.Verbosity"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("")]
         public static IReadOnlyCollection<Output> InnoSetup(Configure<InnoSetupSettings> configurator)
         {
             return InnoSetup(configurator(new InnoSetupSettings()));
@@ -133,45 +134,57 @@ namespace Nuke.Common.Tools.InnoSetup
         /// <summary>
         ///   The .iss script file to compile
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string ScriptFile { get; internal set; }
         /// <summary>
         ///   Enable or disable output (overrides <c>Output</c>)
         /// </summary>
+        [ArgumentFormat("/O{value}")]
         public virtual bool? Output { get; internal set; }
         /// <summary>
         ///   Output files to specified path (overrides <c>OutputDir</c>)
         /// </summary>
+        [ArgumentFormat("/O{value}")]
         public virtual string OutputDir { get; internal set; }
         /// <summary>
         ///   Overrides OutputBaseFilename with the specified filename
         /// </summary>
+        [ArgumentFormat("/F{value}")]
         public virtual string OutputBaseFilename { get; internal set; }
         /// <summary>
         ///   Sets a SignTool with the specified name and command
         /// </summary>
+        [ArgumentFormat("/S{value}")]
+        [ItemFormat("{key}={value}")]
         public virtual IReadOnlyDictionary<string, string> SignTools => SignToolsInternal.AsReadOnly();
         internal Dictionary<string, string> SignToolsInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Quiet compile (print error messages only)
         /// </summary>
+        [ArgumentFormat("/Q")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   Enable quiet compile while still displaying progress
         /// </summary>
+        [ArgumentFormat("/Qp")]
         public virtual bool? QuietWithProgress { get; internal set; }
         /// <summary>
         ///   Emulate <c>#define public {name} {value}</c>
         /// </summary>
+        [ArgumentFormat("/D{value}")]
+        [ItemFormat("{key}={value}")]
         public virtual IReadOnlyDictionary<string, string> KeyValueDefinitions => KeyValueDefinitionsInternal.AsReadOnly();
         internal Dictionary<string, string> KeyValueDefinitionsInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Emulate <c>#define public {name}</c>
         /// </summary>
+        [ArgumentFormat("/D{value}")]
         public virtual IReadOnlyList<string> KeyDefinitions => KeyDefinitionsInternal.AsReadOnly();
         internal List<string> KeyDefinitionsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Emulate <c>#pragma verboselevel {number}</c> (highest level is 9)
         /// </summary>
+        [ArgumentFormat("/V{value}")]
         public virtual int? Verbosity { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

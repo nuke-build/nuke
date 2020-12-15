@@ -166,6 +166,7 @@ namespace Nuke.Common.Tools.BenchmarkDotNet
         ///     <li><c>--warmupCount</c> via <see cref="BenchmarkDotNetSettings.WarmupCount"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("")]
         public static IReadOnlyCollection<Output> BenchmarkDotNet(Configure<BenchmarkDotNetSettings> configurator)
         {
             return BenchmarkDotNet(configurator(new BenchmarkDotNetSettings()));
@@ -250,206 +251,262 @@ namespace Nuke.Common.Tools.BenchmarkDotNet
         /// <summary>
         ///   The assembly with the benchmarks (required).
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string AssemblyFile { get; internal set; }
         /// <summary>
         ///   Dry/Short/Medium/Long or Default
         /// </summary>
+        [ArgumentFormat("--job {value}")]
         public virtual BenchmarkDotNetJob Job { get; internal set; }
         /// <summary>
         ///   Full target framework moniker for .NET Core and .NET. For Mono just 'Mono', for CoreRT just 'CoreRT'. First one will be marked as baseline!
         /// </summary>
+        [ArgumentFormat("--runtimes {value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Runtimes => RuntimesInternal.AsReadOnly();
         internal List<string> RuntimesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   GitHub/StackOverflow/RPlot/CSV/JSON/HTML/XML
         /// </summary>
+        [ArgumentFormat("--exporters {value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<BenchmarkDotNetExporter> Exporters => ExportersInternal.AsReadOnly();
         internal List<BenchmarkDotNetExporter> ExportersInternal { get; set; } = new List<BenchmarkDotNetExporter>();
         /// <summary>
         ///   Prints memory statistics
         /// </summary>
+        [ArgumentFormat("--memory")]
         public virtual bool? MemoryStats { get; internal set; }
         /// <summary>
         ///   Prints threading statistics
         /// </summary>
+        [ArgumentFormat("--threading")]
         public virtual bool? ThreadingStats { get; internal set; }
         /// <summary>
         ///   Gets disassembly of benchmarked code
         /// </summary>
+        [ArgumentFormat("--disasm")]
         public virtual bool? Disassembly { get; internal set; }
         /// <summary>
         ///   Profiles benchmarked code using selected profiler.
         /// </summary>
+        [ArgumentFormat("--profiler {value}")]
         public virtual BenchmarkDotNetProfiler Profiler { get; internal set; }
         /// <summary>
         ///   Glob patterns, e.g. <c>*</c>, <c>*.ClassA.*</c>, <c>*.ClassB.*</c>
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual IReadOnlyList<string> Filter => FilterInternal.AsReadOnly();
         internal List<string> FilterInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Run benchmarks in Process
         /// </summary>
+        [ArgumentFormat("--inProcess")]
         public virtual bool? RunInProcess { get; internal set; }
         /// <summary>
         ///   Valid path to accessible directory
         /// </summary>
+        [ArgumentFormat("--artifacts {value}")]
         public virtual string ArtifactsDirecory { get; internal set; }
         /// <summary>
         ///   DontRemove/RemoveUpper/RemoveLower/RemoveAll
         /// </summary>
+        [ArgumentFormat("--outliers {value}")]
         public virtual BenchmarkDotNetOutlierMode OutlierMode { get; internal set; }
         /// <summary>
         ///   Affinity mask to set for the benchmark process
         /// </summary>
+        [ArgumentFormat("--affinity {value}")]
         public virtual int? Affinity { get; internal set; }
         /// <summary>
         ///   Displays all statistics (min, max &amp; more)
         /// </summary>
+        [ArgumentFormat("--allStats")]
         public virtual bool? DisplayAllStatistics { get; internal set; }
         /// <summary>
         ///   Categories to run. If few are provided, only the benchmarks which belong to all of them are going to be executed
         /// </summary>
+        [ArgumentFormat("--allCategories {value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> AllCategories => AllCategoriesInternal.AsReadOnly();
         internal List<string> AllCategoriesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Any Categories to run
         /// </summary>
+        [ArgumentFormat("--anyCategories {value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> AnyCategories => AnyCategoriesInternal.AsReadOnly();
         internal List<string> AnyCategoriesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Run all methods with given attribute (applied to class or method)
         /// </summary>
+        [ArgumentFormat("--attribute {value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> AttributeNames => AttributeNamesInternal.AsReadOnly();
         internal List<string> AttributeNamesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Prints single table with results for all benchmarks
         /// </summary>
+        [ArgumentFormat("--join {value}")]
         public virtual bool? Join { get; internal set; }
         /// <summary>
         ///   Determines if all auto-generated files should be kept or removed after running the benchmarks.
         /// </summary>
+        [ArgumentFormat("--keepFiles")]
         public virtual bool? KeepBenchmarkFiles { get; internal set; }
         /// <summary>
         ///   Determines if the exported result files should not be overwritten (by default they are overwritten).
         /// </summary>
+        [ArgumentFormat("--noOverwrite")]
         public virtual bool? DontOverwriteResults { get; internal set; }
         /// <summary>
         ///   Hardware Counters
         /// </summary>
+        [ArgumentFormat("--counters {value}")]
+        [Separator("+")]
         public virtual IReadOnlyList<string> HardwareCounters => HardwareCountersInternal.AsReadOnly();
         internal List<string> HardwareCountersInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Path to dotnet CLI (optional).
         /// </summary>
+        [ArgumentFormat("--cli {value}")]
         public virtual string CliPath { get; internal set; }
         /// <summary>
         ///   The directory to restore packages to (optional).
         /// </summary>
+        [ArgumentFormat("--packages {value}")]
         public virtual string RestorePath { get; internal set; }
         /// <summary>
         ///   Path(s) to CoreRun (optional).
         /// </summary>
+        [ArgumentFormat("--coreRun {value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> CoreRunPaths => CoreRunPathsInternal.AsReadOnly();
         internal List<string> CoreRunPathsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Optional path to Mono which should be used for running benchmarks.
         /// </summary>
+        [ArgumentFormat("--monoPath {value}")]
         public virtual string MonoPath { get; internal set; }
         /// <summary>
         ///   Optional version of private CLR build used as the value of <c>COMPLUS_Version</c> env var.
         /// </summary>
+        [ArgumentFormat("--clrVersion {value}")]
         public virtual string ClrVersion { get; internal set; }
         /// <summary>
         ///   Optional version of <c>Microsoft.DotNet.ILCompiler</c> which should be used to run with CoreRT. Example: <c>1.0.0-alpha-26414-01</c>
         /// </summary>
+        [ArgumentFormat("--coreRtVersion {value}")]
         public virtual string CoreRtVersion { get; internal set; }
         /// <summary>
         ///   Optional IlcPath which should be used to run with private CoreRT build.
         /// </summary>
+        [ArgumentFormat("--ilcPath {value}")]
         public virtual string CoreRtPath { get; internal set; }
         /// <summary>
         ///   How many times we should launch process with target benchmark. The default is <c>1</c>.
         /// </summary>
+        [ArgumentFormat("--launchCount {value}")]
         public virtual int? LaunchCount { get; internal set; }
         /// <summary>
         ///   How many warmup iterations should be performed. If you set it, the <c>minWarmupCount</c> and <c>maxWarmupCount</c> are ignored. By default calculated by the heuristic.
         /// </summary>
+        [ArgumentFormat("--warmupCount {value}")]
         public virtual int? WarmupCount { get; internal set; }
         /// <summary>
         ///   Minimum count of warmup iterations that should be performed. The default is <c>6</c>.
         /// </summary>
+        [ArgumentFormat("--minWarmupCount {value}")]
         public virtual int? MinWarmupCount { get; internal set; }
         /// <summary>
         ///   Maximum count of warmup iterations that should be performed. The default is <c>50</c>.
         /// </summary>
+        [ArgumentFormat("--maxWarmupCount {value}")]
         public virtual int? MaxWarmupCount { get; internal set; }
         /// <summary>
         ///   Desired time of execution of an iteration in milliseconds. Used by Pilot stage to estimate the number of invocations per iteration. The default is <c>500</c> milliseconds.
         /// </summary>
+        [ArgumentFormat("--iterationTime {value}")]
         public virtual int? IterationTime { get; internal set; }
         /// <summary>
         ///   How many target iterations should be performed. By default calculated by the heuristic.
         /// </summary>
+        [ArgumentFormat("--iterationCount {value}")]
         public virtual int? IterationCount { get; internal set; }
         /// <summary>
         ///   Minimum number of iterations to run. The default is <c>15</c>.
         /// </summary>
+        [ArgumentFormat("--minIterationCount {value}")]
         public virtual int? MinIterationCount { get; internal set; }
         /// <summary>
         ///   Maximum number of iterations to run. The default is <c>100</c>.
         /// </summary>
+        [ArgumentFormat("--maxIterationCount {value}")]
         public virtual int? MaxIterationCount { get; internal set; }
         /// <summary>
         ///   Invocation count in a single iteration. By default calculated by the heuristic.
         /// </summary>
+        [ArgumentFormat("--invocationCount {value}")]
         public virtual int? InvocationCount { get; internal set; }
         /// <summary>
         ///   How many times the benchmark method will be invoked per one iteration of a generated loop. The default is <c>16</c>.
         /// </summary>
+        [ArgumentFormat("--unrollFactor {value}")]
         public virtual int? UnrollFactor { get; internal set; }
         /// <summary>
         ///   The run strategy that should be used. Throughput/ColdStart/Monitoring.
         /// </summary>
+        [ArgumentFormat("--strategy {value}")]
         public virtual BenchmarkDotNetRunStrategy RunStrategy { get; internal set; }
         /// <summary>
         ///   Run the benchmark exactly once per iteration.
         /// </summary>
+        [ArgumentFormat("--runOncePerIteration")]
         public virtual bool? RunOncePerIteration { get; internal set; }
         /// <summary>
         ///   Print environment information.
         /// </summary>
+        [ArgumentFormat("--info")]
         public virtual bool? PrintInformation { get; internal set; }
         /// <summary>
         ///   Prints all of the available benchmark names. Flat/Tree
         /// </summary>
+        [ArgumentFormat("--list {value}")]
         public virtual BenchmarkDotNetCaseMode ListBenchmarkCaseMode { get; internal set; }
         /// <summary>
         ///   Sets the recursive depth for the disassembler.
         /// </summary>
+        [ArgumentFormat("--disasmDepth {value}")]
         public virtual int? DisassemblyRecursiveDepth { get; internal set; }
         /// <summary>
         ///   Generates diff reports for the disassembler.
         /// </summary>
+        [ArgumentFormat("--disasmDiff")]
         public virtual bool? DisassemblyDiff { get; internal set; }
         /// <summary>
         ///   Build timeout in seconds.
         /// </summary>
+        [ArgumentFormat("--buildTimeout {value}")]
         public virtual int? BuildTimeout { get; internal set; }
         /// <summary>
         ///   Stop on first error.
         /// </summary>
+        [ArgumentFormat("--stopOnFirstError")]
         public virtual bool? StopOnFirstError { get; internal set; }
         /// <summary>
         ///   Threshold for Mann–Whitney U Test. Examples: <c>5%</c>, <c>10ms</c>, <c>100ns</c>, <c>1s</c>
         /// </summary>
+        [ArgumentFormat("--statisticalTest {value}")]
         public virtual string StatisticalTestThreshold { get; internal set; }
         /// <summary>
         ///   Disables the logfile.
         /// </summary>
+        [ArgumentFormat("--disableLogFile")]
         public virtual bool? DisableLogFile { get; internal set; }
         /// <summary>
         ///   Max paramter column width, the default is <c>20</c>.
         /// </summary>
+        [ArgumentFormat("--maxWidth {value}")]
         public virtual int? MaxParameterColumnWidth { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

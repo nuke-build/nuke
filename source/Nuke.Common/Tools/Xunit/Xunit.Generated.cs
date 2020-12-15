@@ -112,6 +112,7 @@ namespace Nuke.Common.Tools.Xunit
         ///     <li><c>-wait</c> via <see cref="Xunit2Settings.Wait"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("")]
         public static IReadOnlyCollection<Output> Xunit2(Configure<Xunit2Settings> configurator)
         {
             return Xunit2(configurator(new Xunit2Settings()));
@@ -169,98 +170,125 @@ namespace Nuke.Common.Tools.Xunit
         /// <summary>
         ///   Assemblies to test, and their related related configuration files (ending with .json or .config).
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [ItemFormat("{key} {value}")]
         public virtual ILookup<string, string> TargetAssemblyWithConfigs => TargetAssemblyWithConfigsInternal.AsReadOnly();
         internal LookupTable<string, string> TargetAssemblyWithConfigsInternal { get; set; } = new LookupTable<string, string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Do not show the copyright message.
         /// </summary>
+        [ArgumentFormat("-nologo")]
         public virtual bool? NoLogo { get; internal set; }
         /// <summary>
         ///   Do not output results with colors.
         /// </summary>
+        [ArgumentFormat("-nocolor")]
         public virtual bool? NoColor { get; internal set; }
         /// <summary>
         ///   Convert skipped tests into failures.
         /// </summary>
+        [ArgumentFormat("-failskips")]
         public virtual bool? FailSkips { get; internal set; }
         /// <summary>
         ///   Stop on first test failure.
         /// </summary>
+        [ArgumentFormat("-stoponfail")]
         public virtual bool? StopOnFail { get; internal set; }
         /// <summary>
         ///   Set parallelization based on option:<ul><li><b>none:</b> turn off all parallelization</li><li><b>collections:</b> only parallelize collections</li><li><b>assemblies:</b> only parallelize assemblies</li><li><b>all:</b> parallelize assemblies &amp; collections</li></ul>
         /// </summary>
+        [ArgumentFormat("-parallel {value}")]
         public virtual Xunit2ParallelOption Parallel { get; internal set; }
         /// <summary>
         ///   Maximum thread count for collection parallelization:<br/><ul><li><b>default:</b> run with default (1 thread per CPU thread)</li><li><b>unlimited:</b> run with unbounded thread count</li><li><b>(number):</b> limit task thread pool size to 'count'</li></ul>
         /// </summary>
+        [ArgumentFormat("-maxthreads {value}")]
         public virtual int? MaxThreads { get; internal set; }
         /// <summary>
         ///   AppDomain modes:<ul><li><c>-ifavailable</c>: choose based on library type</li><li><c>-required</c>: force app domains on</li><li><c>-denied</c>: force app domains off</li></ul>
         /// </summary>
+        [ArgumentFormat("-appdomains {value}")]
         public virtual Xunit2AppDomainMode AppDomainMode { get; internal set; }
         /// <summary>
         ///   Do not shadow copy assemblies.
         /// </summary>
+        [ArgumentFormat("-noshadow")]
         public virtual bool? NoShadowCopying { get; internal set; }
         /// <summary>
         ///   Wait for input after completion.
         /// </summary>
+        [ArgumentFormat("-wait")]
         public virtual bool? Wait { get; internal set; }
         /// <summary>
         ///   Enable diagnostics messages for all test assemblies.
         /// </summary>
+        [ArgumentFormat("-diagnostics")]
         public virtual bool? Diagnostics { get; internal set; }
         /// <summary>
         ///   Pause before doing any work, to help attach a debugger.
         /// </summary>
+        [ArgumentFormat("-pause")]
         public virtual bool? Pause { get; internal set; }
         /// <summary>
         ///   Launch the debugger to debug the tests.
         /// </summary>
+        [ArgumentFormat("-debug")]
         public virtual bool? Debug { get; internal set; }
         /// <summary>
         ///   Serialize all test cases (for diagnostic purposes only).
         /// </summary>
+        [ArgumentFormat("-serialize")]
         public virtual bool? Serialization { get; internal set; }
         /// <summary>
         ///   Only run tests with matching name/value traits.
         /// </summary>
+        [ArgumentFormat("-trait {value}")]
+        [ItemFormat("{key}={value}")]
         public virtual ILookup<string, string> Traits => TraitsInternal.AsReadOnly();
         internal LookupTable<string, string> TraitsInternal { get; set; } = new LookupTable<string, string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Do not run tests with matching name/value traits.
         /// </summary>
+        [ArgumentFormat("-notrait {value}")]
+        [ItemFormat("{key}={value}")]
         public virtual ILookup<string, string> ExcludedTraits => ExcludedTraitsInternal.AsReadOnly();
         internal LookupTable<string, string> ExcludedTraitsInternal { get; set; } = new LookupTable<string, string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').
         /// </summary>
+        [ArgumentFormat("-method {value}")]
         public virtual IReadOnlyList<string> Methods => MethodsInternal.AsReadOnly();
         internal List<string> MethodsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').
         /// </summary>
+        [ArgumentFormat("-class {value}")]
         public virtual IReadOnlyList<string> Classes => ClassesInternal.AsReadOnly();
         internal List<string> ClassesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').
         /// </summary>
+        [ArgumentFormat("-namespace {value}")]
         public virtual IReadOnlyList<string> Namespaces => NamespacesInternal.AsReadOnly();
         internal List<string> NamespacesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).
         /// </summary>
+        [ArgumentFormat("-noautoreporters")]
         public virtual bool? NoAutoReporters { get; internal set; }
         /// <summary>
         ///   Reporters:<ul><li><c>-appveyor</c>: forces AppVeyor CI mode (normally auto-detected)</li><li><c>-json</c>: show progress messages in JSON format</li><li><c>-quiet</c>: do not show progress messages</li><li><c>-teamcity</c>: forces TeamCity mode (normally auto-detected)</li><li><c>-verbose</c>: show verbose progress messages</li></ul>
         /// </summary>
+        [ArgumentFormat("-{value}")]
         public virtual Xunit2ReporterType Reporter { get; internal set; }
         /// <summary>
         ///   Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul>
         /// </summary>
+        [ArgumentFormat("-{value}")]
+        [ItemFormat("{key} {value}")]
         public virtual IReadOnlyDictionary<Xunit2ResultFormat, string> ResultReports => ResultReportsInternal.AsReadOnly();
         internal Dictionary<Xunit2ResultFormat, string> ResultReportsInternal { get; set; } = new Dictionary<Xunit2ResultFormat, string>(EqualityComparer<Xunit2ResultFormat>.Default);
+        [ArgumentFormat("")]
         public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

@@ -126,6 +126,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>/property</c> via <see cref="DotNetTestSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("test")]
         public static IReadOnlyCollection<Output> DotNetTest(Configure<DotNetTestSettings> configurator)
         {
             return DotNetTest(configurator(new DotNetTestSettings()));
@@ -240,6 +241,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>/property</c> via <see cref="DotNetRunSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("run")]
         public static IReadOnlyCollection<Output> DotNetRun(Configure<DotNetRunSettings> configurator)
         {
             return DotNetRun(configurator(new DotNetRunSettings()));
@@ -335,6 +337,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>/property</c> via <see cref="DotNetRestoreSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("restore")]
         public static IReadOnlyCollection<Output> DotNetRestore(Configure<DotNetRestoreSettings> configurator)
         {
             return DotNetRestore(configurator(new DotNetRestoreSettings()));
@@ -441,6 +444,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>/property</c> via <see cref="DotNetPackSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("pack")]
         public static IReadOnlyCollection<Output> DotNetPack(Configure<DotNetPackSettings> configurator)
         {
             return DotNetPack(configurator(new DotNetPackSettings()));
@@ -555,6 +559,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>/property</c> via <see cref="DotNetBuildSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("build")]
         public static IReadOnlyCollection<Output> DotNetBuild(Configure<DotNetBuildSettings> configurator)
         {
             return DotNetBuild(configurator(new DotNetBuildSettings()));
@@ -637,6 +642,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>/property</c> via <see cref="DotNetCleanSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("clean")]
         public static IReadOnlyCollection<Output> DotNetClean(Configure<DotNetCleanSettings> configurator)
         {
             return DotNetClean(configurator(new DotNetCleanSettings()));
@@ -735,6 +741,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>/property</c> via <see cref="DotNetPublishSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("publish")]
         public static IReadOnlyCollection<Output> DotNetPublish(Configure<DotNetPublishSettings> configurator)
         {
             return DotNetPublish(configurator(new DotNetPublishSettings()));
@@ -823,6 +830,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--timeout</c> via <see cref="DotNetNuGetPushSettings.Timeout"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("nuget push")]
         public static IReadOnlyCollection<Output> DotNetNuGetPush(Configure<DotNetNuGetPushSettings> configurator)
         {
             return DotNetNuGetPush(configurator(new DotNetNuGetPushSettings()));
@@ -888,6 +896,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--valid-authentication-types</c> via <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("nuget add source")]
         public static IReadOnlyCollection<Output> DotNetNuGetAddSource(Configure<DotNetNuGetAddSourceSettings> configurator)
         {
             return DotNetNuGetAddSource(configurator(new DotNetNuGetAddSourceSettings()));
@@ -952,6 +961,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--version</c> via <see cref="DotNetToolInstallSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("tool install")]
         public static IReadOnlyCollection<Output> DotNetToolInstall(Configure<DotNetToolInstallSettings> configurator)
         {
             return DotNetToolInstall(configurator(new DotNetToolInstallSettings()));
@@ -1010,6 +1020,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--verbosity</c> via <see cref="DotNetToolUninstallSettings.Verbosity"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("tool uninstall")]
         public static IReadOnlyCollection<Output> DotNetToolUninstall(Configure<DotNetToolUninstallSettings> configurator)
         {
             return DotNetToolUninstall(configurator(new DotNetToolUninstallSettings()));
@@ -1072,6 +1083,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--version</c> via <see cref="DotNetToolUpdateSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("tool update")]
         public static IReadOnlyCollection<Output> DotNetToolUpdate(Configure<DotNetToolUpdateSettings> configurator)
         {
             return DotNetToolUpdate(configurator(new DotNetToolUpdateSettings()));
@@ -1115,121 +1127,154 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Specifies a path to the test project. If omitted, it defaults to current directory.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string ProjectFile { get; internal set; }
         /// <summary>
         ///   Use the custom test adapters from the specified path in the test run.
         /// </summary>
+        [ArgumentFormat("--test-adapter-path {value}")]
         public virtual string TestAdapterPath { get; internal set; }
         /// <summary>
         ///   Configuration under which to build. The default value is <c>Debug</c>, but your project's configuration could override this default SDK setting.
         /// </summary>
+        [ArgumentFormat("--configuration {value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   Enables data collector for the test run. For more information, see <a href="https://aka.ms/vstest-collect">Monitor and analyze test run</a>.
         /// </summary>
+        [ArgumentFormat("--collect {value}")]
         public virtual string DataCollector { get; internal set; }
         /// <summary>
         ///   Enables diagnostic mode for the test platform and write diagnostic messages to the specified file.
         /// </summary>
+        [ArgumentFormat("--diag {value}")]
         public virtual string DiagnosticsFile { get; internal set; }
         /// <summary>
         ///   Looks for test binaries for a specific <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">framework</a>.
         /// </summary>
+        [ArgumentFormat("--framework {value}")]
         public virtual string Framework { get; internal set; }
         /// <summary>
         ///   Filters out tests in the current project using the given expression. For more information, see the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-test#filter-option-details">Filter option details</a> section. For additional information and examples on how to use selective unit test filtering, see <a href="https://docs.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests">Running selective unit tests</a>.
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Specifies a logger for test results.
         /// </summary>
+        [ArgumentFormat("--logger {value}")]
         public virtual string Logger { get; internal set; }
         /// <summary>
         ///   Does not build the test project prior to running it.
         /// </summary>
+        [ArgumentFormat("--no-build")]
         public virtual bool? NoBuild { get; internal set; }
         /// <summary>
         ///   Doesn't perform an implicit restore when running the command.
         /// </summary>
+        [ArgumentFormat("--no-restore")]
         public virtual bool? NoRestore { get; internal set; }
         /// <summary>
         ///   Directory in which to find the binaries to run.
         /// </summary>
+        [ArgumentFormat("--output {value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   The directory where the test results are going to be placed. The specified directory will be created if it doesn't exist.
         /// </summary>
+        [ArgumentFormat("--results-directory {value}")]
         public virtual string ResultsDirectory { get; internal set; }
         /// <summary>
         ///   Settings to use when running tests.
         /// </summary>
+        [ArgumentFormat("--settings {value}")]
         public virtual string SettingsFile { get; internal set; }
         /// <summary>
         ///   List all of the discovered tests in the current project.
         /// </summary>
+        [ArgumentFormat("--list-tests")]
         public virtual bool? ListTests { get; internal set; }
         /// <summary>
         ///   Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.
         /// </summary>
+        [ArgumentFormat("--verbosity {value}")]
         public virtual DotNetVerbosity Verbosity { get; internal set; }
         /// <summary>
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
+        [ArgumentFormat("/property:{value}")]
+        [ItemFormat("{key}={value}")]
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Runs the tests in blame mode. This option is helpful in isolating the problematic tests causing test host to crash. It creates an output file in the current directory as <em>Sequence.xml</em> that captures the order of tests execution before the crash.
         /// </summary>
+        [ArgumentFormat("--blame")]
         public virtual bool? BlameMode { get; internal set; }
         /// <summary>
         ///   Disables restoring multiple projects in parallel.
         /// </summary>
+        [ArgumentFormat("--disable-parallel")]
         public virtual bool? DisableParallel { get; internal set; }
         /// <summary>
         ///   Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Only warn about failed sources if there are packages meeting the version requirement.
         /// </summary>
+        [ArgumentFormat("--ignore-failed-sources")]
         public virtual bool? IgnoreFailedSources { get; internal set; }
         /// <summary>
         ///   Specifies to not cache packages and HTTP requests.
         /// </summary>
+        [ArgumentFormat("--no-cache")]
         public virtual bool? NoCache { get; internal set; }
         /// <summary>
         ///   When restoring a project with project-to-project (P2P) references, restore the root project and not the references.
         /// </summary>
+        [ArgumentFormat("--no-dependencies")]
         public virtual bool? NoDependencies { get; internal set; }
         /// <summary>
         ///   Specifies the directory for restored packages.
         /// </summary>
+        [ArgumentFormat("--packages {value}")]
         public virtual string PackageDirectory { get; internal set; }
         /// <summary>
         ///   Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.
         /// </summary>
+        [ArgumentFormat("--source {value}")]
         public virtual IReadOnlyList<string> Sources => SourcesInternal.AsReadOnly();
         internal List<string> SourcesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Enables project lock file to be generated and used with restore.
         /// </summary>
+        [ArgumentFormat("--use-lock-file")]
         public virtual bool? UseLockFile { get; internal set; }
         /// <summary>
         ///   Don't allow updating project lock file.
         /// </summary>
+        [ArgumentFormat("--locked-mode")]
         public virtual bool? LockedMode { get; internal set; }
         /// <summary>
         ///   Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.
         /// </summary>
+        [ArgumentFormat("--lock-file-path {value}")]
         public virtual string LockFilePath { get; internal set; }
         /// <summary>
         ///   Forces restore to reevaluate all dependencies even if a lock file already exists.
         /// </summary>
+        [ArgumentFormat("--force-evaluate")]
         public virtual bool? ForceEvaluate { get; internal set; }
         /// <summary>
         ///   Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.
         /// </summary>
+        [ArgumentFormat("--runtime {value}")]
         public virtual string Runtime { get; internal set; }
+        [ArgumentFormat("-- {value}")]
+        [ItemFormat("{key}={value}")]
+        [Separator(" ")]
         public virtual IReadOnlyDictionary<string, object> RunSettings => RunSettingsInternal.AsReadOnly();
         internal Dictionary<string, object> RunSettingsInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -1287,88 +1332,138 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Configuration to use for building the project. The default value is Debug.
         /// </summary>
+        [ArgumentFormat("--configuration {value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   Builds and runs the app using the specified framework. The framework must be specified in the project file.
         /// </summary>
+        [ArgumentFormat("--framework {value}")]
         public virtual string Framework { get; internal set; }
         /// <summary>
         ///   The name of the launch profile (if any) to use when launching the application. Launch profiles are defined in the <em>launchSettings.json</em> file and are typically called <c>Development</c>, <c>Staging</c> and <c>Production</c>. For more information, see <a href="https://docs.microsoft.com/en-us/aspnetcore/fundamentals/environments">Working with multiple environments</a>.
         /// </summary>
+        [ArgumentFormat("--launch-profile {value}")]
         public virtual string LaunchProfile { get; internal set; }
         /// <summary>
         ///   Doesn't build the project before running.
         /// </summary>
+        [ArgumentFormat("--no-build")]
         public virtual bool? NoBuild { get; internal set; }
         /// <summary>
         ///   Doesn't attempt to use <em>launchSettings.json</em> to configure the application.
         /// </summary>
+        [ArgumentFormat("--no-launch-profile")]
         public virtual bool? NoLaunchProfile { get; internal set; }
         /// <summary>
         ///   Doesn't perform an implicit restore when running the command.
         /// </summary>
+        [ArgumentFormat("--no-restore")]
         public virtual bool? NoRestore { get; internal set; }
         /// <summary>
         ///   Specifies the path and name of the project file. (See the NOTE.) It defaults to the current directory if not specified.
         /// </summary>
+        [ArgumentFormat("--project {value}")]
         public virtual string ProjectFile { get; internal set; }
         /// <summary>
         ///   Disables restoring multiple projects in parallel.
         /// </summary>
+        [ArgumentFormat("--disable-parallel")]
         public virtual bool? DisableParallel { get; internal set; }
         /// <summary>
         ///   Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Only warn about failed sources if there are packages meeting the version requirement.
         /// </summary>
+        [ArgumentFormat("--ignore-failed-sources")]
         public virtual bool? IgnoreFailedSources { get; internal set; }
         /// <summary>
         ///   Specifies to not cache packages and HTTP requests.
         /// </summary>
+        [ArgumentFormat("--no-cache")]
         public virtual bool? NoCache { get; internal set; }
         /// <summary>
         ///   When restoring a project with project-to-project (P2P) references, restore the root project and not the references.
         /// </summary>
+        [ArgumentFormat("--no-dependencies")]
         public virtual bool? NoDependencies { get; internal set; }
         /// <summary>
         ///   Specifies the directory for restored packages.
         /// </summary>
+        [ArgumentFormat("--packages {value}")]
         public virtual string PackageDirectory { get; internal set; }
         /// <summary>
         ///   Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.
         /// </summary>
+        [ArgumentFormat("--source {value}")]
         public virtual IReadOnlyList<string> Sources => SourcesInternal.AsReadOnly();
         internal List<string> SourcesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Enables project lock file to be generated and used with restore.
         /// </summary>
+        [ArgumentFormat("--use-lock-file")]
         public virtual bool? UseLockFile { get; internal set; }
         /// <summary>
         ///   Don't allow updating project lock file.
         /// </summary>
+        [ArgumentFormat("--locked-mode")]
         public virtual bool? LockedMode { get; internal set; }
         /// <summary>
         ///   Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.
         /// </summary>
+        [ArgumentFormat("--lock-file-path {value}")]
         public virtual string LockFilePath { get; internal set; }
         /// <summary>
         ///   Forces restore to reevaluate all dependencies even if a lock file already exists.
         /// </summary>
+        [ArgumentFormat("--force-evaluate")]
         public virtual bool? ForceEvaluate { get; internal set; }
         /// <summary>
         ///   Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.
         /// </summary>
+        [ArgumentFormat("--runtime {value}")]
         public virtual string Runtime { get; internal set; }
         /// <summary>
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
+        [ArgumentFormat("/property:{value}")]
+        [ItemFormat("{key}={value}")]
+        [Delegate("RunCodeAnalysis", "")]
+        [Delegate("NoWarn", "")]
+        [Delegate("WarningsAsErrors", "")]
+        [Delegate("WarningLevel", "")]
+        [Delegate("TreatWarningsAsErrors", "")]
+        [Delegate("AssemblyVersion", "")]
+        [Delegate("FileVersion", "")]
+        [Delegate("InformationalVersion", "")]
+        [Delegate("PackageId", "")]
+        [Delegate("Version", "")]
+        [Delegate("VersionPrefix", "")]
+        [Delegate("Authors", "")]
+        [Delegate("Title", "")]
+        [Delegate("Description", "")]
+        [Delegate("Copyright", "")]
+        [Delegate("PackageRequireLicenseAcceptance", "")]
+        [Delegate("PackageLicenseUrl", "")]
+        [Delegate("PackageProjectUrl", "")]
+        [Delegate("PackageIconUrl", "")]
+        [Delegate("PackageTags", "")]
+        [Delegate("PackageReleaseNotes", "")]
+        [Delegate("RepositoryUrl", "")]
+        [Delegate("RepositoryType", "")]
+        [Delegate("SymbolPackageFormat", "")]
+        [Delegate("PublishReadyToRun", "")]
+        [Delegate("PublishSingleFile", "")]
+        [Delegate("PublishTrimmed", "")]
+        [Delegate("PublishProfile", "")]
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Arguments passed to the application being run.
         /// </summary>
+        [ArgumentFormat("-- {value}")]
         public virtual string ApplicationArguments { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1416,67 +1511,112 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Optional path to the project file to restore.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string ProjectFile { get; internal set; }
         /// <summary>
         ///   The NuGet configuration file (<em>NuGet.config</em>) to use for the restore operation.
         /// </summary>
+        [ArgumentFormat("--configfile {value}")]
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.
         /// </summary>
+        [ArgumentFormat("--verbosity {value}")]
         public virtual DotNetVerbosity Verbosity { get; internal set; }
         /// <summary>
         ///   Disables restoring multiple projects in parallel.
         /// </summary>
+        [ArgumentFormat("--disable-parallel")]
         public virtual bool? DisableParallel { get; internal set; }
         /// <summary>
         ///   Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Only warn about failed sources if there are packages meeting the version requirement.
         /// </summary>
+        [ArgumentFormat("--ignore-failed-sources")]
         public virtual bool? IgnoreFailedSources { get; internal set; }
         /// <summary>
         ///   Specifies to not cache packages and HTTP requests.
         /// </summary>
+        [ArgumentFormat("--no-cache")]
         public virtual bool? NoCache { get; internal set; }
         /// <summary>
         ///   When restoring a project with project-to-project (P2P) references, restore the root project and not the references.
         /// </summary>
+        [ArgumentFormat("--no-dependencies")]
         public virtual bool? NoDependencies { get; internal set; }
         /// <summary>
         ///   Specifies the directory for restored packages.
         /// </summary>
+        [ArgumentFormat("--packages {value}")]
         public virtual string PackageDirectory { get; internal set; }
         /// <summary>
         ///   Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.
         /// </summary>
+        [ArgumentFormat("--source {value}")]
         public virtual IReadOnlyList<string> Sources => SourcesInternal.AsReadOnly();
         internal List<string> SourcesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Enables project lock file to be generated and used with restore.
         /// </summary>
+        [ArgumentFormat("--use-lock-file")]
         public virtual bool? UseLockFile { get; internal set; }
         /// <summary>
         ///   Don't allow updating project lock file.
         /// </summary>
+        [ArgumentFormat("--locked-mode")]
         public virtual bool? LockedMode { get; internal set; }
         /// <summary>
         ///   Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.
         /// </summary>
+        [ArgumentFormat("--lock-file-path {value}")]
         public virtual string LockFilePath { get; internal set; }
         /// <summary>
         ///   Forces restore to reevaluate all dependencies even if a lock file already exists.
         /// </summary>
+        [ArgumentFormat("--force-evaluate")]
         public virtual bool? ForceEvaluate { get; internal set; }
         /// <summary>
         ///   Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.
         /// </summary>
+        [ArgumentFormat("--runtime {value}")]
         public virtual string Runtime { get; internal set; }
         /// <summary>
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
+        [ArgumentFormat("/property:{value}")]
+        [ItemFormat("{key}={value}")]
+        [Delegate("RunCodeAnalysis", "")]
+        [Delegate("NoWarn", "")]
+        [Delegate("WarningsAsErrors", "")]
+        [Delegate("WarningLevel", "")]
+        [Delegate("TreatWarningsAsErrors", "")]
+        [Delegate("AssemblyVersion", "")]
+        [Delegate("FileVersion", "")]
+        [Delegate("InformationalVersion", "")]
+        [Delegate("PackageId", "")]
+        [Delegate("Version", "")]
+        [Delegate("VersionPrefix", "")]
+        [Delegate("Authors", "")]
+        [Delegate("Title", "")]
+        [Delegate("Description", "")]
+        [Delegate("Copyright", "")]
+        [Delegate("PackageRequireLicenseAcceptance", "")]
+        [Delegate("PackageLicenseUrl", "")]
+        [Delegate("PackageProjectUrl", "")]
+        [Delegate("PackageIconUrl", "")]
+        [Delegate("PackageTags", "")]
+        [Delegate("PackageReleaseNotes", "")]
+        [Delegate("RepositoryUrl", "")]
+        [Delegate("RepositoryType", "")]
+        [Delegate("SymbolPackageFormat", "")]
+        [Delegate("PublishReadyToRun", "")]
+        [Delegate("PublishSingleFile", "")]
+        [Delegate("PublishTrimmed", "")]
+        [Delegate("PublishProfile", "")]
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -1520,99 +1660,152 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   The project to pack. It's either a path to a csproj file or to a directory. If omitted, it defaults to the current directory.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Project { get; internal set; }
         /// <summary>
         ///   Configuration to use when building the project. If not specified, configuration defaults to <c>Debug</c>.
         /// </summary>
+        [ArgumentFormat("--configuration {value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   Includes the source files in the NuGet package. The sources files are included in the <c>src</c> folder within the <c>nupkg</c>.
         /// </summary>
+        [ArgumentFormat("--include-source")]
         public virtual bool? IncludeSource { get; internal set; }
         /// <summary>
         ///   Generates the symbols <c>nupkg</c>.
         /// </summary>
+        [ArgumentFormat("--include-symbols")]
         public virtual bool? IncludeSymbols { get; internal set; }
         /// <summary>
         ///   Don't build the project before packing.
         /// </summary>
+        [ArgumentFormat("--no-build")]
         public virtual bool? NoBuild { get; internal set; }
         /// <summary>
         ///   Doesn't perform an implicit restore when running the command.
         /// </summary>
+        [ArgumentFormat("--no-restore")]
         public virtual bool? NoRestore { get; internal set; }
         /// <summary>
         ///   Places the built packages in the directory specified.
         /// </summary>
+        [ArgumentFormat("--output {value}")]
         public virtual string OutputDirectory { get; internal set; }
         /// <summary>
         ///   Sets the serviceable flag in the package. For more information, see <a href="https://aka.ms/nupkgservicing">.NET Blog: .NET 4.5.1 Supports Microsoft Security Updates for .NET NuGet Libraries</a>.
         /// </summary>
+        [ArgumentFormat("--serviceable")]
         public virtual bool? Serviceable { get; internal set; }
         /// <summary>
         ///   Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.
         /// </summary>
+        [ArgumentFormat("--verbosity {value}")]
         public virtual DotNetVerbosity Verbosity { get; internal set; }
         /// <summary>
         ///   Defines the value for the <c>$(VersionSuffix)</c> MSBuild property in the project.
         /// </summary>
+        [ArgumentFormat("--version-suffix {value}")]
         public virtual string VersionSuffix { get; internal set; }
         /// <summary>
         ///   Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.
         /// </summary>
+        [ArgumentFormat("--nologo")]
         public virtual bool? NoLogo { get; internal set; }
         /// <summary>
         ///   Disables restoring multiple projects in parallel.
         /// </summary>
+        [ArgumentFormat("--disable-parallel")]
         public virtual bool? DisableParallel { get; internal set; }
         /// <summary>
         ///   Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Only warn about failed sources if there are packages meeting the version requirement.
         /// </summary>
+        [ArgumentFormat("--ignore-failed-sources")]
         public virtual bool? IgnoreFailedSources { get; internal set; }
         /// <summary>
         ///   Specifies to not cache packages and HTTP requests.
         /// </summary>
+        [ArgumentFormat("--no-cache")]
         public virtual bool? NoCache { get; internal set; }
         /// <summary>
         ///   When restoring a project with project-to-project (P2P) references, restore the root project and not the references.
         /// </summary>
+        [ArgumentFormat("--no-dependencies")]
         public virtual bool? NoDependencies { get; internal set; }
         /// <summary>
         ///   Specifies the directory for restored packages.
         /// </summary>
+        [ArgumentFormat("--packages {value}")]
         public virtual string PackageDirectory { get; internal set; }
         /// <summary>
         ///   Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.
         /// </summary>
+        [ArgumentFormat("--source {value}")]
         public virtual IReadOnlyList<string> Sources => SourcesInternal.AsReadOnly();
         internal List<string> SourcesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Enables project lock file to be generated and used with restore.
         /// </summary>
+        [ArgumentFormat("--use-lock-file")]
         public virtual bool? UseLockFile { get; internal set; }
         /// <summary>
         ///   Don't allow updating project lock file.
         /// </summary>
+        [ArgumentFormat("--locked-mode")]
         public virtual bool? LockedMode { get; internal set; }
         /// <summary>
         ///   Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.
         /// </summary>
+        [ArgumentFormat("--lock-file-path {value}")]
         public virtual string LockFilePath { get; internal set; }
         /// <summary>
         ///   Forces restore to reevaluate all dependencies even if a lock file already exists.
         /// </summary>
+        [ArgumentFormat("--force-evaluate")]
         public virtual bool? ForceEvaluate { get; internal set; }
         /// <summary>
         ///   Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.
         /// </summary>
+        [ArgumentFormat("--runtime {value}")]
         public virtual string Runtime { get; internal set; }
         /// <summary>
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
+        [ArgumentFormat("/property:{value}")]
+        [ItemFormat("{key}={value}")]
+        [Delegate("RunCodeAnalysis", "")]
+        [Delegate("NoWarn", "")]
+        [Delegate("WarningsAsErrors", "")]
+        [Delegate("WarningLevel", "")]
+        [Delegate("TreatWarningsAsErrors", "")]
+        [Delegate("AssemblyVersion", "")]
+        [Delegate("FileVersion", "")]
+        [Delegate("InformationalVersion", "")]
+        [Delegate("PackageId", "")]
+        [Delegate("Version", "")]
+        [Delegate("VersionPrefix", "")]
+        [Delegate("Authors", "")]
+        [Delegate("Title", "")]
+        [Delegate("Description", "")]
+        [Delegate("Copyright", "")]
+        [Delegate("PackageRequireLicenseAcceptance", "")]
+        [Delegate("PackageLicenseUrl", "")]
+        [Delegate("PackageProjectUrl", "")]
+        [Delegate("PackageIconUrl", "")]
+        [Delegate("PackageTags", "")]
+        [Delegate("PackageReleaseNotes", "")]
+        [Delegate("RepositoryUrl", "")]
+        [Delegate("RepositoryType", "")]
+        [Delegate("SymbolPackageFormat", "")]
+        [Delegate("PublishReadyToRun", "")]
+        [Delegate("PublishSingleFile", "")]
+        [Delegate("PublishTrimmed", "")]
+        [Delegate("PublishProfile", "")]
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -1664,100 +1857,153 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   The project file to build. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in proj and uses that file.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string ProjectFile { get; internal set; }
         /// <summary>
         ///   Defines the build configuration. If omitted, the build configuration defaults to <c>Debug</c>. Use <c>Release</c> build a Release configuration.
         /// </summary>
+        [ArgumentFormat("--configuration {value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   Compiles for a specific <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">framework</a>. The framework must be defined in the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/csproj">project file</a>.
         /// </summary>
+        [ArgumentFormat("--framework {value}")]
         public virtual string Framework { get; internal set; }
         /// <summary>
         ///   Marks the build as unsafe for incremental build. This turns off incremental compilation and forces a clean rebuild of the project's dependency graph.
         /// </summary>
+        [ArgumentFormat("--no-incremental")]
         public virtual bool? NoIncremental { get; internal set; }
         /// <summary>
         ///   Doesn't perform an implicit restore during build.
         /// </summary>
+        [ArgumentFormat("--no-restore")]
         public virtual bool? NoRestore { get; internal set; }
         /// <summary>
         ///   Directory in which to place the built binaries. You also need to define <c>--framework</c> when you specify this option.
         /// </summary>
+        [ArgumentFormat("--output {value}")]
         public virtual string OutputDirectory { get; internal set; }
         /// <summary>
         ///   Specifies the target runtime. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.
         /// </summary>
+        [ArgumentFormat("--runtime {value}")]
         public virtual string Runtime { get; internal set; }
         /// <summary>
         ///   Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.
         /// </summary>
+        [ArgumentFormat("--verbosity {value}")]
         public virtual DotNetVerbosity Verbosity { get; internal set; }
         /// <summary>
         ///   Defines the version suffix for an asterisk (<c>*</c>) in the version field of the project file. The format follows NuGet's version guidelines.
         /// </summary>
+        [ArgumentFormat("--version-suffix {value}")]
         public virtual string VersionSuffix { get; internal set; }
         /// <summary>
         ///   Specifies the loggers to use to log events from MSBuild.
         /// </summary>
+        [ArgumentFormat("/logger:{value}")]
         public virtual IReadOnlyList<string> Loggers => LoggersInternal.AsReadOnly();
         internal List<string> LoggersInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Disable the default console logger, and don't log events to the console.
         /// </summary>
+        [ArgumentFormat("/noconsolelogger")]
         public virtual bool? NoConsoleLogger { get; internal set; }
         /// <summary>
         ///   Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.
         /// </summary>
+        [ArgumentFormat("--nologo")]
         public virtual bool? NoLogo { get; internal set; }
         /// <summary>
         ///   Disables restoring multiple projects in parallel.
         /// </summary>
+        [ArgumentFormat("--disable-parallel")]
         public virtual bool? DisableParallel { get; internal set; }
         /// <summary>
         ///   Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Only warn about failed sources if there are packages meeting the version requirement.
         /// </summary>
+        [ArgumentFormat("--ignore-failed-sources")]
         public virtual bool? IgnoreFailedSources { get; internal set; }
         /// <summary>
         ///   Specifies to not cache packages and HTTP requests.
         /// </summary>
+        [ArgumentFormat("--no-cache")]
         public virtual bool? NoCache { get; internal set; }
         /// <summary>
         ///   When restoring a project with project-to-project (P2P) references, restore the root project and not the references.
         /// </summary>
+        [ArgumentFormat("--no-dependencies")]
         public virtual bool? NoDependencies { get; internal set; }
         /// <summary>
         ///   Specifies the directory for restored packages.
         /// </summary>
+        [ArgumentFormat("--packages {value}")]
         public virtual string PackageDirectory { get; internal set; }
         /// <summary>
         ///   Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.
         /// </summary>
+        [ArgumentFormat("--source {value}")]
         public virtual IReadOnlyList<string> Sources => SourcesInternal.AsReadOnly();
         internal List<string> SourcesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Enables project lock file to be generated and used with restore.
         /// </summary>
+        [ArgumentFormat("--use-lock-file")]
         public virtual bool? UseLockFile { get; internal set; }
         /// <summary>
         ///   Don't allow updating project lock file.
         /// </summary>
+        [ArgumentFormat("--locked-mode")]
         public virtual bool? LockedMode { get; internal set; }
         /// <summary>
         ///   Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.
         /// </summary>
+        [ArgumentFormat("--lock-file-path {value}")]
         public virtual string LockFilePath { get; internal set; }
         /// <summary>
         ///   Forces restore to reevaluate all dependencies even if a lock file already exists.
         /// </summary>
+        [ArgumentFormat("--force-evaluate")]
         public virtual bool? ForceEvaluate { get; internal set; }
         /// <summary>
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
+        [ArgumentFormat("/property:{value}")]
+        [ItemFormat("{key}={value}")]
+        [Delegate("RunCodeAnalysis", "")]
+        [Delegate("NoWarn", "")]
+        [Delegate("WarningsAsErrors", "")]
+        [Delegate("WarningLevel", "")]
+        [Delegate("TreatWarningsAsErrors", "")]
+        [Delegate("AssemblyVersion", "")]
+        [Delegate("FileVersion", "")]
+        [Delegate("InformationalVersion", "")]
+        [Delegate("PackageId", "")]
+        [Delegate("Version", "")]
+        [Delegate("VersionPrefix", "")]
+        [Delegate("Authors", "")]
+        [Delegate("Title", "")]
+        [Delegate("Description", "")]
+        [Delegate("Copyright", "")]
+        [Delegate("PackageRequireLicenseAcceptance", "")]
+        [Delegate("PackageLicenseUrl", "")]
+        [Delegate("PackageProjectUrl", "")]
+        [Delegate("PackageIconUrl", "")]
+        [Delegate("PackageTags", "")]
+        [Delegate("PackageReleaseNotes", "")]
+        [Delegate("RepositoryUrl", "")]
+        [Delegate("RepositoryType", "")]
+        [Delegate("SymbolPackageFormat", "")]
+        [Delegate("PublishReadyToRun", "")]
+        [Delegate("PublishSingleFile", "")]
+        [Delegate("PublishTrimmed", "")]
+        [Delegate("PublishProfile", "")]
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -1809,34 +2055,71 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   The MSBuild project to clean. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in <em>proj</em> and uses that file.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Project { get; internal set; }
         /// <summary>
         ///   Defines the build configuration. The default value is <c>Debug</c>. This option is only required when cleaning if you specified it during build time.
         /// </summary>
+        [ArgumentFormat("--configuration {value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">framework</a> that was specified at build time. The framework must be defined in the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/csproj">project file</a>. If you specified the framework at build time, you must specify the framework when cleaning.
         /// </summary>
+        [ArgumentFormat("--framework {value}")]
         public virtual string Framework { get; internal set; }
         /// <summary>
         ///   Directory in which the build outputs are placed. Specify the <c>--framework</c> switch with the output directory switch if you specified the framework when the project was built.
         /// </summary>
+        [ArgumentFormat("--output {value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   Cleans the output folder of the specified runtime. This is used when a <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index#self-contained-deployments-scd">self-contained deployment</a> was created.
         /// </summary>
+        [ArgumentFormat("--runtime {value}")]
         public virtual string Runtime { get; internal set; }
         /// <summary>
         ///   Sets the verbosity level of the command. Allowed levels are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
         /// </summary>
+        [ArgumentFormat("--verbosity {value}")]
         public virtual DotNetVerbosity Verbosity { get; internal set; }
         /// <summary>
         ///   Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.
         /// </summary>
+        [ArgumentFormat("--nologo")]
         public virtual bool? NoLogo { get; internal set; }
         /// <summary>
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
+        [ArgumentFormat("/property:{value}")]
+        [ItemFormat("{key}={value}")]
+        [Delegate("RunCodeAnalysis", "")]
+        [Delegate("NoWarn", "")]
+        [Delegate("WarningsAsErrors", "")]
+        [Delegate("WarningLevel", "")]
+        [Delegate("TreatWarningsAsErrors", "")]
+        [Delegate("AssemblyVersion", "")]
+        [Delegate("FileVersion", "")]
+        [Delegate("InformationalVersion", "")]
+        [Delegate("PackageId", "")]
+        [Delegate("Version", "")]
+        [Delegate("VersionPrefix", "")]
+        [Delegate("Authors", "")]
+        [Delegate("Title", "")]
+        [Delegate("Description", "")]
+        [Delegate("Copyright", "")]
+        [Delegate("PackageRequireLicenseAcceptance", "")]
+        [Delegate("PackageLicenseUrl", "")]
+        [Delegate("PackageProjectUrl", "")]
+        [Delegate("PackageIconUrl", "")]
+        [Delegate("PackageTags", "")]
+        [Delegate("PackageReleaseNotes", "")]
+        [Delegate("RepositoryUrl", "")]
+        [Delegate("RepositoryType", "")]
+        [Delegate("SymbolPackageFormat", "")]
+        [Delegate("PublishReadyToRun", "")]
+        [Delegate("PublishSingleFile", "")]
+        [Delegate("PublishTrimmed", "")]
+        [Delegate("PublishProfile", "")]
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -1872,99 +2155,152 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   The project to publish, which defaults to the current directory if not specified.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Project { get; internal set; }
         /// <summary>
         ///   Defines the build configuration. The default value is <c>Debug</c>.
         /// </summary>
+        [ArgumentFormat("--configuration {value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   Publishes the application for the specified <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. You must specify the target framework in the project file.
         /// </summary>
+        [ArgumentFormat("--framework {value}")]
         public virtual string Framework { get; internal set; }
         /// <summary>
         ///   Specifies one or several <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/runtime-store">target manifests</a> to use to trim the set of packages published with the app. The manifest file is part of the output of the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-store"><c>dotnet store</c></a> command. To specify multiple manifests, add a <c>--manifest</c> option for each manifest. This option is available starting with .NET Core 2.0 SDK.
         /// </summary>
+        [ArgumentFormat("--manifest {value}")]
         public virtual string Manifest { get; internal set; }
         /// <summary>
         ///   Doesn't perform an implicit restore when running the command.
         /// </summary>
+        [ArgumentFormat("--no-restore")]
         public virtual bool? NoRestore { get; internal set; }
         /// <summary>
         ///   Doesn't build the project before publishing. It also implicitly sets the <c>--no-restore</c> flag.
         /// </summary>
+        [ArgumentFormat("--no-build")]
         public virtual bool? NoBuild { get; internal set; }
         /// <summary>
         ///   Specifies the path for the output directory. If not specified, it defaults to <em>./bin/[configuration]/[framework]/</em> for a framework-dependent deployment or <em>./bin/[configuration]/[framework]/[runtime]</em> for a self-contained deployment.<para/>If a relative path is provided, the output directory generated is relative to the project file location, not to the current working directory.
         /// </summary>
+        [ArgumentFormat("--output {value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   Publishes the .NET Core runtime with your application so the runtime doesn't need to be installed on the target machine. If a runtime identifier is specified, its default value is <c>true</c>. For more information about the different deployment types, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index">.NET Core application deployment</a>.
         /// </summary>
+        [ArgumentFormat("--self-contained {value}")]
         public virtual bool? SelfContained { get; internal set; }
         /// <summary>
         ///   Publishes the application for a given runtime. This is used when creating a <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index#self-contained-deployments-scd">self-contained deployment (SCD)</a>. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Default is to publish a <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index#framework-dependent-deployments-fdd">framework-dependent deployment (FDD)</a>.
         /// </summary>
+        [ArgumentFormat("--runtime {value}")]
         public virtual string Runtime { get; internal set; }
         /// <summary>
         ///   Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.
         /// </summary>
+        [ArgumentFormat("--verbosity {value}")]
         public virtual DotNetVerbosity Verbosity { get; internal set; }
         /// <summary>
         ///   Defines the version suffix for an asterisk (<c>*</c>) in the version field of the project file. The format follows NuGet's version guidelines.
         /// </summary>
+        [ArgumentFormat("--version-suffix {value}")]
         public virtual string VersionSuffix { get; internal set; }
         /// <summary>
         ///   Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.
         /// </summary>
+        [ArgumentFormat("--nologo")]
         public virtual bool? NoLogo { get; internal set; }
         /// <summary>
         ///   Disables restoring multiple projects in parallel.
         /// </summary>
+        [ArgumentFormat("--disable-parallel")]
         public virtual bool? DisableParallel { get; internal set; }
         /// <summary>
         ///   Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Only warn about failed sources if there are packages meeting the version requirement.
         /// </summary>
+        [ArgumentFormat("--ignore-failed-sources")]
         public virtual bool? IgnoreFailedSources { get; internal set; }
         /// <summary>
         ///   Specifies to not cache packages and HTTP requests.
         /// </summary>
+        [ArgumentFormat("--no-cache")]
         public virtual bool? NoCache { get; internal set; }
         /// <summary>
         ///   When restoring a project with project-to-project (P2P) references, restore the root project and not the references.
         /// </summary>
+        [ArgumentFormat("--no-dependencies")]
         public virtual bool? NoDependencies { get; internal set; }
         /// <summary>
         ///   Specifies the directory for restored packages.
         /// </summary>
+        [ArgumentFormat("--packages {value}")]
         public virtual string PackageDirectory { get; internal set; }
         /// <summary>
         ///   Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.
         /// </summary>
+        [ArgumentFormat("--source {value}")]
         public virtual IReadOnlyList<string> Sources => SourcesInternal.AsReadOnly();
         internal List<string> SourcesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Enables project lock file to be generated and used with restore.
         /// </summary>
+        [ArgumentFormat("--use-lock-file")]
         public virtual bool? UseLockFile { get; internal set; }
         /// <summary>
         ///   Don't allow updating project lock file.
         /// </summary>
+        [ArgumentFormat("--locked-mode")]
         public virtual bool? LockedMode { get; internal set; }
         /// <summary>
         ///   Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.
         /// </summary>
+        [ArgumentFormat("--lock-file-path {value}")]
         public virtual string LockFilePath { get; internal set; }
         /// <summary>
         ///   Forces restore to reevaluate all dependencies even if a lock file already exists.
         /// </summary>
+        [ArgumentFormat("--force-evaluate")]
         public virtual bool? ForceEvaluate { get; internal set; }
         /// <summary>
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
+        [ArgumentFormat("/property:{value}")]
+        [ItemFormat("{key}={value}")]
+        [Delegate("RunCodeAnalysis", "")]
+        [Delegate("NoWarn", "")]
+        [Delegate("WarningsAsErrors", "")]
+        [Delegate("WarningLevel", "")]
+        [Delegate("TreatWarningsAsErrors", "")]
+        [Delegate("AssemblyVersion", "")]
+        [Delegate("FileVersion", "")]
+        [Delegate("InformationalVersion", "")]
+        [Delegate("PackageId", "")]
+        [Delegate("Version", "")]
+        [Delegate("VersionPrefix", "")]
+        [Delegate("Authors", "")]
+        [Delegate("Title", "")]
+        [Delegate("Description", "")]
+        [Delegate("Copyright", "")]
+        [Delegate("PackageRequireLicenseAcceptance", "")]
+        [Delegate("PackageLicenseUrl", "")]
+        [Delegate("PackageProjectUrl", "")]
+        [Delegate("PackageIconUrl", "")]
+        [Delegate("PackageTags", "")]
+        [Delegate("PackageReleaseNotes", "")]
+        [Delegate("RepositoryUrl", "")]
+        [Delegate("RepositoryType", "")]
+        [Delegate("SymbolPackageFormat", "")]
+        [Delegate("PublishReadyToRun", "")]
+        [Delegate("PublishSingleFile", "")]
+        [Delegate("PublishTrimmed", "")]
+        [Delegate("PublishProfile", "")]
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -2016,46 +2352,57 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   Path of the package to push.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string TargetPath { get; internal set; }
         /// <summary>
         ///   Specifies the server URL. This option is required unless <c>DefaultPushSource</c> config value is set in the NuGet config file.
         /// </summary>
+        [ArgumentFormat("--source {value}")]
         public virtual string Source { get; internal set; }
         /// <summary>
         ///   Specifies the symbol server URL.
         /// </summary>
+        [ArgumentFormat("--symbol-source {value}")]
         public virtual string SymbolSource { get; internal set; }
         /// <summary>
         ///   Specifies the timeout for pushing to a server in seconds. Defaults to 300 seconds (5 minutes). Specifying 0 (zero seconds) applies the default value.
         /// </summary>
+        [ArgumentFormat("--timeout {value}")]
         public virtual int? Timeout { get; internal set; }
         /// <summary>
         ///   The API key for the server.
         /// </summary>
+        [ArgumentFormat("--api-key {value}")]
         public virtual string ApiKey { get; internal set; }
         /// <summary>
         ///   The API key for the symbol server.
         /// </summary>
+        [ArgumentFormat("--symbol-api-key {value}")]
         public virtual string SymbolApiKey { get; internal set; }
         /// <summary>
         ///   Disables buffering when pushing to an HTTP(S) server to decrease memory usage.
         /// </summary>
+        [ArgumentFormat("--disable-buffering")]
         public virtual bool? DisableBuffering { get; internal set; }
         /// <summary>
         ///   Doesn't push symbols (even if present).
         /// </summary>
+        [ArgumentFormat("--no-symbols")]
         public virtual bool? NoSymbols { get; internal set; }
         /// <summary>
         ///   Forces all logged output in English.
         /// </summary>
+        [ArgumentFormat("--force-english-output")]
         public virtual bool? ForceEnglishOutput { get; internal set; }
         /// <summary>
         ///   When pushing multiple packages to an HTTP(S) server, treats any 409 Conflict response as a warning so that the push can continue. Available since .NET Core 3.1 SDK.
         /// </summary>
+        [ArgumentFormat("--skip-duplicate")]
         public virtual bool? SkipDuplicate { get; internal set; }
         /// <summary>
         ///   Doesn't append <c>api/v2/package</c> to the source URL. Option available since .NET Core 2.1 SDK.
         /// </summary>
+        [ArgumentFormat("--no-service-endpoint")]
         public virtual bool? NoServiceEndpoint { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -2093,26 +2440,33 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   URL of the source.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Source { get; internal set; }
         /// <summary>
         ///   Name of the source.
         /// </summary>
+        [ArgumentFormat("--name {value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   Username to be used when connecting to an authenticated source.
         /// </summary>
+        [ArgumentFormat("--username {value}")]
         public virtual string Username { get; internal set; }
         /// <summary>
         ///   Password to be used when connecting to an authenticated source.
         /// </summary>
+        [ArgumentFormat("--password {value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   Enables storing portable package source credentials by disabling password encryption.
         /// </summary>
+        [ArgumentFormat("--store-password-in-clear-text")]
         public virtual bool? StorePasswordInClearText { get; internal set; }
         /// <summary>
         ///   List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.
         /// </summary>
+        [ArgumentFormat("--valid-authentication-types")]
+        [Separator(",")]
         public virtual IReadOnlyList<DotNetNuGetAuthentication> ValidAuthenticationTypes => ValidAuthenticationTypesInternal.AsReadOnly();
         internal List<DotNetNuGetAuthentication> ValidAuthenticationTypesInternal { get; set; } = new List<DotNetNuGetAuthentication>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -2146,35 +2500,43 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   The Name/ID of the NuGet package that contains the .NET Core Global Tool to install.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string PackageName { get; internal set; }
         /// <summary>
         ///   Adds an additional NuGet package source to use during installation.
         /// </summary>
+        [ArgumentFormat("--add-source {value}")]
         public virtual IReadOnlyList<string> Sources => SourcesInternal.AsReadOnly();
         internal List<string> SourcesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies the NuGet configuration (<em>nuget.config</em>) file to use.
         /// </summary>
+        [ArgumentFormat("--configfile {value}")]
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   Specifies the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a> to install the tool for. By default, the .NET Core SDK tries to choose the most appropriate target framework.
         /// </summary>
+        [ArgumentFormat("--framework {value}")]
         public virtual string Framework { get; internal set; }
         /// <summary>
         ///   Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.
         /// </summary>
+        [ArgumentFormat("--global")]
         public virtual bool? Global { get; internal set; }
         /// <summary>
         ///   Specifies the location where to install the Global Tool. The path can be absolute or relative. If the path doesn't exist, the command tries to create it. Can't be combined with the <c>--global</c> option. If you don't specify this option, you must specify the <c>--global</c> option.
         /// </summary>
+        [ArgumentFormat("--tool-path {value}")]
         public virtual string ToolInstallationPath { get; internal set; }
         /// <summary>
         ///   Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.
         /// </summary>
+        [ArgumentFormat("--verbosity {value}")]
         public virtual DotNetVerbosity Verbosity { get; internal set; }
         /// <summary>
         ///   The version of the tool to install. By default, the latest stable package version is installed. Use this option to install preview or older versions of the tool.
         /// </summary>
+        [ArgumentFormat("--version {value}")]
         public virtual string Version { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -2209,18 +2571,22 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   The Name/ID of the NuGet package that contains the .NET Core Global Tool to uninstall. You can find the package name using the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-list">dotnet tool list</a> command.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string PackageName { get; internal set; }
         /// <summary>
         ///   Specifies that the tool to be removed is from a user-wide installation. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.
         /// </summary>
+        [ArgumentFormat("--global")]
         public virtual bool? Global { get; internal set; }
         /// <summary>
         ///   Specifies the location where to uninstall the Global Tool. The path can be absolute or relative. Can't be combined with the <c>--global</c> option. If you don't specify this option, you must specify the <c>--global</c> option.
         /// </summary>
+        [ArgumentFormat("--tool-path {value}")]
         public virtual string ToolInstallationPath { get; internal set; }
         /// <summary>
         ///   Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.
         /// </summary>
+        [ArgumentFormat("--verbosity {value}")]
         public virtual DotNetVerbosity Verbosity { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -2251,35 +2617,43 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   The Name/ID of the NuGet package that contains the .NET Core Global Tool to install.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string PackageName { get; internal set; }
         /// <summary>
         ///   Adds an additional NuGet package source to use during installation.
         /// </summary>
+        [ArgumentFormat("--add-source {value}")]
         public virtual IReadOnlyList<string> Sources => SourcesInternal.AsReadOnly();
         internal List<string> SourcesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies the NuGet configuration (<em>nuget.config</em>) file to use.
         /// </summary>
+        [ArgumentFormat("--configfile {value}")]
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   Specifies the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a> to update the tool for.
         /// </summary>
+        [ArgumentFormat("--framework {value}")]
         public virtual string Framework { get; internal set; }
         /// <summary>
         ///   Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.
         /// </summary>
+        [ArgumentFormat("--global")]
         public virtual bool? Global { get; internal set; }
         /// <summary>
         ///   Specifies the location where the Global Tool is installed. The path can be absolute or relative. Can't be combined with the <c>--global</c> option. If you don't specify this option, you must specify the <c>--global</c> option.
         /// </summary>
+        [ArgumentFormat("--tool-path {value}")]
         public virtual string ToolInstallationPath { get; internal set; }
         /// <summary>
         ///   Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.
         /// </summary>
+        [ArgumentFormat("--verbosity {value}")]
         public virtual DotNetVerbosity Verbosity { get; internal set; }
         /// <summary>
         ///   The version of the tool to install. By default, the latest stable package version is installed. Use this option to install preview or older versions of the tool.
         /// </summary>
+        [ArgumentFormat("--version {value}")]
         public virtual string Version { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

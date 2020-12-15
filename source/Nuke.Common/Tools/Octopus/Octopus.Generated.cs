@@ -94,6 +94,7 @@ namespace Nuke.Common.Tools.Octopus
         ///     <li><c>--version</c> via <see cref="OctopusPackSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("pack")]
         public static IReadOnlyCollection<Output> OctopusPack(Configure<OctopusPackSettings> configurator)
         {
             return OctopusPack(configurator(new OctopusPackSettings()));
@@ -181,6 +182,7 @@ namespace Nuke.Common.Tools.Octopus
         ///     <li><c>--user</c> via <see cref="OctopusPushSettings.Username"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("push")]
         public static IReadOnlyCollection<Output> OctopusPush(Configure<OctopusPushSettings> configurator)
         {
             return OctopusPush(configurator(new OctopusPushSettings()));
@@ -325,6 +327,7 @@ namespace Nuke.Common.Tools.Octopus
         ///     <li><c>--whatif</c> via <see cref="OctopusCreateReleaseSettings.WhatIf"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("create-release")]
         public static IReadOnlyCollection<Output> OctopusCreateRelease(Configure<OctopusCreateReleaseSettings> configurator)
         {
             return OctopusCreateRelease(configurator(new OctopusCreateReleaseSettings()));
@@ -480,6 +483,7 @@ namespace Nuke.Common.Tools.Octopus
         ///     <li><c>--waitfordeployment</c> via <see cref="OctopusDeployReleaseSettings.WaitForDepployment"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("deploy-release")]
         public static IReadOnlyCollection<Output> OctopusDeployRelease(Configure<OctopusDeployReleaseSettings> configurator)
         {
             return OctopusDeployRelease(configurator(new OctopusDeployReleaseSettings()));
@@ -593,6 +597,7 @@ namespace Nuke.Common.Tools.Octopus
         ///     <li><c>--version</c> via <see cref="OctopusBuildInformationSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("build-information")]
         public static IReadOnlyCollection<Output> OctopusBuildInformation(Configure<OctopusBuildInformationSettings> configurator)
         {
             return OctopusBuildInformation(configurator(new OctopusBuildInformationSettings()));
@@ -646,56 +651,70 @@ namespace Nuke.Common.Tools.Octopus
         /// <summary>
         ///   The ID of the package. E.g. <c>MyCompany.MyApp</c>.
         /// </summary>
+        [ArgumentFormat("--id={value}")]
         public virtual string Id { get; internal set; }
         /// <summary>
         ///   Package format. Options are: NuPkg, Zip. Defaults to NuPkg, though we recommend Zip going forward.
         /// </summary>
+        [ArgumentFormat("--format={value}")]
         public virtual OctopusPackFormat Format { get; internal set; }
         /// <summary>
         ///   The version of the package; must be a valid SemVer. Defaults to a timestamp-based version.
         /// </summary>
+        [ArgumentFormat("--version={value}")]
         public virtual string Version { get; internal set; }
         /// <summary>
         ///   The folder into which the generated NUPKG file will be written. Defaults to <c>.</c>.
         /// </summary>
+        [ArgumentFormat("--outFolder={value}")]
         public virtual string OutputFolder { get; internal set; }
         /// <summary>
         ///   The root folder containing files and folders to pack. Defaults to <c>.</c>.
         /// </summary>
+        [ArgumentFormat("--basePath={value}")]
         public virtual string BasePath { get; internal set; }
         /// <summary>
         ///   List more detailed output. E.g. Which files are being added.
         /// </summary>
+        [ArgumentFormat("--verbose")]
         public virtual bool? Verbose { get; internal set; }
         /// <summary>
         ///   Add an author to the package metadata. Defaults to the current user.
         /// </summary>
+        [ArgumentFormat("--author={value}")]
         public virtual IReadOnlyList<string> Authors => AuthorsInternal.AsReadOnly();
         internal List<string> AuthorsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The title of the package.
         /// </summary>
+        [ArgumentFormat("--title={value}")]
         public virtual string Title { get; internal set; }
         /// <summary>
         ///   A description of the package. Defaults to a generic description.
         /// </summary>
+        [ArgumentFormat("--description={value}")]
         public virtual string Description { get; internal set; }
         /// <summary>
         ///   Release notes for this version of the package.
         /// </summary>
+        [ArgumentFormat("--releaseNotes={value}")]
         public virtual string ReleaseNotes { get; internal set; }
         /// <summary>
         ///   A file containing release notes for this version of the package.
         /// </summary>
+        [ArgumentFormat("--releaseNotesFile={value}")]
         public virtual string ReleaseNotesFile { get; internal set; }
         /// <summary>
         ///   Add a file pattern to include, relative to the base path. E.g. <c>/bin/-*.dll</c> - if none are specified, defaults to <c>**</c>.
         /// </summary>
+        [ArgumentFormat("--include={value}")]
         public virtual string Include { get; internal set; }
         /// <summary>
         ///   Allow an existing package file of the same ID/version to be overwritten.
         /// </summary>
+        [ArgumentFormat("--overwrite")]
         public virtual bool? Overwrite { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -735,68 +754,85 @@ namespace Nuke.Common.Tools.Octopus
         /// <summary>
         ///   Package file to push.
         /// </summary>
+        [ArgumentFormat("--package={value}")]
         public virtual IReadOnlyList<string> Package => PackageInternal.AsReadOnly();
         internal List<string> PackageInternal { get; set; } = new List<string>();
         /// <summary>
         ///   If the package already exists in the repository, the default behavior is to reject the new package being pushed. You can pass this flag to overwrite the existing package.
         /// </summary>
+        [ArgumentFormat("--replace-existing")]
         public virtual bool? ReplaceExisting { get; internal set; }
         /// <summary>
         ///   The base URL for your Octopus server - e.g., http://your-octopus/
         /// </summary>
+        [ArgumentFormat("--server={value}")]
         public virtual string Server { get; internal set; }
         /// <summary>
         ///   Your API key. Get this from the user profile page. Your must provide an apiKey or username and password. If the guest account is enabled, a key of API-GUEST can be used.
         /// </summary>
+        [ArgumentFormat("--apiKey={value}")]
         public virtual string ApiKey { get; internal set; }
         /// <summary>
         ///   Username to use when authenticating with the server. Your must provide an apiKey or username and password.
         /// </summary>
+        [ArgumentFormat("--user={value}")]
         public virtual string Username { get; internal set; }
         /// <summary>
         ///   Password to use when authenticating with the server.
         /// </summary>
+        [ArgumentFormat("--pass={value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   Text file of default values, with one 'key = value' per line.
         /// </summary>
+        [ArgumentFormat("--configFile={value}")]
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   Enable debug logging.
         /// </summary>
+        [ArgumentFormat("--debug")]
         public virtual bool? Debug { get; internal set; }
         /// <summary>
         ///   Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.
         /// </summary>
+        [ArgumentFormat("--ignoreSslErrors")]
         public virtual bool? IgnoreSslErrors { get; internal set; }
         /// <summary>
         ///   Enable TeamCity or Team Foundation Build service messages when logging.
         /// </summary>
+        [ArgumentFormat("--enableServiceMessages")]
         public virtual bool? EnableServiceMessages { get; internal set; }
         /// <summary>
         ///   Timeout in seconds for network operations. Default is 600.
         /// </summary>
+        [ArgumentFormat("--timeout={value}")]
         public virtual int? Timeout { get; internal set; }
         /// <summary>
         ///   The URI of the proxy to use, e.g., http://example.com:8080.
         /// </summary>
+        [ArgumentFormat("--proxy={value}")]
         public virtual string Proxy { get; internal set; }
         /// <summary>
         ///   The username for the proxy.
         /// </summary>
+        [ArgumentFormat("--proxyUser={value}")]
         public virtual string ProxyUsername { get; internal set; }
         /// <summary>
         ///   The password for the proxy. If both the username and password are omitted and proxyAddress is specified, the default credentials are used.
         /// </summary>
+        [ArgumentFormat("--proxyPass={value}")]
         public virtual string ProxyPassword { get; internal set; }
         /// <summary>
         ///   The name of a space within which this command will be executed. The default space will be used if it is omitted.
         /// </summary>
+        [ArgumentFormat("--space={value}")]
         public virtual string Space { get; internal set; }
         /// <summary>
         ///   The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.
         /// </summary>
+        [ArgumentFormat("--logLevel={value}")]
         public virtual string LogLevel { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -839,179 +875,225 @@ namespace Nuke.Common.Tools.Octopus
         /// <summary>
         ///   Name of the project.
         /// </summary>
+        [ArgumentFormat("--project={value}")]
         public virtual string Project { get; internal set; }
         /// <summary>
         ///   Default version number of all packages to use for this release.
         /// </summary>
+        [ArgumentFormat("--packageversion={value}")]
         public virtual string DefaultPackageVersion { get; internal set; }
         /// <summary>
         ///   Release number to use for the new release.
         /// </summary>
+        [ArgumentFormat("--version={value}")]
         public virtual string Version { get; internal set; }
         /// <summary>
         ///   Channel to use for the new release. Omit this argument to automatically select the best channel.
         /// </summary>
+        [ArgumentFormat("--channel={value}")]
         public virtual string Channel { get; internal set; }
         /// <summary>
         ///   Version number to use for a step or package in the release. Format: <c>--package=StepNameOrPackageId:Version</c>.
         /// </summary>
+        [ArgumentFormat("--package={value}")]
+        [ItemFormat("{key}:{value}")]
         public virtual IReadOnlyDictionary<string, string> PackageVersions => PackageVersionsInternal.AsReadOnly();
         internal Dictionary<string, string> PackageVersionsInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   A folder containing NuGet packages from which we should get versions.
         /// </summary>
+        [ArgumentFormat("--packagesFolder={value}")]
         public virtual string PackagesFolder { get; internal set; }
         /// <summary>
         ///   Release Notes for the new release. Styling with Markdown is supported.
         /// </summary>
+        [ArgumentFormat("--releasenotes={value}")]
         public virtual string ReleaseNotes { get; internal set; }
         /// <summary>
         ///   Path to a file that contains Release Notes for the new release. Supports Markdown files.
         /// </summary>
+        [ArgumentFormat("--releasenotesfile={value}")]
         public virtual string ReleaseNotesFile { get; internal set; }
         /// <summary>
         ///   Don't create this release if there is already one with the same version number.
         /// </summary>
+        [ArgumentFormat("--ignoreexisting")]
         public virtual bool? IgnoreExisting { get; internal set; }
         /// <summary>
         ///   Create the release ignoring any version rules specified by the channel.
         /// </summary>
+        [ArgumentFormat("--ignorechannelrules")]
         public virtual bool? IgnoreChannelRules { get; internal set; }
         /// <summary>
         ///   Pre-release for latest version of all packages to use for this release.
         /// </summary>
+        [ArgumentFormat("--packageprerelease={value}")]
         public virtual string PackagePrerelease { get; internal set; }
         /// <summary>
         ///   Perform a dry run but don't actually create/deploy release.
         /// </summary>
+        [ArgumentFormat("--whatif")]
         public virtual bool? WhatIf { get; internal set; }
         /// <summary>
         ///   Show progress of the deployment.
         /// </summary>
+        [ArgumentFormat("--progress")]
         public virtual bool? Progress { get; internal set; }
         /// <summary>
         ///   Whether to force downloading of already installed packages (flag, default false).
         /// </summary>
+        [ArgumentFormat("--forcepackagedownload")]
         public virtual bool? ForcePackageDownload { get; internal set; }
         /// <summary>
         ///   Whether to wait synchronously for deployment to finish.
         /// </summary>
+        [ArgumentFormat("--waitfordeployment")]
         public virtual bool? WaitForDeployment { get; internal set; }
         /// <summary>
         ///   Specifies maximum time (timespan format) that the console session will wait for the deployment to finish(default 00:10:00). This will not stop the deployment. Requires <c>--waitfordeployment</c> parameter set.
         /// </summary>
+        [ArgumentFormat("--deploymenttimeout={value}")]
         public virtual string DeploymentTimeout { get; internal set; }
         /// <summary>
         ///   Whether to cancel the deployment if the deployment timeout is reached (flag, default false).
         /// </summary>
+        [ArgumentFormat("--cancelontimeout")]
         public virtual bool? CancelOnTimeout { get; internal set; }
         /// <summary>
         ///   Specifies how much time (timespan format) should elapse between deployment status checks (default 00:00:10).
         /// </summary>
+        [ArgumentFormat("--deploymentchecksleepcycle={value}")]
         public virtual string DeploymentCheckSleepCycle { get; internal set; }
         /// <summary>
         ///   Whether to use Guided Failure mode. (True or False. If not specified, will use default setting from environment).
         /// </summary>
+        [ArgumentFormat("--guidedfailure={value}")]
         public virtual bool? GuidedFailure { get; internal set; }
         /// <summary>
         ///   A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.
         /// </summary>
+        [ArgumentFormat("--specificmachines={value}")]
         public virtual IReadOnlyList<string> SpecificMachines => SpecificMachinesInternal.AsReadOnly();
         internal List<string> SpecificMachinesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   If a project is configured to skip packages with already-installed versions, override this setting to force re-deployment (flag, default false).
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Skip a step by name.
         /// </summary>
+        [ArgumentFormat("--skip={value}")]
         public virtual IReadOnlyList<string> Skip => SkipInternal.AsReadOnly();
         internal List<string> SkipInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Don't print the raw log of failed tasks.
         /// </summary>
+        [ArgumentFormat("--norawlog")]
         public virtual bool? NoRawLog { get; internal set; }
         /// <summary>
         ///   Redirect the raw log of failed tasks to a file.
         /// </summary>
+        [ArgumentFormat("--rawlogfile={value}")]
         public virtual string RawLogFile { get; internal set; }
         /// <summary>
         ///   Values for any prompted variables in the format Label:Value. For JSON values, embedded quotation marks should be escaped with a backslash.
         /// </summary>
+        [ArgumentFormat("--variable={value}")]
+        [ItemFormat("{key}:{value}")]
         public virtual IReadOnlyDictionary<string, string> Variables => VariablesInternal.AsReadOnly();
         internal Dictionary<string, string> VariablesInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Time at which deployment should start (scheduled deployment), specified as any valid DateTimeOffset format, and assuming the time zone is the current local time zone.
         /// </summary>
+        [ArgumentFormat("--deployat={value}")]
         public virtual string DeployAt { get; internal set; }
         /// <summary>
         ///   Environment to automatically deploy to, e.g., <c>Production</c>.
         /// </summary>
+        [ArgumentFormat("--deployto={value}")]
         public virtual string DeployTo { get; internal set; }
         /// <summary>
         ///   A tenant the deployment will be performed for; specify this argument multiple times to add multiple tenants or use <c>*</c> wildcard to deploy to tenants able to deploy.
         /// </summary>
+        [ArgumentFormat("--tenant={value}")]
         public virtual string Tenant { get; internal set; }
         /// <summary>
         ///   A tenant tag used to match tenants that the deployment will be performed for; specify this argument multiple times to add multiple tenant tags.
         /// </summary>
+        [ArgumentFormat("--tenanttag={value}")]
         public virtual string TenantTag { get; internal set; }
         /// <summary>
         ///   The base URL for your Octopus server - e.g., http://your-octopus/
         /// </summary>
+        [ArgumentFormat("--server={value}")]
         public virtual string Server { get; internal set; }
         /// <summary>
         ///   Your API key. Get this from the user profile page. Your must provide an apiKey or username and password. If the guest account is enabled, a key of API-GUEST can be used.
         /// </summary>
+        [ArgumentFormat("--apiKey={value}")]
         public virtual string ApiKey { get; internal set; }
         /// <summary>
         ///   Username to use when authenticating with the server. Your must provide an apiKey or username and password.
         /// </summary>
+        [ArgumentFormat("--user={value}")]
         public virtual string Username { get; internal set; }
         /// <summary>
         ///   Password to use when authenticating with the server.
         /// </summary>
+        [ArgumentFormat("--pass={value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   Text file of default values, with one 'key = value' per line.
         /// </summary>
+        [ArgumentFormat("--configFile={value}")]
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   Enable debug logging.
         /// </summary>
+        [ArgumentFormat("--debug")]
         public virtual bool? Debug { get; internal set; }
         /// <summary>
         ///   Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.
         /// </summary>
+        [ArgumentFormat("--ignoreSslErrors")]
         public virtual bool? IgnoreSslErrors { get; internal set; }
         /// <summary>
         ///   Enable TeamCity or Team Foundation Build service messages when logging.
         /// </summary>
+        [ArgumentFormat("--enableServiceMessages")]
         public virtual bool? EnableServiceMessages { get; internal set; }
         /// <summary>
         ///   Timeout in seconds for network operations. Default is 600.
         /// </summary>
+        [ArgumentFormat("--timeout={value}")]
         public virtual int? Timeout { get; internal set; }
         /// <summary>
         ///   The URI of the proxy to use, e.g., http://example.com:8080.
         /// </summary>
+        [ArgumentFormat("--proxy={value}")]
         public virtual string Proxy { get; internal set; }
         /// <summary>
         ///   The username for the proxy.
         /// </summary>
+        [ArgumentFormat("--proxyUser={value}")]
         public virtual string ProxyUsername { get; internal set; }
         /// <summary>
         ///   The password for the proxy. If both the username and password are omitted and proxyAddress is specified, the default credentials are used.
         /// </summary>
+        [ArgumentFormat("--proxyPass={value}")]
         public virtual string ProxyPassword { get; internal set; }
         /// <summary>
         ///   The name of a space within which this command will be executed. The default space will be used if it is omitted.
         /// </summary>
+        [ArgumentFormat("--space={value}")]
         public virtual string Space { get; internal set; }
         /// <summary>
         ///   The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.
         /// </summary>
+        [ArgumentFormat("--logLevel={value}")]
         public virtual string LogLevel { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1081,146 +1163,183 @@ namespace Nuke.Common.Tools.Octopus
         /// <summary>
         ///   Show progress of the deployment.
         /// </summary>
+        [ArgumentFormat("--progress")]
         public virtual bool? Progress { get; internal set; }
         /// <summary>
         ///   Whether to force downloading of already installed packages (flag, default false).
         /// </summary>
+        [ArgumentFormat("--forcepackagedownload")]
         public virtual bool? ForcePackageDownload { get; internal set; }
         /// <summary>
         ///   Whether to wait synchronously for deployment to finish.
         /// </summary>
+        [ArgumentFormat("--waitfordeployment")]
         public virtual bool? WaitForDepployment { get; internal set; }
         /// <summary>
         ///   Specifies maximum time (timespan format) that the console session will wait for the deployment to finish(default 00:10:00). This will not stop the deployment. Requires <c>WaitForDeployment</c> parameter set.
         /// </summary>
+        [ArgumentFormat("--deploymenttimeout={value}")]
         public virtual string DeploymentTimeout { get; internal set; }
         /// <summary>
         ///   Whether to cancel the deployment if the deployment timeout is reached (flag, default false).
         /// </summary>
+        [ArgumentFormat("--cancelontimeout")]
         public virtual bool? CancelOnTimeout { get; internal set; }
         /// <summary>
         ///   Specifies how much time (timespan format) should elapse between deployment status checks (default 00:00:10).
         /// </summary>
+        [ArgumentFormat("--deploymentchecksleepcycle={value}")]
         public virtual string DeploymentCheckSleepCycle { get; internal set; }
         /// <summary>
         ///   Whether to use Guided Failure mode. (True or False. If not specified, will use default setting from environment).
         /// </summary>
+        [ArgumentFormat("--guidedfailure={value}")]
         public virtual bool? GuidedFailure { get; internal set; }
         /// <summary>
         ///   A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.
         /// </summary>
+        [ArgumentFormat("--specificmachines={value}")]
         public virtual IReadOnlyList<string> SpecificMachines => SpecificMachinesInternal.AsReadOnly();
         internal List<string> SpecificMachinesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   If a project is configured to skip packages with already-installed versions, override this setting to force re-deployment (flag, default false).
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Skip a step by name.
         /// </summary>
+        [ArgumentFormat("--skip={value}")]
         public virtual IReadOnlyList<string> Skip => SkipInternal.AsReadOnly();
         internal List<string> SkipInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Don't print the raw log of failed tasks.
         /// </summary>
+        [ArgumentFormat("--norawlog")]
         public virtual bool? NoRawLog { get; internal set; }
         /// <summary>
         ///   Redirect the raw log of failed tasks to a file.
         /// </summary>
+        [ArgumentFormat("--rawlogfile={value}")]
         public virtual string RawLogFile { get; internal set; }
         /// <summary>
         ///   Values for any prompted variables. For JSON values, embedded quotation marks should be escaped with a backslash. 
         /// </summary>
+        [ArgumentFormat("--variable={value}")]
+        [ItemFormat("{key}:{value}")]
         public virtual IReadOnlyDictionary<string, string> Variables => VariablesInternal.AsReadOnly();
         internal Dictionary<string, string> VariablesInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Time at which deployment should start (scheduled deployment), specified as any valid DateTimeOffset format, and assuming the time zone is the current local time zone.
         /// </summary>
+        [ArgumentFormat("--deployat={value}")]
         public virtual string DeployAt { get; internal set; }
         /// <summary>
         ///   Create a deployment for this tenant; specify this argument multiple times to add multiple tenants or use <c>*</c> wildcard to deploy to all tenants who are ready for this release (according to lifecycle).
         /// </summary>
+        [ArgumentFormat("--tenant={value}")]
         public virtual string Tenant { get; internal set; }
         /// <summary>
         ///   Create a deployment for tenants matching this tag; specify this argument multiple times to build a query/filter with multiple tags, just like you can in the user interface.
         /// </summary>
+        [ArgumentFormat("--tenanttag={value}")]
         public virtual string TenantTag { get; internal set; }
         /// <summary>
         ///   Name of the project.
         /// </summary>
+        [ArgumentFormat("--project={value}")]
         public virtual string Project { get; internal set; }
         /// <summary>
         ///   Environment to deploy to, e.g. <c>Production</c>.
         /// </summary>
+        [ArgumentFormat("--deployto={value}")]
         public virtual string DeployTo { get; internal set; }
         /// <summary>
         ///   Version number of the release to deploy. Or specify 'latest' for the latest release.
         /// </summary>
+        [ArgumentFormat("--version={value}")]
         public virtual string Version { get; internal set; }
         /// <summary>
         ///   Channel to use when getting the release to deploy
         /// </summary>
+        [ArgumentFormat("--channel={value}")]
         public virtual string Channel { get; internal set; }
         /// <summary>
         ///   Overwrite the variable snapshot for the release by re-importing the variables from the project
         /// </summary>
+        [ArgumentFormat("--updateVariables")]
         public virtual bool? UpdateVariables { get; internal set; }
         /// <summary>
         ///   The base URL for your Octopus server - e.g., http://your-octopus/
         /// </summary>
+        [ArgumentFormat("--server={value}")]
         public virtual string Server { get; internal set; }
         /// <summary>
         ///   Your API key. Get this from the user profile page. Your must provide an apiKey or username and password. If the guest account is enabled, a key of API-GUEST can be used.
         /// </summary>
+        [ArgumentFormat("--apiKey={value}")]
         public virtual string ApiKey { get; internal set; }
         /// <summary>
         ///   Username to use when authenticating with the server. Your must provide an apiKey or username and password.
         /// </summary>
+        [ArgumentFormat("--user={value}")]
         public virtual string Username { get; internal set; }
         /// <summary>
         ///   Password to use when authenticating with the server.
         /// </summary>
+        [ArgumentFormat("--pass={value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   Text file of default values, with one 'key = value' per line.
         /// </summary>
+        [ArgumentFormat("--configFile={value}")]
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   Enable debug logging.
         /// </summary>
+        [ArgumentFormat("--debug")]
         public virtual bool? Debug { get; internal set; }
         /// <summary>
         ///   Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.
         /// </summary>
+        [ArgumentFormat("--ignoreSslErrors")]
         public virtual bool? IgnoreSslErrors { get; internal set; }
         /// <summary>
         ///   Enable TeamCity or Team Foundation Build service messages when logging.
         /// </summary>
+        [ArgumentFormat("--enableServiceMessages")]
         public virtual bool? EnableServiceMessages { get; internal set; }
         /// <summary>
         ///   Timeout in seconds for network operations. Default is 600.
         /// </summary>
+        [ArgumentFormat("--timeout={value}")]
         public virtual int? Timeout { get; internal set; }
         /// <summary>
         ///   The URI of the proxy to use, e.g., http://example.com:8080.
         /// </summary>
+        [ArgumentFormat("--proxy={value}")]
         public virtual string Proxy { get; internal set; }
         /// <summary>
         ///   The username for the proxy.
         /// </summary>
+        [ArgumentFormat("--proxyUser={value}")]
         public virtual string ProxyUsername { get; internal set; }
         /// <summary>
         ///   The password for the proxy. If both the username and password are omitted and proxyAddress is specified, the default credentials are used.
         /// </summary>
+        [ArgumentFormat("--proxyPass={value}")]
         public virtual string ProxyPassword { get; internal set; }
         /// <summary>
         ///   The name of a space within which this command will be executed. The default space will be used if it is omitted.
         /// </summary>
+        [ArgumentFormat("--space={value}")]
         public virtual string Space { get; internal set; }
         /// <summary>
         ///   The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.
         /// </summary>
+        [ArgumentFormat("--logLevel={value}")]
         public virtual string LogLevel { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1282,76 +1401,95 @@ namespace Nuke.Common.Tools.Octopus
         /// <summary>
         ///   Id of the package.
         /// </summary>
+        [ArgumentFormat("--package-id={value}")]
         public virtual IReadOnlyList<string> PackageId => PackageIdInternal.AsReadOnly();
         internal List<string> PackageIdInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Version number of the package.
         /// </summary>
+        [ArgumentFormat("--version={value}")]
         public virtual string Version { get; internal set; }
         /// <summary>
         ///   Octopus build information json file.
         /// </summary>
+        [ArgumentFormat("--file={value}")]
         public virtual string File { get; internal set; }
         /// <summary>
         ///   Overwrite policy when the information already exists.
         /// </summary>
+        [ArgumentFormat("--overwrite-mode={value}")]
         public virtual OctopusOverwriteMode OverwriteMode { get; internal set; }
         /// <summary>
         ///   The base URL for your Octopus server - e.g., http://your-octopus/
         /// </summary>
+        [ArgumentFormat("--server={value}")]
         public virtual string Server { get; internal set; }
         /// <summary>
         ///   Your API key. Get this from the user profile page. Your must provide an apiKey or username and password. If the guest account is enabled, a key of API-GUEST can be used.
         /// </summary>
+        [ArgumentFormat("--apiKey={value}")]
         public virtual string ApiKey { get; internal set; }
         /// <summary>
         ///   Username to use when authenticating with the server. Your must provide an apiKey or username and password.
         /// </summary>
+        [ArgumentFormat("--user={value}")]
         public virtual string Username { get; internal set; }
         /// <summary>
         ///   Password to use when authenticating with the server.
         /// </summary>
+        [ArgumentFormat("--pass={value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   Text file of default values, with one 'key = value' per line.
         /// </summary>
+        [ArgumentFormat("--configFile={value}")]
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   Enable debug logging.
         /// </summary>
+        [ArgumentFormat("--debug")]
         public virtual bool? Debug { get; internal set; }
         /// <summary>
         ///   Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.
         /// </summary>
+        [ArgumentFormat("--ignoreSslErrors")]
         public virtual bool? IgnoreSslErrors { get; internal set; }
         /// <summary>
         ///   Enable TeamCity or Team Foundation Build service messages when logging.
         /// </summary>
+        [ArgumentFormat("--enableServiceMessages")]
         public virtual bool? EnableServiceMessages { get; internal set; }
         /// <summary>
         ///   Timeout in seconds for network operations. Default is 600.
         /// </summary>
+        [ArgumentFormat("--timeout={value}")]
         public virtual int? Timeout { get; internal set; }
         /// <summary>
         ///   The URI of the proxy to use, e.g., http://example.com:8080.
         /// </summary>
+        [ArgumentFormat("--proxy={value}")]
         public virtual string Proxy { get; internal set; }
         /// <summary>
         ///   The username for the proxy.
         /// </summary>
+        [ArgumentFormat("--proxyUser={value}")]
         public virtual string ProxyUsername { get; internal set; }
         /// <summary>
         ///   The password for the proxy. If both the username and password are omitted and proxyAddress is specified, the default credentials are used.
         /// </summary>
+        [ArgumentFormat("--proxyPass={value}")]
         public virtual string ProxyPassword { get; internal set; }
         /// <summary>
         ///   The name of a space within which this command will be executed. The default space will be used if it is omitted.
         /// </summary>
+        [ArgumentFormat("--space={value}")]
         public virtual string Space { get; internal set; }
         /// <summary>
         ///   The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.
         /// </summary>
+        [ArgumentFormat("--logLevel={value}")]
         public virtual string LogLevel { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

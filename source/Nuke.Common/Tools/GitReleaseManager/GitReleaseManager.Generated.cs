@@ -84,6 +84,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///     <li><c>--username</c> via <see cref="GitReleaseManagerAddAssetsSettings.UserName"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("addasset")]
         public static IReadOnlyCollection<Output> GitReleaseManagerAddAssets(Configure<GitReleaseManagerAddAssetsSettings> configurator)
         {
             return GitReleaseManagerAddAssets(configurator(new GitReleaseManagerAddAssetsSettings()));
@@ -148,6 +149,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///     <li><c>--username</c> via <see cref="GitReleaseManagerCloseSettings.UserName"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("close")]
         public static IReadOnlyCollection<Output> GitReleaseManagerClose(Configure<GitReleaseManagerCloseSettings> configurator)
         {
             return GitReleaseManagerClose(configurator(new GitReleaseManagerCloseSettings()));
@@ -221,6 +223,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///     <li><c>--username</c> via <see cref="GitReleaseManagerCreateSettings.UserName"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("create")]
         public static IReadOnlyCollection<Output> GitReleaseManagerCreate(Configure<GitReleaseManagerCreateSettings> configurator)
         {
             return GitReleaseManagerCreate(configurator(new GitReleaseManagerCreateSettings()));
@@ -291,6 +294,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///     <li><c>--username</c> via <see cref="GitReleaseManagerExportSettings.UserName"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("export")]
         public static IReadOnlyCollection<Output> GitReleaseManagerExport(Configure<GitReleaseManagerExportSettings> configurator)
         {
             return GitReleaseManagerExport(configurator(new GitReleaseManagerExportSettings()));
@@ -355,6 +359,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///     <li><c>--username</c> via <see cref="GitReleaseManagerPublishSettings.UserName"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("publish")]
         public static IReadOnlyCollection<Output> GitReleaseManagerPublish(Configure<GitReleaseManagerPublishSettings> configurator)
         {
             return GitReleaseManagerPublish(configurator(new GitReleaseManagerPublishSettings()));
@@ -397,35 +402,44 @@ namespace Nuke.Common.Tools.GitReleaseManager
         /// <summary>
         ///   Paths to the files to include in the release.
         /// </summary>
+        [ArgumentFormat("--assets {value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> AssetPaths => AssetPathsInternal.AsReadOnly();
         internal List<string> AssetPathsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The name of the release. Typically this is the generated SemVer Version Number.
         /// </summary>
+        [ArgumentFormat("--tagName {value}")]
         public virtual string TagName { get; internal set; }
         /// <summary>
         ///   The username to access GitHub with.
         /// </summary>
+        [ArgumentFormat("--username {value}")]
         public virtual string UserName { get; internal set; }
         /// <summary>
         ///   The password to access GitHub with.
         /// </summary>
+        [ArgumentFormat("--password {value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   The owner of the repository.
         /// </summary>
+        [ArgumentFormat("--owner {value}")]
         public virtual string RepositoryOwner { get; internal set; }
         /// <summary>
         ///   The name of the repository.
         /// </summary>
+        [ArgumentFormat("--repository {value}")]
         public virtual string RepositoryName { get; internal set; }
         /// <summary>
         ///   The directory on which GitReleaseManager should be executed. Default is <em>current directory</em>.
         /// </summary>
+        [ArgumentFormat("--targetDirectory {value}")]
         public virtual string TargetDirectory { get; internal set; }
         /// <summary>
         ///   Path to where log file should be created. Defaults is <em>logging to console</em>.
         /// </summary>
+        [ArgumentFormat("--logFilePath {value}")]
         public virtual string LogFilePath { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -460,30 +474,37 @@ namespace Nuke.Common.Tools.GitReleaseManager
         /// <summary>
         ///   The milestone to use.
         /// </summary>
+        [ArgumentFormat("--milestone {value}")]
         public virtual string Milestone { get; internal set; }
         /// <summary>
         ///   The username to access GitHub with.
         /// </summary>
+        [ArgumentFormat("--username {value}")]
         public virtual string UserName { get; internal set; }
         /// <summary>
         ///   The password to access GitHub with.
         /// </summary>
+        [ArgumentFormat("--password {value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   The owner of the repository.
         /// </summary>
+        [ArgumentFormat("--owner {value}")]
         public virtual string RepositoryOwner { get; internal set; }
         /// <summary>
         ///   The name of the repository.
         /// </summary>
+        [ArgumentFormat("--repository {value}")]
         public virtual string RepositoryName { get; internal set; }
         /// <summary>
         ///   The directory on which GitReleaseManager should be executed. Default is <em>current directory</em>.
         /// </summary>
+        [ArgumentFormat("--targetDirectory {value}")]
         public virtual string TargetDirectory { get; internal set; }
         /// <summary>
         ///   Path to where log file should be created. Defaults is <em>logging to console</em>.
         /// </summary>
+        [ArgumentFormat("--logFilePath {value}")]
         public virtual string LogFilePath { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -517,51 +538,64 @@ namespace Nuke.Common.Tools.GitReleaseManager
         /// <summary>
         ///   Paths to the files to include in the release.
         /// </summary>
+        [ArgumentFormat("--assets {value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> AssetPaths => AssetPathsInternal.AsReadOnly();
         internal List<string> AssetPathsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The commit to tag. Can be a branch or SHA. Defaults to repository's default branch.
         /// </summary>
+        [ArgumentFormat("--targetcommitish {value}")]
         public virtual string TargetCommitish { get; internal set; }
         /// <summary>
         ///   The milestone to use.
         /// </summary>
+        [ArgumentFormat("--milestone {value}")]
         public virtual string Milestone { get; internal set; }
         /// <summary>
         ///   The name of the release. Typically this is the generated SemVer Version Number.
         /// </summary>
+        [ArgumentFormat("--name {value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   The path to the file to be used as the content of the release notes.
         /// </summary>
+        [ArgumentFormat("--inputFilePath {value}")]
         public virtual string InputFilePath { get; internal set; }
         /// <summary>
         ///   Creates the release as a pre-release.
         /// </summary>
+        [ArgumentFormat("--prerelease")]
         public virtual bool? Prerelease { get; internal set; }
         /// <summary>
         ///   The username to access GitHub with.
         /// </summary>
+        [ArgumentFormat("--username {value}")]
         public virtual string UserName { get; internal set; }
         /// <summary>
         ///   The password to access GitHub with.
         /// </summary>
+        [ArgumentFormat("--password {value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   The owner of the repository.
         /// </summary>
+        [ArgumentFormat("--owner {value}")]
         public virtual string RepositoryOwner { get; internal set; }
         /// <summary>
         ///   The name of the repository.
         /// </summary>
+        [ArgumentFormat("--repository {value}")]
         public virtual string RepositoryName { get; internal set; }
         /// <summary>
         ///   The directory on which GitReleaseManager should be executed. Default is <em>current directory</em>.
         /// </summary>
+        [ArgumentFormat("--targetDirectory {value}")]
         public virtual string TargetDirectory { get; internal set; }
         /// <summary>
         ///   Path to where log file should be created. Defaults is <em>logging to console</em>.
         /// </summary>
+        [ArgumentFormat("--logFilePath {value}")]
         public virtual string LogFilePath { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -600,34 +634,42 @@ namespace Nuke.Common.Tools.GitReleaseManager
         /// <summary>
         ///   The name of the release. Typically this is the generated SemVer Version Number.
         /// </summary>
+        [ArgumentFormat("--tagName {value}")]
         public virtual string TagName { get; internal set; }
         /// <summary>
         ///   Path to the file export releases.
         /// </summary>
+        [ArgumentFormat("--fileOutputPath {value}")]
         public virtual string FileOutputPath { get; internal set; }
         /// <summary>
         ///   The username to access GitHub with.
         /// </summary>
+        [ArgumentFormat("--username {value}")]
         public virtual string UserName { get; internal set; }
         /// <summary>
         ///   The password to access GitHub with.
         /// </summary>
+        [ArgumentFormat("--password {value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   The owner of the repository.
         /// </summary>
+        [ArgumentFormat("--owner {value}")]
         public virtual string RepositoryOwner { get; internal set; }
         /// <summary>
         ///   The name of the repository.
         /// </summary>
+        [ArgumentFormat("--repository {value}")]
         public virtual string RepositoryName { get; internal set; }
         /// <summary>
         ///   The directory on which GitReleaseManager should be executed. Default is <em>current directory</em>.
         /// </summary>
+        [ArgumentFormat("--targetDirectory {value}")]
         public virtual string TargetDirectory { get; internal set; }
         /// <summary>
         ///   Path to where log file should be created. Defaults is <em>logging to console</em>.
         /// </summary>
+        [ArgumentFormat("--logFilePath {value}")]
         public virtual string LogFilePath { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -662,30 +704,37 @@ namespace Nuke.Common.Tools.GitReleaseManager
         /// <summary>
         ///   The name of the release. Typically this is the generated SemVer Version Number.
         /// </summary>
+        [ArgumentFormat("--tagName {value}")]
         public virtual string TagName { get; internal set; }
         /// <summary>
         ///   The username to access GitHub with.
         /// </summary>
+        [ArgumentFormat("--username {value}")]
         public virtual string UserName { get; internal set; }
         /// <summary>
         ///   The password to access GitHub with.
         /// </summary>
+        [ArgumentFormat("--password {value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   The owner of the repository.
         /// </summary>
+        [ArgumentFormat("--owner {value}")]
         public virtual string RepositoryOwner { get; internal set; }
         /// <summary>
         ///   The name of the repository.
         /// </summary>
+        [ArgumentFormat("--repository {value}")]
         public virtual string RepositoryName { get; internal set; }
         /// <summary>
         ///   The directory on which GitReleaseManager should be executed. Default is <em>current directory</em>.
         /// </summary>
+        [ArgumentFormat("--targetDirectory {value}")]
         public virtual string TargetDirectory { get; internal set; }
         /// <summary>
         ///   Path to where log file should be created. Defaults is <em>logging to console</em>.
         /// </summary>
+        [ArgumentFormat("--logFilePath {value}")]
         public virtual string LogFilePath { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

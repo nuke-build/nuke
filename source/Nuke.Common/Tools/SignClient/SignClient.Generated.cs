@@ -90,6 +90,7 @@ namespace Nuke.Common.Tools.SignClient
         ///     <li><c>--user</c> via <see cref="SignClientSignSettings.Username"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("sign")]
         public static IReadOnlyCollection<Output> SignClientSign(Configure<SignClientSignSettings> configurator)
         {
             return SignClientSign(configurator(new SignClientSignSettings()));
@@ -136,46 +137,57 @@ namespace Nuke.Common.Tools.SignClient
         /// <summary>
         ///   Path to config json file
         /// </summary>
+        [ArgumentFormat("--config {value}")]
         public virtual string Config { get; internal set; }
         /// <summary>
         ///   Path to input file
         /// </summary>
+        [ArgumentFormat("--input {value}")]
         public virtual string Input { get; internal set; }
         /// <summary>
         ///   Base directory for files to override the working directory
         /// </summary>
+        [ArgumentFormat("--baseDirectory {value}")]
         public virtual string BaseDirectory { get; internal set; }
         /// <summary>
         ///   Path to output file. May be same as input to overwrite
         /// </summary>
+        [ArgumentFormat("--output {value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   Path to file containing paths of files to sign within an archive
         /// </summary>
+        [ArgumentFormat("--fileList {value}")]
         public virtual string FileList { get; internal set; }
         /// <summary>
         ///   Client Secret
         /// </summary>
+        [ArgumentFormat("--secret {value}")]
         public virtual string Secret { get; internal set; }
         /// <summary>
         ///   Username
         /// </summary>
+        [ArgumentFormat("--user {value}")]
         public virtual string Username { get; internal set; }
         /// <summary>
         ///   Name of project for tracking
         /// </summary>
+        [ArgumentFormat("--name {value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   Description
         /// </summary>
+        [ArgumentFormat("--description {value}")]
         public virtual string Description { get; internal set; }
         /// <summary>
         ///   Description Url
         /// </summary>
+        [ArgumentFormat("--descriptionUrl {value}")]
         public virtual string DescriptionUrl { get; internal set; }
         /// <summary>
         ///   Maximum concurrency (default is 4)
         /// </summary>
+        [ArgumentFormat("--maxConcurrency {value}")]
         public virtual string MaxConcurrency { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

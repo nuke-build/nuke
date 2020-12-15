@@ -90,6 +90,7 @@ namespace Nuke.Common.Tools.ReSharper
         ///     <li><c>--toolset</c> via <see cref="ReSharperInspectCodeSettings.Toolset"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("inspectcode")]
         public static IReadOnlyCollection<Output> ReSharperInspectCode(Configure<ReSharperInspectCodeSettings> configurator)
         {
             return ReSharperInspectCode(configurator(new ReSharperInspectCodeSettings()));
@@ -174,6 +175,7 @@ namespace Nuke.Common.Tools.ReSharper
         ///     <li><c>--toolset-path</c> via <see cref="ReSharperCleanupCodeSettings.ToolsetPath"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("cleanupcode")]
         public static IReadOnlyCollection<Output> ReSharperCleanupCode(Configure<ReSharperCleanupCodeSettings> configurator)
         {
             return ReSharperCleanupCode(configurator(new ReSharperCleanupCodeSettings()));
@@ -261,6 +263,7 @@ namespace Nuke.Common.Tools.ReSharper
         ///     <li><c>--show-text</c> via <see cref="ReSharperDupFinderSettings.ShowText"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("dupfinder")]
         public static IReadOnlyCollection<Output> ReSharperDupFinder(Configure<ReSharperDupFinderSettings> configurator)
         {
             return ReSharperDupFinder(configurator(new ReSharperDupFinderSettings()));
@@ -311,48 +314,61 @@ namespace Nuke.Common.Tools.ReSharper
         /// <summary>
         ///   Target path.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string TargetPath { get; internal set; }
         /// <summary>
         ///   Lets you set the output file. By default, the output file is saved in the <em>%TEMP%</em> directory.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   Disables solution-wide analysis.
         /// </summary>
+        [ArgumentFormat("--no-swea")]
         public virtual bool? NoSwea { get; internal set; }
         /// <summary>
         ///   Specifies an additional .DotSettings file used for inspection settings.
         /// </summary>
+        [ArgumentFormat("--profile={value}")]
         public virtual string Profile { get; internal set; }
         /// <summary>
         ///   Allows analyzing particular project(s) instead of the whole solution. After this parameter, you can type a project name or a wildcard that matches several projects within your solution. For example, <c>--project=*Billing</c>
         /// </summary>
+        [ArgumentFormat("--project={value}")]
         public virtual string Project { get; internal set; }
         /// <summary>
         ///   Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.
         /// </summary>
+        [ArgumentFormat("--disable-settings-layers={value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<ReSharperSettingsLayers> DisableSettingsLayers => DisableSettingsLayersInternal.AsReadOnly();
         internal List<ReSharperSettingsLayers> DisableSettingsLayersInternal { get; set; } = new List<ReSharperSettingsLayers>();
         /// <summary>
         ///   Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c>
         /// </summary>
+        [ArgumentFormat("--no-buildin-settings")]
         public virtual bool? NoBuiltinSettings { get; internal set; }
         /// <summary>
         ///   Lets you specify a custom location for the data that InspectCode caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.
         /// </summary>
+        [ArgumentFormat("--caches-home={value}")]
         public virtual string CachesHome { get; internal set; }
         /// <summary>
         ///   Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.
         /// </summary>
+        [ArgumentFormat("--properties={value}")]
+        [ItemFormat("{key}={value}")]
         public virtual IReadOnlyDictionary<string, string> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, string> PropertiesInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.
         /// </summary>
+        [ArgumentFormat("--dumpIssuesTypes")]
         public virtual bool? DumpIssuesTypes { get; internal set; }
         /// <summary>
         ///   Explicitly specified MsBuild Toolset version (12.0, 14.0, 15.0). For example, <c>--toolset=12.0</c>.
         /// </summary>
+        [ArgumentFormat("--toolset={value}")]
         public virtual ReSharperMSBuildToolset Toolset { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -390,68 +406,89 @@ namespace Nuke.Common.Tools.ReSharper
         /// <summary>
         ///   Target path.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string TargetPath { get; internal set; }
         /// <summary>
         ///   A code cleanup profile that lists cleanup tasks to execute.<p/>By default, CleanupCode will apply code cleanup tasks specified in the <a href="https://www.jetbrains.com/help/resharper/Code_Cleanup__Index.html#profiles">Built-in: Full Cleanup profile</a>, that is all <a href="https://www.jetbrains.com/help/resharper/Code_Cleanup__Index.html#tasks">available cleanup tasks</a> tasks except <a href="https://www.jetbrains.com/help/resharper/File_Header_Style.html">updating file header</a>. 
         /// </summary>
+        [ArgumentFormat("--profile={value}")]
         public virtual string Profile { get; internal set; }
         /// <summary>
         ///   Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.
         /// </summary>
+        [ArgumentFormat("--include={value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> Include => IncludeInternal.AsReadOnly();
         internal List<string> IncludeInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.
         /// </summary>
+        [ArgumentFormat("--exclude={value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> Exclude => ExcludeInternal.AsReadOnly();
         internal List<string> ExcludeInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Lets you override MSBuild properties. You can set each property separately ( <c>--properties:prop1=val1</c> <c>--properties:prop2=val2</c>), or use a semicolon to separate multiple properties <c>--properties:prop1=val1;prop2=val2</c>.<para/>Note that the semicolon cannot be used inside values, for example: <c>--properties:ReferencePath="r:\reference1\;r:\reference2\"</c>. In such cases, add each value separately using another <c>--properties</c> parameter — the values will be combined.<para/>The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in CleanupCode parameters.
         /// </summary>
+        [ArgumentFormat("--properties={value}")]
+        [ItemFormat("{key}={value}")]
         public virtual IReadOnlyDictionary<string, string> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, string> PropertiesInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Use this option to specify the exact MSBuild version. For example 12.0: <c>--toolset=12.0</c>. By default the highest available MSBuild version is used. This option might not work if you have several installations with the same version, for example 16.0 from Visual Studio 2019 and 16.0 from .NET Core 3.x.
         /// </summary>
+        [ArgumentFormat("--toolset={value}")]
         public virtual ReSharperMSBuildToolset Toolset { get; internal set; }
         /// <summary>
         ///   Use this option to specify the exact path to MSBuild. This might be helpful if you have a custom MSBuild installation and want to use it with CleanupCode, for example: <c>--toolset-path="C:\tools\msbuild\bin\MsBuild.exe"</c>
         /// </summary>
+        [ArgumentFormat("--toolset-path={value}")]
         public virtual string ToolsetPath { get; internal set; }
         /// <summary>
         ///   By default, .NET Core installation is auto-detected. You can use this option to point to the specific .NET Core installation if the auto-detection results in a conflict. Use it without arguments to ignore .NET Core. Example: <c>--dotnetcore=/usr/local/share/dotnet/dotnet</c>.
         /// </summary>
+        [ArgumentFormat("--dotnetcore={value}")]
         public virtual string DotNetCore { get; internal set; }
         /// <summary>
         ///   Use this option to specify .NET Core SDK version that should provide MSBuild. For example, if you have installed .NET Core with SDKs 2.0.3 and 3.0.100, CleanupCode will prefer 3.0.100 (the latest, including preview versions). Now if you want to run CleanupCode with .NET Core SDK 2.0.3, add <c>--dotnetcoresdk=2.0.3</c> to the command line.
         /// </summary>
+        [ArgumentFormat("--dotnetcoresdk={value}")]
         public virtual string DotNetCoreSdk { get; internal set; }
         /// <summary>
         ///   Mono path. Empty to ignore Mono. Not specified for autodetect. Example: <c>--mono=/Library/Frameworks/Mono.framework/Versions/Current/bin/mono.</c>
         /// </summary>
+        [ArgumentFormat("--mono={value}")]
         public virtual string MonoPath { get; internal set; }
         /// <summary>
         ///   Names of custom MSBuild targets that will be executed to get referenced assemblies of projects. The targets are defined either in the project file or in the <c>.targets</c> file. Multiple values are separated with the semicolon. For example, <c>--targets-for-references="GetReferences"</c>.
         /// </summary>
+        [ArgumentFormat("--targets-for-references={value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> ReferenceTargets => ReferenceTargetsInternal.AsReadOnly();
         internal List<string> ReferenceTargetsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Names of custom MSBuild targets that will be executed to get other items (for example, a Compile item) of projects. The targets are defined either in the project file or in the <c>.targets</c> file. Multiple values are separated with the semicolon. For example, <c>--targets-for-items="GetCompileItems"</c>.
         /// </summary>
+        [ArgumentFormat("--targets-for-items={value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> ItemTargets => ItemTargetsInternal.AsReadOnly();
         internal List<string> ItemTargetsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Lets you specify a custom location for the data that CleanupCode caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.
         /// </summary>
+        [ArgumentFormat("--caches-home={value}")]
         public virtual string CachesHome { get; internal set; }
         /// <summary>
         ///   Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.
         /// </summary>
+        [ArgumentFormat("--disable-settings-layers={value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<ReSharperSettingsLayers> DisableSettingsLayers => DisableSettingsLayersInternal.AsReadOnly();
         internal List<ReSharperSettingsLayers> DisableSettingsLayersInternal { get; set; } = new List<ReSharperSettingsLayers>();
         /// <summary>
         ///   Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c>
         /// </summary>
+        [ArgumentFormat("--no-buildin-settings")]
         public virtual bool? NoBuiltinSettings { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -493,66 +530,85 @@ namespace Nuke.Common.Tools.ReSharper
         /// <summary>
         ///   Defines files included into the duplicates search. Use Visual Studio solution or project files, Ant-like wildcards or specific source file and folder names. Paths should be either absolute or relative to the working directory.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Source { get; internal set; }
         /// <summary>
         ///   Lets you set the output file.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual string OutputFile { get; internal set; }
         /// <summary>
         ///   Allows excluding files from the duplicates search. Wildcards can be used; for example, <c>*Generated.cs</c>. Note that the paths should be either absolute or relative to the working directory.
         /// </summary>
+        [ArgumentFormat("--exclude={value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> ExcludeFiles => ExcludeFilesInternal.AsReadOnly();
         internal List<string> ExcludeFilesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Allows excluding files that have a matching substrings in the opening comments.
         /// </summary>
+        [ArgumentFormat("--exclude-by-comment={value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> ExcludeComments => ExcludeCommentsInternal.AsReadOnly();
         internal List<string> ExcludeCommentsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>).
         /// </summary>
+        [ArgumentFormat("--exclude-code-regions={value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> ExcludeCodeRegions => ExcludeCodeRegionsInternal.AsReadOnly();
         internal List<string> ExcludeCodeRegionsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Whether to consider similar fragments as duplicates if they have different fields. The default value is <c>false</c>.
         /// </summary>
+        [ArgumentFormat("--discard-fields={value}")]
         public virtual bool? DiscardFields { get; internal set; }
         /// <summary>
         ///   Whether to consider similar fragments as duplicates if they have different literals. The default value is <c>false</c>.
         /// </summary>
+        [ArgumentFormat("--discard-literals={value}")]
         public virtual bool? DiscardLiterals { get; internal set; }
         /// <summary>
         ///   Whether to consider similar fragments as duplicates if they have different local variables. The default value is <c>false</c>.
         /// </summary>
+        [ArgumentFormat("--discard-local-vars={value}")]
         public virtual bool? DiscardLocalVars { get; internal set; }
         /// <summary>
         ///   Whether to consider similar fragments as duplicates if they have different types. The default value is <c>false</c>.
         /// </summary>
+        [ArgumentFormat("--discard-types={value}")]
         public virtual bool? DiscardTypes { get; internal set; }
         /// <summary>
         ///   Allows setting a threshold for code complexity of the duplicated fragments. The fragments with lower complexity are discarded as non-duplicates. The value for this option is provided in relative units. Using this option, you can filter out equal code fragments that present no semantic duplication. E.g. you can often have the following statements in tests: <c>Assert.AreEqual(gold, result);</c>. If the <c>discard-cost</c> value is less than 10, statements like that will appear as duplicates, which is obviously unhelpful. You'll need to play a bit with this value to find a balance between avoiding false positives and missing real duplicates. The proper values will differ for different codebases.
         /// </summary>
+        [ArgumentFormat("--discard-cost={value}")]
         public virtual int? DiscardCost { get; internal set; }
         /// <summary>
         ///   Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.
         /// </summary>
+        [ArgumentFormat("--properties:{value}")]
+        [ItemFormat("{key}={value}")]
         public virtual IReadOnlyDictionary<string, string> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, string> PropertiesInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Allows normalizing type names to the last subtype in the output (default: <c>false</c>).
         /// </summary>
+        [ArgumentFormat("--normalize-types={value}")]
         public virtual bool? NormalizeTypes { get; internal set; }
         /// <summary>
         ///   If you use this parameter, the detected duplicate fragments will be embedded into the report.
         /// </summary>
+        [ArgumentFormat("--show-text={value}")]
         public virtual bool? ShowText { get; internal set; }
         /// <summary>
         ///   Used to save the current parameters to a configuration file.
         /// </summary>
+        [ArgumentFormat("--config-create={value}")]
         public virtual string CreateConfigFile { get; internal set; }
         /// <summary>
         ///   Used to load the parameters described above from a configuration file.
         /// </summary>
+        [ArgumentFormat("--config={value}")]
         public virtual string ConfigFile { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -589,6 +645,7 @@ namespace Nuke.Common.Tools.ReSharper
         /// <summary>
         ///   Allows adding ReSharper plugins that will get included during execution. To add a plugin, specify its ID and version. Available plugins are listed in the <a href="https://resharper-plugins.jetbrains.com/">Plugin Repository</a>. The ID can be grabbed from the download URL. Using <c>ReSharperPluginLatest</c> or <c>null</c> will download the latest version.
         /// </summary>
+        [ArgumentFormat("")]
         public virtual IReadOnlyDictionary<string, string> Plugins => PluginsInternal.AsReadOnly();
         internal Dictionary<string, string> PluginsInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
     }

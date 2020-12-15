@@ -94,6 +94,7 @@ namespace Nuke.Common.Tools.MSBuild
         ///     <li><c>/verbosity</c> via <see cref="MSBuildSettings.Verbosity"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("")]
         public static IReadOnlyCollection<Output> MSBuild(Configure<MSBuildSettings> configurator)
         {
             return MSBuild(configurator(new MSBuildSettings()));
@@ -142,65 +143,120 @@ namespace Nuke.Common.Tools.MSBuild
         /// <summary>
         ///   The solution or project file on which MSBuild is executed.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string TargetPath { get; internal set; }
         /// <summary>
         ///   Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.
         /// </summary>
+        [ArgumentFormat("/detailedsummary")]
         public virtual bool? DetailedSummary { get; internal set; }
         /// <summary>
         ///   <p>Specifies the maximum number of concurrent processes to use when building. If you don't include this switch, the default value is 1. If you include this switch without specifying a value, MSBuild will use up to the number of processors in the computer. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb651793.aspx">Building Multiple Projects in Parallel</a>.</p><p>The following example instructs MSBuild to build using three MSBuild processes, which allows three projects to build at the same time:</p><p><c>msbuild myproject.proj /maxcpucount:3</c></p>
         /// </summary>
+        [ArgumentFormat("/maxcpucount:{value}")]
         public virtual int? MaxCpuCount { get; internal set; }
         /// <summary>
         ///   <p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p>
         /// </summary>
+        [ArgumentFormat("/nodeReuse:{value}")]
         public virtual bool? NodeReuse { get; internal set; }
         /// <summary>
         ///   Don't display the startup banner or the copyright message.
         /// </summary>
+        [ArgumentFormat("/nologo")]
         public virtual bool? NoLogo { get; internal set; }
         /// <summary>
         ///   The target platform for which the project is built to run on.
         /// </summary>
+        [ArgumentFormat("/p:Platform={value}")]
         public virtual MSBuildTargetPlatform TargetPlatform { get; internal set; }
         /// <summary>
         ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
         /// </summary>
+        [ArgumentFormat("/p:{value}")]
+        [ItemFormat("{key}={value}")]
+        [Delegate("OutDir", "")]
+        [Delegate("RunCodeAnalysis", "")]
+        [Delegate("NoWarn", "")]
+        [Delegate("WarningsAsErrors", "")]
+        [Delegate("WarningLevel", "")]
+        [Delegate("Configuration", "")]
+        [Delegate("TreatWarningsAsErrors", "")]
+        [Delegate("AssemblyVersion", "")]
+        [Delegate("FileVersion", "")]
+        [Delegate("InformationalVersion", "")]
+        [Delegate("PackageOutputPath", "")]
+        [Delegate("IncludeSymbols", "")]
+        [Delegate("PackageId", "")]
+        [Delegate("PackageVersion", "")]
+        [Delegate("PackageVersionPrefix", "")]
+        [Delegate("PackageVersionSuffix", "")]
+        [Delegate("Authors", "")]
+        [Delegate("Title", "")]
+        [Delegate("Description", "")]
+        [Delegate("Copyright", "")]
+        [Delegate("PackageRequireLicenseAcceptance", "")]
+        [Delegate("PackageLicenseUrl", "")]
+        [Delegate("PackageProjectUrl", "")]
+        [Delegate("PackageIconUrl", "")]
+        [Delegate("PackageTags", "")]
+        [Delegate("PackageReleaseNotes", "")]
+        [Delegate("RepositoryUrl", "")]
+        [Delegate("RepositoryType", "")]
+        [Delegate("RestoreSources", "")]
+        [Delegate("RestorePackagesPath", "")]
+        [Delegate("RestoreDisableParallel", "")]
+        [Delegate("RestoreConfigFile", "")]
+        [Delegate("RestoreNoCache", "")]
+        [Delegate("RestoreIgnoreFailedSources", "")]
+        [Delegate("RestoreTaskAssemblyFile", "")]
+        [Delegate("RestoreGraphProjectInput", "")]
+        [Delegate("RestoreOutputPath", "")]
+        [Delegate("SymbolPackageFormat", "")]
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Runs the <c>Restore</c> target prior to building the actual targets.
         /// </summary>
+        [ArgumentFormat("/restore")]
         public virtual bool? Restore { get; internal set; }
         /// <summary>
         ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
         /// </summary>
+        [ArgumentFormat("/target:{value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> Targets => TargetsInternal.AsReadOnly();
         internal List<string> TargetsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   <p>Specifies the version of the Toolset to use to build the project, as the following example shows: <c>/toolsversion:3.5</c></p><p>By using this switch, you can build a project and specify a version that differs from the version that's specified in the <a href="https://msdn.microsoft.com/en-us/library/bcxfsh87.aspx">Project Element (MSBuild)</a>. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb383985.aspx">Overriding ToolsVersion Settings</a>.</p><p>For MSBuild 4.5, you can specify the following values for version: 2.0, 3.5, and 4.0. If you specify 4.0, the VisualStudioVersion build property specifies which sub-toolset to use. For more information, see the Sub-toolsets section of <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>.</p><p>A Toolset consists of tasks, targets, and tools that are used to build an application. The tools include compilers such as csc.exe and vbc.exe. For more information about Toolsets, see <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>, <a href="https://msdn.microsoft.com/en-us/library/bb397428.aspx">Standard and Custom Toolset Configurations</a>, and <a href="https://msdn.microsoft.com/en-us/library/hh264223.aspx">Multitargeting</a>. Note: The toolset version isn't the same as the target framework, which is the version of the .NET Framework on which a project is built to run. For more information, see <a href="https://msdn.microsoft.com/en-us/library/hh264221.aspx">Target Framework and Target Platform</a>.</p>
         /// </summary>
+        [ArgumentFormat("/toolsversion:{value}")]
         public virtual MSBuildToolsVersion ToolsVersion { get; internal set; }
         /// <summary>
         ///   Specifies the version of MSBuild for building.
         /// </summary>
+        [ArgumentFormat("")]
         public virtual MSBuildVersion? MSBuildVersion { get; internal set; }
         /// <summary>
         ///   <p>Specifies the amount of information to display in the build log. Each logger displays events based on the verbosity level that you set for that logger.</p><p>You can specify the following verbosity levels: <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p><p>The following setting is an example: <c>/verbosity:quiet</c></p>
         /// </summary>
+        [ArgumentFormat("/verbosity:{value}")]
         public virtual MSBuildVerbosity Verbosity { get; internal set; }
         /// <summary>
         ///   Specifies the platform to use when building.
         /// </summary>
+        [ArgumentFormat("")]
         public virtual MSBuildPlatform? MSBuildPlatform { get; internal set; }
         /// <summary>
         ///   Specifies the loggers to use to log events from MSBuild.
         /// </summary>
+        [ArgumentFormat("/logger:{value}")]
         public virtual IReadOnlyList<string> Loggers => LoggersInternal.AsReadOnly();
         internal List<string> LoggersInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Disable the default console logger, and don't log events to the console.
         /// </summary>
+        [ArgumentFormat("/noconsolelogger")]
         public virtual bool? NoConsoleLogger { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

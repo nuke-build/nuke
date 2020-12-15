@@ -116,6 +116,7 @@ namespace Nuke.Common.Tools.OpenCover
         ///     <li><c>-threshold</c> via <see cref="OpenCoverSettings.MaximumVisitCount"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("")]
         public static IReadOnlyCollection<Output> OpenCover(Configure<OpenCoverSettings> configurator)
         {
             return OpenCover(configurator(new OpenCoverSettings()));
@@ -175,105 +176,136 @@ namespace Nuke.Common.Tools.OpenCover
         /// <summary>
         ///   The name of the target application or service that will be started; this can also be a path to the target application.
         /// </summary>
+        [ArgumentFormat("-target:{value}")]
         public virtual string TargetPath { get; internal set; }
         /// <summary>
         ///   Arguments to be passed to the target process.
         /// </summary>
+        [ArgumentFormat("-targetargs:{value}")]
         public virtual string TargetArguments { get; internal set; }
         /// <summary>
         ///   The path to the target directory; if the target argument already contains a path then this argument can be used to provide an alternate path where PDB files may be found.
         /// </summary>
+        [ArgumentFormat("-targetdir:{value}")]
         public virtual string TargetDirectory { get; internal set; }
         /// <summary>
         ///   Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub.
         /// </summary>
+        [ArgumentFormat("-coverbytest:{value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> CoverByTests => CoverByTestsInternal.AsReadOnly();
         internal List<string> CoverByTestsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   <em>Administrator</em> privileges required. Allows the monitoring in <em>Performance Monitor</em> of the following values (they are usually cleared at the end of a performance run):<ul><li>messages remaining on the queue</li><li>number of messages processed</li></ul>
         /// </summary>
+        [ArgumentFormat("-enableperformancecounters")]
         public virtual bool? PerformanceCounters { get; internal set; }
         /// <summary>
         ///   Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.
         /// </summary>
+        [ArgumentFormat("-excludebyattribute:{value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> ExcludeByAttributes => ExcludeByAttributesInternal.AsReadOnly();
         internal List<string> ExcludeByAttributesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Exclude a class (or methods) by file-filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.
         /// </summary>
+        [ArgumentFormat("-excludebyfile:{value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> ExcludeByFile => ExcludeByFileInternal.AsReadOnly();
         internal List<string> ExcludeByFileInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Assemblies being loaded from these locations will be ignored.
         /// </summary>
+        [ArgumentFormat("-excludedirs:{value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> ExcludeDirectories => ExcludeDirectoriesInternal.AsReadOnly();
         internal List<string> ExcludeDirectoriesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   <p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <em>Open</em>, <c>-[*]Core.*</c> exclude all types in the <em>Core</em> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:"+[*]* -[A*]Name.*"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul>
         /// </summary>
+        [ArgumentFormat("-filter:{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Filters => FiltersInternal.AsReadOnly();
         internal List<string> FiltersInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c>
         /// </summary>
+        [ArgumentFormat("-hideskipped:{value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<OpenCoverSkipping> HideSkippedKinds => HideSkippedKindsInternal.AsReadOnly();
         internal List<OpenCoverSkipping> HideSkippedKindsInternal { get; set; } = new List<OpenCoverSkipping>();
         /// <summary>
         ///   Change the logging level, default is set to Info. Logging is based on log4net logging levels and appenders.
         /// </summary>
+        [ArgumentFormat("-log:{value}")]
         public virtual OpenCoverVerbosity Verbosity { get; internal set; }
         /// <summary>
         ///   Under some scenarios e.g. using MSTest, an assembly may be loaded many times from different locations. This option is used to merge the coverage results for an assembly regardless of where it was loaded assuming the assembly has the same file-hash in each location.
         /// </summary>
+        [ArgumentFormat("-mergebyhash")]
         public virtual bool? MergeByHash { get; internal set; }
         /// <summary>
         ///   Allow to merge the results with an existing file (specified by <c>-output</c> option). So the coverage from the output file will be loaded first (if exists).
         /// </summary>
+        [ArgumentFormat("-mergeoutput")]
         public virtual bool? MergeOutput { get; internal set; }
         /// <summary>
         ///   A list of default exclusion filters are usually applied, this option can be used to turn them off. The default filters are:<ul><li><c>-[System]*</c></li><li><c>-[System.*]*</c></li><li><c>-[mscorlib]*</c></li><li><c>-[mscorlib.*]*</c></li><li><c>-[Microsoft.VisualBasic]*</c></li></ul>
         /// </summary>
+        [ArgumentFormat("-nodefaultfilters")]
         public virtual bool? NoDefaultFilters { get; internal set; }
         /// <summary>
         ///   Use old style instrumentation - the instrumentation is not Silverlight friendly and is provided to support environments where mscorlib instrumentation is not working. <em>ONLY</em> use this option if you are encountering <see cref="MissingMethodException"/> like errors when the code is run under OpenCover. The issue could be down to <em>ngen /Profile</em> of the mscorlib which then interferes with the instrumentation.
         /// </summary>
+        [ArgumentFormat("-oldStyle")]
         public virtual bool? OldStyle { get; internal set; }
         /// <summary>
         ///   The location and name of the output Xml file. If no value is supplied then the current directory will be used and the output filename will be <c>results.xml</c>.
         /// </summary>
+        [ArgumentFormat("-output:{value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   Enable or disable safemode - default is on/yes. When safemode is on OpenCover will use a common buffer for all threads in an instrumented process and this may have performance impacts depending on your code and its tests. Turning safemode off uses individual buffers for each thread but this may lead to data loss (uncovered code reported) if the runtime shuts down the instrumented process before the profiler has had time to retrieve the data and shunt it to the host for processing.
         /// </summary>
+        [ArgumentFormat("-safemode:{value}")]
         public virtual bool? SafeMode { get; internal set; }
         /// <summary>
         ///   Alternative locations to look for PDBs.
         /// </summary>
+        [ArgumentFormat("-searchdirs:{value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> SearchDirectories => SearchDirectoriesInternal.AsReadOnly();
         internal List<string> SearchDirectoriesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The value provided in the target parameter is the name of a service rather than a name of a process. <em>Administrator</em> privileges recommended.
         /// </summary>
+        [ArgumentFormat("-service")]
         public virtual bool? Service { get; internal set; }
         /// <summary>
         ///   Show a list of unvisited methods and classes after the coverage run is finished and the results are presented.
         /// </summary>
+        [ArgumentFormat("-showunvisited")]
         public virtual bool? ShowUnvisited { get; internal set; }
         /// <summary>
         ///   Neither track nor record auto-implemented properties. That is, skip getters and setters like these: <c>public bool Service { get; set; }</c>
         /// </summary>
+        [ArgumentFormat("-skipautoprops")]
         public virtual bool? SkipAutoProperties { get; internal set; }
         /// <summary>
         ///   Limits the number of visit counts recorded/reported for an instrumentation point. May have some performance gains as it can reduce the number of messages sent from the profiler. Coverage results should not be affected but will have an obvious impact on the Visit Counts reported.
         /// </summary>
+        [ArgumentFormat("-threshold:{value}")]
         public virtual int? MaximumVisitCount { get; internal set; }
         /// <summary>
         ///   Use this switch to register and de-register the code coverage profiler. Alternatively use the optional user argument to do per-user registration where the user account does not have administrative permissions. Alternatively use an administrative account to register the profilers using the <em>regsvr32</em> utility. If you do not want to use the registry entries, use <c>-register:Path32</c> or <c>-register:Path64</c> to let opencover select the profiler for you. Depending on your choice it selects the <em>OpenCoverAssemblyLocation/x86/OpenCover.Profiler.dll</em> or <em>OpenCoverAssemblyLocation/x64/OpenCover.Profiler.dll</em>.
         /// </summary>
+        [ArgumentFormat("-register:{value}")]
         public virtual RegistrationType Registration { get; internal set; }
         /// <summary>
         ///   Return the target process exit code instead of the OpenCover console exit code. Use the offset to return the OpenCover console at a value outside the range returned by the target process.
         /// </summary>
+        [ArgumentFormat("-returntargetcode:{value}")]
         public virtual int? TargetExitCodeOffset { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

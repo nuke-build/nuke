@@ -112,6 +112,7 @@ namespace Nuke.CodeGeneration.Generators
             return writer
                 .WriteSummary(task)
                 .WriteRemarks(task)
+                .WriteLine($"[CommandFormat({task.DefiniteArgument.DoubleQuote()})]")
                 .WriteObsoleteAttributeWhenObsolete(task)
                 .WriteLine($"public static {returnType} {task.GetTaskMethodName()}(Configure<{task.SettingsClass.Name}> configurator)")
                 .WriteBlock(w => w

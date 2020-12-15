@@ -92,6 +92,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///     <li><c>--user</c> via <see cref="TestCloudSettings.UserEmail"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("submit")]
         public static IReadOnlyCollection<Output> TestCloud(Configure<TestCloudSettings> configurator)
         {
             return TestCloud(configurator(new TestCloudSettings()));
@@ -139,53 +140,65 @@ namespace Nuke.Common.Tools.TestCloud
         /// <summary>
         ///   The path to the folder holding the test assemblies.
         /// </summary>
+        [ArgumentFormat("--assembly-dir {value}")]
         public virtual string AssemblyDirectory { get; internal set; }
         /// <summary>
         ///   The device ID that was provided in the Test Cloud Upload dialog.
         /// </summary>
+        [ArgumentFormat("--devices {value}")]
         public virtual string Devices { get; internal set; }
         /// <summary>
         ///   The e-mail address of the team member submitting the tests.
         /// </summary>
+        [ArgumentFormat("--user {value}")]
         public virtual string UserEmail { get; internal set; }
         /// <summary>
         ///   The filename to which test results are exported, formatted as NUnit results XML. Optional.
         /// </summary>
+        [ArgumentFormat("--nunit-xml {value}")]
         public virtual string NunitResultsFile { get; internal set; }
         /// <summary>
         ///   Android only. Supply a signing information file that will be used to sign the Test Server APK. See the section below for more details. Optional.
         /// </summary>
+        [ArgumentFormat("--sign-info {value}")]
         public virtual string SignInfoFile { get; internal set; }
         /// <summary>
         ///   iOS only. Will upload the dSYM files along with the application and tests. This allows for more detail in the log files. Optional.
         /// </summary>
+        [ArgumentFormat("--dsym {value}")]
         public virtual string DsymFile { get; internal set; }
         /// <summary>
         ///   NUnit fixture / namespace to run. (Can be used multiple times).
         /// </summary>
+        [ArgumentFormat("--fixture {value}")]
         public virtual IReadOnlyList<string> Fixtures => FixturesInternal.AsReadOnly();
         internal List<string> FixturesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Identifies the NUnit test categories that should only be included in the test run.
         /// </summary>
+        [ArgumentFormat("--include {value}")]
         public virtual IReadOnlyList<string> IncludeCategories => IncludeCategoriesInternal.AsReadOnly();
         internal List<string> IncludeCategoriesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Identifies the NUnit test categories that should be excluded from the test run.
         /// </summary>
+        [ArgumentFormat("--exclude {value}")]
         public virtual IReadOnlyList<string> ExcludeCategories => ExcludeCategoriesInternal.AsReadOnly();
         internal List<string> ExcludeCategoriesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Run tests in parallel by method.
         /// </summary>
+        [ArgumentFormat("--test-chunk")]
         public virtual bool? TestChunk { get; internal set; }
         /// <summary>
         ///   Run tests in parallel by fixture.
         /// </summary>
+        [ArgumentFormat("--fixture-chunk")]
         public virtual bool? FixtureChunk { get; internal set; }
         /// <summary>
         ///   Uploads file or directory along with assemblies. (Can be used multiple times).
         /// </summary>
+        [ArgumentFormat("--data {value}")]
         public virtual IReadOnlyList<string> DataPaths => DataPathsInternal.AsReadOnly();
         internal List<string> DataPathsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)

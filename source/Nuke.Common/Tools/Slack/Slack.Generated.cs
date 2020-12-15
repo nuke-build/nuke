@@ -28,27 +28,34 @@ namespace Nuke.Common.Tools.Slack
     public partial class SlackMessage : ISettingsEntity
     {
         [JsonProperty("channel")]
+        [ArgumentFormat("")]
         public virtual string Channel { get; internal set; }
         [JsonProperty("username")]
+        [ArgumentFormat("")]
         public virtual string Username { get; internal set; }
         /// <summary>
         ///   Slack messages may be formatted using a simple markup language similar to <a href="https://daringfireball.net/projects/markdown/">Markdown</a>. Supported formatting includes: <c>```pre```</c>, <c>`code`</c>, <c>_italic_</c>, <c>*bold*</c>, and even <c>~strike~</c>.; full details are available on our <a href="https://slack.zendesk.com/hc/en-us/articles/202288908-how-can-i-add-formatting-to-my-messages-?sid=zd-up-t0288d531-u0a5kka1k">help site</a>.
         /// </summary>
         [JsonProperty("text")]
+        [ArgumentFormat("")]
         public virtual string Text { get; internal set; }
         /// <summary>
         ///   By default bot message text will be formatted. To disable formatting on a non-user message, set the <c>mrkdwn</c> property to <c>false</c>.
         /// </summary>
         [JsonProperty("mrkdwn")]
+        [ArgumentFormat("")]
         public virtual bool? Markdown { get; internal set; }
         [JsonProperty("icon_emoji")]
+        [ArgumentFormat("")]
         public virtual string Emoji { get; internal set; }
         [JsonProperty("icon_url")]
+        [ArgumentFormat("")]
         public virtual string Icon { get; internal set; }
         /// <summary>
         ///   Attachments let you add more context to a message, making them more useful and effective.
         /// </summary>
         [JsonProperty("attachments")]
+        [ArgumentFormat("")]
         public virtual IReadOnlyList<SlackMessageAttachment> Attachments => AttachmentsInternal.AsReadOnly();
         internal List<SlackMessageAttachment> AttachmentsInternal { get; set; } = new List<SlackMessageAttachment>();
     }
@@ -66,82 +73,98 @@ namespace Nuke.Common.Tools.Slack
         ///   The title is displayed as larger, bold text near the top of a message attachment.
         /// </summary>
         [JsonProperty("title")]
+        [ArgumentFormat("")]
         public virtual string Title { get; internal set; }
         /// <summary>
         ///   Hyperlink used for the title.
         /// </summary>
         [JsonProperty("title_link")]
+        [ArgumentFormat("")]
         public virtual string TitleLink { get; internal set; }
         /// <summary>
         ///   This is optional text that appears above the message attachment block.
         /// </summary>
         [JsonProperty("pretext")]
+        [ArgumentFormat("")]
         public virtual string PreText { get; internal set; }
         /// <summary>
         ///   This is the main text in a message attachment, and can contain <a href="https://api.slack.com/docs/message-formatting">standard message markup</a>. The content will automatically collapse if it contains <b>700+ characters</b> or <b>5+ linebreaks</b>, and will display a "Show more..." link to expand the content. Links posted in the <c>text</c> field will not unfurl.
         /// </summary>
         [JsonProperty("text")]
+        [ArgumentFormat("")]
         public virtual string Text { get; internal set; }
         /// <summary>
         ///   By default bot message attachments will not be formatted. To enable formatting on attachment fields, set the mrkdwn_in array on each attachment to the list of fields to process.
         /// </summary>
         [JsonProperty("mrkdwn_in")]
+        [ArgumentFormat("")]
         public virtual IReadOnlyList<string> MarkdownIn => MarkdownInInternal.AsReadOnly();
         internal List<string> MarkdownInInternal { get; set; } = new List<string>();
         /// <summary>
         ///   A plain-text summary of the attachment. This text will be used in clients that don't show formatted text (eg. IRC, mobile notifications) and should not contain any markup.
         /// </summary>
         [JsonProperty("fallback")]
+        [ArgumentFormat("")]
         public virtual string Fallback { get; internal set; }
         /// <summary>
         ///   Like traffic signals, color-coding messages can quickly communicate intent and help separate them from the flow of other messages in the timeline.<para/>An optional value that can either be one of good, warning, danger, or any hex color code (eg. #439FE0). This value is used to color the border along the left side of the message attachment.
         /// </summary>
         [JsonProperty("color")]
+        [ArgumentFormat("")]
         public virtual string Color { get; internal set; }
         /// <summary>
         ///   Small text used to display the author's name.
         /// </summary>
         [JsonProperty("author_name")]
+        [ArgumentFormat("")]
         public virtual string AuthorName { get; internal set; }
         /// <summary>
         ///   A valid URL that will hyperlink the <c>author_name</c> text mentioned above. Will only work if <c>author_name</c> is present.
         /// </summary>
         [JsonProperty("author_link")]
+        [ArgumentFormat("")]
         public virtual string AuthorLink { get; internal set; }
         /// <summary>
         ///   A valid URL that displays a small 16x16px image to the left of the <c>author_name</c> text. Will only work if <c>author_name</c> is present.
         /// </summary>
         [JsonProperty("author_icon")]
+        [ArgumentFormat("")]
         public virtual string AuthorIcon { get; internal set; }
         /// <summary>
         ///   A valid URL to an image file that will be displayed inside a message attachment. We currently support the following formats: GIF, JPEG, PNG, and BMP.<para/>Large images will be resized to a maximum width of 360px or a maximum height of 500px, while still maintaining the original aspect ratio.
         /// </summary>
         [JsonProperty("image_url")]
+        [ArgumentFormat("")]
         public virtual string ImageUrl { get; internal set; }
         /// <summary>
         ///   A valid URL to an image file that will be displayed as a thumbnail on the right side of a message attachment. We currently support the following formats: GIF, JPEG, PNG, and BMP.<para/>The thumbnail's longest dimension will be scaled down to 75px while maintaining the aspect ratio of the image. The filesize of the image must also be less than 500 KB.<para/>For best results, please use images that are already 75px by 75px.
         /// </summary>
         [JsonProperty("thumb_url")]
+        [ArgumentFormat("")]
         public virtual string ThumbUrl { get; internal set; }
         /// <summary>
         ///   Add some brief text to help contextualize and identify an attachment. Limited to 300 characters, and may be truncated further when displayed to users in environments with limited screen real estate.
         /// </summary>
         [JsonProperty("footer")]
+        [ArgumentFormat("")]
         public virtual string Footer { get; internal set; }
         /// <summary>
         ///   To render a small icon beside your <c>footer</c> text, provide a publicly accessible URL string in the <c>footer_icon</c> field. You must also provide a <c>footer</c> for the field to be recognized.<para/>We'll render what you provide at 16px by 16px. It's best to use an image that is similarly sized.<para/>Example: <c>https://platform.slack-edge.com/img/default_application_icon.png</c>
         /// </summary>
         [JsonProperty("footer_icon")]
+        [ArgumentFormat("")]
         public virtual string FooterIcon { get; internal set; }
         /// <summary>
         ///   Does your attachment relate to something happening at a specific time?<para/>By providing the <c>ts</c> field with an integer value in "<a href="https://en.wikipedia.org/wiki/Unix_time">epoch time</a>", the attachment will display an additional timestamp value as part of the attachment's footer.<para/>Use <c>ts</c> when referencing articles or happenings. Your message will have its own timestamp when published.<para/>Example: Providing <c>123456789</c> would result in a rendered timestamp of <em>Nov 29th, 1973</em>.
         /// </summary>
         [JsonProperty("ts")]
+        [ArgumentFormat("")]
         public virtual string Timestamp { get; internal set; }
         /// <summary>
         ///   Fields get displayed in a table-like way.
         /// </summary>
         [JsonProperty("fields")]
+        [ArgumentFormat("")]
         public virtual IReadOnlyList<SlackMessageField> Fields => FieldsInternal.AsReadOnly();
         internal List<SlackMessageField> FieldsInternal { get; set; } = new List<SlackMessageField>();
     }
@@ -159,16 +182,19 @@ namespace Nuke.Common.Tools.Slack
         ///   Shown as a bold heading above the <c>value</c> text. It cannot contain markup and will be escaped for you.
         /// </summary>
         [JsonProperty("title")]
+        [ArgumentFormat("")]
         public virtual string Title { get; internal set; }
         /// <summary>
         ///   The text value of the field. It may contain <a href="https://api.slack.com/docs/message-formatting">standard message markup</a> and must be escaped as normal. May be multi-line.
         /// </summary>
         [JsonProperty("value")]
+        [ArgumentFormat("")]
         public virtual string Value { get; internal set; }
         /// <summary>
         ///   An optional flag indicating whether the <c>value</c> is short enough to be displayed side-by-side with other values.
         /// </summary>
         [JsonProperty("short")]
+        [ArgumentFormat("")]
         public virtual bool? Short { get; internal set; }
     }
     #endregion

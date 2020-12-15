@@ -106,6 +106,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///     <li><c>--useRelativePaths</c> via <see cref="CoverallsNetSettings.UserRelativePaths"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("")]
         public static IReadOnlyCollection<Output> CoverallsNet(Configure<CoverallsNetSettings> configurator)
         {
             return CoverallsNet(configurator(new CoverallsNetSettings()));
@@ -160,78 +161,97 @@ namespace Nuke.Common.Tools.CoverallsNet
         /// <summary>
         ///   The coverage source file location.
         /// </summary>
+        [ArgumentFormat("--input {value}")]
         public virtual string Input { get; internal set; }
         /// <summary>
         ///   The coverage results json will be written to this file it provided.
         /// </summary>
+        [ArgumentFormat("--output {value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   This flag will stop coverage results being posted to <a href="https://coveralls.io">coveralls.io</a>.
         /// </summary>
+        [ArgumentFormat("--dryrun")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   This flag, when provided, will attempt to strip the current working directory from the beginning of the source file path.
         /// </summary>
+        [ArgumentFormat("--useRelativePaths")]
         public virtual bool? UserRelativePaths { get; internal set; }
         /// <summary>
         ///   When useRelativePaths and a basePath is provided, this path is used instead of the current working directory.
         /// </summary>
+        [ArgumentFormat("--basePath {value}")]
         public virtual string BasePath { get; internal set; }
         /// <summary>
         ///   Reads input as OpenCover data.
         /// </summary>
+        [ArgumentFormat("--opencover")]
         public virtual bool? OpenCover { get; internal set; }
         /// <summary>
         ///   Reads input as the CodeCoverage.exe xml format.
         /// </summary>
+        [ArgumentFormat("--dynamiccodecoverage")]
         public virtual bool? DynamicCodeCoverage { get; internal set; }
         /// <summary>
         ///   Reads input as the Visual Studio Coverage Export xml format.
         /// </summary>
+        [ArgumentFormat("--exportcodecoverage")]
         public virtual bool? ExportCodeCoverage { get; internal set; }
         /// <summary>
         ///   Reads input as monocov results folder.
         /// </summary>
+        [ArgumentFormat("--monocov")]
         public virtual bool? Monocov { get; internal set; }
         /// <summary>
         ///   The coveralls.io repository token.
         /// </summary>
+        [ArgumentFormat("--repoToken {value}")]
         public virtual string RepoToken { get; internal set; }
         /// <summary>
         ///   The Environment Variable name where the coveralls.io repository token is available. Default is <c>COVERALLS_REPO_TOKEN</c>.
         /// </summary>
+        [ArgumentFormat("--repoTokenVariable {value}")]
         public virtual string RepoTokenVariable { get; internal set; }
         /// <summary>
         ///   The git commit hash for the coverage report.
         /// </summary>
+        [ArgumentFormat("--commitId {value}")]
         public virtual string CommitId { get; internal set; }
         /// <summary>
         ///   The git branch for the coverage report.
         /// </summary>
+        [ArgumentFormat("--commitBranch {value}")]
         public virtual string CommitBranch { get; internal set; }
         /// <summary>
         ///   The git commit author for the coverage report.
         /// </summary>
+        [ArgumentFormat("--commitAuthor {value}")]
         public virtual string CommitAuthor { get; internal set; }
         /// <summary>
         ///   The git commit author email for the coverage report.
         /// </summary>
+        [ArgumentFormat("--commitEmail {value}")]
         public virtual string CommitEmail { get; internal set; }
         /// <summary>
         ///   The git commit message for the coverage report.
         /// </summary>
+        [ArgumentFormat("--commitMessage {value}")]
         public virtual string CommitMessage { get; internal set; }
         /// <summary>
         ///   The job Id to provide to coveralls.io. Default is <c>0</c>.
         /// </summary>
+        [ArgumentFormat("--jobId {value}")]
         public virtual int? JobId { get; internal set; }
         /// <summary>
         ///   The service-name for the coverage report. Default is <c>coveralls.net</c>.
         /// </summary>
+        [ArgumentFormat("--serviceName {value}")]
         public virtual string ServiceName { get; internal set; }
         /// <summary>
         ///   The github pull request id. Used for updating status on github PRs.
         /// </summary>
+        [ArgumentFormat("--pullRequest {value}")]
         public virtual int? PullRequest { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

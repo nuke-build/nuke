@@ -83,6 +83,7 @@ namespace Nuke.Common.Tools.Unity
         ///     <li><c>-username</c> via <see cref="UnityCreateManualActivationFileSettings.Username"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("-createManualActivationFile")]
         public static IReadOnlyCollection<Output> UnityCreateManualActivationFile(Configure<UnityCreateManualActivationFileSettings> configurator)
         {
             return UnityCreateManualActivationFile(configurator(new UnityCreateManualActivationFileSettings()));
@@ -149,6 +150,7 @@ namespace Nuke.Common.Tools.Unity
         ///     <li><c>-username</c> via <see cref="UnityManualLicenseFileSettings.Username"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("")]
         public static IReadOnlyCollection<Output> UnityManualLicenseFile(Configure<UnityManualLicenseFileSettings> configurator)
         {
             return UnityManualLicenseFile(configurator(new UnityManualLicenseFileSettings()));
@@ -284,6 +286,7 @@ namespace Nuke.Common.Tools.Unity
         ///     <li><c>-username</c> via <see cref="UnitySettings.Username"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("")]
         public static IReadOnlyCollection<Output> Unity(Configure<UnitySettings> configurator)
         {
             return Unity(configurator(new UnitySettings()));
@@ -383,6 +386,7 @@ namespace Nuke.Common.Tools.Unity
         ///     <li><c>-username</c> via <see cref="UnityReturnLicenseSettings.Username"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("-returnlicense")]
         public static IReadOnlyCollection<Output> UnityReturnLicense(Configure<UnityReturnLicenseSettings> configurator)
         {
             return UnityReturnLicense(configurator(new UnityReturnLicenseSettings()));
@@ -425,30 +429,37 @@ namespace Nuke.Common.Tools.Unity
         /// <summary>
         ///   Enter a username into the log-in form during activation of the Unity Editor.
         /// </summary>
+        [ArgumentFormat("-username {value}")]
         public virtual string Username { get; internal set; }
         /// <summary>
         ///   Enter a password into the log-in form during activation of the Unity Editor.
         /// </summary>
+        [ArgumentFormat("-password {value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Editor.log</a> for info.
         /// </summary>
+        [ArgumentFormat("-serial {value}")]
         public virtual string Serial { get; internal set; }
         /// <summary>
         ///   Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.
         /// </summary>
+        [ArgumentFormat("-batchmode")]
         public virtual bool? BatchMode { get; internal set; }
         /// <summary>
         ///   Don't display a crash dialog.
         /// </summary>
+        [ArgumentFormat("-silent-crashes")]
         public virtual bool? SilentCrashes { get; internal set; }
         /// <summary>
         ///   When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.
         /// </summary>
+        [ArgumentFormat("-nographics")]
         public virtual bool? NoGraphics { get; internal set; }
         /// <summary>
         ///   Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).
         /// </summary>
+        [ArgumentFormat("-quit")]
         public virtual bool? Quit { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -482,34 +493,42 @@ namespace Nuke.Common.Tools.Unity
         /// <summary>
         ///   The path to the license file.
         /// </summary>
+        [ArgumentFormat("-manualLicenseFile {value}")]
         public virtual string LicenseFile { get; internal set; }
         /// <summary>
         ///   Enter a username into the log-in form during activation of the Unity Editor.
         /// </summary>
+        [ArgumentFormat("-username {value}")]
         public virtual string Username { get; internal set; }
         /// <summary>
         ///   Enter a password into the log-in form during activation of the Unity Editor.
         /// </summary>
+        [ArgumentFormat("-password {value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Editor.log</a> for info.
         /// </summary>
+        [ArgumentFormat("-serial {value}")]
         public virtual string Serial { get; internal set; }
         /// <summary>
         ///   Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.
         /// </summary>
+        [ArgumentFormat("-batchmode")]
         public virtual bool? BatchMode { get; internal set; }
         /// <summary>
         ///   Don't display a crash dialog.
         /// </summary>
+        [ArgumentFormat("-silent-crashes")]
         public virtual bool? SilentCrashes { get; internal set; }
         /// <summary>
         ///   When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.
         /// </summary>
+        [ArgumentFormat("-nographics")]
         public virtual bool? NoGraphics { get; internal set; }
         /// <summary>
         ///   Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).
         /// </summary>
+        [ArgumentFormat("-quit")]
         public virtual bool? Quit { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -543,175 +562,222 @@ namespace Nuke.Common.Tools.Unity
         /// <summary>
         ///   Force an update of the project in the <a href="https://docs.unity3d.com/Manual/AssetServer.html">Asset Server</a> given by <c>IP:port</c>. The port is optional, and if not given it is assumed to be the standard one (10733). It is advisable to use this command in conjunction with the <c>-projectPath</c> argument to ensure you are working with the correct project. If no project name is given, then the last project opened by Unity is used. If no project exists at the path given by <c>-projectPath</c>, then one is created automatically.
         /// </summary>
+        [ArgumentFormat("-assetServerUpdate {value}")]
         public virtual string AssetServerUpdate { get; internal set; }
         /// <summary>
         ///   Build a 32-bit standalone Linux player (for example, <c>-buildLinux32Player path/to/your/build</c>).
         /// </summary>
+        [ArgumentFormat("-buildLinux32Player {value}")]
         public virtual string BuildLinux32Player { get; internal set; }
         /// <summary>
         ///   Build a 64-bit standalone Linux player (for example, <c>-buildLinux64Player path/to/your/build</c>).
         /// </summary>
+        [ArgumentFormat("-buildLinux64Player {value}")]
         public virtual string BuildLinux64Player { get; internal set; }
         /// <summary>
         ///   Build a combined 32-bit and 64-bit standalone Linux player (for example, <c>-buildLinuxUniversalPlayer path/to/your/build</c>).
         /// </summary>
+        [ArgumentFormat("-buildLinuxUniversalPlayer {value}")]
         public virtual string BuildLinuxUniversalPlayer { get; internal set; }
         /// <summary>
         ///   Build a 32-bit standalone Mac OSX player (for example, <c>-buildOSXPlayer path/to/your/build.app</c>).
         /// </summary>
+        [ArgumentFormat("-buildOSXPlayer {value}")]
         public virtual string BuildOSXPlayer { get; internal set; }
         /// <summary>
         ///   Build a 64-bit standalone Mac OSX player (for example, <c>-buildOSX64Player path/to/your/build.app</c>).
         /// </summary>
+        [ArgumentFormat("-buildOSX64Player {value}")]
         public virtual string BuildOSX64Player { get; internal set; }
         /// <summary>
         ///   Build a combined 32-bit and 64-bit standalone Mac OSX player (for example, <c>-buildOSXUniversalPlayer path/to/your/build.app</c>).
         /// </summary>
+        [ArgumentFormat("-buildOSXUniversalPlayer {value}")]
         public virtual string BuildOSXUniversalPlayer { get; internal set; }
         /// <summary>
         ///   Allows the selection of an active build target before a project is loaded.
         /// </summary>
+        [ArgumentFormat("-buildTarget {value}")]
         public virtual string BuildTarget { get; internal set; }
         /// <summary>
         ///   Build a 32-bit standalone Windows player (for example, <c>-buildWindowsPlayer path/to/your/build.exe</c>).
         /// </summary>
+        [ArgumentFormat("-buildWindowsPlayer {value}")]
         public virtual string BuildWindowsPlayer { get; internal set; }
         /// <summary>
         ///   Build a 64-bit standalone Windows player (for example, <c>-buildWindows64Player path/to/your/build.exe</c>).
         /// </summary>
+        [ArgumentFormat("-buildWindows64Player {value}")]
         public virtual string BuildWindows64Player { get; internal set; }
         /// <summary>
         ///   Create an empty project at the given path.
         /// </summary>
+        [ArgumentFormat("-createProject {value}")]
         public virtual string CreateProject { get; internal set; }
         /// <summary>
         ///   Execute the static method as soon as Unity is started, the project is open and after the optional Asset server update has been performed. This can be used to do tasks such as continous integration, performing Unit Tests, making builds or preparing data. To return an error from the command line process, either throw an exception which causes Unity to exit with return code <b>1</b>, or call <a href="https:/docs.unity3d.com/ScriptReference/EditorApplication.Exit.html">EditorApplication.Exit</a> with a non-zero return code.To use <b>ExecuteMethod</b>, you need to place the enclosing script in an Editor folder. The method to be executed must be defined as <c>static</c>.
         /// </summary>
+        [ArgumentFormat("-executeMethod {value}")]
         public virtual string ExecuteMethod { get; internal set; }
         /// <summary>
         ///   (Windows only) Make the Editor use Direct3D 11 for rendering. Normally the graphics API depends on player settings (typically defaults to D3D11).
         /// </summary>
+        [ArgumentFormat("-force-d3d11")]
         public virtual bool? ForceD3d11 { get; internal set; }
         /// <summary>
         ///   (macOS only) When using Metal, make the Editor use a particular GPU device by passing it the index of that GPU.
         /// </summary>
+        [ArgumentFormat("-force-device-index")]
         public virtual bool? ForceDeviceIndex { get; internal set; }
         /// <summary>
         ///   (macOS only) Make the Editor use Metal as the default graphics API.
         /// </summary>
+        [ArgumentFormat("-force-gfx-metal")]
         public virtual bool? ForceGfxMetal { get; internal set; }
         /// <summary>
         ///   (Windows only) Make the Editor use OpenGL 3/4 core profile for rendering. The Editor tries to use the best OpenGL version available and all OpenGL extensions exposed by the OpenGL drivers. If the platform isn't supported, Direct3D is used.
         /// </summary>
+        [ArgumentFormat("-force-glcore")]
         public virtual bool? ForceGLCore { get; internal set; }
         /// <summary>
         ///   (Windows only) Similar to <c>-force-glcore</c>, but requests a specific OpenGL context version. Accepted values for XY: 32, 33, 40, 41, 42, 43, 44 or 45.
         /// </summary>
+        [ArgumentFormat("-force-glcore{value}")]
         public virtual UnityGLCore ForceGLCoreXY { get; internal set; }
         /// <summary>
         ///   (Windows only) Make the Editor use OpenGL for Embedded Systems for rendering. The Editor tries to use the best OpenGL ES version available, and all OpenGL ES extensions exposed by the OpenGL drivers.
         /// </summary>
+        [ArgumentFormat("-force-gles")]
         public virtual bool? ForceGLES { get; internal set; }
         /// <summary>
         ///   (Windows only) Similar to <c>-force-gles</c>, but requests a specific OpenGL ES context version. Accepted values for XY: 30, 31 or 32.
         /// </summary>
+        [ArgumentFormat("-force-gles{value}")]
         public virtual UnityGLES ForceGLESXY { get; internal set; }
         /// <summary>
         ///   (2017.3+) (Windows only) Used with <c>-force-glcoreXY</c> to prevent checking for additional OpenGL extensions, allowing it to run between platforms with the same code paths.
         /// </summary>
+        [ArgumentFormat("-force-clamped")]
         public virtual bool? ForceClamped { get; internal set; }
         /// <summary>
         ///   (macOS only) When using Metal, make the Editor use a low power device.
         /// </summary>
+        [ArgumentFormat("-force-low-power-device")]
         public virtual bool? ForceLowPowerDevice { get; internal set; }
         /// <summary>
         ///   Import the given <a href="https://docs.unity3d.com/Manual/HOWTO-exportpackage.html">package</a>. No import dialog is shown.
         /// </summary>
+        [ArgumentFormat("-importPackage {value}")]
         public virtual string ImportPackage { get; internal set; }
         /// <summary>
         ///   (2018.1+) Sets the default texture compression to the desired format before importing a texture or building the project. This is so you don’t have to import the texture again with the format you want. The available formats are dxt, pvrtc, atc, etc, etc2, and astc. Note that this is only supported on Android.
         /// </summary>
+        [ArgumentFormat("-setDefaultPlatformTextureFormat {value}")]
         public virtual string DefaultPlatformTextureFormat { get; internal set; }
         /// <summary>
         ///   Specify a space-separated list of assembly names as parameters for Unity to ignore on automatic updates. The space-separated list of assembly names is optional: Pass the command line options without any assembly names to ignore all assemblies.
         /// </summary>
+        [ArgumentFormat("-disable-assembly-updater {value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> DisableAssemblyUpdater => DisableAssemblyUpdaterInternal.AsReadOnly();
         internal List<string> DisableAssemblyUpdaterInternal { get; set; } = new List<string>();
         /// <summary>
         ///   (2018.1+) Connect to the Cache Server given by <c>IP:port</c> on startup, overriding any configuration stored in the Editor Preferences. Use this to connect multiple instances of Unity to different Cache Servers.
         /// </summary>
+        [ArgumentFormat("-cacheServerIPAddress {value}")]
         public virtual string CacheServerIPAddress { get; internal set; }
         /// <summary>
         ///   (2018.1+) Disables the Unity Package Manager.
         /// </summary>
+        [ArgumentFormat("-noUpm")]
         public virtual bool? NoUpm { get; internal set; }
         /// <summary>
         ///   (2017.2+) Use this command line option to specify that APIUpdater should run when Unity is launched in batch mode. Omitting this command line argument when launching Unity in batch mode results in APIUpdater not running which can lead to compiler errors. Note that in versions prior to 2017.2 there’s no way to not run APIUpdater when Unity is launched in batch mode.
         /// </summary>
+        [ArgumentFormat("-accept-apiupdate")]
         public virtual bool? AcceptApiUpdate { get; internal set; }
         /// <summary>
         ///   Run Editor tests from the project. This argument requires the <c>projectPath</c>, and it’s good practice to run it with <c>batchmode</c> argument. <c>quit</c> is not required, because the Editor automatically closes down after the run is finished.
         /// </summary>
+        [ArgumentFormat("-runEditorTests")]
         public virtual bool? RunEditorTests { get; internal set; }
         /// <summary>
         ///   Filter editor tests by categories.
         /// </summary>
+        [ArgumentFormat("-editorTestsCategories {value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> EditorTestsCategories => EditorTestsCategoriesInternal.AsReadOnly();
         internal List<string> EditorTestsCategoriesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Filter editor tests by names.
         /// </summary>
+        [ArgumentFormat("-editorTestsFilter {value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> EditorTestsFilter => EditorTestsFilterInternal.AsReadOnly();
         internal List<string> EditorTestsFilterInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Path where the result file should be placed. If the path is a folder, a default file name is used. If not specified, the results are placed in the project's root folder.
         /// </summary>
+        [ArgumentFormat("-editorTestsResultFile {value}")]
         public virtual string EditorTestsResultFile { get; internal set; }
         /// <summary>
         ///   Export a package, given a path (or set of given paths).<c>-exportPackage &lt;exportAssetPath&gt; &lt;exportFileName&gt;</c> In this example exportAssetPath is a folder (relative to to the Unity project root) to export from the Unity project, and exportFileName is the package name. Currently, this option only exports whole folders at a time. You normally need to use this command with the -projectPath argument.
         /// </summary>
+        [ArgumentFormat("-exportPackage {value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> ExportPackage => ExportPackageInternal.AsReadOnly();
         internal List<string> ExportPackageInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Custom parameters. To pass parameters, add them to the command line and retrieve them inside the function using <c>System.Environment.GetCommandLineArgs</c>. 
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> CustomArguments => CustomArgumentsInternal.AsReadOnly();
         internal List<string> CustomArgumentsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Detailed debugging feature. StackTraceLogging allows you to allow detailed logging.
         /// </summary>
+        [ArgumentFormat("-stackTraceLogType {value}")]
         public virtual UnityStackTraceLogType StackTraceLogType { get; internal set; }
         /// <summary>
         ///   Specify the path of the unity project.
         /// </summary>
+        [ArgumentFormat("-projectPath {value}")]
         public virtual string ProjectPath { get; internal set; }
         /// <summary>
         ///   Enter a username into the log-in form during activation of the Unity Editor.
         /// </summary>
+        [ArgumentFormat("-username {value}")]
         public virtual string Username { get; internal set; }
         /// <summary>
         ///   Enter a password into the log-in form during activation of the Unity Editor.
         /// </summary>
+        [ArgumentFormat("-password {value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Editor.log</a> for info.
         /// </summary>
+        [ArgumentFormat("-serial {value}")]
         public virtual string Serial { get; internal set; }
         /// <summary>
         ///   Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.
         /// </summary>
+        [ArgumentFormat("-batchmode")]
         public virtual bool? BatchMode { get; internal set; }
         /// <summary>
         ///   Don't display a crash dialog.
         /// </summary>
+        [ArgumentFormat("-silent-crashes")]
         public virtual bool? SilentCrashes { get; internal set; }
         /// <summary>
         ///   When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.
         /// </summary>
+        [ArgumentFormat("-nographics")]
         public virtual bool? NoGraphics { get; internal set; }
         /// <summary>
         ///   Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).
         /// </summary>
+        [ArgumentFormat("-quit")]
         public virtual bool? Quit { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -779,30 +845,37 @@ namespace Nuke.Common.Tools.Unity
         /// <summary>
         ///   Enter a username into the log-in form during activation of the Unity Editor.
         /// </summary>
+        [ArgumentFormat("-username {value}")]
         public virtual string Username { get; internal set; }
         /// <summary>
         ///   Enter a password into the log-in form during activation of the Unity Editor.
         /// </summary>
+        [ArgumentFormat("-password {value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Editor.log</a> for info.
         /// </summary>
+        [ArgumentFormat("-serial {value}")]
         public virtual string Serial { get; internal set; }
         /// <summary>
         ///   Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time.
         /// </summary>
+        [ArgumentFormat("-batchmode")]
         public virtual bool? BatchMode { get; internal set; }
         /// <summary>
         ///   Don't display a crash dialog.
         /// </summary>
+        [ArgumentFormat("-silent-crashes")]
         public virtual bool? SilentCrashes { get; internal set; }
         /// <summary>
         ///   When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration.
         /// </summary>
+        [ArgumentFormat("-nographics")]
         public virtual bool? NoGraphics { get; internal set; }
         /// <summary>
         ///   Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).
         /// </summary>
+        [ArgumentFormat("-quit")]
         public virtual bool? Quit { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -831,19 +904,23 @@ namespace Nuke.Common.Tools.Unity
         /// <summary>
         ///   Specify where the Editor or Windows/Linux/OSX standalone log file are written.
         /// </summary>
+        [ArgumentFormat("-logFile {value}")]
         public virtual string LogFile { get; internal set; }
         /// <summary>
         ///   (experimental) If set to true only warnings and errors will be printed to the output.
         /// </summary>
+        [ArgumentFormat("")]
         public virtual bool? MinimalOutput { get; internal set; }
         /// <summary>
         ///   Define exit codes which will not fail the build.
         /// </summary>
+        [ArgumentFormat("")]
         public virtual IReadOnlyList<int> StableExitCodes => StableExitCodesInternal.AsReadOnly();
         internal List<int> StableExitCodesInternal { get; set; } = new List<int>();
         /// <summary>
         ///   Defines the Unity version to use. The version must be installed via Unity Hub.
         /// </summary>
+        [ArgumentFormat("")]
         public virtual string HubVersion { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

@@ -156,6 +156,7 @@ namespace Nuke.Common.Tools.DocFX
         ///     <li><c>--xref</c> via <see cref="DocFXBuildSettings.XRefMaps"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("build")]
         public static IReadOnlyCollection<Output> DocFXBuild(Configure<DocFXBuildSettings> configurator)
         {
             return DocFXBuild(configurator(new DocFXBuildSettings()));
@@ -250,6 +251,7 @@ namespace Nuke.Common.Tools.DocFX
         ///     <li><c>--version</c> via <see cref="DocFXDependencySettings.VersionName"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("dependency")]
         public static IReadOnlyCollection<Output> DocFXDependency(Configure<DocFXDependencySettings> configurator)
         {
             return DocFXDependency(configurator(new DocFXDependencySettings()));
@@ -302,6 +304,7 @@ namespace Nuke.Common.Tools.DocFX
         ///     <li><c>--xref</c> via <see cref="DocFXDownloadSettings.Uri"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("download")]
         public static IReadOnlyCollection<Output> DocFXDownload(Configure<DocFXDownloadSettings> configurator)
         {
             return DocFXDownload(configurator(new DocFXDownloadSettings()));
@@ -349,6 +352,7 @@ namespace Nuke.Common.Tools.DocFX
         ///     <li><c>&lt;command&gt;</c> via <see cref="DocFXHelpSettings.Command"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("help")]
         public static IReadOnlyCollection<Output> DocFXHelp(Configure<DocFXHelpSettings> configurator)
         {
             return DocFXHelp(configurator(new DocFXHelpSettings()));
@@ -406,6 +410,7 @@ namespace Nuke.Common.Tools.DocFX
         ///     <li><c>--quiet</c> via <see cref="DocFXInitSettings.Quiet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("init")]
         public static IReadOnlyCollection<Output> DocFXInit(Configure<DocFXInitSettings> configurator)
         {
             return DocFXInit(configurator(new DocFXInitSettings()));
@@ -479,6 +484,7 @@ namespace Nuke.Common.Tools.DocFX
         ///     <li><c>--warningsAsErrors</c> via <see cref="DocFXMergeSettings.WarningsAsErrors"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("merge")]
         public static IReadOnlyCollection<Output> DocFXMerge(Configure<DocFXMergeSettings> configurator)
         {
             return DocFXMerge(configurator(new DocFXMergeSettings()));
@@ -565,6 +571,7 @@ namespace Nuke.Common.Tools.DocFX
         ///     <li><c>--warningsAsErrors</c> via <see cref="DocFXMetadataSettings.WarningsAsErrors"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("metadata")]
         public static IReadOnlyCollection<Output> DocFXMetadata(Configure<DocFXMetadataSettings> configurator)
         {
             return DocFXMetadata(configurator(new DocFXMetadataSettings()));
@@ -735,6 +742,7 @@ namespace Nuke.Common.Tools.DocFX
         ///     <li><c>--xref</c> via <see cref="DocFXPdfSettings.XRefMaps"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("pdf")]
         public static IReadOnlyCollection<Output> DocFXPdf(Configure<DocFXPdfSettings> configurator)
         {
             return DocFXPdf(configurator(new DocFXPdfSettings()));
@@ -841,6 +849,7 @@ namespace Nuke.Common.Tools.DocFX
         ///     <li><c>--port</c> via <see cref="DocFXServeSettings.Port"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("serve")]
         public static IReadOnlyCollection<Output> DocFXServe(Configure<DocFXServeSettings> configurator)
         {
             return DocFXServe(configurator(new DocFXServeSettings()));
@@ -895,6 +904,7 @@ namespace Nuke.Common.Tools.DocFX
         ///     <li><c>--output</c> via <see cref="DocFXTemplateSettings.OutputFolder"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("template")]
         public static IReadOnlyCollection<Output> DocFXTemplate(Configure<DocFXTemplateSettings> configurator)
         {
             return DocFXTemplate(configurator(new DocFXTemplateSettings()));
@@ -931,187 +941,240 @@ namespace Nuke.Common.Tools.DocFX
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
         public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
+        [ArgumentFormat("{value}")]
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   Set changes file.
         /// </summary>
+        [ArgumentFormat("--changesFile={value}")]
         public virtual string ChangesFile { get; internal set; }
         /// <summary>
         ///   If set to true, docfx create a new intermediate folder for cache files, historical cache data will be cleaned up.
         /// </summary>
+        [ArgumentFormat("--cleanupCacheHistory")]
         public virtual bool? CleanupCacheHistory { get; internal set; }
         /// <summary>
         ///   Specify content files for generating documentation.
         /// </summary>
+        [ArgumentFormat("--content={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Content => ContentInternal.AsReadOnly();
         internal List<string> ContentInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large.
         /// </summary>
+        [ArgumentFormat("--disableGitFeatures")]
         public virtual bool? DisableGitFeatures { get; internal set; }
         /// <summary>
         ///   If set to true, template will not be actually applied to the documents. This option is always used with --exportRawModel or --exportViewModel is set so that only raw model files or view model files are generated.
         /// </summary>
+        [ArgumentFormat("--dryRun")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   Run in debug mode. With debug mode, raw model and view model will be exported automatically when it encounters error when applying templates. If not specified, it is false.
         /// </summary>
+        [ArgumentFormat("--debug")]
         public virtual bool? EnableDebugMode { get; internal set; }
         /// <summary>
         ///   If set to true, data model to run template script will be extracted in .raw.model.json extension.
         /// </summary>
+        [ArgumentFormat("--exportRawModel")]
         public virtual bool? ExportRawModel { get; internal set; }
         /// <summary>
         ///   If set to true, data model to apply template will be extracted in .view.model.json extension.
         /// </summary>
+        [ArgumentFormat("--exportViewModel")]
         public virtual bool? ExportViewModel { get; internal set; }
         /// <summary>
         ///   Set the name of input file abstract layer builder.
         /// </summary>
+        [ArgumentFormat("--falName={value}")]
         public virtual string FALName { get; internal set; }
         /// <summary>
         ///   Specify a JSON file path containing fileMetadata settings, as similar to {"fileMetadata":{"key":"value"}}. It overrides the fileMetadata settings from the config file.
         /// </summary>
+        [ArgumentFormat("--fileMetadataFile={value}")]
         public virtual string FileMetadataFilePath { get; internal set; }
         /// <summary>
         ///   Specify a list of JSON file path containing fileMetadata settings, as similar to {"key":"value"}. It overrides the fileMetadata settings from the config file.
         /// </summary>
+        [ArgumentFormat("--fileMetadataFiles={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> FileMetadataFilePaths => FileMetadataFilePathsInternal.AsReadOnly();
         internal List<string> FileMetadataFilePathsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Force to re-process the documentation in post processors. It will be cascaded from force option.
         /// </summary>
+        [ArgumentFormat("--forcePostProcess")]
         public virtual bool? ForcePostProcess { get; internal set; }
         /// <summary>
         ///   Force re-build all the documentation.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? ForceRebuild { get; internal set; }
         /// <summary>
         ///   Specify global metadata key-value pair in json format. It overrides the globalMetadata settings from the config file.
         /// </summary>
+        [ArgumentFormat("--globalMetadata={value}")]
         public virtual string GlobalMetadata { get; internal set; }
         /// <summary>
         ///   Specify a JSON file path containing globalMetadata settings, as similar to {"globalMetadata":{"key":"value"}}. It overrides the globalMetadata settings from the config file.
         /// </summary>
+        [ArgumentFormat("--globalMetadataFile={value}")]
         public virtual string GlobalMetadataFilePath { get; internal set; }
         /// <summary>
         ///   Specify a list of JSON file path containing globalMetadata settings, as similar to {"key":"value"}. It overrides the globalMetadata settings from the config file.
         /// </summary>
+        [ArgumentFormat("--globalMetadataFiles={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> GlobalMetadataFilePaths => GlobalMetadataFilePathsInternal.AsReadOnly();
         internal List<string> GlobalMetadataFilePathsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specify the hostname of the hosted website (e.g., 'localhost' or '*').
         /// </summary>
+        [ArgumentFormat("--hostname={value}")]
         public virtual string Host { get; internal set; }
         /// <summary>
         ///   Set folder for intermediate build results.
         /// </summary>
+        [ArgumentFormat("--intermediateFolder={value}")]
         public virtual string IntermediateFolder { get; internal set; }
         /// <summary>
         ///   If set to true, docfx does not dereference (aka. copy) file to the output folder, instead, it saves a link_to_path property inside mainfiest.json to indicate the physical location of that file.
         /// </summary>
+        [ArgumentFormat("--keepFileLink")]
         public virtual bool? KeepFileLink { get; internal set; }
         /// <summary>
         ///   Set the LRU cached model count (approximately the same as the count of input files). By default, it is 8192 for 64bit and 3072 for 32bit process. With LRU cache enabled, memory usage decreases and time consumed increases. If set to 0, Lru cache is disabled.
         /// </summary>
+        [ArgumentFormat("--lruSize={value}")]
         public virtual int? LruSize { get; internal set; }
         /// <summary>
         ///   Set the name of markdown engine, default is 'dfm'.
         /// </summary>
+        [ArgumentFormat("--markdownEngineName={value}")]
         public virtual string MarkdownEngineName { get; internal set; }
         /// <summary>
         ///   Set the parameters for markdown engine, value should be a JSON string.
         /// </summary>
+        [ArgumentFormat("--markdownEngineProperties={value}")]
         public virtual string MarkdownEngineProperties { get; internal set; }
         /// <summary>
         ///   Set the max parallelism, 0 is auto.
         /// </summary>
+        [ArgumentFormat("--maxParallelism={value}")]
         public virtual int? MaxParallelism { get; internal set; }
         /// <summary>
         ///   Disable default lang keyword.
         /// </summary>
+        [ArgumentFormat("--noLangKeyword")]
         public virtual bool? NoLangKeyword { get; internal set; }
         /// <summary>
         ///   Specify the output base directory.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual string OutputFolder { get; internal set; }
         /// <summary>
         ///   The output folder for files generated for debugging purpose when in debug mode. If not specified, it is ${TempPath}/docfx.
         /// </summary>
+        [ArgumentFormat("--debugOutput={value}")]
         public virtual string OutputFolderForDebugFiles { get; internal set; }
         /// <summary>
         ///   Specify overwrite files used by content files.
         /// </summary>
+        [ArgumentFormat("--overwrite={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Overwrite => OverwriteInternal.AsReadOnly();
         internal List<string> OverwriteInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specify the port of the hosted website.
         /// </summary>
+        [ArgumentFormat("--port={value}")]
         public virtual int? Port { get; internal set; }
         /// <summary>
         ///   Set the order of post processors in plugins.
         /// </summary>
+        [ArgumentFormat("--postProcessors={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> PostProcessors => PostProcessorsInternal.AsReadOnly();
         internal List<string> PostProcessorsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Print help message for this sub-command.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? PrintHelpMessage { get; internal set; }
         /// <summary>
         ///   Specify the output folder for the raw model. If not set, the raw model will be generated to the same folder as the output documentation.
         /// </summary>
+        [ArgumentFormat("--rawModelOutputFolder={value}")]
         public virtual string RawModelOutputFolder { get; internal set; }
         /// <summary>
         ///   Specify resources used by content files.
         /// </summary>
+        [ArgumentFormat("--resource={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Resource => ResourceInternal.AsReadOnly();
         internal List<string> ResourceInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Please provide the license key for validating schema using NewtonsoftJson.Schema here.
         /// </summary>
+        [ArgumentFormat("--schemaLicense={value}")]
         public virtual string SchemaLicense { get; internal set; }
         /// <summary>
         ///   Host the generated documentation to a website.
         /// </summary>
+        [ArgumentFormat("--serve")]
         public virtual bool? Serve { get; internal set; }
         /// <summary>
         ///   Specify the template name to apply to. If not specified, output YAML file will not be transformed.
         /// </summary>
+        [ArgumentFormat("--template={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Templates => TemplatesInternal.AsReadOnly();
         internal List<string> TemplatesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specify which theme to use. By default 'default' theme is offered.
         /// </summary>
+        [ArgumentFormat("--theme={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Themes => ThemesInternal.AsReadOnly();
         internal List<string> ThemesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specify the output folder for the view model. If not set, the view model will be generated to the same folder as the output documentation.
         /// </summary>
+        [ArgumentFormat("--viewModelOutputFolder={value}")]
         public virtual string ViewModelOutputFolder { get; internal set; }
         /// <summary>
         ///   Specify the urls of xrefmap used by content files.
         /// </summary>
+        [ArgumentFormat("--xref={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> XRefMaps => XRefMapsInternal.AsReadOnly();
         internal List<string> XRefMapsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specify the correlation id used for logging.
         /// </summary>
+        [ArgumentFormat("--correlationId={value}")]
         public virtual string CorrelationId { get; internal set; }
         /// <summary>
         ///   Specify the file name to save processing log.
         /// </summary>
+        [ArgumentFormat("--log={value}")]
         public virtual string LogFilePath { get; internal set; }
         /// <summary>
         ///   Specify to which log level will be logged. By default log level &gt;= Info will be logged. The acceptable value could be Verbose, Info, Warning, Error.
         /// </summary>
+        [ArgumentFormat("--logLevel={value}")]
         public virtual DocFXLogLevel LogLevel { get; internal set; }
         /// <summary>
         ///   Specify the GIT repository root folder.
         /// </summary>
+        [ArgumentFormat("--repositoryRoot={value}")]
         public virtual string RepoRoot { get; internal set; }
         /// <summary>
         ///   Specify if warnings should be treated as errors.
         /// </summary>
+        [ArgumentFormat("--warningsAsErrors")]
         public virtual bool? WarningsAsErrors { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1179,18 +1242,22 @@ namespace Nuke.Common.Tools.DocFX
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
         public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
+        [ArgumentFormat("{value}")]
         public virtual string DependencyFile { get; internal set; }
         /// <summary>
         ///   The intermediate folder that store cache files.
         /// </summary>
+        [ArgumentFormat("--intermediateFolder={value}")]
         public virtual string IntermediateFolder { get; internal set; }
         /// <summary>
         ///   Print help message for this sub-command.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? PrintHelpMessage { get; internal set; }
         /// <summary>
         ///   The version name of the content.
         /// </summary>
+        [ArgumentFormat("--version={value}")]
         public virtual string VersionName { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1218,14 +1285,17 @@ namespace Nuke.Common.Tools.DocFX
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
         public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
+        [ArgumentFormat("{value}")]
         public virtual string ArchiveFile { get; internal set; }
         /// <summary>
         ///   Print help message for this sub-command.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? PrintHelpMessage { get; internal set; }
         /// <summary>
         ///   Specify the url of xrefmap.
         /// </summary>
+        [ArgumentFormat("--xref={value}")]
         public virtual string Uri { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1252,6 +1322,7 @@ namespace Nuke.Common.Tools.DocFX
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
         public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
+        [ArgumentFormat("{value}")]
         public virtual string Command { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1279,30 +1350,37 @@ namespace Nuke.Common.Tools.DocFX
         /// <summary>
         ///   Specify the source working folder for source project files to start glob search.
         /// </summary>
+        [ArgumentFormat("--apiSourceFolder={value}")]
         public virtual string ApiSourceFolder { get; internal set; }
         /// <summary>
         ///   Specify the source project files' glob pattern to generate metadata.
         /// </summary>
+        [ArgumentFormat("--apiGlobPattern={value}")]
         public virtual string ApiSourceGlobPattern { get; internal set; }
         /// <summary>
         ///   Generate config file docfx.json only, no project folder will be generated.
         /// </summary>
+        [ArgumentFormat("--file")]
         public virtual bool? OnlyConfigFile { get; internal set; }
         /// <summary>
         ///   Specify the output folder of the config file. If not specified, the config file will be saved to a new folder docfx_project.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual string OutputFolder { get; internal set; }
         /// <summary>
         ///   Specify if the current file will be overwritten if it exists.
         /// </summary>
+        [ArgumentFormat("--overwrite")]
         public virtual bool? Overwrite { get; internal set; }
         /// <summary>
         ///   Print help message for this sub-command.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? PrintHelpMessage { get; internal set; }
         /// <summary>
         ///   Quietly generate the default docfx.json.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1333,52 +1411,66 @@ namespace Nuke.Common.Tools.DocFX
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
         public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
+        [ArgumentFormat("{value}")]
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   Specifies content files for generating documentation.
         /// </summary>
+        [ArgumentFormat("--content={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Content => ContentInternal.AsReadOnly();
         internal List<string> ContentInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specify a JSON file path containing fileMetadata settings, as similar to {"fileMetadata":{"key":"value"}}. It overrides the fileMetadata settings from the config file.
         /// </summary>
+        [ArgumentFormat("--fileMetadataFile={value}")]
         public virtual string FileMetadataFilePath { get; internal set; }
         /// <summary>
         ///   Specify global metadata key-value pair in json format. It overrides the globalMetadata settings from the config file.
         /// </summary>
+        [ArgumentFormat("--globalMetadata={value}")]
         public virtual string GlobalMetadata { get; internal set; }
         /// <summary>
         ///   Specify a JSON file path containing globalMetadata settings, as similar to {"globalMetadata":{"key":"value"}}. It overrides the globalMetadata settings from the config file.
         /// </summary>
+        [ArgumentFormat("--globalMetadataFile={value}")]
         public virtual string GlobalMetadataFilePath { get; internal set; }
         /// <summary>
         ///   Print help message for this sub-command.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? PrintHelpMessage { get; internal set; }
         /// <summary>
         ///   Specify metadata names that need to be merged into toc file.
         /// </summary>
+        [ArgumentFormat("--tocMetadata={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> TocMetadata => TocMetadataInternal.AsReadOnly();
         internal List<string> TocMetadataInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specify the correlation id used for logging.
         /// </summary>
+        [ArgumentFormat("--correlationId={value}")]
         public virtual string CorrelationId { get; internal set; }
         /// <summary>
         ///   Specify the file name to save processing log.
         /// </summary>
+        [ArgumentFormat("--log={value}")]
         public virtual string LogFilePath { get; internal set; }
         /// <summary>
         ///   Specify to which log level will be logged. By default log level &gt;= Info will be logged. The acceptable value could be Verbose, Info, Warning, Error.
         /// </summary>
+        [ArgumentFormat("--logLevel={value}")]
         public virtual DocFXLogLevel LogLevel { get; internal set; }
         /// <summary>
         ///   Specify the GIT repository root folder.
         /// </summary>
+        [ArgumentFormat("--repositoryRoot={value}")]
         public virtual string RepoRoot { get; internal set; }
         /// <summary>
         ///   Specify if warnings should be treated as errors.
         /// </summary>
+        [ArgumentFormat("--warningsAsErrors")]
         public virtual bool? WarningsAsErrors { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1417,68 +1509,87 @@ namespace Nuke.Common.Tools.DocFX
         /// <summary>
         ///   The projects for which the metadata should be built.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Projects => ProjectsInternal.AsReadOnly();
         internal List<string> ProjectsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Disable the default API filter (default filter only generate public or protected APIs).
         /// </summary>
+        [ArgumentFormat("--disableDefaultFilter")]
         public virtual bool? DisableDefaultFilter { get; internal set; }
         /// <summary>
         ///   Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large.
         /// </summary>
+        [ArgumentFormat("--disableGitFeatures")]
         public virtual bool? DisableGitFeatures { get; internal set; }
         /// <summary>
         ///   Specify the filter config file.
         /// </summary>
+        [ArgumentFormat("--filter={value}")]
         public virtual string FilterConfigFile { get; internal set; }
         /// <summary>
         ///   Force re-generate all the metadata.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? ForceRebuild { get; internal set; }
         /// <summary>
         ///   Specify the name to use for the global namespace.
         /// </summary>
+        [ArgumentFormat("--globalNamespaceId={value}")]
         public virtual string GlobalNamespaceId { get; internal set; }
         /// <summary>
         ///   --property &lt;n1&gt;=&lt;v1&gt;;&lt;n2&gt;=&lt;v2&gt; An optional set of MSBuild properties used when interpreting project files. These are the same properties that are passed to msbuild via the /property:&lt;n1&gt;=&lt;v1&gt;;&lt;n2&gt;=&lt;v2&gt; command line argument.
         /// </summary>
+        [ArgumentFormat("--property={value}")]
+        [ItemFormat("{key}={value}")]
+        [Separator(";")]
         public virtual IReadOnlyDictionary<string, string> MSBuildProperties => MSBuildPropertiesInternal.AsReadOnly();
         internal Dictionary<string, string> MSBuildPropertiesInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Specify the output base directory.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual string OutputFolder { get; internal set; }
         /// <summary>
         ///   Preserve the existing xml comment tags inside 'summary' triple slash comments.
         /// </summary>
+        [ArgumentFormat("--raw")]
         public virtual bool? PreserveRawInlineComments { get; internal set; }
         /// <summary>
         ///   Print help message for this sub-command.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? PrintHelpMessage { get; internal set; }
         /// <summary>
         ///   Skip to markup the triple slash comments.
         /// </summary>
+        [ArgumentFormat("--shouldSkipMarkup")]
         public virtual bool? ShouldSkipMarkup { get; internal set; }
         /// <summary>
         ///   Specify the correlation id used for logging.
         /// </summary>
+        [ArgumentFormat("--correlationId={value}")]
         public virtual string CorrelationId { get; internal set; }
         /// <summary>
         ///   Specify the file name to save processing log.
         /// </summary>
+        [ArgumentFormat("--log={value}")]
         public virtual string LogFilePath { get; internal set; }
         /// <summary>
         ///   Specify to which log level will be logged. By default log level &gt;= Info will be logged. The acceptable value could be Verbose, Info, Warning, Error.
         /// </summary>
+        [ArgumentFormat("--logLevel={value}")]
         public virtual DocFXLogLevel LogLevel { get; internal set; }
         /// <summary>
         ///   Specify the GIT repository root folder.
         /// </summary>
+        [ArgumentFormat("--repositoryRoot={value}")]
         public virtual string RepoRoot { get; internal set; }
         /// <summary>
         ///   Specify if warnings should be treated as errors.
         /// </summary>
+        [ArgumentFormat("--warningsAsErrors")]
         public virtual bool? WarningsAsErrors { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1521,233 +1632,298 @@ namespace Nuke.Common.Tools.DocFX
         /// <summary>
         ///   Specify the base path to generate external link, {host}/{locale}/{basePath}.
         /// </summary>
+        [ArgumentFormat("--basePath={value}")]
         public virtual string BasePath { get; internal set; }
         /// <summary>
         ///   Specify the path for the css to generate pdf, default value is styles/default.css.
         /// </summary>
+        [ArgumentFormat("--css={value}")]
         public virtual string CssFilePath { get; internal set; }
         /// <summary>
         ///   Specify the toc files to be excluded.
         /// </summary>
+        [ArgumentFormat("--excludedTocs={value}")]
         public virtual IReadOnlyList<string> ExcludedTocs => ExcludedTocsInternal.AsReadOnly();
         internal List<string> ExcludedTocsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specify whether or not to generate appendices for not-in-TOC articles.
         /// </summary>
+        [ArgumentFormat("--generatesAppendices")]
         public virtual bool? GeneratesAppendices { get; internal set; }
         /// <summary>
         ///   Specify whether or not to generate external links for PDF.
         /// </summary>
+        [ArgumentFormat("--generatesExternalLink")]
         public virtual bool? GeneratesExternalLink { get; internal set; }
         /// <summary>
         ///   Specify the hostname to link not-in-TOC articles.
         /// </summary>
+        [ArgumentFormat("--host={value}")]
         public virtual string PdfHost { get; internal set; }
         /// <summary>
         ///   Specify whether or not to keep the intermediate html files that used to generate the PDF file. It it usually used in debug purpose. By default the value is false.
         /// </summary>
+        [ArgumentFormat("--keepRawFiles")]
         public virtual bool? KeepRawFiles { get; internal set; }
         /// <summary>
         ///   Specify how to handle pdf pages that fail to load: abort, ignore or skip(default abort), it is the same input as wkhtmltopdf --load-error-handling options.
         /// </summary>
+        [ArgumentFormat("--errorHandling={value}")]
         public virtual string LoadErrorHandling { get; internal set; }
         /// <summary>
         ///   Specify the locale of the pdf file.
         /// </summary>
+        [ArgumentFormat("--locale={value}")]
         public virtual string Locale { get; internal set; }
         /// <summary>
         ///   Specify the name of the generated pdf.
         /// </summary>
+        [ArgumentFormat("--name={value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   Do not use stdin when wkhtmltopdf is executed.
         /// </summary>
+        [ArgumentFormat("--noStdin")]
         public virtual bool? NoInputStreamArgs { get; internal set; }
         /// <summary>
         ///   Specify the output folder for the raw files, if not specified, raw files will by default be saved to _raw subfolder under output folder if keepRawFiles is set to true.
         /// </summary>
+        [ArgumentFormat("--rawOutputFolder={value}")]
         public virtual string RawOutputFolder { get; internal set; }
+        [ArgumentFormat("{value}")]
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   Set changes file.
         /// </summary>
+        [ArgumentFormat("--changesFile={value}")]
         public virtual string ChangesFile { get; internal set; }
         /// <summary>
         ///   If set to true, docfx create a new intermediate folder for cache files, historical cache data will be cleaned up.
         /// </summary>
+        [ArgumentFormat("--cleanupCacheHistory")]
         public virtual bool? CleanupCacheHistory { get; internal set; }
         /// <summary>
         ///   Specify content files for generating documentation.
         /// </summary>
+        [ArgumentFormat("--content={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Content => ContentInternal.AsReadOnly();
         internal List<string> ContentInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Disable fetching Git related information for articles. By default it is enabled and may have side effect on performance when the repo is large.
         /// </summary>
+        [ArgumentFormat("--disableGitFeatures")]
         public virtual bool? DisableGitFeatures { get; internal set; }
         /// <summary>
         ///   If set to true, template will not be actually applied to the documents. This option is always used with --exportRawModel or --exportViewModel is set so that only raw model files or view model files are generated.
         /// </summary>
+        [ArgumentFormat("--dryRun")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   Run in debug mode. With debug mode, raw model and view model will be exported automatically when it encounters error when applying templates. If not specified, it is false.
         /// </summary>
+        [ArgumentFormat("--debug")]
         public virtual bool? EnableDebugMode { get; internal set; }
         /// <summary>
         ///   If set to true, data model to run template script will be extracted in .raw.model.json extension.
         /// </summary>
+        [ArgumentFormat("--exportRawModel")]
         public virtual bool? ExportRawModel { get; internal set; }
         /// <summary>
         ///   If set to true, data model to apply template will be extracted in .view.model.json extension.
         /// </summary>
+        [ArgumentFormat("--exportViewModel")]
         public virtual bool? ExportViewModel { get; internal set; }
         /// <summary>
         ///   Set the name of input file abstract layer builder.
         /// </summary>
+        [ArgumentFormat("--falName={value}")]
         public virtual string FALName { get; internal set; }
         /// <summary>
         ///   Specify a JSON file path containing fileMetadata settings, as similar to {"fileMetadata":{"key":"value"}}. It overrides the fileMetadata settings from the config file.
         /// </summary>
+        [ArgumentFormat("--fileMetadataFile={value}")]
         public virtual string FileMetadataFilePath { get; internal set; }
         /// <summary>
         ///   Specify a list of JSON file path containing fileMetadata settings, as similar to {"key":"value"}. It overrides the fileMetadata settings from the config file.
         /// </summary>
+        [ArgumentFormat("--fileMetadataFiles={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> FileMetadataFilePaths => FileMetadataFilePathsInternal.AsReadOnly();
         internal List<string> FileMetadataFilePathsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Force to re-process the documentation in post processors. It will be cascaded from force option.
         /// </summary>
+        [ArgumentFormat("--forcePostProcess")]
         public virtual bool? ForcePostProcess { get; internal set; }
         /// <summary>
         ///   Force re-build all the documentation.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? ForceRebuild { get; internal set; }
         /// <summary>
         ///   Specify global metadata key-value pair in json format. It overrides the globalMetadata settings from the config file.
         /// </summary>
+        [ArgumentFormat("--globalMetadata={value}")]
         public virtual string GlobalMetadata { get; internal set; }
         /// <summary>
         ///   Specify a JSON file path containing globalMetadata settings, as similar to {"globalMetadata":{"key":"value"}}. It overrides the globalMetadata settings from the config file.
         /// </summary>
+        [ArgumentFormat("--globalMetadataFile={value}")]
         public virtual string GlobalMetadataFilePath { get; internal set; }
         /// <summary>
         ///   Specify a list of JSON file path containing globalMetadata settings, as similar to {"key":"value"}. It overrides the globalMetadata settings from the config file.
         /// </summary>
+        [ArgumentFormat("--globalMetadataFiles={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> GlobalMetadataFilePaths => GlobalMetadataFilePathsInternal.AsReadOnly();
         internal List<string> GlobalMetadataFilePathsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specify the hostname of the hosted website (e.g., 'localhost' or '*').
         /// </summary>
+        [ArgumentFormat("--hostname={value}")]
         public virtual string Host { get; internal set; }
         /// <summary>
         ///   Set folder for intermediate build results.
         /// </summary>
+        [ArgumentFormat("--intermediateFolder={value}")]
         public virtual string IntermediateFolder { get; internal set; }
         /// <summary>
         ///   If set to true, docfx does not dereference (aka. copy) file to the output folder, instead, it saves a link_to_path property inside mainfiest.json to indicate the physical location of that file.
         /// </summary>
+        [ArgumentFormat("--keepFileLink")]
         public virtual bool? KeepFileLink { get; internal set; }
         /// <summary>
         ///   Set the LRU cached model count (approximately the same as the count of input files). By default, it is 8192 for 64bit and 3072 for 32bit process. With LRU cache enabled, memory usage decreases and time consumed increases. If set to 0, Lru cache is disabled.
         /// </summary>
+        [ArgumentFormat("--lruSize={value}")]
         public virtual int? LruSize { get; internal set; }
         /// <summary>
         ///   Set the name of markdown engine, default is 'dfm'.
         /// </summary>
+        [ArgumentFormat("--markdownEngineName={value}")]
         public virtual string MarkdownEngineName { get; internal set; }
         /// <summary>
         ///   Set the parameters for markdown engine, value should be a JSON string.
         /// </summary>
+        [ArgumentFormat("--markdownEngineProperties={value}")]
         public virtual string MarkdownEngineProperties { get; internal set; }
         /// <summary>
         ///   Set the max parallelism, 0 is auto.
         /// </summary>
+        [ArgumentFormat("--maxParallelism={value}")]
         public virtual int? MaxParallelism { get; internal set; }
         /// <summary>
         ///   Disable default lang keyword.
         /// </summary>
+        [ArgumentFormat("--noLangKeyword")]
         public virtual bool? NoLangKeyword { get; internal set; }
         /// <summary>
         ///   Specify the output base directory.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual string OutputFolder { get; internal set; }
         /// <summary>
         ///   The output folder for files generated for debugging purpose when in debug mode. If not specified, it is ${TempPath}/docfx.
         /// </summary>
+        [ArgumentFormat("--debugOutput={value}")]
         public virtual string OutputFolderForDebugFiles { get; internal set; }
         /// <summary>
         ///   Specify overwrite files used by content files.
         /// </summary>
+        [ArgumentFormat("--overwrite={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Overwrite => OverwriteInternal.AsReadOnly();
         internal List<string> OverwriteInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specify the port of the hosted website.
         /// </summary>
+        [ArgumentFormat("--port={value}")]
         public virtual int? Port { get; internal set; }
         /// <summary>
         ///   Set the order of post processors in plugins.
         /// </summary>
+        [ArgumentFormat("--postProcessors={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> PostProcessors => PostProcessorsInternal.AsReadOnly();
         internal List<string> PostProcessorsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Print help message for this sub-command.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? PrintHelpMessage { get; internal set; }
         /// <summary>
         ///   Specify the output folder for the raw model. If not set, the raw model will be generated to the same folder as the output documentation.
         /// </summary>
+        [ArgumentFormat("--rawModelOutputFolder={value}")]
         public virtual string RawModelOutputFolder { get; internal set; }
         /// <summary>
         ///   Specify resources used by content files.
         /// </summary>
+        [ArgumentFormat("--resource={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Resource => ResourceInternal.AsReadOnly();
         internal List<string> ResourceInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Please provide the license key for validating schema using NewtonsoftJson.Schema here.
         /// </summary>
+        [ArgumentFormat("--schemaLicense={value}")]
         public virtual string SchemaLicense { get; internal set; }
         /// <summary>
         ///   Host the generated documentation to a website.
         /// </summary>
+        [ArgumentFormat("--serve")]
         public virtual bool? Serve { get; internal set; }
         /// <summary>
         ///   Specify the template name to apply to. If not specified, output YAML file will not be transformed.
         /// </summary>
+        [ArgumentFormat("--template={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Templates => TemplatesInternal.AsReadOnly();
         internal List<string> TemplatesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specify which theme to use. By default 'default' theme is offered.
         /// </summary>
+        [ArgumentFormat("--theme={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Themes => ThemesInternal.AsReadOnly();
         internal List<string> ThemesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specify the output folder for the view model. If not set, the view model will be generated to the same folder as the output documentation.
         /// </summary>
+        [ArgumentFormat("--viewModelOutputFolder={value}")]
         public virtual string ViewModelOutputFolder { get; internal set; }
         /// <summary>
         ///   Specify the urls of xrefmap used by content files.
         /// </summary>
+        [ArgumentFormat("--xref={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> XRefMaps => XRefMapsInternal.AsReadOnly();
         internal List<string> XRefMapsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specify the correlation id used for logging.
         /// </summary>
+        [ArgumentFormat("--correlationId={value}")]
         public virtual string CorrelationId { get; internal set; }
         /// <summary>
         ///   Specify the file name to save processing log.
         /// </summary>
+        [ArgumentFormat("--log={value}")]
         public virtual string LogFilePath { get; internal set; }
         /// <summary>
         ///   Specify to which log level will be logged. By default log level &gt;= Info will be logged. The acceptable value could be Verbose, Info, Warning, Error.
         /// </summary>
+        [ArgumentFormat("--logLevel={value}")]
         public virtual DocFXLogLevel LogLevel { get; internal set; }
         /// <summary>
         ///   Specify the GIT repository root folder.
         /// </summary>
+        [ArgumentFormat("--repositoryRoot={value}")]
         public virtual string RepoRoot { get; internal set; }
         /// <summary>
         ///   Specify if warnings should be treated as errors.
         /// </summary>
+        [ArgumentFormat("--warningsAsErrors")]
         public virtual bool? WarningsAsErrors { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1827,18 +2003,22 @@ namespace Nuke.Common.Tools.DocFX
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
         public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
+        [ArgumentFormat("{value}")]
         public virtual string Folder { get; internal set; }
         /// <summary>
         ///   Specify the hostname of the hosted website [localhost].
         /// </summary>
+        [ArgumentFormat("--hostname={value}")]
         public virtual string Host { get; internal set; }
         /// <summary>
         ///   Specify the port of the hosted website [8080].
         /// </summary>
+        [ArgumentFormat("--port={value}")]
         public virtual int? Port { get; internal set; }
         /// <summary>
         ///   Print help message for this sub-command.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? PrintHelpMessage { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1869,18 +2049,23 @@ namespace Nuke.Common.Tools.DocFX
         /// <summary>
         ///   The command to execute.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual string Command { get; internal set; }
         /// <summary>
         ///   If specified, all the available templates will be exported.
         /// </summary>
+        [ArgumentFormat("--all")]
         public virtual bool? All { get; internal set; }
         /// <summary>
         ///   Specify the output folder path for the exported templates.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual string OutputFolder { get; internal set; }
         /// <summary>
         ///   Print help message for this sub-command.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? PrintHelpMessage { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

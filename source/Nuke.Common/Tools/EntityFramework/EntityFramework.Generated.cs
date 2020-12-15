@@ -92,6 +92,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--verbose</c> via <see cref="EntityFrameworkDatabaseDropSettings.Verbose"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("ef database drop")]
         public static IReadOnlyCollection<Output> EntityFrameworkDatabaseDrop(Configure<EntityFrameworkDatabaseDropSettings> configurator)
         {
             return EntityFrameworkDatabaseDrop(configurator(new EntityFrameworkDatabaseDropSettings()));
@@ -170,6 +171,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--verbose</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.Verbose"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("ef database update")]
         public static IReadOnlyCollection<Output> EntityFrameworkDatabaseUpdate(Configure<EntityFrameworkDatabaseUpdateSettings> configurator)
         {
             return EntityFrameworkDatabaseUpdate(configurator(new EntityFrameworkDatabaseUpdateSettings()));
@@ -244,6 +246,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--verbose</c> via <see cref="EntityFrameworkDbContextInfoSettings.Verbose"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("ef dbcontext info")]
         public static IReadOnlyCollection<Output> EntityFrameworkDbContextInfo(Configure<EntityFrameworkDbContextInfoSettings> configurator)
         {
             return EntityFrameworkDbContextInfo(configurator(new EntityFrameworkDbContextInfoSettings()));
@@ -316,6 +319,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--verbose</c> via <see cref="EntityFrameworkDbContextListSettings.Verbose"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("ef dbcontext list")]
         public static IReadOnlyCollection<Output> EntityFrameworkDbContextList(Configure<EntityFrameworkDbContextListSettings> configurator)
         {
             return EntityFrameworkDbContextList(configurator(new EntityFrameworkDbContextListSettings()));
@@ -406,6 +410,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--verbose</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Verbose"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("ef dbcontext scaffold")]
         public static IReadOnlyCollection<Output> EntityFrameworkDbContextScaffold(Configure<EntityFrameworkDbContextScaffoldSettings> configurator)
         {
             return EntityFrameworkDbContextScaffold(configurator(new EntityFrameworkDbContextScaffoldSettings()));
@@ -491,6 +496,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--verbose</c> via <see cref="EntityFrameworkMigrationsAddSettings.Verbose"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("ef migrations add")]
         public static IReadOnlyCollection<Output> EntityFrameworkMigrationsAdd(Configure<EntityFrameworkMigrationsAddSettings> configurator)
         {
             return EntityFrameworkMigrationsAdd(configurator(new EntityFrameworkMigrationsAddSettings()));
@@ -565,6 +571,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--verbose</c> via <see cref="EntityFrameworkMigrationsListSettings.Verbose"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("ef migrations list")]
         public static IReadOnlyCollection<Output> EntityFrameworkMigrationsList(Configure<EntityFrameworkMigrationsListSettings> configurator)
         {
             return EntityFrameworkMigrationsList(configurator(new EntityFrameworkMigrationsListSettings()));
@@ -639,6 +646,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--verbose</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.Verbose"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("ef migrations remove")]
         public static IReadOnlyCollection<Output> EntityFrameworkMigrationsRemove(Configure<EntityFrameworkMigrationsRemoveSettings> configurator)
         {
             return EntityFrameworkMigrationsRemove(configurator(new EntityFrameworkMigrationsRemoveSettings()));
@@ -720,6 +728,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--verbose</c> via <see cref="EntityFrameworkMigrationsScriptSettings.Verbose"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("ef migrations script")]
         public static IReadOnlyCollection<Output> EntityFrameworkMigrationsScript(Configure<EntityFrameworkMigrationsScriptSettings> configurator)
         {
             return EntityFrameworkMigrationsScript(configurator(new EntityFrameworkMigrationsScriptSettings()));
@@ -769,50 +778,62 @@ namespace Nuke.Common.Tools.EntityFramework
         /// <summary>
         ///   Don't confirm.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Show which database would be dropped, but don't drop it.
         /// </summary>
+        [ArgumentFormat("--dry-run")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   Show JSON output.
         /// </summary>
+        [ArgumentFormat("--json")]
         public virtual bool? Json { get; internal set; }
         /// <summary>
         ///   The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.
         /// </summary>
+        [ArgumentFormat("--context {value}")]
         public virtual string Context { get; internal set; }
         /// <summary>
         ///   Relative path to the project folder of the target project. Default value is the current folder.
         /// </summary>
+        [ArgumentFormat("--project {value}")]
         public virtual string Project { get; internal set; }
         /// <summary>
         ///   Relative path to the project folder of the startup project. Default value is the current folder.
         /// </summary>
+        [ArgumentFormat("--startup-project {value}")]
         public virtual string StartupProject { get; internal set; }
         /// <summary>
         ///   The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.
         /// </summary>
+        [ArgumentFormat("--framework {value}")]
         public virtual string Framework { get; internal set; }
         /// <summary>
         ///   The build configuration, for example: <c>Debug</c> or <c>Release.</c>
         /// </summary>
+        [ArgumentFormat("--configuration {value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.
         /// </summary>
+        [ArgumentFormat("--runtime {value}")]
         public virtual string Runtime { get; internal set; }
         /// <summary>
         ///   Don't colorize output.
         /// </summary>
+        [ArgumentFormat("--no-color")]
         public virtual bool? NoColor { get; internal set; }
         /// <summary>
         ///   Prefix output with level.
         /// </summary>
+        [ArgumentFormat("--prefix-output")]
         public virtual bool? PrefixOutput { get; internal set; }
         /// <summary>
         ///   Show verbose output.
         /// </summary>
+        [ArgumentFormat("--verbose")]
         public virtual bool? Verbose { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -851,50 +872,62 @@ namespace Nuke.Common.Tools.EntityFramework
         /// <summary>
         ///   The target migration. Migrations may be identified by name or by ID. The number 0 is a special case that means before the first migration and causes all migrations to be reverted. If no migration is specified, the command defaults to the last migration.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Migration { get; internal set; }
         /// <summary>
         ///   This option shows which database would be dropped, but doesn't drop it.
         /// </summary>
+        [ArgumentFormat("--dry-run")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   Show JSON output.
         /// </summary>
+        [ArgumentFormat("--json")]
         public virtual bool? Json { get; internal set; }
         /// <summary>
         ///   The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.
         /// </summary>
+        [ArgumentFormat("--context {value}")]
         public virtual string Context { get; internal set; }
         /// <summary>
         ///   Relative path to the project folder of the target project. Default value is the current folder.
         /// </summary>
+        [ArgumentFormat("--project {value}")]
         public virtual string Project { get; internal set; }
         /// <summary>
         ///   Relative path to the project folder of the startup project. Default value is the current folder.
         /// </summary>
+        [ArgumentFormat("--startup-project {value}")]
         public virtual string StartupProject { get; internal set; }
         /// <summary>
         ///   The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.
         /// </summary>
+        [ArgumentFormat("--framework {value}")]
         public virtual string Framework { get; internal set; }
         /// <summary>
         ///   The build configuration, for example: <c>Debug</c> or <c>Release.</c>
         /// </summary>
+        [ArgumentFormat("--configuration {value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.
         /// </summary>
+        [ArgumentFormat("--runtime {value}")]
         public virtual string Runtime { get; internal set; }
         /// <summary>
         ///   Don't colorize output.
         /// </summary>
+        [ArgumentFormat("--no-color")]
         public virtual bool? NoColor { get; internal set; }
         /// <summary>
         ///   Prefix output with level.
         /// </summary>
+        [ArgumentFormat("--prefix-output")]
         public virtual bool? PrefixOutput { get; internal set; }
         /// <summary>
         ///   Show verbose output.
         /// </summary>
+        [ArgumentFormat("--verbose")]
         public virtual bool? Verbose { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -933,42 +966,52 @@ namespace Nuke.Common.Tools.EntityFramework
         /// <summary>
         ///   Show JSON output.
         /// </summary>
+        [ArgumentFormat("--json")]
         public virtual bool? Json { get; internal set; }
         /// <summary>
         ///   The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.
         /// </summary>
+        [ArgumentFormat("--context {value}")]
         public virtual string Context { get; internal set; }
         /// <summary>
         ///   Relative path to the project folder of the target project. Default value is the current folder.
         /// </summary>
+        [ArgumentFormat("--project {value}")]
         public virtual string Project { get; internal set; }
         /// <summary>
         ///   Relative path to the project folder of the startup project. Default value is the current folder.
         /// </summary>
+        [ArgumentFormat("--startup-project {value}")]
         public virtual string StartupProject { get; internal set; }
         /// <summary>
         ///   The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.
         /// </summary>
+        [ArgumentFormat("--framework {value}")]
         public virtual string Framework { get; internal set; }
         /// <summary>
         ///   The build configuration, for example: <c>Debug</c> or <c>Release.</c>
         /// </summary>
+        [ArgumentFormat("--configuration {value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.
         /// </summary>
+        [ArgumentFormat("--runtime {value}")]
         public virtual string Runtime { get; internal set; }
         /// <summary>
         ///   Don't colorize output.
         /// </summary>
+        [ArgumentFormat("--no-color")]
         public virtual bool? NoColor { get; internal set; }
         /// <summary>
         ///   Prefix output with level.
         /// </summary>
+        [ArgumentFormat("--prefix-output")]
         public virtual bool? PrefixOutput { get; internal set; }
         /// <summary>
         ///   Show verbose output.
         /// </summary>
+        [ArgumentFormat("--verbose")]
         public virtual bool? Verbose { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1005,42 +1048,52 @@ namespace Nuke.Common.Tools.EntityFramework
         /// <summary>
         ///   Show JSON output.
         /// </summary>
+        [ArgumentFormat("--json")]
         public virtual bool? Json { get; internal set; }
         /// <summary>
         ///   The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.
         /// </summary>
+        [ArgumentFormat("--context {value}")]
         public virtual string Context { get; internal set; }
         /// <summary>
         ///   Relative path to the project folder of the target project. Default value is the current folder.
         /// </summary>
+        [ArgumentFormat("--project {value}")]
         public virtual string Project { get; internal set; }
         /// <summary>
         ///   Relative path to the project folder of the startup project. Default value is the current folder.
         /// </summary>
+        [ArgumentFormat("--startup-project {value}")]
         public virtual string StartupProject { get; internal set; }
         /// <summary>
         ///   The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.
         /// </summary>
+        [ArgumentFormat("--framework {value}")]
         public virtual string Framework { get; internal set; }
         /// <summary>
         ///   The build configuration, for example: <c>Debug</c> or <c>Release.</c>
         /// </summary>
+        [ArgumentFormat("--configuration {value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.
         /// </summary>
+        [ArgumentFormat("--runtime {value}")]
         public virtual string Runtime { get; internal set; }
         /// <summary>
         ///   Don't colorize output.
         /// </summary>
+        [ArgumentFormat("--no-color")]
         public virtual bool? NoColor { get; internal set; }
         /// <summary>
         ///   Prefix output with level.
         /// </summary>
+        [ArgumentFormat("--prefix-output")]
         public virtual bool? PrefixOutput { get; internal set; }
         /// <summary>
         ///   Show verbose output.
         /// </summary>
+        [ArgumentFormat("--verbose")]
         public virtual bool? Verbose { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1077,80 +1130,99 @@ namespace Nuke.Common.Tools.EntityFramework
         /// <summary>
         ///   The connection string to the database. For ASP.NET Core 2.x projects, the value can be <em>name=&lt;name of connection string&gt;</em>. In that case the name comes from the configuration sources that are set up for the project.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Connection { get; internal set; }
         /// <summary>
         ///   The provider to use. Typically this is the name of the NuGet package, for example: <c>Microsoft.EntityFrameworkCore.SqlServer.</c>
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Provider { get; internal set; }
         /// <summary>
         ///   Use attributes to configure the model (where possible). If this option is omitted, only the fluent API is used.
         /// </summary>
+        [ArgumentFormat("--data-annotations")]
         public virtual bool? DataAnnotations { get; internal set; }
         /// <summary>
         ///   The name of the <c>DbContext</c> class to generate.
         /// </summary>
+        [ArgumentFormat("--context {value}")]
         public virtual string Context { get; internal set; }
         /// <summary>
         ///   The directory to put the <c>DbContext</c> class file in. Paths are relative to the project directory. Namespaces are derived from the folder names.
         /// </summary>
+        [ArgumentFormat("--context-dir {value}")]
         public virtual string ContextDirectory { get; internal set; }
         /// <summary>
         ///   Overwrite existing files.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   The directory to put entity class files in. Paths are relative to the project directory.
         /// </summary>
+        [ArgumentFormat("--output-dir {value}")]
         public virtual string OutputDirectory { get; internal set; }
         /// <summary>
         ///   The schemas of tables to generate entity types for. To specify multiple schemas, repeat <c>--schema</c> for each one. If this option is omitted, all schemas are included.
         /// </summary>
+        [ArgumentFormat("--schema {value}")]
         public virtual IReadOnlyList<string> Schemas => SchemasInternal.AsReadOnly();
         internal List<string> SchemasInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The tables to generate entity types for. To specify multiple tables, repeat <c>-t</c> or <c>--table</c> for each one. If this option is omitted, all tables are included.
         /// </summary>
+        [ArgumentFormat("--table {value}")]
         public virtual IReadOnlyList<string> Tables => TablesInternal.AsReadOnly();
         internal List<string> TablesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Use table and column names exactly as they appear in the database. If this option is omitted, database names are changed to more closely conform to C# name style conventions.
         /// </summary>
+        [ArgumentFormat("--use-database-names")]
         public virtual bool? UseDatabaseNames { get; internal set; }
         /// <summary>
         ///   Show JSON output.
         /// </summary>
+        [ArgumentFormat("--json")]
         public virtual bool? Json { get; internal set; }
         /// <summary>
         ///   Relative path to the project folder of the target project. Default value is the current folder.
         /// </summary>
+        [ArgumentFormat("--project {value}")]
         public virtual string Project { get; internal set; }
         /// <summary>
         ///   Relative path to the project folder of the startup project. Default value is the current folder.
         /// </summary>
+        [ArgumentFormat("--startup-project {value}")]
         public virtual string StartupProject { get; internal set; }
         /// <summary>
         ///   The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.
         /// </summary>
+        [ArgumentFormat("--framework {value}")]
         public virtual string Framework { get; internal set; }
         /// <summary>
         ///   The build configuration, for example: <c>Debug</c> or <c>Release.</c>
         /// </summary>
+        [ArgumentFormat("--configuration {value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.
         /// </summary>
+        [ArgumentFormat("--runtime {value}")]
         public virtual string Runtime { get; internal set; }
         /// <summary>
         ///   Don't colorize output.
         /// </summary>
+        [ArgumentFormat("--no-color")]
         public virtual bool? NoColor { get; internal set; }
         /// <summary>
         ///   Prefix output with level.
         /// </summary>
+        [ArgumentFormat("--prefix-output")]
         public virtual bool? PrefixOutput { get; internal set; }
         /// <summary>
         ///   Show verbose output.
         /// </summary>
+        [ArgumentFormat("--verbose")]
         public virtual bool? Verbose { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1196,50 +1268,62 @@ namespace Nuke.Common.Tools.EntityFramework
         /// <summary>
         ///   The name of the migration.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   The directory (and sub-namespace) to use. Paths are relative to the project directory. Defaults to 'Migrations'.
         /// </summary>
+        [ArgumentFormat("--output-dir {value}")]
         public virtual string OutputDirectory { get; internal set; }
         /// <summary>
         ///   Show JSON output.
         /// </summary>
+        [ArgumentFormat("--json")]
         public virtual bool? Json { get; internal set; }
         /// <summary>
         ///   The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.
         /// </summary>
+        [ArgumentFormat("--context {value}")]
         public virtual string Context { get; internal set; }
         /// <summary>
         ///   Relative path to the project folder of the target project. Default value is the current folder.
         /// </summary>
+        [ArgumentFormat("--project {value}")]
         public virtual string Project { get; internal set; }
         /// <summary>
         ///   Relative path to the project folder of the startup project. Default value is the current folder.
         /// </summary>
+        [ArgumentFormat("--startup-project {value}")]
         public virtual string StartupProject { get; internal set; }
         /// <summary>
         ///   The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.
         /// </summary>
+        [ArgumentFormat("--framework {value}")]
         public virtual string Framework { get; internal set; }
         /// <summary>
         ///   The build configuration, for example: <c>Debug</c> or <c>Release.</c>
         /// </summary>
+        [ArgumentFormat("--configuration {value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.
         /// </summary>
+        [ArgumentFormat("--runtime {value}")]
         public virtual string Runtime { get; internal set; }
         /// <summary>
         ///   Don't colorize output.
         /// </summary>
+        [ArgumentFormat("--no-color")]
         public virtual bool? NoColor { get; internal set; }
         /// <summary>
         ///   Prefix output with level.
         /// </summary>
+        [ArgumentFormat("--prefix-output")]
         public virtual bool? PrefixOutput { get; internal set; }
         /// <summary>
         ///   Show verbose output.
         /// </summary>
+        [ArgumentFormat("--verbose")]
         public virtual bool? Verbose { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1278,42 +1362,52 @@ namespace Nuke.Common.Tools.EntityFramework
         /// <summary>
         ///   Show JSON output.
         /// </summary>
+        [ArgumentFormat("--json")]
         public virtual bool? Json { get; internal set; }
         /// <summary>
         ///   The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.
         /// </summary>
+        [ArgumentFormat("--context {value}")]
         public virtual string Context { get; internal set; }
         /// <summary>
         ///   Relative path to the project folder of the target project. Default value is the current folder.
         /// </summary>
+        [ArgumentFormat("--project {value}")]
         public virtual string Project { get; internal set; }
         /// <summary>
         ///   Relative path to the project folder of the startup project. Default value is the current folder.
         /// </summary>
+        [ArgumentFormat("--startup-project {value}")]
         public virtual string StartupProject { get; internal set; }
         /// <summary>
         ///   The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.
         /// </summary>
+        [ArgumentFormat("--framework {value}")]
         public virtual string Framework { get; internal set; }
         /// <summary>
         ///   The build configuration, for example: <c>Debug</c> or <c>Release.</c>
         /// </summary>
+        [ArgumentFormat("--configuration {value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.
         /// </summary>
+        [ArgumentFormat("--runtime {value}")]
         public virtual string Runtime { get; internal set; }
         /// <summary>
         ///   Don't colorize output.
         /// </summary>
+        [ArgumentFormat("--no-color")]
         public virtual bool? NoColor { get; internal set; }
         /// <summary>
         ///   Prefix output with level.
         /// </summary>
+        [ArgumentFormat("--prefix-output")]
         public virtual bool? PrefixOutput { get; internal set; }
         /// <summary>
         ///   Show verbose output.
         /// </summary>
+        [ArgumentFormat("--verbose")]
         public virtual bool? Verbose { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1350,46 +1444,57 @@ namespace Nuke.Common.Tools.EntityFramework
         /// <summary>
         ///   The directory (and sub-namespace) to use. Paths are relative to the project directory. Defaults to 'Migrations'.
         /// </summary>
+        [ArgumentFormat("--output-dir {value}")]
         public virtual string OutputDirectory { get; internal set; }
         /// <summary>
         ///   Show JSON output.
         /// </summary>
+        [ArgumentFormat("--json")]
         public virtual bool? Json { get; internal set; }
         /// <summary>
         ///   The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.
         /// </summary>
+        [ArgumentFormat("--context {value}")]
         public virtual string Context { get; internal set; }
         /// <summary>
         ///   Relative path to the project folder of the target project. Default value is the current folder.
         /// </summary>
+        [ArgumentFormat("--project {value}")]
         public virtual string Project { get; internal set; }
         /// <summary>
         ///   Relative path to the project folder of the startup project. Default value is the current folder.
         /// </summary>
+        [ArgumentFormat("--startup-project {value}")]
         public virtual string StartupProject { get; internal set; }
         /// <summary>
         ///   The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.
         /// </summary>
+        [ArgumentFormat("--framework {value}")]
         public virtual string Framework { get; internal set; }
         /// <summary>
         ///   The build configuration, for example: <c>Debug</c> or <c>Release.</c>
         /// </summary>
+        [ArgumentFormat("--configuration {value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.
         /// </summary>
+        [ArgumentFormat("--runtime {value}")]
         public virtual string Runtime { get; internal set; }
         /// <summary>
         ///   Don't colorize output.
         /// </summary>
+        [ArgumentFormat("--no-color")]
         public virtual bool? NoColor { get; internal set; }
         /// <summary>
         ///   Prefix output with level.
         /// </summary>
+        [ArgumentFormat("--prefix-output")]
         public virtual bool? PrefixOutput { get; internal set; }
         /// <summary>
         ///   Show verbose output.
         /// </summary>
+        [ArgumentFormat("--verbose")]
         public virtual bool? Verbose { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1427,58 +1532,72 @@ namespace Nuke.Common.Tools.EntityFramework
         /// <summary>
         ///   The starting migration. Migrations may be identified by name or by ID. The number 0 is a special case that means <em>before the first migration</em>. Defaults to 0.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string From { get; internal set; }
         /// <summary>
         ///   The ending migration. Defaults to the last migration.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string To { get; internal set; }
         /// <summary>
         ///   The file to write the script to.
         /// </summary>
+        [ArgumentFormat("--output {value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   Generate a script that can be used on a database at any migration.
         /// </summary>
+        [ArgumentFormat("--idempotent")]
         public virtual bool? Idempotent { get; internal set; }
         /// <summary>
         ///   Show JSON output.
         /// </summary>
+        [ArgumentFormat("--json")]
         public virtual bool? Json { get; internal set; }
         /// <summary>
         ///   The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.
         /// </summary>
+        [ArgumentFormat("--context {value}")]
         public virtual string Context { get; internal set; }
         /// <summary>
         ///   Relative path to the project folder of the target project. Default value is the current folder.
         /// </summary>
+        [ArgumentFormat("--project {value}")]
         public virtual string Project { get; internal set; }
         /// <summary>
         ///   Relative path to the project folder of the startup project. Default value is the current folder.
         /// </summary>
+        [ArgumentFormat("--startup-project {value}")]
         public virtual string StartupProject { get; internal set; }
         /// <summary>
         ///   The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.
         /// </summary>
+        [ArgumentFormat("--framework {value}")]
         public virtual string Framework { get; internal set; }
         /// <summary>
         ///   The build configuration, for example: <c>Debug</c> or <c>Release.</c>
         /// </summary>
+        [ArgumentFormat("--configuration {value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.
         /// </summary>
+        [ArgumentFormat("--runtime {value}")]
         public virtual string Runtime { get; internal set; }
         /// <summary>
         ///   Don't colorize output.
         /// </summary>
+        [ArgumentFormat("--no-color")]
         public virtual bool? NoColor { get; internal set; }
         /// <summary>
         ///   Prefix output with level.
         /// </summary>
+        [ArgumentFormat("--prefix-output")]
         public virtual bool? PrefixOutput { get; internal set; }
         /// <summary>
         ///   Show verbose output.
         /// </summary>
+        [ArgumentFormat("--verbose")]
         public virtual bool? Verbose { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

@@ -144,6 +144,7 @@ namespace Nuke.Common.Tools.NUnit
         ///     <li><c>--x86</c> via <see cref="NUnit3Settings.X86"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("")]
         public static IReadOnlyCollection<Output> NUnit3(Configure<NUnit3Settings> configurator)
         {
             return NUnit3(configurator(new NUnit3Settings()));
@@ -217,159 +218,199 @@ namespace Nuke.Common.Tools.NUnit
         /// <summary>
         ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (<c>.nunit</c>) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual IReadOnlyList<string> InputFiles => InputFilesInternal.AsReadOnly();
         internal List<string> InputFilesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Comma-separated list of names of tests to run or explore. This option may be repeated. Note that this option is retained for backward compatibility. The --where option can now be used instead.
         /// </summary>
+        [ArgumentFormat("--test={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Tests => TestsInternal.AsReadOnly();
         internal List<string> TestsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The name (or path) of a file containing a list of tests to run or explore, one per line.
         /// </summary>
+        [ArgumentFormat("--testlist={value}")]
         public virtual string TestListFile { get; internal set; }
         /// <summary>
         ///   An expression indicating which tests to run. It may specify test names, classes, methods, catgories or properties comparing them to actual values with the operators <c>==</c>, <c>!=</c>, <c>=~</c> and <c>!~</c>. See Test Selection Language for a full description of the syntax.
         /// </summary>
+        [ArgumentFormat("--where={value}")]
         public virtual string WhereExpression { get; internal set; }
         /// <summary>
         ///   A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the <c>--params</c> option multiple times.
         /// </summary>
+        [ArgumentFormat("--params={value}")]
+        [ItemFormat("{key}={value}")]
         public virtual IReadOnlyDictionary<string, string> Parameters => ParametersInternal.AsReadOnly();
         internal Dictionary<string, string> ParametersInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Name of a project configuration to load (e.g.: <c>Debug</c>).
         /// </summary>
+        [ArgumentFormat("--config={value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   Process isolation for test assemblies. Values: <c>Single</c>, <c>Separate</c>, <c>Multiple</c>. If not specified, defaults to Separate for a single assembly or Multiple for more than one. By default, processes are run in parallel.
         /// </summary>
+        [ArgumentFormat("--process={value}")]
         public virtual NUnitProcessType Process { get; internal set; }
         /// <summary>
         ///   This option is a synonym for <c>--process=Single</c>
         /// </summary>
+        [ArgumentFormat("--inprocess")]
         public virtual bool? InProcess { get; internal set; }
         /// <summary>
         ///   Number of agents that may be allowed to run simultaneously assuming you are not running inprocess. If not specified, all agent processes run tests at the same time, whatever the number of assemblies. This setting is used to control running your assemblies in parallel.
         /// </summary>
+        [ArgumentFormat("--agents={value}")]
         public virtual int? Agents { get; internal set; }
         /// <summary>
         ///   Domain isolation for test assemblies. Values: <c>None</c>, <c>Single</c>, <c>Multiple</c>. If not specified, defaults to <c>Single</c> for a single assembly or <c>Multiple</c> for more than one.
         /// </summary>
+        [ArgumentFormat("--domain={value}")]
         public virtual string Domain { get; internal set; }
         /// <summary>
         ///   Framework type/version to use for tests. Examples: <c>mono</c>, <c>net-4.5,</c> <c>v4.0</c>, <c>2.0</c>, <c>mono-4.0</c>
         /// </summary>
+        [ArgumentFormat("--framework={value}")]
         public virtual string Framework { get; internal set; }
         /// <summary>
         ///   Run tests in a 32-bit process on 64-bit systems.
         /// </summary>
+        [ArgumentFormat("--x86")]
         public virtual bool? X86 { get; internal set; }
         /// <summary>
         ///   Dispose each test runner after it has finished running its tests
         /// </summary>
+        [ArgumentFormat("--dispose-runners")]
         public virtual bool? DisposeRunners { get; internal set; }
         /// <summary>
         ///   Set timeout for each test case in milliseconds.
         /// </summary>
+        [ArgumentFormat("--timeout={value}")]
         public virtual int? Timeout { get; internal set; }
         /// <summary>
         ///   Set the random seed used to generate test cases.
         /// </summary>
+        [ArgumentFormat("--seed={value}")]
         public virtual int? Seed { get; internal set; }
         /// <summary>
         ///   Specify the number of worker threads to be used in running tests. This setting is used to control running your tests in parallel and is used in conjunction with the <c>Parallelizable</c> attribute. If not specified, workers defaults to the number of processors on the machine, or 2, whichever is greater.
         /// </summary>
+        [ArgumentFormat("--workers={value}")]
         public virtual int? Workers { get; internal set; }
         /// <summary>
         ///   Stop run immediately upon any test failure or error.
         /// </summary>
+        [ArgumentFormat("--stoponerror")]
         public virtual bool? StopOnError { get; internal set; }
         /// <summary>
         ///   Skip any non-test assemblies specified, without error.
         /// </summary>
+        [ArgumentFormat("--skipnontestassemblies")]
         public virtual bool? SkipNonTestAssemblies { get; internal set; }
         /// <summary>
         ///   Causes NUnit to break into the debugger immediately before it executes your tests. This is particularly useful when the tests are running in a separate process to which you would otherwise have to attach.
         /// </summary>
+        [ArgumentFormat("--debug")]
         public virtual bool? Debug { get; internal set; }
         /// <summary>
         ///   Available only in debug builds of NUnit, this option is for use by developers in debugging the nunit-agent itself. It breaks in the agent code immediately upon entry of the process.
         /// </summary>
+        [ArgumentFormat("--debug-agent")]
         public virtual bool? DebugAgent { get; internal set; }
         /// <summary>
         ///   Causes NUnit to immediately open a message box, allowing you to attach a debugger. For cases where <c>--debug </c>does not work.
         /// </summary>
+        [ArgumentFormat("--pause")]
         public virtual bool? Pause { get; internal set; }
         /// <summary>
         ///   Wait for input before closing console window.
         /// </summary>
+        [ArgumentFormat("--wait")]
         public virtual bool? Wait { get; internal set; }
         /// <summary>
         ///   Path of the directory to use for output files.
         /// </summary>
+        [ArgumentFormat("--work={value}")]
         public virtual string WorkPath { get; internal set; }
         /// <summary>
         ///   File path to contain text output from the tests.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual string OutputFile { get; internal set; }
         /// <summary>
         ///   File path to contain error output from the tests.
         /// </summary>
+        [ArgumentFormat("--err={value}")]
         public virtual string ErrorFile { get; internal set; }
         /// <summary>
         ///   An output spec for saving the test results. This option may be repeated.
         /// </summary>
+        [ArgumentFormat("--result={value}")]
         public virtual IReadOnlyList<string> Results => ResultsInternal.AsReadOnly();
         internal List<string> ResultsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Display or save test info rather than running tests. Optionally provide an output spec for saving the test info. This option may be repeated.
         /// </summary>
+        [ArgumentFormat("--explore={value}")]
         public virtual IReadOnlyList<string> Explores => ExploresInternal.AsReadOnly();
         internal List<string> ExploresInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Don't save any test results.
         /// </summary>
+        [ArgumentFormat("--noresult")]
         public virtual bool? NoResults { get; internal set; }
         /// <summary>
         ///   Specify whether to write test case names to the output. Values: <c>Off</c>, <c>On</c>, <c>All</c>
         /// </summary>
+        [ArgumentFormat("--labels={value}")]
         public virtual NUnitLabelType Labels { get; internal set; }
         /// <summary>
         ///   Set internal trace level. Values: <c>Off</c>, !<c>Error</c>, <c>Warning</c>, <c>Info</c>, <c>Verbose</c> (<c>Debug</c>)
         /// </summary>
+        [ArgumentFormat("--trace={value}")]
         public virtual NUnitTraceLevel Trace { get; internal set; }
         /// <summary>
         ///   Specify the console codepage, such as <c>utf-8</c>, <c>ascii</c>cc, etc. This option is not normally needed unless your output includes special characters. The page specified must be available on the system.
         /// </summary>
+        [ArgumentFormat("--encoding={value}")]
         public virtual string Encoding { get; internal set; }
         /// <summary>
         ///   Tells .NET to copy loaded assemblies to the shadowcopy directory.
         /// </summary>
+        [ArgumentFormat("--shadowcopy")]
         public virtual bool? ShadowCopy { get; internal set; }
         /// <summary>
         ///   Turns on use of TeamCity service messages.
         /// </summary>
+        [ArgumentFormat("--teamcity")]
         public virtual bool? TeamCity { get; internal set; }
         /// <summary>
         ///   Causes the user profile to be loaded in any separate test processes.
         /// </summary>
+        [ArgumentFormat("--loaduserprofile")]
         public virtual bool? LoadUserProfile { get; internal set; }
         /// <summary>
         ///   Lists all extension points and the extensions installed on each of them.
         /// </summary>
+        [ArgumentFormat("--list-extensions")]
         public virtual bool? ListExtensions { get; internal set; }
         /// <summary>
         ///   Set the principal policy for the test domain. Values: <c>UnauthenticatedPrincipal</c>, <c>NoPrincipal</c>, <c>WindowsPrincipal</c>
         /// </summary>
+        [ArgumentFormat("--set-principal-policy={value}")]
         public virtual NUnitPrincipalPolicy SetPrincipalPolicy { get; internal set; }
         /// <summary>
         ///   Suppress display of program information at start of run.
         /// </summary>
+        [ArgumentFormat("--noheader")]
         public virtual bool? NoHeader { get; internal set; }
         /// <summary>
         ///   Displays console output without color.
         /// </summary>
+        [ArgumentFormat("--nocolor")]
         public virtual bool? NoColor { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

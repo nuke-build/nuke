@@ -74,6 +74,7 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         ///     <li><c>&lt;webConfigFilename&gt;</c> via <see cref="WebConfigTransformRunnerSettings.WebConfigFilename"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("")]
         public static IReadOnlyCollection<Output> WebConfigTransformRunner(Configure<WebConfigTransformRunnerSettings> configurator)
         {
             return WebConfigTransformRunner(configurator(new WebConfigTransformRunnerSettings()));
@@ -112,14 +113,17 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         /// <summary>
         ///   The base web.config file
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string WebConfigFilename { get; internal set; }
         /// <summary>
         ///   The transformation web.config file
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string TransformFilename { get; internal set; }
         /// <summary>
         ///   The path to the output web.config file
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string OutputFilename { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

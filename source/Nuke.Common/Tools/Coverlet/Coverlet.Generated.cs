@@ -93,6 +93,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///     <li><c>--version</c> via <see cref="CoverletSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("")]
         public static IReadOnlyCollection<Output> Coverlet(Configure<CoverletSettings> configurator)
         {
             return Coverlet(configurator(new CoverletSettings()));
@@ -140,55 +141,68 @@ namespace Nuke.Common.Tools.Coverlet
         /// <summary>
         ///   Path to the test assembly.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Assembly { get; internal set; }
         /// <summary>
         ///   Path to the test runner application.
         /// </summary>
+        [ArgumentFormat("--target {value}")]
         public virtual string Target { get; internal set; }
         /// <summary>
         ///   Arguments to be passed to the test runner.
         /// </summary>
+        [ArgumentFormat("--targetargs {value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> TargetArgs => TargetArgsInternal.AsReadOnly();
         internal List<string> TargetArgsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Output of the generated coverage report
         /// </summary>
+        [ArgumentFormat("--output {value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   Format of the generated coverage report.Can be specified multiple times to output multiple formats in a single run.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual IReadOnlyList<CoverletOutputFormat> Format => FormatInternal.AsReadOnly();
         internal List<CoverletOutputFormat> FormatInternal { get; set; } = new List<CoverletOutputFormat>();
         /// <summary>
         ///   Exits with error if the coverage % is below value.
         /// </summary>
+        [ArgumentFormat("--threshold {value}")]
         public virtual int? Threshold { get; internal set; }
         /// <summary>
         ///   Coverage type to apply the threshold to.
         /// </summary>
+        [ArgumentFormat("--threshold-type {value}")]
         public virtual CoverletThresholdType ThresholdType { get; internal set; }
         /// <summary>
         ///   Filter expressions to exclude specific modules and types.
         /// </summary>
+        [ArgumentFormat("--exclude {value}")]
         public virtual IReadOnlyList<string> Exclude => ExcludeInternal.AsReadOnly();
         internal List<string> ExcludeInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Filter expressions to include specific modules and types.
         /// </summary>
+        [ArgumentFormat("--include {value}")]
         public virtual IReadOnlyList<string> Include => IncludeInternal.AsReadOnly();
         internal List<string> IncludeInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Glob patterns specifying source files to exclude.
         /// </summary>
+        [ArgumentFormat("--exclude-by-file {value}")]
         public virtual IReadOnlyList<string> ExcludeByFile => ExcludeByFileInternal.AsReadOnly();
         internal List<string> ExcludeByFileInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Show version information.
         /// </summary>
+        [ArgumentFormat("--version")]
         public virtual bool? Version { get; internal set; }
         /// <summary>
         ///   Path to existing coverage result to merge.
         /// </summary>
+        [ArgumentFormat("--merge-with {value}")]
         public virtual string MergeWith { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

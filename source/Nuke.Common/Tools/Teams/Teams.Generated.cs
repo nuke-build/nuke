@@ -28,10 +28,13 @@ namespace Nuke.Common.Tools.Teams
     public partial class TeamsMessage : ISettingsEntity
     {
         [JsonProperty("title")]
+        [ArgumentFormat("")]
         public virtual string Title { get; internal set; }
         [JsonProperty("text")]
+        [ArgumentFormat("")]
         public virtual string Text { get; internal set; }
         [JsonProperty("themeColor")]
+        [ArgumentFormat("")]
         public virtual string ThemeColor { get; internal set; }
     }
     #endregion

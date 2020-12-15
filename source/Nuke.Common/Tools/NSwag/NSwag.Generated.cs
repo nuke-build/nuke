@@ -1,4 +1,3 @@
-#pragma warning disable CS1574
 // Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/NSwag.json
 
 using JetBrains.Annotations;
@@ -71,6 +70,7 @@ namespace Nuke.Common.Tools.NSwag
         ///     <li><c>&lt;nswagRuntime&gt;</c> via <see cref="NSwagVersionSettings.NSwagRuntime"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("version")]
         public static IReadOnlyCollection<Output> NSwagVersion(Configure<NSwagVersionSettings> configurator)
         {
             return NSwagVersion(configurator(new NSwagVersionSettings()));
@@ -128,6 +128,7 @@ namespace Nuke.Common.Tools.NSwag
         ///     <li><c>/Variables</c> via <see cref="NSwagListTypesSettings.Variables"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("list-types")]
         public static IReadOnlyCollection<Output> NSwagListTypes(Configure<NSwagListTypesSettings> configurator)
         {
             return NSwagListTypes(configurator(new NSwagListTypesSettings()));
@@ -191,6 +192,7 @@ namespace Nuke.Common.Tools.NSwag
         ///     <li><c>/Variables</c> via <see cref="NSwagListWebApiControllersSettings.Variables"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("list-controllers")]
         public static IReadOnlyCollection<Output> NSwagListWebApiControllers(Configure<NSwagListWebApiControllersSettings> configurator)
         {
             return NSwagListWebApiControllers(configurator(new NSwagListWebApiControllersSettings()));
@@ -254,6 +256,7 @@ namespace Nuke.Common.Tools.NSwag
         ///     <li><c>/UseNuGetCache</c> via <see cref="NSwagTypesToOpenApiSettings.UseNuGetCache"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("types2openapi")]
         public static IReadOnlyCollection<Output> NSwagTypesToOpenApi(Configure<NSwagTypesToOpenApiSettings> configurator)
         {
             return NSwagTypesToOpenApi(configurator(new NSwagTypesToOpenApiSettings()));
@@ -337,6 +340,7 @@ namespace Nuke.Common.Tools.NSwag
         ///     <li><c>/UseNuGetCache</c> via <see cref="NSwagTypesToSwaggerSettings.UseNuGetCache"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("types2swagger")]
         public static IReadOnlyCollection<Output> NSwagTypesToSwagger(Configure<NSwagTypesToSwaggerSettings> configurator)
         {
             return NSwagTypesToSwagger(configurator(new NSwagTypesToSwaggerSettings()));
@@ -476,6 +480,7 @@ namespace Nuke.Common.Tools.NSwag
         ///     <li><c>/UseNuGetCache</c> via <see cref="NSwagWebApiToOpenApiSettings.UseNuGetCache"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("webapi2openapi")]
         public static IReadOnlyCollection<Output> NSwagWebApiToOpenApi(Configure<NSwagWebApiToOpenApiSettings> configurator)
         {
             return NSwagWebApiToOpenApi(configurator(new NSwagWebApiToOpenApiSettings()));
@@ -652,6 +657,7 @@ namespace Nuke.Common.Tools.NSwag
         ///     <li><c>/UseNuGetCache</c> via <see cref="NSwagWebApiToSwaggerSettings.UseNuGetCache"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("webapi2swagger")]
         public static IReadOnlyCollection<Output> NSwagWebApiToSwagger(Configure<NSwagWebApiToSwaggerSettings> configurator)
         {
             return NSwagWebApiToSwagger(configurator(new NSwagWebApiToSwaggerSettings()));
@@ -821,6 +827,7 @@ namespace Nuke.Common.Tools.NSwag
         ///     <li><c>/UseNuGetCache</c> via <see cref="NSwagAspNetCoreToOpenApiSettings.UseNuGetCache"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("aspnetcore2openapi")]
         public static IReadOnlyCollection<Output> NSwagAspNetCoreToOpenApi(Configure<NSwagAspNetCoreToOpenApiSettings> configurator)
         {
             return NSwagAspNetCoreToOpenApi(configurator(new NSwagAspNetCoreToOpenApiSettings()));
@@ -1003,6 +1010,7 @@ namespace Nuke.Common.Tools.NSwag
         ///     <li><c>/WorkingDirectory</c> via <see cref="NSwagAspNetCoreToSwaggerSettings.NSwagWorkingDirectory"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("aspnetcore2swagger")]
         public static IReadOnlyCollection<Output> NSwagAspNetCoreToSwagger(Configure<NSwagAspNetCoreToSwaggerSettings> configurator)
         {
             return NSwagAspNetCoreToSwagger(configurator(new NSwagAspNetCoreToSwaggerSettings()));
@@ -1097,6 +1105,7 @@ namespace Nuke.Common.Tools.NSwag
         ///     <li><c>&lt;nswagRuntime&gt;</c> via <see cref="NSwagCreateDocumentSettings.NSwagRuntime"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("new")]
         public static IReadOnlyCollection<Output> NSwagCreateDocument(Configure<NSwagCreateDocumentSettings> configurator)
         {
             return NSwagCreateDocument(configurator(new NSwagCreateDocumentSettings()));
@@ -1146,6 +1155,7 @@ namespace Nuke.Common.Tools.NSwag
         ///     <li><c>/Variables</c> via <see cref="NSwagExecuteDocumentSettings.Variables"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("run")]
         public static IReadOnlyCollection<Output> NSwagExecuteDocument(Configure<NSwagExecuteDocumentSettings> configurator)
         {
             return NSwagExecuteDocument(configurator(new NSwagExecuteDocumentSettings()));
@@ -1221,6 +1231,7 @@ namespace Nuke.Common.Tools.NSwag
         ///     <li><c>/ServiceSchemes</c> via <see cref="NSwagJsonSchemaToCSharpSettings.ServiceSchemes"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("jsonschema2csclient")]
         public static IReadOnlyCollection<Output> NSwagJsonSchemaToCSharp(Configure<NSwagJsonSchemaToCSharpSettings> configurator)
         {
             return NSwagJsonSchemaToCSharp(configurator(new NSwagJsonSchemaToCSharpSettings()));
@@ -1290,6 +1301,7 @@ namespace Nuke.Common.Tools.NSwag
         ///     <li><c>/ServiceSchemes</c> via <see cref="NSwagJsonSchemaToTypeScriptSettings.ServiceSchemes"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("jsonschema2tsclient")]
         public static IReadOnlyCollection<Output> NSwagJsonSchemaToTypeScript(Configure<NSwagJsonSchemaToTypeScriptSettings> configurator)
         {
             return NSwagJsonSchemaToTypeScript(configurator(new NSwagJsonSchemaToTypeScriptSettings()));
@@ -1444,6 +1456,7 @@ namespace Nuke.Common.Tools.NSwag
         ///     <li><c>/WrapResponses</c> via <see cref="NSwagOpenApiToCSharpClientSettings.WrapResponses"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("openapi2csclient")]
         public static IReadOnlyCollection<Output> NSwagOpenApiToCSharpClient(Configure<NSwagOpenApiToCSharpClientSettings> configurator)
         {
             return NSwagOpenApiToCSharpClient(configurator(new NSwagOpenApiToCSharpClientSettings()));
@@ -1699,6 +1712,7 @@ namespace Nuke.Common.Tools.NSwag
         ///     <li><c>/WrapResponses</c> via <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponses"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("swagger2csclient")]
         public static IReadOnlyCollection<Output> NSwagSwaggerToCSharpClient(Configure<NSwagSwaggerToCSharpClientSettings> configurator)
         {
             return NSwagSwaggerToCSharpClient(configurator(new NSwagSwaggerToCSharpClientSettings()));
@@ -1927,6 +1941,7 @@ namespace Nuke.Common.Tools.NSwag
         ///     <li><c>/WrapResponses</c> via <see cref="NSwagOpenApiToCSharpControllerSettings.WrapResponses"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("openapi2cscontroller")]
         public static IReadOnlyCollection<Output> NSwagOpenApiToCSharpController(Configure<NSwagOpenApiToCSharpControllerSettings> configurator)
         {
             return NSwagOpenApiToCSharpController(configurator(new NSwagOpenApiToCSharpControllerSettings()));
@@ -2144,6 +2159,7 @@ namespace Nuke.Common.Tools.NSwag
         ///     <li><c>/WrapResponses</c> via <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponses"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("swagger2cscontroller")]
         public static IReadOnlyCollection<Output> NSwagSwaggerToCSharpController(Configure<NSwagSwaggerToCSharpControllerSettings> configurator)
         {
             return NSwagSwaggerToCSharpController(configurator(new NSwagSwaggerToCSharpControllerSettings()));
@@ -2265,6 +2281,7 @@ namespace Nuke.Common.Tools.NSwag
         ///     <li><c>/TypeNameGenerator</c> via <see cref="NSwagOpenApiToTypeScriptClientSettings.TypeNameGenerator"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("openapi2tsclient")]
         public static IReadOnlyCollection<Output> NSwagOpenApiToTypeScriptClient(Configure<NSwagOpenApiToTypeScriptClientSettings> configurator)
         {
             return NSwagOpenApiToTypeScriptClient(configurator(new NSwagOpenApiToTypeScriptClientSettings()));
@@ -2428,6 +2445,7 @@ namespace Nuke.Common.Tools.NSwag
         ///     <li><c>/WrapResponses</c> via <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponses"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("swagger2tsclient")]
         public static IReadOnlyCollection<Output> NSwagSwaggerToTypeScriptClient(Configure<NSwagSwaggerToTypeScriptClientSettings> configurator)
         {
             return NSwagSwaggerToTypeScriptClient(configurator(new NSwagSwaggerToTypeScriptClientSettings()));
@@ -2542,26 +2560,33 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   The nswag.json configuration file path.
         /// </summary>
+        [ArgumentFormat("/File:{value}")]
         public virtual string File { get; internal set; }
+        [ArgumentFormat("/Variables:{value}")]
+        [ItemFormat("{key}={value}")]
         public virtual IReadOnlyDictionary<string, object> Variables => VariablesInternal.AsReadOnly();
         internal Dictionary<string,object> VariablesInternal { get; set; } = new Dictionary<string,object>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   The path or paths to the .NET assemblies (comma separated).
         /// </summary>
+        [ArgumentFormat("/Assembly:{value}")]
         public virtual IReadOnlyList<string> Assembly => AssemblyInternal.AsReadOnly();
         internal List<string> AssemblyInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The path to the assembly App.config or Web.config (optional).
         /// </summary>
+        [ArgumentFormat("/AssemblyConfig:{value}")]
         public virtual string AssemblyConfig { get; internal set; }
         /// <summary>
         ///   The paths to search for referenced assembly files (comma separated).
         /// </summary>
+        [ArgumentFormat("/ReferencePaths:{value}")]
         public virtual IReadOnlyList<string> ReferencePaths => ReferencePathsInternal.AsReadOnly();
         internal List<string> ReferencePathsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Determines if local Nuget's cache folder should be put in the ReferencePaths by default
         /// </summary>
+        [ArgumentFormat("/UseNuGetCache:{value}")]
         public virtual bool? UseNuGetCache { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -2595,26 +2620,33 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   The nswag.json configuration file path.
         /// </summary>
+        [ArgumentFormat("/File:{value}")]
         public virtual string File { get; internal set; }
+        [ArgumentFormat("/Variables:{value}")]
+        [ItemFormat("{key}={value}")]
         public virtual IReadOnlyDictionary<string, object> Variables => VariablesInternal.AsReadOnly();
         internal Dictionary<string,object> VariablesInternal { get; set; } = new Dictionary<string,object>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   The path or paths to the .NET assemblies (comma separated).
         /// </summary>
+        [ArgumentFormat("/Assembly:{value}")]
         public virtual IReadOnlyList<string> Assembly => AssemblyInternal.AsReadOnly();
         internal List<string> AssemblyInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The path to the assembly App.config or Web.config (optional).
         /// </summary>
+        [ArgumentFormat("/AssemblyConfig:{value}")]
         public virtual string AssemblyConfig { get; internal set; }
         /// <summary>
         ///   The paths to search for referenced assembly files (comma separated).
         /// </summary>
+        [ArgumentFormat("/ReferencePaths:{value}")]
         public virtual IReadOnlyList<string> ReferencePaths => ReferencePathsInternal.AsReadOnly();
         internal List<string> ReferencePathsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Determines if local Nuget's cache folder should be put in the ReferencePaths by default
         /// </summary>
+        [ArgumentFormat("/UseNuGetCache:{value}")]
         public virtual bool? UseNuGetCache { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -2648,28 +2680,34 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   The output file path (optional).
         /// </summary>
+        [ArgumentFormat("/Output:{value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   Specifies the output schema type, ignored when UseDocumentProvider is enabled (Swagger2|OpenApi3, default: Swagger2).
         /// </summary>
+        [ArgumentFormat("/OutputType:{value}")]
         public virtual SchemaType OutputType { get; internal set; }
         /// <summary>
         ///   The path or paths to the .NET assemblies (comma separated).
         /// </summary>
+        [ArgumentFormat("/Assembly:{value}")]
         public virtual IReadOnlyList<string> Assembly => AssemblyInternal.AsReadOnly();
         internal List<string> AssemblyInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The path to the assembly App.config or Web.config (optional).
         /// </summary>
+        [ArgumentFormat("/AssemblyConfig:{value}")]
         public virtual string AssemblyConfig { get; internal set; }
         /// <summary>
         ///   The paths to search for referenced assembly files (comma separated).
         /// </summary>
+        [ArgumentFormat("/ReferencePaths:{value}")]
         public virtual IReadOnlyList<string> ReferencePaths => ReferencePathsInternal.AsReadOnly();
         internal List<string> ReferencePathsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Determines if local Nuget's cache folder should be put in the ReferencePaths by default
         /// </summary>
+        [ArgumentFormat("/UseNuGetCache:{value}")]
         public virtual bool? UseNuGetCache { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -2703,69 +2741,85 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).
         /// </summary>
+        [ArgumentFormat("/AllowReferencesWithProperties:{value}")]
         public virtual bool? AllowReferencesWithProperties { get; internal set; }
         /// <summary>
         ///   The class names.
         /// </summary>
+        [ArgumentFormat("/ClassNames:{value}")]
         public virtual IReadOnlyList<string> ClassNames => ClassNamesInternal.AsReadOnly();
         internal List<string> ClassNamesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The default reference type null handling of dictionary value types (NotNull (default) or Null).
         /// </summary>
+        [ArgumentFormat("/DefaultDictionaryValueReferenceTypeNullHandling:{value}")]
         public virtual ReferenceTypeNullHandling DefaultDictionaryValueReferenceTypeNullHandling { get; internal set; }
         /// <summary>
         ///   The default enum handling ('String' or 'Integer'), default: Integer.
         /// </summary>
+        [ArgumentFormat("/DefaultEnumHandling:{value}")]
         public virtual EnumHandling DefaultEnumHandling { get; internal set; }
         /// <summary>
         ///   The default property name handling ('Default' or 'CamelCase').
         /// </summary>
+        [ArgumentFormat("/DefaultPropertyNameHandling:{value}")]
         public virtual PropertyNameHandling DefaultPropertyNameHandling { get; internal set; }
         /// <summary>
         ///   The default reference type null handling (Null (default) or NotNull).
         /// </summary>
+        [ArgumentFormat("/DefaultReferenceTypeNullHandling:{value}")]
         public virtual ReferenceTypeNullHandling DefaultReferenceTypeNullHandling { get; internal set; }
         /// <summary>
         ///   Flatten the inheritance hierarchy instead of using allOf to describe inheritance (default: false).
         /// </summary>
+        [ArgumentFormat("/FlattenInheritanceHierarchy:{value}")]
         public virtual bool? FlattenInheritanceHierarchy { get; internal set; }
         /// <summary>
         ///   Generate schemas for types in KnownTypeAttribute attributes (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateKnownTypes:{value}")]
         public virtual bool? GenerateKnownTypes { get; internal set; }
         /// <summary>
         ///   Generate xmlObject representation for definitions (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateXmlObjects:{value}")]
         public virtual bool? GenerateXmlObjects { get; internal set; }
         /// <summary>
         ///   Ignore properties with the ObsoleteAttribute (default: false).
         /// </summary>
+        [ArgumentFormat("/IgnoreObsoleteProperties:{value}")]
         public virtual bool? IgnoreObsoleteProperties { get; internal set; }
         /// <summary>
         ///   The output file path (optional).
         /// </summary>
+        [ArgumentFormat("/Output:{value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   Specifies the output schema type, ignored when UseDocumentProvider is enabled (Swagger2|OpenApi3, default: Swagger2).
         /// </summary>
+        [ArgumentFormat("/OutputType:{value}")]
         public virtual SchemaType OutputType { get; internal set; }
         /// <summary>
         ///   The path or paths to the .NET assemblies (comma separated).
         /// </summary>
+        [ArgumentFormat("/Assembly:{value}")]
         public virtual IReadOnlyList<string> Assembly => AssemblyInternal.AsReadOnly();
         internal List<string> AssemblyInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The path to the assembly App.config or Web.config (optional).
         /// </summary>
+        [ArgumentFormat("/AssemblyConfig:{value}")]
         public virtual string AssemblyConfig { get; internal set; }
         /// <summary>
         ///   The paths to search for referenced assembly files (comma separated).
         /// </summary>
+        [ArgumentFormat("/ReferencePaths:{value}")]
         public virtual IReadOnlyList<string> ReferencePaths => ReferencePathsInternal.AsReadOnly();
         internal List<string> ReferencePathsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Determines if local Nuget's cache folder should be put in the ReferencePaths by default
         /// </summary>
+        [ArgumentFormat("/UseNuGetCache:{value}")]
         public virtual bool? UseNuGetCache { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -2809,164 +2863,203 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available (ASP.NET Core 2.0+), default: true).
         /// </summary>
+        [ArgumentFormat("/AllowNullableBodyParameters:{value}")]
         public virtual bool? AllowNullableBodyParameters { get; internal set; }
         /// <summary>
         ///   Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).
         /// </summary>
+        [ArgumentFormat("/AllowReferencesWithProperties:{value}")]
         public virtual bool? AllowReferencesWithProperties { get; internal set; }
         /// <summary>
         ///   Sets the ASPNETCORE_ENVIRONMENT if provided (default: empty).
         /// </summary>
+        [ArgumentFormat("/AspNetCoreEnvironment:{value}")]
         public virtual string AspNetCoreEnvironment { get; internal set; }
         /// <summary>
         ///   DEPRECATED: The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/ContractResolver:{value}")]
         public virtual string ContractResolver { get; internal set; }
         /// <summary>
         ///   The CreateWebHostBuilder method in the form 'assemblyName:fullTypeName.methodName' or 'fullTypeName.methodName'.
         /// </summary>
+        [ArgumentFormat("/CreateWebHostBuilderMethod:{value}")]
         public virtual string CreateWebHostBuilderMethod { get; internal set; }
         /// <summary>
         ///   The default reference type null handling of dictionary value types (NotNull (default) or Null).
         /// </summary>
+        [ArgumentFormat("/DefaultDictionaryValueReferenceTypeNullHandling:{value}")]
         public virtual ReferenceTypeNullHandling DefaultDictionaryValueReferenceTypeNullHandling { get; internal set; }
         /// <summary>
         ///   The default enum handling ('String' or 'Integer'), default: Integer.
         /// </summary>
+        [ArgumentFormat("/DefaultEnumHandling:{value}")]
         public virtual EnumHandling DefaultEnumHandling { get; internal set; }
         /// <summary>
         ///   The default property name handling ('Default' or 'CamelCase').
         /// </summary>
+        [ArgumentFormat("/DefaultPropertyNameHandling:{value}")]
         public virtual PropertyNameHandling DefaultPropertyNameHandling { get; internal set; }
         /// <summary>
         ///   The default reference type null handling (Null (default) or NotNull).
         /// </summary>
+        [ArgumentFormat("/DefaultReferenceTypeNullHandling:{value}")]
         public virtual ReferenceTypeNullHandling DefaultReferenceTypeNullHandling { get; internal set; }
         /// <summary>
         ///   The default response reference type null handling (default: NotNull (default) or Null).
         /// </summary>
+        [ArgumentFormat("/DefaultResponseReferenceTypeNullHandling:{value}")]
         public virtual ReferenceTypeNullHandling DefaultResponseReferenceTypeNullHandling { get; internal set; }
         /// <summary>
         ///   The document name to use in SwaggerDocumentProvider (default: v1).
         /// </summary>
+        [ArgumentFormat("/DocumentName:{value}")]
         public virtual string DocumentName { get; internal set; }
         /// <summary>
         ///   The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/DocumentProcessors:{value}")]
         public virtual IReadOnlyList<string> DocumentProcessors => DocumentProcessorsInternal.AsReadOnly();
         internal List<string> DocumentProcessorsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies the Swagger document template (may be a path or JSON, default: none).
         /// </summary>
+        [ArgumentFormat("/DocumentTemplate:{value}")]
         public virtual string DocumentTemplate { get; internal set; }
         /// <summary>
         ///   The excluded type names (same as JsonSchemaIgnoreAttribute).
         /// </summary>
+        [ArgumentFormat("/ExcludedTypeNames:{value}")]
         public virtual IReadOnlyList<string> ExcludedTypeNames => ExcludedTypeNamesInternal.AsReadOnly();
         internal List<string> ExcludedTypeNamesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Flatten the inheritance hierarchy instead of using allOf to describe inheritance (default: false).
         /// </summary>
+        [ArgumentFormat("/FlattenInheritanceHierarchy:{value}")]
         public virtual bool? FlattenInheritanceHierarchy { get; internal set; }
         /// <summary>
         ///   Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateAbstractProperties:{value}")]
         public virtual bool? GenerateAbstractProperties { get; internal set; }
         /// <summary>
         ///   Generate the x-abstract flag on schemas (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateAbstractSchemas:{value}")]
         public virtual bool? GenerateAbstractSchemas { get; internal set; }
         /// <summary>
         ///   Generate a description with number to enum name mappings (for integer enums only, default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateEnumMappingDescription:{value}")]
         public virtual bool? GenerateEnumMappingDescription { get; internal set; }
         /// <summary>
         ///   Generate schemas for types in KnownTypeAttribute attributes (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateKnownTypes:{value}")]
         public virtual bool? GenerateKnownTypes { get; internal set; }
         /// <summary>
         ///   Generate xmlObject representation for definitions (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateXmlObjects:{value}")]
         public virtual bool? GenerateXmlObjects { get; internal set; }
         /// <summary>
         ///   Ignore properties with the ObsoleteAttribute (default: false).
         /// </summary>
+        [ArgumentFormat("/IgnoreObsoleteProperties:{value}")]
         public virtual bool? IgnoreObsoleteProperties { get; internal set; }
         /// <summary>
         ///   Specify the description of the Swagger specification (ignored when DocumentTemplate is set).
         /// </summary>
+        [ArgumentFormat("/InfoDescription:{value}")]
         public virtual string InfoDescription { get; internal set; }
         /// <summary>
         ///   Specify the title of the Swagger specification (ignored when DocumentTemplate is set).
         /// </summary>
+        [ArgumentFormat("/InfoTitle:{value}")]
         public virtual string InfoTitle { get; internal set; }
         /// <summary>
         ///   Specify the version of the Swagger specification (default: 1.0.0, ignored when DocumentTemplate is set).
         /// </summary>
+        [ArgumentFormat("/InfoVersion:{value}")]
         public virtual string InfoVersion { get; internal set; }
         /// <summary>
         ///   The operation processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/OperationProcessors:{value}")]
         public virtual IReadOnlyList<string> OperationProcessors => OperationProcessorsInternal.AsReadOnly();
         internal List<string> OperationProcessorsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The custom ISchemaNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/SchemaNameGenerator:{value}")]
         public virtual string SchemaNameGenerator { get; internal set; }
         /// <summary>
         ///   The custom JsonSerializerSettings implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/SerializerSettings:{value}")]
         public virtual string SerializerSettings { get; internal set; }
         /// <summary>
         ///   The basePath of the Swagger specification (optional).
         /// </summary>
+        [ArgumentFormat("/ServiceBasePath:{value}")]
         public virtual string ServiceBasePath { get; internal set; }
         /// <summary>
         ///   Overrides the service host of the web service (optional, use '.' to remove the hostname).
         /// </summary>
+        [ArgumentFormat("/ServiceHost:{value}")]
         public virtual string ServiceHost { get; internal set; }
         /// <summary>
         ///   Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').
         /// </summary>
+        [ArgumentFormat("/ServiceSchemes:{value}")]
         public virtual IReadOnlyList<string> ServiceSchemes => ServiceSchemesInternal.AsReadOnly();
         internal List<string> ServiceSchemesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The Startup class type in the form 'assemblyName:fullTypeName' or 'fullTypeName'.
         /// </summary>
+        [ArgumentFormat("/Startup:{value}")]
         public virtual string Startup { get; internal set; }
         /// <summary>
         ///   The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/TypeNameGenerator:{value}")]
         public virtual string TypeNameGenerator { get; internal set; }
         /// <summary>
         ///   Generate document using SwaggerDocumentProvider (configuration from AddOpenApiDocument()/AddSwaggerDocument(), most CLI settings will be ignored).
         /// </summary>
+        [ArgumentFormat("/UseDocumentProvider:{value}")]
         public virtual bool? UseDocumentProvider { get; internal set; }
         /// <summary>
         ///   The output file path (optional).
         /// </summary>
+        [ArgumentFormat("/Output:{value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   Specifies the output schema type, ignored when UseDocumentProvider is enabled (Swagger2|OpenApi3, default: Swagger2).
         /// </summary>
+        [ArgumentFormat("/OutputType:{value}")]
         public virtual SchemaType OutputType { get; internal set; }
         /// <summary>
         ///   The path or paths to the .NET assemblies (comma separated).
         /// </summary>
+        [ArgumentFormat("/Assembly:{value}")]
         public virtual IReadOnlyList<string> Assembly => AssemblyInternal.AsReadOnly();
         internal List<string> AssemblyInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The path to the assembly App.config or Web.config (optional).
         /// </summary>
+        [ArgumentFormat("/AssemblyConfig:{value}")]
         public virtual string AssemblyConfig { get; internal set; }
         /// <summary>
         ///   The paths to search for referenced assembly files (comma separated).
         /// </summary>
+        [ArgumentFormat("/ReferencePaths:{value}")]
         public virtual IReadOnlyList<string> ReferencePaths => ReferencePathsInternal.AsReadOnly();
         internal List<string> ReferencePathsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Determines if local Nuget's cache folder should be put in the ReferencePaths by default
         /// </summary>
+        [ArgumentFormat("/UseNuGetCache:{value}")]
         public virtual bool? UseNuGetCache { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3033,194 +3126,240 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Specifies whether to add path parameters which are missing in the action method (default: true).
         /// </summary>
+        [ArgumentFormat("/AddMissingPathParameters:{value}")]
         public virtual bool? AddMissingPathParameters { get; internal set; }
         /// <summary>
         ///   Specifies whether the controllers are hosted by ASP.NET Core.
         /// </summary>
+        [ArgumentFormat("/AspNetCore:{value}")]
         public virtual bool? AspNetCore { get; internal set; }
         /// <summary>
         ///   The Web API controller full class name or empty to load all controllers from the assembly.
         /// </summary>
+        [ArgumentFormat("/Controller:{value}")]
         public virtual string Controller { get; internal set; }
         /// <summary>
         ///   The Web API controller full class names or empty to load all controllers from the assembly (comma separated).
         /// </summary>
+        [ArgumentFormat("/Controllers:{value}")]
         public virtual IReadOnlyList<string> Controllers => ControllersInternal.AsReadOnly();
         internal List<string> ControllersInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The Web API default URL template (default for Web API: 'api/{controller}/{id}'; for MVC projects: '{controller}/{action}/{id?}').
         /// </summary>
+        [ArgumentFormat("/DefaultUrlTemplate:{value}")]
         public virtual string DefaultUrlTemplate { get; internal set; }
         /// <summary>
         ///   The included API versions used by the ApiVersionProcessor (comma separated, default: empty = all).
         /// </summary>
+        [ArgumentFormat("/IncludedVersions:{value}")]
         public virtual IReadOnlyList<string> IncludedVersions => IncludedVersionsInternal.AsReadOnly();
         internal List<string> IncludedVersionsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies whether to resolve MvcJsonOptions to infer serializer settings (recommended, default: false, only available when IsAspNetCore is set).
         /// </summary>
+        [ArgumentFormat("/ResolveJsonOptions:{value}")]
         public virtual bool? ResolveJsonOptions { get; internal set; }
         /// <summary>
         ///   Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available (ASP.NET Core 2.0+), default: true).
         /// </summary>
+        [ArgumentFormat("/AllowNullableBodyParameters:{value}")]
         public virtual bool? AllowNullableBodyParameters { get; internal set; }
         /// <summary>
         ///   Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).
         /// </summary>
+        [ArgumentFormat("/AllowReferencesWithProperties:{value}")]
         public virtual bool? AllowReferencesWithProperties { get; internal set; }
         /// <summary>
         ///   Sets the ASPNETCORE_ENVIRONMENT if provided (default: empty).
         /// </summary>
+        [ArgumentFormat("/AspNetCoreEnvironment:{value}")]
         public virtual string AspNetCoreEnvironment { get; internal set; }
         /// <summary>
         ///   DEPRECATED: The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/ContractResolver:{value}")]
         public virtual string ContractResolver { get; internal set; }
         /// <summary>
         ///   The CreateWebHostBuilder method in the form 'assemblyName:fullTypeName.methodName' or 'fullTypeName.methodName'.
         /// </summary>
+        [ArgumentFormat("/CreateWebHostBuilderMethod:{value}")]
         public virtual string CreateWebHostBuilderMethod { get; internal set; }
         /// <summary>
         ///   The default reference type null handling of dictionary value types (NotNull (default) or Null).
         /// </summary>
+        [ArgumentFormat("/DefaultDictionaryValueReferenceTypeNullHandling:{value}")]
         public virtual ReferenceTypeNullHandling DefaultDictionaryValueReferenceTypeNullHandling { get; internal set; }
         /// <summary>
         ///   The default enum handling ('String' or 'Integer'), default: Integer.
         /// </summary>
+        [ArgumentFormat("/DefaultEnumHandling:{value}")]
         public virtual EnumHandling DefaultEnumHandling { get; internal set; }
         /// <summary>
         ///   The default property name handling ('Default' or 'CamelCase').
         /// </summary>
+        [ArgumentFormat("/DefaultPropertyNameHandling:{value}")]
         public virtual PropertyNameHandling DefaultPropertyNameHandling { get; internal set; }
         /// <summary>
         ///   The default reference type null handling (Null (default) or NotNull).
         /// </summary>
+        [ArgumentFormat("/DefaultReferenceTypeNullHandling:{value}")]
         public virtual ReferenceTypeNullHandling DefaultReferenceTypeNullHandling { get; internal set; }
         /// <summary>
         ///   The default response reference type null handling (default: NotNull (default) or Null).
         /// </summary>
+        [ArgumentFormat("/DefaultResponseReferenceTypeNullHandling:{value}")]
         public virtual ReferenceTypeNullHandling DefaultResponseReferenceTypeNullHandling { get; internal set; }
         /// <summary>
         ///   The document name to use in SwaggerDocumentProvider (default: v1).
         /// </summary>
+        [ArgumentFormat("/DocumentName:{value}")]
         public virtual string DocumentName { get; internal set; }
         /// <summary>
         ///   The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/DocumentProcessors:{value}")]
         public virtual IReadOnlyList<string> DocumentProcessors => DocumentProcessorsInternal.AsReadOnly();
         internal List<string> DocumentProcessorsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies the Swagger document template (may be a path or JSON, default: none).
         /// </summary>
+        [ArgumentFormat("/DocumentTemplate:{value}")]
         public virtual string DocumentTemplate { get; internal set; }
         /// <summary>
         ///   The excluded type names (same as JsonSchemaIgnoreAttribute).
         /// </summary>
+        [ArgumentFormat("/ExcludedTypeNames:{value}")]
         public virtual IReadOnlyList<string> ExcludedTypeNames => ExcludedTypeNamesInternal.AsReadOnly();
         internal List<string> ExcludedTypeNamesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Flatten the inheritance hierarchy instead of using allOf to describe inheritance (default: false).
         /// </summary>
+        [ArgumentFormat("/FlattenInheritanceHierarchy:{value}")]
         public virtual bool? FlattenInheritanceHierarchy { get; internal set; }
         /// <summary>
         ///   Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateAbstractProperties:{value}")]
         public virtual bool? GenerateAbstractProperties { get; internal set; }
         /// <summary>
         ///   Generate the x-abstract flag on schemas (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateAbstractSchemas:{value}")]
         public virtual bool? GenerateAbstractSchemas { get; internal set; }
         /// <summary>
         ///   Generate a description with number to enum name mappings (for integer enums only, default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateEnumMappingDescription:{value}")]
         public virtual bool? GenerateEnumMappingDescription { get; internal set; }
         /// <summary>
         ///   Generate schemas for types in KnownTypeAttribute attributes (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateKnownTypes:{value}")]
         public virtual bool? GenerateKnownTypes { get; internal set; }
         /// <summary>
         ///   Generate xmlObject representation for definitions (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateXmlObjects:{value}")]
         public virtual bool? GenerateXmlObjects { get; internal set; }
         /// <summary>
         ///   Ignore properties with the ObsoleteAttribute (default: false).
         /// </summary>
+        [ArgumentFormat("/IgnoreObsoleteProperties:{value}")]
         public virtual bool? IgnoreObsoleteProperties { get; internal set; }
         /// <summary>
         ///   Specify the description of the Swagger specification (ignored when DocumentTemplate is set).
         /// </summary>
+        [ArgumentFormat("/InfoDescription:{value}")]
         public virtual string InfoDescription { get; internal set; }
         /// <summary>
         ///   Specify the title of the Swagger specification (ignored when DocumentTemplate is set).
         /// </summary>
+        [ArgumentFormat("/InfoTitle:{value}")]
         public virtual string InfoTitle { get; internal set; }
         /// <summary>
         ///   Specify the version of the Swagger specification (default: 1.0.0, ignored when DocumentTemplate is set).
         /// </summary>
+        [ArgumentFormat("/InfoVersion:{value}")]
         public virtual string InfoVersion { get; internal set; }
         /// <summary>
         ///   The operation processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/OperationProcessors:{value}")]
         public virtual IReadOnlyList<string> OperationProcessors => OperationProcessorsInternal.AsReadOnly();
         internal List<string> OperationProcessorsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The custom ISchemaNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/SchemaNameGenerator:{value}")]
         public virtual string SchemaNameGenerator { get; internal set; }
         /// <summary>
         ///   The custom JsonSerializerSettings implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/SerializerSettings:{value}")]
         public virtual string SerializerSettings { get; internal set; }
         /// <summary>
         ///   The basePath of the Swagger specification (optional).
         /// </summary>
+        [ArgumentFormat("/ServiceBasePath:{value}")]
         public virtual string ServiceBasePath { get; internal set; }
         /// <summary>
         ///   Overrides the service host of the web service (optional, use '.' to remove the hostname).
         /// </summary>
+        [ArgumentFormat("/ServiceHost:{value}")]
         public virtual string ServiceHost { get; internal set; }
         /// <summary>
         ///   Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').
         /// </summary>
+        [ArgumentFormat("/ServiceSchemes:{value}")]
         public virtual IReadOnlyList<string> ServiceSchemes => ServiceSchemesInternal.AsReadOnly();
         internal List<string> ServiceSchemesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The Startup class type in the form 'assemblyName:fullTypeName' or 'fullTypeName'.
         /// </summary>
+        [ArgumentFormat("/Startup:{value}")]
         public virtual string Startup { get; internal set; }
         /// <summary>
         ///   The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/TypeNameGenerator:{value}")]
         public virtual string TypeNameGenerator { get; internal set; }
         /// <summary>
         ///   Generate document using SwaggerDocumentProvider (configuration from AddOpenApiDocument()/AddSwaggerDocument(), most CLI settings will be ignored).
         /// </summary>
+        [ArgumentFormat("/UseDocumentProvider:{value}")]
         public virtual bool? UseDocumentProvider { get; internal set; }
         /// <summary>
         ///   The output file path (optional).
         /// </summary>
+        [ArgumentFormat("/Output:{value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   Specifies the output schema type, ignored when UseDocumentProvider is enabled (Swagger2|OpenApi3, default: Swagger2).
         /// </summary>
+        [ArgumentFormat("/OutputType:{value}")]
         public virtual SchemaType OutputType { get; internal set; }
         /// <summary>
         ///   The path or paths to the .NET assemblies (comma separated).
         /// </summary>
+        [ArgumentFormat("/Assembly:{value}")]
         public virtual IReadOnlyList<string> Assembly => AssemblyInternal.AsReadOnly();
         internal List<string> AssemblyInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The path to the assembly App.config or Web.config (optional).
         /// </summary>
+        [ArgumentFormat("/AssemblyConfig:{value}")]
         public virtual string AssemblyConfig { get; internal set; }
         /// <summary>
         ///   The paths to search for referenced assembly files (comma separated).
         /// </summary>
+        [ArgumentFormat("/ReferencePaths:{value}")]
         public virtual IReadOnlyList<string> ReferencePaths => ReferencePathsInternal.AsReadOnly();
         internal List<string> ReferencePathsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Determines if local Nuget's cache folder should be put in the ReferencePaths by default
         /// </summary>
+        [ArgumentFormat("/UseNuGetCache:{value}")]
         public virtual bool? UseNuGetCache { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3294,164 +3433,203 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available (ASP.NET Core 2.0+), default: true).
         /// </summary>
+        [ArgumentFormat("/AllowNullableBodyParameters:{value}")]
         public virtual bool? AllowNullableBodyParameters { get; internal set; }
         /// <summary>
         ///   Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).
         /// </summary>
+        [ArgumentFormat("/AllowReferencesWithProperties:{value}")]
         public virtual bool? AllowReferencesWithProperties { get; internal set; }
         /// <summary>
         ///   Sets the ASPNETCORE_ENVIRONMENT if provided (default: empty).
         /// </summary>
+        [ArgumentFormat("/AspNetCoreEnvironment:{value}")]
         public virtual string AspNetCoreEnvironment { get; internal set; }
         /// <summary>
         ///   DEPRECATED: The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/ContractResolver:{value}")]
         public virtual string ContractResolver { get; internal set; }
         /// <summary>
         ///   The CreateWebHostBuilder method in the form 'assemblyName:fullTypeName.methodName' or 'fullTypeName.methodName'.
         /// </summary>
+        [ArgumentFormat("/CreateWebHostBuilderMethod:{value}")]
         public virtual string CreateWebHostBuilderMethod { get; internal set; }
         /// <summary>
         ///   The default reference type null handling of dictionary value types (NotNull (default) or Null).
         /// </summary>
+        [ArgumentFormat("/DefaultDictionaryValueReferenceTypeNullHandling:{value}")]
         public virtual ReferenceTypeNullHandling DefaultDictionaryValueReferenceTypeNullHandling { get; internal set; }
         /// <summary>
         ///   The default enum handling ('String' or 'Integer'), default: Integer.
         /// </summary>
+        [ArgumentFormat("/DefaultEnumHandling:{value}")]
         public virtual EnumHandling DefaultEnumHandling { get; internal set; }
         /// <summary>
         ///   The default property name handling ('Default' or 'CamelCase').
         /// </summary>
+        [ArgumentFormat("/DefaultPropertyNameHandling:{value}")]
         public virtual PropertyNameHandling DefaultPropertyNameHandling { get; internal set; }
         /// <summary>
         ///   The default reference type null handling (Null (default) or NotNull).
         /// </summary>
+        [ArgumentFormat("/DefaultReferenceTypeNullHandling:{value}")]
         public virtual ReferenceTypeNullHandling DefaultReferenceTypeNullHandling { get; internal set; }
         /// <summary>
         ///   The default response reference type null handling (default: NotNull (default) or Null).
         /// </summary>
+        [ArgumentFormat("/DefaultResponseReferenceTypeNullHandling:{value}")]
         public virtual ReferenceTypeNullHandling DefaultResponseReferenceTypeNullHandling { get; internal set; }
         /// <summary>
         ///   The document name to use in SwaggerDocumentProvider (default: v1).
         /// </summary>
+        [ArgumentFormat("/DocumentName:{value}")]
         public virtual string DocumentName { get; internal set; }
         /// <summary>
         ///   The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/DocumentProcessors:{value}")]
         public virtual IReadOnlyList<string> DocumentProcessors => DocumentProcessorsInternal.AsReadOnly();
         internal List<string> DocumentProcessorsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies the Swagger document template (may be a path or JSON, default: none).
         /// </summary>
+        [ArgumentFormat("/DocumentTemplate:{value}")]
         public virtual string DocumentTemplate { get; internal set; }
         /// <summary>
         ///   The excluded type names (same as JsonSchemaIgnoreAttribute).
         /// </summary>
+        [ArgumentFormat("/ExcludedTypeNames:{value}")]
         public virtual IReadOnlyList<string> ExcludedTypeNames => ExcludedTypeNamesInternal.AsReadOnly();
         internal List<string> ExcludedTypeNamesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Flatten the inheritance hierarchy instead of using allOf to describe inheritance (default: false).
         /// </summary>
+        [ArgumentFormat("/FlattenInheritanceHierarchy:{value}")]
         public virtual bool? FlattenInheritanceHierarchy { get; internal set; }
         /// <summary>
         ///   Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateAbstractProperties:{value}")]
         public virtual bool? GenerateAbstractProperties { get; internal set; }
         /// <summary>
         ///   Generate the x-abstract flag on schemas (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateAbstractSchemas:{value}")]
         public virtual bool? GenerateAbstractSchemas { get; internal set; }
         /// <summary>
         ///   Generate a description with number to enum name mappings (for integer enums only, default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateEnumMappingDescription:{value}")]
         public virtual bool? GenerateEnumMappingDescription { get; internal set; }
         /// <summary>
         ///   Generate schemas for types in KnownTypeAttribute attributes (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateKnownTypes:{value}")]
         public virtual bool? GenerateKnownTypes { get; internal set; }
         /// <summary>
         ///   Generate xmlObject representation for definitions (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateXmlObjects:{value}")]
         public virtual bool? GenerateXmlObjects { get; internal set; }
         /// <summary>
         ///   Ignore properties with the ObsoleteAttribute (default: false).
         /// </summary>
+        [ArgumentFormat("/IgnoreObsoleteProperties:{value}")]
         public virtual bool? IgnoreObsoleteProperties { get; internal set; }
         /// <summary>
         ///   Specify the description of the Swagger specification (ignored when DocumentTemplate is set).
         /// </summary>
+        [ArgumentFormat("/InfoDescription:{value}")]
         public virtual string InfoDescription { get; internal set; }
         /// <summary>
         ///   Specify the title of the Swagger specification (ignored when DocumentTemplate is set).
         /// </summary>
+        [ArgumentFormat("/InfoTitle:{value}")]
         public virtual string InfoTitle { get; internal set; }
         /// <summary>
         ///   Specify the version of the Swagger specification (default: 1.0.0, ignored when DocumentTemplate is set).
         /// </summary>
+        [ArgumentFormat("/InfoVersion:{value}")]
         public virtual string InfoVersion { get; internal set; }
         /// <summary>
         ///   The operation processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/OperationProcessors:{value}")]
         public virtual IReadOnlyList<string> OperationProcessors => OperationProcessorsInternal.AsReadOnly();
         internal List<string> OperationProcessorsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The custom ISchemaNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/SchemaNameGenerator:{value}")]
         public virtual string SchemaNameGenerator { get; internal set; }
         /// <summary>
         ///   The custom JsonSerializerSettings implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/SerializerSettings:{value}")]
         public virtual string SerializerSettings { get; internal set; }
         /// <summary>
         ///   The basePath of the Swagger specification (optional).
         /// </summary>
+        [ArgumentFormat("/ServiceBasePath:{value}")]
         public virtual string ServiceBasePath { get; internal set; }
         /// <summary>
         ///   Overrides the service host of the web service (optional, use '.' to remove the hostname).
         /// </summary>
+        [ArgumentFormat("/ServiceHost:{value}")]
         public virtual string ServiceHost { get; internal set; }
         /// <summary>
         ///   Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').
         /// </summary>
+        [ArgumentFormat("/ServiceSchemes:{value}")]
         public virtual IReadOnlyList<string> ServiceSchemes => ServiceSchemesInternal.AsReadOnly();
         internal List<string> ServiceSchemesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The Startup class type in the form 'assemblyName:fullTypeName' or 'fullTypeName'.
         /// </summary>
+        [ArgumentFormat("/Startup:{value}")]
         public virtual string Startup { get; internal set; }
         /// <summary>
         ///   The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/TypeNameGenerator:{value}")]
         public virtual string TypeNameGenerator { get; internal set; }
         /// <summary>
         ///   Generate document using SwaggerDocumentProvider (configuration from AddOpenApiDocument()/AddSwaggerDocument(), most CLI settings will be ignored).
         /// </summary>
+        [ArgumentFormat("/UseDocumentProvider:{value}")]
         public virtual bool? UseDocumentProvider { get; internal set; }
         /// <summary>
         ///   The output file path (optional).
         /// </summary>
+        [ArgumentFormat("/Output:{value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   Specifies the output schema type, ignored when UseDocumentProvider is enabled (Swagger2|OpenApi3, default: Swagger2).
         /// </summary>
+        [ArgumentFormat("/OutputType:{value}")]
         public virtual SchemaType OutputType { get; internal set; }
         /// <summary>
         ///   The path or paths to the .NET assemblies (comma separated).
         /// </summary>
+        [ArgumentFormat("/Assembly:{value}")]
         public virtual IReadOnlyList<string> Assembly => AssemblyInternal.AsReadOnly();
         internal List<string> AssemblyInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The path to the assembly App.config or Web.config (optional).
         /// </summary>
+        [ArgumentFormat("/AssemblyConfig:{value}")]
         public virtual string AssemblyConfig { get; internal set; }
         /// <summary>
         ///   The paths to search for referenced assembly files (comma separated).
         /// </summary>
+        [ArgumentFormat("/ReferencePaths:{value}")]
         public virtual IReadOnlyList<string> ReferencePaths => ReferencePathsInternal.AsReadOnly();
         internal List<string> ReferencePathsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Determines if local Nuget's cache folder should be put in the ReferencePaths by default
         /// </summary>
+        [ArgumentFormat("/UseNuGetCache:{value}")]
         public virtual bool? UseNuGetCache { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3518,205 +3696,254 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   The ASP.NET Core API Explorer group names to include (comma separated, default: empty = all).
         /// </summary>
+        [ArgumentFormat("/ApiGroupNames:{value}")]
         public virtual IReadOnlyList<string> ApiGroupNames => ApiGroupNamesInternal.AsReadOnly();
         internal List<string> ApiGroupNamesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The configuration to use.
         /// </summary>
+        [ArgumentFormat("/Configuration:{value}")]
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   The MSBuild project extensions path. Defaults to "obj".
         /// </summary>
+        [ArgumentFormat("/MSBuildProjectExtensionsPath:{value}")]
         public virtual string MSBuildProjectExtensionsPath { get; internal set; }
         /// <summary>
         ///   Don't build the project. Only use this when the build is up-to-date.
         /// </summary>
+        [ArgumentFormat("/NoBuild:{value}")]
         public virtual bool? NoBuild { get; internal set; }
         /// <summary>
         ///   The working directory to use.
         /// </summary>
+        [ArgumentFormat("/WorkingDirectory:{value}")]
         public virtual string NSwagWorkingDirectory { get; internal set; }
         /// <summary>
         ///   The project to use.
         /// </summary>
+        [ArgumentFormat("/Project:{value}")]
         public virtual string Project { get; internal set; }
         /// <summary>
         ///   Parameters without default value are always required(i.e. api explorer info and only optional when default is set, legacy, default: false).
         /// </summary>
+        [ArgumentFormat("/RequireParametersWithoutDefault:{value}")]
         public virtual bool? RequireParametersWithoutDefault { get; internal set; }
         /// <summary>
         ///   The runtime to use.
         /// </summary>
+        [ArgumentFormat("/Runtime:{value}")]
         public virtual string Runtime { get; internal set; }
         /// <summary>
         ///   The target framework to use.
         /// </summary>
+        [ArgumentFormat("/TargetFramework:{value}")]
         public virtual string TargetFramework { get; internal set; }
         /// <summary>
         ///   Print verbose output.
         /// </summary>
+        [ArgumentFormat("/Verbose:{value}")]
         public virtual bool? Verbose { get; internal set; }
         /// <summary>
         ///   Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available (ASP.NET Core 2.0+), default: true).
         /// </summary>
+        [ArgumentFormat("/AllowNullableBodyParameters:{value}")]
         public virtual bool? AllowNullableBodyParameters { get; internal set; }
         /// <summary>
         ///   Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).
         /// </summary>
+        [ArgumentFormat("/AllowReferencesWithProperties:{value}")]
         public virtual bool? AllowReferencesWithProperties { get; internal set; }
         /// <summary>
         ///   Sets the ASPNETCORE_ENVIRONMENT if provided (default: empty).
         /// </summary>
+        [ArgumentFormat("/AspNetCoreEnvironment:{value}")]
         public virtual string AspNetCoreEnvironment { get; internal set; }
         /// <summary>
         ///   DEPRECATED: The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/ContractResolver:{value}")]
         public virtual string ContractResolver { get; internal set; }
         /// <summary>
         ///   The CreateWebHostBuilder method in the form 'assemblyName:fullTypeName.methodName' or 'fullTypeName.methodName'.
         /// </summary>
+        [ArgumentFormat("/CreateWebHostBuilderMethod:{value}")]
         public virtual string CreateWebHostBuilderMethod { get; internal set; }
         /// <summary>
         ///   The default reference type null handling of dictionary value types (NotNull (default) or Null).
         /// </summary>
+        [ArgumentFormat("/DefaultDictionaryValueReferenceTypeNullHandling:{value}")]
         public virtual ReferenceTypeNullHandling DefaultDictionaryValueReferenceTypeNullHandling { get; internal set; }
         /// <summary>
         ///   The default enum handling ('String' or 'Integer'), default: Integer.
         /// </summary>
+        [ArgumentFormat("/DefaultEnumHandling:{value}")]
         public virtual EnumHandling DefaultEnumHandling { get; internal set; }
         /// <summary>
         ///   The default property name handling ('Default' or 'CamelCase').
         /// </summary>
+        [ArgumentFormat("/DefaultPropertyNameHandling:{value}")]
         public virtual PropertyNameHandling DefaultPropertyNameHandling { get; internal set; }
         /// <summary>
         ///   The default reference type null handling (Null (default) or NotNull).
         /// </summary>
+        [ArgumentFormat("/DefaultReferenceTypeNullHandling:{value}")]
         public virtual ReferenceTypeNullHandling DefaultReferenceTypeNullHandling { get; internal set; }
         /// <summary>
         ///   The default response reference type null handling (default: NotNull (default) or Null).
         /// </summary>
+        [ArgumentFormat("/DefaultResponseReferenceTypeNullHandling:{value}")]
         public virtual ReferenceTypeNullHandling DefaultResponseReferenceTypeNullHandling { get; internal set; }
         /// <summary>
         ///   The document name to use in SwaggerDocumentProvider (default: v1).
         /// </summary>
+        [ArgumentFormat("/DocumentName:{value}")]
         public virtual string DocumentName { get; internal set; }
         /// <summary>
         ///   The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/DocumentProcessors:{value}")]
         public virtual IReadOnlyList<string> DocumentProcessors => DocumentProcessorsInternal.AsReadOnly();
         internal List<string> DocumentProcessorsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies the Swagger document template (may be a path or JSON, default: none).
         /// </summary>
+        [ArgumentFormat("/DocumentTemplate:{value}")]
         public virtual string DocumentTemplate { get; internal set; }
         /// <summary>
         ///   The excluded type names (same as JsonSchemaIgnoreAttribute).
         /// </summary>
+        [ArgumentFormat("/ExcludedTypeNames:{value}")]
         public virtual IReadOnlyList<string> ExcludedTypeNames => ExcludedTypeNamesInternal.AsReadOnly();
         internal List<string> ExcludedTypeNamesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Flatten the inheritance hierarchy instead of using allOf to describe inheritance (default: false).
         /// </summary>
+        [ArgumentFormat("/FlattenInheritanceHierarchy:{value}")]
         public virtual bool? FlattenInheritanceHierarchy { get; internal set; }
         /// <summary>
         ///   Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateAbstractProperties:{value}")]
         public virtual bool? GenerateAbstractProperties { get; internal set; }
         /// <summary>
         ///   Generate the x-abstract flag on schemas (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateAbstractSchemas:{value}")]
         public virtual bool? GenerateAbstractSchemas { get; internal set; }
         /// <summary>
         ///   Generate a description with number to enum name mappings (for integer enums only, default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateEnumMappingDescription:{value}")]
         public virtual bool? GenerateEnumMappingDescription { get; internal set; }
         /// <summary>
         ///   Generate schemas for types in KnownTypeAttribute attributes (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateKnownTypes:{value}")]
         public virtual bool? GenerateKnownTypes { get; internal set; }
         /// <summary>
         ///   Generate xmlObject representation for definitions (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateXmlObjects:{value}")]
         public virtual bool? GenerateXmlObjects { get; internal set; }
         /// <summary>
         ///   Ignore properties with the ObsoleteAttribute (default: false).
         /// </summary>
+        [ArgumentFormat("/IgnoreObsoleteProperties:{value}")]
         public virtual bool? IgnoreObsoleteProperties { get; internal set; }
         /// <summary>
         ///   Specify the description of the Swagger specification (ignored when DocumentTemplate is set).
         /// </summary>
+        [ArgumentFormat("/InfoDescription:{value}")]
         public virtual string InfoDescription { get; internal set; }
         /// <summary>
         ///   Specify the title of the Swagger specification (ignored when DocumentTemplate is set).
         /// </summary>
+        [ArgumentFormat("/InfoTitle:{value}")]
         public virtual string InfoTitle { get; internal set; }
         /// <summary>
         ///   Specify the version of the Swagger specification (default: 1.0.0, ignored when DocumentTemplate is set).
         /// </summary>
+        [ArgumentFormat("/InfoVersion:{value}")]
         public virtual string InfoVersion { get; internal set; }
         /// <summary>
         ///   The operation processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/OperationProcessors:{value}")]
         public virtual IReadOnlyList<string> OperationProcessors => OperationProcessorsInternal.AsReadOnly();
         internal List<string> OperationProcessorsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The custom ISchemaNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/SchemaNameGenerator:{value}")]
         public virtual string SchemaNameGenerator { get; internal set; }
         /// <summary>
         ///   The custom JsonSerializerSettings implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/SerializerSettings:{value}")]
         public virtual string SerializerSettings { get; internal set; }
         /// <summary>
         ///   The basePath of the Swagger specification (optional).
         /// </summary>
+        [ArgumentFormat("/ServiceBasePath:{value}")]
         public virtual string ServiceBasePath { get; internal set; }
         /// <summary>
         ///   Overrides the service host of the web service (optional, use '.' to remove the hostname).
         /// </summary>
+        [ArgumentFormat("/ServiceHost:{value}")]
         public virtual string ServiceHost { get; internal set; }
         /// <summary>
         ///   Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').
         /// </summary>
+        [ArgumentFormat("/ServiceSchemes:{value}")]
         public virtual IReadOnlyList<string> ServiceSchemes => ServiceSchemesInternal.AsReadOnly();
         internal List<string> ServiceSchemesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The Startup class type in the form 'assemblyName:fullTypeName' or 'fullTypeName'.
         /// </summary>
+        [ArgumentFormat("/Startup:{value}")]
         public virtual string Startup { get; internal set; }
         /// <summary>
         ///   The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/TypeNameGenerator:{value}")]
         public virtual string TypeNameGenerator { get; internal set; }
         /// <summary>
         ///   Generate document using SwaggerDocumentProvider (configuration from AddOpenApiDocument()/AddSwaggerDocument(), most CLI settings will be ignored).
         /// </summary>
+        [ArgumentFormat("/UseDocumentProvider:{value}")]
         public virtual bool? UseDocumentProvider { get; internal set; }
         /// <summary>
         ///   The output file path (optional).
         /// </summary>
+        [ArgumentFormat("/Output:{value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   Specifies the output schema type, ignored when UseDocumentProvider is enabled (Swagger2|OpenApi3, default: Swagger2).
         /// </summary>
+        [ArgumentFormat("/OutputType:{value}")]
         public virtual SchemaType OutputType { get; internal set; }
         /// <summary>
         ///   The path or paths to the .NET assemblies (comma separated).
         /// </summary>
+        [ArgumentFormat("/Assembly:{value}")]
         public virtual IReadOnlyList<string> Assembly => AssemblyInternal.AsReadOnly();
         internal List<string> AssemblyInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The path to the assembly App.config or Web.config (optional).
         /// </summary>
+        [ArgumentFormat("/AssemblyConfig:{value}")]
         public virtual string AssemblyConfig { get; internal set; }
         /// <summary>
         ///   The paths to search for referenced assembly files (comma separated).
         /// </summary>
+        [ArgumentFormat("/ReferencePaths:{value}")]
         public virtual IReadOnlyList<string> ReferencePaths => ReferencePathsInternal.AsReadOnly();
         internal List<string> ReferencePathsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Determines if local Nuget's cache folder should be put in the ReferencePaths by default
         /// </summary>
+        [ArgumentFormat("/UseNuGetCache:{value}")]
         public virtual bool? UseNuGetCache { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3813,7 +4040,10 @@ namespace Nuke.Common.Tools.NSwag
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
         public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
+        [ArgumentFormat("/Input:{value}")]
         public virtual string Input { get; internal set; }
+        [ArgumentFormat("/Variables:{value}")]
+        [ItemFormat("{key}={value}")]
         public virtual IReadOnlyDictionary<string, object> Variables => VariablesInternal.AsReadOnly();
         internal Dictionary<string,object> VariablesInternal { get; set; } = new Dictionary<string,object>(StringComparer.OrdinalIgnoreCase);
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -3844,59 +4074,73 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   The any .NET type (default: 'object').
         /// </summary>
+        [ArgumentFormat("/AnyType:{value}")]
         public virtual string AnyType { get; internal set; }
         /// <summary>
         ///   The generic array .NET instance type (default: empty = ArrayType).
         /// </summary>
+        [ArgumentFormat("/ArrayInstanceType:{value}")]
         public virtual string ArrayInstanceType { get; internal set; }
         /// <summary>
         ///   The generic array .NET type (default: 'ObservableCollection').
         /// </summary>
+        [ArgumentFormat("/ArrayType:{value}")]
         public virtual string ArrayType { get; internal set; }
         /// <summary>
         ///   The date time .NET type (default: 'DateTime').
         /// </summary>
+        [ArgumentFormat("/DateTimeType:{value}")]
         public virtual string DateTimeType { get; internal set; }
         /// <summary>
         ///   The generic dictionary .NET instance type (default: empty = DictionaryType).
         /// </summary>
+        [ArgumentFormat("/DictionaryInstanceType:{value}")]
         public virtual string DictionaryInstanceType { get; internal set; }
         /// <summary>
         ///   The generic dictionary .NET type (default: 'Dictionary').
         /// </summary>
+        [ArgumentFormat("/DictionaryType:{value}")]
         public virtual string DictionaryType { get; internal set; }
         /// <summary>
         ///   Specifies whether optional schema properties (not required) are generated as nullable properties (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateOptionalPropertiesAsNullable:{value}")]
         public virtual bool? GenerateOptionalPropertiesAsNullable { get; internal set; }
         /// <summary>
         ///   The class name of the root schema.
         /// </summary>
+        [ArgumentFormat("/Name:{value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   The namespace of the generated classes.
         /// </summary>
+        [ArgumentFormat("/Namespace:{value}")]
         public virtual string Namespace { get; internal set; }
         /// <summary>
         ///   Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).
         /// </summary>
+        [ArgumentFormat("/RequiredPropertiesMustBeDefined:{value}")]
         public virtual bool? RequiredPropertiesMustBeDefined { get; internal set; }
         /// <summary>
         ///   A file path or URL to the data or the JSON data itself.
         /// </summary>
+        [ArgumentFormat("/Input:{value}")]
         public virtual string Input { get; internal set; }
         /// <summary>
         ///   Overrides the service host of the web document (optional, use '.' to remove the hostname).
         /// </summary>
+        [ArgumentFormat("/ServiceHost:{value}")]
         public virtual string ServiceHost { get; internal set; }
         /// <summary>
         ///   Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').
         /// </summary>
+        [ArgumentFormat("/ServiceSchemes:{value}")]
         public virtual IReadOnlyList<string> ServiceSchemes => ServiceSchemesInternal.AsReadOnly();
         internal List<string> ServiceSchemesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The output file path (optional).
         /// </summary>
+        [ArgumentFormat("/Output:{value}")]
         public virtual string Output { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3938,23 +4182,28 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   The type name of the root schema.
         /// </summary>
+        [ArgumentFormat("/Name:{value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   A file path or URL to the data or the JSON data itself.
         /// </summary>
+        [ArgumentFormat("/Input:{value}")]
         public virtual string Input { get; internal set; }
         /// <summary>
         ///   Overrides the service host of the web document (optional, use '.' to remove the hostname).
         /// </summary>
+        [ArgumentFormat("/ServiceHost:{value}")]
         public virtual string ServiceHost { get; internal set; }
         /// <summary>
         ///   Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').
         /// </summary>
+        [ArgumentFormat("/ServiceSchemes:{value}")]
         public virtual IReadOnlyList<string> ServiceSchemes => ServiceSchemesInternal.AsReadOnly();
         internal List<string> ServiceSchemesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The output file path (optional).
         /// </summary>
+        [ArgumentFormat("/Output:{value}")]
         public virtual string Output { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3987,217 +4236,269 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   The additional contract namespace usages.
         /// </summary>
+        [ArgumentFormat("/AdditionalContractNamespaceUsages:{value}")]
         public virtual IReadOnlyList<string> AdditionalContractNamespaceUsages => AdditionalContractNamespaceUsagesInternal.AsReadOnly();
         internal List<string> AdditionalContractNamespaceUsagesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The additional namespace usages.
         /// </summary>
+        [ArgumentFormat("/AdditionalNamespaceUsages:{value}")]
         public virtual IReadOnlyList<string> AdditionalNamespaceUsages => AdditionalNamespaceUsagesInternal.AsReadOnly();
         internal List<string> AdditionalNamespaceUsagesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The any .NET type (default: 'object').
         /// </summary>
+        [ArgumentFormat("/AnyType:{value}")]
         public virtual string AnyType { get; internal set; }
         /// <summary>
         ///   The generic array .NET type (default: 'Collection').
         /// </summary>
+        [ArgumentFormat("/ArrayBaseType:{value}")]
         public virtual string ArrayBaseType { get; internal set; }
         /// <summary>
         ///   The generic array .NET instance type (default: empty = ArrayType).
         /// </summary>
+        [ArgumentFormat("/ArrayInstanceType:{value}")]
         public virtual string ArrayInstanceType { get; internal set; }
         /// <summary>
         ///   The generic array .NET type (default: 'ICollection').
         /// </summary>
+        [ArgumentFormat("/ArrayType:{value}")]
         public virtual string ArrayType { get; internal set; }
         /// <summary>
         ///   The class name of the generated client.
         /// </summary>
+        [ArgumentFormat("/ClassName:{value}")]
         public virtual string ClassName { get; internal set; }
         /// <summary>
         ///   The CSharp class style, 'Poco' or 'Inpc' (default: 'Poco').
         /// </summary>
+        [ArgumentFormat("/ClassStyle:{value}")]
         public virtual CSharpClassStyle ClassStyle { get; internal set; }
         /// <summary>
         ///   The date time .NET type (default: 'DateTimeOffset').
         /// </summary>
+        [ArgumentFormat("/DateTimeType:{value}")]
         public virtual string DateTimeType { get; internal set; }
         /// <summary>
         ///   The date .NET type (default: 'DateTimeOffset').
         /// </summary>
+        [ArgumentFormat("/DateType:{value}")]
         public virtual string DateType { get; internal set; }
         /// <summary>
         ///   The generic dictionary .NET type (default: 'Dictionary').
         /// </summary>
+        [ArgumentFormat("/DictionaryBaseType:{value}")]
         public virtual string DictionaryBaseType { get; internal set; }
         /// <summary>
         ///   The generic dictionary .NET instance type (default: empty = DictionaryType).
         /// </summary>
+        [ArgumentFormat("/DictionaryInstanceType:{value}")]
         public virtual string DictionaryInstanceType { get; internal set; }
         /// <summary>
         ///   The generic dictionary .NET type (default: 'IDictionary').
         /// </summary>
+        [ArgumentFormat("/DictionaryType:{value}")]
         public virtual string DictionaryType { get; internal set; }
         /// <summary>
         ///   Specifies whether enums should be always generated as bit flags (default: false).
         /// </summary>
+        [ArgumentFormat("/EnforceFlagEnums:{value}")]
         public virtual bool? EnforceFlagEnums { get; internal set; }
         /// <summary>
         ///   The globally excluded parameter names.
         /// </summary>
+        [ArgumentFormat("/ExcludedParameterNames:{value}")]
         public virtual IReadOnlyList<string> ExcludedParameterNames => ExcludedParameterNamesInternal.AsReadOnly();
         internal List<string> ExcludedParameterNamesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The excluded DTO type names (must be defined in an import or other namespace).
         /// </summary>
+        [ArgumentFormat("/ExcludedTypeNames:{value}")]
         public virtual IReadOnlyList<string> ExcludedTypeNames => ExcludedTypeNamesInternal.AsReadOnly();
         internal List<string> ExcludedTypeNamesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies whether to generate data annotation attributes on DTO classes (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateDataAnnotations:{value}")]
         public virtual bool? GenerateDataAnnotations { get; internal set; }
         /// <summary>
         ///   Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateDefaultValues:{value}")]
         public virtual bool? GenerateDefaultValues { get; internal set; }
         /// <summary>
         ///   Specifies whether to generate DTO classes.
         /// </summary>
+        [ArgumentFormat("/GenerateDtoTypes:{value}")]
         public virtual bool? GenerateDtoTypes { get; internal set; }
         /// <summary>
         ///   Specifies whether to remove the setter for non-nullable array properties (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateImmutableArrayProperties:{value}")]
         public virtual bool? GenerateImmutableArrayProperties { get; internal set; }
         /// <summary>
         ///   Specifies whether to remove the setter for non-nullable dictionary properties (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateImmutableDictionaryProperties:{value}")]
         public virtual bool? GenerateImmutableDictionaryProperties { get; internal set; }
         /// <summary>
         ///   Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateJsonMethods:{value}")]
         public virtual bool? GenerateJsonMethods { get; internal set; }
         /// <summary>
         ///   Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateOptionalParameters:{value}")]
         public virtual bool? GenerateOptionalParameters { get; internal set; }
         /// <summary>
         ///   Specifies whether optional schema properties (not required) are generated as nullable properties (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateOptionalPropertiesAsNullable:{value}")]
         public virtual bool? GenerateOptionalPropertiesAsNullable { get; internal set; }
         /// <summary>
         ///   Specifies whether to generate response classes (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateResponseClasses:{value}")]
         public virtual bool? GenerateResponseClasses { get; internal set; }
         /// <summary>
         ///   Use preserve references handling (All) in the JSON serializer (default: false).
         /// </summary>
+        [ArgumentFormat("/HandleReferences:{value}")]
         public virtual bool? HandleReferences { get; internal set; }
         /// <summary>
         ///   Inline named any types (default: false).
         /// </summary>
+        [ArgumentFormat("/InlineNamedAny:{value}")]
         public virtual bool? InlineNamedAny { get; internal set; }
         /// <summary>
         ///   Inline named arrays (default: false).
         /// </summary>
+        [ArgumentFormat("/InlineNamedArrays:{value}")]
         public virtual bool? InlineNamedArrays { get; internal set; }
         /// <summary>
         ///   Inline named dictionaries (default: false).
         /// </summary>
+        [ArgumentFormat("/InlineNamedDictionaries:{value}")]
         public virtual bool? InlineNamedDictionaries { get; internal set; }
         /// <summary>
         ///   Inline named tuples (default: true).
         /// </summary>
+        [ArgumentFormat("/InlineNamedTuples:{value}")]
         public virtual bool? InlineNamedTuples { get; internal set; }
         /// <summary>
         ///   Specifies the custom Json.NET converter types (optional, comma separated).
         /// </summary>
+        [ArgumentFormat("/JsonConverters:{value}")]
         public virtual IReadOnlyList<string> JsonConverters => JsonConvertersInternal.AsReadOnly();
         internal List<string> JsonConvertersInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The name of a static method which is called to transform the JsonSerializerSettings used in the generated ToJson()/FromJson() methods (default: none).
         /// </summary>
+        [ArgumentFormat("/JsonSerializerSettingsTransformationMethod:{value}")]
         public virtual string JsonSerializerSettingsTransformationMethod { get; internal set; }
         /// <summary>
         ///   The namespace of the generated classes.
         /// </summary>
+        [ArgumentFormat("/Namespace:{value}")]
         public virtual string Namespace { get; internal set; }
         /// <summary>
         ///   The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').
         /// </summary>
+        [ArgumentFormat("/OperationGenerationMode:{value}")]
         public virtual OperationGenerationMode OperationGenerationMode { get; internal set; }
         /// <summary>
         ///   The generic array .NET type of operation parameters (default: 'IEnumerable').
         /// </summary>
+        [ArgumentFormat("/ParameterArrayType:{value}")]
         public virtual string ParameterArrayType { get; internal set; }
         /// <summary>
         ///   The generic dictionary .NET type of operation parameters (default: 'IDictionary').
         /// </summary>
+        [ArgumentFormat("/ParameterDictionaryType:{value}")]
         public virtual string ParameterDictionaryType { get; internal set; }
         /// <summary>
         ///   Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).
         /// </summary>
+        [ArgumentFormat("/RequiredPropertiesMustBeDefined:{value}")]
         public virtual bool? RequiredPropertiesMustBeDefined { get; internal set; }
         /// <summary>
         ///   The generic array .NET type of operation responses (default: 'ICollection').
         /// </summary>
+        [ArgumentFormat("/ResponseArrayType:{value}")]
         public virtual string ResponseArrayType { get; internal set; }
         /// <summary>
         ///   The response class (default 'SwaggerResponse', may use '{controller}' placeholder).
         /// </summary>
+        [ArgumentFormat("/ResponseClass:{value}")]
         public virtual string ResponseClass { get; internal set; }
         /// <summary>
         ///   The generic dictionary .NET type of operation responses (default: 'IDictionary').
         /// </summary>
+        [ArgumentFormat("/ResponseDictionaryType:{value}")]
         public virtual string ResponseDictionaryType { get; internal set; }
         /// <summary>
         ///   The time span .NET type (default: 'TimeSpan').
         /// </summary>
+        [ArgumentFormat("/TimeSpanType:{value}")]
         public virtual string TimeSpanType { get; internal set; }
         /// <summary>
         ///   The time .NET type (default: 'TimeSpan').
         /// </summary>
+        [ArgumentFormat("/TimeType:{value}")]
         public virtual string TimeType { get; internal set; }
         /// <summary>
         ///   List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).
         /// </summary>
+        [ArgumentFormat("/WrapResponseMethods:{value}")]
         public virtual IReadOnlyList<string> WrapResponseMethods => WrapResponseMethodsInternal.AsReadOnly();
         internal List<string> WrapResponseMethodsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies whether to wrap success responses to allow full response access.
         /// </summary>
+        [ArgumentFormat("/WrapResponses:{value}")]
         public virtual bool? WrapResponses { get; internal set; }
         /// <summary>
         ///   The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/EnumNameGeneratorType:{value}")]
         public virtual string EnumNameGeneratorType { get; internal set; }
         /// <summary>
         ///   The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/PropertyNameGeneratorType:{value}")]
         public virtual string PropertyNameGeneratorType { get; internal set; }
         /// <summary>
         ///   The Liquid template directory (experimental).
         /// </summary>
+        [ArgumentFormat("/TemplateDirectory:{value}")]
         public virtual string TemplateDirectory { get; internal set; }
         /// <summary>
         ///   The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/TypeNameGenerator:{value}")]
         public virtual string TypeNameGenerator { get; internal set; }
         /// <summary>
         ///   A file path or URL to the data or the JSON data itself.
         /// </summary>
+        [ArgumentFormat("/Input:{value}")]
         public virtual string Input { get; internal set; }
         /// <summary>
         ///   Overrides the service host of the web document (optional, use '.' to remove the hostname).
         /// </summary>
+        [ArgumentFormat("/ServiceHost:{value}")]
         public virtual string ServiceHost { get; internal set; }
         /// <summary>
         ///   Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').
         /// </summary>
+        [ArgumentFormat("/ServiceSchemes:{value}")]
         public virtual IReadOnlyList<string> ServiceSchemes => ServiceSchemesInternal.AsReadOnly();
         internal List<string> ServiceSchemesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The output file path (optional).
         /// </summary>
+        [ArgumentFormat("/Output:{value}")]
         public virtual string Output { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4277,326 +4578,405 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   The client base class (empty for no base class).
         /// </summary>
+        [ArgumentFormat("/ClientBaseClass:{value}")]
         public virtual string ClientBaseClass { get; internal set; }
         /// <summary>
         ///   The client class access modifier (default: public).
         /// </summary>
+        [ArgumentFormat("/ClientClassAccessModifier:{value}")]
         public virtual string ClientClassAccessModifier { get; internal set; }
         /// <summary>
         ///   The configuration class. The setting ClientBaseClass must be set. (empty for no configuration class).
         /// </summary>
+        [ArgumentFormat("/ConfigurationClass:{value}")]
         public virtual string ConfigurationClass { get; internal set; }
         /// <summary>
         ///   The contracts .NET namespace.
         /// </summary>
+        [ArgumentFormat("/ContractsNamespace:{value}")]
         public virtual string ContractsNamespace { get; internal set; }
         /// <summary>
         ///   The contracts output file path (optional, if no path is set then a single file with the implementation and contracts is generated).
         /// </summary>
+        [ArgumentFormat("/ContractsOutput:{value}")]
         public virtual string ContractsOutput { get; internal set; }
         /// <summary>
         ///   Specifies whether to dispose the HttpClient (injected HttpClient is never disposed).
         /// </summary>
+        [ArgumentFormat("/DisposeHttpClient:{value}")]
         public virtual bool? DisposeHttpClient { get; internal set; }
         /// <summary>
         ///   The exception class (default 'SwaggerException', may use '{controller}' placeholder).
         /// </summary>
+        [ArgumentFormat("/ExceptionClass:{value}")]
         public virtual string ExceptionClass { get; internal set; }
         /// <summary>
         ///   Specifies whether to expose the JsonSerializerSettings property (default: false).
         /// </summary>
+        [ArgumentFormat("/ExposeJsonSerializerSettings:{value}")]
         public virtual bool? ExposeJsonSerializerSettings { get; internal set; }
         /// <summary>
         ///   Specifies whether to generate the BaseUrl property, must be defined on the base class otherwise (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateBaseUrlProperty:{value}")]
         public virtual bool? GenerateBaseUrlProperty { get; internal set; }
         /// <summary>
         ///   Specifies whether generate client classes.
         /// </summary>
+        [ArgumentFormat("/GenerateClientClasses:{value}")]
         public virtual bool? GenerateClientClasses { get; internal set; }
         /// <summary>
         ///   Specifies whether generate interfaces for the client classes.
         /// </summary>
+        [ArgumentFormat("/GenerateClientInterfaces:{value}")]
         public virtual bool? GenerateClientInterfaces { get; internal set; }
         /// <summary>
         ///   Specifies whether to generate contracts output (interface and models in a separate file set with the ContractsOutput parameter).
         /// </summary>
+        [ArgumentFormat("/GenerateContractsOutput:{value}")]
         public virtual bool? GenerateContractsOutput { get; internal set; }
         /// <summary>
         ///   Specifies whether to generate exception classes (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateExceptionClasses:{value}")]
         public virtual bool? GenerateExceptionClasses { get; internal set; }
         /// <summary>
         ///   Specifies whether to generate synchronous methods (not recommended, default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateSyncMethods:{value}")]
         public virtual bool? GenerateSyncMethods { get; internal set; }
         /// <summary>
         ///   Generate the UpdateJsonSerializerSettings method (must be implemented in the base class otherwise, default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateUpdateJsonSerializerSettingsMethod:{value}")]
         public virtual bool? GenerateUpdateJsonSerializerSettingsMethod { get; internal set; }
         /// <summary>
         ///   Specifies the HttpClient type. By default the 'System.Net.Http.HttpClient' is used.
         /// </summary>
+        [ArgumentFormat("/HttpClientType:{value}")]
         public virtual string HttpClientType { get; internal set; }
         /// <summary>
         ///   Specifies whether an HttpClient instance is injected (default: true).
         /// </summary>
+        [ArgumentFormat("/InjectHttpClient:{value}")]
         public virtual bool? InjectHttpClient { get; internal set; }
         /// <summary>
         ///   Specifies the format for Date type method parameters (default: yyyy-MM-dd).
         /// </summary>
+        [ArgumentFormat("/ParameterDateFormat:{value}")]
         public virtual string ParameterDateFormat { get; internal set; }
         /// <summary>
         ///   Specifies the format for DateTime type method parameters (default: s).
         /// </summary>
+        [ArgumentFormat("/ParameterDateTimeFormat:{value}")]
         public virtual string ParameterDateTimeFormat { get; internal set; }
         /// <summary>
         ///   List of methods with a protected access modifier ('classname.methodname').
         /// </summary>
+        [ArgumentFormat("/ProtectedMethods:{value}")]
         public virtual IReadOnlyList<string> ProtectedMethods => ProtectedMethodsInternal.AsReadOnly();
         internal List<string> ProtectedMethodsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The null value used for query parameters which are null (default: '').
         /// </summary>
+        [ArgumentFormat("/QueryNullValue:{value}")]
         public virtual string QueryNullValue { get; internal set; }
         /// <summary>
         ///   Serialize the type information in a $type property (not recommended, also sets TypeNameHandling = Auto, default: true).
         /// </summary>
+        [ArgumentFormat("/SerializeTypeInformation:{value}")]
         public virtual bool? SerializeTypeInformation { get; internal set; }
         /// <summary>
         ///   The DTO class/enum access modifier (default: public).
         /// </summary>
+        [ArgumentFormat("/TypeAccessModifier:{value}")]
         public virtual string TypeAccessModifier { get; internal set; }
         /// <summary>
         ///   Specifies whether to use and expose the base URL (default: true).
         /// </summary>
+        [ArgumentFormat("/UseBaseUrl:{value}")]
         public virtual bool? UseBaseUrl { get; internal set; }
         /// <summary>
         ///   Specifies whether to call CreateHttpClientAsync on the base class to create a new HttpClient.
         /// </summary>
+        [ArgumentFormat("/UseHttpClientCreationMethod:{value}")]
         public virtual bool? UseHttpClientCreationMethod { get; internal set; }
         /// <summary>
         ///   Specifies whether to call CreateHttpRequestMessageAsync on the base class to create a new HttpRequestMethod.
         /// </summary>
+        [ArgumentFormat("/UseHttpRequestMessageCreationMethod:{value}")]
         public virtual bool? UseHttpRequestMessageCreationMethod { get; internal set; }
         /// <summary>
         ///   Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: true).
         /// </summary>
+        [ArgumentFormat("/WrapDtoExceptions:{value}")]
         public virtual bool? WrapDtoExceptions { get; internal set; }
         /// <summary>
         ///   The additional contract namespace usages.
         /// </summary>
+        [ArgumentFormat("/AdditionalContractNamespaceUsages:{value}")]
         public virtual IReadOnlyList<string> AdditionalContractNamespaceUsages => AdditionalContractNamespaceUsagesInternal.AsReadOnly();
         internal List<string> AdditionalContractNamespaceUsagesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The additional namespace usages.
         /// </summary>
+        [ArgumentFormat("/AdditionalNamespaceUsages:{value}")]
         public virtual IReadOnlyList<string> AdditionalNamespaceUsages => AdditionalNamespaceUsagesInternal.AsReadOnly();
         internal List<string> AdditionalNamespaceUsagesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The any .NET type (default: 'object').
         /// </summary>
+        [ArgumentFormat("/AnyType:{value}")]
         public virtual string AnyType { get; internal set; }
         /// <summary>
         ///   The generic array .NET type (default: 'Collection').
         /// </summary>
+        [ArgumentFormat("/ArrayBaseType:{value}")]
         public virtual string ArrayBaseType { get; internal set; }
         /// <summary>
         ///   The generic array .NET instance type (default: empty = ArrayType).
         /// </summary>
+        [ArgumentFormat("/ArrayInstanceType:{value}")]
         public virtual string ArrayInstanceType { get; internal set; }
         /// <summary>
         ///   The generic array .NET type (default: 'ICollection').
         /// </summary>
+        [ArgumentFormat("/ArrayType:{value}")]
         public virtual string ArrayType { get; internal set; }
         /// <summary>
         ///   The class name of the generated client.
         /// </summary>
+        [ArgumentFormat("/ClassName:{value}")]
         public virtual string ClassName { get; internal set; }
         /// <summary>
         ///   The CSharp class style, 'Poco' or 'Inpc' (default: 'Poco').
         /// </summary>
+        [ArgumentFormat("/ClassStyle:{value}")]
         public virtual CSharpClassStyle ClassStyle { get; internal set; }
         /// <summary>
         ///   The date time .NET type (default: 'DateTimeOffset').
         /// </summary>
+        [ArgumentFormat("/DateTimeType:{value}")]
         public virtual string DateTimeType { get; internal set; }
         /// <summary>
         ///   The date .NET type (default: 'DateTimeOffset').
         /// </summary>
+        [ArgumentFormat("/DateType:{value}")]
         public virtual string DateType { get; internal set; }
         /// <summary>
         ///   The generic dictionary .NET type (default: 'Dictionary').
         /// </summary>
+        [ArgumentFormat("/DictionaryBaseType:{value}")]
         public virtual string DictionaryBaseType { get; internal set; }
         /// <summary>
         ///   The generic dictionary .NET instance type (default: empty = DictionaryType).
         /// </summary>
+        [ArgumentFormat("/DictionaryInstanceType:{value}")]
         public virtual string DictionaryInstanceType { get; internal set; }
         /// <summary>
         ///   The generic dictionary .NET type (default: 'IDictionary').
         /// </summary>
+        [ArgumentFormat("/DictionaryType:{value}")]
         public virtual string DictionaryType { get; internal set; }
         /// <summary>
         ///   Specifies whether enums should be always generated as bit flags (default: false).
         /// </summary>
+        [ArgumentFormat("/EnforceFlagEnums:{value}")]
         public virtual bool? EnforceFlagEnums { get; internal set; }
         /// <summary>
         ///   The globally excluded parameter names.
         /// </summary>
+        [ArgumentFormat("/ExcludedParameterNames:{value}")]
         public virtual IReadOnlyList<string> ExcludedParameterNames => ExcludedParameterNamesInternal.AsReadOnly();
         internal List<string> ExcludedParameterNamesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The excluded DTO type names (must be defined in an import or other namespace).
         /// </summary>
+        [ArgumentFormat("/ExcludedTypeNames:{value}")]
         public virtual IReadOnlyList<string> ExcludedTypeNames => ExcludedTypeNamesInternal.AsReadOnly();
         internal List<string> ExcludedTypeNamesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies whether to generate data annotation attributes on DTO classes (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateDataAnnotations:{value}")]
         public virtual bool? GenerateDataAnnotations { get; internal set; }
         /// <summary>
         ///   Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateDefaultValues:{value}")]
         public virtual bool? GenerateDefaultValues { get; internal set; }
         /// <summary>
         ///   Specifies whether to generate DTO classes.
         /// </summary>
+        [ArgumentFormat("/GenerateDtoTypes:{value}")]
         public virtual bool? GenerateDtoTypes { get; internal set; }
         /// <summary>
         ///   Specifies whether to remove the setter for non-nullable array properties (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateImmutableArrayProperties:{value}")]
         public virtual bool? GenerateImmutableArrayProperties { get; internal set; }
         /// <summary>
         ///   Specifies whether to remove the setter for non-nullable dictionary properties (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateImmutableDictionaryProperties:{value}")]
         public virtual bool? GenerateImmutableDictionaryProperties { get; internal set; }
         /// <summary>
         ///   Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateJsonMethods:{value}")]
         public virtual bool? GenerateJsonMethods { get; internal set; }
         /// <summary>
         ///   Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateOptionalParameters:{value}")]
         public virtual bool? GenerateOptionalParameters { get; internal set; }
         /// <summary>
         ///   Specifies whether optional schema properties (not required) are generated as nullable properties (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateOptionalPropertiesAsNullable:{value}")]
         public virtual bool? GenerateOptionalPropertiesAsNullable { get; internal set; }
         /// <summary>
         ///   Specifies whether to generate response classes (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateResponseClasses:{value}")]
         public virtual bool? GenerateResponseClasses { get; internal set; }
         /// <summary>
         ///   Use preserve references handling (All) in the JSON serializer (default: false).
         /// </summary>
+        [ArgumentFormat("/HandleReferences:{value}")]
         public virtual bool? HandleReferences { get; internal set; }
         /// <summary>
         ///   Inline named any types (default: false).
         /// </summary>
+        [ArgumentFormat("/InlineNamedAny:{value}")]
         public virtual bool? InlineNamedAny { get; internal set; }
         /// <summary>
         ///   Inline named arrays (default: false).
         /// </summary>
+        [ArgumentFormat("/InlineNamedArrays:{value}")]
         public virtual bool? InlineNamedArrays { get; internal set; }
         /// <summary>
         ///   Inline named dictionaries (default: false).
         /// </summary>
+        [ArgumentFormat("/InlineNamedDictionaries:{value}")]
         public virtual bool? InlineNamedDictionaries { get; internal set; }
         /// <summary>
         ///   Inline named tuples (default: true).
         /// </summary>
+        [ArgumentFormat("/InlineNamedTuples:{value}")]
         public virtual bool? InlineNamedTuples { get; internal set; }
         /// <summary>
         ///   Specifies the custom Json.NET converter types (optional, comma separated).
         /// </summary>
+        [ArgumentFormat("/JsonConverters:{value}")]
         public virtual IReadOnlyList<string> JsonConverters => JsonConvertersInternal.AsReadOnly();
         internal List<string> JsonConvertersInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The name of a static method which is called to transform the JsonSerializerSettings used in the generated ToJson()/FromJson() methods (default: none).
         /// </summary>
+        [ArgumentFormat("/JsonSerializerSettingsTransformationMethod:{value}")]
         public virtual string JsonSerializerSettingsTransformationMethod { get; internal set; }
         /// <summary>
         ///   The namespace of the generated classes.
         /// </summary>
+        [ArgumentFormat("/Namespace:{value}")]
         public virtual string Namespace { get; internal set; }
         /// <summary>
         ///   The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').
         /// </summary>
+        [ArgumentFormat("/OperationGenerationMode:{value}")]
         public virtual OperationGenerationMode OperationGenerationMode { get; internal set; }
         /// <summary>
         ///   The generic array .NET type of operation parameters (default: 'IEnumerable').
         /// </summary>
+        [ArgumentFormat("/ParameterArrayType:{value}")]
         public virtual string ParameterArrayType { get; internal set; }
         /// <summary>
         ///   The generic dictionary .NET type of operation parameters (default: 'IDictionary').
         /// </summary>
+        [ArgumentFormat("/ParameterDictionaryType:{value}")]
         public virtual string ParameterDictionaryType { get; internal set; }
         /// <summary>
         ///   Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).
         /// </summary>
+        [ArgumentFormat("/RequiredPropertiesMustBeDefined:{value}")]
         public virtual bool? RequiredPropertiesMustBeDefined { get; internal set; }
         /// <summary>
         ///   The generic array .NET type of operation responses (default: 'ICollection').
         /// </summary>
+        [ArgumentFormat("/ResponseArrayType:{value}")]
         public virtual string ResponseArrayType { get; internal set; }
         /// <summary>
         ///   The response class (default 'SwaggerResponse', may use '{controller}' placeholder).
         /// </summary>
+        [ArgumentFormat("/ResponseClass:{value}")]
         public virtual string ResponseClass { get; internal set; }
         /// <summary>
         ///   The generic dictionary .NET type of operation responses (default: 'IDictionary').
         /// </summary>
+        [ArgumentFormat("/ResponseDictionaryType:{value}")]
         public virtual string ResponseDictionaryType { get; internal set; }
         /// <summary>
         ///   The time span .NET type (default: 'TimeSpan').
         /// </summary>
+        [ArgumentFormat("/TimeSpanType:{value}")]
         public virtual string TimeSpanType { get; internal set; }
         /// <summary>
         ///   The time .NET type (default: 'TimeSpan').
         /// </summary>
+        [ArgumentFormat("/TimeType:{value}")]
         public virtual string TimeType { get; internal set; }
         /// <summary>
         ///   List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).
         /// </summary>
+        [ArgumentFormat("/WrapResponseMethods:{value}")]
         public virtual IReadOnlyList<string> WrapResponseMethods => WrapResponseMethodsInternal.AsReadOnly();
         internal List<string> WrapResponseMethodsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies whether to wrap success responses to allow full response access.
         /// </summary>
+        [ArgumentFormat("/WrapResponses:{value}")]
         public virtual bool? WrapResponses { get; internal set; }
         /// <summary>
         ///   The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/EnumNameGeneratorType:{value}")]
         public virtual string EnumNameGeneratorType { get; internal set; }
         /// <summary>
         ///   The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/PropertyNameGeneratorType:{value}")]
         public virtual string PropertyNameGeneratorType { get; internal set; }
         /// <summary>
         ///   The Liquid template directory (experimental).
         /// </summary>
+        [ArgumentFormat("/TemplateDirectory:{value}")]
         public virtual string TemplateDirectory { get; internal set; }
         /// <summary>
         ///   The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/TypeNameGenerator:{value}")]
         public virtual string TypeNameGenerator { get; internal set; }
         /// <summary>
         ///   A file path or URL to the data or the JSON data itself.
         /// </summary>
+        [ArgumentFormat("/Input:{value}")]
         public virtual string Input { get; internal set; }
         /// <summary>
         ///   Overrides the service host of the web document (optional, use '.' to remove the hostname).
         /// </summary>
+        [ArgumentFormat("/ServiceHost:{value}")]
         public virtual string ServiceHost { get; internal set; }
         /// <summary>
         ///   Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').
         /// </summary>
+        [ArgumentFormat("/ServiceSchemes:{value}")]
         public virtual IReadOnlyList<string> ServiceSchemes => ServiceSchemesInternal.AsReadOnly();
         internal List<string> ServiceSchemesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The output file path (optional).
         /// </summary>
+        [ArgumentFormat("/Output:{value}")]
         public virtual string Output { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4703,217 +5083,269 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   The additional contract namespace usages.
         /// </summary>
+        [ArgumentFormat("/AdditionalContractNamespaceUsages:{value}")]
         public virtual IReadOnlyList<string> AdditionalContractNamespaceUsages => AdditionalContractNamespaceUsagesInternal.AsReadOnly();
         internal List<string> AdditionalContractNamespaceUsagesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The additional namespace usages.
         /// </summary>
+        [ArgumentFormat("/AdditionalNamespaceUsages:{value}")]
         public virtual IReadOnlyList<string> AdditionalNamespaceUsages => AdditionalNamespaceUsagesInternal.AsReadOnly();
         internal List<string> AdditionalNamespaceUsagesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The any .NET type (default: 'object').
         /// </summary>
+        [ArgumentFormat("/AnyType:{value}")]
         public virtual string AnyType { get; internal set; }
         /// <summary>
         ///   The generic array .NET type (default: 'Collection').
         /// </summary>
+        [ArgumentFormat("/ArrayBaseType:{value}")]
         public virtual string ArrayBaseType { get; internal set; }
         /// <summary>
         ///   The generic array .NET instance type (default: empty = ArrayType).
         /// </summary>
+        [ArgumentFormat("/ArrayInstanceType:{value}")]
         public virtual string ArrayInstanceType { get; internal set; }
         /// <summary>
         ///   The generic array .NET type (default: 'ICollection').
         /// </summary>
+        [ArgumentFormat("/ArrayType:{value}")]
         public virtual string ArrayType { get; internal set; }
         /// <summary>
         ///   The class name of the generated client.
         /// </summary>
+        [ArgumentFormat("/ClassName:{value}")]
         public virtual string ClassName { get; internal set; }
         /// <summary>
         ///   The CSharp class style, 'Poco' or 'Inpc' (default: 'Poco').
         /// </summary>
+        [ArgumentFormat("/ClassStyle:{value}")]
         public virtual CSharpClassStyle ClassStyle { get; internal set; }
         /// <summary>
         ///   The date time .NET type (default: 'DateTimeOffset').
         /// </summary>
+        [ArgumentFormat("/DateTimeType:{value}")]
         public virtual string DateTimeType { get; internal set; }
         /// <summary>
         ///   The date .NET type (default: 'DateTimeOffset').
         /// </summary>
+        [ArgumentFormat("/DateType:{value}")]
         public virtual string DateType { get; internal set; }
         /// <summary>
         ///   The generic dictionary .NET type (default: 'Dictionary').
         /// </summary>
+        [ArgumentFormat("/DictionaryBaseType:{value}")]
         public virtual string DictionaryBaseType { get; internal set; }
         /// <summary>
         ///   The generic dictionary .NET instance type (default: empty = DictionaryType).
         /// </summary>
+        [ArgumentFormat("/DictionaryInstanceType:{value}")]
         public virtual string DictionaryInstanceType { get; internal set; }
         /// <summary>
         ///   The generic dictionary .NET type (default: 'IDictionary').
         /// </summary>
+        [ArgumentFormat("/DictionaryType:{value}")]
         public virtual string DictionaryType { get; internal set; }
         /// <summary>
         ///   Specifies whether enums should be always generated as bit flags (default: false).
         /// </summary>
+        [ArgumentFormat("/EnforceFlagEnums:{value}")]
         public virtual bool? EnforceFlagEnums { get; internal set; }
         /// <summary>
         ///   The globally excluded parameter names.
         /// </summary>
+        [ArgumentFormat("/ExcludedParameterNames:{value}")]
         public virtual IReadOnlyList<string> ExcludedParameterNames => ExcludedParameterNamesInternal.AsReadOnly();
         internal List<string> ExcludedParameterNamesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The excluded DTO type names (must be defined in an import or other namespace).
         /// </summary>
+        [ArgumentFormat("/ExcludedTypeNames:{value}")]
         public virtual IReadOnlyList<string> ExcludedTypeNames => ExcludedTypeNamesInternal.AsReadOnly();
         internal List<string> ExcludedTypeNamesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies whether to generate data annotation attributes on DTO classes (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateDataAnnotations:{value}")]
         public virtual bool? GenerateDataAnnotations { get; internal set; }
         /// <summary>
         ///   Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateDefaultValues:{value}")]
         public virtual bool? GenerateDefaultValues { get; internal set; }
         /// <summary>
         ///   Specifies whether to generate DTO classes.
         /// </summary>
+        [ArgumentFormat("/GenerateDtoTypes:{value}")]
         public virtual bool? GenerateDtoTypes { get; internal set; }
         /// <summary>
         ///   Specifies whether to remove the setter for non-nullable array properties (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateImmutableArrayProperties:{value}")]
         public virtual bool? GenerateImmutableArrayProperties { get; internal set; }
         /// <summary>
         ///   Specifies whether to remove the setter for non-nullable dictionary properties (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateImmutableDictionaryProperties:{value}")]
         public virtual bool? GenerateImmutableDictionaryProperties { get; internal set; }
         /// <summary>
         ///   Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateJsonMethods:{value}")]
         public virtual bool? GenerateJsonMethods { get; internal set; }
         /// <summary>
         ///   Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateOptionalParameters:{value}")]
         public virtual bool? GenerateOptionalParameters { get; internal set; }
         /// <summary>
         ///   Specifies whether optional schema properties (not required) are generated as nullable properties (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateOptionalPropertiesAsNullable:{value}")]
         public virtual bool? GenerateOptionalPropertiesAsNullable { get; internal set; }
         /// <summary>
         ///   Specifies whether to generate response classes (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateResponseClasses:{value}")]
         public virtual bool? GenerateResponseClasses { get; internal set; }
         /// <summary>
         ///   Use preserve references handling (All) in the JSON serializer (default: false).
         /// </summary>
+        [ArgumentFormat("/HandleReferences:{value}")]
         public virtual bool? HandleReferences { get; internal set; }
         /// <summary>
         ///   Inline named any types (default: false).
         /// </summary>
+        [ArgumentFormat("/InlineNamedAny:{value}")]
         public virtual bool? InlineNamedAny { get; internal set; }
         /// <summary>
         ///   Inline named arrays (default: false).
         /// </summary>
+        [ArgumentFormat("/InlineNamedArrays:{value}")]
         public virtual bool? InlineNamedArrays { get; internal set; }
         /// <summary>
         ///   Inline named dictionaries (default: false).
         /// </summary>
+        [ArgumentFormat("/InlineNamedDictionaries:{value}")]
         public virtual bool? InlineNamedDictionaries { get; internal set; }
         /// <summary>
         ///   Inline named tuples (default: true).
         /// </summary>
+        [ArgumentFormat("/InlineNamedTuples:{value}")]
         public virtual bool? InlineNamedTuples { get; internal set; }
         /// <summary>
         ///   Specifies the custom Json.NET converter types (optional, comma separated).
         /// </summary>
+        [ArgumentFormat("/JsonConverters:{value}")]
         public virtual IReadOnlyList<string> JsonConverters => JsonConvertersInternal.AsReadOnly();
         internal List<string> JsonConvertersInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The name of a static method which is called to transform the JsonSerializerSettings used in the generated ToJson()/FromJson() methods (default: none).
         /// </summary>
+        [ArgumentFormat("/JsonSerializerSettingsTransformationMethod:{value}")]
         public virtual string JsonSerializerSettingsTransformationMethod { get; internal set; }
         /// <summary>
         ///   The namespace of the generated classes.
         /// </summary>
+        [ArgumentFormat("/Namespace:{value}")]
         public virtual string Namespace { get; internal set; }
         /// <summary>
         ///   The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').
         /// </summary>
+        [ArgumentFormat("/OperationGenerationMode:{value}")]
         public virtual OperationGenerationMode OperationGenerationMode { get; internal set; }
         /// <summary>
         ///   The generic array .NET type of operation parameters (default: 'IEnumerable').
         /// </summary>
+        [ArgumentFormat("/ParameterArrayType:{value}")]
         public virtual string ParameterArrayType { get; internal set; }
         /// <summary>
         ///   The generic dictionary .NET type of operation parameters (default: 'IDictionary').
         /// </summary>
+        [ArgumentFormat("/ParameterDictionaryType:{value}")]
         public virtual string ParameterDictionaryType { get; internal set; }
         /// <summary>
         ///   Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).
         /// </summary>
+        [ArgumentFormat("/RequiredPropertiesMustBeDefined:{value}")]
         public virtual bool? RequiredPropertiesMustBeDefined { get; internal set; }
         /// <summary>
         ///   The generic array .NET type of operation responses (default: 'ICollection').
         /// </summary>
+        [ArgumentFormat("/ResponseArrayType:{value}")]
         public virtual string ResponseArrayType { get; internal set; }
         /// <summary>
         ///   The response class (default 'SwaggerResponse', may use '{controller}' placeholder).
         /// </summary>
+        [ArgumentFormat("/ResponseClass:{value}")]
         public virtual string ResponseClass { get; internal set; }
         /// <summary>
         ///   The generic dictionary .NET type of operation responses (default: 'IDictionary').
         /// </summary>
+        [ArgumentFormat("/ResponseDictionaryType:{value}")]
         public virtual string ResponseDictionaryType { get; internal set; }
         /// <summary>
         ///   The time span .NET type (default: 'TimeSpan').
         /// </summary>
+        [ArgumentFormat("/TimeSpanType:{value}")]
         public virtual string TimeSpanType { get; internal set; }
         /// <summary>
         ///   The time .NET type (default: 'TimeSpan').
         /// </summary>
+        [ArgumentFormat("/TimeType:{value}")]
         public virtual string TimeType { get; internal set; }
         /// <summary>
         ///   List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).
         /// </summary>
+        [ArgumentFormat("/WrapResponseMethods:{value}")]
         public virtual IReadOnlyList<string> WrapResponseMethods => WrapResponseMethodsInternal.AsReadOnly();
         internal List<string> WrapResponseMethodsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies whether to wrap success responses to allow full response access.
         /// </summary>
+        [ArgumentFormat("/WrapResponses:{value}")]
         public virtual bool? WrapResponses { get; internal set; }
         /// <summary>
         ///   The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/EnumNameGeneratorType:{value}")]
         public virtual string EnumNameGeneratorType { get; internal set; }
         /// <summary>
         ///   The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/PropertyNameGeneratorType:{value}")]
         public virtual string PropertyNameGeneratorType { get; internal set; }
         /// <summary>
         ///   The Liquid template directory (experimental).
         /// </summary>
+        [ArgumentFormat("/TemplateDirectory:{value}")]
         public virtual string TemplateDirectory { get; internal set; }
         /// <summary>
         ///   The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/TypeNameGenerator:{value}")]
         public virtual string TypeNameGenerator { get; internal set; }
         /// <summary>
         ///   A file path or URL to the data or the JSON data itself.
         /// </summary>
+        [ArgumentFormat("/Input:{value}")]
         public virtual string Input { get; internal set; }
         /// <summary>
         ///   Overrides the service host of the web document (optional, use '.' to remove the hostname).
         /// </summary>
+        [ArgumentFormat("/ServiceHost:{value}")]
         public virtual string ServiceHost { get; internal set; }
         /// <summary>
         ///   Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').
         /// </summary>
+        [ArgumentFormat("/ServiceSchemes:{value}")]
         public virtual IReadOnlyList<string> ServiceSchemes => ServiceSchemesInternal.AsReadOnly();
         internal List<string> ServiceSchemesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The output file path (optional).
         /// </summary>
+        [ArgumentFormat("/Output:{value}")]
         public virtual string Output { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4993,249 +5425,309 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   The Base path on which the API is served, which is relative to the Host
         /// </summary>
+        [ArgumentFormat("/BasePath:{value}")]
         public virtual string BasePath { get; internal set; }
         /// <summary>
         ///   The controller base class (empty for 'ApiController').
         /// </summary>
+        [ArgumentFormat("/ControllerBaseClass:{value}")]
         public virtual string ControllerBaseClass { get; internal set; }
         /// <summary>
         ///   The controller generation style (partial, abstract; default: partial).
         /// </summary>
+        [ArgumentFormat("/ControllerStyle:{value}")]
         public virtual CSharpControllerStyle ControllerStyle { get; internal set; }
         /// <summary>
         ///   controller target framework (default: AspNetCore).
         /// </summary>
+        [ArgumentFormat("/ControllerTarget:{value}")]
         public virtual CSharpControllerTarget ControllerTarget { get; internal set; }
         /// <summary>
         ///   Add model validation attributes (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateModelValidationAttributes:{value}")]
         public virtual bool? GenerateModelValidationAttributes { get; internal set; }
         /// <summary>
         ///   The strategy for naming controller routes (none, operationid; default: none).
         /// </summary>
+        [ArgumentFormat("/RouteNamingStrategy:{value}")]
         public virtual CSharpControllerRouteNamingStrategy RouteNamingStrategy { get; internal set; }
         /// <summary>
         ///   Use ASP.Net Core (2.1) ActionResult type as return type (default: false)
         /// </summary>
+        [ArgumentFormat("/UseActionResultType:{value}")]
         public virtual bool? UseActionResultType { get; internal set; }
         /// <summary>
         ///   Add a cancellation token parameter (default: false).
         /// </summary>
+        [ArgumentFormat("/UseCancellationToken:{value}")]
         public virtual bool? UseCancellationToken { get; internal set; }
         /// <summary>
         ///   The additional contract namespace usages.
         /// </summary>
+        [ArgumentFormat("/AdditionalContractNamespaceUsages:{value}")]
         public virtual IReadOnlyList<string> AdditionalContractNamespaceUsages => AdditionalContractNamespaceUsagesInternal.AsReadOnly();
         internal List<string> AdditionalContractNamespaceUsagesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The additional namespace usages.
         /// </summary>
+        [ArgumentFormat("/AdditionalNamespaceUsages:{value}")]
         public virtual IReadOnlyList<string> AdditionalNamespaceUsages => AdditionalNamespaceUsagesInternal.AsReadOnly();
         internal List<string> AdditionalNamespaceUsagesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The any .NET type (default: 'object').
         /// </summary>
+        [ArgumentFormat("/AnyType:{value}")]
         public virtual string AnyType { get; internal set; }
         /// <summary>
         ///   The generic array .NET type (default: 'Collection').
         /// </summary>
+        [ArgumentFormat("/ArrayBaseType:{value}")]
         public virtual string ArrayBaseType { get; internal set; }
         /// <summary>
         ///   The generic array .NET instance type (default: empty = ArrayType).
         /// </summary>
+        [ArgumentFormat("/ArrayInstanceType:{value}")]
         public virtual string ArrayInstanceType { get; internal set; }
         /// <summary>
         ///   The generic array .NET type (default: 'ICollection').
         /// </summary>
+        [ArgumentFormat("/ArrayType:{value}")]
         public virtual string ArrayType { get; internal set; }
         /// <summary>
         ///   The class name of the generated client.
         /// </summary>
+        [ArgumentFormat("/ClassName:{value}")]
         public virtual string ClassName { get; internal set; }
         /// <summary>
         ///   The CSharp class style, 'Poco' or 'Inpc' (default: 'Poco').
         /// </summary>
+        [ArgumentFormat("/ClassStyle:{value}")]
         public virtual CSharpClassStyle ClassStyle { get; internal set; }
         /// <summary>
         ///   The date time .NET type (default: 'DateTimeOffset').
         /// </summary>
+        [ArgumentFormat("/DateTimeType:{value}")]
         public virtual string DateTimeType { get; internal set; }
         /// <summary>
         ///   The date .NET type (default: 'DateTimeOffset').
         /// </summary>
+        [ArgumentFormat("/DateType:{value}")]
         public virtual string DateType { get; internal set; }
         /// <summary>
         ///   The generic dictionary .NET type (default: 'Dictionary').
         /// </summary>
+        [ArgumentFormat("/DictionaryBaseType:{value}")]
         public virtual string DictionaryBaseType { get; internal set; }
         /// <summary>
         ///   The generic dictionary .NET instance type (default: empty = DictionaryType).
         /// </summary>
+        [ArgumentFormat("/DictionaryInstanceType:{value}")]
         public virtual string DictionaryInstanceType { get; internal set; }
         /// <summary>
         ///   The generic dictionary .NET type (default: 'IDictionary').
         /// </summary>
+        [ArgumentFormat("/DictionaryType:{value}")]
         public virtual string DictionaryType { get; internal set; }
         /// <summary>
         ///   Specifies whether enums should be always generated as bit flags (default: false).
         /// </summary>
+        [ArgumentFormat("/EnforceFlagEnums:{value}")]
         public virtual bool? EnforceFlagEnums { get; internal set; }
         /// <summary>
         ///   The globally excluded parameter names.
         /// </summary>
+        [ArgumentFormat("/ExcludedParameterNames:{value}")]
         public virtual IReadOnlyList<string> ExcludedParameterNames => ExcludedParameterNamesInternal.AsReadOnly();
         internal List<string> ExcludedParameterNamesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The excluded DTO type names (must be defined in an import or other namespace).
         /// </summary>
+        [ArgumentFormat("/ExcludedTypeNames:{value}")]
         public virtual IReadOnlyList<string> ExcludedTypeNames => ExcludedTypeNamesInternal.AsReadOnly();
         internal List<string> ExcludedTypeNamesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies whether to generate data annotation attributes on DTO classes (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateDataAnnotations:{value}")]
         public virtual bool? GenerateDataAnnotations { get; internal set; }
         /// <summary>
         ///   Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateDefaultValues:{value}")]
         public virtual bool? GenerateDefaultValues { get; internal set; }
         /// <summary>
         ///   Specifies whether to generate DTO classes.
         /// </summary>
+        [ArgumentFormat("/GenerateDtoTypes:{value}")]
         public virtual bool? GenerateDtoTypes { get; internal set; }
         /// <summary>
         ///   Specifies whether to remove the setter for non-nullable array properties (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateImmutableArrayProperties:{value}")]
         public virtual bool? GenerateImmutableArrayProperties { get; internal set; }
         /// <summary>
         ///   Specifies whether to remove the setter for non-nullable dictionary properties (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateImmutableDictionaryProperties:{value}")]
         public virtual bool? GenerateImmutableDictionaryProperties { get; internal set; }
         /// <summary>
         ///   Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateJsonMethods:{value}")]
         public virtual bool? GenerateJsonMethods { get; internal set; }
         /// <summary>
         ///   Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateOptionalParameters:{value}")]
         public virtual bool? GenerateOptionalParameters { get; internal set; }
         /// <summary>
         ///   Specifies whether optional schema properties (not required) are generated as nullable properties (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateOptionalPropertiesAsNullable:{value}")]
         public virtual bool? GenerateOptionalPropertiesAsNullable { get; internal set; }
         /// <summary>
         ///   Specifies whether to generate response classes (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateResponseClasses:{value}")]
         public virtual bool? GenerateResponseClasses { get; internal set; }
         /// <summary>
         ///   Use preserve references handling (All) in the JSON serializer (default: false).
         /// </summary>
+        [ArgumentFormat("/HandleReferences:{value}")]
         public virtual bool? HandleReferences { get; internal set; }
         /// <summary>
         ///   Inline named any types (default: false).
         /// </summary>
+        [ArgumentFormat("/InlineNamedAny:{value}")]
         public virtual bool? InlineNamedAny { get; internal set; }
         /// <summary>
         ///   Inline named arrays (default: false).
         /// </summary>
+        [ArgumentFormat("/InlineNamedArrays:{value}")]
         public virtual bool? InlineNamedArrays { get; internal set; }
         /// <summary>
         ///   Inline named dictionaries (default: false).
         /// </summary>
+        [ArgumentFormat("/InlineNamedDictionaries:{value}")]
         public virtual bool? InlineNamedDictionaries { get; internal set; }
         /// <summary>
         ///   Inline named tuples (default: true).
         /// </summary>
+        [ArgumentFormat("/InlineNamedTuples:{value}")]
         public virtual bool? InlineNamedTuples { get; internal set; }
         /// <summary>
         ///   Specifies the custom Json.NET converter types (optional, comma separated).
         /// </summary>
+        [ArgumentFormat("/JsonConverters:{value}")]
         public virtual IReadOnlyList<string> JsonConverters => JsonConvertersInternal.AsReadOnly();
         internal List<string> JsonConvertersInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The name of a static method which is called to transform the JsonSerializerSettings used in the generated ToJson()/FromJson() methods (default: none).
         /// </summary>
+        [ArgumentFormat("/JsonSerializerSettingsTransformationMethod:{value}")]
         public virtual string JsonSerializerSettingsTransformationMethod { get; internal set; }
         /// <summary>
         ///   The namespace of the generated classes.
         /// </summary>
+        [ArgumentFormat("/Namespace:{value}")]
         public virtual string Namespace { get; internal set; }
         /// <summary>
         ///   The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').
         /// </summary>
+        [ArgumentFormat("/OperationGenerationMode:{value}")]
         public virtual OperationGenerationMode OperationGenerationMode { get; internal set; }
         /// <summary>
         ///   The generic array .NET type of operation parameters (default: 'IEnumerable').
         /// </summary>
+        [ArgumentFormat("/ParameterArrayType:{value}")]
         public virtual string ParameterArrayType { get; internal set; }
         /// <summary>
         ///   The generic dictionary .NET type of operation parameters (default: 'IDictionary').
         /// </summary>
+        [ArgumentFormat("/ParameterDictionaryType:{value}")]
         public virtual string ParameterDictionaryType { get; internal set; }
         /// <summary>
         ///   Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).
         /// </summary>
+        [ArgumentFormat("/RequiredPropertiesMustBeDefined:{value}")]
         public virtual bool? RequiredPropertiesMustBeDefined { get; internal set; }
         /// <summary>
         ///   The generic array .NET type of operation responses (default: 'ICollection').
         /// </summary>
+        [ArgumentFormat("/ResponseArrayType:{value}")]
         public virtual string ResponseArrayType { get; internal set; }
         /// <summary>
         ///   The response class (default 'SwaggerResponse', may use '{controller}' placeholder).
         /// </summary>
+        [ArgumentFormat("/ResponseClass:{value}")]
         public virtual string ResponseClass { get; internal set; }
         /// <summary>
         ///   The generic dictionary .NET type of operation responses (default: 'IDictionary').
         /// </summary>
+        [ArgumentFormat("/ResponseDictionaryType:{value}")]
         public virtual string ResponseDictionaryType { get; internal set; }
         /// <summary>
         ///   The time span .NET type (default: 'TimeSpan').
         /// </summary>
+        [ArgumentFormat("/TimeSpanType:{value}")]
         public virtual string TimeSpanType { get; internal set; }
         /// <summary>
         ///   The time .NET type (default: 'TimeSpan').
         /// </summary>
+        [ArgumentFormat("/TimeType:{value}")]
         public virtual string TimeType { get; internal set; }
         /// <summary>
         ///   List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).
         /// </summary>
+        [ArgumentFormat("/WrapResponseMethods:{value}")]
         public virtual IReadOnlyList<string> WrapResponseMethods => WrapResponseMethodsInternal.AsReadOnly();
         internal List<string> WrapResponseMethodsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies whether to wrap success responses to allow full response access.
         /// </summary>
+        [ArgumentFormat("/WrapResponses:{value}")]
         public virtual bool? WrapResponses { get; internal set; }
         /// <summary>
         ///   The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/EnumNameGeneratorType:{value}")]
         public virtual string EnumNameGeneratorType { get; internal set; }
         /// <summary>
         ///   The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/PropertyNameGeneratorType:{value}")]
         public virtual string PropertyNameGeneratorType { get; internal set; }
         /// <summary>
         ///   The Liquid template directory (experimental).
         /// </summary>
+        [ArgumentFormat("/TemplateDirectory:{value}")]
         public virtual string TemplateDirectory { get; internal set; }
         /// <summary>
         ///   The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/TypeNameGenerator:{value}")]
         public virtual string TypeNameGenerator { get; internal set; }
         /// <summary>
         ///   A file path or URL to the data or the JSON data itself.
         /// </summary>
+        [ArgumentFormat("/Input:{value}")]
         public virtual string Input { get; internal set; }
         /// <summary>
         ///   Overrides the service host of the web document (optional, use '.' to remove the hostname).
         /// </summary>
+        [ArgumentFormat("/ServiceHost:{value}")]
         public virtual string ServiceHost { get; internal set; }
         /// <summary>
         ///   Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').
         /// </summary>
+        [ArgumentFormat("/ServiceSchemes:{value}")]
         public virtual IReadOnlyList<string> ServiceSchemes => ServiceSchemesInternal.AsReadOnly();
         internal List<string> ServiceSchemesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The output file path (optional).
         /// </summary>
+        [ArgumentFormat("/Output:{value}")]
         public virtual string Output { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5323,35 +5815,43 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/EnumNameGeneratorType:{value}")]
         public virtual string EnumNameGeneratorType { get; internal set; }
         /// <summary>
         ///   The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/PropertyNameGeneratorType:{value}")]
         public virtual string PropertyNameGeneratorType { get; internal set; }
         /// <summary>
         ///   The Liquid template directory (experimental).
         /// </summary>
+        [ArgumentFormat("/TemplateDirectory:{value}")]
         public virtual string TemplateDirectory { get; internal set; }
         /// <summary>
         ///   The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/TypeNameGenerator:{value}")]
         public virtual string TypeNameGenerator { get; internal set; }
         /// <summary>
         ///   A file path or URL to the data or the JSON data itself.
         /// </summary>
+        [ArgumentFormat("/Input:{value}")]
         public virtual string Input { get; internal set; }
         /// <summary>
         ///   Overrides the service host of the web document (optional, use '.' to remove the hostname).
         /// </summary>
+        [ArgumentFormat("/ServiceHost:{value}")]
         public virtual string ServiceHost { get; internal set; }
         /// <summary>
         ///   Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').
         /// </summary>
+        [ArgumentFormat("/ServiceSchemes:{value}")]
         public virtual IReadOnlyList<string> ServiceSchemes => ServiceSchemesInternal.AsReadOnly();
         internal List<string> ServiceSchemesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The output file path (optional).
         /// </summary>
+        [ArgumentFormat("/Output:{value}")]
         public virtual string Output { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5387,229 +5887,284 @@ namespace Nuke.Common.Tools.NSwag
         /// <summary>
         ///   The token name for injecting the API base URL string (used in the Angular template, default: 'API_BASE_URL').
         /// </summary>
+        [ArgumentFormat("/BaseUrlTokenName:{value}")]
         public virtual string BaseUrlTokenName { get; internal set; }
         /// <summary>
         ///   The class name of the generated client.
         /// </summary>
+        [ArgumentFormat("/ClassName:{value}")]
         public virtual string ClassName { get; internal set; }
         /// <summary>
         ///   The type names which always generate plain TypeScript classes.
         /// </summary>
+        [ArgumentFormat("/ClassTypes:{value}")]
         public virtual IReadOnlyList<string> ClassTypes => ClassTypesInternal.AsReadOnly();
         internal List<string> ClassTypesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The base class of the generated client classes (optional, must be imported or implemented in the extension code).
         /// </summary>
+        [ArgumentFormat("/ClientBaseClass:{value}")]
         public virtual string ClientBaseClass { get; internal set; }
         /// <summary>
         ///   The configuration class. The setting ClientBaseClass must be set. (empty for no configuration class).
         /// </summary>
+        [ArgumentFormat("/ConfigurationClass:{value}")]
         public virtual string ConfigurationClass { get; internal set; }
         /// <summary>
         ///   Convert POJO objects in the constructor data to DTO instances (GenerateConstructorInterface must be enabled, default: false).
         /// </summary>
+        [ArgumentFormat("/ConvertConstructorInterfaceData:{value}")]
         public virtual bool? ConvertConstructorInterfaceData { get; internal set; }
         /// <summary>
         ///   The date time type ('Date', 'MomentJS', 'OffsetMomentJS', 'string').
         /// </summary>
+        [ArgumentFormat("/DateTimeType:{value}")]
         public virtual TypeScriptDateTimeType DateTimeType { get; internal set; }
         /// <summary>
         ///   The exception class (default 'ApiException').
         /// </summary>
+        [ArgumentFormat("/ExceptionClass:{value}")]
         public virtual string ExceptionClass { get; internal set; }
         /// <summary>
         ///   The globally excluded parameter names.
         /// </summary>
+        [ArgumentFormat("/ExcludedParameterNames:{value}")]
         public virtual IReadOnlyList<string> ExcludedParameterNames => ExcludedParameterNamesInternal.AsReadOnly();
         internal List<string> ExcludedParameterNamesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The excluded DTO type names (must be defined in an import or other namespace).
         /// </summary>
+        [ArgumentFormat("/ExcludedTypeNames:{value}")]
         public virtual IReadOnlyList<string> ExcludedTypeNames => ExcludedTypeNamesInternal.AsReadOnly();
         internal List<string> ExcludedTypeNamesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies whether the export keyword should be added to all classes, interfaces and enums (default: true).
         /// </summary>
+        [ArgumentFormat("/ExportTypes:{value}")]
         public virtual bool? ExportTypes { get; internal set; }
         /// <summary>
         ///   The list of extended classes.
         /// </summary>
+        [ArgumentFormat("/ExtendedClasses:{value}")]
         public virtual IReadOnlyList<string> ExtendedClasses => ExtendedClassesInternal.AsReadOnly();
         internal List<string> ExtendedClassesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The extension code (string or file path).
         /// </summary>
+        [ArgumentFormat("/ExtensionCode:{value}")]
         public virtual string ExtensionCode { get; internal set; }
         /// <summary>
         ///   Specifies whether generate client classes.
         /// </summary>
+        [ArgumentFormat("/GenerateClientClasses:{value}")]
         public virtual bool? GenerateClientClasses { get; internal set; }
         /// <summary>
         ///   Specifies whether generate interfaces for the client classes (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateClientInterfaces:{value}")]
         public virtual bool? GenerateClientInterfaces { get; internal set; }
         /// <summary>
         ///   Specifies whether a clone() method should be generated in the DTO classes (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateCloneMethod:{value}")]
         public virtual bool? GenerateCloneMethod { get; internal set; }
         /// <summary>
         ///   Generate an class interface which is used in the constructor to initialize the class (only available when TypeStyle is Class, default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateConstructorInterface:{value}")]
         public virtual bool? GenerateConstructorInterface { get; internal set; }
         /// <summary>
         ///   Specifies whether to generate default values for properties (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateDefaultValues:{value}")]
         public virtual bool? GenerateDefaultValues { get; internal set; }
         /// <summary>
         ///   Specifies whether to generate DTO classes.
         /// </summary>
+        [ArgumentFormat("/GenerateDtoTypes:{value}")]
         public virtual bool? GenerateDtoTypes { get; internal set; }
         /// <summary>
         ///   Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).
         /// </summary>
+        [ArgumentFormat("/GenerateOptionalParameters:{value}")]
         public virtual bool? GenerateOptionalParameters { get; internal set; }
         /// <summary>
         ///   Specifies whether to generate response classes (default: true).
         /// </summary>
+        [ArgumentFormat("/GenerateResponseClasses:{value}")]
         public virtual bool? GenerateResponseClasses { get; internal set; }
         /// <summary>
         ///   Handle JSON references (default: false).
         /// </summary>
+        [ArgumentFormat("/HandleReferences:{value}")]
         public virtual bool? HandleReferences { get; internal set; }
         /// <summary>
         ///   The Angular HTTP service class (default 'Http', 'HttpClient').
         /// </summary>
+        [ArgumentFormat("/HttpClass:{value}")]
         public virtual HttpClass HttpClass { get; internal set; }
         /// <summary>
         ///   Specifies whether required types should be imported (default: true).
         /// </summary>
+        [ArgumentFormat("/ImportRequiredTypes:{value}")]
         public virtual bool? ImportRequiredTypes { get; internal set; }
         /// <summary>
         ///   The Angular injection token type (default 'InjectionToken', 'OpaqueToken').
         /// </summary>
+        [ArgumentFormat("/InjectionTokenType:{value}")]
         public virtual InjectionTokenType InjectionTokenType { get; internal set; }
         /// <summary>
         ///   Inline named any types (default: false).
         /// </summary>
+        [ArgumentFormat("/InlineNamedAny:{value}")]
         public virtual bool? InlineNamedAny { get; internal set; }
         /// <summary>
         ///   Inline named dictionaries (default: false).
         /// </summary>
+        [ArgumentFormat("/InlineNamedDictionaries:{value}")]
         public virtual bool? InlineNamedDictionaries { get; internal set; }
         /// <summary>
         ///   Specifies whether to mark optional properties with ? (default: false).
         /// </summary>
+        [ArgumentFormat("/MarkOptionalProperties:{value}")]
         public virtual bool? MarkOptionalProperties { get; internal set; }
         /// <summary>
         ///   The TypeScript module name (default: '', no module).
         /// </summary>
+        [ArgumentFormat("/ModuleName:{value}")]
         public virtual string ModuleName { get; internal set; }
         /// <summary>
         ///   The TypeScript namespace (default: '', no namespace).
         /// </summary>
+        [ArgumentFormat("/Namespace:{value}")]
         public virtual string Namespace { get; internal set; }
         /// <summary>
         ///   The null value used in object initializers (default 'Undefined', 'Null').
         /// </summary>
+        [ArgumentFormat("/NullValue:{value}")]
         public virtual TypeScriptNullValue NullValue { get; internal set; }
         /// <summary>
         ///   The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').
         /// </summary>
+        [ArgumentFormat("/OperationGenerationMode:{value}")]
         public virtual OperationGenerationMode OperationGenerationMode { get; internal set; }
         /// <summary>
         ///   The promise type ('Promise' or 'QPromise').
         /// </summary>
+        [ArgumentFormat("/PromiseType:{value}")]
         public virtual PromiseType PromiseType { get; internal set; }
         /// <summary>
         ///   List of methods with a protected access modifier ('classname.methodname').
         /// </summary>
+        [ArgumentFormat("/ProtectedMethods:{value}")]
         public virtual IReadOnlyList<string> ProtectedMethods => ProtectedMethodsInternal.AsReadOnly();
         internal List<string> ProtectedMethodsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The null value used for query parameters which are null (default: '').
         /// </summary>
+        [ArgumentFormat("/QueryNullValue:{value}")]
         public virtual string QueryNullValue { get; internal set; }
         /// <summary>
         ///   The response class (default 'SwaggerResponse', may use '{controller}' placeholder).
         /// </summary>
+        [ArgumentFormat("/ResponseClass:{value}")]
         public virtual string ResponseClass { get; internal set; }
         /// <summary>
         ///   The target RxJs version (default: 6.0).
         /// </summary>
+        [ArgumentFormat("/RxJsVersion:{value}")]
         public virtual decimal? RxJsVersion { get; internal set; }
         /// <summary>
         ///   The type of the asynchronism handling ('JQueryCallbacks', 'JQueryPromises', 'AngularJS', 'Angular', 'Fetch', 'Aurelia').
         /// </summary>
+        [ArgumentFormat("/Template:{value}")]
         public virtual TypeScriptTemplate Template { get; internal set; }
         /// <summary>
         ///   The target TypeScript version (default: 2.7).
         /// </summary>
+        [ArgumentFormat("/TypeScriptVersion:{value}")]
         public virtual decimal? TypeScriptVersion { get; internal set; }
         /// <summary>
         ///   The type style (default: Class).
         /// </summary>
+        [ArgumentFormat("/TypeStyle:{value}")]
         public virtual TypeScriptTypeStyle TypeStyle { get; internal set; }
         /// <summary>
         ///   Specifies whether to use the 'getBaseUrl(defaultUrl: string)' method from the base class (default: false).
         /// </summary>
+        [ArgumentFormat("/UseGetBaseUrlMethod:{value}")]
         public virtual bool? UseGetBaseUrlMethod { get; internal set; }
         /// <summary>
         ///   Specifies whether to use the Angular 6 Singleton Provider (Angular template only, default: false).
         /// </summary>
+        [ArgumentFormat("/UseSingletonProvider:{value}")]
         public virtual bool? UseSingletonProvider { get; internal set; }
         /// <summary>
         ///   Call 'transformOptions' on the base class or extension class (default: false).
         /// </summary>
+        [ArgumentFormat("/UseTransformOptionsMethod:{value}")]
         public virtual bool? UseTransformOptionsMethod { get; internal set; }
         /// <summary>
         ///   Call 'transformResult' on the base class or extension class (default: false).
         /// </summary>
+        [ArgumentFormat("/UseTransformResultMethod:{value}")]
         public virtual bool? UseTransformResultMethod { get; internal set; }
         /// <summary>
         ///   Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: false).
         /// </summary>
+        [ArgumentFormat("/WrapDtoExceptions:{value}")]
         public virtual bool? WrapDtoExceptions { get; internal set; }
         /// <summary>
         ///   List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).
         /// </summary>
+        [ArgumentFormat("/WrapResponseMethods:{value}")]
         public virtual IReadOnlyList<string> WrapResponseMethods => WrapResponseMethodsInternal.AsReadOnly();
         internal List<string> WrapResponseMethodsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies whether to wrap success responses to allow full response access (experimental).
         /// </summary>
+        [ArgumentFormat("/WrapResponses:{value}")]
         public virtual bool? WrapResponses { get; internal set; }
         /// <summary>
         ///   The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/EnumNameGeneratorType:{value}")]
         public virtual string EnumNameGeneratorType { get; internal set; }
         /// <summary>
         ///   The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/PropertyNameGeneratorType:{value}")]
         public virtual string PropertyNameGeneratorType { get; internal set; }
         /// <summary>
         ///   The Liquid template directory (experimental).
         /// </summary>
+        [ArgumentFormat("/TemplateDirectory:{value}")]
         public virtual string TemplateDirectory { get; internal set; }
         /// <summary>
         ///   The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
+        [ArgumentFormat("/TypeNameGenerator:{value}")]
         public virtual string TypeNameGenerator { get; internal set; }
         /// <summary>
         ///   A file path or URL to the data or the JSON data itself.
         /// </summary>
+        [ArgumentFormat("/Input:{value}")]
         public virtual string Input { get; internal set; }
         /// <summary>
         ///   Overrides the service host of the web document (optional, use '.' to remove the hostname).
         /// </summary>
+        [ArgumentFormat("/ServiceHost:{value}")]
         public virtual string ServiceHost { get; internal set; }
         /// <summary>
         ///   Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').
         /// </summary>
+        [ArgumentFormat("/ServiceSchemes:{value}")]
         public virtual IReadOnlyList<string> ServiceSchemes => ServiceSchemesInternal.AsReadOnly();
         internal List<string> ServiceSchemesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The output file path (optional).
         /// </summary>
+        [ArgumentFormat("/Output:{value}")]
         public virtual string Output { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

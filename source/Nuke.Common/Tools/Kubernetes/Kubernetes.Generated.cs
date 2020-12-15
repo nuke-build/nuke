@@ -78,6 +78,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--verbs</c> via <see cref="KubernetesApiResourcesSettings.Verbs"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("api-resources")]
         public static IReadOnlyCollection<Output> KubernetesApiResources(Configure<KubernetesApiResourcesSettings> configurator)
         {
             return KubernetesApiResources(configurator(new KubernetesApiResourcesSettings()));
@@ -142,6 +143,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--timeout</c> via <see cref="KubernetesDrainSettings.Timeout"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("drain")]
         public static IReadOnlyCollection<Output> KubernetesDrain(Configure<KubernetesDrainSettings> configurator)
         {
             return KubernetesDrain(configurator(new KubernetesDrainSettings()));
@@ -270,6 +272,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--wait</c> via <see cref="KubernetesRunSettings.Wait"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("run")]
         public static IReadOnlyCollection<Output> KubernetesRun(Configure<KubernetesRunSettings> configurator)
         {
             return KubernetesRun(configurator(new KubernetesRunSettings()));
@@ -399,6 +402,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--watch-only</c> via <see cref="KubernetesGetSettings.WatchOnly"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("get")]
         public static IReadOnlyCollection<Output> KubernetesGet(Configure<KubernetesGetSettings> configurator)
         {
             return KubernetesGet(configurator(new KubernetesGetSettings()));
@@ -471,6 +475,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--short</c> via <see cref="KubernetesVersionSettings.Short"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("version")]
         public static IReadOnlyCollection<Output> KubernetesVersion(Configure<KubernetesVersionSettings> configurator)
         {
             return KubernetesVersion(configurator(new KubernetesVersionSettings()));
@@ -512,6 +517,7 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         /// </remarks>
+        [CommandFormat("top")]
         public static IReadOnlyCollection<Output> KubernetesTop(Configure<KubernetesTopSettings> configurator)
         {
             return KubernetesTop(configurator(new KubernetesTopSettings()));
@@ -548,6 +554,7 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         /// </remarks>
+        [CommandFormat("config")]
         public static IReadOnlyCollection<Output> KubernetesConfig(Configure<KubernetesConfigSettings> configurator)
         {
             return KubernetesConfig(configurator(new KubernetesConfigSettings()));
@@ -598,6 +605,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--tty</c> via <see cref="KubernetesExecSettings.Tty"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("exec")]
         public static IReadOnlyCollection<Output> KubernetesExec(Configure<KubernetesExecSettings> configurator)
         {
             return KubernetesExec(configurator(new KubernetesExecSettings()));
@@ -673,6 +681,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--validate</c> via <see cref="KubernetesRollingUpdateSettings.Validate"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("rolling-update")]
         public static IReadOnlyCollection<Output> KubernetesRollingUpdate(Configure<KubernetesRollingUpdateSettings> configurator)
         {
             return KubernetesRollingUpdate(configurator(new KubernetesRollingUpdateSettings()));
@@ -763,6 +772,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--template</c> via <see cref="KubernetesLabelSettings.Template"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("label")]
         public static IReadOnlyCollection<Output> KubernetesLabel(Configure<KubernetesLabelSettings> configurator)
         {
             return KubernetesLabel(configurator(new KubernetesLabelSettings()));
@@ -854,6 +864,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--template</c> via <see cref="KubernetesAnnotateSettings.Template"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("annotate")]
         public static IReadOnlyCollection<Output> KubernetesAnnotate(Configure<KubernetesAnnotateSettings> configurator)
         {
             return KubernetesAnnotate(configurator(new KubernetesAnnotateSettings()));
@@ -940,6 +951,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--wait</c> via <see cref="KubernetesDeleteSettings.Wait"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("delete")]
         public static IReadOnlyCollection<Output> KubernetesDelete(Configure<KubernetesDeleteSettings> configurator)
         {
             return KubernetesDelete(configurator(new KubernetesDeleteSettings()));
@@ -1040,6 +1052,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--type</c> via <see cref="KubernetesExposeSettings.Type"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("expose")]
         public static IReadOnlyCollection<Output> KubernetesExpose(Configure<KubernetesExposeSettings> configurator)
         {
             return KubernetesExpose(configurator(new KubernetesExposeSettings()));
@@ -1100,6 +1113,7 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         /// </remarks>
+        [CommandFormat("options")]
         public static IReadOnlyCollection<Output> KubernetesOptions(Configure<KubernetesOptionsSettings> configurator)
         {
             return KubernetesOptions(configurator(new KubernetesOptionsSettings()));
@@ -1150,6 +1164,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--tty</c> via <see cref="KubernetesAttachSettings.Tty"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("attach")]
         public static IReadOnlyCollection<Output> KubernetesAttach(Configure<KubernetesAttachSettings> configurator)
         {
             return KubernetesAttach(configurator(new KubernetesAttachSettings()));
@@ -1219,6 +1234,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--www-prefix</c> via <see cref="KubernetesProxySettings.WwwPrefix"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("proxy")]
         public static IReadOnlyCollection<Output> KubernetesProxy(Configure<KubernetesProxySettings> configurator)
         {
             return KubernetesProxy(configurator(new KubernetesProxySettings()));
@@ -1268,6 +1284,7 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         /// </remarks>
+        [CommandFormat("alpha")]
         public static IReadOnlyCollection<Output> KubernetesAlpha(Configure<KubernetesAlphaSettings> configurator)
         {
             return KubernetesAlpha(configurator(new KubernetesAlphaSettings()));
@@ -1304,6 +1321,7 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         /// </remarks>
+        [CommandFormat("kubectl")]
         public static IReadOnlyCollection<Output> Kubernetes(Configure<KubernetesSettings> configurator)
         {
             return Kubernetes(configurator(new KubernetesSettings()));
@@ -1340,6 +1358,7 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         /// </remarks>
+        [CommandFormat("completion")]
         public static IReadOnlyCollection<Output> KubernetesCompletion(Configure<KubernetesCompletionSettings> configurator)
         {
             return KubernetesCompletion(configurator(new KubernetesCompletionSettings()));
@@ -1402,6 +1421,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--type</c> via <see cref="KubernetesPatchSettings.Type"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("patch")]
         public static IReadOnlyCollection<Output> KubernetesPatch(Configure<KubernetesPatchSettings> configurator)
         {
             return KubernetesPatch(configurator(new KubernetesPatchSettings()));
@@ -1479,6 +1499,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--wait</c> via <see cref="KubernetesReplaceSettings.Wait"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("replace")]
         public static IReadOnlyCollection<Output> KubernetesReplace(Configure<KubernetesReplaceSettings> configurator)
         {
             return KubernetesReplace(configurator(new KubernetesReplaceSettings()));
@@ -1551,6 +1572,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--validate</c> via <see cref="KubernetesTaintSettings.Validate"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("taint")]
         public static IReadOnlyCollection<Output> KubernetesTaint(Configure<KubernetesTaintSettings> configurator)
         {
             return KubernetesTaint(configurator(new KubernetesTaintSettings()));
@@ -1616,6 +1638,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--show-events</c> via <see cref="KubernetesDescribeSettings.ShowEvents"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("describe")]
         public static IReadOnlyCollection<Output> KubernetesDescribe(Configure<KubernetesDescribeSettings> configurator)
         {
             return KubernetesDescribe(configurator(new KubernetesDescribeSettings()));
@@ -1667,6 +1690,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>&lt;subcommand&gt;</c> via <see cref="KubernetesSetSettings.Subcommand"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("set")]
         public static IReadOnlyCollection<Output> KubernetesSet(Configure<KubernetesSetSettings> configurator)
         {
             return KubernetesSet(configurator(new KubernetesSetSettings()));
@@ -1712,6 +1736,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>&lt;subcommand&gt;</c> via <see cref="KubernetesAuthSettings.Subcommand"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("auth")]
         public static IReadOnlyCollection<Output> KubernetesAuth(Configure<KubernetesAuthSettings> configurator)
         {
             return KubernetesAuth(configurator(new KubernetesAuthSettings()));
@@ -1757,6 +1782,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>&lt;subcommand&gt;</c> via <see cref="KubernetesCertificateSettings.Subcommand"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("certificate")]
         public static IReadOnlyCollection<Output> KubernetesCertificate(Configure<KubernetesCertificateSettings> configurator)
         {
             return KubernetesCertificate(configurator(new KubernetesCertificateSettings()));
@@ -1802,6 +1828,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>&lt;subcommand&gt;</c> via <see cref="KubernetesRolloutSettings.Subcommand"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("rollout")]
         public static IReadOnlyCollection<Output> KubernetesRollout(Configure<KubernetesRolloutSettings> configurator)
         {
             return KubernetesRollout(configurator(new KubernetesRolloutSettings()));
@@ -1885,6 +1912,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--wait</c> via <see cref="KubernetesApplySettings.Wait"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("apply")]
         public static IReadOnlyCollection<Output> KubernetesApply(Configure<KubernetesApplySettings> configurator)
         {
             return KubernetesApply(configurator(new KubernetesApplySettings()));
@@ -1953,6 +1981,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--selector</c> via <see cref="KubernetesCordonSettings.Selector"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("cordon")]
         public static IReadOnlyCollection<Output> KubernetesCordon(Configure<KubernetesCordonSettings> configurator)
         {
             return KubernetesCordon(configurator(new KubernetesCordonSettings()));
@@ -2004,6 +2033,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--container</c> via <see cref="KubernetesCpSettings.Container"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("cp")]
         public static IReadOnlyCollection<Output> KubernetesCp(Configure<KubernetesCpSettings> configurator)
         {
             return KubernetesCp(configurator(new KubernetesCpSettings()));
@@ -2045,6 +2075,7 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         /// </remarks>
+        [CommandFormat("api-versions")]
         public static IReadOnlyCollection<Output> KubernetesApiVersions(Configure<KubernetesApiVersionsSettings> configurator)
         {
             return KubernetesApiVersions(configurator(new KubernetesApiVersionsSettings()));
@@ -2091,6 +2122,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--selector</c> via <see cref="KubernetesUncordonSettings.Selector"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("uncordon")]
         public static IReadOnlyCollection<Output> KubernetesUncordon(Configure<KubernetesUncordonSettings> configurator)
         {
             return KubernetesUncordon(configurator(new KubernetesUncordonSettings()));
@@ -2162,6 +2194,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--template</c> via <see cref="KubernetesAutoscaleSettings.Template"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("autoscale")]
         public static IReadOnlyCollection<Output> KubernetesAutoscale(Configure<KubernetesAutoscaleSettings> configurator)
         {
             return KubernetesAutoscale(configurator(new KubernetesAutoscaleSettings()));
@@ -2219,6 +2252,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>&lt;name&gt;</c> via <see cref="KubernetesPluginSettings.Name"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("plugin")]
         public static IReadOnlyCollection<Output> KubernetesPlugin(Configure<KubernetesPluginSettings> configurator)
         {
             return KubernetesPlugin(configurator(new KubernetesPluginSettings()));
@@ -2258,6 +2292,7 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         /// </remarks>
+        [CommandFormat("cluster-info")]
         public static IReadOnlyCollection<Output> KubernetesClusterInfo(Configure<KubernetesClusterInfoSettings> configurator)
         {
             return KubernetesClusterInfo(configurator(new KubernetesClusterInfoSettings()));
@@ -2314,6 +2349,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--timeout</c> via <see cref="KubernetesWaitSettings.Timeout"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("wait")]
         public static IReadOnlyCollection<Output> KubernetesWait(Configure<KubernetesWaitSettings> configurator)
         {
             return KubernetesWait(configurator(new KubernetesWaitSettings()));
@@ -2380,6 +2416,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--validate</c> via <see cref="KubernetesConvertSettings.Validate"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("convert")]
         public static IReadOnlyCollection<Output> KubernetesConvert(Configure<KubernetesConvertSettings> configurator)
         {
             return KubernetesConvert(configurator(new KubernetesConvertSettings()));
@@ -2456,6 +2493,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--windows-line-endings</c> via <see cref="KubernetesCreateSettings.WindowsLineEndings"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("create")]
         public static IReadOnlyCollection<Output> KubernetesCreate(Configure<KubernetesCreateSettings> configurator)
         {
             return KubernetesCreate(configurator(new KubernetesCreateSettings()));
@@ -2517,6 +2555,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--pod-running-timeout</c> via <see cref="KubernetesPortForwardSettings.PodRunningTimeout"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("port-forward")]
         public static IReadOnlyCollection<Output> KubernetesPortForward(Configure<KubernetesPortForwardSettings> configurator)
         {
             return KubernetesPortForward(configurator(new KubernetesPortForwardSettings()));
@@ -2638,6 +2677,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--wait</c> via <see cref="KubernetesRunContainerSettings.Wait"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("run-container")]
         public static IReadOnlyCollection<Output> KubernetesRunContainer(Configure<KubernetesRunContainerSettings> configurator)
         {
             return KubernetesRunContainer(configurator(new KubernetesRunContainerSettings()));
@@ -2742,6 +2782,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--windows-line-endings</c> via <see cref="KubernetesEditSettings.WindowsLineEndings"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("edit")]
         public static IReadOnlyCollection<Output> KubernetesEdit(Configure<KubernetesEditSettings> configurator)
         {
             return KubernetesEdit(configurator(new KubernetesEditSettings()));
@@ -2820,6 +2861,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--timeout</c> via <see cref="KubernetesScaleSettings.Timeout"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("scale")]
         public static IReadOnlyCollection<Output> KubernetesScale(Configure<KubernetesScaleSettings> configurator)
         {
             return KubernetesScale(configurator(new KubernetesScaleSettings()));
@@ -2880,6 +2922,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--recursive</c> via <see cref="KubernetesExplainSettings.Recursive"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("explain")]
         public static IReadOnlyCollection<Output> KubernetesExplain(Configure<KubernetesExplainSettings> configurator)
         {
             return KubernetesExplain(configurator(new KubernetesExplainSettings()));
@@ -2951,6 +2994,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///     <li><c>--timestamps</c> via <see cref="KubernetesLogsSettings.Timestamps"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("logs")]
         public static IReadOnlyCollection<Output> KubernetesLogs(Configure<KubernetesLogsSettings> configurator)
         {
             return KubernetesLogs(configurator(new KubernetesLogsSettings()));
@@ -2999,26 +3043,33 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Limit to resources in the specified API group.
         /// </summary>
+        [ArgumentFormat("--api-group={value}")]
         public virtual string ApiGroup { get; internal set; }
         /// <summary>
         ///   Use the cached list of resources if available.
         /// </summary>
+        [ArgumentFormat("--cached={value}")]
         public virtual bool? Cached { get; internal set; }
         /// <summary>
         ///   If false, non-namespaced resources will be returned, otherwise returning namespaced resources by default.
         /// </summary>
+        [ArgumentFormat("--namespaced={value}")]
         public virtual bool? Namespaced { get; internal set; }
         /// <summary>
         ///   When using the default or custom-column output format, don't print headers (default print headers).
         /// </summary>
+        [ArgumentFormat("--no-headers={value}")]
         public virtual bool? NoHeaders { get; internal set; }
         /// <summary>
         ///   Output format. One of: wide|name.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual KubernetesApiResourcesOutput Output { get; internal set; }
         /// <summary>
         ///   Limit to resources that support the specified verbs.
         /// </summary>
+        [ArgumentFormat("--verbs={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Verbs => VerbsInternal.AsReadOnly();
         internal List<string> VerbsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -3052,34 +3103,42 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Continue even if there are pods using emptyDir (local data that will be deleted when the node is drained).
         /// </summary>
+        [ArgumentFormat("--delete-local-data={value}")]
         public virtual bool? DeleteLocalData { get; internal set; }
         /// <summary>
         ///   If true, only print the object that would be sent, without sending it.
         /// </summary>
+        [ArgumentFormat("--dry-run={value}")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   Continue even if there are pods not managed by a ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet.
         /// </summary>
+        [ArgumentFormat("--force={value}")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Period of time in seconds given to each pod to terminate gracefully. If negative, the default value specified in the pod will be used.
         /// </summary>
+        [ArgumentFormat("--grace-period={value}")]
         public virtual int? GracePeriod { get; internal set; }
         /// <summary>
         ///   Ignore DaemonSet-managed pods.
         /// </summary>
+        [ArgumentFormat("--ignore-daemonsets={value}")]
         public virtual bool? IgnoreDaemonsets { get; internal set; }
         /// <summary>
         ///   Label selector to filter pods on the node.
         /// </summary>
+        [ArgumentFormat("--pod-selector={value}")]
         public virtual string PodSelector { get; internal set; }
         /// <summary>
         ///   Selector (label query) to filter on.
         /// </summary>
+        [ArgumentFormat("--selector={value}")]
         public virtual string Selector { get; internal set; }
         /// <summary>
         ///   The length of time to wait before giving up, zero means infinite.
         /// </summary>
+        [ArgumentFormat("--timeout={value}")]
         public virtual TimeSpan? Timeout { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3114,160 +3173,200 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   The name of the container.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
+        [ArgumentFormat("--allow-missing-template-keys={value}")]
         public virtual bool? AllowMissingTemplateKeys { get; internal set; }
         /// <summary>
         ///   If true, wait for the Pod to start running, and then attach to the Pod as if 'kubectl attach ...' were called.  Default false, unless '-i/--stdin' is set, in which case the default is true. With '--restart=Never' the exit code of the container process is returned.
         /// </summary>
+        [ArgumentFormat("--attach={value}")]
         public virtual bool? Attach { get; internal set; }
         /// <summary>
         ///   If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.
         /// </summary>
+        [ArgumentFormat("--cascade={value}")]
         public virtual bool? Cascade { get; internal set; }
         /// <summary>
         ///   If true and extra arguments are present, use them as the 'command' field in the container, rather than the 'args' field which is the default.
         /// </summary>
+        [ArgumentFormat("--command={value}")]
         public virtual bool? Command { get; internal set; }
         /// <summary>
         ///   If true, only print the object that would be sent, without sending it.
         /// </summary>
+        [ArgumentFormat("--dry-run={value}")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   Environment variables to set in the container.
         /// </summary>
+        [ArgumentFormat("--env={value}")]
         public virtual IReadOnlyList<string> Env => EnvInternal.AsReadOnly();
         internal List<string> EnvInternal { get; set; } = new List<string>();
         /// <summary>
         ///   If true, a public, external service is created for the container(s) which are run.
         /// </summary>
+        [ArgumentFormat("--expose={value}")]
         public virtual bool? Expose { get; internal set; }
         /// <summary>
         ///   to use to replace the resource.
         /// </summary>
+        [ArgumentFormat("--filename={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Filename => FilenameInternal.AsReadOnly();
         internal List<string> FilenameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.
         /// </summary>
+        [ArgumentFormat("--force={value}")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   The name of the API generator to use, see http://kubernetes.io/docs/user-guide/kubectl-conventions/#generators for a list.
         /// </summary>
+        [ArgumentFormat("--generator={value}")]
         public virtual string Generator { get; internal set; }
         /// <summary>
         ///   Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion).
         /// </summary>
+        [ArgumentFormat("--grace-period={value}")]
         public virtual int? GracePeriod { get; internal set; }
         /// <summary>
         ///   The host port mapping for the container port. To demonstrate a single-machine container.
         /// </summary>
+        [ArgumentFormat("--hostport={value}")]
         public virtual int? Hostport { get; internal set; }
         /// <summary>
         ///   The image for the container to run.
         /// </summary>
+        [ArgumentFormat("--image={value}")]
         public virtual string Image { get; internal set; }
         /// <summary>
         ///   The image pull policy for the container. If left empty, this value will not be specified by the client and defaulted by the server.
         /// </summary>
+        [ArgumentFormat("--image-pull-policy={value}")]
         public virtual string ImagePullPolicy { get; internal set; }
         /// <summary>
         ///   Comma separated labels to apply to the pod(s). Will override previous values.
         /// </summary>
+        [ArgumentFormat("--labels={value}")]
         public virtual string Labels { get; internal set; }
         /// <summary>
         ///   If the pod is started in interactive mode or with stdin, leave stdin open after the first attach completes. By default, stdin will be closed after the first attach completes.
         /// </summary>
+        [ArgumentFormat("--leave-stdin-open={value}")]
         public virtual bool? LeaveStdinOpen { get; internal set; }
         /// <summary>
         ///   The resource requirement limits for this container.  For example, 'cpu=200m,memory=512Mi'.  Note that server side components may assign limits depending on the server configuration, such as limit ranges.
         /// </summary>
+        [ArgumentFormat("--limits={value}")]
         public virtual string Limits { get; internal set; }
         /// <summary>
         ///   Output format. One of: json|yaml|name|templatefile|template|go-template|go-template-file|jsonpath|jsonpath-file.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual KubernetesRunOutput Output { get; internal set; }
         /// <summary>
         ///   An inline JSON override for the generated object. If this is non-empty, it is used to override the generated object. Requires that the object supply a valid apiVersion field.
         /// </summary>
+        [ArgumentFormat("--overrides={value}")]
         public virtual string Overrides { get; internal set; }
         /// <summary>
         ///   The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running.
         /// </summary>
+        [ArgumentFormat("--pod-running-timeout={value}")]
         public virtual TimeSpan? PodRunningTimeout { get; internal set; }
         /// <summary>
         ///   The port that this container exposes.  If --expose is true, this is also the port used by the service that is created.
         /// </summary>
+        [ArgumentFormat("--port={value}")]
         public virtual string Port { get; internal set; }
         /// <summary>
         ///   If true, suppress prompt messages.
         /// </summary>
+        [ArgumentFormat("--quiet={value}")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.
         /// </summary>
+        [ArgumentFormat("--record={value}")]
         public virtual bool? Record { get; internal set; }
         /// <summary>
         ///   Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
         /// </summary>
+        [ArgumentFormat("--recursive={value}")]
         public virtual bool? Recursive { get; internal set; }
         /// <summary>
         ///   Number of replicas to create for this container. Default is 1.
         /// </summary>
+        [ArgumentFormat("--replicas={value}")]
         public virtual int? Replicas { get; internal set; }
         /// <summary>
         ///   The resource requirement requests for this container.  For example, 'cpu=100m,memory=256Mi'.  Note that server side components may assign requests depending on the server configuration, such as limit ranges.
         /// </summary>
+        [ArgumentFormat("--requests={value}")]
         public virtual string Requests { get; internal set; }
         /// <summary>
         ///   The restart policy for this Pod.  Legal values [Always, OnFailure, Never].  If set to 'Always' a deployment is created, if set to 'OnFailure' a job is created, if set to 'Never', a regular pod is created. For the latter two --replicas must be 1.  Default 'Always', for CronJobs `Never`.
         /// </summary>
+        [ArgumentFormat("--restart={value}")]
         public virtual string Restart { get; internal set; }
         /// <summary>
         ///   If true, delete resources created in this command for attached containers.
         /// </summary>
+        [ArgumentFormat("--rm={value}")]
         public virtual bool? Rm { get; internal set; }
         /// <summary>
         ///   If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
         /// </summary>
+        [ArgumentFormat("--save-config={value}")]
         public virtual bool? SaveConfig { get; internal set; }
         /// <summary>
         ///   A schedule in the Cron format the job should be run with.
         /// </summary>
+        [ArgumentFormat("--schedule={value}")]
         public virtual string Schedule { get; internal set; }
         /// <summary>
         ///   The name of the generator to use for creating a service.  Only used if --expose is true.
         /// </summary>
+        [ArgumentFormat("--service-generator={value}")]
         public virtual string ServiceGenerator { get; internal set; }
         /// <summary>
         ///   An inline JSON override for the generated service object. If this is non-empty, it is used to override the generated object. Requires that the object supply a valid apiVersion field.  Only used if --expose is true.
         /// </summary>
+        [ArgumentFormat("--service-overrides={value}")]
         public virtual string ServiceOverrides { get; internal set; }
         /// <summary>
         ///   Service account to set in the pod spec.
         /// </summary>
+        [ArgumentFormat("--serviceaccount={value}")]
         public virtual string Serviceaccount { get; internal set; }
         /// <summary>
         ///   Keep stdin open on the container(s) in the pod, even if nothing is attached.
         /// </summary>
+        [ArgumentFormat("--stdin={value}")]
         public virtual bool? Stdin { get; internal set; }
         /// <summary>
         ///   Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
         /// </summary>
+        [ArgumentFormat("--template={value}")]
         public virtual string Template { get; internal set; }
         /// <summary>
         ///   The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object.
         /// </summary>
+        [ArgumentFormat("--timeout={value}")]
         public virtual TimeSpan? Timeout { get; internal set; }
         /// <summary>
         ///   Allocated a TTY for each container in the pod.
         /// </summary>
+        [ArgumentFormat("--tty={value}")]
         public virtual bool? Tty { get; internal set; }
         /// <summary>
         ///   If true, wait for resources to be gone before returning. This waits for finalizers.
         /// </summary>
+        [ArgumentFormat("--wait={value}")]
         public virtual bool? Wait { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3333,101 +3432,128 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> TypeName => TypeNameInternal.AsReadOnly();
         internal List<string> TypeNameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.
         /// </summary>
+        [ArgumentFormat("--all-namespaces={value}")]
         public virtual bool? AllNamespaces { get; internal set; }
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
+        [ArgumentFormat("--allow-missing-template-keys={value}")]
         public virtual bool? AllowMissingTemplateKeys { get; internal set; }
         /// <summary>
         ///   Return large lists in chunks rather than all at once. Pass 0 to disable. This flag is beta and may change in the future.
         /// </summary>
+        [ArgumentFormat("--chunk-size={value}")]
         public virtual long? ChunkSize { get; internal set; }
         /// <summary>
         ///   If true, use 'export' for the resources.  Exported resources are stripped of cluster-specific information.
         /// </summary>
+        [ArgumentFormat("--export={value}")]
         public virtual bool? Export { get; internal set; }
         /// <summary>
         ///   Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.
         /// </summary>
+        [ArgumentFormat("--field-selector={value}")]
         public virtual string FieldSelector { get; internal set; }
         /// <summary>
         ///   Filename, directory, or URL to files identifying the resource to get from a server.
         /// </summary>
+        [ArgumentFormat("--filename={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Filename => FilenameInternal.AsReadOnly();
         internal List<string> FilenameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   If the requested object does not exist the command will return exit code 0.
         /// </summary>
+        [ArgumentFormat("--ignore-not-found={value}")]
         public virtual bool? IgnoreNotFound { get; internal set; }
         /// <summary>
         ///   If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.
         /// </summary>
+        [ArgumentFormat("--include-uninitialized={value}")]
         public virtual bool? IncludeUninitialized { get; internal set; }
         /// <summary>
         ///   Accepts a comma separated list of labels that are going to be presented as columns. Names are case-sensitive. You can also use multiple flag options like -L label1 -L label2...
         /// </summary>
+        [ArgumentFormat("--label-columns={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> LabelColumns => LabelColumnsInternal.AsReadOnly();
         internal List<string> LabelColumnsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   When using the default or custom-column output format, don't print headers (default print headers).
         /// </summary>
+        [ArgumentFormat("--no-headers={value}")]
         public virtual bool? NoHeaders { get; internal set; }
         /// <summary>
         ///   Output format. One of: json|yaml|wide|name|custom-columns=...|custom-columns-file=...|go-template=...|go-template-file=...|jsonpath=...|jsonpath-file=... See custom columns [http://kubernetes.io/docs/user-guide/kubectl-overview/#custom-columns], golang template [http://golang.org/pkg/text/template/#pkg-overview] and jsonpath template [http://kubernetes.io/docs/user-guide/jsonpath].
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual KubernetesGetOutput Output { get; internal set; }
         /// <summary>
         ///   Raw URI to request from the server.  Uses the transport specified by the kubeconfig file.
         /// </summary>
+        [ArgumentFormat("--raw={value}")]
         public virtual string Raw { get; internal set; }
         /// <summary>
         ///   Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
         /// </summary>
+        [ArgumentFormat("--recursive={value}")]
         public virtual bool? Recursive { get; internal set; }
         /// <summary>
         ///   Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).
         /// </summary>
+        [ArgumentFormat("--selector={value}")]
         public virtual string Selector { get; internal set; }
         /// <summary>
         ///   If true, have the server return the appropriate table output. Supports extension APIs and CRDs.
         /// </summary>
+        [ArgumentFormat("--server-print={value}")]
         public virtual bool? ServerPrint { get; internal set; }
         /// <summary>
         ///   When printing, show all resources (default show all pods including terminated one.).
         /// </summary>
+        [ArgumentFormat("--show-all={value}")]
         public virtual bool? ShowAll { get; internal set; }
         /// <summary>
         ///   If present, list the resource type for the requested object(s).
         /// </summary>
+        [ArgumentFormat("--show-kind={value}")]
         public virtual bool? ShowKind { get; internal set; }
         /// <summary>
         ///   When printing, show all labels as the last column (default hide labels column).
         /// </summary>
+        [ArgumentFormat("--show-labels={value}")]
         public virtual bool? ShowLabels { get; internal set; }
         /// <summary>
         ///   If non-empty, sort list types using this field specification.  The field specification is expressed as a JSONPath expression (e.g. '{.metadata.name}'). The field in the API resource specified by this JSONPath expression must be an integer or a string.
         /// </summary>
+        [ArgumentFormat("--sort-by={value}")]
         public virtual string SortBy { get; internal set; }
         /// <summary>
         ///   Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
         /// </summary>
+        [ArgumentFormat("--template={value}")]
         public virtual string Template { get; internal set; }
         /// <summary>
         ///   If true, use x-kubernetes-print-column metadata (if present) from the OpenAPI schema for displaying a resource.
         /// </summary>
+        [ArgumentFormat("--use-openapi-print-columns={value}")]
         public virtual bool? UseOpenapiPrintColumns { get; internal set; }
         /// <summary>
         ///   After listing/getting the requested object, watch for changes. Uninitialized objects are excluded if no object name is provided.
         /// </summary>
+        [ArgumentFormat("--watch={value}")]
         public virtual bool? Watch { get; internal set; }
         /// <summary>
         ///   Watch for changes to the requested object(s), without listing/getting first.
         /// </summary>
+        [ArgumentFormat("--watch-only={value}")]
         public virtual bool? WatchOnly { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3478,14 +3604,17 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Client version only (no server required).
         /// </summary>
+        [ArgumentFormat("--client={value}")]
         public virtual bool? Client { get; internal set; }
         /// <summary>
         ///   One of 'yaml' or 'json'.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   Print just the version number.
         /// </summary>
+        [ArgumentFormat("--short={value}")]
         public virtual bool? Short { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3559,22 +3688,27 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   The name of the pod.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string PodName { get; internal set; }
         /// <summary>
         ///   Container name. If omitted, the first container in the pod will be chosen.
         /// </summary>
+        [ArgumentFormat("--container={value}")]
         public virtual string Container { get; internal set; }
         /// <summary>
         ///   Pod name.
         /// </summary>
+        [ArgumentFormat("--pod={value}")]
         public virtual string Pod { get; internal set; }
         /// <summary>
         ///   Pass stdin to the container.
         /// </summary>
+        [ArgumentFormat("--stdin={value}")]
         public virtual bool? Stdin { get; internal set; }
         /// <summary>
         ///   Stdin is a TTY.
         /// </summary>
+        [ArgumentFormat("--tty={value}")]
         public virtual bool? Tty { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3606,59 +3740,74 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
+        [ArgumentFormat("--allow-missing-template-keys={value}")]
         public virtual bool? AllowMissingTemplateKeys { get; internal set; }
         /// <summary>
         ///   Container name which will have its image upgraded. Only relevant when --image is specified, ignored otherwise. Required when using --image on a multi-container pod.
         /// </summary>
+        [ArgumentFormat("--container={value}")]
         public virtual string Container { get; internal set; }
         /// <summary>
         ///   The key to use to differentiate between two different controllers, default 'deployment'.  Only relevant when --image is specified, ignored otherwise.
         /// </summary>
+        [ArgumentFormat("--deployment-label-key={value}")]
         public virtual string DeploymentLabelKey { get; internal set; }
         /// <summary>
         ///   If true, only print the object that would be sent, without sending it.
         /// </summary>
+        [ArgumentFormat("--dry-run={value}")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   Filename or URL to file to use to create the new replication controller.
         /// </summary>
+        [ArgumentFormat("--filename={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Filename => FilenameInternal.AsReadOnly();
         internal List<string> FilenameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Image to use for upgrading the replication controller. Must be distinct from the existing image (either new image or new image tag).  Can not be used with --filename/-f.
         /// </summary>
+        [ArgumentFormat("--image={value}")]
         public virtual string Image { get; internal set; }
         /// <summary>
         ///   Explicit policy for when to pull container images. Required when --image is same as existing image, ignored otherwise.
         /// </summary>
+        [ArgumentFormat("--image-pull-policy={value}")]
         public virtual string ImagePullPolicy { get; internal set; }
         /// <summary>
         ///   Output format. One of: json|yaml|name|go-template-file|templatefile|template|go-template|jsonpath|jsonpath-file.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual KubernetesRollingUpdateOutput Output { get; internal set; }
         /// <summary>
         ///   Time delay between polling for replication controller status after the update. Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".
         /// </summary>
+        [ArgumentFormat("--poll-interval={value}")]
         public virtual TimeSpan? PollInterval { get; internal set; }
         /// <summary>
         ///   If true, this is a request to abort an existing rollout that is partially rolled out. It effectively reverses current and next and runs a rollout.
         /// </summary>
+        [ArgumentFormat("--rollback={value}")]
         public virtual bool? Rollback { get; internal set; }
         /// <summary>
         ///   Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
         /// </summary>
+        [ArgumentFormat("--template={value}")]
         public virtual string Template { get; internal set; }
         /// <summary>
         ///   Max time to wait for a replication controller to update before giving up. Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".
         /// </summary>
+        [ArgumentFormat("--timeout={value}")]
         public virtual TimeSpan? Timeout { get; internal set; }
         /// <summary>
         ///   Time to wait between updating pods. Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".
         /// </summary>
+        [ArgumentFormat("--update-period={value}")]
         public virtual TimeSpan? UpdatePeriod { get; internal set; }
         /// <summary>
         ///   If true, use a schema to validate the input before sending it.
         /// </summary>
+        [ArgumentFormat("--validate={value}")]
         public virtual bool? Validate { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3699,73 +3848,94 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> TypeName => TypeNameInternal.AsReadOnly();
         internal List<string> TypeNameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The Labels to set.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [ItemFormat("{key}={value}")]
+        [Separator(" ")]
         public virtual IReadOnlyDictionary<string, string> Labels => LabelsInternal.AsReadOnly();
         internal Dictionary<string,string> LabelsInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Select all resources, including uninitialized ones, in the namespace of the specified resource types.
         /// </summary>
+        [ArgumentFormat("--all={value}")]
         public virtual bool? All { get; internal set; }
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
+        [ArgumentFormat("--allow-missing-template-keys={value}")]
         public virtual bool? AllowMissingTemplateKeys { get; internal set; }
         /// <summary>
         ///   If true, only print the object that would be sent, without sending it.
         /// </summary>
+        [ArgumentFormat("--dry-run={value}")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.
         /// </summary>
+        [ArgumentFormat("--field-selector={value}")]
         public virtual string FieldSelector { get; internal set; }
         /// <summary>
         ///   Filename, directory, or URL to files identifying the resource to update the labels.
         /// </summary>
+        [ArgumentFormat("--filename={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Filename => FilenameInternal.AsReadOnly();
         internal List<string> FilenameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.
         /// </summary>
+        [ArgumentFormat("--include-uninitialized={value}")]
         public virtual bool? IncludeUninitialized { get; internal set; }
         /// <summary>
         ///   If true, display the labels for a given resource.
         /// </summary>
+        [ArgumentFormat("--list={value}")]
         public virtual bool? List { get; internal set; }
         /// <summary>
         ///   If true, label will NOT contact api-server but run locally.
         /// </summary>
+        [ArgumentFormat("--local={value}")]
         public virtual bool? Local { get; internal set; }
         /// <summary>
         ///   Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual KubernetesLabelOutput Output { get; internal set; }
         /// <summary>
         ///   If true, allow labels to be overwritten, otherwise reject label updates that overwrite existing labels.
         /// </summary>
+        [ArgumentFormat("--overwrite={value}")]
         public virtual bool? Overwrite { get; internal set; }
         /// <summary>
         ///   Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.
         /// </summary>
+        [ArgumentFormat("--record={value}")]
         public virtual bool? Record { get; internal set; }
         /// <summary>
         ///   Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
         /// </summary>
+        [ArgumentFormat("--recursive={value}")]
         public virtual bool? Recursive { get; internal set; }
         /// <summary>
         ///   If non-empty, the labels update will only succeed if this is the current resource-version for the object. Only valid when specifying a single resource.
         /// </summary>
+        [ArgumentFormat("--resource-version={value}")]
         public virtual string ResourceVersion { get; internal set; }
         /// <summary>
         ///   Selector (label query) to filter on, not including uninitialized ones, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).
         /// </summary>
+        [ArgumentFormat("--selector={value}")]
         public virtual string Selector { get; internal set; }
         /// <summary>
         ///   Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
         /// </summary>
+        [ArgumentFormat("--template={value}")]
         public virtual string Template { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3809,69 +3979,89 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> TypeName => TypeNameInternal.AsReadOnly();
         internal List<string> TypeNameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The annotations to set on the ressource
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [ItemFormat("{key}={value}")]
+        [Separator(" ")]
         public virtual IReadOnlyDictionary<string, string> Annotations => AnnotationsInternal.AsReadOnly();
         internal Dictionary<string,string> AnnotationsInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Select all resources, including uninitialized ones, in the namespace of the specified resource types.
         /// </summary>
+        [ArgumentFormat("--all={value}")]
         public virtual bool? All { get; internal set; }
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
+        [ArgumentFormat("--allow-missing-template-keys={value}")]
         public virtual bool? AllowMissingTemplateKeys { get; internal set; }
         /// <summary>
         ///   If true, only print the object that would be sent, without sending it.
         /// </summary>
+        [ArgumentFormat("--dry-run={value}")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.
         /// </summary>
+        [ArgumentFormat("--field-selector={value}")]
         public virtual string FieldSelector { get; internal set; }
         /// <summary>
         ///   Filename, directory, or URL to files identifying the resource to update the annotation.
         /// </summary>
+        [ArgumentFormat("--filename={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Filename => FilenameInternal.AsReadOnly();
         internal List<string> FilenameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.
         /// </summary>
+        [ArgumentFormat("--include-uninitialized={value}")]
         public virtual bool? IncludeUninitialized { get; internal set; }
         /// <summary>
         ///   If true, annotation will NOT contact api-server but run locally.
         /// </summary>
+        [ArgumentFormat("--local={value}")]
         public virtual bool? Local { get; internal set; }
         /// <summary>
         ///   Output format. One of: json|yaml|name|templatefile|template|go-template|go-template-file|jsonpath|jsonpath-file.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual KubernetesAnnotateOutput Output { get; internal set; }
         /// <summary>
         ///   If true, allow annotations to be overwritten, otherwise reject annotation updates that overwrite existing annotations.
         /// </summary>
+        [ArgumentFormat("--overwrite={value}")]
         public virtual bool? Overwrite { get; internal set; }
         /// <summary>
         ///   Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.
         /// </summary>
+        [ArgumentFormat("--record={value}")]
         public virtual bool? Record { get; internal set; }
         /// <summary>
         ///   Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
         /// </summary>
+        [ArgumentFormat("--recursive={value}")]
         public virtual bool? Recursive { get; internal set; }
         /// <summary>
         ///   If non-empty, the annotation update will only succeed if this is the current resource-version for the object. Only valid when specifying a single resource.
         /// </summary>
+        [ArgumentFormat("--resource-version={value}")]
         public virtual string ResourceVersion { get; internal set; }
         /// <summary>
         ///   Selector (label query) to filter on, not including uninitialized ones, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).
         /// </summary>
+        [ArgumentFormat("--selector={value}")]
         public virtual string Selector { get; internal set; }
         /// <summary>
         ///   Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
         /// </summary>
+        [ArgumentFormat("--template={value}")]
         public virtual string Template { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3914,59 +4104,74 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Delete all resources, including uninitialized ones, in the namespace of the specified resource types.
         /// </summary>
+        [ArgumentFormat("--all={value}")]
         public virtual bool? All { get; internal set; }
         /// <summary>
         ///   If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.
         /// </summary>
+        [ArgumentFormat("--cascade={value}")]
         public virtual bool? Cascade { get; internal set; }
         /// <summary>
         ///   Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.
         /// </summary>
+        [ArgumentFormat("--field-selector={value}")]
         public virtual string FieldSelector { get; internal set; }
         /// <summary>
         ///   containing the resource to delete.
         /// </summary>
+        [ArgumentFormat("--filename={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Filename => FilenameInternal.AsReadOnly();
         internal List<string> FilenameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.
         /// </summary>
+        [ArgumentFormat("--force={value}")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion).
         /// </summary>
+        [ArgumentFormat("--grace-period={value}")]
         public virtual int? GracePeriod { get; internal set; }
         /// <summary>
         ///   Treat "resource not found" as a successful delete. Defaults to "true" when --all is specified.
         /// </summary>
+        [ArgumentFormat("--ignore-not-found={value}")]
         public virtual bool? IgnoreNotFound { get; internal set; }
         /// <summary>
         ///   If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.
         /// </summary>
+        [ArgumentFormat("--include-uninitialized={value}")]
         public virtual bool? IncludeUninitialized { get; internal set; }
         /// <summary>
         ///   If true, resources are signaled for immediate shutdown (same as --grace-period=1).
         /// </summary>
+        [ArgumentFormat("--now={value}")]
         public virtual bool? Now { get; internal set; }
         /// <summary>
         ///   Output mode. Use "-o name" for shorter output (resource/name).
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
         /// </summary>
+        [ArgumentFormat("--recursive={value}")]
         public virtual bool? Recursive { get; internal set; }
         /// <summary>
         ///   Selector (label query) to filter on, not including uninitialized ones.
         /// </summary>
+        [ArgumentFormat("--selector={value}")]
         public virtual string Selector { get; internal set; }
         /// <summary>
         ///   The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object.
         /// </summary>
+        [ArgumentFormat("--timeout={value}")]
         public virtual TimeSpan? Timeout { get; internal set; }
         /// <summary>
         ///   If true, wait for resources to be gone before returning. This waits for finalizers.
         /// </summary>
+        [ArgumentFormat("--wait={value}")]
         public virtual bool? Wait { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4007,91 +4212,114 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
+        [ArgumentFormat("--allow-missing-template-keys={value}")]
         public virtual bool? AllowMissingTemplateKeys { get; internal set; }
         /// <summary>
         ///   ClusterIP to be assigned to the service. Leave empty to auto-allocate, or set to 'None' to create a headless service.
         /// </summary>
+        [ArgumentFormat("--cluster-ip={value}")]
         public virtual string ClusterIp { get; internal set; }
         /// <summary>
         ///   Synonym for --target-port.
         /// </summary>
+        [ArgumentFormat("--container-port={value}")]
         public virtual string ContainerPort { get; internal set; }
         /// <summary>
         ///   If true, only print the object that would be sent, without sending it.
         /// </summary>
+        [ArgumentFormat("--dry-run={value}")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   Additional external IP address (not managed by Kubernetes) to accept for the service. If this IP is routed to a node, the service can be accessed by this IP in addition to its generated service IP.
         /// </summary>
+        [ArgumentFormat("--external-ip={value}")]
         public virtual string ExternalIp { get; internal set; }
         /// <summary>
         ///   Filename, directory, or URL to files identifying the resource to expose a service.
         /// </summary>
+        [ArgumentFormat("--filename={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Filename => FilenameInternal.AsReadOnly();
         internal List<string> FilenameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The name of the API generator to use. There are 2 generators: 'service/v1' and 'service/v2'. The only difference between them is that service port in v1 is named 'default', while it is left unnamed in v2. Default is 'service/v2'.
         /// </summary>
+        [ArgumentFormat("--generator={value}")]
         public virtual string Generator { get; internal set; }
         /// <summary>
         ///   Labels to apply to the service created by this call.
         /// </summary>
+        [ArgumentFormat("--labels={value}")]
         public virtual string Labels { get; internal set; }
         /// <summary>
         ///   IP to assign to the LoadBalancer. If empty, an ephemeral IP will be created and used (cloud-provider specific).
         /// </summary>
+        [ArgumentFormat("--load-balancer-ip={value}")]
         public virtual string LoadBalancerIp { get; internal set; }
         /// <summary>
         ///   The name for the newly created object.
         /// </summary>
+        [ArgumentFormat("--name={value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual KubernetesExposeOutput Output { get; internal set; }
         /// <summary>
         ///   An inline JSON override for the generated object. If this is non-empty, it is used to override the generated object. Requires that the object supply a valid apiVersion field.
         /// </summary>
+        [ArgumentFormat("--overrides={value}")]
         public virtual string Overrides { get; internal set; }
         /// <summary>
         ///   The port that the service should serve on. Copied from the resource being exposed, if unspecified.
         /// </summary>
+        [ArgumentFormat("--port={value}")]
         public virtual string Port { get; internal set; }
         /// <summary>
         ///   The network protocol for the service to be created. Default is 'TCP'.
         /// </summary>
+        [ArgumentFormat("--protocol={value}")]
         public virtual string Protocol { get; internal set; }
         /// <summary>
         ///   Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.
         /// </summary>
+        [ArgumentFormat("--record={value}")]
         public virtual bool? Record { get; internal set; }
         /// <summary>
         ///   Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
         /// </summary>
+        [ArgumentFormat("--recursive={value}")]
         public virtual bool? Recursive { get; internal set; }
         /// <summary>
         ///   If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
         /// </summary>
+        [ArgumentFormat("--save-config={value}")]
         public virtual bool? SaveConfig { get; internal set; }
         /// <summary>
         ///   A label selector to use for this service. Only equality-based selector requirements are supported. If empty (the default) infer the selector from the replication controller or replica set.).
         /// </summary>
+        [ArgumentFormat("--selector={value}")]
         public virtual string Selector { get; internal set; }
         /// <summary>
         ///   If non-empty, set the session affinity for the service to this; legal values: 'None', 'ClientIP'.
         /// </summary>
+        [ArgumentFormat("--session-affinity={value}")]
         public virtual string SessionAffinity { get; internal set; }
         /// <summary>
         ///   Name or number for the port on the container that the service should direct traffic to. Optional.
         /// </summary>
+        [ArgumentFormat("--target-port={value}")]
         public virtual string TargetPort { get; internal set; }
         /// <summary>
         ///   Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
         /// </summary>
+        [ArgumentFormat("--template={value}")]
         public virtual string Template { get; internal set; }
         /// <summary>
         ///   Type for this service: ClusterIP, NodePort, LoadBalancer, or ExternalName. Default is 'ClusterIP'.
         /// </summary>
+        [ArgumentFormat("--type={value}")]
         public virtual string Type { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4162,23 +4390,29 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   The type or/and name of the pod.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Pod => PodInternal.AsReadOnly();
         internal List<string> PodInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Container name. If omitted, the first container in the pod will be chosen.
         /// </summary>
+        [ArgumentFormat("--container={value}")]
         public virtual string Container { get; internal set; }
         /// <summary>
         ///   The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running.
         /// </summary>
+        [ArgumentFormat("--pod-running-timeout={value}")]
         public virtual TimeSpan? PodRunningTimeout { get; internal set; }
         /// <summary>
         ///   Pass stdin to the container.
         /// </summary>
+        [ArgumentFormat("--stdin={value}")]
         public virtual bool? Stdin { get; internal set; }
         /// <summary>
         ///   Stdin is a TTY.
         /// </summary>
+        [ArgumentFormat("--tty={value}")]
         public virtual bool? Tty { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4210,46 +4444,57 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Regular expression for hosts that the proxy should accept.
         /// </summary>
+        [ArgumentFormat("--accept-hosts={value}")]
         public virtual string AcceptHosts { get; internal set; }
         /// <summary>
         ///   Regular expression for paths that the proxy should accept.
         /// </summary>
+        [ArgumentFormat("--accept-paths={value}")]
         public virtual string AcceptPaths { get; internal set; }
         /// <summary>
         ///   The IP address on which to serve on.
         /// </summary>
+        [ArgumentFormat("--address={value}")]
         public virtual string Address { get; internal set; }
         /// <summary>
         ///   Prefix to serve the proxied API under.
         /// </summary>
+        [ArgumentFormat("--api-prefix={value}")]
         public virtual string ApiPrefix { get; internal set; }
         /// <summary>
         ///   If true, disable request filtering in the proxy. This is dangerous, and can leave you vulnerable to XSRF attacks, when used with an accessible port.
         /// </summary>
+        [ArgumentFormat("--disable-filter={value}")]
         public virtual bool? DisableFilter { get; internal set; }
         /// <summary>
         ///   The port on which to run the proxy. Set to 0 to pick a random port.
         /// </summary>
+        [ArgumentFormat("--port={value}")]
         public virtual int? Port { get; internal set; }
         /// <summary>
         ///   Regular expression for HTTP methods that the proxy should reject (example --reject-methods='POST,PUT,PATCH'). .
         /// </summary>
+        [ArgumentFormat("--reject-methods={value}")]
         public virtual string RejectMethods { get; internal set; }
         /// <summary>
         ///   Regular expression for paths that the proxy should reject. Paths specified here will be rejected even accepted by --accept-paths.
         /// </summary>
+        [ArgumentFormat("--reject-paths={value}")]
         public virtual string RejectPaths { get; internal set; }
         /// <summary>
         ///   Unix socket on which to run the proxy.
         /// </summary>
+        [ArgumentFormat("--unix-socket={value}")]
         public virtual string UnixSocket { get; internal set; }
         /// <summary>
         ///   Also serve static files from the given directory under the specified prefix.
         /// </summary>
+        [ArgumentFormat("--www={value}")]
         public virtual string Www { get; internal set; }
         /// <summary>
         ///   Prefix to serve static files under, if static file directory is specified.
         /// </summary>
+        [ArgumentFormat("--www-prefix={value}")]
         public virtual string WwwPrefix { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4353,48 +4598,61 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> TypeName => TypeNameInternal.AsReadOnly();
         internal List<string> TypeNameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
+        [ArgumentFormat("--allow-missing-template-keys={value}")]
         public virtual bool? AllowMissingTemplateKeys { get; internal set; }
         /// <summary>
         ///   If true, only print the object that would be sent, without sending it.
         /// </summary>
+        [ArgumentFormat("--dry-run={value}")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   Filename, directory, or URL to files identifying the resource to update.
         /// </summary>
+        [ArgumentFormat("--filename={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Filename => FilenameInternal.AsReadOnly();
         internal List<string> FilenameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   If true, patch will operate on the content of the file, not the server-side resource.
         /// </summary>
+        [ArgumentFormat("--local={value}")]
         public virtual bool? Local { get; internal set; }
         /// <summary>
         ///   Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual KubernetesPatchOutput Output { get; internal set; }
         /// <summary>
         ///   The patch to be applied to the resource JSON file.
         /// </summary>
+        [ArgumentFormat("--patch={value}")]
         public virtual string Patch { get; internal set; }
         /// <summary>
         ///   Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.
         /// </summary>
+        [ArgumentFormat("--record={value}")]
         public virtual bool? Record { get; internal set; }
         /// <summary>
         ///   Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
         /// </summary>
+        [ArgumentFormat("--recursive={value}")]
         public virtual bool? Recursive { get; internal set; }
         /// <summary>
         ///   Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
         /// </summary>
+        [ArgumentFormat("--template={value}")]
         public virtual string Template { get; internal set; }
         /// <summary>
         ///   The type of patch being provided; one of [json merge strategic].
         /// </summary>
+        [ArgumentFormat("--type={value}")]
         public virtual KubernetesPatchType Type { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4432,51 +4690,64 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
+        [ArgumentFormat("--allow-missing-template-keys={value}")]
         public virtual bool? AllowMissingTemplateKeys { get; internal set; }
         /// <summary>
         ///   If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.
         /// </summary>
+        [ArgumentFormat("--cascade={value}")]
         public virtual bool? Cascade { get; internal set; }
         /// <summary>
         ///   to use to replace the resource.
         /// </summary>
+        [ArgumentFormat("--filename={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Filename => FilenameInternal.AsReadOnly();
         internal List<string> FilenameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.
         /// </summary>
+        [ArgumentFormat("--force={value}")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion).
         /// </summary>
+        [ArgumentFormat("--grace-period={value}")]
         public virtual int? GracePeriod { get; internal set; }
         /// <summary>
         ///   Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual KubernetesReplaceOutput Output { get; internal set; }
         /// <summary>
         ///   Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
         /// </summary>
+        [ArgumentFormat("--recursive={value}")]
         public virtual bool? Recursive { get; internal set; }
         /// <summary>
         ///   If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
         /// </summary>
+        [ArgumentFormat("--save-config={value}")]
         public virtual bool? SaveConfig { get; internal set; }
         /// <summary>
         ///   Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
         /// </summary>
+        [ArgumentFormat("--template={value}")]
         public virtual string Template { get; internal set; }
         /// <summary>
         ///   The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object.
         /// </summary>
+        [ArgumentFormat("--timeout={value}")]
         public virtual TimeSpan? Timeout { get; internal set; }
         /// <summary>
         ///   If true, use a schema to validate the input before sending it.
         /// </summary>
+        [ArgumentFormat("--validate={value}")]
         public virtual bool? Validate { get; internal set; }
         /// <summary>
         ///   If true, wait for resources to be gone before returning. This waits for finalizers.
         /// </summary>
+        [ArgumentFormat("--wait={value}")]
         public virtual bool? Wait { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4515,40 +4786,52 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> TypeName => TypeNameInternal.AsReadOnly();
         internal List<string> TypeNameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The taint effects to set.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [ItemFormat("{key}={value}")]
+        [Separator(" ")]
         public virtual IReadOnlyDictionary<string, string> TaintEffects => TaintEffectsInternal.AsReadOnly();
         internal Dictionary<string,string> TaintEffectsInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Select all nodes in the cluster.
         /// </summary>
+        [ArgumentFormat("--all={value}")]
         public virtual bool? All { get; internal set; }
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
+        [ArgumentFormat("--allow-missing-template-keys={value}")]
         public virtual bool? AllowMissingTemplateKeys { get; internal set; }
         /// <summary>
         ///   Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual KubernetesTaintOutput Output { get; internal set; }
         /// <summary>
         ///   If true, allow taints to be overwritten, otherwise reject taint updates that overwrite existing taints.
         /// </summary>
+        [ArgumentFormat("--overwrite={value}")]
         public virtual bool? Overwrite { get; internal set; }
         /// <summary>
         ///   Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).
         /// </summary>
+        [ArgumentFormat("--selector={value}")]
         public virtual string Selector { get; internal set; }
         /// <summary>
         ///   Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
         /// </summary>
+        [ArgumentFormat("--template={value}")]
         public virtual string Template { get; internal set; }
         /// <summary>
         ///   If true, use a schema to validate the input before sending it.
         /// </summary>
+        [ArgumentFormat("--validate={value}")]
         public virtual bool? Validate { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4584,32 +4867,41 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> TypeName => TypeNameInternal.AsReadOnly();
         internal List<string> TypeNameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.
         /// </summary>
+        [ArgumentFormat("--all-namespaces={value}")]
         public virtual bool? AllNamespaces { get; internal set; }
         /// <summary>
         ///   Filename, directory, or URL to files containing the resource to describe.
         /// </summary>
+        [ArgumentFormat("--filename={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Filename => FilenameInternal.AsReadOnly();
         internal List<string> FilenameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.
         /// </summary>
+        [ArgumentFormat("--include-uninitialized={value}")]
         public virtual bool? IncludeUninitialized { get; internal set; }
         /// <summary>
         ///   Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
         /// </summary>
+        [ArgumentFormat("--recursive={value}")]
         public virtual bool? Recursive { get; internal set; }
         /// <summary>
         ///   Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).
         /// </summary>
+        [ArgumentFormat("--selector={value}")]
         public virtual string Selector { get; internal set; }
         /// <summary>
         ///   If true, display events related to the described object.
         /// </summary>
+        [ArgumentFormat("--show-events={value}")]
         public virtual bool? ShowEvents { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4643,6 +4935,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   The subcommand to run.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Subcommand => SubcommandInternal.AsReadOnly();
         internal List<string> SubcommandInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -4671,6 +4965,7 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   The subcommand to run.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Subcommand { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4698,6 +4993,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   The subcommand to run.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Subcommand => SubcommandInternal.AsReadOnly();
         internal List<string> SubcommandInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -4726,6 +5023,8 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   The subcommand to run.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Subcommand => SubcommandInternal.AsReadOnly();
         internal List<string> SubcommandInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -4754,84 +5053,105 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Select all resources in the namespace of the specified resource types.
         /// </summary>
+        [ArgumentFormat("--all={value}")]
         public virtual bool? All { get; internal set; }
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
+        [ArgumentFormat("--allow-missing-template-keys={value}")]
         public virtual bool? AllowMissingTemplateKeys { get; internal set; }
         /// <summary>
         ///   If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.
         /// </summary>
+        [ArgumentFormat("--cascade={value}")]
         public virtual bool? Cascade { get; internal set; }
         /// <summary>
         ///   If true, only print the object that would be sent, without sending it.
         /// </summary>
+        [ArgumentFormat("--dry-run={value}")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   that contains the configuration to apply.
         /// </summary>
+        [ArgumentFormat("--filename={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Filename => FilenameInternal.AsReadOnly();
         internal List<string> FilenameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.
         /// </summary>
+        [ArgumentFormat("--force={value}")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion).
         /// </summary>
+        [ArgumentFormat("--grace-period={value}")]
         public virtual int? GracePeriod { get; internal set; }
         /// <summary>
         ///   If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.
         /// </summary>
+        [ArgumentFormat("--include-uninitialized={value}")]
         public virtual bool? IncludeUninitialized { get; internal set; }
         /// <summary>
         ///   If true, use openapi to calculate diff when the openapi presents and the resource can be found in the openapi spec. Otherwise, fall back to use baked-in types.
         /// </summary>
+        [ArgumentFormat("--openapi-patch={value}")]
         public virtual bool? OpenapiPatch { get; internal set; }
         /// <summary>
         ///   Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual KubernetesApplyOutput Output { get; internal set; }
         /// <summary>
         ///   Automatically resolve conflicts between the modified and live configuration by using values from the modified configuration.
         /// </summary>
+        [ArgumentFormat("--overwrite={value}")]
         public virtual bool? Overwrite { get; internal set; }
         /// <summary>
         ///   Automatically delete resource objects, including the uninitialized ones, that do not appear in the configs and are created by either apply or create --save-config. Should be used with either -l or --all.
         /// </summary>
+        [ArgumentFormat("--prune={value}")]
         public virtual bool? Prune { get; internal set; }
         /// <summary>
         ///   Overwrite the default whitelist with &lt;group/version/kind&gt; for --prune.
         /// </summary>
+        [ArgumentFormat("--prune-whitelist={value}")]
         public virtual IReadOnlyList<string> PruneWhitelist => PruneWhitelistInternal.AsReadOnly();
         internal List<string> PruneWhitelistInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.
         /// </summary>
+        [ArgumentFormat("--record={value}")]
         public virtual bool? Record { get; internal set; }
         /// <summary>
         ///   Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
         /// </summary>
+        [ArgumentFormat("--recursive={value}")]
         public virtual bool? Recursive { get; internal set; }
         /// <summary>
         ///   Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).
         /// </summary>
+        [ArgumentFormat("--selector={value}")]
         public virtual string Selector { get; internal set; }
         /// <summary>
         ///   Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
         /// </summary>
+        [ArgumentFormat("--template={value}")]
         public virtual string Template { get; internal set; }
         /// <summary>
         ///   The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object.
         /// </summary>
+        [ArgumentFormat("--timeout={value}")]
         public virtual TimeSpan? Timeout { get; internal set; }
         /// <summary>
         ///   If true, use a schema to validate the input before sending it.
         /// </summary>
+        [ArgumentFormat("--validate={value}")]
         public virtual bool? Validate { get; internal set; }
         /// <summary>
         ///   If true, wait for resources to be gone before returning. This waits for finalizers.
         /// </summary>
+        [ArgumentFormat("--wait={value}")]
         public virtual bool? Wait { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4878,14 +5198,17 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   The namne of the Node.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Node { get; internal set; }
         /// <summary>
         ///   If true, only print the object that would be sent, without sending it.
         /// </summary>
+        [ArgumentFormat("--dry-run={value}")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   Selector (label query) to filter on.
         /// </summary>
+        [ArgumentFormat("--selector={value}")]
         public virtual string Selector { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4915,14 +5238,17 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   The file specification of the source. '[namespace/]pod-name:/file/path'. for a remote file '/file/path' for a local file.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string SrcFileSpec { get; internal set; }
         /// <summary>
         ///   The file specification of the destination. '[namespace/]pod-name:/file/path'. for a remote file '/file/path' for a local file.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string DestFileSpec { get; internal set; }
         /// <summary>
         ///   Container name. If omitted, the first container in the pod will be chosen.
         /// </summary>
+        [ArgumentFormat("--container={value}")]
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4974,14 +5300,17 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   The name of the node.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Node { get; internal set; }
         /// <summary>
         ///   If true, only print the object that would be sent, without sending it.
         /// </summary>
+        [ArgumentFormat("--dry-run={value}")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   Selector (label query) to filter on.
         /// </summary>
+        [ArgumentFormat("--selector={value}")]
         public virtual string Selector { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5011,55 +5340,69 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
+        [ArgumentFormat("--allow-missing-template-keys={value}")]
         public virtual bool? AllowMissingTemplateKeys { get; internal set; }
         /// <summary>
         ///   The target average CPU utilization (represented as a percent of requested CPU) over all the pods. If it's not specified or negative, a default autoscaling policy will be used.
         /// </summary>
+        [ArgumentFormat("--cpu-percent={value}")]
         public virtual int? CpuPercent { get; internal set; }
         /// <summary>
         ///   If true, only print the object that would be sent, without sending it.
         /// </summary>
+        [ArgumentFormat("--dry-run={value}")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   Filename, directory, or URL to files identifying the resource to autoscale.
         /// </summary>
+        [ArgumentFormat("--filename={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Filename => FilenameInternal.AsReadOnly();
         internal List<string> FilenameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The name of the API generator to use. Currently there is only 1 generator.
         /// </summary>
+        [ArgumentFormat("--generator={value}")]
         public virtual string Generator { get; internal set; }
         /// <summary>
         ///   The upper limit for the number of pods that can be set by the autoscaler. Required.
         /// </summary>
+        [ArgumentFormat("--max={value}")]
         public virtual int? Max { get; internal set; }
         /// <summary>
         ///   The lower limit for the number of pods that can be set by the autoscaler. If it's not specified or negative, the server will apply a default value.
         /// </summary>
+        [ArgumentFormat("--min={value}")]
         public virtual int? Min { get; internal set; }
         /// <summary>
         ///   The name for the newly created object. If not specified, the name of the input resource will be used.
         /// </summary>
+        [ArgumentFormat("--name={value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual KubernetesAutoscaleOutput Output { get; internal set; }
         /// <summary>
         ///   Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.
         /// </summary>
+        [ArgumentFormat("--record={value}")]
         public virtual bool? Record { get; internal set; }
         /// <summary>
         ///   Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
         /// </summary>
+        [ArgumentFormat("--recursive={value}")]
         public virtual bool? Recursive { get; internal set; }
         /// <summary>
         ///   If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
         /// </summary>
+        [ArgumentFormat("--save-config={value}")]
         public virtual bool? SaveConfig { get; internal set; }
         /// <summary>
         ///   Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
         /// </summary>
+        [ArgumentFormat("--template={value}")]
         public virtual string Template { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5099,6 +5442,7 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   The name of the plugin.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Name { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5148,39 +5492,49 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.
         /// </summary>
+        [ArgumentFormat("--all-namespaces={value}")]
         public virtual bool? AllNamespaces { get; internal set; }
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
+        [ArgumentFormat("--allow-missing-template-keys={value}")]
         public virtual bool? AllowMissingTemplateKeys { get; internal set; }
         /// <summary>
         ///   identifying the resource.
         /// </summary>
+        [ArgumentFormat("--filename={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Filename => FilenameInternal.AsReadOnly();
         internal List<string> FilenameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The condition to wait on: [delete|condition=condition-name].
         /// </summary>
+        [ArgumentFormat("--for={value}")]
         public virtual string For { get; internal set; }
         /// <summary>
         ///   Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual KubernetesWaitOutput Output { get; internal set; }
         /// <summary>
         ///   Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
         /// </summary>
+        [ArgumentFormat("--recursive={value}")]
         public virtual bool? Recursive { get; internal set; }
         /// <summary>
         ///   Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).
         /// </summary>
+        [ArgumentFormat("--selector={value}")]
         public virtual string Selector { get; internal set; }
         /// <summary>
         ///   Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
         /// </summary>
+        [ArgumentFormat("--template={value}")]
         public virtual string Template { get; internal set; }
         /// <summary>
         ///   The length of time to wait before giving up.  Zero means check once and don't wait, negative means wait for a week.
         /// </summary>
+        [ArgumentFormat("--timeout={value}")]
         public virtual TimeSpan? Timeout { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5216,35 +5570,44 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
+        [ArgumentFormat("--allow-missing-template-keys={value}")]
         public virtual bool? AllowMissingTemplateKeys { get; internal set; }
         /// <summary>
         ///   Filename, directory, or URL to files to need to get converted.
         /// </summary>
+        [ArgumentFormat("--filename={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Filename => FilenameInternal.AsReadOnly();
         internal List<string> FilenameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   If true, convert will NOT try to contact api-server but run locally.
         /// </summary>
+        [ArgumentFormat("--local={value}")]
         public virtual bool? Local { get; internal set; }
         /// <summary>
         ///   Output format. One of: json|yaml|name|go-template|go-template-file|templatefile|template|jsonpath|jsonpath-file.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual KubernetesConvertOutput Output { get; internal set; }
         /// <summary>
         ///   Output the formatted object with the given group version (for ex: 'extensions/v1beta1').).
         /// </summary>
+        [ArgumentFormat("--output-version={value}")]
         public virtual string OutputVersion { get; internal set; }
         /// <summary>
         ///   Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
         /// </summary>
+        [ArgumentFormat("--recursive={value}")]
         public virtual bool? Recursive { get; internal set; }
         /// <summary>
         ///   Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
         /// </summary>
+        [ArgumentFormat("--template={value}")]
         public virtual string Template { get; internal set; }
         /// <summary>
         ///   If true, use a schema to validate the input before sending it.
         /// </summary>
+        [ArgumentFormat("--validate={value}")]
         public virtual bool? Validate { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5279,55 +5642,69 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
+        [ArgumentFormat("--allow-missing-template-keys={value}")]
         public virtual bool? AllowMissingTemplateKeys { get; internal set; }
         /// <summary>
         ///   If true, only print the object that would be sent, without sending it.
         /// </summary>
+        [ArgumentFormat("--dry-run={value}")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   Edit the API resource before creating.
         /// </summary>
+        [ArgumentFormat("--edit={value}")]
         public virtual bool? Edit { get; internal set; }
         /// <summary>
         ///   Filename, directory, or URL to files to use to create the resource.
         /// </summary>
+        [ArgumentFormat("--filename={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Filename => FilenameInternal.AsReadOnly();
         internal List<string> FilenameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual KubernetesCreateOutput Output { get; internal set; }
         /// <summary>
         ///   Raw URI to POST to the server.  Uses the transport specified by the kubeconfig file.
         /// </summary>
+        [ArgumentFormat("--raw={value}")]
         public virtual string Raw { get; internal set; }
         /// <summary>
         ///   Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.
         /// </summary>
+        [ArgumentFormat("--record={value}")]
         public virtual bool? Record { get; internal set; }
         /// <summary>
         ///   Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
         /// </summary>
+        [ArgumentFormat("--recursive={value}")]
         public virtual bool? Recursive { get; internal set; }
         /// <summary>
         ///   If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
         /// </summary>
+        [ArgumentFormat("--save-config={value}")]
         public virtual bool? SaveConfig { get; internal set; }
         /// <summary>
         ///   Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).
         /// </summary>
+        [ArgumentFormat("--selector={value}")]
         public virtual string Selector { get; internal set; }
         /// <summary>
         ///   Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
         /// </summary>
+        [ArgumentFormat("--template={value}")]
         public virtual string Template { get; internal set; }
         /// <summary>
         ///   If true, use a schema to validate the input before sending it.
         /// </summary>
+        [ArgumentFormat("--validate={value}")]
         public virtual bool? Validate { get; internal set; }
         /// <summary>
         ///   Only relevant if --edit=true. Defaults to the line ending native to your platform.
         /// </summary>
+        [ArgumentFormat("--windows-line-endings={value}")]
         public virtual bool? WindowsLineEndings { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5367,16 +5744,22 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> TypeName => TypeNameInternal.AsReadOnly();
         internal List<string> TypeNameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The port combinations to forward. In the Format 'srcPort:destPort'.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [ItemFormat("{key}={value}")]
+        [Separator(" ")]
         public virtual IReadOnlyDictionary<int, int> Ports => PortsInternal.AsReadOnly();
         internal Dictionary<int,int> PortsInternal { get; set; } = new Dictionary<int,int>(EqualityComparer<int>.Default);
         /// <summary>
         ///   The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running.
         /// </summary>
+        [ArgumentFormat("--pod-running-timeout={value}")]
         public virtual TimeSpan? PodRunningTimeout { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5406,156 +5789,195 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
+        [ArgumentFormat("--allow-missing-template-keys={value}")]
         public virtual bool? AllowMissingTemplateKeys { get; internal set; }
         /// <summary>
         ///   If true, wait for the Pod to start running, and then attach to the Pod as if 'kubectl attach ...' were called.  Default false, unless '-i/--stdin' is set, in which case the default is true. With '--restart=Never' the exit code of the container process is returned.
         /// </summary>
+        [ArgumentFormat("--attach={value}")]
         public virtual bool? Attach { get; internal set; }
         /// <summary>
         ///   If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.
         /// </summary>
+        [ArgumentFormat("--cascade={value}")]
         public virtual bool? Cascade { get; internal set; }
         /// <summary>
         ///   If true and extra arguments are present, use them as the 'command' field in the container, rather than the 'args' field which is the default.
         /// </summary>
+        [ArgumentFormat("--command={value}")]
         public virtual bool? Command { get; internal set; }
         /// <summary>
         ///   If true, only print the object that would be sent, without sending it.
         /// </summary>
+        [ArgumentFormat("--dry-run={value}")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   Environment variables to set in the container.
         /// </summary>
+        [ArgumentFormat("--env={value}")]
         public virtual IReadOnlyList<string> Env => EnvInternal.AsReadOnly();
         internal List<string> EnvInternal { get; set; } = new List<string>();
         /// <summary>
         ///   If true, a public, external service is created for the container(s) which are run.
         /// </summary>
+        [ArgumentFormat("--expose={value}")]
         public virtual bool? Expose { get; internal set; }
         /// <summary>
         ///   to use to replace the resource.
         /// </summary>
+        [ArgumentFormat("--filename={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Filename => FilenameInternal.AsReadOnly();
         internal List<string> FilenameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.
         /// </summary>
+        [ArgumentFormat("--force={value}")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   The name of the API generator to use, see http://kubernetes.io/docs/user-guide/kubectl-conventions/#generators for a list.
         /// </summary>
+        [ArgumentFormat("--generator={value}")]
         public virtual string Generator { get; internal set; }
         /// <summary>
         ///   Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion).
         /// </summary>
+        [ArgumentFormat("--grace-period={value}")]
         public virtual int? GracePeriod { get; internal set; }
         /// <summary>
         ///   The host port mapping for the container port. To demonstrate a single-machine container.
         /// </summary>
+        [ArgumentFormat("--hostport={value}")]
         public virtual int? Hostport { get; internal set; }
         /// <summary>
         ///   The image for the container to run.
         /// </summary>
+        [ArgumentFormat("--image={value}")]
         public virtual string Image { get; internal set; }
         /// <summary>
         ///   The image pull policy for the container. If left empty, this value will not be specified by the client and defaulted by the server.
         /// </summary>
+        [ArgumentFormat("--image-pull-policy={value}")]
         public virtual string ImagePullPolicy { get; internal set; }
         /// <summary>
         ///   Comma separated labels to apply to the pod(s). Will override previous values.
         /// </summary>
+        [ArgumentFormat("--labels={value}")]
         public virtual string Labels { get; internal set; }
         /// <summary>
         ///   If the pod is started in interactive mode or with stdin, leave stdin open after the first attach completes. By default, stdin will be closed after the first attach completes.
         /// </summary>
+        [ArgumentFormat("--leave-stdin-open={value}")]
         public virtual bool? LeaveStdinOpen { get; internal set; }
         /// <summary>
         ///   The resource requirement limits for this container.  For example, 'cpu=200m,memory=512Mi'.  Note that server side components may assign limits depending on the server configuration, such as limit ranges.
         /// </summary>
+        [ArgumentFormat("--limits={value}")]
         public virtual string Limits { get; internal set; }
         /// <summary>
         ///   Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual KubernetesRunContainerOutput Output { get; internal set; }
         /// <summary>
         ///   An inline JSON override for the generated object. If this is non-empty, it is used to override the generated object. Requires that the object supply a valid apiVersion field.
         /// </summary>
+        [ArgumentFormat("--overrides={value}")]
         public virtual string Overrides { get; internal set; }
         /// <summary>
         ///   The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running.
         /// </summary>
+        [ArgumentFormat("--pod-running-timeout={value}")]
         public virtual TimeSpan? PodRunningTimeout { get; internal set; }
         /// <summary>
         ///   The port that this container exposes.  If --expose is true, this is also the port used by the service that is created.
         /// </summary>
+        [ArgumentFormat("--port={value}")]
         public virtual string Port { get; internal set; }
         /// <summary>
         ///   If true, suppress prompt messages.
         /// </summary>
+        [ArgumentFormat("--quiet={value}")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.
         /// </summary>
+        [ArgumentFormat("--record={value}")]
         public virtual bool? Record { get; internal set; }
         /// <summary>
         ///   Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
         /// </summary>
+        [ArgumentFormat("--recursive={value}")]
         public virtual bool? Recursive { get; internal set; }
         /// <summary>
         ///   Number of replicas to create for this container. Default is 1.
         /// </summary>
+        [ArgumentFormat("--replicas={value}")]
         public virtual int? Replicas { get; internal set; }
         /// <summary>
         ///   The resource requirement requests for this container.  For example, 'cpu=100m,memory=256Mi'.  Note that server side components may assign requests depending on the server configuration, such as limit ranges.
         /// </summary>
+        [ArgumentFormat("--requests={value}")]
         public virtual string Requests { get; internal set; }
         /// <summary>
         ///   The restart policy for this Pod.  Legal values [Always, OnFailure, Never].  If set to 'Always' a deployment is created, if set to 'OnFailure' a job is created, if set to 'Never', a regular pod is created. For the latter two --replicas must be 1.  Default 'Always', for CronJobs `Never`.
         /// </summary>
+        [ArgumentFormat("--restart={value}")]
         public virtual string Restart { get; internal set; }
         /// <summary>
         ///   If true, delete resources created in this command for attached containers.
         /// </summary>
+        [ArgumentFormat("--rm={value}")]
         public virtual bool? Rm { get; internal set; }
         /// <summary>
         ///   If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
         /// </summary>
+        [ArgumentFormat("--save-config={value}")]
         public virtual bool? SaveConfig { get; internal set; }
         /// <summary>
         ///   A schedule in the Cron format the job should be run with.
         /// </summary>
+        [ArgumentFormat("--schedule={value}")]
         public virtual string Schedule { get; internal set; }
         /// <summary>
         ///   The name of the generator to use for creating a service.  Only used if --expose is true.
         /// </summary>
+        [ArgumentFormat("--service-generator={value}")]
         public virtual string ServiceGenerator { get; internal set; }
         /// <summary>
         ///   An inline JSON override for the generated service object. If this is non-empty, it is used to override the generated object. Requires that the object supply a valid apiVersion field.  Only used if --expose is true.
         /// </summary>
+        [ArgumentFormat("--service-overrides={value}")]
         public virtual string ServiceOverrides { get; internal set; }
         /// <summary>
         ///   Service account to set in the pod spec.
         /// </summary>
+        [ArgumentFormat("--serviceaccount={value}")]
         public virtual string Serviceaccount { get; internal set; }
         /// <summary>
         ///   Keep stdin open on the container(s) in the pod, even if nothing is attached.
         /// </summary>
+        [ArgumentFormat("--stdin={value}")]
         public virtual bool? Stdin { get; internal set; }
         /// <summary>
         ///   Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
         /// </summary>
+        [ArgumentFormat("--template={value}")]
         public virtual string Template { get; internal set; }
         /// <summary>
         ///   The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object.
         /// </summary>
+        [ArgumentFormat("--timeout={value}")]
         public virtual TimeSpan? Timeout { get; internal set; }
         /// <summary>
         ///   Allocated a TTY for each container in the pod.
         /// </summary>
+        [ArgumentFormat("--tty={value}")]
         public virtual bool? Tty { get; internal set; }
         /// <summary>
         ///   If true, wait for resources to be gone before returning. This waits for finalizers.
         /// </summary>
+        [ArgumentFormat("--wait={value}")]
         public virtual bool? Wait { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5620,52 +6042,66 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> TypeName => TypeNameInternal.AsReadOnly();
         internal List<string> TypeNameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
+        [ArgumentFormat("--allow-missing-template-keys={value}")]
         public virtual bool? AllowMissingTemplateKeys { get; internal set; }
         /// <summary>
         ///   Filename, directory, or URL to files to use to edit the resource.
         /// </summary>
+        [ArgumentFormat("--filename={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Filename => FilenameInternal.AsReadOnly();
         internal List<string> FilenameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.
         /// </summary>
+        [ArgumentFormat("--include-uninitialized={value}")]
         public virtual bool? IncludeUninitialized { get; internal set; }
         /// <summary>
         ///   Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual KubernetesEditOutput Output { get; internal set; }
         /// <summary>
         ///   Output the patch if the resource is edited.
         /// </summary>
+        [ArgumentFormat("--output-patch={value}")]
         public virtual bool? OutputPatch { get; internal set; }
         /// <summary>
         ///   Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.
         /// </summary>
+        [ArgumentFormat("--record={value}")]
         public virtual bool? Record { get; internal set; }
         /// <summary>
         ///   Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
         /// </summary>
+        [ArgumentFormat("--recursive={value}")]
         public virtual bool? Recursive { get; internal set; }
         /// <summary>
         ///   If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
         /// </summary>
+        [ArgumentFormat("--save-config={value}")]
         public virtual bool? SaveConfig { get; internal set; }
         /// <summary>
         ///   Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
         /// </summary>
+        [ArgumentFormat("--template={value}")]
         public virtual string Template { get; internal set; }
         /// <summary>
         ///   If true, use a schema to validate the input before sending it.
         /// </summary>
+        [ArgumentFormat("--validate={value}")]
         public virtual bool? Validate { get; internal set; }
         /// <summary>
         ///   Defaults to the line ending native to your platform.
         /// </summary>
+        [ArgumentFormat("--windows-line-endings={value}")]
         public virtual bool? WindowsLineEndings { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5704,51 +6140,64 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Select all resources in the namespace of the specified resource types.
         /// </summary>
+        [ArgumentFormat("--all={value}")]
         public virtual bool? All { get; internal set; }
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
+        [ArgumentFormat("--allow-missing-template-keys={value}")]
         public virtual bool? AllowMissingTemplateKeys { get; internal set; }
         /// <summary>
         ///   Precondition for current size. Requires that the current size of the resource match this value in order to scale.
         /// </summary>
+        [ArgumentFormat("--current-replicas={value}")]
         public virtual int? CurrentReplicas { get; internal set; }
         /// <summary>
         ///   Filename, directory, or URL to files identifying the resource to set a new size.
         /// </summary>
+        [ArgumentFormat("--filename={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Filename => FilenameInternal.AsReadOnly();
         internal List<string> FilenameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.
         /// </summary>
+        [ArgumentFormat("--output={value}")]
         public virtual KubernetesScaleOutput Output { get; internal set; }
         /// <summary>
         ///   Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.
         /// </summary>
+        [ArgumentFormat("--record={value}")]
         public virtual bool? Record { get; internal set; }
         /// <summary>
         ///   Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
         /// </summary>
+        [ArgumentFormat("--recursive={value}")]
         public virtual bool? Recursive { get; internal set; }
         /// <summary>
         ///   The new desired number of replicas. Required.
         /// </summary>
+        [ArgumentFormat("--replicas={value}")]
         public virtual int? Replicas { get; internal set; }
         /// <summary>
         ///   Precondition for resource version. Requires that the current resource version match this value in order to scale.
         /// </summary>
+        [ArgumentFormat("--resource-version={value}")]
         public virtual string ResourceVersion { get; internal set; }
         /// <summary>
         ///   Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).
         /// </summary>
+        [ArgumentFormat("--selector={value}")]
         public virtual string Selector { get; internal set; }
         /// <summary>
         ///   Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
         /// </summary>
+        [ArgumentFormat("--template={value}")]
         public virtual string Template { get; internal set; }
         /// <summary>
         ///   The length of time to wait before giving up on a scale operation, zero means don't wait. Any other values should contain a corresponding time unit (e.g. 1s, 2m, 3h).
         /// </summary>
+        [ArgumentFormat("--timeout={value}")]
         public virtual TimeSpan? Timeout { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5787,14 +6236,18 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   Get different explanations for particular API version.
         /// </summary>
+        [ArgumentFormat("--api-version={value}")]
         public virtual string ApiVersion { get; internal set; }
         /// <summary>
         ///   Print the fields of fields (Currently only 1 level deep).
         /// </summary>
+        [ArgumentFormat("--recursive={value}")]
         public virtual bool? Recursive { get; internal set; }
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Resource => ResourceInternal.AsReadOnly();
         internal List<string> ResourceInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -5825,55 +6278,69 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> TypeName => TypeNameInternal.AsReadOnly();
         internal List<string> TypeNameInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Get all containers's logs in the pod(s).
         /// </summary>
+        [ArgumentFormat("--all-containers={value}")]
         public virtual bool? AllContainers { get; internal set; }
         /// <summary>
         ///   Print the logs of this container.
         /// </summary>
+        [ArgumentFormat("--container={value}")]
         public virtual string Container { get; internal set; }
         /// <summary>
         ///   Specify if the logs should be streamed.
         /// </summary>
+        [ArgumentFormat("--follow={value}")]
         public virtual bool? Follow { get; internal set; }
         /// <summary>
         ///   If true, prompt the user for input when required.
         /// </summary>
+        [ArgumentFormat("--interactive={value}")]
         public virtual bool? Interactive { get; internal set; }
         /// <summary>
         ///   Maximum bytes of logs to return. Defaults to no limit.
         /// </summary>
+        [ArgumentFormat("--limit-bytes={value}")]
         public virtual long? LimitBytes { get; internal set; }
         /// <summary>
         ///   The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running.
         /// </summary>
+        [ArgumentFormat("--pod-running-timeout={value}")]
         public virtual TimeSpan? PodRunningTimeout { get; internal set; }
         /// <summary>
         ///   If true, print the logs for the previous instance of the container in a pod if it exists.
         /// </summary>
+        [ArgumentFormat("--previous={value}")]
         public virtual bool? Previous { get; internal set; }
         /// <summary>
         ///   Selector (label query) to filter on.
         /// </summary>
+        [ArgumentFormat("--selector={value}")]
         public virtual string Selector { get; internal set; }
         /// <summary>
         ///   Only return logs newer than a relative duration like 5s, 2m, or 3h. Defaults to all logs. Only one of since-time / since may be used.
         /// </summary>
+        [ArgumentFormat("--since={value}")]
         public virtual TimeSpan? Since { get; internal set; }
         /// <summary>
         ///   Only return logs after a specific date (RFC3339). Defaults to all logs. Only one of since-time / since may be used.
         /// </summary>
+        [ArgumentFormat("--since-time={value}")]
         public virtual string SinceTime { get; internal set; }
         /// <summary>
         ///   Lines of recent log file to display. Defaults to -1 with no selector, showing all log lines otherwise 10, if a selector is provided.
         /// </summary>
+        [ArgumentFormat("--tail={value}")]
         public virtual long? Tail { get; internal set; }
         /// <summary>
         ///   Include timestamps on each line in the log output.
         /// </summary>
+        [ArgumentFormat("--timestamps={value}")]
         public virtual bool? Timestamps { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5908,95 +6375,120 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   log to standard error as well as files.
         /// </summary>
+        [ArgumentFormat("--alsologtostderr={value}")]
         public virtual bool? Alsologtostderr { get; internal set; }
         /// <summary>
         ///   Username to impersonate for the operation.
         /// </summary>
+        [ArgumentFormat("--as={value}")]
         public virtual string As { get; internal set; }
         /// <summary>
         ///   Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
         /// </summary>
+        [ArgumentFormat("--as-group={value}")]
         public virtual IReadOnlyList<string> AsGroup => AsGroupInternal.AsReadOnly();
         internal List<string> AsGroupInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Default HTTP cache directory.
         /// </summary>
+        [ArgumentFormat("--cache-dir={value}")]
         public virtual string CacheDir { get; internal set; }
         /// <summary>
         ///   Path to a cert file for the certificate authority.
         /// </summary>
+        [ArgumentFormat("--certificate-authority={value}")]
         public virtual string CertificateAuthority { get; internal set; }
         /// <summary>
         ///   Path to a client certificate file for TLS.
         /// </summary>
+        [ArgumentFormat("--client-certificate={value}")]
         public virtual string ClientCertificate { get; internal set; }
         /// <summary>
         ///   Path to a client key file for TLS.
         /// </summary>
+        [ArgumentFormat("--client-key={value}")]
         public virtual string ClientKey { get; internal set; }
         /// <summary>
         ///   The name of the kubeconfig cluster to use.
         /// </summary>
+        [ArgumentFormat("--cluster={value}")]
         public virtual string Cluster { get; internal set; }
         /// <summary>
         ///   The name of the kubeconfig context to use.
         /// </summary>
+        [ArgumentFormat("--context={value}")]
         public virtual string Context { get; internal set; }
         /// <summary>
         ///   If true, the server's certificate will not be checked for validity. This will make your HTTPS connections insecure.
         /// </summary>
+        [ArgumentFormat("--insecure-skip-tls-verify={value}")]
         public virtual bool? InsecureSkipTlsVerify { get; internal set; }
         /// <summary>
         ///   Path to the kubeconfig file to use for CLI requests.
         /// </summary>
+        [ArgumentFormat("--kubeconfig={value}")]
         public virtual string Kubeconfig { get; internal set; }
         /// <summary>
         ///   when logging hits line file:N, emit a stack trace.
         /// </summary>
+        [ArgumentFormat("--log-backtrace-at={value}")]
         public virtual string LogBacktraceAt { get; internal set; }
         /// <summary>
         ///   If non-empty, write log files in this directory.
         /// </summary>
+        [ArgumentFormat("--log-dir={value}")]
         public virtual string LogDir { get; internal set; }
         /// <summary>
         ///   log to standard error instead of files.
         /// </summary>
+        [ArgumentFormat("--logtostderr={value}")]
         public virtual bool? Logtostderr { get; internal set; }
         /// <summary>
         ///   Require server version to match client version.
         /// </summary>
+        [ArgumentFormat("--match-server-version={value}")]
         public virtual bool? MatchServerVersion { get; internal set; }
         /// <summary>
         ///   If present, the namespace scope for this CLI request.
         /// </summary>
+        [ArgumentFormat("--namespace={value}")]
         public virtual string Namespace { get; internal set; }
         /// <summary>
         ///   The length of time to wait before giving up on a single server request. Non-zero values should contain a corresponding time unit (e.g. 1s, 2m, 3h). A value of zero means don't timeout requests.
         /// </summary>
+        [ArgumentFormat("--request-timeout={value}")]
         public virtual string RequestTimeout { get; internal set; }
         /// <summary>
         ///   The address and port of the Kubernetes API server.
         /// </summary>
+        [ArgumentFormat("--server={value}")]
         public virtual string Server { get; internal set; }
         /// <summary>
         ///   logs at or above this threshold go to stderr.
         /// </summary>
+        [ArgumentFormat("--stderrthreshold={value}")]
         public virtual int? Stderrthreshold { get; internal set; }
         /// <summary>
         ///   Bearer token for authentication to the API server.
         /// </summary>
+        [ArgumentFormat("--token={value}")]
         public virtual string Token { get; internal set; }
         /// <summary>
         ///   The name of the kubeconfig user to use.
         /// </summary>
+        [ArgumentFormat("--user={value}")]
         public virtual string User { get; internal set; }
         /// <summary>
         ///   log level for V logs.
         /// </summary>
+        [ArgumentFormat("--v={value}")]
         public virtual int? V { get; internal set; }
         /// <summary>
         ///   comma-separated list of pattern=N settings for file-filtered logging.
         /// </summary>
+        [ArgumentFormat("--vmodule={value}")]
+        [ItemFormat("{key}={value}")]
+        [Separator(",")]
         public virtual IReadOnlyDictionary<string, string> Vmodule => VmoduleInternal.AsReadOnly();
         internal Dictionary<string,string> VmoduleInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         protected override Arguments ConfigureProcessArguments(Arguments arguments)

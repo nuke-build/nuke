@@ -92,6 +92,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///     <li><c>-version</c> via <see cref="VSWhereSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("")]
         public static (List<VSWhereResult> Result, IReadOnlyCollection<Output> Output) VSWhere(Configure<VSWhereSettings> configurator)
         {
             return VSWhere(configurator(new VSWhereSettings()));
@@ -139,52 +140,66 @@ namespace Nuke.Common.Tools.VSWhere
         /// <summary>
         ///    Return only the newest version and last installed.
         /// </summary>
+        [ArgumentFormat("-latest")]
         public virtual bool? Latest { get; internal set; }
         /// <summary>
         ///   Return information about instances found in a format described below:<ul><li><c>text</c>: Colon-delimited properties in separate blocks for each instance (default).</li><li><c>json</c>: An array of JSON objects for each instance (no logo).</li><li><c>value</c>: A single property specified by the -property parameter (no logo).</li><li><c>xml</c>: An XML data set containing instances (no logo).</li></ul>
         /// </summary>
+        [ArgumentFormat("-format {value}")]
         public virtual VSWhereFormat Format { get; internal set; }
         /// <summary>
         ///   Do not show logo information.
         /// </summary>
+        [ArgumentFormat("-nologo")]
         public virtual bool? NoLogo { get; internal set; }
         /// <summary>
         ///   Use UTF-8 encoding (recommended for JSON).
         /// </summary>
+        [ArgumentFormat("-utf8")]
         public virtual bool? UTF8 { get; internal set; }
         /// <summary>
         ///   Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.
         /// </summary>
+        [ArgumentFormat("-legacy")]
         public virtual bool? Legacy { get; internal set; }
         /// <summary>
         ///   Finds all instances even if they are incomplete and may not launch.
         /// </summary>
+        [ArgumentFormat("-all")]
         public virtual bool? All { get; internal set; }
         /// <summary>
         ///   Also searches prereleases. By default, only releases are searched.
         /// </summary>
+        [ArgumentFormat("-prerelease")]
         public virtual bool? Prerelease { get; internal set; }
         /// <summary>
         ///   One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.
         /// </summary>
+        [ArgumentFormat("-products {value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Products => ProductsInternal.AsReadOnly();
         internal List<string> ProductsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.
         /// </summary>
+        [ArgumentFormat("-requires {value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Requires => RequiresInternal.AsReadOnly();
         internal List<string> RequiresInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Find instances with any one or more workload or components IDs passed to <c>-requires</c>.
         /// </summary>
+        [ArgumentFormat("-requiresAny")]
         public virtual bool? RequiresAny { get; internal set; }
         /// <summary>
         ///   A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.
         /// </summary>
+        [ArgumentFormat("-version {value}")]
         public virtual string Version { get; internal set; }
         /// <summary>
         ///   The name of a property to return. Use delimiters <c>'.'</c>, <c>'/'</c>, or <c>'_'</c> to separate object and property names. Example: <c>properties.nickname</c> will return the <em>nickname</em> property under <em>properties</em>.
         /// </summary>
+        [ArgumentFormat("-property {value}")]
         public virtual string Property { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -214,22 +229,39 @@ namespace Nuke.Common.Tools.VSWhere
     [Serializable]
     public partial class VSWhereCatalog : ISettingsEntity
     {
+        [ArgumentFormat("")]
         public virtual string BuildBranch { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string BuildVersion { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string Id { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string LocalBuild { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string ManifestName { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string ManifestType { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string ProductDisplayVersion { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string ProductLine { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string ProductLineVersion { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string ProductMilestone { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string ProductMilestoneIsPreRelease { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string ProductName { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string ProductPatchVersion { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string ProductPreReleaseMilestoneSuffix { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string ProductRelease { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string ProductSemanticVersion { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string RequiredEngineVersion { get; internal set; }
     }
     #endregion
@@ -242,23 +274,41 @@ namespace Nuke.Common.Tools.VSWhere
     [Serializable]
     public partial class VSWhereResult : ISettingsEntity
     {
+        [ArgumentFormat("")]
         public virtual string InstanceId { get; internal set; }
+        [ArgumentFormat("")]
         public virtual DateTime InstallDate { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string InstallationName { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string InstallationPath { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string InstallationVersion { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string ProductId { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string ProductPath { get; internal set; }
+        [ArgumentFormat("")]
         public virtual bool? IsPreRelease { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string DisplayName { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string Description { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string ChannelId { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string ChannelUri { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string EnginePath { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string ReleaseNotes { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string ThirdPartyNotices { get; internal set; }
+        [ArgumentFormat("")]
         public virtual DateTime UpdateDate { get; internal set; }
+        [ArgumentFormat("")]
         public virtual VSWhereCatalog Catalog { get; internal set; }
+        [ArgumentFormat("")]
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
     }

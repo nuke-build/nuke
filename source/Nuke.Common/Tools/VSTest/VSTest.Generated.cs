@@ -104,6 +104,7 @@ namespace Nuke.Common.Tools.VSTest
         ///     <li><c>/UseVsixExtensions</c> via <see cref="VSTestSettings.UseVsixExtensions"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("")]
         public static IReadOnlyCollection<Output> VSTest(Configure<VSTestSettings> configurator)
         {
             return VSTest(configurator(new VSTestSettings()));
@@ -157,77 +158,97 @@ namespace Nuke.Common.Tools.VSTest
         /// <summary>
         ///   Run tests from the specified files. Separate multiple test file names with spaces.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual IReadOnlyList<string> TestAssemblies => TestAssembliesInternal.AsReadOnly();
         internal List<string> TestAssembliesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Run tests with additional settings such as data collectors.
         /// </summary>
+        [ArgumentFormat("/Settings:{value}")]
         public virtual string SettingsFile { get; internal set; }
         /// <summary>
         ///   Run tests with names that match the provided values. To provide multiple values, separate them by commas.
         /// </summary>
+        [ArgumentFormat("/Tests:{value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> Tests => TestsInternal.AsReadOnly();
         internal List<string> TestsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies that the tests be executed in parallel. By default up to all available cores on the machine may be used. The number of cores to use can be configured by using a settings file.
         /// </summary>
+        [ArgumentFormat("/Parallel")]
         public virtual bool? Parallel { get; internal set; }
         /// <summary>
         ///   Enables data diagnostic adapter CodeCoverage in the test run.
         /// </summary>
+        [ArgumentFormat("/EnableCodeCoverage")]
         public virtual bool? EnableCodeCoverage { get; internal set; }
         /// <summary>
         ///   Runs the tests in an isolated process.
         /// </summary>
+        [ArgumentFormat("/InIsolation")]
         public virtual bool? InIsolation { get; internal set; }
         /// <summary>
         ///   This makes vstest.console.exe process use or skip the VSIX extensions installed (if any) in the test run.
         /// </summary>
+        [ArgumentFormat("/UseVsixExtensions:{value}")]
         public virtual bool? UseVsixExtensions { get; internal set; }
         /// <summary>
         ///   Forces the vstest.console.exe process to use custom test adapters from a specified path (if any) in the test run.
         /// </summary>
+        [ArgumentFormat("/TestAdapterPath:{value}")]
         public virtual string TestAdapterPath { get; internal set; }
         /// <summary>
         ///   Target platform architecture to be used for test execution.
         /// </summary>
+        [ArgumentFormat("/Platform:{value}")]
         public virtual VsTestPlatform Platform { get; internal set; }
         /// <summary>
         ///   Target .NET Framework version to be used for test execution.
         /// </summary>
+        [ArgumentFormat("/Framework:{value}")]
         public virtual VsTestFramework Framework { get; internal set; }
         /// <summary>
         ///   Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.
         /// </summary>
+        [ArgumentFormat("/TestCaseFilter:{value}")]
+        [Separator("|")]
         public virtual IReadOnlyList<string> TestCaseFilters => TestCaseFiltersInternal.AsReadOnly();
         internal List<string> TestCaseFiltersInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specify a logger for test results. Example: To log results into a Visual Studio Test Results File (TRX) use <c>/Logger:trx</c>.
         /// </summary>
+        [ArgumentFormat("/Logger:{value}")]
         public virtual string Logger { get; internal set; }
         /// <summary>
         ///   Lists discovered tests from the given test container.
         /// </summary>
+        [ArgumentFormat("/ListTests:{value}")]
         public virtual string ListTests { get; internal set; }
         /// <summary>
         ///   Lists installed test discoverers.
         /// </summary>
+        [ArgumentFormat("/ListDiscoverers")]
         public virtual bool? ListDiscoverers { get; internal set; }
         /// <summary>
         ///   Lists installed test executors.
         /// </summary>
+        [ArgumentFormat("/ListExecutors")]
         public virtual bool? ListExecutors { get; internal set; }
         /// <summary>
         ///   Lists installed test loggers.
         /// </summary>
+        [ArgumentFormat("/ListLoggers")]
         public virtual bool? ListLoggers { get; internal set; }
         /// <summary>
         ///   Lists installed test settings providers.
         /// </summary>
+        [ArgumentFormat("/ListSettingsProviders")]
         public virtual bool? ListSettingsProviders { get; internal set; }
         /// <summary>
         ///   Writes diagnostic trace logs to the specified file.
         /// </summary>
+        [ArgumentFormat("/Diag:{value}")]
         public virtual string DiagnosticsFile { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

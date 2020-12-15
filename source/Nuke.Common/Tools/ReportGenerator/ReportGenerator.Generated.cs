@@ -88,6 +88,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///     <li><c>-verbosity</c> via <see cref="ReportGeneratorSettings.Verbosity"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("")]
         public static IReadOnlyCollection<Output> ReportGenerator(Configure<ReportGeneratorSettings> configurator)
         {
             return ReportGenerator(configurator(new ReportGeneratorSettings()));
@@ -133,49 +134,66 @@ namespace Nuke.Common.Tools.ReportGenerator
         /// <summary>
         ///   The coverage reports that should be parsed (separated by semicolon). Wildcards are allowed.
         /// </summary>
+        [ArgumentFormat("-reports:{value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> Reports => ReportsInternal.AsReadOnly();
         internal List<string> ReportsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The directory where the generated report should be saved.
         /// </summary>
+        [ArgumentFormat("-targetdir:{value}")]
         public virtual string TargetDirectory { get; internal set; }
         /// <summary>
         ///   The output formats and scope (separated by semicolon). Default is Html.
         /// </summary>
+        [ArgumentFormat("-reporttypes:{value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<ReportTypes> ReportTypes => ReportTypesInternal.AsReadOnly();
         internal List<ReportTypes> ReportTypesInternal { get; set; } = new List<ReportTypes>();
         /// <summary>
         ///   Optional directories which contain the corresponding source code (separated by semicolon). The source files are used if coverage report contains classes without path information.
         /// </summary>
+        [ArgumentFormat("-sourcedirs:{value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> SourceDirectories => SourceDirectoriesInternal.AsReadOnly();
         internal List<string> SourceDirectoriesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Optional directory for storing persistent coverage information. Can be used in future reports to show coverage evolution.
         /// </summary>
+        [ArgumentFormat("-historydir:{value}")]
         public virtual string HistoryDirectory { get; internal set; }
         /// <summary>
         ///   Optional list of assemblies that should be included (+) or excluded (-) in the report. Default is +*.
         /// </summary>
+        [ArgumentFormat("-assemblyfilters:{value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> AssemblyFilters => AssemblyFiltersInternal.AsReadOnly();
         internal List<string> AssemblyFiltersInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Optional list of classes that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.
         /// </summary>
+        [ArgumentFormat("-classfilters:{value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> ClassFilters => ClassFiltersInternal.AsReadOnly();
         internal List<string> ClassFiltersInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Optional list of files that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.
         /// </summary>
+        [ArgumentFormat("-classfilters:{value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> FileFilters => FileFiltersInternal.AsReadOnly();
         internal List<string> FileFiltersInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Optional tag or build version.
         /// </summary>
+        [ArgumentFormat("-tag:{value}")]
         public virtual string Tag { get; internal set; }
         /// <summary>
         ///   The verbosity level of the log messages. Default is Verbose.
         /// </summary>
+        [ArgumentFormat("-verbosity:{value}")]
         public virtual ReportGeneratorVerbosity Verbosity { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

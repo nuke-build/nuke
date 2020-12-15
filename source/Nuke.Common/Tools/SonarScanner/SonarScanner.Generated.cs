@@ -128,6 +128,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///     <li><c>/v</c> via <see cref="SonarScannerBeginSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("begin")]
         public static IReadOnlyCollection<Output> SonarScannerBegin(Configure<SonarScannerBeginSettings> configurator)
         {
             return SonarScannerBegin(configurator(new SonarScannerBeginSettings()));
@@ -204,6 +205,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///     <li><c>/d:sonar.password</c> via <see cref="SonarScannerEndSettings.Password"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("end")]
         public static IReadOnlyCollection<Output> SonarScannerEnd(Configure<SonarScannerEndSettings> configurator)
         {
             return SonarScannerEnd(configurator(new SonarScannerEndSettings()));
@@ -241,135 +243,178 @@ namespace Nuke.Common.Tools.SonarScanner
         /// <summary>
         ///   Specifies the key of the analyzed project in SonarQube.
         /// </summary>
+        [ArgumentFormat("/k:{value}")]
         public virtual string ProjectKey { get; internal set; }
         /// <summary>
         ///   Specifies the name of the analyzed project in SonarQube. Adding this argument will overwrite the project name in SonarQube if it already exists.
         /// </summary>
+        [ArgumentFormat("/n:{value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   Specifies the version of your project.
         /// </summary>
+        [ArgumentFormat("/v:{value}")]
         public virtual string Version { get; internal set; }
         /// <summary>
         ///   The project description.
         /// </summary>
+        [ArgumentFormat("/d:sonar.projectDescription={value}")]
         public virtual string Description { get; internal set; }
         /// <summary>
         ///   The server URL. Default is <c>http://localhost:9000</c>
         /// </summary>
+        [ArgumentFormat("/d:sonar.host.url={value}")]
         public virtual string Server { get; internal set; }
         /// <summary>
         ///   Specifies the username or access token to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added on the end step.
         /// </summary>
+        [ArgumentFormat("/d:sonar.login={value}")]
         public virtual string Login { get; internal set; }
         /// <summary>
         ///   Specifies the password for the SonarQube username in the <c>sonar.login</c> argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.
         /// </summary>
+        [ArgumentFormat("/d:sonar.password={value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   Sets the logging verbosity to detailed. Add this argument before sending logs for troubleshooting.
         /// </summary>
+        [ArgumentFormat("/d:sonar.verbose={value}")]
         public virtual bool? Verbose { get; internal set; }
         /// <summary>
         ///   Comma separated list of VSTest report files to include.
         /// </summary>
+        [ArgumentFormat("/d:sonar.cs.vstest.reportsPaths={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> VSTestReports => VSTestReportsInternal.AsReadOnly();
         internal List<string> VSTestReportsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Comma separated list of NUnit report files to include.
         /// </summary>
+        [ArgumentFormat("/d:sonar.cs.nunit.reportsPaths={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> NUnitTestReports => NUnitTestReportsInternal.AsReadOnly();
         internal List<string> NUnitTestReportsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Comma separated list of xUnit report files to include.
         /// </summary>
+        [ArgumentFormat("/d:sonar.cs.xunit.reportsPaths={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> XUnitTestReports => XUnitTestReportsInternal.AsReadOnly();
         internal List<string> XUnitTestReportsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Comma separated list of source files to exclude from analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).
         /// </summary>
+        [ArgumentFormat("/d:sonar.exclusions={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> SourceExclusions => SourceExclusionsInternal.AsReadOnly();
         internal List<string> SourceExclusionsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Comma separated list of source files to include in analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).
         /// </summary>
+        [ArgumentFormat("/d:sonar.inclusions={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> SourceInclusions => SourceInclusionsInternal.AsReadOnly();
         internal List<string> SourceInclusionsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Comma separated list of test files to exclude from analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).
         /// </summary>
+        [ArgumentFormat("/d:sonar.test.exclusions={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> TestFileExclusions => TestFileExclusionsInternal.AsReadOnly();
         internal List<string> TestFileExclusionsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Comma separated list of test files to include in analysis scope. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).
         /// </summary>
+        [ArgumentFormat("/d:sonar.test.inclusions={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> TestFileInclusions => TestFileInclusionsInternal.AsReadOnly();
         internal List<string> TestFileInclusionsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Comma separated list of files to exclude from coverage calculations. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).
         /// </summary>
+        [ArgumentFormat("/d:sonar.coverage.exclusions={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> CoverageExclusions => CoverageExclusionsInternal.AsReadOnly();
         internal List<string> CoverageExclusionsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).
         /// </summary>
+        [ArgumentFormat("/d:sonar.cs.vscoveragexml.reportsPaths={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> VisualStudioCoveragePaths => VisualStudioCoveragePathsInternal.AsReadOnly();
         internal List<string> VisualStudioCoveragePathsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Comma separated list of dotCover HTML-reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).
         /// </summary>
+        [ArgumentFormat("/d:sonar.cs.dotcover.reportsPaths={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> DotCoverPaths => DotCoverPathsInternal.AsReadOnly();
         internal List<string> DotCoverPathsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Comma separated list of OpenCover reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).
         /// </summary>
+        [ArgumentFormat("/d:sonar.cs.opencover.reportsPaths={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> OpenCoverPaths => OpenCoverPathsInternal.AsReadOnly();
         internal List<string> OpenCoverPathsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Maximum time to wait for the response of a Web Service call (in seconds). Modifying this value from the default is useful only when you're experiencing timeouts during analysis while waiting for the server to respond to Web Service calls.
         /// </summary>
+        [ArgumentFormat("/d:sonar.ws.timeout={value}")]
         public virtual int? WebServiceTimeout { get; internal set; }
         /// <summary>
         ///   Project home page.
         /// </summary>
+        [ArgumentFormat("/d:sonar.links.homepage={value}")]
         public virtual string Homepage { get; internal set; }
         /// <summary>
         ///   Link to Continuous integration
         /// </summary>
+        [ArgumentFormat("/d:sonar.links.ci={value}")]
         public virtual string ContinuousIntegrationUrl { get; internal set; }
         /// <summary>
         ///   Link to Issue tracker.
         /// </summary>
+        [ArgumentFormat("/d:sonar.links.issue={value}")]
         public virtual string IssueTrackerUrl { get; internal set; }
         /// <summary>
         ///   Link to project source repository
         /// </summary>
+        [ArgumentFormat("/d:sonar.links.scm={value}")]
         public virtual string SCMUrl { get; internal set; }
         /// <summary>
         ///   Encoding of the source files. Ex: <c>UTF-8</c> , <c>MacRoman</c> , <c>Shift_JIS</c>. This property can be replaced by the standard property <c>project.build.sourceEncoding</c> in Maven projects. The list of available encodings depends on your JVM.
         /// </summary>
+        [ArgumentFormat("/d:sonar.sourceEncoding={value}")]
         public virtual string SourceEncoding { get; internal set; }
         /// <summary>
         ///   Comma-delimited list of file path patterns to be excluded from duplication detection.
         /// </summary>
+        [ArgumentFormat("/d:sonar.cpd.exclusions={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> DuplicationExclusions => DuplicationExclusionsInternal.AsReadOnly();
         internal List<string> DuplicationExclusionsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Name of the branch (visible in the UI)
         /// </summary>
+        [ArgumentFormat("/d:sonar.branch.name={value}")]
         public virtual string BranchName { get; internal set; }
         /// <summary>
         ///   Unique identifier of your Pull Request. Must correspond to the key of the Pull Request in your ALM. e.g.: <c>sonar.pullrequest.key=5</c>
         /// </summary>
+        [ArgumentFormat("/d:sonar.pullrequest.key={value}")]
         public virtual string PullRequestKey { get; internal set; }
         /// <summary>
         ///   The name of the branch that contains the changes to be merged. e.g.: <c>sonar.pullrequest.branch=feature/my-new-feature</c>
         /// </summary>
+        [ArgumentFormat("/d:sonar.pullrequest.branch={value}")]
         public virtual string PullRequestBranch { get; internal set; }
         /// <summary>
         ///   The branch into which the Pull Request will be merged. Default: <c>master</c>. e.g.: <c>sonar.pullrequest.base=master</c>
         /// </summary>
+        [ArgumentFormat("/d:sonar.pullrequest.base={value}")]
         public virtual string PullRequestBase { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -426,11 +471,14 @@ namespace Nuke.Common.Tools.SonarScanner
         /// <summary>
         ///   Specifies the username or access token to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added on the end step.
         /// </summary>
+        [ArgumentFormat("/d:sonar.login={value}")]
         public virtual string Login { get; internal set; }
         /// <summary>
         ///   Specifies the password for the SonarQube username in the <c>sonar.login</c> argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.
         /// </summary>
+        [ArgumentFormat("/d:sonar.password={value}")]
         public virtual string Password { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

@@ -92,6 +92,7 @@ namespace Nuke.Common.Tools.NuGet
         ///     <li><c>-Verbosity</c> via <see cref="NuGetPushSettings.Verbosity"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("push")]
         public static IReadOnlyCollection<Output> NuGetPush(Configure<NuGetPushSettings> configurator)
         {
             return NuGetPush(configurator(new NuGetPushSettings()));
@@ -186,6 +187,7 @@ namespace Nuke.Common.Tools.NuGet
         ///     <li><c>-Version</c> via <see cref="NuGetPackSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("pack")]
         public static IReadOnlyCollection<Output> NuGetPack(Configure<NuGetPackSettings> configurator)
         {
             return NuGetPack(configurator(new NuGetPackSettings()));
@@ -286,6 +288,7 @@ namespace Nuke.Common.Tools.NuGet
         ///     <li><c>-Verbosity</c> via <see cref="NuGetRestoreSettings.Verbosity"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("restore")]
         public static IReadOnlyCollection<Output> NuGetRestore(Configure<NuGetRestoreSettings> configurator)
         {
             return NuGetRestore(configurator(new NuGetRestoreSettings()));
@@ -383,6 +386,7 @@ namespace Nuke.Common.Tools.NuGet
         ///     <li><c>-Version</c> via <see cref="NuGetInstallSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("install")]
         public static IReadOnlyCollection<Output> NuGetInstall(Configure<NuGetInstallSettings> configurator)
         {
             return NuGetInstall(configurator(new NuGetInstallSettings()));
@@ -461,6 +465,7 @@ namespace Nuke.Common.Tools.NuGet
         ///     <li><c>-Verbosity</c> via <see cref="NuGetSourcesAddSettings.Verbosity"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("sources add")]
         public static IReadOnlyCollection<Output> NuGetSourcesAdd(Configure<NuGetSourcesAddSettings> configurator)
         {
             return NuGetSourcesAdd(configurator(new NuGetSourcesAddSettings()));
@@ -530,6 +535,7 @@ namespace Nuke.Common.Tools.NuGet
         ///     <li><c>-Verbosity</c> via <see cref="NuGetSourcesUpdateSettings.Verbosity"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("sources update")]
         public static IReadOnlyCollection<Output> NuGetSourcesUpdate(Configure<NuGetSourcesUpdateSettings> configurator)
         {
             return NuGetSourcesUpdate(configurator(new NuGetSourcesUpdateSettings()));
@@ -591,6 +597,7 @@ namespace Nuke.Common.Tools.NuGet
         ///     <li><c>-Verbosity</c> via <see cref="NuGetSourcesRemoveSettings.Verbosity"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("sources remove")]
         public static IReadOnlyCollection<Output> NuGetSourcesRemove(Configure<NuGetSourcesRemoveSettings> configurator)
         {
             return NuGetSourcesRemove(configurator(new NuGetSourcesRemoveSettings()));
@@ -648,6 +655,7 @@ namespace Nuke.Common.Tools.NuGet
         ///     <li><c>-Verbosity</c> via <see cref="NuGetSourcesEnableSettings.Verbosity"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("sources enable")]
         public static IReadOnlyCollection<Output> NuGetSourcesEnable(Configure<NuGetSourcesEnableSettings> configurator)
         {
             return NuGetSourcesEnable(configurator(new NuGetSourcesEnableSettings()));
@@ -705,6 +713,7 @@ namespace Nuke.Common.Tools.NuGet
         ///     <li><c>-Verbosity</c> via <see cref="NuGetSourcesDisableSettings.Verbosity"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("sources disable")]
         public static IReadOnlyCollection<Output> NuGetSourcesDisable(Configure<NuGetSourcesDisableSettings> configurator)
         {
             return NuGetSourcesDisable(configurator(new NuGetSourcesDisableSettings()));
@@ -762,6 +771,7 @@ namespace Nuke.Common.Tools.NuGet
         ///     <li><c>-Verbosity</c> via <see cref="NuGetSourcesListSettings.Verbosity"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("sources list")]
         public static IReadOnlyCollection<Output> NuGetSourcesList(Configure<NuGetSourcesListSettings> configurator)
         {
             return NuGetSourcesList(configurator(new NuGetSourcesListSettings()));
@@ -802,50 +812,62 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary>
         ///   Path of the package to push.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string TargetPath { get; internal set; }
         /// <summary>
         ///   The API key for the target repository. If not present, the one specified in <em>%AppData%\NuGet\NuGet.Config</em> is used.
         /// </summary>
+        [ArgumentFormat("-ApiKey {value}")]
         public virtual string ApiKey { get; internal set; }
         /// <summary>
         ///   Specifies the server URL. NuGet identifies a UNC or local folder source and simply copies the file there instead of pushing it using HTTP.  Also, starting with NuGet 3.4.2, this is a mandatory parameter unless the <em>NuGet.Config</em> file specifies a <em>DefaultPushSource</em> value (see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Configuring NuGet behavior</a>).
         /// </summary>
+        [ArgumentFormat("-Source {value}")]
         public virtual string Source { get; internal set; }
         /// <summary>
         ///   <em>(3.5+)</em> Specifies the symbol server URL; nuget.smbsrc.net is used when pushing to nuget.org
         /// </summary>
+        [ArgumentFormat("-SymbolSource {value}")]
         public virtual string SymbolSource { get; internal set; }
         /// <summary>
         ///   <em>(3.5+)</em> Specifies the API key for the URL specified in <c>-SymbolSource</c>.
         /// </summary>
+        [ArgumentFormat("-SymbolApiKey {value}")]
         public virtual string SymbolApiKey { get; internal set; }
         /// <summary>
         ///   <em>(3.5+)</em> If a symbols package exists, it will not be pushed to a symbol server.
         /// </summary>
+        [ArgumentFormat("-NoSymbols")]
         public virtual bool? NoSymbols { get; internal set; }
         /// <summary>
         ///   Disables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.
         /// </summary>
+        [ArgumentFormat("-DisableBuffering")]
         public virtual bool? DisableBuffering { get; internal set; }
         /// <summary>
         ///   The NuGet configuration file to apply. If not specified, <em>%AppData%\NuGet\NuGet.Config</em> is used.
         /// </summary>
+        [ArgumentFormat("-ConfigFile {value}")]
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   Specifies the amount of details displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.
         /// </summary>
+        [ArgumentFormat("-Verbosity {value}")]
         public virtual NuGetVerbosity Verbosity { get; internal set; }
         /// <summary>
         ///   <em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.
         /// </summary>
+        [ArgumentFormat("-ForceEnglishOutput")]
         public virtual bool? ForceEnglishOutput { get; internal set; }
         /// <summary>
         ///   Suppresses prompts for user input or confirmations.
         /// </summary>
+        [ArgumentFormat("-NonInteractive")]
         public virtual bool? NonInteractive { get; internal set; }
         /// <summary>
         ///   Specifies the timeout, in seconds, for pushing to a server. The default is 300 seconds (5 minutes).
         /// </summary>
+        [ArgumentFormat("-Timeout {value}")]
         public virtual int? Timeout { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -884,83 +906,106 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary>
         ///   The <c>.nuspec</c> or <c>.csproj</c> file.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string TargetPath { get; internal set; }
         /// <summary>
         ///   Sets the base path of the files defined in the <c>.nuspec</c> file.
         /// </summary>
+        [ArgumentFormat("-BasePath {value}")]
         public virtual string BasePath { get; internal set; }
         /// <summary>
         ///   Specifies that the project should be built before building the package.
         /// </summary>
+        [ArgumentFormat("-Build")]
         public virtual bool? Build { get; internal set; }
         /// <summary>
         ///   Specifies one or more wildcard patterns to exclude when creating a package. To specify more than one pattern, repeat the <c>-Exclude</c> flag.
         /// </summary>
+        [ArgumentFormat("-Exclude {value}")]
         public virtual string Exclude { get; internal set; }
         /// <summary>
         ///   Prevent inclusion of empty directories when building the package.
         /// </summary>
+        [ArgumentFormat("-ExcludeEmptyDirectories")]
         public virtual bool? ExcludeEmptyDirectories { get; internal set; }
         /// <summary>
         ///   Indicates that the built package should include referenced projects either as dependencies or as part of the package. If a referenced project has a corresponding <c>.nuspec</c> file that has the same name as the project, then that referenced project is added as a dependency. Otherwise, the referenced project is added as part of the package.
         /// </summary>
+        [ArgumentFormat("-IncludeReferencedProjects")]
         public virtual bool? IncludeReferencedProjects { get; internal set; }
         /// <summary>
         ///   Set the <em>minClientVersion</em> attribute for the created package. This value will override the value of the existing <em>minClientVersion</em> attribute (if any) in the <c>.nuspec</c> file.
         /// </summary>
+        [ArgumentFormat("-MinClientVersion")]
         public virtual bool? MinClientVersion { get; internal set; }
         /// <summary>
         ///   <em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.
         /// </summary>
+        [ArgumentFormat("-ForceEnglishOutput")]
         public virtual bool? ForceEnglishOutput { get; internal set; }
         /// <summary>
         ///   <em>(4.0+)</em> Specifies the path of MSBuild to use with the command, taking precedence over <c>-MSBuildVersion</c>.
         /// </summary>
+        [ArgumentFormat("-MSBuildPath {value}")]
         public virtual string MSBuildPath { get; internal set; }
         /// <summary>
         ///   <em>(3.2+)</em> Specifies the version of MSBuild to be used with this command. Supported values are <em>4</em>, <em>12</em>, <em>14</em>. By default the MSBuild in your path is picked, otherwise it defaults to the highest installed version of MSBuild.
         /// </summary>
+        [ArgumentFormat("-MSBuildVersion {value}")]
         public virtual NuGetMSBuildVersion MSBuildVersion { get; internal set; }
         /// <summary>
         ///   Prevents default exclusion of NuGet package files and files and folders starting with a dot, such as <em>.svn</em> and <c>.gitignore</c>.
         /// </summary>
+        [ArgumentFormat("-NoDefaultExcludes")]
         public virtual bool? NoDefaultExcludes { get; internal set; }
         /// <summary>
         ///   Specifies that pack should not run package analysis after building the package.
         /// </summary>
+        [ArgumentFormat("-NoPackageAnalysis")]
         public virtual bool? NoPackageAnalysis { get; internal set; }
         /// <summary>
         ///   Specifies the folder in which the created package is stored. If no folder is specified, the current folder is used.
         /// </summary>
+        [ArgumentFormat("-OutputDirectory {value}")]
         public virtual string OutputDirectory { get; internal set; }
         /// <summary>
         ///   Specifies a list of properties that override values in the project file; see <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/common-msbuild-project-properties">Common MSBuild Project Properties</a> for property names. The Properties argument here is a list of token=value pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks. Note that for the &quot;Configuration&quot; property, the default is &quot;Debug&quot;. To change to a Release configuration, use <c>-Properties Configuration=Release</c>.
         /// </summary>
+        [ArgumentFormat("-Properties {value}")]
+        [ItemFormat("{key}={value}")]
+        [Separator(";")]
+        [Delegate("Configuration", "")]
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   <em>(3.4.4+)</em> Appends a suffix to the internally generated version number, typically used for appending build or other pre-release identifiers. For example, using <c>-suffix nightly</c> will create a package with a version number like <c>1.2.3-nightly</c>. Suffixes must start with a letter to avoid warnings, errors, and potential incompatibilities with different versions of NuGet and the NuGet Package Manager.
         /// </summary>
+        [ArgumentFormat("-Suffix {value}")]
         public virtual string Suffix { get; internal set; }
         /// <summary>
         ///   Specifies that the package contains sources and symbols. When used with a <c>.nuspec</c> file, this creates a regular NuGet package file and the corresponding symbols package.
         /// </summary>
+        [ArgumentFormat("-Symbols")]
         public virtual bool? Symbols { get; internal set; }
         /// <summary>
         ///   Specifies that the output files of the project should be placed in the <c>tool</c> folder.
         /// </summary>
+        [ArgumentFormat("-Tool")]
         public virtual bool? Tool { get; internal set; }
         /// <summary>
         ///   Specifies the amount of details displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.
         /// </summary>
+        [ArgumentFormat("-Verbosity {value}")]
         public virtual NuGetVerbosity Verbosity { get; internal set; }
         /// <summary>
         ///   Overrides the version number from the <c>.nuspec</c> file.
         /// </summary>
+        [ArgumentFormat("-Version {value}")]
         public virtual string Version { get; internal set; }
         /// <summary>
         ///   Format for packaging symbols.
         /// </summary>
+        [ArgumentFormat("-SymbolPackageFormat {value}")]
         public virtual NuGetSymbolPackageFormat SymbolPackageFormat { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1007,81 +1052,103 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary>
         ///   Defines the project to restore. I.e., the location of a solution file, a <c>packages.config</c>, or a <c>project.json</c> file.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string TargetPath { get; internal set; }
         /// <summary>
         ///   The NuGet configuration file to apply. If not specified, <em>%AppData%\NuGet\NuGet.Config</em> is used.
         /// </summary>
+        [ArgumentFormat("-ConfigFile {value}")]
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   <em>(4.0+)</em> Downloads packages directly without populating caches with any binaries or metadata.
         /// </summary>
+        [ArgumentFormat("-DirectDownload")]
         public virtual bool? DirectDownload { get; internal set; }
         /// <summary>
         ///   Disables restoring multiple packages in parallel.
         /// </summary>
+        [ArgumentFormat("-DisableParallelProcessing")]
         public virtual bool? DisableParallelProcessing { get; internal set; }
         /// <summary>
         ///   <em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.
         /// </summary>
+        [ArgumentFormat("-FallbackSource {value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> FallbackSource => FallbackSourceInternal.AsReadOnly();
         internal List<string> FallbackSourceInternal { get; set; } = new List<string>();
         /// <summary>
         ///   <em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.
         /// </summary>
+        [ArgumentFormat("-ForceEnglishOutput")]
         public virtual bool? ForceEnglishOutput { get; internal set; }
         /// <summary>
         ///   <em>(4.0+)</em> Specifies the path of MSBuild to use with the command, taking precedence over <c>-MSBuildVersion</c>.
         /// </summary>
+        [ArgumentFormat("-MSBuildPath {value}")]
         public virtual string MSBuildPath { get; internal set; }
         /// <summary>
         ///   <em>(3.2+)</em> Specifies the version of MSBuild to be used with this command. Supported values are <em>4</em>, <em>12</em>, <em>14</em>, <em>15</em>. By default the MSBuild in your path is picked, otherwise it defaults to the highest installed version of MSBuild.
         /// </summary>
+        [ArgumentFormat("-MSBuildVersion {value}")]
         public virtual NuGetMSBuildVersion MSBuildVersion { get; internal set; }
         /// <summary>
         ///   Prevents NuGet from using packages from local machine caches.
         /// </summary>
+        [ArgumentFormat("-NoCache")]
         public virtual bool? NoCache { get; internal set; }
         /// <summary>
         ///   Suppresses prompts for user input or confirmations.
         /// </summary>
+        [ArgumentFormat("-NonInteractive")]
         public virtual bool? NonInteractive { get; internal set; }
         /// <summary>
         ///   Specifies the folder in which packages are installed. If no folder is specified, the current folder is used.
         /// </summary>
+        [ArgumentFormat("-OutputDirectory {value}")]
         public virtual string OutputDirectory { get; internal set; }
         /// <summary>
         ///   Specifies the types of files to save after package installation: one of <c>nuspec</c>, <c>nupkg</c>, or <c>nuspec;nupkg</c>.
         /// </summary>
+        [ArgumentFormat("-PackageSaveMode {value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<PackageSaveMode> PackageSaveMode => PackageSaveModeInternal.AsReadOnly();
         internal List<PackageSaveMode> PackageSaveModeInternal { get; set; } = new List<PackageSaveMode>();
         /// <summary>
         ///   Same as <c>OutputDirectory</c>.
         /// </summary>
+        [ArgumentFormat("-PackagesDirectory {value}")]
         public virtual string PackagesDirectory { get; internal set; }
         /// <summary>
         ///   Timeout in seconds for resolving project-to-project references.
         /// </summary>
+        [ArgumentFormat("-Project2ProjectTimeOut {value}")]
         public virtual int? Project2ProjectTimeOut { get; internal set; }
         /// <summary>
         ///   <em>(4.0+)</em> Restores all references projects for UWP and .NET Core projects. Does not apply to projects using <c>packages.config</c>.
         /// </summary>
+        [ArgumentFormat("-Recursive")]
         public virtual bool? Recursive { get; internal set; }
         /// <summary>
         ///   Verifies that restoring packages is enabled before downloading and installing the packages. For details, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore">Package Restore</a>.
         /// </summary>
+        [ArgumentFormat("-RequireConsent")]
         public virtual bool? RequireConsent { get; internal set; }
         /// <summary>
         ///   Specifies the solution folder. Not valid when restoring packages for a solution.
         /// </summary>
+        [ArgumentFormat("-SolutionDirectory {value}")]
         public virtual string SolutionDirectory { get; internal set; }
         /// <summary>
         ///   Specifies the list of package sources (as URLs) to use for the restore. If omitted, the command uses the sources provided in configuration files, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Configuring NuGet behavior</a>.
         /// </summary>
+        [ArgumentFormat("-Source {value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> Source => SourceInternal.AsReadOnly();
         internal List<string> SourceInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.
         /// </summary>
+        [ArgumentFormat("-Verbosity {value}")]
         public virtual NuGetVerbosity Verbosity { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1127,77 +1194,98 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary>
         ///   Name of the package to install.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string PackageID { get; internal set; }
         /// <summary>
         ///   <em>(4.4+)</em> The version of the dependency packages to use, which can be one of the following: <ul><li><c>Lowest</c>: (default) the lowest version.</li> <li><c>HighestPatch</c>: the version with the lowest major, lowest minor, highest patch.</li> <li><c>HighestMinor</c>: the version with the lowest major, highest minor, highest patch.</li> <li><c>Highest</c>: the highest version.</li> <li><c>Ignore</c>: No dependency packages will be used.</li></ul>
         /// </summary>
+        [ArgumentFormat("-DependencyVersion {value}")]
         public virtual DependencyVersion DependencyVersion { get; internal set; }
         /// <summary>
         ///   Disables installing multiple packages in parallel.
         /// </summary>
+        [ArgumentFormat("-DisableParallelProcessing")]
         public virtual bool? DisableParallelProcessing { get; internal set; }
         /// <summary>
         ///   Installs the package to a folder named with only the package name and not the version number.
         /// </summary>
+        [ArgumentFormat("-ExcludeVersion")]
         public virtual bool? ExcludeVersion { get; internal set; }
         /// <summary>
         ///   <em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.
         /// </summary>
+        [ArgumentFormat("-FallbackSource {value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> FallbackSource => FallbackSourceInternal.AsReadOnly();
         internal List<string> FallbackSourceInternal { get; set; } = new List<string>();
         /// <summary>
         ///   <em>(4.4+)</em> Target framework used for selecting dependencies. Defaults to 'Any' if not specified.
         /// </summary>
+        [ArgumentFormat("-Framework {value}")]
         public virtual string Framework { get; internal set; }
         /// <summary>
         ///   Prevents NuGet from using cached packages. See <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders">Managing the global packages and cache folders</a>.
         /// </summary>
+        [ArgumentFormat("-NoCache")]
         public virtual bool? NoCache { get; internal set; }
         /// <summary>
         ///   Specifies the folder in which packages are installed. If no folder is specified, the current folder is used.
         /// </summary>
+        [ArgumentFormat("-OutputDirectory {value}")]
         public virtual string OutputDirectory { get; internal set; }
         /// <summary>
         ///   Specifies the types of files to save after package installation: one of <c>nuspec</c>, <c>nupkg</c>, or <c>nuspec;nupkg</c>.
         /// </summary>
+        [ArgumentFormat("-PackageSaveMode {value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<PackageSaveMode> PackageSaveMode => PackageSaveModeInternal.AsReadOnly();
         internal List<PackageSaveMode> PackageSaveModeInternal { get; set; } = new List<PackageSaveMode>();
         /// <summary>
         ///   Allows prerelease packages to be installed. This flag is not required when restoring packages with <c>packages.config</c>.
         /// </summary>
+        [ArgumentFormat("-PreRelease")]
         public virtual bool? PreRelease { get; internal set; }
         /// <summary>
         ///   Verifies that restoring packages is enabled before downloading and installing the packages. For details, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore">Package Restore</a>.
         /// </summary>
+        [ArgumentFormat("-RequireConsent")]
         public virtual bool? RequireConsent { get; internal set; }
         /// <summary>
         ///   Specifies root folder of the solution for which to restore packages.
         /// </summary>
+        [ArgumentFormat("-SolutionDirectory {value}")]
         public virtual string SolutionDirectory { get; internal set; }
         /// <summary>
         ///   Specifies the list of package sources (as URLs) to use for the restore. If omitted, the command uses the sources provided in configuration files, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Common NuGet configurations</a>.
         /// </summary>
+        [ArgumentFormat("-Source {value}")]
+        [Separator(";")]
         public virtual IReadOnlyList<string> Source => SourceInternal.AsReadOnly();
         internal List<string> SourceInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specifies the version of the package to install.
         /// </summary>
+        [ArgumentFormat("-Version {value}")]
         public virtual string Version { get; internal set; }
         /// <summary>
         ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
         /// </summary>
+        [ArgumentFormat("-ConfigFile {value}")]
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   <em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.
         /// </summary>
+        [ArgumentFormat("-ForceEnglishOutput")]
         public virtual bool? ForceEnglishOutput { get; internal set; }
         /// <summary>
         ///   Suppresses prompts for user input or confirmations.
         /// </summary>
+        [ArgumentFormat("-NonInteractive")]
         public virtual bool? NonInteractive { get; internal set; }
         /// <summary>
         ///   Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.
         /// </summary>
+        [ArgumentFormat("-Verbosity {value}")]
         public virtual NuGetVerbosity Verbosity { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1242,38 +1330,47 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary>
         ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
         /// </summary>
+        [ArgumentFormat("-ConfigFile {value}")]
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   <em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.
         /// </summary>
+        [ArgumentFormat("-ForceEnglishOutput")]
         public virtual bool? ForceEnglishOutput { get; internal set; }
         /// <summary>
         ///   Suppresses prompts for user input or confirmations.
         /// </summary>
+        [ArgumentFormat("-NonInteractive")]
         public virtual bool? NonInteractive { get; internal set; }
         /// <summary>
         ///   Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.
         /// </summary>
+        [ArgumentFormat("-Verbosity {value}")]
         public virtual NuGetVerbosity Verbosity { get; internal set; }
         /// <summary>
         ///   Name of the source.
         /// </summary>
+        [ArgumentFormat("-Name {value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   URL of the source.
         /// </summary>
+        [ArgumentFormat("-Source {value}")]
         public virtual string Source { get; internal set; }
         /// <summary>
         ///   Specifies the password for authenticating with the source.
         /// </summary>
+        [ArgumentFormat("-Password {value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   Indicates to store the password in unencrypted text instead of the default behavior of storing an encrypted form.
         /// </summary>
+        [ArgumentFormat("-StorePasswordInClearText")]
         public virtual bool? StorePasswordInClearText { get; internal set; }
         /// <summary>
         ///   Specifies the user name for authenticating with the source.
         /// </summary>
+        [ArgumentFormat("-UserName {value}")]
         public virtual string UserName { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1309,38 +1406,47 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary>
         ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
         /// </summary>
+        [ArgumentFormat("-ConfigFile {value}")]
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   <em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.
         /// </summary>
+        [ArgumentFormat("-ForceEnglishOutput")]
         public virtual bool? ForceEnglishOutput { get; internal set; }
         /// <summary>
         ///   Suppresses prompts for user input or confirmations.
         /// </summary>
+        [ArgumentFormat("-NonInteractive")]
         public virtual bool? NonInteractive { get; internal set; }
         /// <summary>
         ///   Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.
         /// </summary>
+        [ArgumentFormat("-Verbosity {value}")]
         public virtual NuGetVerbosity Verbosity { get; internal set; }
         /// <summary>
         ///   Name of the source.
         /// </summary>
+        [ArgumentFormat("-Name {value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   URL of the source.
         /// </summary>
+        [ArgumentFormat("-Source {value}")]
         public virtual string Source { get; internal set; }
         /// <summary>
         ///   Specifies the password for authenticating with the source.
         /// </summary>
+        [ArgumentFormat("-Password {value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   Indicates to store the password in unencrypted text instead of the default behavior of storing an encrypted form.
         /// </summary>
+        [ArgumentFormat("-StorePasswordInClearText")]
         public virtual bool? StorePasswordInClearText { get; internal set; }
         /// <summary>
         ///   Specifies the user name for authenticating with the source.
         /// </summary>
+        [ArgumentFormat("-UserName {value}")]
         public virtual string UserName { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1376,22 +1482,27 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary>
         ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
         /// </summary>
+        [ArgumentFormat("-ConfigFile {value}")]
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   <em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.
         /// </summary>
+        [ArgumentFormat("-ForceEnglishOutput")]
         public virtual bool? ForceEnglishOutput { get; internal set; }
         /// <summary>
         ///   Suppresses prompts for user input or confirmations.
         /// </summary>
+        [ArgumentFormat("-NonInteractive")]
         public virtual bool? NonInteractive { get; internal set; }
         /// <summary>
         ///   Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.
         /// </summary>
+        [ArgumentFormat("-Verbosity {value}")]
         public virtual NuGetVerbosity Verbosity { get; internal set; }
         /// <summary>
         ///   Name of the source.
         /// </summary>
+        [ArgumentFormat("-Name {value}")]
         public virtual string Name { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1423,22 +1534,27 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary>
         ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
         /// </summary>
+        [ArgumentFormat("-ConfigFile {value}")]
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   <em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.
         /// </summary>
+        [ArgumentFormat("-ForceEnglishOutput")]
         public virtual bool? ForceEnglishOutput { get; internal set; }
         /// <summary>
         ///   Suppresses prompts for user input or confirmations.
         /// </summary>
+        [ArgumentFormat("-NonInteractive")]
         public virtual bool? NonInteractive { get; internal set; }
         /// <summary>
         ///   Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.
         /// </summary>
+        [ArgumentFormat("-Verbosity {value}")]
         public virtual NuGetVerbosity Verbosity { get; internal set; }
         /// <summary>
         ///   Name of the source.
         /// </summary>
+        [ArgumentFormat("-Name {value}")]
         public virtual string Name { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1470,22 +1586,27 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary>
         ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
         /// </summary>
+        [ArgumentFormat("-ConfigFile {value}")]
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   <em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.
         /// </summary>
+        [ArgumentFormat("-ForceEnglishOutput")]
         public virtual bool? ForceEnglishOutput { get; internal set; }
         /// <summary>
         ///   Suppresses prompts for user input or confirmations.
         /// </summary>
+        [ArgumentFormat("-NonInteractive")]
         public virtual bool? NonInteractive { get; internal set; }
         /// <summary>
         ///   Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.
         /// </summary>
+        [ArgumentFormat("-Verbosity {value}")]
         public virtual NuGetVerbosity Verbosity { get; internal set; }
         /// <summary>
         ///   Name of the source.
         /// </summary>
+        [ArgumentFormat("-Name {value}")]
         public virtual string Name { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1517,22 +1638,27 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary>
         ///   Can be <c>Detailed</c> (the default) or <c>Short</c>.
         /// </summary>
+        [ArgumentFormat("-Format {value}")]
         public virtual NuGetSourcesListFormat Format { get; internal set; }
         /// <summary>
         ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
         /// </summary>
+        [ArgumentFormat("-ConfigFile {value}")]
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   <em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.
         /// </summary>
+        [ArgumentFormat("-ForceEnglishOutput")]
         public virtual bool? ForceEnglishOutput { get; internal set; }
         /// <summary>
         ///   Suppresses prompts for user input or confirmations.
         /// </summary>
+        [ArgumentFormat("-NonInteractive")]
         public virtual bool? NonInteractive { get; internal set; }
         /// <summary>
         ///   Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.
         /// </summary>
+        [ArgumentFormat("-Verbosity {value}")]
         public virtual NuGetVerbosity Verbosity { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

@@ -70,6 +70,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--help</c> via <see cref="HelmCompletionSettings.Help"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("completion")]
         public static IReadOnlyCollection<Output> HelmCompletion(Configure<HelmCompletionSettings> configurator)
         {
             return HelmCompletion(configurator(new HelmCompletionSettings()));
@@ -120,6 +121,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--starter</c> via <see cref="HelmCreateSettings.Starter"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("create")]
         public static IReadOnlyCollection<Output> HelmCreate(Configure<HelmCreateSettings> configurator)
         {
             return HelmCreate(configurator(new HelmCreateSettings()));
@@ -191,6 +193,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--tls-verify</c> via <see cref="HelmDeleteSettings.TlsVerify"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("delete")]
         public static IReadOnlyCollection<Output> HelmDelete(Configure<HelmDeleteSettings> configurator)
         {
             return HelmDelete(configurator(new HelmDeleteSettings()));
@@ -254,6 +257,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--verify</c> via <see cref="HelmDependencyBuildSettings.Verify"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("dependency build")]
         public static IReadOnlyCollection<Output> HelmDependencyBuild(Configure<HelmDependencyBuildSettings> configurator)
         {
             return HelmDependencyBuild(configurator(new HelmDependencyBuildSettings()));
@@ -304,6 +308,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--help</c> via <see cref="HelmDependencyListSettings.Help"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("dependency list")]
         public static IReadOnlyCollection<Output> HelmDependencyList(Configure<HelmDependencyListSettings> configurator)
         {
             return HelmDependencyList(configurator(new HelmDependencyListSettings()));
@@ -358,6 +363,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--verify</c> via <see cref="HelmDependencyUpdateSettings.Verify"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("dependency update")]
         public static IReadOnlyCollection<Output> HelmDependencyUpdate(Configure<HelmDependencyUpdateSettings> configurator)
         {
             return HelmDependencyUpdate(configurator(new HelmDependencyUpdateSettings()));
@@ -437,6 +443,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--version</c> via <see cref="HelmFetchSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("fetch")]
         public static IReadOnlyCollection<Output> HelmFetch(Configure<HelmFetchSettings> configurator)
         {
             return HelmFetch(configurator(new HelmFetchSettings()));
@@ -513,6 +520,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--tls-verify</c> via <see cref="HelmGetSettings.TlsVerify"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("get")]
         public static IReadOnlyCollection<Output> HelmGet(Configure<HelmGetSettings> configurator)
         {
             return HelmGet(configurator(new HelmGetSettings()));
@@ -582,6 +590,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--tls-verify</c> via <see cref="HelmGetHooksSettings.TlsVerify"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("get hooks")]
         public static IReadOnlyCollection<Output> HelmGetHooks(Configure<HelmGetHooksSettings> configurator)
         {
             return HelmGetHooks(configurator(new HelmGetHooksSettings()));
@@ -651,6 +660,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--tls-verify</c> via <see cref="HelmGetManifestSettings.TlsVerify"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("get manifest")]
         public static IReadOnlyCollection<Output> HelmGetManifest(Configure<HelmGetManifestSettings> configurator)
         {
             return HelmGetManifest(configurator(new HelmGetManifestSettings()));
@@ -720,6 +730,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--tls-verify</c> via <see cref="HelmGetNotesSettings.TlsVerify"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("get notes")]
         public static IReadOnlyCollection<Output> HelmGetNotes(Configure<HelmGetNotesSettings> configurator)
         {
             return HelmGetNotes(configurator(new HelmGetNotesSettings()));
@@ -793,6 +804,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--tls-verify</c> via <see cref="HelmGetValuesSettings.TlsVerify"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("get values")]
         public static IReadOnlyCollection<Output> HelmGetValues(Configure<HelmGetValuesSettings> configurator)
         {
             return HelmGetValues(configurator(new HelmGetValuesSettings()));
@@ -868,6 +880,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--tls-verify</c> via <see cref="HelmHistorySettings.TlsVerify"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("history")]
         public static IReadOnlyCollection<Output> HelmHistory(Configure<HelmHistorySettings> configurator)
         {
             return HelmHistory(configurator(new HelmHistorySettings()));
@@ -923,6 +936,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--help</c> via <see cref="HelmHomeSettings.Help"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("home")]
         public static IReadOnlyCollection<Output> HelmHome(Configure<HelmHomeSettings> configurator)
         {
             return HelmHome(configurator(new HelmHomeSettings()));
@@ -1016,6 +1030,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--wait</c> via <see cref="HelmInitSettings.Wait"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("init")]
         public static IReadOnlyCollection<Output> HelmInit(Configure<HelmInitSettings> configurator)
         {
             return HelmInit(configurator(new HelmInitSettings()));
@@ -1107,6 +1122,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--version</c> via <see cref="HelmInspectSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("inspect")]
         public static IReadOnlyCollection<Output> HelmInspect(Configure<HelmInspectSettings> configurator)
         {
             return HelmInspect(configurator(new HelmInspectSettings()));
@@ -1185,6 +1201,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--version</c> via <see cref="HelmInspectChartSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("inspect chart")]
         public static IReadOnlyCollection<Output> HelmInspectChart(Configure<HelmInspectChartSettings> configurator)
         {
             return HelmInspectChart(configurator(new HelmInspectChartSettings()));
@@ -1259,6 +1276,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--version</c> via <see cref="HelmInspectReadmeSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("inspect readme")]
         public static IReadOnlyCollection<Output> HelmInspectReadme(Configure<HelmInspectReadmeSettings> configurator)
         {
             return HelmInspectReadme(configurator(new HelmInspectReadmeSettings()));
@@ -1335,6 +1353,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--version</c> via <see cref="HelmInspectValuesSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("inspect values")]
         public static IReadOnlyCollection<Output> HelmInspectValues(Configure<HelmInspectValuesSettings> configurator)
         {
             return HelmInspectValues(configurator(new HelmInspectValuesSettings()));
@@ -1459,6 +1478,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--wait</c> via <see cref="HelmInstallSettings.Wait"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("install")]
         public static IReadOnlyCollection<Output> HelmInstall(Configure<HelmInstallSettings> configurator)
         {
             return HelmInstall(configurator(new HelmInstallSettings()));
@@ -1552,6 +1572,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--values</c> via <see cref="HelmLintSettings.Values"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("lint")]
         public static IReadOnlyCollection<Output> HelmLint(Configure<HelmLintSettings> configurator)
         {
             return HelmLint(configurator(new HelmLintSettings()));
@@ -1648,6 +1669,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--tls-verify</c> via <see cref="HelmListSettings.TlsVerify"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("list")]
         public static IReadOnlyCollection<Output> HelmList(Configure<HelmListSettings> configurator)
         {
             return HelmList(configurator(new HelmListSettings()));
@@ -1733,6 +1755,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--version</c> via <see cref="HelmPackageSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("package")]
         public static IReadOnlyCollection<Output> HelmPackage(Configure<HelmPackageSettings> configurator)
         {
             return HelmPackage(configurator(new HelmPackageSettings()));
@@ -1793,6 +1816,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--version</c> via <see cref="HelmPluginInstallSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("plugin install")]
         public static IReadOnlyCollection<Output> HelmPluginInstall(Configure<HelmPluginInstallSettings> configurator)
         {
             return HelmPluginInstall(configurator(new HelmPluginInstallSettings()));
@@ -1841,6 +1865,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--help</c> via <see cref="HelmPluginListSettings.Help"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("plugin list")]
         public static IReadOnlyCollection<Output> HelmPluginList(Configure<HelmPluginListSettings> configurator)
         {
             return HelmPluginList(configurator(new HelmPluginListSettings()));
@@ -1888,6 +1913,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--help</c> via <see cref="HelmPluginRemoveSettings.Help"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("plugin remove")]
         public static IReadOnlyCollection<Output> HelmPluginRemove(Configure<HelmPluginRemoveSettings> configurator)
         {
             return HelmPluginRemove(configurator(new HelmPluginRemoveSettings()));
@@ -1936,6 +1962,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--help</c> via <see cref="HelmPluginUpdateSettings.Help"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("plugin update")]
         public static IReadOnlyCollection<Output> HelmPluginUpdate(Configure<HelmPluginUpdateSettings> configurator)
         {
             return HelmPluginUpdate(configurator(new HelmPluginUpdateSettings()));
@@ -1998,6 +2025,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--username</c> via <see cref="HelmRepoAddSettings.Username"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("repo add")]
         public static IReadOnlyCollection<Output> HelmRepoAdd(Configure<HelmRepoAddSettings> configurator)
         {
             return HelmRepoAdd(configurator(new HelmRepoAddSettings()));
@@ -2057,6 +2085,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--url</c> via <see cref="HelmRepoIndexSettings.Url"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("repo index")]
         public static IReadOnlyCollection<Output> HelmRepoIndex(Configure<HelmRepoIndexSettings> configurator)
         {
             return HelmRepoIndex(configurator(new HelmRepoIndexSettings()));
@@ -2105,6 +2134,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--help</c> via <see cref="HelmRepoListSettings.Help"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("repo list")]
         public static IReadOnlyCollection<Output> HelmRepoList(Configure<HelmRepoListSettings> configurator)
         {
             return HelmRepoList(configurator(new HelmRepoListSettings()));
@@ -2152,6 +2182,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--help</c> via <see cref="HelmRepoRemoveSettings.Help"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("repo remove")]
         public static IReadOnlyCollection<Output> HelmRepoRemove(Configure<HelmRepoRemoveSettings> configurator)
         {
             return HelmRepoRemove(configurator(new HelmRepoRemoveSettings()));
@@ -2200,6 +2231,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--strict</c> via <see cref="HelmRepoUpdateSettings.Strict"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("repo update")]
         public static IReadOnlyCollection<Output> HelmRepoUpdate(Configure<HelmRepoUpdateSettings> configurator)
         {
             return HelmRepoUpdate(configurator(new HelmRepoUpdateSettings()));
@@ -2262,6 +2294,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--tls-verify</c> via <see cref="HelmResetSettings.TlsVerify"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("reset")]
         public static IReadOnlyCollection<Output> HelmReset(Configure<HelmResetSettings> configurator)
         {
             return HelmReset(configurator(new HelmResetSettings()));
@@ -2345,6 +2378,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--wait</c> via <see cref="HelmRollbackSettings.Wait"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("rollback")]
         public static IReadOnlyCollection<Output> HelmRollback(Configure<HelmRollbackSettings> configurator)
         {
             return HelmRollback(configurator(new HelmRollbackSettings()));
@@ -2415,6 +2449,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--versions</c> via <see cref="HelmSearchSettings.Versions"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("search")]
         public static IReadOnlyCollection<Output> HelmSearch(Configure<HelmSearchSettings> configurator)
         {
             return HelmSearch(configurator(new HelmSearchSettings()));
@@ -2471,6 +2506,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--url</c> via <see cref="HelmServeSettings.Url"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("serve")]
         public static IReadOnlyCollection<Output> HelmServe(Configure<HelmServeSettings> configurator)
         {
             return HelmServe(configurator(new HelmServeSettings()));
@@ -2537,6 +2573,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--tls-verify</c> via <see cref="HelmStatusSettings.TlsVerify"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("status")]
         public static IReadOnlyCollection<Output> HelmStatus(Configure<HelmStatusSettings> configurator)
         {
             return HelmStatus(configurator(new HelmStatusSettings()));
@@ -2617,6 +2654,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--values</c> via <see cref="HelmTemplateSettings.Values"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("template")]
         public static IReadOnlyCollection<Output> HelmTemplate(Configure<HelmTemplateSettings> configurator)
         {
             return HelmTemplate(configurator(new HelmTemplateSettings()));
@@ -2695,6 +2733,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--tls-verify</c> via <see cref="HelmTestSettings.TlsVerify"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("test")]
         public static IReadOnlyCollection<Output> HelmTest(Configure<HelmTestSettings> configurator)
         {
             return HelmTest(configurator(new HelmTestSettings()));
@@ -2820,6 +2859,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--wait</c> via <see cref="HelmUpgradeSettings.Wait"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("upgrade")]
         public static IReadOnlyCollection<Output> HelmUpgrade(Configure<HelmUpgradeSettings> configurator)
         {
             return HelmUpgrade(configurator(new HelmUpgradeSettings()));
@@ -2904,6 +2944,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--keyring</c> via <see cref="HelmVerifySettings.Keyring"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("verify")]
         public static IReadOnlyCollection<Output> HelmVerify(Configure<HelmVerifySettings> configurator)
         {
             return HelmVerify(configurator(new HelmVerifySettings()));
@@ -2971,6 +3012,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--tls-verify</c> via <see cref="HelmVersionSettings.TlsVerify"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("version")]
         public static IReadOnlyCollection<Output> HelmVersion(Configure<HelmVersionSettings> configurator)
         {
             return HelmVersion(configurator(new HelmVersionSettings()));
@@ -3017,7 +3059,9 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Help for completion.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
+        [ArgumentFormat("{value}")]
         public virtual string Shell { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3046,14 +3090,17 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Help for create.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   The named Helm starter scaffold.
         /// </summary>
+        [ArgumentFormat("--starter {value}")]
         public virtual string Starter { get; internal set; }
         /// <summary>
         ///   The name of chart directory to create.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Name { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3083,54 +3130,68 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Specify a description for the release.
         /// </summary>
+        [ArgumentFormat("--description {value}")]
         public virtual string Description { get; internal set; }
         /// <summary>
         ///   Simulate a delete.
         /// </summary>
+        [ArgumentFormat("--dry-run")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   Help for delete.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Prevent hooks from running during deletion.
         /// </summary>
+        [ArgumentFormat("--no-hooks")]
         public virtual bool? NoHooks { get; internal set; }
         /// <summary>
         ///   Remove the release from the store and make its name free for later use.
         /// </summary>
+        [ArgumentFormat("--purge")]
         public virtual bool? Purge { get; internal set; }
         /// <summary>
         ///   Time in seconds to wait for any individual Kubernetes operation (like Jobs for hooks) (default 300).
         /// </summary>
+        [ArgumentFormat("--timeout {value}")]
         public virtual long? Timeout { get; internal set; }
         /// <summary>
         ///   Enable TLS for request.
         /// </summary>
+        [ArgumentFormat("--tls")]
         public virtual bool? Tls { get; internal set; }
         /// <summary>
         ///   Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").
         /// </summary>
+        [ArgumentFormat("--tls-ca-cert {value}")]
         public virtual string TlsCaCert { get; internal set; }
         /// <summary>
         ///   Path to TLS certificate file (default "$HELM_HOME/cert.pem").
         /// </summary>
+        [ArgumentFormat("--tls-cert {value}")]
         public virtual string TlsCert { get; internal set; }
         /// <summary>
         ///   The server name used to verify the hostname on the returned certificates from the server.
         /// </summary>
+        [ArgumentFormat("--tls-hostname {value}")]
         public virtual string TlsHostname { get; internal set; }
         /// <summary>
         ///   Path to TLS key file (default "$HELM_HOME/key.pem").
         /// </summary>
+        [ArgumentFormat("--tls-key {value}")]
         public virtual string TlsKey { get; internal set; }
         /// <summary>
         ///   Enable TLS for request and verify remote.
         /// </summary>
+        [ArgumentFormat("--tls-verify")]
         public virtual bool? TlsVerify { get; internal set; }
         /// <summary>
         ///   The name of the releases to delete.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> ReleaseNames => ReleaseNamesInternal.AsReadOnly();
         internal List<string> ReleaseNamesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -3171,18 +3232,22 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Help for build.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Keyring containing public keys (default "~/.gnupg/pubring.gpg").
         /// </summary>
+        [ArgumentFormat("--keyring {value}")]
         public virtual string Keyring { get; internal set; }
         /// <summary>
         ///   Verify the packages against signatures.
         /// </summary>
+        [ArgumentFormat("--verify")]
         public virtual bool? Verify { get; internal set; }
         /// <summary>
         ///   The name of the chart to build.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Chart { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3213,10 +3278,12 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Help for list.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   The name of the chart to list.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Chart { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3245,22 +3312,27 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Help for update.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Keyring containing public keys (default "~/.gnupg/pubring.gpg").
         /// </summary>
+        [ArgumentFormat("--keyring {value}")]
         public virtual string Keyring { get; internal set; }
         /// <summary>
         ///   Do not refresh the local repository cache.
         /// </summary>
+        [ArgumentFormat("--skip-refresh")]
         public virtual bool? SkipRefresh { get; internal set; }
         /// <summary>
         ///   Verify the packages against signatures.
         /// </summary>
+        [ArgumentFormat("--verify")]
         public virtual bool? Verify { get; internal set; }
         /// <summary>
         ///   The name of the chart to update.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Chart { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3292,66 +3364,83 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Verify certificates of HTTPS-enabled servers using this CA bundle.
         /// </summary>
+        [ArgumentFormat("--ca-file {value}")]
         public virtual string CaFile { get; internal set; }
         /// <summary>
         ///   Identify HTTPS client using this SSL certificate file.
         /// </summary>
+        [ArgumentFormat("--cert-file {value}")]
         public virtual string CertFile { get; internal set; }
         /// <summary>
         ///   Location to write the chart. If this and tardir are specified, tardir is appended to this (default ".").
         /// </summary>
+        [ArgumentFormat("--destination {value}")]
         public virtual string Destination { get; internal set; }
         /// <summary>
         ///   Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.
         /// </summary>
+        [ArgumentFormat("--devel")]
         public virtual bool? Devel { get; internal set; }
         /// <summary>
         ///   Help for fetch.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Identify HTTPS client using this SSL key file.
         /// </summary>
+        [ArgumentFormat("--key-file {value}")]
         public virtual string KeyFile { get; internal set; }
         /// <summary>
         ///   Keyring containing public keys (default "~/.gnupg/pubring.gpg").
         /// </summary>
+        [ArgumentFormat("--keyring {value}")]
         public virtual string Keyring { get; internal set; }
         /// <summary>
         ///   Chart repository password.
         /// </summary>
+        [ArgumentFormat("--password {value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   Fetch the provenance file, but don't perform verification.
         /// </summary>
+        [ArgumentFormat("--prov")]
         public virtual bool? Prov { get; internal set; }
         /// <summary>
         ///   Chart repository url where to locate the requested chart.
         /// </summary>
+        [ArgumentFormat("--repo {value}")]
         public virtual string Repo { get; internal set; }
         /// <summary>
         ///   If set to true, will untar the chart after downloading it.
         /// </summary>
+        [ArgumentFormat("--untar")]
         public virtual bool? Untar { get; internal set; }
         /// <summary>
         ///   If untar is specified, this flag specifies the name of the directory into which the chart is expanded (default ".").
         /// </summary>
+        [ArgumentFormat("--untardir {value}")]
         public virtual string Untardir { get; internal set; }
         /// <summary>
         ///   Chart repository username.
         /// </summary>
+        [ArgumentFormat("--username {value}")]
         public virtual string Username { get; internal set; }
         /// <summary>
         ///   Verify the package against its signature.
         /// </summary>
+        [ArgumentFormat("--verify")]
         public virtual bool? Verify { get; internal set; }
         /// <summary>
         ///   Specific version of a chart. Without this, the latest version is fetched.
         /// </summary>
+        [ArgumentFormat("--version {value}")]
         public virtual string Version { get; internal set; }
         /// <summary>
         ///   The charts to fetch. Can either be specified by <c>repoName/chartName</c> or directly by an url.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Charts => ChartsInternal.AsReadOnly();
         internal List<string> ChartsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -3395,38 +3484,47 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Help for get.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Get the named release with revision.
         /// </summary>
+        [ArgumentFormat("--revision {value}")]
         public virtual int? Revision { get; internal set; }
         /// <summary>
         ///   Enable TLS for request.
         /// </summary>
+        [ArgumentFormat("--tls")]
         public virtual bool? Tls { get; internal set; }
         /// <summary>
         ///   Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").
         /// </summary>
+        [ArgumentFormat("--tls-ca-cert {value}")]
         public virtual string TlsCaCert { get; internal set; }
         /// <summary>
         ///   Path to TLS certificate file (default "$HELM_HOME/cert.pem").
         /// </summary>
+        [ArgumentFormat("--tls-cert {value}")]
         public virtual string TlsCert { get; internal set; }
         /// <summary>
         ///   The server name used to verify the hostname on the returned certificates from the server.
         /// </summary>
+        [ArgumentFormat("--tls-hostname {value}")]
         public virtual string TlsHostname { get; internal set; }
         /// <summary>
         ///   Path to TLS key file (default "$HELM_HOME/key.pem").
         /// </summary>
+        [ArgumentFormat("--tls-key {value}")]
         public virtual string TlsKey { get; internal set; }
         /// <summary>
         ///   Enable TLS for request and verify remote.
         /// </summary>
+        [ArgumentFormat("--tls-verify")]
         public virtual bool? TlsVerify { get; internal set; }
         /// <summary>
         ///   The name of the release to get.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string ReleaseName { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3462,38 +3560,47 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Help for hooks.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Get the named release with revision.
         /// </summary>
+        [ArgumentFormat("--revision {value}")]
         public virtual int? Revision { get; internal set; }
         /// <summary>
         ///   Enable TLS for request.
         /// </summary>
+        [ArgumentFormat("--tls")]
         public virtual bool? Tls { get; internal set; }
         /// <summary>
         ///   Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").
         /// </summary>
+        [ArgumentFormat("--tls-ca-cert {value}")]
         public virtual string TlsCaCert { get; internal set; }
         /// <summary>
         ///   Path to TLS certificate file (default "$HELM_HOME/cert.pem").
         /// </summary>
+        [ArgumentFormat("--tls-cert {value}")]
         public virtual string TlsCert { get; internal set; }
         /// <summary>
         ///   The server name used to verify the hostname on the returned certificates from the server.
         /// </summary>
+        [ArgumentFormat("--tls-hostname {value}")]
         public virtual string TlsHostname { get; internal set; }
         /// <summary>
         ///   Path to TLS key file (default "$HELM_HOME/key.pem").
         /// </summary>
+        [ArgumentFormat("--tls-key {value}")]
         public virtual string TlsKey { get; internal set; }
         /// <summary>
         ///   Enable TLS for request and verify remote.
         /// </summary>
+        [ArgumentFormat("--tls-verify")]
         public virtual bool? TlsVerify { get; internal set; }
         /// <summary>
         ///   The name of the release to get the hooks for.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string ReleaseName { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3529,38 +3636,47 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Help for manifest.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Get the named release with revision.
         /// </summary>
+        [ArgumentFormat("--revision {value}")]
         public virtual int? Revision { get; internal set; }
         /// <summary>
         ///   Enable TLS for request.
         /// </summary>
+        [ArgumentFormat("--tls")]
         public virtual bool? Tls { get; internal set; }
         /// <summary>
         ///   Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").
         /// </summary>
+        [ArgumentFormat("--tls-ca-cert {value}")]
         public virtual string TlsCaCert { get; internal set; }
         /// <summary>
         ///   Path to TLS certificate file (default "$HELM_HOME/cert.pem").
         /// </summary>
+        [ArgumentFormat("--tls-cert {value}")]
         public virtual string TlsCert { get; internal set; }
         /// <summary>
         ///   The server name used to verify the hostname on the returned certificates from the server.
         /// </summary>
+        [ArgumentFormat("--tls-hostname {value}")]
         public virtual string TlsHostname { get; internal set; }
         /// <summary>
         ///   Path to TLS key file (default "$HELM_HOME/key.pem").
         /// </summary>
+        [ArgumentFormat("--tls-key {value}")]
         public virtual string TlsKey { get; internal set; }
         /// <summary>
         ///   Enable TLS for request and verify remote.
         /// </summary>
+        [ArgumentFormat("--tls-verify")]
         public virtual bool? TlsVerify { get; internal set; }
         /// <summary>
         ///   The name of the release to get the manifest for.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string ReleaseName { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3596,35 +3712,44 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Help for notes.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Get the notes of the named release with revision.
         /// </summary>
+        [ArgumentFormat("--revision {value}")]
         public virtual int? Revision { get; internal set; }
         /// <summary>
         ///   Enable TLS for request.
         /// </summary>
+        [ArgumentFormat("--tls")]
         public virtual bool? Tls { get; internal set; }
         /// <summary>
         ///   Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").
         /// </summary>
+        [ArgumentFormat("--tls-ca-cert {value}")]
         public virtual string TlsCaCert { get; internal set; }
         /// <summary>
         ///   Path to TLS certificate file (default "$HELM_HOME/cert.pem").
         /// </summary>
+        [ArgumentFormat("--tls-cert {value}")]
         public virtual string TlsCert { get; internal set; }
         /// <summary>
         ///   The server name used to verify the hostname on the returned certificates from the server.
         /// </summary>
+        [ArgumentFormat("--tls-hostname {value}")]
         public virtual string TlsHostname { get; internal set; }
         /// <summary>
         ///   Path to TLS key file (default "$HELM_HOME/key.pem").
         /// </summary>
+        [ArgumentFormat("--tls-key {value}")]
         public virtual string TlsKey { get; internal set; }
         /// <summary>
         ///   Enable TLS for request and verify remote.
         /// </summary>
+        [ArgumentFormat("--tls-verify")]
         public virtual bool? TlsVerify { get; internal set; }
+        [ArgumentFormat("{value}")]
         public virtual string ReleaseName { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3660,46 +3785,57 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Dump all (computed) values.
         /// </summary>
+        [ArgumentFormat("--all")]
         public virtual bool? All { get; internal set; }
         /// <summary>
         ///   Help for values.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Output the specified format (json or yaml) (default "yaml").
         /// </summary>
+        [ArgumentFormat("--output {value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   Get the named release with revision.
         /// </summary>
+        [ArgumentFormat("--revision {value}")]
         public virtual int? Revision { get; internal set; }
         /// <summary>
         ///   Enable TLS for request.
         /// </summary>
+        [ArgumentFormat("--tls")]
         public virtual bool? Tls { get; internal set; }
         /// <summary>
         ///   Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").
         /// </summary>
+        [ArgumentFormat("--tls-ca-cert {value}")]
         public virtual string TlsCaCert { get; internal set; }
         /// <summary>
         ///   Path to TLS certificate file (default "$HELM_HOME/cert.pem").
         /// </summary>
+        [ArgumentFormat("--tls-cert {value}")]
         public virtual string TlsCert { get; internal set; }
         /// <summary>
         ///   The server name used to verify the hostname on the returned certificates from the server.
         /// </summary>
+        [ArgumentFormat("--tls-hostname {value}")]
         public virtual string TlsHostname { get; internal set; }
         /// <summary>
         ///   Path to TLS key file (default "$HELM_HOME/key.pem").
         /// </summary>
+        [ArgumentFormat("--tls-key {value}")]
         public virtual string TlsKey { get; internal set; }
         /// <summary>
         ///   Enable TLS for request and verify remote.
         /// </summary>
+        [ArgumentFormat("--tls-verify")]
         public virtual bool? TlsVerify { get; internal set; }
         /// <summary>
         ///   The name of the release to get the values for.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string ReleaseName { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3737,46 +3873,57 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Specifies the max column width of output (default 60).
         /// </summary>
+        [ArgumentFormat("--col-width {value}")]
         public virtual uint? ColWidth { get; internal set; }
         /// <summary>
         ///   Help for history.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Maximum number of revision to include in history (default 256).
         /// </summary>
+        [ArgumentFormat("--max {value}")]
         public virtual int? Max { get; internal set; }
         /// <summary>
         ///   Prints the output in the specified format (json|table|yaml) (default "table").
         /// </summary>
+        [ArgumentFormat("--output {value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   Enable TLS for request.
         /// </summary>
+        [ArgumentFormat("--tls")]
         public virtual bool? Tls { get; internal set; }
         /// <summary>
         ///   Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").
         /// </summary>
+        [ArgumentFormat("--tls-ca-cert {value}")]
         public virtual string TlsCaCert { get; internal set; }
         /// <summary>
         ///   Path to TLS certificate file (default "$HELM_HOME/cert.pem").
         /// </summary>
+        [ArgumentFormat("--tls-cert {value}")]
         public virtual string TlsCert { get; internal set; }
         /// <summary>
         ///   The server name used to verify the hostname on the returned certificates from the server.
         /// </summary>
+        [ArgumentFormat("--tls-hostname {value}")]
         public virtual string TlsHostname { get; internal set; }
         /// <summary>
         ///   Path to TLS key file (default "$HELM_HOME/key.pem").
         /// </summary>
+        [ArgumentFormat("--tls-key {value}")]
         public virtual string TlsKey { get; internal set; }
         /// <summary>
         ///   Enable TLS for request and verify remote.
         /// </summary>
+        [ArgumentFormat("--tls-verify")]
         public virtual bool? TlsVerify { get; internal set; }
         /// <summary>
         ///   The name of the release to get the history for.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string ReleaseName { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3814,6 +3961,7 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Help for home.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3841,103 +3989,130 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Auto-mount the given service account to tiller (default true).
         /// </summary>
+        [ArgumentFormat("--automount-service-account-token")]
         public virtual bool? AutomountServiceAccountToken { get; internal set; }
         /// <summary>
         ///   Use the canary Tiller image.
         /// </summary>
+        [ArgumentFormat("--canary-image")]
         public virtual bool? CanaryImage { get; internal set; }
         /// <summary>
         ///   If set does not install Tiller.
         /// </summary>
+        [ArgumentFormat("--client-only")]
         public virtual bool? ClientOnly { get; internal set; }
         /// <summary>
         ///   Do not install local or remote.
         /// </summary>
+        [ArgumentFormat("--dry-run")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   Force upgrade of Tiller to the current helm version.
         /// </summary>
+        [ArgumentFormat("--force-upgrade")]
         public virtual bool? ForceUpgrade { get; internal set; }
         /// <summary>
         ///   Help for init.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Limit the maximum number of revisions saved per release. Use 0 for no limit.
         /// </summary>
+        [ArgumentFormat("--history-max {value}")]
         public virtual long? HistoryMax { get; internal set; }
         /// <summary>
         ///   URL for local repository (default "http://127.0.0.1:8879/charts").
         /// </summary>
+        [ArgumentFormat("--local-repo-url {value}")]
         public virtual string LocalRepoUrl { get; internal set; }
         /// <summary>
         ///   Install Tiller with net=host.
         /// </summary>
+        [ArgumentFormat("--net-host")]
         public virtual bool? NetHost { get; internal set; }
         /// <summary>
         ///   Labels to specify the node on which Tiller is installed (app=tiller,helm=rocks).
         /// </summary>
+        [ArgumentFormat("--node-selectors {value}")]
         public virtual string NodeSelectors { get; internal set; }
         /// <summary>
         ///   Skip installation and output Tiller's manifest in specified format (json or yaml).
         /// </summary>
+        [ArgumentFormat("--output {value}")]
         public virtual HelmOutputFormat Output { get; internal set; }
         /// <summary>
         ///   Override values for the Tiller Deployment manifest (can specify multiple or separate values with commas: key1=val1,key2=val2).
         /// </summary>
+        [ArgumentFormat("--override {value}")]
+        [ItemFormat("{key}={value}")]
+        [Separator(",")]
         public virtual IReadOnlyDictionary<string, object> Override => OverrideInternal.AsReadOnly();
         internal Dictionary<string, object> OverrideInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Amount of tiller instances to run on the cluster (default 1).
         /// </summary>
+        [ArgumentFormat("--replicas {value}")]
         public virtual long? Replicas { get; internal set; }
         /// <summary>
         ///   Name of service account.
         /// </summary>
+        [ArgumentFormat("--service-account {value}")]
         public virtual string ServiceAccount { get; internal set; }
         /// <summary>
         ///   Do not refresh (download) the local repository cache.
         /// </summary>
+        [ArgumentFormat("--skip-refresh")]
         public virtual bool? SkipRefresh { get; internal set; }
         /// <summary>
         ///   URL for stable repository (default "https://kubernetes-charts.storage.googleapis.com").
         /// </summary>
+        [ArgumentFormat("--stable-repo-url {value}")]
         public virtual string StableRepoUrl { get; internal set; }
         /// <summary>
         ///   Override Tiller image.
         /// </summary>
+        [ArgumentFormat("--tiller-image {value}")]
         public virtual string TillerImage { get; internal set; }
         /// <summary>
         ///   Install Tiller with TLS enabled.
         /// </summary>
+        [ArgumentFormat("--tiller-tls")]
         public virtual bool? TillerTls { get; internal set; }
         /// <summary>
         ///   Path to TLS certificate file to install with Tiller.
         /// </summary>
+        [ArgumentFormat("--tiller-tls-cert {value}")]
         public virtual string TillerTlsCert { get; internal set; }
         /// <summary>
         ///   The server name used to verify the hostname on the returned certificates from Tiller.
         /// </summary>
+        [ArgumentFormat("--tiller-tls-hostname {value}")]
         public virtual string TillerTlsHostname { get; internal set; }
         /// <summary>
         ///   Path to TLS key file to install with Tiller.
         /// </summary>
+        [ArgumentFormat("--tiller-tls-key {value}")]
         public virtual string TillerTlsKey { get; internal set; }
         /// <summary>
         ///   Install Tiller with TLS enabled and to verify remote certificates.
         /// </summary>
+        [ArgumentFormat("--tiller-tls-verify")]
         public virtual bool? TillerTlsVerify { get; internal set; }
         /// <summary>
         ///   Path to CA root certificate.
         /// </summary>
+        [ArgumentFormat("--tls-ca-cert {value}")]
         public virtual string TlsCaCert { get; internal set; }
         /// <summary>
         ///   Upgrade if Tiller is already installed.
         /// </summary>
+        [ArgumentFormat("--upgrade")]
         public virtual bool? Upgrade { get; internal set; }
         /// <summary>
         ///   Block until Tiller is running and ready to receive requests.
         /// </summary>
+        [ArgumentFormat("--wait")]
         public virtual bool? Wait { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -3989,50 +4164,62 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Chart repository url where to locate the requested chart.
         /// </summary>
+        [ArgumentFormat("--ca-file {value}")]
         public virtual string CaFile { get; internal set; }
         /// <summary>
         ///   Verify certificates of HTTPS-enabled servers using this CA bundle.
         /// </summary>
+        [ArgumentFormat("--cert-file {value}")]
         public virtual string CertFile { get; internal set; }
         /// <summary>
         ///   Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.
         /// </summary>
+        [ArgumentFormat("--devel")]
         public virtual bool? Devel { get; internal set; }
         /// <summary>
         ///   Help for inspect.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Identify HTTPS client using this SSL key file.
         /// </summary>
+        [ArgumentFormat("--key-file {value}")]
         public virtual string KeyFile { get; internal set; }
         /// <summary>
         ///   Path to the keyring containing public verification keys (default "~/.gnupg/pubring.gpg").
         /// </summary>
+        [ArgumentFormat("--keyring {value}")]
         public virtual string Keyring { get; internal set; }
         /// <summary>
         ///   Chart repository password where to locate the requested chart.
         /// </summary>
+        [ArgumentFormat("--password {value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   Chart repository url where to locate the requested chart.
         /// </summary>
+        [ArgumentFormat("--repo {value}")]
         public virtual string Repo { get; internal set; }
         /// <summary>
         ///   Chart repository username where to locate the requested chart.
         /// </summary>
+        [ArgumentFormat("--username {value}")]
         public virtual string Username { get; internal set; }
         /// <summary>
         ///   Verify the provenance data for this chart.
         /// </summary>
+        [ArgumentFormat("--verify")]
         public virtual bool? Verify { get; internal set; }
         /// <summary>
         ///   Version of the chart. By default, the newest chart is shown.
         /// </summary>
+        [ArgumentFormat("--version {value}")]
         public virtual string Version { get; internal set; }
         /// <summary>
         ///   The name of the chart to inspect.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Chart { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4071,50 +4258,62 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Chart repository url where to locate the requested chart.
         /// </summary>
+        [ArgumentFormat("--ca-file {value}")]
         public virtual string CaFile { get; internal set; }
         /// <summary>
         ///   Verify certificates of HTTPS-enabled servers using this CA bundle.
         /// </summary>
+        [ArgumentFormat("--cert-file {value}")]
         public virtual string CertFile { get; internal set; }
         /// <summary>
         ///   Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.
         /// </summary>
+        [ArgumentFormat("--devel")]
         public virtual bool? Devel { get; internal set; }
         /// <summary>
         ///   Help for chart.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Identify HTTPS client using this SSL key file.
         /// </summary>
+        [ArgumentFormat("--key-file {value}")]
         public virtual string KeyFile { get; internal set; }
         /// <summary>
         ///   Path to the keyring containing public verification keys (default "~/.gnupg/pubring.gpg").
         /// </summary>
+        [ArgumentFormat("--keyring {value}")]
         public virtual string Keyring { get; internal set; }
         /// <summary>
         ///   Chart repository password where to locate the requested chart.
         /// </summary>
+        [ArgumentFormat("--password {value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   Chart repository url where to locate the requested chart.
         /// </summary>
+        [ArgumentFormat("--repo {value}")]
         public virtual string Repo { get; internal set; }
         /// <summary>
         ///   Chart repository username where to locate the requested chart.
         /// </summary>
+        [ArgumentFormat("--username {value}")]
         public virtual string Username { get; internal set; }
         /// <summary>
         ///   Verify the provenance data for this chart.
         /// </summary>
+        [ArgumentFormat("--verify")]
         public virtual bool? Verify { get; internal set; }
         /// <summary>
         ///   Version of the chart. By default, the newest chart is shown.
         /// </summary>
+        [ArgumentFormat("--version {value}")]
         public virtual string Version { get; internal set; }
         /// <summary>
         ///   The name of the chart to inspect.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Chart { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4153,42 +4352,52 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Chart repository url where to locate the requested chart.
         /// </summary>
+        [ArgumentFormat("--ca-file {value}")]
         public virtual string CaFile { get; internal set; }
         /// <summary>
         ///   Verify certificates of HTTPS-enabled servers using this CA bundle.
         /// </summary>
+        [ArgumentFormat("--cert-file {value}")]
         public virtual string CertFile { get; internal set; }
         /// <summary>
         ///   Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.
         /// </summary>
+        [ArgumentFormat("--devel")]
         public virtual bool? Devel { get; internal set; }
         /// <summary>
         ///   Help for readme.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Identify HTTPS client using this SSL key file.
         /// </summary>
+        [ArgumentFormat("--key-file {value}")]
         public virtual string KeyFile { get; internal set; }
         /// <summary>
         ///   Path to the keyring containing public verification keys (default "~/.gnupg/pubring.gpg").
         /// </summary>
+        [ArgumentFormat("--keyring {value}")]
         public virtual string Keyring { get; internal set; }
         /// <summary>
         ///   Chart repository url where to locate the requested chart.
         /// </summary>
+        [ArgumentFormat("--repo {value}")]
         public virtual string Repo { get; internal set; }
         /// <summary>
         ///   Verify the provenance data for this chart.
         /// </summary>
+        [ArgumentFormat("--verify")]
         public virtual bool? Verify { get; internal set; }
         /// <summary>
         ///   Version of the chart. By default, the newest chart is shown.
         /// </summary>
+        [ArgumentFormat("--version {value}")]
         public virtual string Version { get; internal set; }
         /// <summary>
         ///   The name of the chart to inspect.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Chart { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4225,50 +4434,62 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Chart repository url where to locate the requested chart.
         /// </summary>
+        [ArgumentFormat("--ca-file {value}")]
         public virtual string CaFile { get; internal set; }
         /// <summary>
         ///   Verify certificates of HTTPS-enabled servers using this CA bundle.
         /// </summary>
+        [ArgumentFormat("--cert-file {value}")]
         public virtual string CertFile { get; internal set; }
         /// <summary>
         ///   Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.
         /// </summary>
+        [ArgumentFormat("--devel")]
         public virtual bool? Devel { get; internal set; }
         /// <summary>
         ///   Help for values.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Identify HTTPS client using this SSL key file.
         /// </summary>
+        [ArgumentFormat("--key-file {value}")]
         public virtual string KeyFile { get; internal set; }
         /// <summary>
         ///   Path to the keyring containing public verification keys (default "~/.gnupg/pubring.gpg").
         /// </summary>
+        [ArgumentFormat("--keyring {value}")]
         public virtual string Keyring { get; internal set; }
         /// <summary>
         ///   Chart repository password where to locate the requested chart.
         /// </summary>
+        [ArgumentFormat("--password {value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   Chart repository url where to locate the requested chart.
         /// </summary>
+        [ArgumentFormat("--repo {value}")]
         public virtual string Repo { get; internal set; }
         /// <summary>
         ///   Chart repository username where to locate the requested chart.
         /// </summary>
+        [ArgumentFormat("--username {value}")]
         public virtual string Username { get; internal set; }
         /// <summary>
         ///   Verify the provenance data for this chart.
         /// </summary>
+        [ArgumentFormat("--verify")]
         public virtual bool? Verify { get; internal set; }
         /// <summary>
         ///   Version of the chart. By default, the newest chart is shown.
         /// </summary>
+        [ArgumentFormat("--version {value}")]
         public virtual string Version { get; internal set; }
         /// <summary>
         ///   The name of the chart to inspect.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Chart { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4307,146 +4528,187 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   If set, installation process purges chart on fail, also sets --wait flag.
         /// </summary>
+        [ArgumentFormat("--atomic")]
         public virtual bool? Atomic { get; internal set; }
         /// <summary>
         ///   Verify certificates of HTTPS-enabled servers using this CA bundle.
         /// </summary>
+        [ArgumentFormat("--ca-file {value}")]
         public virtual string CaFile { get; internal set; }
         /// <summary>
         ///   Identify HTTPS client using this SSL certificate file.
         /// </summary>
+        [ArgumentFormat("--cert-file {value}")]
         public virtual string CertFile { get; internal set; }
         /// <summary>
         ///   Run helm dependency update before installing the chart.
         /// </summary>
+        [ArgumentFormat("--dep-up")]
         public virtual bool? DepUp { get; internal set; }
         /// <summary>
         ///   Specify a description for the release.
         /// </summary>
+        [ArgumentFormat("--description {value}")]
         public virtual string Description { get; internal set; }
         /// <summary>
         ///   Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.
         /// </summary>
+        [ArgumentFormat("--devel")]
         public virtual bool? Devel { get; internal set; }
         /// <summary>
         ///   Simulate an install.
         /// </summary>
+        [ArgumentFormat("--dry-run")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   Help for install.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Identify HTTPS client using this SSL key file.
         /// </summary>
+        [ArgumentFormat("--key-file {value}")]
         public virtual string KeyFile { get; internal set; }
         /// <summary>
         ///   Location of public keys used for verification (default "~/.gnupg/pubring.gpg").
         /// </summary>
+        [ArgumentFormat("--keyring {value}")]
         public virtual string Keyring { get; internal set; }
         /// <summary>
         ///   Release name. If unspecified, it will autogenerate one for you.
         /// </summary>
+        [ArgumentFormat("--name {value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   Specify template used to name the release.
         /// </summary>
+        [ArgumentFormat("--name-template {value}")]
         public virtual string NameTemplate { get; internal set; }
         /// <summary>
         ///   Namespace to install the release into. Defaults to the current kube config namespace.
         /// </summary>
+        [ArgumentFormat("--namespace {value}")]
         public virtual string Namespace { get; internal set; }
         /// <summary>
         ///   Prevent CRD hooks from running, but run other hooks.
         /// </summary>
+        [ArgumentFormat("--no-crd-hook")]
         public virtual bool? NoCrdHook { get; internal set; }
         /// <summary>
         ///   Prevent hooks from running during install.
         /// </summary>
+        [ArgumentFormat("--no-hooks")]
         public virtual bool? NoHooks { get; internal set; }
         /// <summary>
         ///   Chart repository password where to locate the requested chart.
         /// </summary>
+        [ArgumentFormat("--password {value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   Render subchart notes along with the parent.
         /// </summary>
+        [ArgumentFormat("--render-subchart-notes")]
         public virtual bool? RenderSubchartNotes { get; internal set; }
         /// <summary>
         ///   Re-use the given name, even if that name is already used. This is unsafe in production.
         /// </summary>
+        [ArgumentFormat("--replace")]
         public virtual bool? Replace { get; internal set; }
         /// <summary>
         ///   Chart repository url where to locate the requested chart.
         /// </summary>
+        [ArgumentFormat("--repo {value}")]
         public virtual string Repo { get; internal set; }
         /// <summary>
         ///   Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).
         /// </summary>
+        [ArgumentFormat("--set {value}")]
+        [ItemFormat("{key}={value}")]
+        [Separator(",")]
         public virtual IReadOnlyDictionary<string, object> Set => SetInternal.AsReadOnly();
         internal Dictionary<string, object> SetInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).
         /// </summary>
+        [ArgumentFormat("--set-file {value}")]
+        [ItemFormat("{key}={value}")]
+        [Separator(",")]
         public virtual IReadOnlyDictionary<string, object> SetFile => SetFileInternal.AsReadOnly();
         internal Dictionary<string, object> SetFileInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).
         /// </summary>
+        [ArgumentFormat("--set-string {value}")]
+        [ItemFormat("{key}={value}")]
+        [Separator(",")]
         public virtual IReadOnlyDictionary<string, object> SetString => SetStringInternal.AsReadOnly();
         internal Dictionary<string, object> SetStringInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Time in seconds to wait for any individual Kubernetes operation (like Jobs for hooks) (default 300).
         /// </summary>
+        [ArgumentFormat("--timeout {value}")]
         public virtual long? Timeout { get; internal set; }
         /// <summary>
         ///   Enable TLS for request.
         /// </summary>
+        [ArgumentFormat("--tls")]
         public virtual bool? Tls { get; internal set; }
         /// <summary>
         ///   Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").
         /// </summary>
+        [ArgumentFormat("--tls-ca-cert {value}")]
         public virtual string TlsCaCert { get; internal set; }
         /// <summary>
         ///   Path to TLS certificate file (default "$HELM_HOME/cert.pem").
         /// </summary>
+        [ArgumentFormat("--tls-cert {value}")]
         public virtual string TlsCert { get; internal set; }
         /// <summary>
         ///   The server name used to verify the hostname on the returned certificates from the server.
         /// </summary>
+        [ArgumentFormat("--tls-hostname {value}")]
         public virtual string TlsHostname { get; internal set; }
         /// <summary>
         ///   Path to TLS key file (default "$HELM_HOME/key.pem").
         /// </summary>
+        [ArgumentFormat("--tls-key {value}")]
         public virtual string TlsKey { get; internal set; }
         /// <summary>
         ///   Enable TLS for request and verify remote.
         /// </summary>
+        [ArgumentFormat("--tls-verify")]
         public virtual bool? TlsVerify { get; internal set; }
         /// <summary>
         ///   Chart repository username where to locate the requested chart.
         /// </summary>
+        [ArgumentFormat("--username {value}")]
         public virtual string Username { get; internal set; }
         /// <summary>
         ///   Specify values in a YAML file or a URL(can specify multiple) (default []).
         /// </summary>
+        [ArgumentFormat("--values {value}")]
         public virtual IReadOnlyList<string> Values => ValuesInternal.AsReadOnly();
         internal List<string> ValuesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Verify the package before installing it.
         /// </summary>
+        [ArgumentFormat("--verify")]
         public virtual bool? Verify { get; internal set; }
         /// <summary>
         ///   Specify the exact chart version to install. If this is not specified, the latest version is installed.
         /// </summary>
+        [ArgumentFormat("--version {value}")]
         public virtual string Version { get; internal set; }
         /// <summary>
         ///   If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment are in a ready state before marking the release as successful. It will wait for as long as --timeout.
         /// </summary>
+        [ArgumentFormat("--wait")]
         public virtual bool? Wait { get; internal set; }
         /// <summary>
         ///   The name of the chart to install.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Chart { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4508,38 +4770,52 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Help for lint.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Namespace to put the release into (default "default").
         /// </summary>
+        [ArgumentFormat("--namespace {value}")]
         public virtual string Namespace { get; internal set; }
         /// <summary>
         ///   Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).
         /// </summary>
+        [ArgumentFormat("--set {value}")]
+        [ItemFormat("{key}={value}")]
+        [Separator(",")]
         public virtual IReadOnlyDictionary<string, object> Set => SetInternal.AsReadOnly();
         internal Dictionary<string, object> SetInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).
         /// </summary>
+        [ArgumentFormat("--set-file {value}")]
+        [ItemFormat("{key}={value}")]
+        [Separator(",")]
         public virtual IReadOnlyDictionary<string, object> SetFile => SetFileInternal.AsReadOnly();
         internal Dictionary<string, object> SetFileInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).
         /// </summary>
+        [ArgumentFormat("--set-string {value}")]
+        [ItemFormat("{key}={value}")]
+        [Separator(",")]
         public virtual IReadOnlyDictionary<string, object> SetString => SetStringInternal.AsReadOnly();
         internal Dictionary<string, object> SetStringInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Fail on lint warnings.
         /// </summary>
+        [ArgumentFormat("--strict")]
         public virtual bool? Strict { get; internal set; }
         /// <summary>
         ///   Specify values in a YAML file (can specify multiple) (default []).
         /// </summary>
+        [ArgumentFormat("--values {value}")]
         public virtual IReadOnlyList<string> Values => ValuesInternal.AsReadOnly();
         internal List<string> ValuesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   The Path to a chart.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Path { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4574,94 +4850,117 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Show all releases, not just the ones marked DEPLOYED.
         /// </summary>
+        [ArgumentFormat("--all")]
         public virtual bool? All { get; internal set; }
         /// <summary>
         ///   Sort by chart name.
         /// </summary>
+        [ArgumentFormat("--chart-name")]
         public virtual bool? ChartName { get; internal set; }
         /// <summary>
         ///   Specifies the max column width of output (default 60).
         /// </summary>
+        [ArgumentFormat("--col-width {value}")]
         public virtual uint? ColWidth { get; internal set; }
         /// <summary>
         ///   Sort by release date.
         /// </summary>
+        [ArgumentFormat("--date")]
         public virtual bool? Date { get; internal set; }
         /// <summary>
         ///   Show deleted releases.
         /// </summary>
+        [ArgumentFormat("--deleted")]
         public virtual bool? Deleted { get; internal set; }
         /// <summary>
         ///   Show releases that are currently being deleted.
         /// </summary>
+        [ArgumentFormat("--deleting")]
         public virtual bool? Deleting { get; internal set; }
         /// <summary>
         ///   Show deployed releases. If no other is specified, this will be automatically enabled.
         /// </summary>
+        [ArgumentFormat("--deployed")]
         public virtual bool? Deployed { get; internal set; }
         /// <summary>
         ///   Show failed releases.
         /// </summary>
+        [ArgumentFormat("--failed")]
         public virtual bool? Failed { get; internal set; }
         /// <summary>
         ///   Help for list.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Maximum number of releases to fetch (default 256).
         /// </summary>
+        [ArgumentFormat("--max {value}")]
         public virtual long? Max { get; internal set; }
         /// <summary>
         ///   Show releases within a specific namespace.
         /// </summary>
+        [ArgumentFormat("--namespace {value}")]
         public virtual string Namespace { get; internal set; }
         /// <summary>
         ///   Next release name in the list, used to offset from start value.
         /// </summary>
+        [ArgumentFormat("--offset {value}")]
         public virtual string Offset { get; internal set; }
         /// <summary>
         ///   Output the specified format (json or yaml).
         /// </summary>
+        [ArgumentFormat("--output {value}")]
         public virtual HelmOutputFormat Output { get; internal set; }
         /// <summary>
         ///   Show pending releases.
         /// </summary>
+        [ArgumentFormat("--pending")]
         public virtual bool? Pending { get; internal set; }
         /// <summary>
         ///   Reverse the sort order.
         /// </summary>
+        [ArgumentFormat("--reverse")]
         public virtual bool? Reverse { get; internal set; }
         /// <summary>
         ///   Output short (quiet) listing format.
         /// </summary>
+        [ArgumentFormat("--short")]
         public virtual bool? Short { get; internal set; }
         /// <summary>
         ///   Enable TLS for request.
         /// </summary>
+        [ArgumentFormat("--tls")]
         public virtual bool? Tls { get; internal set; }
         /// <summary>
         ///   Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").
         /// </summary>
+        [ArgumentFormat("--tls-ca-cert {value}")]
         public virtual string TlsCaCert { get; internal set; }
         /// <summary>
         ///   Path to TLS certificate file (default "$HELM_HOME/cert.pem").
         /// </summary>
+        [ArgumentFormat("--tls-cert {value}")]
         public virtual string TlsCert { get; internal set; }
         /// <summary>
         ///   The server name used to verify the hostname on the returned certificates from the server.
         /// </summary>
+        [ArgumentFormat("--tls-hostname {value}")]
         public virtual string TlsHostname { get; internal set; }
         /// <summary>
         ///   Path to TLS key file (default "$HELM_HOME/key.pem").
         /// </summary>
+        [ArgumentFormat("--tls-key {value}")]
         public virtual string TlsKey { get; internal set; }
         /// <summary>
         ///   Enable TLS for request and verify remote.
         /// </summary>
+        [ArgumentFormat("--tls-verify")]
         public virtual bool? TlsVerify { get; internal set; }
         /// <summary>
         ///   The filter to use.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Filter { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4711,42 +5010,53 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Set the appVersion on the chart to this version.
         /// </summary>
+        [ArgumentFormat("--app-version {value}")]
         public virtual string AppVersion { get; internal set; }
         /// <summary>
         ///   Update dependencies from "requirements.yaml" to dir "charts/" before packaging.
         /// </summary>
+        [ArgumentFormat("--dependency-update")]
         public virtual bool? DependencyUpdate { get; internal set; }
         /// <summary>
         ///   Location to write the chart. (default ".").
         /// </summary>
+        [ArgumentFormat("--destination {value}")]
         public virtual string Destination { get; internal set; }
         /// <summary>
         ///   Help for package.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Name of the key to use when signing. Used if --sign is true.
         /// </summary>
+        [ArgumentFormat("--key {value}")]
         public virtual string Key { get; internal set; }
         /// <summary>
         ///   Location of a public keyring (default "~/.gnupg/pubring.gpg").
         /// </summary>
+        [ArgumentFormat("--keyring {value}")]
         public virtual string Keyring { get; internal set; }
         /// <summary>
         ///   Save packaged chart to local chart repository (default true).
         /// </summary>
+        [ArgumentFormat("--save")]
         public virtual bool? Save { get; internal set; }
         /// <summary>
         ///   Use a PGP private key to sign this package.
         /// </summary>
+        [ArgumentFormat("--sign")]
         public virtual bool? Sign { get; internal set; }
         /// <summary>
         ///   Set the version on the chart to this semver version.
         /// </summary>
+        [ArgumentFormat("--version {value}")]
         public virtual string Version { get; internal set; }
         /// <summary>
         ///   The paths to the charts to package.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> ChartPaths => ChartPathsInternal.AsReadOnly();
         internal List<string> ChartPathsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -4784,15 +5094,20 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Help for install.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Specify a version constraint. If this is not specified, the latest version is installed.
         /// </summary>
+        [ArgumentFormat("--version {value}")]
         public virtual string Version { get; internal set; }
+        [ArgumentFormat("{value}")]
         public virtual string Options { get; internal set; }
         /// <summary>
         ///   List of paths or urls of packages to install.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Paths => PathsInternal.AsReadOnly();
         internal List<string> PathsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -4824,6 +5139,7 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Help for list.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4851,10 +5167,13 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Help for remove.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   List of plugins to remove.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Plugins => PluginsInternal.AsReadOnly();
         internal List<string> PluginsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -4884,10 +5203,13 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Help for update.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   List of plugins to update.
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Plugins => PluginsInternal.AsReadOnly();
         internal List<string> PluginsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -4917,38 +5239,47 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Verify certificates of HTTPS-enabled servers using this CA bundle.
         /// </summary>
+        [ArgumentFormat("--ca-file {value}")]
         public virtual string CaFile { get; internal set; }
         /// <summary>
         ///   Identify HTTPS client using this SSL certificate file.
         /// </summary>
+        [ArgumentFormat("--cert-file {value}")]
         public virtual string CertFile { get; internal set; }
         /// <summary>
         ///   Help for add.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Identify HTTPS client using this SSL key file.
         /// </summary>
+        [ArgumentFormat("--key-file {value}")]
         public virtual string KeyFile { get; internal set; }
         /// <summary>
         ///   Raise error if repo is already registered.
         /// </summary>
+        [ArgumentFormat("--no-update")]
         public virtual bool? NoUpdate { get; internal set; }
         /// <summary>
         ///   Chart repository password.
         /// </summary>
+        [ArgumentFormat("--password {value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   Chart repository username.
         /// </summary>
+        [ArgumentFormat("--username {value}")]
         public virtual string Username { get; internal set; }
         /// <summary>
         ///   The name of the repository to add.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   The url of the repository to add.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Url { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -4984,18 +5315,22 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Help for index.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Merge the generated index into the given index.
         /// </summary>
+        [ArgumentFormat("--merge {value}")]
         public virtual string Merge { get; internal set; }
         /// <summary>
         ///   Url of chart repository.
         /// </summary>
+        [ArgumentFormat("--url {value}")]
         public virtual string Url { get; internal set; }
         /// <summary>
         ///   The directory of the repository.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Directory { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5026,6 +5361,7 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Help for list.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5053,10 +5389,12 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Help for remove.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   The name of the repository.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Name { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5085,10 +5423,12 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Help for update.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Fail on update warnings.
         /// </summary>
+        [ArgumentFormat("--strict")]
         public virtual bool? Strict { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5117,38 +5457,47 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Forces Tiller uninstall even if there are releases installed, or if Tiller is not in ready state. Releases are not deleted.).
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Help for reset.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   If set deletes $HELM_HOME.
         /// </summary>
+        [ArgumentFormat("--remove-helm-home")]
         public virtual bool? RemoveHelmHome { get; internal set; }
         /// <summary>
         ///   Enable TLS for request.
         /// </summary>
+        [ArgumentFormat("--tls")]
         public virtual bool? Tls { get; internal set; }
         /// <summary>
         ///   Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").
         /// </summary>
+        [ArgumentFormat("--tls-ca-cert {value}")]
         public virtual string TlsCaCert { get; internal set; }
         /// <summary>
         ///   Path to TLS certificate file (default "$HELM_HOME/cert.pem").
         /// </summary>
+        [ArgumentFormat("--tls-cert {value}")]
         public virtual string TlsCert { get; internal set; }
         /// <summary>
         ///   The server name used to verify the hostname on the returned certificates from the server.
         /// </summary>
+        [ArgumentFormat("--tls-hostname {value}")]
         public virtual string TlsHostname { get; internal set; }
         /// <summary>
         ///   Path to TLS key file (default "$HELM_HOME/key.pem").
         /// </summary>
+        [ArgumentFormat("--tls-key {value}")]
         public virtual string TlsKey { get; internal set; }
         /// <summary>
         ///   Enable TLS for request and verify remote.
         /// </summary>
+        [ArgumentFormat("--tls-verify")]
         public virtual bool? TlsVerify { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5184,66 +5533,82 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Specify a description for the release.
         /// </summary>
+        [ArgumentFormat("--description {value}")]
         public virtual string Description { get; internal set; }
         /// <summary>
         ///   Simulate a rollback.
         /// </summary>
+        [ArgumentFormat("--dry-run")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   Force resource update through delete/recreate if needed.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Help for rollback.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Prevent hooks from running during rollback.
         /// </summary>
+        [ArgumentFormat("--no-hooks")]
         public virtual bool? NoHooks { get; internal set; }
         /// <summary>
         ///   Performs pods restart for the resource if applicable.
         /// </summary>
+        [ArgumentFormat("--recreate-pods")]
         public virtual bool? RecreatePods { get; internal set; }
         /// <summary>
         ///   Time in seconds to wait for any individual Kubernetes operation (like Jobs for hooks) (default 300).
         /// </summary>
+        [ArgumentFormat("--timeout {value}")]
         public virtual long? Timeout { get; internal set; }
         /// <summary>
         ///   Enable TLS for request.
         /// </summary>
+        [ArgumentFormat("--tls")]
         public virtual bool? Tls { get; internal set; }
         /// <summary>
         ///   Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").
         /// </summary>
+        [ArgumentFormat("--tls-ca-cert {value}")]
         public virtual string TlsCaCert { get; internal set; }
         /// <summary>
         ///   Path to TLS certificate file (default "$HELM_HOME/cert.pem").
         /// </summary>
+        [ArgumentFormat("--tls-cert {value}")]
         public virtual string TlsCert { get; internal set; }
         /// <summary>
         ///   The server name used to verify the hostname on the returned certificates from the server.
         /// </summary>
+        [ArgumentFormat("--tls-hostname {value}")]
         public virtual string TlsHostname { get; internal set; }
         /// <summary>
         ///   Path to TLS key file (default "$HELM_HOME/key.pem").
         /// </summary>
+        [ArgumentFormat("--tls-key {value}")]
         public virtual string TlsKey { get; internal set; }
         /// <summary>
         ///   Enable TLS for request and verify remote.
         /// </summary>
+        [ArgumentFormat("--tls-verify")]
         public virtual bool? TlsVerify { get; internal set; }
         /// <summary>
         ///   If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment are in a ready state before marking the release as successful. It will wait for as long as --timeout.
         /// </summary>
+        [ArgumentFormat("--wait")]
         public virtual bool? Wait { get; internal set; }
         /// <summary>
         ///   The name of the release.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Release { get; internal set; }
         /// <summary>
         ///   The revison to roll back.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Revision { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5286,26 +5651,32 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Specifies the max column width of output (default 60).
         /// </summary>
+        [ArgumentFormat("--col-width {value}")]
         public virtual uint? ColWidth { get; internal set; }
         /// <summary>
         ///   Help for search.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Use regular expressions for searching.
         /// </summary>
+        [ArgumentFormat("--regexp")]
         public virtual bool? Regexp { get; internal set; }
         /// <summary>
         ///   Search using semantic versioning constraints.
         /// </summary>
+        [ArgumentFormat("--version {value}")]
         public virtual string Version { get; internal set; }
         /// <summary>
         ///   Show the long listing, with each version of each chart on its own line.
         /// </summary>
+        [ArgumentFormat("--versions")]
         public virtual bool? Versions { get; internal set; }
         /// <summary>
         ///   The keyword to search for.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Keyword { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5338,18 +5709,22 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Address to listen on (default "127.0.0.1:8879").
         /// </summary>
+        [ArgumentFormat("--address {value}")]
         public virtual string Address { get; internal set; }
         /// <summary>
         ///   Help for serve.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Local directory path from which to serve charts.
         /// </summary>
+        [ArgumentFormat("--repo-path {value}")]
         public virtual string RepoPath { get; internal set; }
         /// <summary>
         ///   External URL of chart repository.
         /// </summary>
+        [ArgumentFormat("--url {value}")]
         public virtual string Url { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5380,42 +5755,52 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Help for status.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Output the status in the specified format (json or yaml).
         /// </summary>
+        [ArgumentFormat("--output {value}")]
         public virtual HelmOutputFormat Output { get; internal set; }
         /// <summary>
         ///   If set, display the status of the named release with revision.
         /// </summary>
+        [ArgumentFormat("--revision {value}")]
         public virtual int? Revision { get; internal set; }
         /// <summary>
         ///   Enable TLS for request.
         /// </summary>
+        [ArgumentFormat("--tls")]
         public virtual bool? Tls { get; internal set; }
         /// <summary>
         ///   Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").
         /// </summary>
+        [ArgumentFormat("--tls-ca-cert {value}")]
         public virtual string TlsCaCert { get; internal set; }
         /// <summary>
         ///   Path to TLS certificate file (default "$HELM_HOME/cert.pem").
         /// </summary>
+        [ArgumentFormat("--tls-cert {value}")]
         public virtual string TlsCert { get; internal set; }
         /// <summary>
         ///   The server name used to verify the hostname on the returned certificates from the server.
         /// </summary>
+        [ArgumentFormat("--tls-hostname {value}")]
         public virtual string TlsHostname { get; internal set; }
         /// <summary>
         ///   Path to TLS key file (default "$HELM_HOME/key.pem").
         /// </summary>
+        [ArgumentFormat("--tls-key {value}")]
         public virtual string TlsKey { get; internal set; }
         /// <summary>
         ///   Enable TLS for request and verify remote.
         /// </summary>
+        [ArgumentFormat("--tls-verify")]
         public virtual bool? TlsVerify { get; internal set; }
         /// <summary>
         ///   The name of the release to get the status for.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string ReleaseName { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5452,60 +5837,82 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Only execute the given templates.
         /// </summary>
+        [ArgumentFormat("--execute {value}")]
+        [ItemFormat("{key}={value}")]
+        [Separator(",")]
         public virtual IReadOnlyDictionary<string, object> Execute => ExecuteInternal.AsReadOnly();
         internal Dictionary<string, object> ExecuteInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Help for template.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Set .Release.IsUpgrade instead of .Release.IsInstall.
         /// </summary>
+        [ArgumentFormat("--is-upgrade")]
         public virtual bool? IsUpgrade { get; internal set; }
         /// <summary>
         ///   Kubernetes version used as Capabilities.KubeVersion.Major/Minor (default "1.9").
         /// </summary>
+        [ArgumentFormat("--kube-version {value}")]
         public virtual string KubeVersion { get; internal set; }
         /// <summary>
         ///   Release name (default "release-name").
         /// </summary>
+        [ArgumentFormat("--name {value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   Specify template used to name the release.
         /// </summary>
+        [ArgumentFormat("--name-template {value}")]
         public virtual string NameTemplate { get; internal set; }
         /// <summary>
         ///   Namespace to install the release into.
         /// </summary>
+        [ArgumentFormat("--namespace {value}")]
         public virtual string Namespace { get; internal set; }
         /// <summary>
         ///   Show the computed NOTES.txt file as well.
         /// </summary>
+        [ArgumentFormat("--notes")]
         public virtual bool? Notes { get; internal set; }
         /// <summary>
         ///   Writes the executed templates to files in output-dir instead of stdout.
         /// </summary>
+        [ArgumentFormat("--output-dir {value}")]
         public virtual string OutputDir { get; internal set; }
         /// <summary>
         ///   Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).
         /// </summary>
+        [ArgumentFormat("--set {value}")]
+        [ItemFormat("{key}={value}")]
+        [Separator(",")]
         public virtual IReadOnlyDictionary<string, object> Set => SetInternal.AsReadOnly();
         internal Dictionary<string, object> SetInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).
         /// </summary>
+        [ArgumentFormat("--set-file {value}")]
+        [ItemFormat("{key}={value}")]
+        [Separator(",")]
         public virtual IReadOnlyDictionary<string, object> SetFile => SetFileInternal.AsReadOnly();
         internal Dictionary<string, object> SetFileInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).
         /// </summary>
+        [ArgumentFormat("--set-string {value}")]
+        [ItemFormat("{key}={value}")]
+        [Separator(",")]
         public virtual IReadOnlyDictionary<string, object> SetString => SetStringInternal.AsReadOnly();
         internal Dictionary<string, object> SetStringInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Specify values in a YAML file (can specify multiple) (default []).
         /// </summary>
+        [ArgumentFormat("--values {value}")]
         public virtual IReadOnlyList<string> Values => ValuesInternal.AsReadOnly();
         internal List<string> ValuesInternal { get; set; } = new List<string>();
+        [ArgumentFormat("{value}")]
         public virtual string Chart { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5546,46 +5953,57 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Delete test pods upon completion.
         /// </summary>
+        [ArgumentFormat("--cleanup")]
         public virtual bool? Cleanup { get; internal set; }
         /// <summary>
         ///   Help for test.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Run test pods in parallel.
         /// </summary>
+        [ArgumentFormat("--parallel")]
         public virtual bool? Parallel { get; internal set; }
         /// <summary>
         ///   Time in seconds to wait for any individual Kubernetes operation (like Jobs for hooks) (default 300).
         /// </summary>
+        [ArgumentFormat("--timeout {value}")]
         public virtual long? Timeout { get; internal set; }
         /// <summary>
         ///   Enable TLS for request.
         /// </summary>
+        [ArgumentFormat("--tls")]
         public virtual bool? Tls { get; internal set; }
         /// <summary>
         ///   Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").
         /// </summary>
+        [ArgumentFormat("--tls-ca-cert {value}")]
         public virtual string TlsCaCert { get; internal set; }
         /// <summary>
         ///   Path to TLS certificate file (default "$HELM_HOME/cert.pem").
         /// </summary>
+        [ArgumentFormat("--tls-cert {value}")]
         public virtual string TlsCert { get; internal set; }
         /// <summary>
         ///   The server name used to verify the hostname on the returned certificates from the server.
         /// </summary>
+        [ArgumentFormat("--tls-hostname {value}")]
         public virtual string TlsHostname { get; internal set; }
         /// <summary>
         ///   Path to TLS key file (default "$HELM_HOME/key.pem").
         /// </summary>
+        [ArgumentFormat("--tls-key {value}")]
         public virtual string TlsKey { get; internal set; }
         /// <summary>
         ///   Enable TLS for request and verify remote.
         /// </summary>
+        [ArgumentFormat("--tls-verify")]
         public virtual bool? TlsVerify { get; internal set; }
         /// <summary>
         ///   The name of the release to test.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Release { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5623,150 +6041,192 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   If set, upgrade process rolls back changes made in case of failed upgrade, also sets --wait flag.
         /// </summary>
+        [ArgumentFormat("--atomic")]
         public virtual bool? Atomic { get; internal set; }
         /// <summary>
         ///   Verify certificates of HTTPS-enabled servers using this CA bundle.
         /// </summary>
+        [ArgumentFormat("--ca-file {value}")]
         public virtual string CaFile { get; internal set; }
         /// <summary>
         ///   Identify HTTPS client using this SSL certificate file.
         /// </summary>
+        [ArgumentFormat("--cert-file {value}")]
         public virtual string CertFile { get; internal set; }
         /// <summary>
         ///   Specify the description to use for the upgrade, rather than the default.
         /// </summary>
+        [ArgumentFormat("--description {value}")]
         public virtual string Description { get; internal set; }
         /// <summary>
         ///   Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored.
         /// </summary>
+        [ArgumentFormat("--devel")]
         public virtual bool? Devel { get; internal set; }
         /// <summary>
         ///   Simulate an upgrade.
         /// </summary>
+        [ArgumentFormat("--dry-run")]
         public virtual bool? DryRun { get; internal set; }
         /// <summary>
         ///   Force resource update through delete/recreate if needed.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Help for upgrade.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   If a release by this name doesn't already exist, run an install.
         /// </summary>
+        [ArgumentFormat("--install")]
         public virtual bool? Install { get; internal set; }
         /// <summary>
         ///   Identify HTTPS client using this SSL key file.
         /// </summary>
+        [ArgumentFormat("--key-file {value}")]
         public virtual string KeyFile { get; internal set; }
         /// <summary>
         ///   Path to the keyring that contains public signing keys (default "~/.gnupg/pubring.gpg").
         /// </summary>
+        [ArgumentFormat("--keyring {value}")]
         public virtual string Keyring { get; internal set; }
         /// <summary>
         ///   Namespace to install the release into (only used if --install is set). Defaults to the current kube config namespace.
         /// </summary>
+        [ArgumentFormat("--namespace {value}")]
         public virtual string Namespace { get; internal set; }
         /// <summary>
         ///   Disable pre/post upgrade hooks.
         /// </summary>
+        [ArgumentFormat("--no-hooks")]
         public virtual bool? NoHooks { get; internal set; }
         /// <summary>
         ///   Chart repository password where to locate the requested chart.
         /// </summary>
+        [ArgumentFormat("--password {value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   Performs pods restart for the resource if applicable.
         /// </summary>
+        [ArgumentFormat("--recreate-pods")]
         public virtual bool? RecreatePods { get; internal set; }
         /// <summary>
         ///   Render subchart notes along with parent.
         /// </summary>
+        [ArgumentFormat("--render-subchart-notes")]
         public virtual bool? RenderSubchartNotes { get; internal set; }
         /// <summary>
         ///   Chart repository url where to locate the requested chart.
         /// </summary>
+        [ArgumentFormat("--repo {value}")]
         public virtual string Repo { get; internal set; }
         /// <summary>
         ///   When upgrading, reset the values to the ones built into the chart.
         /// </summary>
+        [ArgumentFormat("--reset-values")]
         public virtual bool? ResetValues { get; internal set; }
         /// <summary>
         ///   When upgrading, reuse the last release's values and merge in any overrides from the command line via --set and -f. If '--reset-values' is specified, this is ignored.
         /// </summary>
+        [ArgumentFormat("--reuse-values")]
         public virtual bool? ReuseValues { get; internal set; }
         /// <summary>
         ///   Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).
         /// </summary>
+        [ArgumentFormat("--set {value}")]
+        [ItemFormat("{key}={value}")]
+        [Separator(",")]
         public virtual IReadOnlyDictionary<string, object> Set => SetInternal.AsReadOnly();
         internal Dictionary<string, object> SetInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2).
         /// </summary>
+        [ArgumentFormat("--set-file {value}")]
+        [ItemFormat("{key}={value}")]
+        [Separator(",")]
         public virtual IReadOnlyDictionary<string, object> SetFile => SetFileInternal.AsReadOnly();
         internal Dictionary<string, object> SetFileInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2).
         /// </summary>
+        [ArgumentFormat("--set-string {value}")]
+        [ItemFormat("{key}={value}")]
+        [Separator(",")]
         public virtual IReadOnlyDictionary<string, object> SetString => SetStringInternal.AsReadOnly();
         internal Dictionary<string, object> SetStringInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Time in seconds to wait for any individual Kubernetes operation (like Jobs for hooks) (default 300).
         /// </summary>
+        [ArgumentFormat("--timeout {value}")]
         public virtual long? Timeout { get; internal set; }
         /// <summary>
         ///   Enable TLS for request.
         /// </summary>
+        [ArgumentFormat("--tls")]
         public virtual bool? Tls { get; internal set; }
         /// <summary>
         ///   Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").
         /// </summary>
+        [ArgumentFormat("--tls-ca-cert {value}")]
         public virtual string TlsCaCert { get; internal set; }
         /// <summary>
         ///   Path to TLS certificate file (default "$HELM_HOME/cert.pem").
         /// </summary>
+        [ArgumentFormat("--tls-cert {value}")]
         public virtual string TlsCert { get; internal set; }
         /// <summary>
         ///   The server name used to verify the hostname on the returned certificates from the server.
         /// </summary>
+        [ArgumentFormat("--tls-hostname {value}")]
         public virtual string TlsHostname { get; internal set; }
         /// <summary>
         ///   Path to TLS key file (default "$HELM_HOME/key.pem").
         /// </summary>
+        [ArgumentFormat("--tls-key {value}")]
         public virtual string TlsKey { get; internal set; }
         /// <summary>
         ///   Enable TLS for request and verify remote.
         /// </summary>
+        [ArgumentFormat("--tls-verify")]
         public virtual bool? TlsVerify { get; internal set; }
         /// <summary>
         ///   Chart repository username where to locate the requested chart.
         /// </summary>
+        [ArgumentFormat("--username {value}")]
         public virtual string Username { get; internal set; }
         /// <summary>
         ///   Specify values in a YAML file or a URL(can specify multiple) (default []).
         /// </summary>
+        [ArgumentFormat("--values {value}")]
         public virtual IReadOnlyList<string> Values => ValuesInternal.AsReadOnly();
         internal List<string> ValuesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Verify the provenance of the chart before upgrading.
         /// </summary>
+        [ArgumentFormat("--verify")]
         public virtual bool? Verify { get; internal set; }
         /// <summary>
         ///   Specify the exact chart version to use. If this is not specified, the latest version is used.
         /// </summary>
+        [ArgumentFormat("--version {value}")]
         public virtual string Version { get; internal set; }
         /// <summary>
         ///   If set, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment are in a ready state before marking the release as successful. It will wait for as long as --timeout.
         /// </summary>
+        [ArgumentFormat("--wait")]
         public virtual bool? Wait { get; internal set; }
         /// <summary>
         ///   The name of the release to upgrade.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Release { get; internal set; }
         /// <summary>
         ///   The name of the chart to upgrade.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Chart { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5829,14 +6289,17 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Help for verify.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Keyring containing public keys (default "~/.gnupg/pubring.gpg").
         /// </summary>
+        [ArgumentFormat("--keyring {value}")]
         public virtual string Keyring { get; internal set; }
         /// <summary>
         ///   The path to the chart to verify.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Path { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5866,46 +6329,57 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Client version only.
         /// </summary>
+        [ArgumentFormat("--client")]
         public virtual bool? Client { get; internal set; }
         /// <summary>
         ///   Help for version.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Server version only.
         /// </summary>
+        [ArgumentFormat("--server")]
         public virtual bool? Server { get; internal set; }
         /// <summary>
         ///   Print the version number.
         /// </summary>
+        [ArgumentFormat("--short")]
         public virtual bool? Short { get; internal set; }
         /// <summary>
         ///   Template for version string format.
         /// </summary>
+        [ArgumentFormat("--template {value}")]
         public virtual string Template { get; internal set; }
         /// <summary>
         ///   Enable TLS for request.
         /// </summary>
+        [ArgumentFormat("--tls")]
         public virtual bool? Tls { get; internal set; }
         /// <summary>
         ///   Path to TLS CA certificate file (default "$HELM_HOME/ca.pem").
         /// </summary>
+        [ArgumentFormat("--tls-ca-cert {value}")]
         public virtual string TlsCaCert { get; internal set; }
         /// <summary>
         ///   Path to TLS certificate file (default "$HELM_HOME/cert.pem").
         /// </summary>
+        [ArgumentFormat("--tls-cert {value}")]
         public virtual string TlsCert { get; internal set; }
         /// <summary>
         ///   The server name used to verify the hostname on the returned certificates from the server.
         /// </summary>
+        [ArgumentFormat("--tls-hostname {value}")]
         public virtual string TlsHostname { get; internal set; }
         /// <summary>
         ///   Path to TLS key file (default "$HELM_HOME/key.pem").
         /// </summary>
+        [ArgumentFormat("--tls-key {value}")]
         public virtual string TlsKey { get; internal set; }
         /// <summary>
         ///   Enable TLS for request and verify remote.
         /// </summary>
+        [ArgumentFormat("--tls-verify")]
         public virtual bool? TlsVerify { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -5938,34 +6412,42 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   Enable verbose output.
         /// </summary>
+        [ArgumentFormat("--debug")]
         public virtual bool? Debug { get; internal set; }
         /// <summary>
         ///   Help for helm.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Location of your Helm config. Overrides $HELM_HOME (default "~/.helm").
         /// </summary>
+        [ArgumentFormat("--home {value}")]
         public virtual string Home { get; internal set; }
         /// <summary>
         ///   Address of Tiller. Overrides $HELM_HOST.
         /// </summary>
+        [ArgumentFormat("--host {value}")]
         public virtual string Host { get; internal set; }
         /// <summary>
         ///   Name of the kubeconfig context to use.
         /// </summary>
+        [ArgumentFormat("--kube-context {value}")]
         public virtual string KubeContext { get; internal set; }
         /// <summary>
         ///   Absolute path to the kubeconfig file to use.
         /// </summary>
+        [ArgumentFormat("--kubeconfig {value}")]
         public virtual string Kubeconfig { get; internal set; }
         /// <summary>
         ///   The duration (in seconds) Helm will wait to establish a connection to tiller (default 300).
         /// </summary>
+        [ArgumentFormat("--tiller-connection-timeout {value}")]
         public virtual long? TillerConnectionTimeout { get; internal set; }
         /// <summary>
         ///   Namespace of Tiller (default "kube-system").
         /// </summary>
+        [ArgumentFormat("--tiller-namespace {value}")]
         public virtual string TillerNamespace { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

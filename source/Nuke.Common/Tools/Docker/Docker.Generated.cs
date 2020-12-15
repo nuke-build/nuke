@@ -1,4 +1,3 @@
-#pragma warning disable CS1574
 // Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Docker.json
 
 using JetBrains.Annotations;
@@ -73,6 +72,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;configs&gt;</c> via <see cref="DockerConfigRmSettings.Configs"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("config rm")]
         public static IReadOnlyCollection<Output> DockerConfigRm(Configure<DockerConfigRmSettings> configurator)
         {
             return DockerConfigRm(configurator(new DockerConfigRmSettings()));
@@ -123,6 +123,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--quiet</c> via <see cref="DockerLoadSettings.Quiet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("load")]
         public static IReadOnlyCollection<Output> DockerLoad(Configure<DockerLoadSettings> configurator)
         {
             return DockerLoad(configurator(new DockerLoadSettings()));
@@ -174,6 +175,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--force</c> via <see cref="DockerContainerPruneSettings.Force"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container prune")]
         public static IReadOnlyCollection<Output> DockerContainerPrune(Configure<DockerContainerPruneSettings> configurator)
         {
             return DockerContainerPrune(configurator(new DockerContainerPruneSettings()));
@@ -221,6 +223,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerTrustSettings.CliSettings"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("trust")]
         public static IReadOnlyCollection<Output> DockerTrust(Configure<DockerTrustSettings> configurator)
         {
             return DockerTrust(configurator(new DockerTrustSettings()));
@@ -270,6 +273,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--orchestrator</c> via <see cref="DockerStackSettings.Orchestrator"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("stack")]
         public static IReadOnlyCollection<Output> DockerStack(Configure<DockerStackSettings> configurator)
         {
             return DockerStack(configurator(new DockerStackSettings()));
@@ -321,6 +325,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;options&gt;</c> via <see cref="DockerTopSettings.Options"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("top [ps")]
         public static IReadOnlyCollection<Output> DockerTop(Configure<DockerTopSettings> configurator)
         {
             return DockerTop(configurator(new DockerTopSettings()));
@@ -378,6 +383,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--quiet</c> via <see cref="DockerPullSettings.Quiet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("pull")]
         public static IReadOnlyCollection<Output> DockerPull(Configure<DockerPullSettings> configurator)
         {
             return DockerPull(configurator(new DockerPullSettings()));
@@ -428,6 +434,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerTrustSignSettings.CliSettings"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("trust sign IMAGE:TAG")]
         public static IReadOnlyCollection<Output> DockerTrustSign(Configure<DockerTrustSignSettings> configurator)
         {
             return DockerTrustSign(configurator(new DockerTrustSignSettings()));
@@ -473,6 +480,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerCheckpointSettings.CliSettings"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("checkpoint")]
         public static IReadOnlyCollection<Output> DockerCheckpoint(Configure<DockerCheckpointSettings> configurator)
         {
             return DockerCheckpoint(configurator(new DockerCheckpointSettings()));
@@ -518,6 +526,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerTrustSignerSettings.CliSettings"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("trust signer")]
         public static IReadOnlyCollection<Output> DockerTrustSigner(Configure<DockerTrustSignerSettings> configurator)
         {
             return DockerTrustSigner(configurator(new DockerTrustSignerSettings()));
@@ -569,6 +578,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--pretty</c> via <see cref="DockerConfigInspectSettings.Pretty"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("config inspect")]
         public static IReadOnlyCollection<Output> DockerConfigInspect(Configure<DockerConfigInspectSettings> configurator)
         {
             return DockerConfigInspect(configurator(new DockerConfigInspectSettings()));
@@ -617,6 +627,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerServiceSettings.CliSettings"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("service")]
         public static IReadOnlyCollection<Output> DockerService(Configure<DockerServiceSettings> configurator)
         {
             return DockerService(configurator(new DockerServiceSettings()));
@@ -664,6 +675,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;name&gt;</c> via <see cref="DockerTrustKeyGenerateSettings.Name"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("trust key generate")]
         public static IReadOnlyCollection<Output> DockerTrustKeyGenerate(Configure<DockerTrustKeyGenerateSettings> configurator)
         {
             return DockerTrustKeyGenerate(configurator(new DockerTrustKeyGenerateSettings()));
@@ -710,6 +722,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerSystemSettings.CliSettings"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("system")]
         public static IReadOnlyCollection<Output> DockerSystem(Configure<DockerSystemSettings> configurator)
         {
             return DockerSystem(configurator(new DockerSystemSettings()));
@@ -761,6 +774,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--quiet</c> via <see cref="DockerConfigLsSettings.Quiet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("config ls")]
         public static IReadOnlyCollection<Output> DockerConfigLs(Configure<DockerConfigLsSettings> configurator)
         {
             return DockerConfigLs(configurator(new DockerConfigLsSettings()));
@@ -819,6 +833,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--kubernetes</c> via <see cref="DockerContextUpdateSettings.Kubernetes"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("context update")]
         public static IReadOnlyCollection<Output> DockerContextUpdate(Configure<DockerContextUpdateSettings> configurator)
         {
             return DockerContextUpdate(configurator(new DockerContextUpdateSettings()));
@@ -879,6 +894,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--quiet</c> via <see cref="DockerStackServicesSettings.Quiet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("stack services")]
         public static IReadOnlyCollection<Output> DockerStackServices(Configure<DockerStackServicesSettings> configurator)
         {
             return DockerStackServices(configurator(new DockerStackServicesSettings()));
@@ -933,6 +949,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;privatePort&gt;</c> via <see cref="DockerContainerPortSettings.PrivatePort"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container port")]
         public static IReadOnlyCollection<Output> DockerContainerPort(Configure<DockerContainerPortSettings> configurator)
         {
             return DockerContainerPort(configurator(new DockerContainerPortSettings()));
@@ -984,6 +1001,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;newName&gt;</c> via <see cref="DockerRenameSettings.NewName"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("rename")]
         public static IReadOnlyCollection<Output> DockerRename(Configure<DockerRenameSettings> configurator)
         {
             return DockerRename(configurator(new DockerRenameSettings()));
@@ -1035,6 +1053,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;targetImage&gt;</c> via <see cref="DockerTagSettings.TargetImage"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("tag")]
         public static IReadOnlyCollection<Output> DockerTag(Configure<DockerTagSettings> configurator)
         {
             return DockerTag(configurator(new DockerTagSettings()));
@@ -1088,6 +1107,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--pretty</c> via <see cref="DockerSecretInspectSettings.Pretty"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("secret inspect")]
         public static IReadOnlyCollection<Output> DockerSecretInspect(Configure<DockerSecretInspectSettings> configurator)
         {
             return DockerSecretInspect(configurator(new DockerSecretInspectSettings()));
@@ -1136,6 +1156,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerSecretSettings.CliSettings"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("secret")]
         public static IReadOnlyCollection<Output> DockerSecret(Configure<DockerSecretSettings> configurator)
         {
             return DockerSecret(configurator(new DockerSecretSettings()));
@@ -1185,6 +1206,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--output</c> via <see cref="DockerContainerExportSettings.Output"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container export")]
         public static IReadOnlyCollection<Output> DockerContainerExport(Configure<DockerContainerExportSettings> configurator)
         {
             return DockerContainerExport(configurator(new DockerContainerExportSettings()));
@@ -1242,6 +1264,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--quiet</c> via <see cref="DockerHistorySettings.Quiet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("history")]
         public static IReadOnlyCollection<Output> DockerHistory(Configure<DockerHistorySettings> configurator)
         {
             return DockerHistory(configurator(new DockerHistorySettings()));
@@ -1430,6 +1453,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--workdir</c> via <see cref="DockerServiceCreateSettings.Workdir"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("service create")]
         public static IReadOnlyCollection<Output> DockerServiceCreate(Configure<DockerServiceCreateSettings> configurator)
         {
             return DockerServiceCreate(configurator(new DockerServiceCreateSettings()));
@@ -1556,6 +1580,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--quiet</c> via <see cref="DockerServicePsSettings.Quiet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("service ps")]
         public static IReadOnlyCollection<Output> DockerServicePs(Configure<DockerServicePsSettings> configurator)
         {
             return DockerServicePs(configurator(new DockerServicePsSettings()));
@@ -1611,6 +1636,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--time</c> via <see cref="DockerStopSettings.Time"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("stop")]
         public static IReadOnlyCollection<Output> DockerStop(Configure<DockerStopSettings> configurator)
         {
             return DockerStop(configurator(new DockerStopSettings()));
@@ -1658,6 +1684,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerNodeSettings.CliSettings"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("node")]
         public static IReadOnlyCollection<Output> DockerNode(Configure<DockerNodeSettings> configurator)
         {
             return DockerNode(configurator(new DockerNodeSettings()));
@@ -1735,6 +1762,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--restart</c> via <see cref="DockerUpdateSettings.Restart"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("update")]
         public static IReadOnlyCollection<Output> DockerUpdate(Configure<DockerUpdateSettings> configurator)
         {
             return DockerUpdate(configurator(new DockerUpdateSettings()));
@@ -1802,6 +1830,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--compress</c> via <see cref="DockerPluginCreateSettings.Compress"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("plugin create")]
         public static IReadOnlyCollection<Output> DockerPluginCreate(Configure<DockerPluginCreateSettings> configurator)
         {
             return DockerPluginCreate(configurator(new DockerPluginCreateSettings()));
@@ -1852,6 +1881,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--format</c> via <see cref="DockerSystemInfoSettings.Format"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("system info")]
         public static IReadOnlyCollection<Output> DockerSystemInfo(Configure<DockerSystemInfoSettings> configurator)
         {
             return DockerSystemInfo(configurator(new DockerSystemInfoSettings()));
@@ -1902,6 +1932,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--force</c> via <see cref="DockerVolumePruneSettings.Force"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("volume prune")]
         public static IReadOnlyCollection<Output> DockerVolumePrune(Configure<DockerVolumePruneSettings> configurator)
         {
             return DockerVolumePrune(configurator(new DockerVolumePruneSettings()));
@@ -1959,6 +1990,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--skip-remote-check</c> via <see cref="DockerPluginUpgradeSettings.SkipRemoteCheck"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("plugin upgrade")]
         public static IReadOnlyCollection<Output> DockerPluginUpgrade(Configure<DockerPluginUpgradeSettings> configurator)
         {
             return DockerPluginUpgrade(configurator(new DockerPluginUpgradeSettings()));
@@ -2009,6 +2041,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerBuilderPruneSettings.CliSettings"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("builder prune")]
         public static IReadOnlyCollection<Output> DockerBuilderPrune(Configure<DockerBuilderPruneSettings> configurator)
         {
             return DockerBuilderPrune(configurator(new DockerBuilderPruneSettings()));
@@ -2060,6 +2093,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--rotate</c> via <see cref="DockerSwarmJoinTokenSettings.Rotate"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("swarm join-token")]
         public static IReadOnlyCollection<Output> DockerSwarmJoinToken(Configure<DockerSwarmJoinTokenSettings> configurator)
         {
             return DockerSwarmJoinToken(configurator(new DockerSwarmJoinTokenSettings()));
@@ -2118,6 +2152,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--role</c> via <see cref="DockerNodeUpdateSettings.Role"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("node update")]
         public static IReadOnlyCollection<Output> DockerNodeUpdate(Configure<DockerNodeUpdateSettings> configurator)
         {
             return DockerNodeUpdate(configurator(new DockerNodeUpdateSettings()));
@@ -2174,6 +2209,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;repositories&gt;</c> via <see cref="DockerTrustSignerAddSettings.Repositories"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("trust signer add")]
         public static IReadOnlyCollection<Output> DockerTrustSignerAdd(Configure<DockerTrustSignerAddSettings> configurator)
         {
             return DockerTrustSignerAdd(configurator(new DockerTrustSignerAddSettings()));
@@ -2236,6 +2272,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--task-history-limit</c> via <see cref="DockerSwarmUpdateSettings.TaskHistoryLimit"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("swarm update")]
         public static IReadOnlyCollection<Output> DockerSwarmUpdate(Configure<DockerSwarmUpdateSettings> configurator)
         {
             return DockerSwarmUpdate(configurator(new DockerSwarmUpdateSettings()));
@@ -2308,6 +2345,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--timestamps</c> via <see cref="DockerServiceLogsSettings.Timestamps"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("service logs")]
         public static IReadOnlyCollection<Output> DockerServiceLogs(Configure<DockerServiceLogsSettings> configurator)
         {
             return DockerServiceLogs(configurator(new DockerServiceLogsSettings()));
@@ -2369,6 +2407,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--quiet</c> via <see cref="DockerServiceLsSettings.Quiet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("service ls")]
         public static IReadOnlyCollection<Output> DockerServiceLs(Configure<DockerServiceLsSettings> configurator)
         {
             return DockerServiceLs(configurator(new DockerServiceLsSettings()));
@@ -2417,6 +2456,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerSwarmUnlockSettings.CliSettings"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("swarm unlock")]
         public static IReadOnlyCollection<Output> DockerSwarmUnlock(Configure<DockerSwarmUnlockSettings> configurator)
         {
             return DockerSwarmUnlock(configurator(new DockerSwarmUnlockSettings()));
@@ -2470,6 +2510,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--quiet</c> via <see cref="DockerNetworkLsSettings.Quiet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("network ls")]
         public static IReadOnlyCollection<Output> DockerNetworkLs(Configure<DockerNetworkLsSettings> configurator)
         {
             return DockerNetworkLs(configurator(new DockerNetworkLsSettings()));
@@ -2527,6 +2568,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--quiet</c> via <see cref="DockerPluginLsSettings.Quiet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("plugin ls")]
         public static IReadOnlyCollection<Output> DockerPluginLs(Configure<DockerPluginLsSettings> configurator)
         {
             return DockerPluginLs(configurator(new DockerPluginLsSettings()));
@@ -2580,6 +2622,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--force</c> via <see cref="DockerPluginRmSettings.Force"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("plugin rm")]
         public static IReadOnlyCollection<Output> DockerPluginRm(Configure<DockerPluginRmSettings> configurator)
         {
             return DockerPluginRm(configurator(new DockerPluginRmSettings()));
@@ -2699,6 +2742,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--ulimit</c> via <see cref="DockerImageBuildSettings.Ulimit"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("image build")]
         public static IReadOnlyCollection<Output> DockerImageBuild(Configure<DockerImageBuildSettings> configurator)
         {
             return DockerImageBuild(configurator(new DockerImageBuildSettings()));
@@ -2784,6 +2828,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--yes</c> via <see cref="DockerTrustRevokeSettings.Yes"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("trust revoke")]
         public static IReadOnlyCollection<Output> DockerTrustRevoke(Configure<DockerTrustRevokeSettings> configurator)
         {
             return DockerTrustRevoke(configurator(new DockerTrustRevokeSettings()));
@@ -2837,6 +2882,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--no-prune</c> via <see cref="DockerRmiSettings.NoPrune"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("rmi")]
         public static IReadOnlyCollection<Output> DockerRmi(Configure<DockerRmiSettings> configurator)
         {
             return DockerRmi(configurator(new DockerRmiSettings()));
@@ -2887,6 +2933,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;networks&gt;</c> via <see cref="DockerNetworkRmSettings.Networks"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("network rm")]
         public static IReadOnlyCollection<Output> DockerNetworkRm(Configure<DockerNetworkRmSettings> configurator)
         {
             return DockerNetworkRm(configurator(new DockerNetworkRmSettings()));
@@ -2937,6 +2984,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--kubeconfig</c> via <see cref="DockerVersionSettings.Kubeconfig"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("version")]
         public static IReadOnlyCollection<Output> DockerVersion(Configure<DockerVersionSettings> configurator)
         {
             return DockerVersion(configurator(new DockerVersionSettings()));
@@ -2994,6 +3042,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--template-driver</c> via <see cref="DockerSecretCreateSettings.TemplateDriver"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("secret create")]
         public static IReadOnlyCollection<Output> DockerSecretCreate(Configure<DockerSecretCreateSettings> configurator)
         {
             return DockerSecretCreate(configurator(new DockerSecretCreateSettings()));
@@ -3046,6 +3095,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;services&gt;</c> via <see cref="DockerServiceRmSettings.Services"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("service rm")]
         public static IReadOnlyCollection<Output> DockerServiceRm(Configure<DockerServiceRmSettings> configurator)
         {
             return DockerServiceRm(configurator(new DockerServiceRmSettings()));
@@ -3096,6 +3146,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--name</c> via <see cref="DockerTrustKeyLoadSettings.Name"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("trust key load")]
         public static IReadOnlyCollection<Output> DockerTrustKeyLoad(Configure<DockerTrustKeyLoadSettings> configurator)
         {
             return DockerTrustKeyLoad(configurator(new DockerTrustKeyLoadSettings()));
@@ -3145,6 +3196,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;secrets&gt;</c> via <see cref="DockerSecretRmSettings.Secrets"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("secret rm")]
         public static IReadOnlyCollection<Output> DockerSecretRm(Configure<DockerSecretRmSettings> configurator)
         {
             return DockerSecretRm(configurator(new DockerSecretRmSettings()));
@@ -3195,6 +3247,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--format</c> via <see cref="DockerImageInspectSettings.Format"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("image inspect")]
         public static IReadOnlyCollection<Output> DockerImageInspect(Configure<DockerImageInspectSettings> configurator)
         {
             return DockerImageInspect(configurator(new DockerImageInspectSettings()));
@@ -3246,6 +3299,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--output</c> via <see cref="DockerImageSaveSettings.Output"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("image save")]
         public static IReadOnlyCollection<Output> DockerImageSave(Configure<DockerImageSaveSettings> configurator)
         {
             return DockerImageSave(configurator(new DockerImageSaveSettings()));
@@ -3293,6 +3347,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerTrustKeySettings.CliSettings"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("trust key")]
         public static IReadOnlyCollection<Output> DockerTrustKey(Configure<DockerTrustKeySettings> configurator)
         {
             return DockerTrustKey(configurator(new DockerTrustKeySettings()));
@@ -3346,6 +3401,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--sig-proxy</c> via <see cref="DockerContainerAttachSettings.SigProxy"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container attach")]
         public static IReadOnlyCollection<Output> DockerContainerAttach(Configure<DockerContainerAttachSettings> configurator)
         {
             return DockerContainerAttach(configurator(new DockerContainerAttachSettings()));
@@ -3407,6 +3463,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--kubernetes</c> via <see cref="DockerContextCreateSettings.Kubernetes"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("context create")]
         public static IReadOnlyCollection<Output> DockerContextCreate(Configure<DockerContextCreateSettings> configurator)
         {
             return DockerContextCreate(configurator(new DockerContextCreateSettings()));
@@ -3466,6 +3523,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--template-driver</c> via <see cref="DockerConfigCreateSettings.TemplateDriver"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("config create")]
         public static IReadOnlyCollection<Output> DockerConfigCreate(Configure<DockerConfigCreateSettings> configurator)
         {
             return DockerConfigCreate(configurator(new DockerConfigCreateSettings()));
@@ -3519,6 +3577,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--format</c> via <see cref="DockerVolumeInspectSettings.Format"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("volume inspect")]
         public static IReadOnlyCollection<Output> DockerVolumeInspect(Configure<DockerVolumeInspectSettings> configurator)
         {
             return DockerVolumeInspect(configurator(new DockerVolumeInspectSettings()));
@@ -3570,6 +3629,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--time</c> via <see cref="DockerContainerStopSettings.Time"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container stop")]
         public static IReadOnlyCollection<Output> DockerContainerStop(Configure<DockerContainerStopSettings> configurator)
         {
             return DockerContainerStop(configurator(new DockerContainerStopSettings()));
@@ -3621,6 +3681,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--force</c> via <see cref="DockerNetworkPruneSettings.Force"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("network prune")]
         public static IReadOnlyCollection<Output> DockerNetworkPrune(Configure<DockerNetworkPruneSettings> configurator)
         {
             return DockerNetworkPrune(configurator(new DockerNetworkPruneSettings()));
@@ -3676,6 +3737,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--verbose</c> via <see cref="DockerManifestInspectSettings.Verbose"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("manifest inspect")]
         public static IReadOnlyCollection<Output> DockerManifestInspect(Configure<DockerManifestInspectSettings> configurator)
         {
             return DockerManifestInspect(configurator(new DockerManifestInspectSettings()));
@@ -3727,6 +3789,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--format</c> via <see cref="DockerInfoSettings.Format"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("info")]
         public static IReadOnlyCollection<Output> DockerInfo(Configure<DockerInfoSettings> configurator)
         {
             return DockerInfo(configurator(new DockerInfoSettings()));
@@ -3785,6 +3848,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--pause</c> via <see cref="DockerCommitSettings.Pause"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("commit")]
         public static IReadOnlyCollection<Output> DockerCommit(Configure<DockerCommitSettings> configurator)
         {
             return DockerCommit(configurator(new DockerCommitSettings()));
@@ -3850,6 +3914,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--with-registry-auth</c> via <see cref="DockerStackDeploySettings.WithRegistryAuth"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("stack deploy")]
         public static IReadOnlyCollection<Output> DockerStackDeploy(Configure<DockerStackDeploySettings> configurator)
         {
             return DockerStackDeploy(configurator(new DockerStackDeploySettings()));
@@ -3904,6 +3969,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;serviceReplicas&gt;</c> via <see cref="DockerServiceScaleSettings.ServiceReplicas"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("service scale")]
         public static IReadOnlyCollection<Output> DockerServiceScale(Configure<DockerServiceScaleSettings> configurator)
         {
             return DockerServiceScale(configurator(new DockerServiceScaleSettings()));
@@ -4158,6 +4224,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--workdir</c> via <see cref="DockerRunSettings.Workdir"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("run")]
         public static IReadOnlyCollection<Output> DockerRun(Configure<DockerRunSettings> configurator)
         {
             return DockerRun(configurator(new DockerRunSettings()));
@@ -4509,6 +4576,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--workdir</c> via <see cref="DockerCreateSettings.Workdir"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("create")]
         public static IReadOnlyCollection<Output> DockerCreate(Configure<DockerCreateSettings> configurator)
         {
             return DockerCreate(configurator(new DockerCreateSettings()));
@@ -4825,6 +4893,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--workdir</c> via <see cref="DockerServiceUpdateSettings.Workdir"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("service update")]
         public static IReadOnlyCollection<Output> DockerServiceUpdate(Configure<DockerServiceUpdateSettings> configurator)
         {
             return DockerServiceUpdate(configurator(new DockerServiceUpdateSettings()));
@@ -4959,6 +5028,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;privatePort&gt;</c> via <see cref="DockerPortSettings.PrivatePort"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("port")]
         public static IReadOnlyCollection<Output> DockerPort(Configure<DockerPortSettings> configurator)
         {
             return DockerPort(configurator(new DockerPortSettings()));
@@ -5006,6 +5076,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerContainerSettings.CliSettings"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container")]
         public static IReadOnlyCollection<Output> DockerContainer(Configure<DockerContainerSettings> configurator)
         {
             return DockerContainer(configurator(new DockerContainerSettings()));
@@ -5055,6 +5126,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--disable-content-trust</c> via <see cref="DockerImagePushSettings.DisableContentTrust"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("image push")]
         public static IReadOnlyCollection<Output> DockerImagePush(Configure<DockerImagePushSettings> configurator)
         {
             return DockerImagePush(configurator(new DockerImagePushSettings()));
@@ -5108,6 +5180,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--pretty</c> via <see cref="DockerServiceInspectSettings.Pretty"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("service inspect")]
         public static IReadOnlyCollection<Output> DockerServiceInspect(Configure<DockerServiceInspectSettings> configurator)
         {
             return DockerServiceInspect(configurator(new DockerServiceInspectSettings()));
@@ -5172,6 +5245,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--link-local-ip</c> via <see cref="DockerNetworkConnectSettings.LinkLocalIp"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("network connect")]
         public static IReadOnlyCollection<Output> DockerNetworkConnect(Configure<DockerNetworkConnectSettings> configurator)
         {
             return DockerNetworkConnect(configurator(new DockerNetworkConnectSettings()));
@@ -5231,6 +5305,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--quiet</c> via <see cref="DockerSecretLsSettings.Quiet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("secret ls")]
         public static IReadOnlyCollection<Output> DockerSecretLs(Configure<DockerSecretLsSettings> configurator)
         {
             return DockerSecretLs(configurator(new DockerSecretLsSettings()));
@@ -5281,6 +5356,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--force</c> via <see cref="DockerSwarmLeaveSettings.Force"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("swarm leave")]
         public static IReadOnlyCollection<Output> DockerSwarmLeave(Configure<DockerSwarmLeaveSettings> configurator)
         {
             return DockerSwarmLeave(configurator(new DockerSwarmLeaveSettings()));
@@ -5341,6 +5417,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--quiet</c> via <see cref="DockerImagesSettings.Quiet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("images")]
         public static IReadOnlyCollection<Output> DockerImages(Configure<DockerImagesSettings> configurator)
         {
             return DockerImages(configurator(new DockerImagesSettings()));
@@ -5401,6 +5478,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--version</c> via <see cref="DockerEngineUpdateSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("engine update")]
         public static IReadOnlyCollection<Output> DockerEngineUpdate(Configure<DockerEngineUpdateSettings> configurator)
         {
             return DockerEngineUpdate(configurator(new DockerEngineUpdateSettings()));
@@ -5458,6 +5536,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--until</c> via <see cref="DockerSystemEventsSettings.Until"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("system events")]
         public static IReadOnlyCollection<Output> DockerSystemEvents(Configure<DockerSystemEventsSettings> configurator)
         {
             return DockerSystemEvents(configurator(new DockerSystemEventsSettings()));
@@ -5515,6 +5594,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--type</c> via <see cref="DockerInspectSettings.Type"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("inspect")]
         public static IReadOnlyCollection<Output> DockerInspect(Configure<DockerInspectSettings> configurator)
         {
             return DockerInspect(configurator(new DockerInspectSettings()));
@@ -5580,6 +5660,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--upgrades</c> via <see cref="DockerEngineCheckSettings.Upgrades"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("engine check")]
         public static IReadOnlyCollection<Output> DockerEngineCheck(Configure<DockerEngineCheckSettings> configurator)
         {
             return DockerEngineCheck(configurator(new DockerEngineCheckSettings()));
@@ -5641,6 +5722,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--sig-proxy</c> via <see cref="DockerAttachSettings.SigProxy"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("attach")]
         public static IReadOnlyCollection<Output> DockerAttach(Configure<DockerAttachSettings> configurator)
         {
             return DockerAttach(configurator(new DockerAttachSettings()));
@@ -5692,6 +5774,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;containers&gt;</c> via <see cref="DockerContainerWaitSettings.Containers"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container wait")]
         public static IReadOnlyCollection<Output> DockerContainerWait(Configure<DockerContainerWaitSettings> configurator)
         {
             return DockerContainerWait(configurator(new DockerContainerWaitSettings()));
@@ -5752,6 +5835,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--rotate</c> via <see cref="DockerSwarmCaSettings.Rotate"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("swarm ca")]
         public static IReadOnlyCollection<Output> DockerSwarmCa(Configure<DockerSwarmCaSettings> configurator)
         {
             return DockerSwarmCa(configurator(new DockerSwarmCaSettings()));
@@ -5806,6 +5890,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;command&gt;</c> via <see cref="DockerEngineSettings.Command"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("engine")]
         public static IReadOnlyCollection<Output> DockerEngine(Configure<DockerEngineSettings> configurator)
         {
             return DockerEngine(configurator(new DockerEngineSettings()));
@@ -5860,6 +5945,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--volumes</c> via <see cref="DockerSystemPruneSettings.Volumes"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("system prune")]
         public static IReadOnlyCollection<Output> DockerSystemPrune(Configure<DockerSystemPruneSettings> configurator)
         {
             return DockerSystemPrune(configurator(new DockerSystemPruneSettings()));
@@ -5909,6 +5995,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerBuilderSettings.CliSettings"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("builder")]
         public static IReadOnlyCollection<Output> DockerBuilder(Configure<DockerBuilderSettings> configurator)
         {
             return DockerBuilder(configurator(new DockerBuilderSettings()));
@@ -5956,6 +6043,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;containers&gt;</c> via <see cref="DockerContainerPauseSettings.Containers"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container pause")]
         public static IReadOnlyCollection<Output> DockerContainerPause(Configure<DockerContainerPauseSettings> configurator)
         {
             return DockerContainerPause(configurator(new DockerContainerPauseSettings()));
@@ -6014,6 +6102,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--pause</c> via <see cref="DockerContainerCommitSettings.Pause"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container commit")]
         public static IReadOnlyCollection<Output> DockerContainerCommit(Configure<DockerContainerCommitSettings> configurator)
         {
             return DockerContainerCommit(configurator(new DockerContainerCommitSettings()));
@@ -6069,6 +6158,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--quiet</c> via <see cref="DockerContextLsSettings.Quiet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("context ls")]
         public static IReadOnlyCollection<Output> DockerContextLs(Configure<DockerContextLsSettings> configurator)
         {
             return DockerContextLs(configurator(new DockerContextLsSettings()));
@@ -6118,6 +6208,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;contexts&gt;</c> via <see cref="DockerContextRmSettings.Contexts"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("context rm")]
         public static IReadOnlyCollection<Output> DockerContextRm(Configure<DockerContextRmSettings> configurator)
         {
             return DockerContextRm(configurator(new DockerContextRmSettings()));
@@ -6178,6 +6269,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--quiet</c> via <see cref="DockerStackPsSettings.Quiet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("stack ps")]
         public static IReadOnlyCollection<Output> DockerStackPs(Configure<DockerStackPsSettings> configurator)
         {
             return DockerStackPs(configurator(new DockerStackPsSettings()));
@@ -6432,6 +6524,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--workdir</c> via <see cref="DockerContainerCreateSettings.Workdir"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container create")]
         public static IReadOnlyCollection<Output> DockerContainerCreate(Configure<DockerContainerCreateSettings> configurator)
         {
             return DockerContainerCreate(configurator(new DockerContainerCreateSettings()));
@@ -6588,6 +6681,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--opt</c> via <see cref="DockerVolumeCreateSettings.Opt"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("volume create")]
         public static IReadOnlyCollection<Output> DockerVolumeCreate(Configure<DockerVolumeCreateSettings> configurator)
         {
             return DockerVolumeCreate(configurator(new DockerVolumeCreateSettings()));
@@ -6638,6 +6732,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerPluginSettings.CliSettings"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("plugin")]
         public static IReadOnlyCollection<Output> DockerPlugin(Configure<DockerPluginSettings> configurator)
         {
             return DockerPlugin(configurator(new DockerPluginSettings()));
@@ -6689,6 +6784,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--username</c> via <see cref="DockerLoginSettings.Username"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("login")]
         public static IReadOnlyCollection<Output> DockerLogin(Configure<DockerLoginSettings> configurator)
         {
             return DockerLogin(configurator(new DockerLoginSettings()));
@@ -6741,6 +6837,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--rotate</c> via <see cref="DockerSwarmUnlockKeySettings.Rotate"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("swarm unlock-key")]
         public static IReadOnlyCollection<Output> DockerSwarmUnlockKey(Configure<DockerSwarmUnlockKeySettings> configurator)
         {
             return DockerSwarmUnlockKey(configurator(new DockerSwarmUnlockKeySettings()));
@@ -6800,6 +6897,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--interactive</c> via <see cref="DockerStartSettings.Interactive"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("start")]
         public static IReadOnlyCollection<Output> DockerStart(Configure<DockerStartSettings> configurator)
         {
             return DockerStart(configurator(new DockerStartSettings()));
@@ -6881,6 +6979,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--task-history-limit</c> via <see cref="DockerSwarmInitSettings.TaskHistoryLimit"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("swarm init")]
         public static IReadOnlyCollection<Output> DockerSwarmInit(Configure<DockerSwarmInitSettings> configurator)
         {
             return DockerSwarmInit(configurator(new DockerSwarmInitSettings()));
@@ -6943,6 +7042,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;container&gt;</c> via <see cref="DockerContainerDiffSettings.Container"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container diff")]
         public static IReadOnlyCollection<Output> DockerContainerDiff(Configure<DockerContainerDiffSettings> configurator)
         {
             return DockerContainerDiff(configurator(new DockerContainerDiffSettings()));
@@ -6993,6 +7093,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--time</c> via <see cref="DockerContainerRestartSettings.Time"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container restart")]
         public static IReadOnlyCollection<Output> DockerContainerRestart(Configure<DockerContainerRestartSettings> configurator)
         {
             return DockerContainerRestart(configurator(new DockerContainerRestartSettings()));
@@ -7040,6 +7141,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerConfigSettings.CliSettings"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("config")]
         public static IReadOnlyCollection<Output> DockerConfig(Configure<DockerConfigSettings> configurator)
         {
             return DockerConfig(configurator(new DockerConfigSettings()));
@@ -7089,6 +7191,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--force</c> via <see cref="DockerPluginDisableSettings.Force"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("plugin disable")]
         public static IReadOnlyCollection<Output> DockerPluginDisable(Configure<DockerPluginDisableSettings> configurator)
         {
             return DockerPluginDisable(configurator(new DockerPluginDisableSettings()));
@@ -7138,6 +7241,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;containers&gt;</c> via <see cref="DockerContainerUnpauseSettings.Containers"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container unpause")]
         public static IReadOnlyCollection<Output> DockerContainerUnpause(Configure<DockerContainerUnpauseSettings> configurator)
         {
             return DockerContainerUnpause(configurator(new DockerContainerUnpauseSettings()));
@@ -7188,6 +7292,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;file&gt;</c> via <see cref="DockerContextImportSettings.File"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("context import")]
         public static IReadOnlyCollection<Output> DockerContextImport(Configure<DockerContextImportSettings> configurator)
         {
             return DockerContextImport(configurator(new DockerContextImportSettings()));
@@ -7243,6 +7348,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--volumes</c> via <see cref="DockerRmSettings.Volumes"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("rm")]
         public static IReadOnlyCollection<Output> DockerRm(Configure<DockerRmSettings> configurator)
         {
             return DockerRm(configurator(new DockerRmSettings()));
@@ -7306,6 +7412,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--with-registry-auth</c> via <see cref="DockerDeploySettings.WithRegistryAuth"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("deploy")]
         public static IReadOnlyCollection<Output> DockerDeploy(Configure<DockerDeploySettings> configurator)
         {
             return DockerDeploy(configurator(new DockerDeploySettings()));
@@ -7362,6 +7469,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--force</c> via <see cref="DockerNodeRmSettings.Force"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("node rm")]
         public static IReadOnlyCollection<Output> DockerNodeRm(Configure<DockerNodeRmSettings> configurator)
         {
             return DockerNodeRm(configurator(new DockerNodeRmSettings()));
@@ -7415,6 +7523,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--checkpoint-dir</c> via <see cref="DockerCheckpointRmSettings.CheckpointDir"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("checkpoint rm")]
         public static IReadOnlyCollection<Output> DockerCheckpointRm(Configure<DockerCheckpointRmSettings> configurator)
         {
             return DockerCheckpointRm(configurator(new DockerCheckpointRmSettings()));
@@ -7467,6 +7576,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--disable-content-trust</c> via <see cref="DockerPushSettings.DisableContentTrust"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("push")]
         public static IReadOnlyCollection<Output> DockerPush(Configure<DockerPushSettings> configurator)
         {
             return DockerPush(configurator(new DockerPushSettings()));
@@ -7548,6 +7658,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--subnet</c> via <see cref="DockerNetworkCreateSettings.Subnet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("network create")]
         public static IReadOnlyCollection<Output> DockerNetworkCreate(Configure<DockerNetworkCreateSettings> configurator)
         {
             return DockerNetworkCreate(configurator(new DockerNetworkCreateSettings()));
@@ -7616,6 +7727,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--quiet</c> via <see cref="DockerVolumeLsSettings.Quiet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("volume ls")]
         public static IReadOnlyCollection<Output> DockerVolumeLs(Configure<DockerVolumeLsSettings> configurator)
         {
             return DockerVolumeLs(configurator(new DockerVolumeLsSettings()));
@@ -7666,6 +7778,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;images&gt;</c> via <see cref="DockerTrustInspectSettings.Images"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("trust inspect")]
         public static IReadOnlyCollection<Output> DockerTrustInspect(Configure<DockerTrustInspectSettings> configurator)
         {
             return DockerTrustInspect(configurator(new DockerTrustInspectSettings()));
@@ -7718,6 +7831,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--verbose</c> via <see cref="DockerNetworkInspectSettings.Verbose"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("network inspect")]
         public static IReadOnlyCollection<Output> DockerNetworkInspect(Configure<DockerNetworkInspectSettings> configurator)
         {
             return DockerNetworkInspect(configurator(new DockerNetworkInspectSettings()));
@@ -7782,6 +7896,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--version</c> via <see cref="DockerEngineActivateSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("engine activate")]
         public static IReadOnlyCollection<Output> DockerEngineActivate(Configure<DockerEngineActivateSettings> configurator)
         {
             return DockerEngineActivate(configurator(new DockerEngineActivateSettings()));
@@ -7837,6 +7952,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;context&gt;</c> via <see cref="DockerContextUseSettings.Context"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("context use")]
         public static IReadOnlyCollection<Output> DockerContextUse(Configure<DockerContextUseSettings> configurator)
         {
             return DockerContextUse(configurator(new DockerContextUseSettings()));
@@ -7887,6 +8003,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--force</c> via <see cref="DockerVolumeRmSettings.Force"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("volume rm")]
         public static IReadOnlyCollection<Output> DockerVolumeRm(Configure<DockerVolumeRmSettings> configurator)
         {
             return DockerVolumeRm(configurator(new DockerVolumeRmSettings()));
@@ -7938,6 +8055,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;manifests&gt;</c> via <see cref="DockerManifestCreateSettings.Manifests"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("manifest create")]
         public static IReadOnlyCollection<Output> DockerManifestCreate(Configure<DockerManifestCreateSettings> configurator)
         {
             return DockerManifestCreate(configurator(new DockerManifestCreateSettings()));
@@ -7991,6 +8109,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--purge</c> via <see cref="DockerManifestPushSettings.Purge"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("manifest push")]
         public static IReadOnlyCollection<Output> DockerManifestPush(Configure<DockerManifestPushSettings> configurator)
         {
             return DockerManifestPush(configurator(new DockerManifestPushSettings()));
@@ -8043,6 +8162,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--timeout</c> via <see cref="DockerPluginEnableSettings.Timeout"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("plugin enable")]
         public static IReadOnlyCollection<Output> DockerPluginEnable(Configure<DockerPluginEnableSettings> configurator)
         {
             return DockerPluginEnable(configurator(new DockerPluginEnableSettings()));
@@ -8100,6 +8220,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--platform</c> via <see cref="DockerImportSettings.Platform"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("import")]
         public static IReadOnlyCollection<Output> DockerImport(Configure<DockerImportSettings> configurator)
         {
             return DockerImport(configurator(new DockerImportSettings()));
@@ -8358,6 +8479,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--workdir</c> via <see cref="DockerContainerRunSettings.Workdir"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container run")]
         public static IReadOnlyCollection<Output> DockerContainerRun(Configure<DockerContainerRunSettings> configurator)
         {
             return DockerContainerRun(configurator(new DockerContainerRunSettings()));
@@ -8513,6 +8635,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--pretty</c> via <see cref="DockerNodeInspectSettings.Pretty"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("node inspect")]
         public static IReadOnlyCollection<Output> DockerNodeInspect(Configure<DockerNodeInspectSettings> configurator)
         {
             return DockerNodeInspect(configurator(new DockerNodeInspectSettings()));
@@ -8565,6 +8688,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--output</c> via <see cref="DockerSaveSettings.Output"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("save")]
         public static IReadOnlyCollection<Output> DockerSave(Configure<DockerSaveSettings> configurator)
         {
             return DockerSave(configurator(new DockerSaveSettings()));
@@ -8622,6 +8746,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--no-trunc</c> via <see cref="DockerContainerStatsSettings.NoTrunc"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container stats")]
         public static IReadOnlyCollection<Output> DockerContainerStats(Configure<DockerContainerStatsSettings> configurator)
         {
             return DockerContainerStats(configurator(new DockerContainerStatsSettings()));
@@ -8694,6 +8819,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--workdir</c> via <see cref="DockerContainerExecSettings.Workdir"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container exec")]
         public static IReadOnlyCollection<Output> DockerContainerExec(Configure<DockerContainerExecSettings> configurator)
         {
             return DockerContainerExec(configurator(new DockerContainerExecSettings()));
@@ -8756,6 +8882,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--quiet</c> via <see cref="DockerNodeLsSettings.Quiet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("node ls")]
         public static IReadOnlyCollection<Output> DockerNodeLs(Configure<DockerNodeLsSettings> configurator)
         {
             return DockerNodeLs(configurator(new DockerNodeLsSettings()));
@@ -8814,6 +8941,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--token</c> via <see cref="DockerSwarmJoinSettings.Token"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("swarm join HOST:PORT")]
         public static IReadOnlyCollection<Output> DockerSwarmJoin(Configure<DockerSwarmJoinSettings> configurator)
         {
             return DockerSwarmJoin(configurator(new DockerSwarmJoinSettings()));
@@ -8878,6 +9006,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--until</c> via <see cref="DockerContainerLogsSettings.Until"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container logs")]
         public static IReadOnlyCollection<Output> DockerContainerLogs(Configure<DockerContainerLogsSettings> configurator)
         {
             return DockerContainerLogs(configurator(new DockerContainerLogsSettings()));
@@ -8934,6 +9063,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--checkpoint-dir</c> via <see cref="DockerCheckpointLsSettings.CheckpointDir"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("checkpoint ls")]
         public static IReadOnlyCollection<Output> DockerCheckpointLs(Configure<DockerCheckpointLsSettings> configurator)
         {
             return DockerCheckpointLs(configurator(new DockerCheckpointLsSettings()));
@@ -8985,6 +9115,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--signal</c> via <see cref="DockerContainerKillSettings.Signal"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container kill")]
         public static IReadOnlyCollection<Output> DockerContainerKill(Configure<DockerContainerKillSettings> configurator)
         {
             return DockerContainerKill(configurator(new DockerContainerKillSettings()));
@@ -9044,6 +9175,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--grant-all-permissions</c> via <see cref="DockerPluginInstallSettings.GrantAllPermissions"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("plugin install")]
         public static IReadOnlyCollection<Output> DockerPluginInstall(Configure<DockerPluginInstallSettings> configurator)
         {
             return DockerPluginInstall(configurator(new DockerPluginInstallSettings()));
@@ -9101,6 +9233,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--force</c> via <see cref="DockerImagePruneSettings.Force"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("image prune")]
         public static IReadOnlyCollection<Output> DockerImagePrune(Configure<DockerImagePruneSettings> configurator)
         {
             return DockerImagePrune(configurator(new DockerImagePruneSettings()));
@@ -9159,6 +9292,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--platform</c> via <see cref="DockerImageImportSettings.Platform"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("image import")]
         public static IReadOnlyCollection<Output> DockerImageImport(Configure<DockerImageImportSettings> configurator)
         {
             return DockerImageImport(configurator(new DockerImageImportSettings()));
@@ -9211,6 +9345,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;container&gt;</c> via <see cref="DockerDiffSettings.Container"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("diff")]
         public static IReadOnlyCollection<Output> DockerDiff(Configure<DockerDiffSettings> configurator)
         {
             return DockerDiff(configurator(new DockerDiffSettings()));
@@ -9259,6 +9394,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;containers&gt;</c> via <see cref="DockerUnpauseSettings.Containers"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("unpause")]
         public static IReadOnlyCollection<Output> DockerUnpause(Configure<DockerUnpauseSettings> configurator)
         {
             return DockerUnpause(configurator(new DockerUnpauseSettings()));
@@ -9321,6 +9457,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--size</c> via <see cref="DockerContainerLsSettings.Size"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container ls")]
         public static IReadOnlyCollection<Output> DockerContainerLs(Configure<DockerContainerLsSettings> configurator)
         {
             return DockerContainerLs(configurator(new DockerContainerLsSettings()));
@@ -9386,6 +9523,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--quiet</c> via <see cref="DockerNodePsSettings.Quiet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("node ps")]
         public static IReadOnlyCollection<Output> DockerNodePs(Configure<DockerNodePsSettings> configurator)
         {
             return DockerNodePs(configurator(new DockerNodePsSettings()));
@@ -9441,6 +9579,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;options&gt;</c> via <see cref="DockerContainerTopSettings.Options"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container top [ps")]
         public static IReadOnlyCollection<Output> DockerContainerTop(Configure<DockerContainerTopSettings> configurator)
         {
             return DockerContainerTop(configurator(new DockerContainerTopSettings()));
@@ -9492,6 +9631,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;newName&gt;</c> via <see cref="DockerContainerRenameSettings.NewName"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container rename")]
         public static IReadOnlyCollection<Output> DockerContainerRename(Configure<DockerContainerRenameSettings> configurator)
         {
             return DockerContainerRename(configurator(new DockerContainerRenameSettings()));
@@ -9549,6 +9689,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--quiet</c> via <see cref="DockerImageHistorySettings.Quiet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("image history")]
         public static IReadOnlyCollection<Output> DockerImageHistory(Configure<DockerImageHistorySettings> configurator)
         {
             return DockerImageHistory(configurator(new DockerImageHistorySettings()));
@@ -9615,6 +9756,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--size</c> via <see cref="DockerPsSettings.Size"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("ps")]
         public static IReadOnlyCollection<Output> DockerPs(Configure<DockerPsSettings> configurator)
         {
             return DockerPs(configurator(new DockerPsSettings()));
@@ -9672,6 +9814,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;targetImage&gt;</c> via <see cref="DockerImageTagSettings.TargetImage"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("image tag")]
         public static IReadOnlyCollection<Output> DockerImageTag(Configure<DockerImageTagSettings> configurator)
         {
             return DockerImageTag(configurator(new DockerImageTagSettings()));
@@ -9723,6 +9866,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--output</c> via <see cref="DockerExportSettings.Output"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("export")]
         public static IReadOnlyCollection<Output> DockerExport(Configure<DockerExportSettings> configurator)
         {
             return DockerExport(configurator(new DockerExportSettings()));
@@ -9776,6 +9920,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--force</c> via <see cref="DockerNetworkDisconnectSettings.Force"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("network disconnect")]
         public static IReadOnlyCollection<Output> DockerNetworkDisconnect(Configure<DockerNetworkDisconnectSettings> configurator)
         {
             return DockerNetworkDisconnect(configurator(new DockerNetworkDisconnectSettings()));
@@ -9896,6 +10041,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--ulimit</c> via <see cref="DockerBuilderBuildSettings.Ulimit"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("builder build")]
         public static IReadOnlyCollection<Output> DockerBuilderBuild(Configure<DockerBuilderBuildSettings> configurator)
         {
             return DockerBuilderBuild(configurator(new DockerBuilderBuildSettings()));
@@ -9987,6 +10133,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--no-trunc</c> via <see cref="DockerStatsSettings.NoTrunc"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("stats")]
         public static IReadOnlyCollection<Output> DockerStats(Configure<DockerStatsSettings> configurator)
         {
             return DockerStats(configurator(new DockerStatsSettings()));
@@ -10051,6 +10198,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--stars</c> via <see cref="DockerSearchSettings.Stars"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("search")]
         public static IReadOnlyCollection<Output> DockerSearch(Configure<DockerSearchSettings> configurator)
         {
             return DockerSearch(configurator(new DockerSearchSettings()));
@@ -10105,6 +10253,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;command&gt;</c> via <see cref="DockerManifestSettings.Command"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("manifest")]
         public static IReadOnlyCollection<Output> DockerManifest(Configure<DockerManifestSettings> configurator)
         {
             return DockerManifest(configurator(new DockerManifestSettings()));
@@ -10155,6 +10304,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--disable-content-trust</c> via <see cref="DockerPluginPushSettings.DisableContentTrust"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("plugin push")]
         public static IReadOnlyCollection<Output> DockerPluginPush(Configure<DockerPluginPushSettings> configurator)
         {
             return DockerPluginPush(configurator(new DockerPluginPushSettings()));
@@ -10206,6 +10356,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--quiet</c> via <see cref="DockerImageLoadSettings.Quiet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("image load")]
         public static IReadOnlyCollection<Output> DockerImageLoad(Configure<DockerImageLoadSettings> configurator)
         {
             return DockerImageLoad(configurator(new DockerImageLoadSettings()));
@@ -10253,6 +10404,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerSwarmSettings.CliSettings"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("swarm")]
         public static IReadOnlyCollection<Output> DockerSwarm(Configure<DockerSwarmSettings> configurator)
         {
             return DockerSwarm(configurator(new DockerSwarmSettings()));
@@ -10306,6 +10458,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--volumes</c> via <see cref="DockerContainerRmSettings.Volumes"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container rm")]
         public static IReadOnlyCollection<Output> DockerContainerRm(Configure<DockerContainerRmSettings> configurator)
         {
             return DockerContainerRm(configurator(new DockerContainerRmSettings()));
@@ -10387,6 +10540,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--restart</c> via <see cref="DockerContainerUpdateSettings.Restart"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container update")]
         public static IReadOnlyCollection<Output> DockerContainerUpdate(Configure<DockerContainerUpdateSettings> configurator)
         {
             return DockerContainerUpdate(configurator(new DockerContainerUpdateSettings()));
@@ -10452,6 +10606,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;plugin&gt;</c> via <see cref="DockerPluginSetSettings.Plugin"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("plugin set")]
         public static IReadOnlyCollection<Output> DockerPluginSet(Configure<DockerPluginSetSettings> configurator)
         {
             return DockerPluginSet(configurator(new DockerPluginSetSettings()));
@@ -10501,6 +10656,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;containers&gt;</c> via <see cref="DockerWaitSettings.Containers"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("wait")]
         public static IReadOnlyCollection<Output> DockerWait(Configure<DockerWaitSettings> configurator)
         {
             return DockerWait(configurator(new DockerWaitSettings()));
@@ -10553,6 +10709,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--kubeconfig</c> via <see cref="DockerContextExportSettings.Kubeconfig"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("context export")]
         public static IReadOnlyCollection<Output> DockerContextExport(Configure<DockerContextExportSettings> configurator)
         {
             return DockerContextExport(configurator(new DockerContextExportSettings()));
@@ -10613,6 +10770,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--variant</c> via <see cref="DockerManifestAnnotateSettings.Variant"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("manifest annotate")]
         public static IReadOnlyCollection<Output> DockerManifestAnnotate(Configure<DockerManifestAnnotateSettings> configurator)
         {
             return DockerManifestAnnotate(configurator(new DockerManifestAnnotateSettings()));
@@ -10674,6 +10832,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--quiet</c> via <see cref="DockerImagePullSettings.Quiet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("image pull")]
         public static IReadOnlyCollection<Output> DockerImagePull(Configure<DockerImagePullSettings> configurator)
         {
             return DockerImagePull(configurator(new DockerImagePullSettings()));
@@ -10732,6 +10891,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--until</c> via <see cref="DockerEventsSettings.Until"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("events")]
         public static IReadOnlyCollection<Output> DockerEvents(Configure<DockerEventsSettings> configurator)
         {
             return DockerEvents(configurator(new DockerEventsSettings()));
@@ -10787,6 +10947,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--namespace</c> via <see cref="DockerStackLsSettings.Namespace"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("stack ls")]
         public static IReadOnlyCollection<Output> DockerStackLs(Configure<DockerStackLsSettings> configurator)
         {
             return DockerStackLs(configurator(new DockerStackLsSettings()));
@@ -10841,6 +11002,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--size</c> via <see cref="DockerContainerInspectSettings.Size"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container inspect")]
         public static IReadOnlyCollection<Output> DockerContainerInspect(Configure<DockerContainerInspectSettings> configurator)
         {
             return DockerContainerInspect(configurator(new DockerContainerInspectSettings()));
@@ -10893,6 +11055,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--signal</c> via <see cref="DockerKillSettings.Signal"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("kill")]
         public static IReadOnlyCollection<Output> DockerKill(Configure<DockerKillSettings> configurator)
         {
             return DockerKill(configurator(new DockerKillSettings()));
@@ -10948,6 +11111,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--leave-running</c> via <see cref="DockerCheckpointCreateSettings.LeaveRunning"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("checkpoint create")]
         public static IReadOnlyCollection<Output> DockerCheckpointCreate(Configure<DockerCheckpointCreateSettings> configurator)
         {
             return DockerCheckpointCreate(configurator(new DockerCheckpointCreateSettings()));
@@ -10999,6 +11163,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;containers&gt;</c> via <see cref="DockerPauseSettings.Containers"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("pause")]
         public static IReadOnlyCollection<Output> DockerPause(Configure<DockerPauseSettings> configurator)
         {
             return DockerPause(configurator(new DockerPauseSettings()));
@@ -11059,6 +11224,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--until</c> via <see cref="DockerLogsSettings.Until"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("logs")]
         public static IReadOnlyCollection<Output> DockerLogs(Configure<DockerLogsSettings> configurator)
         {
             return DockerLogs(configurator(new DockerLogsSettings()));
@@ -11117,6 +11283,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--format</c> via <see cref="DockerContextInspectSettings.Format"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("context inspect")]
         public static IReadOnlyCollection<Output> DockerContextInspect(Configure<DockerContextInspectSettings> configurator)
         {
             return DockerContextInspect(configurator(new DockerContextInspectSettings()));
@@ -11167,6 +11334,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;nodes&gt;</c> via <see cref="DockerNodePromoteSettings.Nodes"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("node promote")]
         public static IReadOnlyCollection<Output> DockerNodePromote(Configure<DockerNodePromoteSettings> configurator)
         {
             return DockerNodePromote(configurator(new DockerNodePromoteSettings()));
@@ -11215,6 +11383,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;nodes&gt;</c> via <see cref="DockerNodeDemoteSettings.Nodes"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("node demote")]
         public static IReadOnlyCollection<Output> DockerNodeDemote(Configure<DockerNodeDemoteSettings> configurator)
         {
             return DockerNodeDemote(configurator(new DockerNodeDemoteSettings()));
@@ -11283,6 +11452,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--workdir</c> via <see cref="DockerExecSettings.Workdir"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("exec")]
         public static IReadOnlyCollection<Output> DockerExec(Configure<DockerExecSettings> configurator)
         {
             return DockerExec(configurator(new DockerExecSettings()));
@@ -11345,6 +11515,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--no-prune</c> via <see cref="DockerImageRmSettings.NoPrune"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("image rm")]
         public static IReadOnlyCollection<Output> DockerImageRm(Configure<DockerImageRmSettings> configurator)
         {
             return DockerImageRm(configurator(new DockerImageRmSettings()));
@@ -11393,6 +11564,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerImageSettings.CliSettings"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("image")]
         public static IReadOnlyCollection<Output> DockerImage(Configure<DockerImageSettings> configurator)
         {
             return DockerImage(configurator(new DockerImageSettings()));
@@ -11438,6 +11610,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerContextSettings.CliSettings"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("context")]
         public static IReadOnlyCollection<Output> DockerContext(Configure<DockerContextSettings> configurator)
         {
             return DockerContext(configurator(new DockerContextSettings()));
@@ -11485,6 +11658,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;command&gt;</c> via <see cref="DockerVolumeSettings.Command"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("volume")]
         public static IReadOnlyCollection<Output> DockerVolume(Configure<DockerVolumeSettings> configurator)
         {
             return DockerVolume(configurator(new DockerVolumeSettings()));
@@ -11543,6 +11717,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--interactive</c> via <see cref="DockerContainerStartSettings.Interactive"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("container start")]
         public static IReadOnlyCollection<Output> DockerContainerStart(Configure<DockerContainerStartSettings> configurator)
         {
             return DockerContainerStart(configurator(new DockerContainerStartSettings()));
@@ -11598,6 +11773,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--format</c> via <see cref="DockerPluginInspectSettings.Format"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("plugin inspect")]
         public static IReadOnlyCollection<Output> DockerPluginInspect(Configure<DockerPluginInspectSettings> configurator)
         {
             return DockerPluginInspect(configurator(new DockerPluginInspectSettings()));
@@ -11647,6 +11823,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;server&gt;</c> via <see cref="DockerLogoutSettings.Server"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("logout")]
         public static IReadOnlyCollection<Output> DockerLogout(Configure<DockerLogoutSettings> configurator)
         {
             return DockerLogout(configurator(new DockerLogoutSettings()));
@@ -11693,6 +11870,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerNetworkSettings.CliSettings"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("network")]
         public static IReadOnlyCollection<Output> DockerNetwork(Configure<DockerNetworkSettings> configurator)
         {
             return DockerNetwork(configurator(new DockerNetworkSettings()));
@@ -11752,6 +11930,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--quiet</c> via <see cref="DockerImageLsSettings.Quiet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("image ls")]
         public static IReadOnlyCollection<Output> DockerImageLs(Configure<DockerImageLsSettings> configurator)
         {
             return DockerImageLs(configurator(new DockerImageLsSettings()));
@@ -11808,6 +11987,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--verbose</c> via <see cref="DockerSystemDfSettings.Verbose"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("system df")]
         public static IReadOnlyCollection<Output> DockerSystemDf(Configure<DockerSystemDfSettings> configurator)
         {
             return DockerSystemDf(configurator(new DockerSystemDfSettings()));
@@ -11861,6 +12041,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--quiet</c> via <see cref="DockerServiceRollbackSettings.Quiet"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("service rollback")]
         public static IReadOnlyCollection<Output> DockerServiceRollback(Configure<DockerServiceRollbackSettings> configurator)
         {
             return DockerServiceRollback(configurator(new DockerServiceRollbackSettings()));
@@ -11913,6 +12094,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--time</c> via <see cref="DockerRestartSettings.Time"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("restart")]
         public static IReadOnlyCollection<Output> DockerRestart(Configure<DockerRestartSettings> configurator)
         {
             return DockerRestart(configurator(new DockerRestartSettings()));
@@ -11966,6 +12148,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--force</c> via <see cref="DockerTrustSignerRemoveSettings.Force"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("trust signer remove")]
         public static IReadOnlyCollection<Output> DockerTrustSignerRemove(Configure<DockerTrustSignerRemoveSettings> configurator)
         {
             return DockerTrustSignerRemove(configurator(new DockerTrustSignerRemoveSettings()));
@@ -12018,6 +12201,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--namespace</c> via <see cref="DockerStackRmSettings.Namespace"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("stack rm")]
         public static IReadOnlyCollection<Output> DockerStackRm(Configure<DockerStackRmSettings> configurator)
         {
             return DockerStackRm(configurator(new DockerStackRmSettings()));
@@ -12137,6 +12321,7 @@ namespace Nuke.Common.Tools.Docker
         ///     <li><c>--ulimit</c> via <see cref="DockerBuildSettings.Ulimit"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("build")]
         public static IReadOnlyCollection<Output> DockerBuild(Configure<DockerBuildSettings> configurator)
         {
             return DockerBuild(configurator(new DockerBuildSettings()));
@@ -12209,6 +12394,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   CONFIG
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Configs => ConfigsInternal.AsReadOnly();
         internal List<string> ConfigsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -12238,10 +12425,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Read from tar archive file, instead of STDIN.
         /// </summary>
+        [ArgumentFormat("--input {value}")]
         public virtual string Input { get; internal set; }
         /// <summary>
         ///   Suppress the load output.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -12271,10 +12460,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Provide filter values (e.g. 'until=&lt;timestamp&gt;').
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Do not prompt for confirmation.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -12327,10 +12518,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Kubernetes config file.
         /// </summary>
+        [ArgumentFormat("--kubeconfig {value}")]
         public virtual string Kubeconfig { get; internal set; }
         /// <summary>
         ///   Orchestrator to use (swarm|kubernetes|all).
         /// </summary>
+        [ArgumentFormat("--orchestrator {value}")]
         public virtual string Orchestrator { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -12360,10 +12553,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         /// <summary>
         ///   OPTIONS]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Options { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -12393,22 +12588,27 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Download all tagged images in the repository.
         /// </summary>
+        [ArgumentFormat("--all-tags")]
         public virtual bool? AllTags { get; internal set; }
         /// <summary>
         ///   Skip image verification.
         /// </summary>
+        [ArgumentFormat("--disable-content-trust")]
         public virtual bool? DisableContentTrust { get; internal set; }
         /// <summary>
         ///   Set platform if server is multi-platform capable.
         /// </summary>
+        [ArgumentFormat("--platform {value}")]
         public virtual string Platform { get; internal set; }
         /// <summary>
         ///   Suppress verbose output.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   NAME[:TAG|@DIGEST]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Name { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -12510,14 +12710,18 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Print the information in a human friendly format.
         /// </summary>
+        [ArgumentFormat("--pretty")]
         public virtual bool? Pretty { get; internal set; }
         /// <summary>
         ///   CONFIG
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Configs => ConfigsInternal.AsReadOnly();
         internal List<string> ConfigsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -12572,6 +12776,7 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   NAME
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Name { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -12623,14 +12828,17 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Pretty-print configs using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Only display IDs.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -12661,22 +12869,27 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Default orchestrator for stack operations to use with this context (swarm|kubernetes|all).
         /// </summary>
+        [ArgumentFormat("--default-stack-orchestrator {value}")]
         public virtual string DefaultStackOrchestrator { get; internal set; }
         /// <summary>
         ///   Description of the context.
         /// </summary>
+        [ArgumentFormat("--description {value}")]
         public virtual string Description { get; internal set; }
         /// <summary>
         ///   set the docker endpoint.
         /// </summary>
+        [ArgumentFormat("--docker {value}")]
         public virtual string Docker { get; internal set; }
         /// <summary>
         ///   set the kubernetes endpoint.
         /// </summary>
+        [ArgumentFormat("--kubernetes {value}")]
         public virtual string Kubernetes { get; internal set; }
         /// <summary>
         ///   CONTEXT
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Context { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -12709,22 +12922,27 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Pretty-print services using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Kubernetes namespace to use.
         /// </summary>
+        [ArgumentFormat("--namespace {value}")]
         public virtual string Namespace { get; internal set; }
         /// <summary>
         ///   Only display IDs.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   STACK
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Stack { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -12757,10 +12975,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         /// <summary>
         ///   [PRIVATE_PORT[/PROTO]]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string PrivatePort { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -12790,10 +13010,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         /// <summary>
         ///   NEW_NAME
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string NewName { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -12823,10 +13045,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   SOURCE_IMAGE[:TAG]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string SourceImage { get; internal set; }
         /// <summary>
         ///   TARGET_IMAGE[:TAG]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string TargetImage { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -12856,14 +13080,18 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Print the information in a human friendly format.
         /// </summary>
+        [ArgumentFormat("--pretty")]
         public virtual bool? Pretty { get; internal set; }
         /// <summary>
         ///   SECRET
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Secrets => SecretsInternal.AsReadOnly();
         internal List<string> SecretsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -12918,10 +13146,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Write to a file, instead of STDOUT.
         /// </summary>
+        [ArgumentFormat("--output {value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -12951,22 +13181,27 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Pretty-print images using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Print sizes and dates in human readable format.
         /// </summary>
+        [ArgumentFormat("--human")]
         public virtual bool? Human { get; internal set; }
         /// <summary>
         ///   Don't truncate output.
         /// </summary>
+        [ArgumentFormat("--no-trunc")]
         public virtual bool? NoTrunc { get; internal set; }
         /// <summary>
         ///   Only show numeric IDs.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   IMAGE
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Image { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -12999,291 +13234,361 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Specify configurations to expose to the service.
         /// </summary>
+        [ArgumentFormat("--config {value}")]
         public virtual string Config { get; internal set; }
         /// <summary>
         ///   Placement constraints.
         /// </summary>
+        [ArgumentFormat("--constraint {value}")]
         public virtual IReadOnlyList<string> Constraint => ConstraintInternal.AsReadOnly();
         internal List<string> ConstraintInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Container labels.
         /// </summary>
+        [ArgumentFormat("--container-label {value}")]
         public virtual IReadOnlyList<string> ContainerLabel => ContainerLabelInternal.AsReadOnly();
         internal List<string> ContainerLabelInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Credential spec for managed service account (Windows only).
         /// </summary>
+        [ArgumentFormat("--credential-spec {value}")]
         public virtual string CredentialSpec { get; internal set; }
         /// <summary>
         ///   Exit immediately instead of waiting for the service to converge.
         /// </summary>
+        [ArgumentFormat("--detach")]
         public virtual bool? Detach { get; internal set; }
         /// <summary>
         ///   Set custom DNS servers.
         /// </summary>
+        [ArgumentFormat("--dns {value}")]
         public virtual IReadOnlyList<string> Dns => DnsInternal.AsReadOnly();
         internal List<string> DnsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set DNS options.
         /// </summary>
+        [ArgumentFormat("--dns-option {value}")]
         public virtual IReadOnlyList<string> DnsOption => DnsOptionInternal.AsReadOnly();
         internal List<string> DnsOptionInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set custom DNS search domains.
         /// </summary>
+        [ArgumentFormat("--dns-search {value}")]
         public virtual IReadOnlyList<string> DnsSearch => DnsSearchInternal.AsReadOnly();
         internal List<string> DnsSearchInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Endpoint mode (vip or dnsrr).
         /// </summary>
+        [ArgumentFormat("--endpoint-mode {value}")]
         public virtual string EndpointMode { get; internal set; }
         /// <summary>
         ///   Overwrite the default ENTRYPOINT of the image.
         /// </summary>
+        [ArgumentFormat("--entrypoint {value}")]
         public virtual string Entrypoint { get; internal set; }
         /// <summary>
         ///   Set environment variables.
         /// </summary>
+        [ArgumentFormat("--env {value}")]
         public virtual IReadOnlyList<string> Env => EnvInternal.AsReadOnly();
         internal List<string> EnvInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Read in a file of environment variables.
         /// </summary>
+        [ArgumentFormat("--env-file {value}")]
         public virtual IReadOnlyList<string> EnvFile => EnvFileInternal.AsReadOnly();
         internal List<string> EnvFileInternal { get; set; } = new List<string>();
         /// <summary>
         ///   User defined resources.
         /// </summary>
+        [ArgumentFormat("--generic-resource {value}")]
         public virtual IReadOnlyList<string> GenericResource => GenericResourceInternal.AsReadOnly();
         internal List<string> GenericResourceInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set one or more supplementary user groups for the container.
         /// </summary>
+        [ArgumentFormat("--group {value}")]
         public virtual IReadOnlyList<string> Group => GroupInternal.AsReadOnly();
         internal List<string> GroupInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Command to run to check health.
         /// </summary>
+        [ArgumentFormat("--health-cmd {value}")]
         public virtual string HealthCmd { get; internal set; }
         /// <summary>
         ///   Time between running the check (ms|s|m|h).
         /// </summary>
+        [ArgumentFormat("--health-interval {value}")]
         public virtual string HealthInterval { get; internal set; }
         /// <summary>
         ///   Consecutive failures needed to report unhealthy.
         /// </summary>
+        [ArgumentFormat("--health-retries {value}")]
         public virtual int? HealthRetries { get; internal set; }
         /// <summary>
         ///   Start period for the container to initialize before counting retries towards unstable (ms|s|m|h).
         /// </summary>
+        [ArgumentFormat("--health-start-period {value}")]
         public virtual string HealthStartPeriod { get; internal set; }
         /// <summary>
         ///   Maximum time to allow one check to run (ms|s|m|h).
         /// </summary>
+        [ArgumentFormat("--health-timeout {value}")]
         public virtual string HealthTimeout { get; internal set; }
         /// <summary>
         ///   Set one or more custom host-to-IP mappings (host:ip).
         /// </summary>
+        [ArgumentFormat("--host {value}")]
         public virtual IReadOnlyList<string> Host => HostInternal.AsReadOnly();
         internal List<string> HostInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Container hostname.
         /// </summary>
+        [ArgumentFormat("--hostname {value}")]
         public virtual string Hostname { get; internal set; }
         /// <summary>
         ///   Use an init inside each service container to forward signals and reap processes.
         /// </summary>
+        [ArgumentFormat("--init")]
         public virtual bool? Init { get; internal set; }
         /// <summary>
         ///   Service container isolation mode.
         /// </summary>
+        [ArgumentFormat("--isolation {value}")]
         public virtual string Isolation { get; internal set; }
         /// <summary>
         ///   Service labels.
         /// </summary>
+        [ArgumentFormat("--label {value}")]
         public virtual IReadOnlyList<string> Label => LabelInternal.AsReadOnly();
         internal List<string> LabelInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Limit CPUs.
         /// </summary>
+        [ArgumentFormat("--limit-cpu {value}")]
         public virtual decimal? LimitCpu { get; internal set; }
         /// <summary>
         ///   Limit Memory.
         /// </summary>
+        [ArgumentFormat("--limit-memory {value}")]
         public virtual long? LimitMemory { get; internal set; }
         /// <summary>
         ///   Logging driver for service.
         /// </summary>
+        [ArgumentFormat("--log-driver {value}")]
         public virtual string LogDriver { get; internal set; }
         /// <summary>
         ///   Logging driver options.
         /// </summary>
+        [ArgumentFormat("--log-opt {value}")]
         public virtual IReadOnlyList<string> LogOpt => LogOptInternal.AsReadOnly();
         internal List<string> LogOptInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Service mode (replicated or global).
         /// </summary>
+        [ArgumentFormat("--mode {value}")]
         public virtual string Mode { get; internal set; }
         /// <summary>
         ///   Attach a filesystem mount to the service.
         /// </summary>
+        [ArgumentFormat("--mount {value}")]
         public virtual string Mount { get; internal set; }
         /// <summary>
         ///   Service name.
         /// </summary>
+        [ArgumentFormat("--name {value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   Network attachments.
         /// </summary>
+        [ArgumentFormat("--network {value}")]
         public virtual string Network { get; internal set; }
         /// <summary>
         ///   Disable any container-specified HEALTHCHECK.
         /// </summary>
+        [ArgumentFormat("--no-healthcheck")]
         public virtual bool? NoHealthcheck { get; internal set; }
         /// <summary>
         ///   Do not query the registry to resolve image digest and supported platforms.
         /// </summary>
+        [ArgumentFormat("--no-resolve-image")]
         public virtual bool? NoResolveImage { get; internal set; }
         /// <summary>
         ///   Add a placement preference.
         /// </summary>
+        [ArgumentFormat("--placement-pref {value}")]
         public virtual string PlacementPref { get; internal set; }
         /// <summary>
         ///   Publish a port as a node port.
         /// </summary>
+        [ArgumentFormat("--publish {value}")]
         public virtual string Publish { get; internal set; }
         /// <summary>
         ///   Suppress progress output.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   Mount the container's root filesystem as read only.
         /// </summary>
+        [ArgumentFormat("--read-only")]
         public virtual bool? ReadOnly { get; internal set; }
         /// <summary>
         ///   Number of tasks.
         /// </summary>
+        [ArgumentFormat("--replicas {value}")]
         public virtual int? Replicas { get; internal set; }
         /// <summary>
         ///   Maximum number of tasks per node (default 0 = unlimited).
         /// </summary>
+        [ArgumentFormat("--replicas-max-per-node {value}")]
         public virtual int? ReplicasMaxPerNode { get; internal set; }
         /// <summary>
         ///   Reserve CPUs.
         /// </summary>
+        [ArgumentFormat("--reserve-cpu {value}")]
         public virtual decimal? ReserveCpu { get; internal set; }
         /// <summary>
         ///   Reserve Memory.
         /// </summary>
+        [ArgumentFormat("--reserve-memory {value}")]
         public virtual long? ReserveMemory { get; internal set; }
         /// <summary>
         ///   Restart when condition is met ("none"|"on-failure"|"any") (default "any").
         /// </summary>
+        [ArgumentFormat("--restart-condition {value}")]
         public virtual RestartCondition RestartCondition { get; internal set; }
         /// <summary>
         ///   Delay between restart attempts (ns|us|ms|s|m|h) (default 5s).
         /// </summary>
+        [ArgumentFormat("--restart-delay {value}")]
         public virtual string RestartDelay { get; internal set; }
         /// <summary>
         ///   Maximum number of restarts before giving up.
         /// </summary>
+        [ArgumentFormat("--restart-max-attempts {value}")]
         public virtual int? RestartMaxAttempts { get; internal set; }
         /// <summary>
         ///   Window used to evaluate the restart policy (ns|us|ms|s|m|h).
         /// </summary>
+        [ArgumentFormat("--restart-window {value}")]
         public virtual string RestartWindow { get; internal set; }
         /// <summary>
         ///   Delay between task rollbacks (ns|us|ms|s|m|h) (default 0s).
         /// </summary>
+        [ArgumentFormat("--rollback-delay {value}")]
         public virtual string RollbackDelay { get; internal set; }
         /// <summary>
         ///   Action on rollback failure ("pause"|"continue") (default "pause").
         /// </summary>
+        [ArgumentFormat("--rollback-failure-action {value}")]
         public virtual RollbackFailureAction RollbackFailureAction { get; internal set; }
         /// <summary>
         ///   Failure rate to tolerate during a rollback (default 0).
         /// </summary>
+        [ArgumentFormat("--rollback-max-failure-ratio {value}")]
         public virtual float? RollbackMaxFailureRatio { get; internal set; }
         /// <summary>
         ///   Duration after each task rollback to monitor for failure (ns|us|ms|s|m|h) (default 5s).
         /// </summary>
+        [ArgumentFormat("--rollback-monitor {value}")]
         public virtual string RollbackMonitor { get; internal set; }
         /// <summary>
         ///   Rollback order ("start-first"|"stop-first") (default "stop-first").
         /// </summary>
+        [ArgumentFormat("--rollback-order {value}")]
         public virtual RollbackOrder RollbackOrder { get; internal set; }
         /// <summary>
         ///   Maximum number of tasks rolled back simultaneously (0 to roll back all at once).
         /// </summary>
+        [ArgumentFormat("--rollback-parallelism {value}")]
         public virtual int? RollbackParallelism { get; internal set; }
         /// <summary>
         ///   Specify secrets to expose to the service.
         /// </summary>
+        [ArgumentFormat("--secret {value}")]
         public virtual string Secret { get; internal set; }
         /// <summary>
         ///   Time to wait before force killing a container (ns|us|ms|s|m|h) (default 10s).
         /// </summary>
+        [ArgumentFormat("--stop-grace-period {value}")]
         public virtual string StopGracePeriod { get; internal set; }
         /// <summary>
         ///   Signal to stop the container.
         /// </summary>
+        [ArgumentFormat("--stop-signal {value}")]
         public virtual string StopSignal { get; internal set; }
         /// <summary>
         ///   Sysctl options.
         /// </summary>
+        [ArgumentFormat("--sysctl {value}")]
         public virtual IReadOnlyList<string> Sysctl => SysctlInternal.AsReadOnly();
         internal List<string> SysctlInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Allocate a pseudo-TTY.
         /// </summary>
+        [ArgumentFormat("--tty")]
         public virtual bool? Tty { get; internal set; }
         /// <summary>
         ///   Delay between updates (ns|us|ms|s|m|h) (default 0s).
         /// </summary>
+        [ArgumentFormat("--update-delay {value}")]
         public virtual string UpdateDelay { get; internal set; }
         /// <summary>
         ///   Action on update failure ("pause"|"continue"|"rollback") (default "pause").
         /// </summary>
+        [ArgumentFormat("--update-failure-action {value}")]
         public virtual UpdateFailureAction UpdateFailureAction { get; internal set; }
         /// <summary>
         ///   Failure rate to tolerate during an update (default 0).
         /// </summary>
+        [ArgumentFormat("--update-max-failure-ratio {value}")]
         public virtual float? UpdateMaxFailureRatio { get; internal set; }
         /// <summary>
         ///   Duration after each task update to monitor for failure (ns|us|ms|s|m|h) (default 5s).
         /// </summary>
+        [ArgumentFormat("--update-monitor {value}")]
         public virtual string UpdateMonitor { get; internal set; }
         /// <summary>
         ///   Update order ("start-first"|"stop-first") (default "stop-first").
         /// </summary>
+        [ArgumentFormat("--update-order {value}")]
         public virtual UpdateOrder UpdateOrder { get; internal set; }
         /// <summary>
         ///   Maximum number of tasks updated simultaneously (0 to update all at once).
         /// </summary>
+        [ArgumentFormat("--update-parallelism {value}")]
         public virtual int? UpdateParallelism { get; internal set; }
         /// <summary>
         ///   Username or UID (format: &lt;name|uid&gt;[:&lt;group|gid&gt;]).
         /// </summary>
+        [ArgumentFormat("--user {value}")]
         public virtual string User { get; internal set; }
         /// <summary>
         ///   Send registry authentication details to swarm agents.
         /// </summary>
+        [ArgumentFormat("--with-registry-auth")]
         public virtual bool? WithRegistryAuth { get; internal set; }
         /// <summary>
         ///   Working directory inside the container.
         /// </summary>
+        [ArgumentFormat("--workdir {value}")]
         public virtual string Workdir { get; internal set; }
         /// <summary>
         ///   IMAGE
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Image { get; internal set; }
         /// <summary>
         ///   [COMMAND]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Command { get; internal set; }
         /// <summary>
         ///   [ARG...]
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Args => ArgsInternal.AsReadOnly();
         internal List<string> ArgsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -13381,26 +13686,33 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Pretty-print tasks using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Do not map IDs to Names.
         /// </summary>
+        [ArgumentFormat("--no-resolve")]
         public virtual bool? NoResolve { get; internal set; }
         /// <summary>
         ///   Do not truncate output.
         /// </summary>
+        [ArgumentFormat("--no-trunc")]
         public virtual bool? NoTrunc { get; internal set; }
         /// <summary>
         ///   Only display task IDs.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   SERVICE
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Services => ServicesInternal.AsReadOnly();
         internal List<string> ServicesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -13435,10 +13747,13 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Seconds to wait for stop before killing it.
         /// </summary>
+        [ArgumentFormat("--time {value}")]
         public virtual int? Time { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -13492,66 +13807,83 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0).
         /// </summary>
+        [ArgumentFormat("--blkio-weight {value}")]
         public virtual int? BlkioWeight { get; internal set; }
         /// <summary>
         ///   Limit CPU CFS (Completely Fair Scheduler) period.
         /// </summary>
+        [ArgumentFormat("--cpu-period {value}")]
         public virtual long? CpuPeriod { get; internal set; }
         /// <summary>
         ///   Limit CPU CFS (Completely Fair Scheduler) quota.
         /// </summary>
+        [ArgumentFormat("--cpu-quota {value}")]
         public virtual long? CpuQuota { get; internal set; }
         /// <summary>
         ///   Limit the CPU real-time period in microseconds.
         /// </summary>
+        [ArgumentFormat("--cpu-rt-period {value}")]
         public virtual long? CpuRtPeriod { get; internal set; }
         /// <summary>
         ///   Limit the CPU real-time runtime in microseconds.
         /// </summary>
+        [ArgumentFormat("--cpu-rt-runtime {value}")]
         public virtual long? CpuRtRuntime { get; internal set; }
         /// <summary>
         ///   CPU shares (relative weight).
         /// </summary>
+        [ArgumentFormat("--cpu-shares {value}")]
         public virtual long? CpuShares { get; internal set; }
         /// <summary>
         ///   Number of CPUs.
         /// </summary>
+        [ArgumentFormat("--cpus {value}")]
         public virtual decimal? Cpus { get; internal set; }
         /// <summary>
         ///   CPUs in which to allow execution (0-3, 0,1).
         /// </summary>
+        [ArgumentFormat("--cpuset-cpus {value}")]
         public virtual string CpusetCpus { get; internal set; }
         /// <summary>
         ///   MEMs in which to allow execution (0-3, 0,1).
         /// </summary>
+        [ArgumentFormat("--cpuset-mems {value}")]
         public virtual string CpusetMems { get; internal set; }
         /// <summary>
         ///   Kernel memory limit.
         /// </summary>
+        [ArgumentFormat("--kernel-memory {value}")]
         public virtual long? KernelMemory { get; internal set; }
         /// <summary>
         ///   Memory limit.
         /// </summary>
+        [ArgumentFormat("--memory {value}")]
         public virtual long? Memory { get; internal set; }
         /// <summary>
         ///   Memory soft limit.
         /// </summary>
+        [ArgumentFormat("--memory-reservation {value}")]
         public virtual long? MemoryReservation { get; internal set; }
         /// <summary>
         ///   Swap limit equal to memory plus swap: '-1' to enable unlimited swap.
         /// </summary>
+        [ArgumentFormat("--memory-swap {value}")]
         public virtual long? MemorySwap { get; internal set; }
         /// <summary>
         ///   Tune container pids limit (set -1 for unlimited).
         /// </summary>
+        [ArgumentFormat("--pids-limit {value}")]
         public virtual long? PidsLimit { get; internal set; }
         /// <summary>
         ///   Restart policy to apply when a container exits.
         /// </summary>
+        [ArgumentFormat("--restart {value}")]
         public virtual string Restart { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -13596,14 +13928,17 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Compress the context using gzip.
         /// </summary>
+        [ArgumentFormat("--compress")]
         public virtual bool? Compress { get; internal set; }
         /// <summary>
         ///   PLUGIN
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Plugin { get; internal set; }
         /// <summary>
         ///   PLUGIN-DATA-DIR
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string PluginDataDir { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -13634,6 +13969,7 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -13662,10 +13998,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Provide filter values (e.g. 'label=&lt;label&gt;').
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Do not prompt for confirmation.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -13695,22 +14033,27 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Skip image verification.
         /// </summary>
+        [ArgumentFormat("--disable-content-trust")]
         public virtual bool? DisableContentTrust { get; internal set; }
         /// <summary>
         ///   Grant all permissions necessary to run the plugin.
         /// </summary>
+        [ArgumentFormat("--grant-all-permissions")]
         public virtual bool? GrantAllPermissions { get; internal set; }
         /// <summary>
         ///   Do not check if specified remote plugin matches existing plugin image.
         /// </summary>
+        [ArgumentFormat("--skip-remote-check")]
         public virtual bool? SkipRemoteCheck { get; internal set; }
         /// <summary>
         ///   PLUGIN
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Plugin { get; internal set; }
         /// <summary>
         ///   [REMOTE]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Remote { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -13766,14 +14109,17 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Only display token.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   Rotate join token.
         /// </summary>
+        [ArgumentFormat("--rotate")]
         public virtual bool? Rotate { get; internal set; }
         /// <summary>
         ///   (worker|manager)
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Worker { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -13804,24 +14150,29 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Availability of the node ("active"|"pause"|"drain").
         /// </summary>
+        [ArgumentFormat("--availability {value}")]
         public virtual Availability Availability { get; internal set; }
         /// <summary>
         ///   Add or update a node label (key=value).
         /// </summary>
+        [ArgumentFormat("--label-add {value}")]
         public virtual IReadOnlyList<string> LabelAdd => LabelAddInternal.AsReadOnly();
         internal List<string> LabelAddInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Remove a node label if exists.
         /// </summary>
+        [ArgumentFormat("--label-rm {value}")]
         public virtual IReadOnlyList<string> LabelRm => LabelRmInternal.AsReadOnly();
         internal List<string> LabelRmInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Role of the node ("worker"|"manager").
         /// </summary>
+        [ArgumentFormat("--role {value}")]
         public virtual Role Role { get; internal set; }
         /// <summary>
         ///   NODE
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Node { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -13854,14 +14205,18 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   OPTIONS
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Options { get; internal set; }
         /// <summary>
         ///   NAME
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   REPOSITORY
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Repositories => RepositoriesInternal.AsReadOnly();
         internal List<string> RepositoriesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -13893,30 +14248,37 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Change manager autolocking setting (true|false).
         /// </summary>
+        [ArgumentFormat("--autolock")]
         public virtual bool? Autolock { get; internal set; }
         /// <summary>
         ///   Validity period for node certificates (ns|us|ms|s|m|h).
         /// </summary>
+        [ArgumentFormat("--cert-expiry {value}")]
         public virtual string CertExpiry { get; internal set; }
         /// <summary>
         ///   Dispatcher heartbeat period (ns|us|ms|s|m|h).
         /// </summary>
+        [ArgumentFormat("--dispatcher-heartbeat {value}")]
         public virtual string DispatcherHeartbeat { get; internal set; }
         /// <summary>
         ///   Specifications of one or more certificate signing endpoints.
         /// </summary>
+        [ArgumentFormat("--external-ca {value}")]
         public virtual string ExternalCa { get; internal set; }
         /// <summary>
         ///   Number of additional Raft snapshots to retain.
         /// </summary>
+        [ArgumentFormat("--max-snapshots {value}")]
         public virtual int? MaxSnapshots { get; internal set; }
         /// <summary>
         ///   Number of log entries between Raft snapshots.
         /// </summary>
+        [ArgumentFormat("--snapshot-interval {value}")]
         public virtual int? SnapshotInterval { get; internal set; }
         /// <summary>
         ///   Task history retention limit.
         /// </summary>
+        [ArgumentFormat("--task-history-limit {value}")]
         public virtual long? TaskHistoryLimit { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -13951,42 +14313,52 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Show extra details provided to logs.
         /// </summary>
+        [ArgumentFormat("--details")]
         public virtual bool? Details { get; internal set; }
         /// <summary>
         ///   Follow log output.
         /// </summary>
+        [ArgumentFormat("--follow")]
         public virtual bool? Follow { get; internal set; }
         /// <summary>
         ///   Do not map IDs to Names in output.
         /// </summary>
+        [ArgumentFormat("--no-resolve")]
         public virtual bool? NoResolve { get; internal set; }
         /// <summary>
         ///   Do not include task IDs in output.
         /// </summary>
+        [ArgumentFormat("--no-task-ids")]
         public virtual bool? NoTaskIds { get; internal set; }
         /// <summary>
         ///   Do not truncate output.
         /// </summary>
+        [ArgumentFormat("--no-trunc")]
         public virtual bool? NoTrunc { get; internal set; }
         /// <summary>
         ///   Do not neatly format logs.
         /// </summary>
+        [ArgumentFormat("--raw")]
         public virtual bool? Raw { get; internal set; }
         /// <summary>
         ///   Show logs since timestamp (e.g. 2013-01-02T13:23:37) or relative (e.g. 42m for 42 minutes).
         /// </summary>
+        [ArgumentFormat("--since {value}")]
         public virtual string Since { get; internal set; }
         /// <summary>
         ///   Number of lines to show from the end of the logs.
         /// </summary>
+        [ArgumentFormat("--tail {value}")]
         public virtual string Tail { get; internal set; }
         /// <summary>
         ///   Show timestamps.
         /// </summary>
+        [ArgumentFormat("--timestamps")]
         public virtual bool? Timestamps { get; internal set; }
         /// <summary>
         ///   SERVICE|TASK
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Service { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -14024,14 +14396,17 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Pretty-print services using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Only display IDs.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -14085,18 +14460,22 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Provide filter values (e.g. 'driver=bridge').
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Pretty-print networks using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Do not truncate the output.
         /// </summary>
+        [ArgumentFormat("--no-trunc")]
         public virtual bool? NoTrunc { get; internal set; }
         /// <summary>
         ///   Only display network IDs.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -14128,18 +14507,22 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Provide filter values (e.g. 'enabled=true').
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Pretty-print plugins using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Don't truncate output.
         /// </summary>
+        [ArgumentFormat("--no-trunc")]
         public virtual bool? NoTrunc { get; internal set; }
         /// <summary>
         ///   Only display plugin IDs.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -14171,10 +14554,13 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Force the removal of an active plugin.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   PLUGIN
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Plugins => PluginsInternal.AsReadOnly();
         internal List<string> PluginsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -14205,152 +14591,188 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Add a custom host-to-IP mapping (host:ip).
         /// </summary>
+        [ArgumentFormat("--add-host {value}")]
         public virtual IReadOnlyList<string> AddHost => AddHostInternal.AsReadOnly();
         internal List<string> AddHostInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set build-time variables.
         /// </summary>
+        [ArgumentFormat("--build-arg {value}")]
         public virtual IReadOnlyList<string> BuildArg => BuildArgInternal.AsReadOnly();
         internal List<string> BuildArgInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Images to consider as cache sources.
         /// </summary>
+        [ArgumentFormat("--cache-from {value}")]
         public virtual IReadOnlyList<string> CacheFrom => CacheFromInternal.AsReadOnly();
         internal List<string> CacheFromInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Optional parent cgroup for the container.
         /// </summary>
+        [ArgumentFormat("--cgroup-parent {value}")]
         public virtual string CgroupParent { get; internal set; }
         /// <summary>
         ///   Compress the build context using gzip.
         /// </summary>
+        [ArgumentFormat("--compress")]
         public virtual bool? Compress { get; internal set; }
         /// <summary>
         ///   Limit the CPU CFS (Completely Fair Scheduler) period.
         /// </summary>
+        [ArgumentFormat("--cpu-period {value}")]
         public virtual long? CpuPeriod { get; internal set; }
         /// <summary>
         ///   Limit the CPU CFS (Completely Fair Scheduler) quota.
         /// </summary>
+        [ArgumentFormat("--cpu-quota {value}")]
         public virtual long? CpuQuota { get; internal set; }
         /// <summary>
         ///   CPU shares (relative weight).
         /// </summary>
+        [ArgumentFormat("--cpu-shares {value}")]
         public virtual long? CpuShares { get; internal set; }
         /// <summary>
         ///   CPUs in which to allow execution (0-3, 0,1).
         /// </summary>
+        [ArgumentFormat("--cpuset-cpus {value}")]
         public virtual string CpusetCpus { get; internal set; }
         /// <summary>
         ///   MEMs in which to allow execution (0-3, 0,1).
         /// </summary>
+        [ArgumentFormat("--cpuset-mems {value}")]
         public virtual string CpusetMems { get; internal set; }
         /// <summary>
         ///   Skip image verification.
         /// </summary>
+        [ArgumentFormat("--disable-content-trust")]
         public virtual bool? DisableContentTrust { get; internal set; }
         /// <summary>
         ///   Name of the Dockerfile (Default is 'PATH/Dockerfile').
         /// </summary>
+        [ArgumentFormat("--file {value}")]
         public virtual string File { get; internal set; }
         /// <summary>
         ///   Always remove intermediate containers.
         /// </summary>
+        [ArgumentFormat("--force-rm")]
         public virtual bool? ForceRm { get; internal set; }
         /// <summary>
         ///   Write the image ID to the file.
         /// </summary>
+        [ArgumentFormat("--iidfile {value}")]
         public virtual string Iidfile { get; internal set; }
         /// <summary>
         ///   Container isolation technology.
         /// </summary>
+        [ArgumentFormat("--isolation {value}")]
         public virtual string Isolation { get; internal set; }
         /// <summary>
         ///   Set metadata for an image.
         /// </summary>
+        [ArgumentFormat("--label {value}")]
         public virtual IReadOnlyList<string> Label => LabelInternal.AsReadOnly();
         internal List<string> LabelInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Memory limit.
         /// </summary>
+        [ArgumentFormat("--memory {value}")]
         public virtual long? Memory { get; internal set; }
         /// <summary>
         ///   Swap limit equal to memory plus swap: '-1' to enable unlimited swap.
         /// </summary>
+        [ArgumentFormat("--memory-swap {value}")]
         public virtual long? MemorySwap { get; internal set; }
         /// <summary>
         ///   Set the networking mode for the RUN instructions during build.
         /// </summary>
+        [ArgumentFormat("--network {value}")]
         public virtual string Network { get; internal set; }
         /// <summary>
         ///   Do not use cache when building the image.
         /// </summary>
+        [ArgumentFormat("--no-cache")]
         public virtual bool? NoCache { get; internal set; }
         /// <summary>
         ///   Output destination (format: type=local,dest=path).
         /// </summary>
+        [ArgumentFormat("--output {value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   Set platform if server is multi-platform capable.
         /// </summary>
+        [ArgumentFormat("--platform {value}")]
         public virtual string Platform { get; internal set; }
         /// <summary>
         ///   Set type of progress output (auto, plain, tty). Use plain to show container output.
         /// </summary>
+        [ArgumentFormat("--progress {value}")]
         public virtual string Progress { get; internal set; }
         /// <summary>
         ///   Always attempt to pull a newer version of the image.
         /// </summary>
+        [ArgumentFormat("--pull")]
         public virtual bool? Pull { get; internal set; }
         /// <summary>
         ///   Suppress the build output and print image ID on success.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   Remove intermediate containers after a successful build.
         /// </summary>
+        [ArgumentFormat("--rm")]
         public virtual bool? Rm { get; internal set; }
         /// <summary>
         ///   Secret file to expose to the build (only if BuildKit enabled): id=mysecret,src=/local/secret.
         /// </summary>
+        [ArgumentFormat("--secret {value}")]
         public virtual string Secret { get; internal set; }
         /// <summary>
         ///   Security options.
         /// </summary>
+        [ArgumentFormat("--security-opt {value}")]
         public virtual IReadOnlyList<string> SecurityOpt => SecurityOptInternal.AsReadOnly();
         internal List<string> SecurityOptInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Size of /dev/shm.
         /// </summary>
+        [ArgumentFormat("--shm-size {value}")]
         public virtual long? ShmSize { get; internal set; }
         /// <summary>
         ///   Squash newly built layers into a single new layer.
         /// </summary>
+        [ArgumentFormat("--squash")]
         public virtual bool? Squash { get; internal set; }
         /// <summary>
         ///   SSH agent socket or keys to expose to the build (only if BuildKit enabled) (format: default|&lt;id&gt;[=&lt;socket&gt;|&lt;key&gt;[,&lt;key&gt;]]).
         /// </summary>
+        [ArgumentFormat("--ssh {value}")]
         public virtual string Ssh { get; internal set; }
         /// <summary>
         ///   Stream attaches to server to negotiate build context.
         /// </summary>
+        [ArgumentFormat("--stream")]
         public virtual bool? Stream { get; internal set; }
         /// <summary>
         ///   Name and optionally a tag in the 'name:tag' format.
         /// </summary>
+        [ArgumentFormat("--tag {value}")]
         public virtual IReadOnlyList<string> Tag => TagInternal.AsReadOnly();
         internal List<string> TagInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set the target build stage to build.
         /// </summary>
+        [ArgumentFormat("--target {value}")]
         public virtual string Target { get; internal set; }
         /// <summary>
         ///   Ulimit options.
         /// </summary>
+        [ArgumentFormat("--ulimit {value}")]
         public virtual string Ulimit { get; internal set; }
         /// <summary>
         ///   Path or url where the build context is located.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Path { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -14414,10 +14836,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Do not prompt for confirmation.
         /// </summary>
+        [ArgumentFormat("--yes")]
         public virtual bool? Yes { get; internal set; }
         /// <summary>
         ///   IMAGE[:TAG]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Image { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -14447,14 +14871,18 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Force removal of the image.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Do not delete untagged parents.
         /// </summary>
+        [ArgumentFormat("--no-prune")]
         public virtual bool? NoPrune { get; internal set; }
         /// <summary>
         ///   IMAGE
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Images => ImagesInternal.AsReadOnly();
         internal List<string> ImagesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -14486,6 +14914,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   NETWORK
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Networks => NetworksInternal.AsReadOnly();
         internal List<string> NetworksInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -14515,10 +14945,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Kubernetes config file.
         /// </summary>
+        [ArgumentFormat("--kubeconfig {value}")]
         public virtual string Kubeconfig { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -14548,23 +14980,28 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Secret driver.
         /// </summary>
+        [ArgumentFormat("--driver {value}")]
         public virtual string Driver { get; internal set; }
         /// <summary>
         ///   Secret labels.
         /// </summary>
+        [ArgumentFormat("--label {value}")]
         public virtual IReadOnlyList<string> Label => LabelInternal.AsReadOnly();
         internal List<string> LabelInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Template driver.
         /// </summary>
+        [ArgumentFormat("--template-driver {value}")]
         public virtual string TemplateDriver { get; internal set; }
         /// <summary>
         ///   SECRET
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Secret { get; internal set; }
         /// <summary>
         ///   Path to file to create the secret from.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string File { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -14597,6 +15034,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   SERVICE
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Services => ServicesInternal.AsReadOnly();
         internal List<string> ServicesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -14626,10 +15065,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Name for the loaded key.
         /// </summary>
+        [ArgumentFormat("--name {value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   KEYFILE
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Keyfile { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -14659,6 +15100,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   SECRET
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Secrets => SecretsInternal.AsReadOnly();
         internal List<string> SecretsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -14688,10 +15131,13 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   IMAGE
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Images => ImagesInternal.AsReadOnly();
         internal List<string> ImagesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -14722,10 +15168,13 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Write to a file, instead of STDOUT.
         /// </summary>
+        [ArgumentFormat("--output {value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   IMAGE
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Images => ImagesInternal.AsReadOnly();
         internal List<string> ImagesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -14779,18 +15228,22 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Override the key sequence for detaching a container.
         /// </summary>
+        [ArgumentFormat("--detach-keys {value}")]
         public virtual string DetachKeys { get; internal set; }
         /// <summary>
         ///   Do not attach STDIN.
         /// </summary>
+        [ArgumentFormat("--no-stdin")]
         public virtual bool? NoStdin { get; internal set; }
         /// <summary>
         ///   Proxy all received signals to the process.
         /// </summary>
+        [ArgumentFormat("--sig-proxy")]
         public virtual bool? SigProxy { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -14822,26 +15275,32 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Default orchestrator for stack operations to use with this context (swarm|kubernetes|all).
         /// </summary>
+        [ArgumentFormat("--default-stack-orchestrator {value}")]
         public virtual string DefaultStackOrchestrator { get; internal set; }
         /// <summary>
         ///   Description of the context.
         /// </summary>
+        [ArgumentFormat("--description {value}")]
         public virtual string Description { get; internal set; }
         /// <summary>
         ///   set the docker endpoint.
         /// </summary>
+        [ArgumentFormat("--docker {value}")]
         public virtual string Docker { get; internal set; }
         /// <summary>
         ///   create context from a named context.
         /// </summary>
+        [ArgumentFormat("--from {value}")]
         public virtual string From { get; internal set; }
         /// <summary>
         ///   set the kubernetes endpoint.
         /// </summary>
+        [ArgumentFormat("--kubernetes {value}")]
         public virtual string Kubernetes { get; internal set; }
         /// <summary>
         ///   CONTEXT
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Context { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -14875,19 +15334,23 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Config labels.
         /// </summary>
+        [ArgumentFormat("--label {value}")]
         public virtual IReadOnlyList<string> Label => LabelInternal.AsReadOnly();
         internal List<string> LabelInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Template driver.
         /// </summary>
+        [ArgumentFormat("--template-driver {value}")]
         public virtual string TemplateDriver { get; internal set; }
         /// <summary>
         ///   CONFIG
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Config { get; internal set; }
         /// <summary>
         ///   file|-
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string File { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -14919,10 +15382,13 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   VOLUME
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Volumes => VolumesInternal.AsReadOnly();
         internal List<string> VolumesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -14953,10 +15419,13 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Seconds to wait for stop before killing it.
         /// </summary>
+        [ArgumentFormat("--time {value}")]
         public virtual int? Time { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -14987,10 +15456,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Provide filter values (e.g. 'until=&lt;timestamp&gt;').
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Do not prompt for confirmation.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -15020,18 +15491,22 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Allow communication with an insecure registry.
         /// </summary>
+        [ArgumentFormat("--insecure")]
         public virtual bool? Insecure { get; internal set; }
         /// <summary>
         ///   Output additional info including layers and platform.
         /// </summary>
+        [ArgumentFormat("--verbose")]
         public virtual bool? Verbose { get; internal set; }
         /// <summary>
         ///   [MANIFEST_LIST]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string ManifestList { get; internal set; }
         /// <summary>
         ///   MANIFEST
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Manifest { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -15063,6 +15538,7 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -15091,27 +15567,33 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Author (e.g., "John Hannibal Smith &lt;hannibal@a-team.com&gt;").
         /// </summary>
+        [ArgumentFormat("--author {value}")]
         public virtual string Author { get; internal set; }
         /// <summary>
         ///   Apply Dockerfile instruction to the created image.
         /// </summary>
+        [ArgumentFormat("--change {value}")]
         public virtual IReadOnlyList<string> Change => ChangeInternal.AsReadOnly();
         internal List<string> ChangeInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Commit message.
         /// </summary>
+        [ArgumentFormat("--message {value}")]
         public virtual string Message { get; internal set; }
         /// <summary>
         ///   Pause container during commit.
         /// </summary>
+        [ArgumentFormat("--pause")]
         public virtual bool? Pause { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         /// <summary>
         ///   [REPOSITORY[:TAG]]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Repository { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -15145,31 +15627,38 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to a Distributed Application Bundle file.
         /// </summary>
+        [ArgumentFormat("--bundle-file {value}")]
         public virtual string BundleFile { get; internal set; }
         /// <summary>
         ///   Path to a Compose file, or "-" to read from stdin.
         /// </summary>
+        [ArgumentFormat("--compose-file {value}")]
         public virtual IReadOnlyList<string> ComposeFile => ComposeFileInternal.AsReadOnly();
         internal List<string> ComposeFileInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Kubernetes namespace to use.
         /// </summary>
+        [ArgumentFormat("--namespace {value}")]
         public virtual string Namespace { get; internal set; }
         /// <summary>
         ///   Prune services that are no longer referenced.
         /// </summary>
+        [ArgumentFormat("--prune")]
         public virtual bool? Prune { get; internal set; }
         /// <summary>
         ///   Query the registry to resolve image digest and supported platforms ("always"|"changed"|"never").
         /// </summary>
+        [ArgumentFormat("--resolve-image {value}")]
         public virtual ResolveImage ResolveImage { get; internal set; }
         /// <summary>
         ///   Send registry authentication details to Swarm agents.
         /// </summary>
+        [ArgumentFormat("--with-registry-auth")]
         public virtual bool? WithRegistryAuth { get; internal set; }
         /// <summary>
         ///   STACK
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Stack { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -15204,6 +15693,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   SERVICE=REPLICAS
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [ItemFormat("{key=value}")]
         public virtual IReadOnlyDictionary<string, string> ServiceReplicas => ServiceReplicasInternal.AsReadOnly();
         internal Dictionary<string,string> ServiceReplicasInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -15233,451 +15724,557 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Add a custom host-to-IP mapping (host:ip).
         /// </summary>
+        [ArgumentFormat("--add-host {value}")]
         public virtual IReadOnlyList<string> AddHost => AddHostInternal.AsReadOnly();
         internal List<string> AddHostInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Attach to STDIN, STDOUT or STDERR.
         /// </summary>
+        [ArgumentFormat("--attach {value}")]
         public virtual IReadOnlyList<string> Attach => AttachInternal.AsReadOnly();
         internal List<string> AttachInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0).
         /// </summary>
+        [ArgumentFormat("--blkio-weight {value}")]
         public virtual int? BlkioWeight { get; internal set; }
         /// <summary>
         ///   Block IO weight (relative device weight).
         /// </summary>
+        [ArgumentFormat("--blkio-weight-device {value}")]
         public virtual IReadOnlyList<string> BlkioWeightDevice => BlkioWeightDeviceInternal.AsReadOnly();
         internal List<string> BlkioWeightDeviceInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Add Linux capabilities.
         /// </summary>
+        [ArgumentFormat("--cap-add {value}")]
         public virtual IReadOnlyList<string> CapAdd => CapAddInternal.AsReadOnly();
         internal List<string> CapAddInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Drop Linux capabilities.
         /// </summary>
+        [ArgumentFormat("--cap-drop {value}")]
         public virtual IReadOnlyList<string> CapDrop => CapDropInternal.AsReadOnly();
         internal List<string> CapDropInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Optional parent cgroup for the container.
         /// </summary>
+        [ArgumentFormat("--cgroup-parent {value}")]
         public virtual string CgroupParent { get; internal set; }
         /// <summary>
         ///   Write the container ID to the file.
         /// </summary>
+        [ArgumentFormat("--cidfile {value}")]
         public virtual string Cidfile { get; internal set; }
         /// <summary>
         ///   CPU count (Windows only).
         /// </summary>
+        [ArgumentFormat("--cpu-count {value}")]
         public virtual long? CpuCount { get; internal set; }
         /// <summary>
         ///   CPU percent (Windows only).
         /// </summary>
+        [ArgumentFormat("--cpu-percent {value}")]
         public virtual long? CpuPercent { get; internal set; }
         /// <summary>
         ///   Limit CPU CFS (Completely Fair Scheduler) period.
         /// </summary>
+        [ArgumentFormat("--cpu-period {value}")]
         public virtual long? CpuPeriod { get; internal set; }
         /// <summary>
         ///   Limit CPU CFS (Completely Fair Scheduler) quota.
         /// </summary>
+        [ArgumentFormat("--cpu-quota {value}")]
         public virtual long? CpuQuota { get; internal set; }
         /// <summary>
         ///   Limit CPU real-time period in microseconds.
         /// </summary>
+        [ArgumentFormat("--cpu-rt-period {value}")]
         public virtual long? CpuRtPeriod { get; internal set; }
         /// <summary>
         ///   Limit CPU real-time runtime in microseconds.
         /// </summary>
+        [ArgumentFormat("--cpu-rt-runtime {value}")]
         public virtual long? CpuRtRuntime { get; internal set; }
         /// <summary>
         ///   CPU shares (relative weight).
         /// </summary>
+        [ArgumentFormat("--cpu-shares {value}")]
         public virtual long? CpuShares { get; internal set; }
         /// <summary>
         ///   Number of CPUs.
         /// </summary>
+        [ArgumentFormat("--cpus {value}")]
         public virtual decimal? Cpus { get; internal set; }
         /// <summary>
         ///   CPUs in which to allow execution (0-3, 0,1).
         /// </summary>
+        [ArgumentFormat("--cpuset-cpus {value}")]
         public virtual string CpusetCpus { get; internal set; }
         /// <summary>
         ///   MEMs in which to allow execution (0-3, 0,1).
         /// </summary>
+        [ArgumentFormat("--cpuset-mems {value}")]
         public virtual string CpusetMems { get; internal set; }
         /// <summary>
         ///   Run container in background and print container ID.
         /// </summary>
+        [ArgumentFormat("--detach")]
         public virtual bool? Detach { get; internal set; }
         /// <summary>
         ///   Override the key sequence for detaching a container.
         /// </summary>
+        [ArgumentFormat("--detach-keys {value}")]
         public virtual string DetachKeys { get; internal set; }
         /// <summary>
         ///   Add a host device to the container.
         /// </summary>
+        [ArgumentFormat("--device {value}")]
         public virtual IReadOnlyList<string> Device => DeviceInternal.AsReadOnly();
         internal List<string> DeviceInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Add a rule to the cgroup allowed devices list.
         /// </summary>
+        [ArgumentFormat("--device-cgroup-rule {value}")]
         public virtual IReadOnlyList<string> DeviceCgroupRule => DeviceCgroupRuleInternal.AsReadOnly();
         internal List<string> DeviceCgroupRuleInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Limit read rate (bytes per second) from a device.
         /// </summary>
+        [ArgumentFormat("--device-read-bps {value}")]
         public virtual IReadOnlyList<string> DeviceReadBps => DeviceReadBpsInternal.AsReadOnly();
         internal List<string> DeviceReadBpsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Limit read rate (IO per second) from a device.
         /// </summary>
+        [ArgumentFormat("--device-read-iops {value}")]
         public virtual IReadOnlyList<string> DeviceReadIops => DeviceReadIopsInternal.AsReadOnly();
         internal List<string> DeviceReadIopsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Limit write rate (bytes per second) to a device.
         /// </summary>
+        [ArgumentFormat("--device-write-bps {value}")]
         public virtual IReadOnlyList<string> DeviceWriteBps => DeviceWriteBpsInternal.AsReadOnly();
         internal List<string> DeviceWriteBpsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Limit write rate (IO per second) to a device.
         /// </summary>
+        [ArgumentFormat("--device-write-iops {value}")]
         public virtual IReadOnlyList<string> DeviceWriteIops => DeviceWriteIopsInternal.AsReadOnly();
         internal List<string> DeviceWriteIopsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Skip image verification.
         /// </summary>
+        [ArgumentFormat("--disable-content-trust")]
         public virtual bool? DisableContentTrust { get; internal set; }
         /// <summary>
         ///   Set custom DNS servers.
         /// </summary>
+        [ArgumentFormat("--dns {value}")]
         public virtual IReadOnlyList<string> Dns => DnsInternal.AsReadOnly();
         internal List<string> DnsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set DNS options.
         /// </summary>
+        [ArgumentFormat("--dns-opt {value}")]
         public virtual IReadOnlyList<string> DnsOpt => DnsOptInternal.AsReadOnly();
         internal List<string> DnsOptInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set DNS options.
         /// </summary>
+        [ArgumentFormat("--dns-option {value}")]
         public virtual IReadOnlyList<string> DnsOption => DnsOptionInternal.AsReadOnly();
         internal List<string> DnsOptionInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set custom DNS search domains.
         /// </summary>
+        [ArgumentFormat("--dns-search {value}")]
         public virtual IReadOnlyList<string> DnsSearch => DnsSearchInternal.AsReadOnly();
         internal List<string> DnsSearchInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Container NIS domain name.
         /// </summary>
+        [ArgumentFormat("--domainname {value}")]
         public virtual string Domainname { get; internal set; }
         /// <summary>
         ///   Overwrite the default ENTRYPOINT of the image.
         /// </summary>
+        [ArgumentFormat("--entrypoint {value}")]
         public virtual string Entrypoint { get; internal set; }
         /// <summary>
         ///   Set environment variables.
         /// </summary>
+        [ArgumentFormat("--env {value}")]
         public virtual IReadOnlyList<string> Env => EnvInternal.AsReadOnly();
         internal List<string> EnvInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Read in a file of environment variables.
         /// </summary>
+        [ArgumentFormat("--env-file {value}")]
         public virtual IReadOnlyList<string> EnvFile => EnvFileInternal.AsReadOnly();
         internal List<string> EnvFileInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Expose a port or a range of ports.
         /// </summary>
+        [ArgumentFormat("--expose {value}")]
         public virtual IReadOnlyList<string> Expose => ExposeInternal.AsReadOnly();
         internal List<string> ExposeInternal { get; set; } = new List<string>();
         /// <summary>
         ///   GPU devices to add to the container ('all' to pass all GPUs).
         /// </summary>
+        [ArgumentFormat("--gpus {value}")]
         public virtual string Gpus { get; internal set; }
         /// <summary>
         ///   Add additional groups to join.
         /// </summary>
+        [ArgumentFormat("--group-add {value}")]
         public virtual IReadOnlyList<string> GroupAdd => GroupAddInternal.AsReadOnly();
         internal List<string> GroupAddInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Command to run to check health.
         /// </summary>
+        [ArgumentFormat("--health-cmd {value}")]
         public virtual string HealthCmd { get; internal set; }
         /// <summary>
         ///   Time between running the check (ms|s|m|h) (default 0s).
         /// </summary>
+        [ArgumentFormat("--health-interval {value}")]
         public virtual string HealthInterval { get; internal set; }
         /// <summary>
         ///   Consecutive failures needed to report unhealthy.
         /// </summary>
+        [ArgumentFormat("--health-retries {value}")]
         public virtual int? HealthRetries { get; internal set; }
         /// <summary>
         ///   Start period for the container to initialize before starting health-retries countdown (ms|s|m|h) (default 0s).
         /// </summary>
+        [ArgumentFormat("--health-start-period {value}")]
         public virtual string HealthStartPeriod { get; internal set; }
         /// <summary>
         ///   Maximum time to allow one check to run (ms|s|m|h) (default 0s).
         /// </summary>
+        [ArgumentFormat("--health-timeout {value}")]
         public virtual string HealthTimeout { get; internal set; }
         /// <summary>
         ///   Print usage.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Container host name.
         /// </summary>
+        [ArgumentFormat("--hostname {value}")]
         public virtual string Hostname { get; internal set; }
         /// <summary>
         ///   Run an init inside the container that forwards signals and reaps processes.
         /// </summary>
+        [ArgumentFormat("--init")]
         public virtual bool? Init { get; internal set; }
         /// <summary>
         ///   Keep STDIN open even if not attached.
         /// </summary>
+        [ArgumentFormat("--interactive")]
         public virtual bool? Interactive { get; internal set; }
         /// <summary>
         ///   Maximum IO bandwidth limit for the system drive (Windows only).
         /// </summary>
+        [ArgumentFormat("--io-maxbandwidth {value}")]
         public virtual long? IoMaxbandwidth { get; internal set; }
         /// <summary>
         ///   Maximum IOps limit for the system drive (Windows only).
         /// </summary>
+        [ArgumentFormat("--io-maxiops {value}")]
         public virtual int? IoMaxiops { get; internal set; }
         /// <summary>
         ///   IPv4 address (e.g., 172.30.100.104).
         /// </summary>
+        [ArgumentFormat("--ip {value}")]
         public virtual string Ip { get; internal set; }
         /// <summary>
         ///   IPv6 address (e.g., 2001:db8::33).
         /// </summary>
+        [ArgumentFormat("--ip6 {value}")]
         public virtual string Ip6 { get; internal set; }
         /// <summary>
         ///   IPC mode to use.
         /// </summary>
+        [ArgumentFormat("--ipc {value}")]
         public virtual string Ipc { get; internal set; }
         /// <summary>
         ///   Container isolation technology.
         /// </summary>
+        [ArgumentFormat("--isolation {value}")]
         public virtual string Isolation { get; internal set; }
         /// <summary>
         ///   Kernel memory limit.
         /// </summary>
+        [ArgumentFormat("--kernel-memory {value}")]
         public virtual long? KernelMemory { get; internal set; }
         /// <summary>
         ///   Set meta data on a container.
         /// </summary>
+        [ArgumentFormat("--label {value}")]
         public virtual IReadOnlyList<string> Label => LabelInternal.AsReadOnly();
         internal List<string> LabelInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Read in a line delimited file of labels.
         /// </summary>
+        [ArgumentFormat("--label-file {value}")]
         public virtual IReadOnlyList<string> LabelFile => LabelFileInternal.AsReadOnly();
         internal List<string> LabelFileInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Add link to another container.
         /// </summary>
+        [ArgumentFormat("--link {value}")]
         public virtual IReadOnlyList<string> Link => LinkInternal.AsReadOnly();
         internal List<string> LinkInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Container IPv4/IPv6 link-local addresses.
         /// </summary>
+        [ArgumentFormat("--link-local-ip {value}")]
         public virtual IReadOnlyList<string> LinkLocalIp => LinkLocalIpInternal.AsReadOnly();
         internal List<string> LinkLocalIpInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Logging driver for the container.
         /// </summary>
+        [ArgumentFormat("--log-driver {value}")]
         public virtual string LogDriver { get; internal set; }
         /// <summary>
         ///   Log driver options.
         /// </summary>
+        [ArgumentFormat("--log-opt {value}")]
         public virtual IReadOnlyList<string> LogOpt => LogOptInternal.AsReadOnly();
         internal List<string> LogOptInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Container MAC address (e.g., 92:d0:c6:0a:29:33).
         /// </summary>
+        [ArgumentFormat("--mac-address {value}")]
         public virtual string MacAddress { get; internal set; }
         /// <summary>
         ///   Memory limit.
         /// </summary>
+        [ArgumentFormat("--memory {value}")]
         public virtual long? Memory { get; internal set; }
         /// <summary>
         ///   Memory soft limit.
         /// </summary>
+        [ArgumentFormat("--memory-reservation {value}")]
         public virtual long? MemoryReservation { get; internal set; }
         /// <summary>
         ///   Swap limit equal to memory plus swap: '-1' to enable unlimited swap.
         /// </summary>
+        [ArgumentFormat("--memory-swap {value}")]
         public virtual long? MemorySwap { get; internal set; }
         /// <summary>
         ///   Tune container memory swappiness (0 to 100).
         /// </summary>
+        [ArgumentFormat("--memory-swappiness {value}")]
         public virtual long? MemorySwappiness { get; internal set; }
         /// <summary>
         ///   Attach a filesystem mount to the container.
         /// </summary>
+        [ArgumentFormat("--mount {value}")]
         public virtual string Mount { get; internal set; }
         /// <summary>
         ///   Assign a name to the container.
         /// </summary>
+        [ArgumentFormat("--name {value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   Connect a container to a network.
         /// </summary>
+        [ArgumentFormat("--net {value}")]
         public virtual string Net { get; internal set; }
         /// <summary>
         ///   Add network-scoped alias for the container.
         /// </summary>
+        [ArgumentFormat("--net-alias {value}")]
         public virtual IReadOnlyList<string> NetAlias => NetAliasInternal.AsReadOnly();
         internal List<string> NetAliasInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Connect a container to a network.
         /// </summary>
+        [ArgumentFormat("--network {value}")]
         public virtual string Network { get; internal set; }
         /// <summary>
         ///   Add network-scoped alias for the container.
         /// </summary>
+        [ArgumentFormat("--network-alias {value}")]
         public virtual IReadOnlyList<string> NetworkAlias => NetworkAliasInternal.AsReadOnly();
         internal List<string> NetworkAliasInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Disable any container-specified HEALTHCHECK.
         /// </summary>
+        [ArgumentFormat("--no-healthcheck")]
         public virtual bool? NoHealthcheck { get; internal set; }
         /// <summary>
         ///   Disable OOM Killer.
         /// </summary>
+        [ArgumentFormat("--oom-kill-disable")]
         public virtual bool? OomKillDisable { get; internal set; }
         /// <summary>
         ///   Tune host's OOM preferences (-1000 to 1000).
         /// </summary>
+        [ArgumentFormat("--oom-score-adj {value}")]
         public virtual int? OomScoreAdj { get; internal set; }
         /// <summary>
         ///   PID namespace to use.
         /// </summary>
+        [ArgumentFormat("--pid {value}")]
         public virtual string Pid { get; internal set; }
         /// <summary>
         ///   Tune container pids limit (set -1 for unlimited).
         /// </summary>
+        [ArgumentFormat("--pids-limit {value}")]
         public virtual long? PidsLimit { get; internal set; }
         /// <summary>
         ///   Set platform if server is multi-platform capable.
         /// </summary>
+        [ArgumentFormat("--platform {value}")]
         public virtual string Platform { get; internal set; }
         /// <summary>
         ///   Give extended privileges to this container.
         /// </summary>
+        [ArgumentFormat("--privileged")]
         public virtual bool? Privileged { get; internal set; }
         /// <summary>
         ///   Publish a container's port(s) to the host.
         /// </summary>
+        [ArgumentFormat("--publish {value}")]
         public virtual IReadOnlyList<string> Publish => PublishInternal.AsReadOnly();
         internal List<string> PublishInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Publish all exposed ports to random ports.
         /// </summary>
+        [ArgumentFormat("--publish-all")]
         public virtual bool? PublishAll { get; internal set; }
         /// <summary>
         ///   Mount the container's root filesystem as read only.
         /// </summary>
+        [ArgumentFormat("--read-only")]
         public virtual bool? ReadOnly { get; internal set; }
         /// <summary>
         ///   Restart policy to apply when a container exits.
         /// </summary>
+        [ArgumentFormat("--restart {value}")]
         public virtual string Restart { get; internal set; }
         /// <summary>
         ///   Automatically remove the container when it exits.
         /// </summary>
+        [ArgumentFormat("--rm")]
         public virtual bool? Rm { get; internal set; }
         /// <summary>
         ///   Runtime to use for this container.
         /// </summary>
+        [ArgumentFormat("--runtime {value}")]
         public virtual string Runtime { get; internal set; }
         /// <summary>
         ///   Security Options.
         /// </summary>
+        [ArgumentFormat("--security-opt {value}")]
         public virtual IReadOnlyList<string> SecurityOpt => SecurityOptInternal.AsReadOnly();
         internal List<string> SecurityOptInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Size of /dev/shm.
         /// </summary>
+        [ArgumentFormat("--shm-size {value}")]
         public virtual long? ShmSize { get; internal set; }
         /// <summary>
         ///   Proxy received signals to the process.
         /// </summary>
+        [ArgumentFormat("--sig-proxy")]
         public virtual bool? SigProxy { get; internal set; }
         /// <summary>
         ///   Signal to stop a container.
         /// </summary>
+        [ArgumentFormat("--stop-signal {value}")]
         public virtual string StopSignal { get; internal set; }
         /// <summary>
         ///   Timeout (in seconds) to stop a container.
         /// </summary>
+        [ArgumentFormat("--stop-timeout {value}")]
         public virtual int? StopTimeout { get; internal set; }
         /// <summary>
         ///   Storage driver options for the container.
         /// </summary>
+        [ArgumentFormat("--storage-opt {value}")]
         public virtual IReadOnlyList<string> StorageOpt => StorageOptInternal.AsReadOnly();
         internal List<string> StorageOptInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Sysctl options.
         /// </summary>
+        [ArgumentFormat("--sysctl {value}")]
+        [ItemFormat("{key}:{value}")]
         public virtual IReadOnlyDictionary<string, string> Sysctl => SysctlInternal.AsReadOnly();
         internal Dictionary<string,string> SysctlInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Mount a tmpfs directory.
         /// </summary>
+        [ArgumentFormat("--tmpfs {value}")]
         public virtual IReadOnlyList<string> Tmpfs => TmpfsInternal.AsReadOnly();
         internal List<string> TmpfsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Allocate a pseudo-TTY.
         /// </summary>
+        [ArgumentFormat("--tty")]
         public virtual bool? Tty { get; internal set; }
         /// <summary>
         ///   Ulimit options.
         /// </summary>
+        [ArgumentFormat("--ulimit {value}")]
         public virtual string Ulimit { get; internal set; }
         /// <summary>
         ///   Username or UID (format: &lt;name|uid&gt;[:&lt;group|gid&gt;]).
         /// </summary>
+        [ArgumentFormat("--user {value}")]
         public virtual string User { get; internal set; }
         /// <summary>
         ///   User namespace to use.
         /// </summary>
+        [ArgumentFormat("--userns {value}")]
         public virtual string Userns { get; internal set; }
         /// <summary>
         ///   UTS namespace to use.
         /// </summary>
+        [ArgumentFormat("--uts {value}")]
         public virtual string Uts { get; internal set; }
         /// <summary>
         ///   Bind mount a volume.
         /// </summary>
+        [ArgumentFormat("--volume {value}")]
         public virtual IReadOnlyList<string> Volume => VolumeInternal.AsReadOnly();
         internal List<string> VolumeInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Optional volume driver for the container.
         /// </summary>
+        [ArgumentFormat("--volume-driver {value}")]
         public virtual string VolumeDriver { get; internal set; }
         /// <summary>
         ///   Mount volumes from the specified container(s).
         /// </summary>
+        [ArgumentFormat("--volumes-from {value}")]
         public virtual IReadOnlyList<string> VolumesFrom => VolumesFromInternal.AsReadOnly();
         internal List<string> VolumesFromInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Working directory inside the container.
         /// </summary>
+        [ArgumentFormat("--workdir {value}")]
         public virtual string Workdir { get; internal set; }
         /// <summary>
         ///   IMAGE
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Image { get; internal set; }
         /// <summary>
         ///   [COMMAND]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Command { get; internal set; }
         /// <summary>
         ///   [ARG...]
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Args => ArgsInternal.AsReadOnly();
         internal List<string> ArgsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -15810,439 +16407,542 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Add a custom host-to-IP mapping (host:ip).
         /// </summary>
+        [ArgumentFormat("--add-host {value}")]
         public virtual IReadOnlyList<string> AddHost => AddHostInternal.AsReadOnly();
         internal List<string> AddHostInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Attach to STDIN, STDOUT or STDERR.
         /// </summary>
+        [ArgumentFormat("--attach {value}")]
         public virtual IReadOnlyList<string> Attach => AttachInternal.AsReadOnly();
         internal List<string> AttachInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0).
         /// </summary>
+        [ArgumentFormat("--blkio-weight {value}")]
         public virtual int? BlkioWeight { get; internal set; }
         /// <summary>
         ///   Block IO weight (relative device weight).
         /// </summary>
+        [ArgumentFormat("--blkio-weight-device {value}")]
         public virtual IReadOnlyList<string> BlkioWeightDevice => BlkioWeightDeviceInternal.AsReadOnly();
         internal List<string> BlkioWeightDeviceInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Add Linux capabilities.
         /// </summary>
+        [ArgumentFormat("--cap-add {value}")]
         public virtual IReadOnlyList<string> CapAdd => CapAddInternal.AsReadOnly();
         internal List<string> CapAddInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Drop Linux capabilities.
         /// </summary>
+        [ArgumentFormat("--cap-drop {value}")]
         public virtual IReadOnlyList<string> CapDrop => CapDropInternal.AsReadOnly();
         internal List<string> CapDropInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Optional parent cgroup for the container.
         /// </summary>
+        [ArgumentFormat("--cgroup-parent {value}")]
         public virtual string CgroupParent { get; internal set; }
         /// <summary>
         ///   Write the container ID to the file.
         /// </summary>
+        [ArgumentFormat("--cidfile {value}")]
         public virtual string Cidfile { get; internal set; }
         /// <summary>
         ///   CPU count (Windows only).
         /// </summary>
+        [ArgumentFormat("--cpu-count {value}")]
         public virtual long? CpuCount { get; internal set; }
         /// <summary>
         ///   CPU percent (Windows only).
         /// </summary>
+        [ArgumentFormat("--cpu-percent {value}")]
         public virtual long? CpuPercent { get; internal set; }
         /// <summary>
         ///   Limit CPU CFS (Completely Fair Scheduler) period.
         /// </summary>
+        [ArgumentFormat("--cpu-period {value}")]
         public virtual long? CpuPeriod { get; internal set; }
         /// <summary>
         ///   Limit CPU CFS (Completely Fair Scheduler) quota.
         /// </summary>
+        [ArgumentFormat("--cpu-quota {value}")]
         public virtual long? CpuQuota { get; internal set; }
         /// <summary>
         ///   Limit CPU real-time period in microseconds.
         /// </summary>
+        [ArgumentFormat("--cpu-rt-period {value}")]
         public virtual long? CpuRtPeriod { get; internal set; }
         /// <summary>
         ///   Limit CPU real-time runtime in microseconds.
         /// </summary>
+        [ArgumentFormat("--cpu-rt-runtime {value}")]
         public virtual long? CpuRtRuntime { get; internal set; }
         /// <summary>
         ///   CPU shares (relative weight).
         /// </summary>
+        [ArgumentFormat("--cpu-shares {value}")]
         public virtual long? CpuShares { get; internal set; }
         /// <summary>
         ///   Number of CPUs.
         /// </summary>
+        [ArgumentFormat("--cpus {value}")]
         public virtual decimal? Cpus { get; internal set; }
         /// <summary>
         ///   CPUs in which to allow execution (0-3, 0,1).
         /// </summary>
+        [ArgumentFormat("--cpuset-cpus {value}")]
         public virtual string CpusetCpus { get; internal set; }
         /// <summary>
         ///   MEMs in which to allow execution (0-3, 0,1).
         /// </summary>
+        [ArgumentFormat("--cpuset-mems {value}")]
         public virtual string CpusetMems { get; internal set; }
         /// <summary>
         ///   Add a host device to the container.
         /// </summary>
+        [ArgumentFormat("--device {value}")]
         public virtual IReadOnlyList<string> Device => DeviceInternal.AsReadOnly();
         internal List<string> DeviceInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Add a rule to the cgroup allowed devices list.
         /// </summary>
+        [ArgumentFormat("--device-cgroup-rule {value}")]
         public virtual IReadOnlyList<string> DeviceCgroupRule => DeviceCgroupRuleInternal.AsReadOnly();
         internal List<string> DeviceCgroupRuleInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Limit read rate (bytes per second) from a device.
         /// </summary>
+        [ArgumentFormat("--device-read-bps {value}")]
         public virtual IReadOnlyList<string> DeviceReadBps => DeviceReadBpsInternal.AsReadOnly();
         internal List<string> DeviceReadBpsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Limit read rate (IO per second) from a device.
         /// </summary>
+        [ArgumentFormat("--device-read-iops {value}")]
         public virtual IReadOnlyList<string> DeviceReadIops => DeviceReadIopsInternal.AsReadOnly();
         internal List<string> DeviceReadIopsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Limit write rate (bytes per second) to a device.
         /// </summary>
+        [ArgumentFormat("--device-write-bps {value}")]
         public virtual IReadOnlyList<string> DeviceWriteBps => DeviceWriteBpsInternal.AsReadOnly();
         internal List<string> DeviceWriteBpsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Limit write rate (IO per second) to a device.
         /// </summary>
+        [ArgumentFormat("--device-write-iops {value}")]
         public virtual IReadOnlyList<string> DeviceWriteIops => DeviceWriteIopsInternal.AsReadOnly();
         internal List<string> DeviceWriteIopsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Skip image verification.
         /// </summary>
+        [ArgumentFormat("--disable-content-trust")]
         public virtual bool? DisableContentTrust { get; internal set; }
         /// <summary>
         ///   Set custom DNS servers.
         /// </summary>
+        [ArgumentFormat("--dns {value}")]
         public virtual IReadOnlyList<string> Dns => DnsInternal.AsReadOnly();
         internal List<string> DnsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set DNS options.
         /// </summary>
+        [ArgumentFormat("--dns-opt {value}")]
         public virtual IReadOnlyList<string> DnsOpt => DnsOptInternal.AsReadOnly();
         internal List<string> DnsOptInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set DNS options.
         /// </summary>
+        [ArgumentFormat("--dns-option {value}")]
         public virtual IReadOnlyList<string> DnsOption => DnsOptionInternal.AsReadOnly();
         internal List<string> DnsOptionInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set custom DNS search domains.
         /// </summary>
+        [ArgumentFormat("--dns-search {value}")]
         public virtual IReadOnlyList<string> DnsSearch => DnsSearchInternal.AsReadOnly();
         internal List<string> DnsSearchInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Container NIS domain name.
         /// </summary>
+        [ArgumentFormat("--domainname {value}")]
         public virtual string Domainname { get; internal set; }
         /// <summary>
         ///   Overwrite the default ENTRYPOINT of the image.
         /// </summary>
+        [ArgumentFormat("--entrypoint {value}")]
         public virtual string Entrypoint { get; internal set; }
         /// <summary>
         ///   Set environment variables.
         /// </summary>
+        [ArgumentFormat("--env {value}")]
         public virtual IReadOnlyList<string> Env => EnvInternal.AsReadOnly();
         internal List<string> EnvInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Read in a file of environment variables.
         /// </summary>
+        [ArgumentFormat("--env-file {value}")]
         public virtual IReadOnlyList<string> EnvFile => EnvFileInternal.AsReadOnly();
         internal List<string> EnvFileInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Expose a port or a range of ports.
         /// </summary>
+        [ArgumentFormat("--expose {value}")]
         public virtual IReadOnlyList<string> Expose => ExposeInternal.AsReadOnly();
         internal List<string> ExposeInternal { get; set; } = new List<string>();
         /// <summary>
         ///   GPU devices to add to the container ('all' to pass all GPUs).
         /// </summary>
+        [ArgumentFormat("--gpus {value}")]
         public virtual string Gpus { get; internal set; }
         /// <summary>
         ///   Add additional groups to join.
         /// </summary>
+        [ArgumentFormat("--group-add {value}")]
         public virtual IReadOnlyList<string> GroupAdd => GroupAddInternal.AsReadOnly();
         internal List<string> GroupAddInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Command to run to check health.
         /// </summary>
+        [ArgumentFormat("--health-cmd {value}")]
         public virtual string HealthCmd { get; internal set; }
         /// <summary>
         ///   Time between running the check (ms|s|m|h) (default 0s).
         /// </summary>
+        [ArgumentFormat("--health-interval {value}")]
         public virtual string HealthInterval { get; internal set; }
         /// <summary>
         ///   Consecutive failures needed to report unhealthy.
         /// </summary>
+        [ArgumentFormat("--health-retries {value}")]
         public virtual int? HealthRetries { get; internal set; }
         /// <summary>
         ///   Start period for the container to initialize before starting health-retries countdown (ms|s|m|h) (default 0s).
         /// </summary>
+        [ArgumentFormat("--health-start-period {value}")]
         public virtual string HealthStartPeriod { get; internal set; }
         /// <summary>
         ///   Maximum time to allow one check to run (ms|s|m|h) (default 0s).
         /// </summary>
+        [ArgumentFormat("--health-timeout {value}")]
         public virtual string HealthTimeout { get; internal set; }
         /// <summary>
         ///   Print usage.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Container host name.
         /// </summary>
+        [ArgumentFormat("--hostname {value}")]
         public virtual string Hostname { get; internal set; }
         /// <summary>
         ///   Run an init inside the container that forwards signals and reaps processes.
         /// </summary>
+        [ArgumentFormat("--init")]
         public virtual bool? Init { get; internal set; }
         /// <summary>
         ///   Keep STDIN open even if not attached.
         /// </summary>
+        [ArgumentFormat("--interactive")]
         public virtual bool? Interactive { get; internal set; }
         /// <summary>
         ///   Maximum IO bandwidth limit for the system drive (Windows only).
         /// </summary>
+        [ArgumentFormat("--io-maxbandwidth {value}")]
         public virtual long? IoMaxbandwidth { get; internal set; }
         /// <summary>
         ///   Maximum IOps limit for the system drive (Windows only).
         /// </summary>
+        [ArgumentFormat("--io-maxiops {value}")]
         public virtual int? IoMaxiops { get; internal set; }
         /// <summary>
         ///   IPv4 address (e.g., 172.30.100.104).
         /// </summary>
+        [ArgumentFormat("--ip {value}")]
         public virtual string Ip { get; internal set; }
         /// <summary>
         ///   IPv6 address (e.g., 2001:db8::33).
         /// </summary>
+        [ArgumentFormat("--ip6 {value}")]
         public virtual string Ip6 { get; internal set; }
         /// <summary>
         ///   IPC mode to use.
         /// </summary>
+        [ArgumentFormat("--ipc {value}")]
         public virtual string Ipc { get; internal set; }
         /// <summary>
         ///   Container isolation technology.
         /// </summary>
+        [ArgumentFormat("--isolation {value}")]
         public virtual string Isolation { get; internal set; }
         /// <summary>
         ///   Kernel memory limit.
         /// </summary>
+        [ArgumentFormat("--kernel-memory {value}")]
         public virtual long? KernelMemory { get; internal set; }
         /// <summary>
         ///   Set meta data on a container.
         /// </summary>
+        [ArgumentFormat("--label {value}")]
         public virtual IReadOnlyList<string> Label => LabelInternal.AsReadOnly();
         internal List<string> LabelInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Read in a line delimited file of labels.
         /// </summary>
+        [ArgumentFormat("--label-file {value}")]
         public virtual IReadOnlyList<string> LabelFile => LabelFileInternal.AsReadOnly();
         internal List<string> LabelFileInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Add link to another container.
         /// </summary>
+        [ArgumentFormat("--link {value}")]
         public virtual IReadOnlyList<string> Link => LinkInternal.AsReadOnly();
         internal List<string> LinkInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Container IPv4/IPv6 link-local addresses.
         /// </summary>
+        [ArgumentFormat("--link-local-ip {value}")]
         public virtual IReadOnlyList<string> LinkLocalIp => LinkLocalIpInternal.AsReadOnly();
         internal List<string> LinkLocalIpInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Logging driver for the container.
         /// </summary>
+        [ArgumentFormat("--log-driver {value}")]
         public virtual string LogDriver { get; internal set; }
         /// <summary>
         ///   Log driver options.
         /// </summary>
+        [ArgumentFormat("--log-opt {value}")]
         public virtual IReadOnlyList<string> LogOpt => LogOptInternal.AsReadOnly();
         internal List<string> LogOptInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Container MAC address (e.g., 92:d0:c6:0a:29:33).
         /// </summary>
+        [ArgumentFormat("--mac-address {value}")]
         public virtual string MacAddress { get; internal set; }
         /// <summary>
         ///   Memory limit.
         /// </summary>
+        [ArgumentFormat("--memory {value}")]
         public virtual long? Memory { get; internal set; }
         /// <summary>
         ///   Memory soft limit.
         /// </summary>
+        [ArgumentFormat("--memory-reservation {value}")]
         public virtual long? MemoryReservation { get; internal set; }
         /// <summary>
         ///   Swap limit equal to memory plus swap: '-1' to enable unlimited swap.
         /// </summary>
+        [ArgumentFormat("--memory-swap {value}")]
         public virtual long? MemorySwap { get; internal set; }
         /// <summary>
         ///   Tune container memory swappiness (0 to 100).
         /// </summary>
+        [ArgumentFormat("--memory-swappiness {value}")]
         public virtual long? MemorySwappiness { get; internal set; }
         /// <summary>
         ///   Attach a filesystem mount to the container.
         /// </summary>
+        [ArgumentFormat("--mount {value}")]
         public virtual string Mount { get; internal set; }
         /// <summary>
         ///   Assign a name to the container.
         /// </summary>
+        [ArgumentFormat("--name {value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   Connect a container to a network.
         /// </summary>
+        [ArgumentFormat("--net {value}")]
         public virtual string Net { get; internal set; }
         /// <summary>
         ///   Add network-scoped alias for the container.
         /// </summary>
+        [ArgumentFormat("--net-alias {value}")]
         public virtual IReadOnlyList<string> NetAlias => NetAliasInternal.AsReadOnly();
         internal List<string> NetAliasInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Connect a container to a network.
         /// </summary>
+        [ArgumentFormat("--network {value}")]
         public virtual string Network { get; internal set; }
         /// <summary>
         ///   Add network-scoped alias for the container.
         /// </summary>
+        [ArgumentFormat("--network-alias {value}")]
         public virtual IReadOnlyList<string> NetworkAlias => NetworkAliasInternal.AsReadOnly();
         internal List<string> NetworkAliasInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Disable any container-specified HEALTHCHECK.
         /// </summary>
+        [ArgumentFormat("--no-healthcheck")]
         public virtual bool? NoHealthcheck { get; internal set; }
         /// <summary>
         ///   Disable OOM Killer.
         /// </summary>
+        [ArgumentFormat("--oom-kill-disable")]
         public virtual bool? OomKillDisable { get; internal set; }
         /// <summary>
         ///   Tune host's OOM preferences (-1000 to 1000).
         /// </summary>
+        [ArgumentFormat("--oom-score-adj {value}")]
         public virtual int? OomScoreAdj { get; internal set; }
         /// <summary>
         ///   PID namespace to use.
         /// </summary>
+        [ArgumentFormat("--pid {value}")]
         public virtual string Pid { get; internal set; }
         /// <summary>
         ///   Tune container pids limit (set -1 for unlimited).
         /// </summary>
+        [ArgumentFormat("--pids-limit {value}")]
         public virtual long? PidsLimit { get; internal set; }
         /// <summary>
         ///   Set platform if server is multi-platform capable.
         /// </summary>
+        [ArgumentFormat("--platform {value}")]
         public virtual string Platform { get; internal set; }
         /// <summary>
         ///   Give extended privileges to this container.
         /// </summary>
+        [ArgumentFormat("--privileged")]
         public virtual bool? Privileged { get; internal set; }
         /// <summary>
         ///   Publish a container's port(s) to the host.
         /// </summary>
+        [ArgumentFormat("--publish {value}")]
         public virtual IReadOnlyList<string> Publish => PublishInternal.AsReadOnly();
         internal List<string> PublishInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Publish all exposed ports to random ports.
         /// </summary>
+        [ArgumentFormat("--publish-all")]
         public virtual bool? PublishAll { get; internal set; }
         /// <summary>
         ///   Mount the container's root filesystem as read only.
         /// </summary>
+        [ArgumentFormat("--read-only")]
         public virtual bool? ReadOnly { get; internal set; }
         /// <summary>
         ///   Restart policy to apply when a container exits.
         /// </summary>
+        [ArgumentFormat("--restart {value}")]
         public virtual string Restart { get; internal set; }
         /// <summary>
         ///   Automatically remove the container when it exits.
         /// </summary>
+        [ArgumentFormat("--rm")]
         public virtual bool? Rm { get; internal set; }
         /// <summary>
         ///   Runtime to use for this container.
         /// </summary>
+        [ArgumentFormat("--runtime {value}")]
         public virtual string Runtime { get; internal set; }
         /// <summary>
         ///   Security Options.
         /// </summary>
+        [ArgumentFormat("--security-opt {value}")]
         public virtual IReadOnlyList<string> SecurityOpt => SecurityOptInternal.AsReadOnly();
         internal List<string> SecurityOptInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Size of /dev/shm.
         /// </summary>
+        [ArgumentFormat("--shm-size {value}")]
         public virtual long? ShmSize { get; internal set; }
         /// <summary>
         ///   Signal to stop a container.
         /// </summary>
+        [ArgumentFormat("--stop-signal {value}")]
         public virtual string StopSignal { get; internal set; }
         /// <summary>
         ///   Timeout (in seconds) to stop a container.
         /// </summary>
+        [ArgumentFormat("--stop-timeout {value}")]
         public virtual int? StopTimeout { get; internal set; }
         /// <summary>
         ///   Storage driver options for the container.
         /// </summary>
+        [ArgumentFormat("--storage-opt {value}")]
         public virtual IReadOnlyList<string> StorageOpt => StorageOptInternal.AsReadOnly();
         internal List<string> StorageOptInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Sysctl options.
         /// </summary>
+        [ArgumentFormat("--sysctl {value}")]
+        [ItemFormat("{key}:{value}")]
         public virtual IReadOnlyDictionary<string, string> Sysctl => SysctlInternal.AsReadOnly();
         internal Dictionary<string,string> SysctlInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Mount a tmpfs directory.
         /// </summary>
+        [ArgumentFormat("--tmpfs {value}")]
         public virtual IReadOnlyList<string> Tmpfs => TmpfsInternal.AsReadOnly();
         internal List<string> TmpfsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Allocate a pseudo-TTY.
         /// </summary>
+        [ArgumentFormat("--tty")]
         public virtual bool? Tty { get; internal set; }
         /// <summary>
         ///   Ulimit options.
         /// </summary>
+        [ArgumentFormat("--ulimit {value}")]
         public virtual string Ulimit { get; internal set; }
         /// <summary>
         ///   Username or UID (format: &lt;name|uid&gt;[:&lt;group|gid&gt;]).
         /// </summary>
+        [ArgumentFormat("--user {value}")]
         public virtual string User { get; internal set; }
         /// <summary>
         ///   User namespace to use.
         /// </summary>
+        [ArgumentFormat("--userns {value}")]
         public virtual string Userns { get; internal set; }
         /// <summary>
         ///   UTS namespace to use.
         /// </summary>
+        [ArgumentFormat("--uts {value}")]
         public virtual string Uts { get; internal set; }
         /// <summary>
         ///   Bind mount a volume.
         /// </summary>
+        [ArgumentFormat("--volume {value}")]
         public virtual IReadOnlyList<string> Volume => VolumeInternal.AsReadOnly();
         internal List<string> VolumeInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Optional volume driver for the container.
         /// </summary>
+        [ArgumentFormat("--volume-driver {value}")]
         public virtual string VolumeDriver { get; internal set; }
         /// <summary>
         ///   Mount volumes from the specified container(s).
         /// </summary>
+        [ArgumentFormat("--volumes-from {value}")]
         public virtual IReadOnlyList<string> VolumesFrom => VolumesFromInternal.AsReadOnly();
         internal List<string> VolumesFromInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Working directory inside the container.
         /// </summary>
+        [ArgumentFormat("--workdir {value}")]
         public virtual string Workdir { get; internal set; }
         /// <summary>
         ///   IMAGE
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Image { get; internal set; }
         /// <summary>
         ///   [COMMAND]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Command { get; internal set; }
         /// <summary>
         ///   [ARG...]
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Args => ArgsInternal.AsReadOnly();
         internal List<string> ArgsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -16372,369 +17072,454 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Service command args.
         /// </summary>
+        [ArgumentFormat("--args {value}")]
         public virtual string Args { get; internal set; }
         /// <summary>
         ///   Add or update a config file on a service.
         /// </summary>
+        [ArgumentFormat("--config-add {value}")]
         public virtual string ConfigAdd { get; internal set; }
         /// <summary>
         ///   Remove a configuration file.
         /// </summary>
+        [ArgumentFormat("--config-rm {value}")]
         public virtual IReadOnlyList<string> ConfigRm => ConfigRmInternal.AsReadOnly();
         internal List<string> ConfigRmInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Add or update a placement constraint.
         /// </summary>
+        [ArgumentFormat("--constraint-add {value}")]
         public virtual IReadOnlyList<string> ConstraintAdd => ConstraintAddInternal.AsReadOnly();
         internal List<string> ConstraintAddInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Remove a constraint.
         /// </summary>
+        [ArgumentFormat("--constraint-rm {value}")]
         public virtual IReadOnlyList<string> ConstraintRm => ConstraintRmInternal.AsReadOnly();
         internal List<string> ConstraintRmInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Add or update a container label.
         /// </summary>
+        [ArgumentFormat("--container-label-add {value}")]
         public virtual IReadOnlyList<string> ContainerLabelAdd => ContainerLabelAddInternal.AsReadOnly();
         internal List<string> ContainerLabelAddInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Remove a container label by its key.
         /// </summary>
+        [ArgumentFormat("--container-label-rm {value}")]
         public virtual IReadOnlyList<string> ContainerLabelRm => ContainerLabelRmInternal.AsReadOnly();
         internal List<string> ContainerLabelRmInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Credential spec for managed service account (Windows only).
         /// </summary>
+        [ArgumentFormat("--credential-spec {value}")]
         public virtual string CredentialSpec { get; internal set; }
         /// <summary>
         ///   Exit immediately instead of waiting for the service to converge.
         /// </summary>
+        [ArgumentFormat("--detach")]
         public virtual bool? Detach { get; internal set; }
         /// <summary>
         ///   Add or update a custom DNS server.
         /// </summary>
+        [ArgumentFormat("--dns-add {value}")]
         public virtual IReadOnlyList<string> DnsAdd => DnsAddInternal.AsReadOnly();
         internal List<string> DnsAddInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Add or update a DNS option.
         /// </summary>
+        [ArgumentFormat("--dns-option-add {value}")]
         public virtual IReadOnlyList<string> DnsOptionAdd => DnsOptionAddInternal.AsReadOnly();
         internal List<string> DnsOptionAddInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Remove a DNS option.
         /// </summary>
+        [ArgumentFormat("--dns-option-rm {value}")]
         public virtual IReadOnlyList<string> DnsOptionRm => DnsOptionRmInternal.AsReadOnly();
         internal List<string> DnsOptionRmInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Remove a custom DNS server.
         /// </summary>
+        [ArgumentFormat("--dns-rm {value}")]
         public virtual IReadOnlyList<string> DnsRm => DnsRmInternal.AsReadOnly();
         internal List<string> DnsRmInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Add or update a custom DNS search domain.
         /// </summary>
+        [ArgumentFormat("--dns-search-add {value}")]
         public virtual IReadOnlyList<string> DnsSearchAdd => DnsSearchAddInternal.AsReadOnly();
         internal List<string> DnsSearchAddInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Remove a DNS search domain.
         /// </summary>
+        [ArgumentFormat("--dns-search-rm {value}")]
         public virtual IReadOnlyList<string> DnsSearchRm => DnsSearchRmInternal.AsReadOnly();
         internal List<string> DnsSearchRmInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Endpoint mode (vip or dnsrr).
         /// </summary>
+        [ArgumentFormat("--endpoint-mode {value}")]
         public virtual string EndpointMode { get; internal set; }
         /// <summary>
         ///   Overwrite the default ENTRYPOINT of the image.
         /// </summary>
+        [ArgumentFormat("--entrypoint {value}")]
         public virtual string Entrypoint { get; internal set; }
         /// <summary>
         ///   Add or update an environment variable.
         /// </summary>
+        [ArgumentFormat("--env-add {value}")]
         public virtual IReadOnlyList<string> EnvAdd => EnvAddInternal.AsReadOnly();
         internal List<string> EnvAddInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Remove an environment variable.
         /// </summary>
+        [ArgumentFormat("--env-rm {value}")]
         public virtual IReadOnlyList<string> EnvRm => EnvRmInternal.AsReadOnly();
         internal List<string> EnvRmInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Force update even if no changes require it.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Add a Generic resource.
         /// </summary>
+        [ArgumentFormat("--generic-resource-add {value}")]
         public virtual IReadOnlyList<string> GenericResourceAdd => GenericResourceAddInternal.AsReadOnly();
         internal List<string> GenericResourceAddInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Remove a Generic resource.
         /// </summary>
+        [ArgumentFormat("--generic-resource-rm {value}")]
         public virtual IReadOnlyList<string> GenericResourceRm => GenericResourceRmInternal.AsReadOnly();
         internal List<string> GenericResourceRmInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Add an additional supplementary user group to the container.
         /// </summary>
+        [ArgumentFormat("--group-add {value}")]
         public virtual IReadOnlyList<string> GroupAdd => GroupAddInternal.AsReadOnly();
         internal List<string> GroupAddInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Remove a previously added supplementary user group from the container.
         /// </summary>
+        [ArgumentFormat("--group-rm {value}")]
         public virtual IReadOnlyList<string> GroupRm => GroupRmInternal.AsReadOnly();
         internal List<string> GroupRmInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Command to run to check health.
         /// </summary>
+        [ArgumentFormat("--health-cmd {value}")]
         public virtual string HealthCmd { get; internal set; }
         /// <summary>
         ///   Time between running the check (ms|s|m|h).
         /// </summary>
+        [ArgumentFormat("--health-interval {value}")]
         public virtual string HealthInterval { get; internal set; }
         /// <summary>
         ///   Consecutive failures needed to report unhealthy.
         /// </summary>
+        [ArgumentFormat("--health-retries {value}")]
         public virtual int? HealthRetries { get; internal set; }
         /// <summary>
         ///   Start period for the container to initialize before counting retries towards unstable (ms|s|m|h).
         /// </summary>
+        [ArgumentFormat("--health-start-period {value}")]
         public virtual string HealthStartPeriod { get; internal set; }
         /// <summary>
         ///   Maximum time to allow one check to run (ms|s|m|h).
         /// </summary>
+        [ArgumentFormat("--health-timeout {value}")]
         public virtual string HealthTimeout { get; internal set; }
         /// <summary>
         ///   Add a custom host-to-IP mapping (host:ip).
         /// </summary>
+        [ArgumentFormat("--host-add {value}")]
         public virtual IReadOnlyList<string> HostAdd => HostAddInternal.AsReadOnly();
         internal List<string> HostAddInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Remove a custom host-to-IP mapping (host:ip).
         /// </summary>
+        [ArgumentFormat("--host-rm {value}")]
         public virtual IReadOnlyList<string> HostRm => HostRmInternal.AsReadOnly();
         internal List<string> HostRmInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Container hostname.
         /// </summary>
+        [ArgumentFormat("--hostname {value}")]
         public virtual string Hostname { get; internal set; }
         /// <summary>
         ///   Service image tag.
         /// </summary>
+        [ArgumentFormat("--image {value}")]
         public virtual string Image { get; internal set; }
         /// <summary>
         ///   Use an init inside each service container to forward signals and reap processes.
         /// </summary>
+        [ArgumentFormat("--init")]
         public virtual bool? Init { get; internal set; }
         /// <summary>
         ///   Service container isolation mode.
         /// </summary>
+        [ArgumentFormat("--isolation {value}")]
         public virtual string Isolation { get; internal set; }
         /// <summary>
         ///   Add or update a service label.
         /// </summary>
+        [ArgumentFormat("--label-add {value}")]
         public virtual IReadOnlyList<string> LabelAdd => LabelAddInternal.AsReadOnly();
         internal List<string> LabelAddInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Remove a label by its key.
         /// </summary>
+        [ArgumentFormat("--label-rm {value}")]
         public virtual IReadOnlyList<string> LabelRm => LabelRmInternal.AsReadOnly();
         internal List<string> LabelRmInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Limit CPUs.
         /// </summary>
+        [ArgumentFormat("--limit-cpu {value}")]
         public virtual decimal? LimitCpu { get; internal set; }
         /// <summary>
         ///   Limit Memory.
         /// </summary>
+        [ArgumentFormat("--limit-memory {value}")]
         public virtual long? LimitMemory { get; internal set; }
         /// <summary>
         ///   Logging driver for service.
         /// </summary>
+        [ArgumentFormat("--log-driver {value}")]
         public virtual string LogDriver { get; internal set; }
         /// <summary>
         ///   Logging driver options.
         /// </summary>
+        [ArgumentFormat("--log-opt {value}")]
         public virtual IReadOnlyList<string> LogOpt => LogOptInternal.AsReadOnly();
         internal List<string> LogOptInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Add or update a mount on a service.
         /// </summary>
+        [ArgumentFormat("--mount-add {value}")]
         public virtual string MountAdd { get; internal set; }
         /// <summary>
         ///   Remove a mount by its target path.
         /// </summary>
+        [ArgumentFormat("--mount-rm {value}")]
         public virtual IReadOnlyList<string> MountRm => MountRmInternal.AsReadOnly();
         internal List<string> MountRmInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Add a network.
         /// </summary>
+        [ArgumentFormat("--network-add {value}")]
         public virtual string NetworkAdd { get; internal set; }
         /// <summary>
         ///   Remove a network.
         /// </summary>
+        [ArgumentFormat("--network-rm {value}")]
         public virtual IReadOnlyList<string> NetworkRm => NetworkRmInternal.AsReadOnly();
         internal List<string> NetworkRmInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Disable any container-specified HEALTHCHECK.
         /// </summary>
+        [ArgumentFormat("--no-healthcheck")]
         public virtual bool? NoHealthcheck { get; internal set; }
         /// <summary>
         ///   Do not query the registry to resolve image digest and supported platforms.
         /// </summary>
+        [ArgumentFormat("--no-resolve-image")]
         public virtual bool? NoResolveImage { get; internal set; }
         /// <summary>
         ///   Add a placement preference.
         /// </summary>
+        [ArgumentFormat("--placement-pref-add {value}")]
         public virtual string PlacementPrefAdd { get; internal set; }
         /// <summary>
         ///   Remove a placement preference.
         /// </summary>
+        [ArgumentFormat("--placement-pref-rm {value}")]
         public virtual string PlacementPrefRm { get; internal set; }
         /// <summary>
         ///   Add or update a published port.
         /// </summary>
+        [ArgumentFormat("--publish-add {value}")]
         public virtual string PublishAdd { get; internal set; }
         /// <summary>
         ///   Remove a published port by its target port.
         /// </summary>
+        [ArgumentFormat("--publish-rm {value}")]
         public virtual string PublishRm { get; internal set; }
         /// <summary>
         ///   Suppress progress output.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   Mount the container's root filesystem as read only.
         /// </summary>
+        [ArgumentFormat("--read-only")]
         public virtual bool? ReadOnly { get; internal set; }
         /// <summary>
         ///   Number of tasks.
         /// </summary>
+        [ArgumentFormat("--replicas {value}")]
         public virtual int? Replicas { get; internal set; }
         /// <summary>
         ///   Maximum number of tasks per node (default 0 = unlimited).
         /// </summary>
+        [ArgumentFormat("--replicas-max-per-node {value}")]
         public virtual int? ReplicasMaxPerNode { get; internal set; }
         /// <summary>
         ///   Reserve CPUs.
         /// </summary>
+        [ArgumentFormat("--reserve-cpu {value}")]
         public virtual decimal? ReserveCpu { get; internal set; }
         /// <summary>
         ///   Reserve Memory.
         /// </summary>
+        [ArgumentFormat("--reserve-memory {value}")]
         public virtual long? ReserveMemory { get; internal set; }
         /// <summary>
         ///   Restart when condition is met ("none"|"on-failure"|"any").
         /// </summary>
+        [ArgumentFormat("--restart-condition {value}")]
         public virtual RestartCondition RestartCondition { get; internal set; }
         /// <summary>
         ///   Delay between restart attempts (ns|us|ms|s|m|h).
         /// </summary>
+        [ArgumentFormat("--restart-delay {value}")]
         public virtual string RestartDelay { get; internal set; }
         /// <summary>
         ///   Maximum number of restarts before giving up.
         /// </summary>
+        [ArgumentFormat("--restart-max-attempts {value}")]
         public virtual int? RestartMaxAttempts { get; internal set; }
         /// <summary>
         ///   Window used to evaluate the restart policy (ns|us|ms|s|m|h).
         /// </summary>
+        [ArgumentFormat("--restart-window {value}")]
         public virtual string RestartWindow { get; internal set; }
         /// <summary>
         ///   Rollback to previous specification.
         /// </summary>
+        [ArgumentFormat("--rollback")]
         public virtual bool? Rollback { get; internal set; }
         /// <summary>
         ///   Delay between task rollbacks (ns|us|ms|s|m|h).
         /// </summary>
+        [ArgumentFormat("--rollback-delay {value}")]
         public virtual string RollbackDelay { get; internal set; }
         /// <summary>
         ///   Action on rollback failure ("pause"|"continue").
         /// </summary>
+        [ArgumentFormat("--rollback-failure-action {value}")]
         public virtual RollbackFailureAction RollbackFailureAction { get; internal set; }
         /// <summary>
         ///   Failure rate to tolerate during a rollback.
         /// </summary>
+        [ArgumentFormat("--rollback-max-failure-ratio {value}")]
         public virtual float? RollbackMaxFailureRatio { get; internal set; }
         /// <summary>
         ///   Duration after each task rollback to monitor for failure (ns|us|ms|s|m|h).
         /// </summary>
+        [ArgumentFormat("--rollback-monitor {value}")]
         public virtual string RollbackMonitor { get; internal set; }
         /// <summary>
         ///   Rollback order ("start-first"|"stop-first").
         /// </summary>
+        [ArgumentFormat("--rollback-order {value}")]
         public virtual RollbackOrder RollbackOrder { get; internal set; }
         /// <summary>
         ///   Maximum number of tasks rolled back simultaneously (0 to roll back all at once).
         /// </summary>
+        [ArgumentFormat("--rollback-parallelism {value}")]
         public virtual int? RollbackParallelism { get; internal set; }
         /// <summary>
         ///   Add or update a secret on a service.
         /// </summary>
+        [ArgumentFormat("--secret-add {value}")]
         public virtual string SecretAdd { get; internal set; }
         /// <summary>
         ///   Remove a secret.
         /// </summary>
+        [ArgumentFormat("--secret-rm {value}")]
         public virtual IReadOnlyList<string> SecretRm => SecretRmInternal.AsReadOnly();
         internal List<string> SecretRmInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Time to wait before force killing a container (ns|us|ms|s|m|h).
         /// </summary>
+        [ArgumentFormat("--stop-grace-period {value}")]
         public virtual string StopGracePeriod { get; internal set; }
         /// <summary>
         ///   Signal to stop the container.
         /// </summary>
+        [ArgumentFormat("--stop-signal {value}")]
         public virtual string StopSignal { get; internal set; }
         /// <summary>
         ///   Add or update a Sysctl option.
         /// </summary>
+        [ArgumentFormat("--sysctl-add {value}")]
         public virtual IReadOnlyList<string> SysctlAdd => SysctlAddInternal.AsReadOnly();
         internal List<string> SysctlAddInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Remove a Sysctl option.
         /// </summary>
+        [ArgumentFormat("--sysctl-rm {value}")]
         public virtual IReadOnlyList<string> SysctlRm => SysctlRmInternal.AsReadOnly();
         internal List<string> SysctlRmInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Allocate a pseudo-TTY.
         /// </summary>
+        [ArgumentFormat("--tty")]
         public virtual bool? Tty { get; internal set; }
         /// <summary>
         ///   Delay between updates (ns|us|ms|s|m|h).
         /// </summary>
+        [ArgumentFormat("--update-delay {value}")]
         public virtual string UpdateDelay { get; internal set; }
         /// <summary>
         ///   Action on update failure ("pause"|"continue"|"rollback").
         /// </summary>
+        [ArgumentFormat("--update-failure-action {value}")]
         public virtual UpdateFailureAction UpdateFailureAction { get; internal set; }
         /// <summary>
         ///   Failure rate to tolerate during an update.
         /// </summary>
+        [ArgumentFormat("--update-max-failure-ratio {value}")]
         public virtual float? UpdateMaxFailureRatio { get; internal set; }
         /// <summary>
         ///   Duration after each task update to monitor for failure (ns|us|ms|s|m|h).
         /// </summary>
+        [ArgumentFormat("--update-monitor {value}")]
         public virtual string UpdateMonitor { get; internal set; }
         /// <summary>
         ///   Update order ("start-first"|"stop-first").
         /// </summary>
+        [ArgumentFormat("--update-order {value}")]
         public virtual UpdateOrder UpdateOrder { get; internal set; }
         /// <summary>
         ///   Maximum number of tasks updated simultaneously (0 to update all at once).
         /// </summary>
+        [ArgumentFormat("--update-parallelism {value}")]
         public virtual int? UpdateParallelism { get; internal set; }
         /// <summary>
         ///   Username or UID (format: &lt;name|uid&gt;[:&lt;group|gid&gt;]).
         /// </summary>
+        [ArgumentFormat("--user {value}")]
         public virtual string User { get; internal set; }
         /// <summary>
         ///   Send registry authentication details to swarm agents.
         /// </summary>
+        [ArgumentFormat("--with-registry-auth")]
         public virtual bool? WithRegistryAuth { get; internal set; }
         /// <summary>
         ///   Working directory inside the container.
         /// </summary>
+        [ArgumentFormat("--workdir {value}")]
         public virtual string Workdir { get; internal set; }
         /// <summary>
         ///   SERVICE
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Service { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -16847,10 +17632,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         /// <summary>
         ///   [PRIVATE_PORT[/PROTO]]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string PrivatePort { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -16903,10 +17690,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Skip image signing.
         /// </summary>
+        [ArgumentFormat("--disable-content-trust")]
         public virtual bool? DisableContentTrust { get; internal set; }
         /// <summary>
         ///   NAME[:TAG]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Name { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -16936,14 +17725,18 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Print the information in a human friendly format.
         /// </summary>
+        [ArgumentFormat("--pretty")]
         public virtual bool? Pretty { get; internal set; }
         /// <summary>
         ///   SERVICE
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Services => ServicesInternal.AsReadOnly();
         internal List<string> ServicesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -16975,38 +17768,46 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Add network-scoped alias for the container.
         /// </summary>
+        [ArgumentFormat("--alias {value}")]
         public virtual IReadOnlyList<string> Alias => AliasInternal.AsReadOnly();
         internal List<string> AliasInternal { get; set; } = new List<string>();
         /// <summary>
         ///   driver options for the network.
         /// </summary>
+        [ArgumentFormat("--driver-opt {value}")]
         public virtual IReadOnlyList<string> DriverOpt => DriverOptInternal.AsReadOnly();
         internal List<string> DriverOptInternal { get; set; } = new List<string>();
         /// <summary>
         ///   IPv4 address (e.g., 172.30.100.104).
         /// </summary>
+        [ArgumentFormat("--ip {value}")]
         public virtual string Ip { get; internal set; }
         /// <summary>
         ///   IPv6 address (e.g., 2001:db8::33).
         /// </summary>
+        [ArgumentFormat("--ip6 {value}")]
         public virtual string Ip6 { get; internal set; }
         /// <summary>
         ///   Add link to another container.
         /// </summary>
+        [ArgumentFormat("--link {value}")]
         public virtual IReadOnlyList<string> Link => LinkInternal.AsReadOnly();
         internal List<string> LinkInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Add a link-local address for the container.
         /// </summary>
+        [ArgumentFormat("--link-local-ip {value}")]
         public virtual IReadOnlyList<string> LinkLocalIp => LinkLocalIpInternal.AsReadOnly();
         internal List<string> LinkLocalIpInternal { get; set; } = new List<string>();
         /// <summary>
         ///   NETWORK
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Network { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -17042,14 +17843,17 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Pretty-print secrets using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Only display IDs.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -17080,6 +17884,7 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Force this node to leave the swarm, ignoring warnings.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -17108,30 +17913,37 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Show all images (default hides intermediate images).
         /// </summary>
+        [ArgumentFormat("--all")]
         public virtual bool? All { get; internal set; }
         /// <summary>
         ///   Show digests.
         /// </summary>
+        [ArgumentFormat("--digests")]
         public virtual bool? Digests { get; internal set; }
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Pretty-print images using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Don't truncate output.
         /// </summary>
+        [ArgumentFormat("--no-trunc")]
         public virtual bool? NoTrunc { get; internal set; }
         /// <summary>
         ///   Only show numeric IDs.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   [REPOSITORY[:TAG]]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Repository { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -17166,18 +17978,22 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   override default location of containerd endpoint.
         /// </summary>
+        [ArgumentFormat("--containerd {value}")]
         public virtual string Containerd { get; internal set; }
         /// <summary>
         ///   Specify engine image (default uses the same image as currently running).
         /// </summary>
+        [ArgumentFormat("--engine-image {value}")]
         public virtual string EngineImage { get; internal set; }
         /// <summary>
         ///   Override the current location where engine images are pulled.
         /// </summary>
+        [ArgumentFormat("--registry-prefix {value}")]
         public virtual string RegistryPrefix { get; internal set; }
         /// <summary>
         ///   Specify engine version.
         /// </summary>
+        [ArgumentFormat("--version {value}")]
         public virtual string Version { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -17209,18 +18025,22 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Show all events created since timestamp.
         /// </summary>
+        [ArgumentFormat("--since {value}")]
         public virtual string Since { get; internal set; }
         /// <summary>
         ///   Stream events until this timestamp.
         /// </summary>
+        [ArgumentFormat("--until {value}")]
         public virtual string Until { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -17252,18 +18072,23 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Display total file sizes if the type is container.
         /// </summary>
+        [ArgumentFormat("--size")]
         public virtual bool? Size { get; internal set; }
         /// <summary>
         ///   Return JSON for specified type.
         /// </summary>
+        [ArgumentFormat("--type {value}")]
         public virtual string Type { get; internal set; }
         /// <summary>
         ///   NAME|ID
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Names => NamesInternal.AsReadOnly();
         internal List<string> NamesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -17296,34 +18121,42 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   override default location of containerd endpoint.
         /// </summary>
+        [ArgumentFormat("--containerd {value}")]
         public virtual string Containerd { get; internal set; }
         /// <summary>
         ///   Report downgrades (default omits older versions).
         /// </summary>
+        [ArgumentFormat("--downgrades")]
         public virtual bool? Downgrades { get; internal set; }
         /// <summary>
         ///   Specify engine image (default uses the same image as currently running).
         /// </summary>
+        [ArgumentFormat("--engine-image {value}")]
         public virtual string EngineImage { get; internal set; }
         /// <summary>
         ///   Pretty-print updates using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Include pre-release versions.
         /// </summary>
+        [ArgumentFormat("--pre-releases")]
         public virtual bool? PreReleases { get; internal set; }
         /// <summary>
         ///   Only display available versions.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   Override the existing location where engine images are pulled.
         /// </summary>
+        [ArgumentFormat("--registry-prefix {value}")]
         public virtual string RegistryPrefix { get; internal set; }
         /// <summary>
         ///   Report available upgrades.
         /// </summary>
+        [ArgumentFormat("--upgrades")]
         public virtual bool? Upgrades { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -17359,18 +18192,22 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Override the key sequence for detaching a container.
         /// </summary>
+        [ArgumentFormat("--detach-keys {value}")]
         public virtual string DetachKeys { get; internal set; }
         /// <summary>
         ///   Do not attach STDIN.
         /// </summary>
+        [ArgumentFormat("--no-stdin")]
         public virtual bool? NoStdin { get; internal set; }
         /// <summary>
         ///   Proxy all received signals to the process.
         /// </summary>
+        [ArgumentFormat("--sig-proxy")]
         public virtual bool? SigProxy { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -17402,6 +18239,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -17431,30 +18270,37 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to the PEM-formatted root CA certificate to use for the new cluster.
         /// </summary>
+        [ArgumentFormat("--ca-cert {value}")]
         public virtual string CaCert { get; internal set; }
         /// <summary>
         ///   Path to the PEM-formatted root CA key to use for the new cluster.
         /// </summary>
+        [ArgumentFormat("--ca-key {value}")]
         public virtual string CaKey { get; internal set; }
         /// <summary>
         ///   Validity period for node certificates (ns|us|ms|s|m|h).
         /// </summary>
+        [ArgumentFormat("--cert-expiry {value}")]
         public virtual string CertExpiry { get; internal set; }
         /// <summary>
         ///   Exit immediately instead of waiting for the root rotation to converge.
         /// </summary>
+        [ArgumentFormat("--detach")]
         public virtual bool? Detach { get; internal set; }
         /// <summary>
         ///   Specifications of one or more certificate signing endpoints.
         /// </summary>
+        [ArgumentFormat("--external-ca {value}")]
         public virtual string ExternalCa { get; internal set; }
         /// <summary>
         ///   Suppress progress output.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   Rotate the swarm CA - if no certificate or key are provided, new ones will be generated.
         /// </summary>
+        [ArgumentFormat("--rotate")]
         public virtual bool? Rotate { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -17489,6 +18335,7 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   COMMAND
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Command { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -17517,18 +18364,22 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Remove all unused images not just dangling ones.
         /// </summary>
+        [ArgumentFormat("--all")]
         public virtual bool? All { get; internal set; }
         /// <summary>
         ///   Provide filter values (e.g. 'label=&lt;key&gt;=&lt;value&gt;').
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Do not prompt for confirmation.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Prune volumes.
         /// </summary>
+        [ArgumentFormat("--volumes")]
         public virtual bool? Volumes { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -17583,6 +18434,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -17612,27 +18465,33 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Author (e.g., "John Hannibal Smith &lt;hannibal@a-team.com&gt;").
         /// </summary>
+        [ArgumentFormat("--author {value}")]
         public virtual string Author { get; internal set; }
         /// <summary>
         ///   Apply Dockerfile instruction to the created image.
         /// </summary>
+        [ArgumentFormat("--change {value}")]
         public virtual IReadOnlyList<string> Change => ChangeInternal.AsReadOnly();
         internal List<string> ChangeInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Commit message.
         /// </summary>
+        [ArgumentFormat("--message {value}")]
         public virtual string Message { get; internal set; }
         /// <summary>
         ///   Pause container during commit.
         /// </summary>
+        [ArgumentFormat("--pause")]
         public virtual bool? Pause { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         /// <summary>
         ///   [REPOSITORY[:TAG]]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Repository { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -17666,10 +18525,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Pretty-print contexts using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Only show context names.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -17699,6 +18560,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   CONTEXT
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Contexts => ContextsInternal.AsReadOnly();
         internal List<string> ContextsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -17728,30 +18591,37 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Pretty-print tasks using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Kubernetes namespace to use.
         /// </summary>
+        [ArgumentFormat("--namespace {value}")]
         public virtual string Namespace { get; internal set; }
         /// <summary>
         ///   Do not map IDs to Names.
         /// </summary>
+        [ArgumentFormat("--no-resolve")]
         public virtual bool? NoResolve { get; internal set; }
         /// <summary>
         ///   Do not truncate output.
         /// </summary>
+        [ArgumentFormat("--no-trunc")]
         public virtual bool? NoTrunc { get; internal set; }
         /// <summary>
         ///   Only display task IDs.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   STACK
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Stack { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -17786,439 +18656,542 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Add a custom host-to-IP mapping (host:ip).
         /// </summary>
+        [ArgumentFormat("--add-host {value}")]
         public virtual IReadOnlyList<string> AddHost => AddHostInternal.AsReadOnly();
         internal List<string> AddHostInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Attach to STDIN, STDOUT or STDERR.
         /// </summary>
+        [ArgumentFormat("--attach {value}")]
         public virtual IReadOnlyList<string> Attach => AttachInternal.AsReadOnly();
         internal List<string> AttachInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0).
         /// </summary>
+        [ArgumentFormat("--blkio-weight {value}")]
         public virtual int? BlkioWeight { get; internal set; }
         /// <summary>
         ///   Block IO weight (relative device weight).
         /// </summary>
+        [ArgumentFormat("--blkio-weight-device {value}")]
         public virtual IReadOnlyList<string> BlkioWeightDevice => BlkioWeightDeviceInternal.AsReadOnly();
         internal List<string> BlkioWeightDeviceInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Add Linux capabilities.
         /// </summary>
+        [ArgumentFormat("--cap-add {value}")]
         public virtual IReadOnlyList<string> CapAdd => CapAddInternal.AsReadOnly();
         internal List<string> CapAddInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Drop Linux capabilities.
         /// </summary>
+        [ArgumentFormat("--cap-drop {value}")]
         public virtual IReadOnlyList<string> CapDrop => CapDropInternal.AsReadOnly();
         internal List<string> CapDropInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Optional parent cgroup for the container.
         /// </summary>
+        [ArgumentFormat("--cgroup-parent {value}")]
         public virtual string CgroupParent { get; internal set; }
         /// <summary>
         ///   Write the container ID to the file.
         /// </summary>
+        [ArgumentFormat("--cidfile {value}")]
         public virtual string Cidfile { get; internal set; }
         /// <summary>
         ///   CPU count (Windows only).
         /// </summary>
+        [ArgumentFormat("--cpu-count {value}")]
         public virtual long? CpuCount { get; internal set; }
         /// <summary>
         ///   CPU percent (Windows only).
         /// </summary>
+        [ArgumentFormat("--cpu-percent {value}")]
         public virtual long? CpuPercent { get; internal set; }
         /// <summary>
         ///   Limit CPU CFS (Completely Fair Scheduler) period.
         /// </summary>
+        [ArgumentFormat("--cpu-period {value}")]
         public virtual long? CpuPeriod { get; internal set; }
         /// <summary>
         ///   Limit CPU CFS (Completely Fair Scheduler) quota.
         /// </summary>
+        [ArgumentFormat("--cpu-quota {value}")]
         public virtual long? CpuQuota { get; internal set; }
         /// <summary>
         ///   Limit CPU real-time period in microseconds.
         /// </summary>
+        [ArgumentFormat("--cpu-rt-period {value}")]
         public virtual long? CpuRtPeriod { get; internal set; }
         /// <summary>
         ///   Limit CPU real-time runtime in microseconds.
         /// </summary>
+        [ArgumentFormat("--cpu-rt-runtime {value}")]
         public virtual long? CpuRtRuntime { get; internal set; }
         /// <summary>
         ///   CPU shares (relative weight).
         /// </summary>
+        [ArgumentFormat("--cpu-shares {value}")]
         public virtual long? CpuShares { get; internal set; }
         /// <summary>
         ///   Number of CPUs.
         /// </summary>
+        [ArgumentFormat("--cpus {value}")]
         public virtual decimal? Cpus { get; internal set; }
         /// <summary>
         ///   CPUs in which to allow execution (0-3, 0,1).
         /// </summary>
+        [ArgumentFormat("--cpuset-cpus {value}")]
         public virtual string CpusetCpus { get; internal set; }
         /// <summary>
         ///   MEMs in which to allow execution (0-3, 0,1).
         /// </summary>
+        [ArgumentFormat("--cpuset-mems {value}")]
         public virtual string CpusetMems { get; internal set; }
         /// <summary>
         ///   Add a host device to the container.
         /// </summary>
+        [ArgumentFormat("--device {value}")]
         public virtual IReadOnlyList<string> Device => DeviceInternal.AsReadOnly();
         internal List<string> DeviceInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Add a rule to the cgroup allowed devices list.
         /// </summary>
+        [ArgumentFormat("--device-cgroup-rule {value}")]
         public virtual IReadOnlyList<string> DeviceCgroupRule => DeviceCgroupRuleInternal.AsReadOnly();
         internal List<string> DeviceCgroupRuleInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Limit read rate (bytes per second) from a device.
         /// </summary>
+        [ArgumentFormat("--device-read-bps {value}")]
         public virtual IReadOnlyList<string> DeviceReadBps => DeviceReadBpsInternal.AsReadOnly();
         internal List<string> DeviceReadBpsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Limit read rate (IO per second) from a device.
         /// </summary>
+        [ArgumentFormat("--device-read-iops {value}")]
         public virtual IReadOnlyList<string> DeviceReadIops => DeviceReadIopsInternal.AsReadOnly();
         internal List<string> DeviceReadIopsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Limit write rate (bytes per second) to a device.
         /// </summary>
+        [ArgumentFormat("--device-write-bps {value}")]
         public virtual IReadOnlyList<string> DeviceWriteBps => DeviceWriteBpsInternal.AsReadOnly();
         internal List<string> DeviceWriteBpsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Limit write rate (IO per second) to a device.
         /// </summary>
+        [ArgumentFormat("--device-write-iops {value}")]
         public virtual IReadOnlyList<string> DeviceWriteIops => DeviceWriteIopsInternal.AsReadOnly();
         internal List<string> DeviceWriteIopsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Skip image verification.
         /// </summary>
+        [ArgumentFormat("--disable-content-trust")]
         public virtual bool? DisableContentTrust { get; internal set; }
         /// <summary>
         ///   Set custom DNS servers.
         /// </summary>
+        [ArgumentFormat("--dns {value}")]
         public virtual IReadOnlyList<string> Dns => DnsInternal.AsReadOnly();
         internal List<string> DnsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set DNS options.
         /// </summary>
+        [ArgumentFormat("--dns-opt {value}")]
         public virtual IReadOnlyList<string> DnsOpt => DnsOptInternal.AsReadOnly();
         internal List<string> DnsOptInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set DNS options.
         /// </summary>
+        [ArgumentFormat("--dns-option {value}")]
         public virtual IReadOnlyList<string> DnsOption => DnsOptionInternal.AsReadOnly();
         internal List<string> DnsOptionInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set custom DNS search domains.
         /// </summary>
+        [ArgumentFormat("--dns-search {value}")]
         public virtual IReadOnlyList<string> DnsSearch => DnsSearchInternal.AsReadOnly();
         internal List<string> DnsSearchInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Container NIS domain name.
         /// </summary>
+        [ArgumentFormat("--domainname {value}")]
         public virtual string Domainname { get; internal set; }
         /// <summary>
         ///   Overwrite the default ENTRYPOINT of the image.
         /// </summary>
+        [ArgumentFormat("--entrypoint {value}")]
         public virtual string Entrypoint { get; internal set; }
         /// <summary>
         ///   Set environment variables.
         /// </summary>
+        [ArgumentFormat("--env {value}")]
         public virtual IReadOnlyList<string> Env => EnvInternal.AsReadOnly();
         internal List<string> EnvInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Read in a file of environment variables.
         /// </summary>
+        [ArgumentFormat("--env-file {value}")]
         public virtual IReadOnlyList<string> EnvFile => EnvFileInternal.AsReadOnly();
         internal List<string> EnvFileInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Expose a port or a range of ports.
         /// </summary>
+        [ArgumentFormat("--expose {value}")]
         public virtual IReadOnlyList<string> Expose => ExposeInternal.AsReadOnly();
         internal List<string> ExposeInternal { get; set; } = new List<string>();
         /// <summary>
         ///   GPU devices to add to the container ('all' to pass all GPUs).
         /// </summary>
+        [ArgumentFormat("--gpus {value}")]
         public virtual string Gpus { get; internal set; }
         /// <summary>
         ///   Add additional groups to join.
         /// </summary>
+        [ArgumentFormat("--group-add {value}")]
         public virtual IReadOnlyList<string> GroupAdd => GroupAddInternal.AsReadOnly();
         internal List<string> GroupAddInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Command to run to check health.
         /// </summary>
+        [ArgumentFormat("--health-cmd {value}")]
         public virtual string HealthCmd { get; internal set; }
         /// <summary>
         ///   Time between running the check (ms|s|m|h) (default 0s).
         /// </summary>
+        [ArgumentFormat("--health-interval {value}")]
         public virtual string HealthInterval { get; internal set; }
         /// <summary>
         ///   Consecutive failures needed to report unhealthy.
         /// </summary>
+        [ArgumentFormat("--health-retries {value}")]
         public virtual int? HealthRetries { get; internal set; }
         /// <summary>
         ///   Start period for the container to initialize before starting health-retries countdown (ms|s|m|h) (default 0s).
         /// </summary>
+        [ArgumentFormat("--health-start-period {value}")]
         public virtual string HealthStartPeriod { get; internal set; }
         /// <summary>
         ///   Maximum time to allow one check to run (ms|s|m|h) (default 0s).
         /// </summary>
+        [ArgumentFormat("--health-timeout {value}")]
         public virtual string HealthTimeout { get; internal set; }
         /// <summary>
         ///   Print usage.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Container host name.
         /// </summary>
+        [ArgumentFormat("--hostname {value}")]
         public virtual string Hostname { get; internal set; }
         /// <summary>
         ///   Run an init inside the container that forwards signals and reaps processes.
         /// </summary>
+        [ArgumentFormat("--init")]
         public virtual bool? Init { get; internal set; }
         /// <summary>
         ///   Keep STDIN open even if not attached.
         /// </summary>
+        [ArgumentFormat("--interactive")]
         public virtual bool? Interactive { get; internal set; }
         /// <summary>
         ///   Maximum IO bandwidth limit for the system drive (Windows only).
         /// </summary>
+        [ArgumentFormat("--io-maxbandwidth {value}")]
         public virtual long? IoMaxbandwidth { get; internal set; }
         /// <summary>
         ///   Maximum IOps limit for the system drive (Windows only).
         /// </summary>
+        [ArgumentFormat("--io-maxiops {value}")]
         public virtual int? IoMaxiops { get; internal set; }
         /// <summary>
         ///   IPv4 address (e.g., 172.30.100.104).
         /// </summary>
+        [ArgumentFormat("--ip {value}")]
         public virtual string Ip { get; internal set; }
         /// <summary>
         ///   IPv6 address (e.g., 2001:db8::33).
         /// </summary>
+        [ArgumentFormat("--ip6 {value}")]
         public virtual string Ip6 { get; internal set; }
         /// <summary>
         ///   IPC mode to use.
         /// </summary>
+        [ArgumentFormat("--ipc {value}")]
         public virtual string Ipc { get; internal set; }
         /// <summary>
         ///   Container isolation technology.
         /// </summary>
+        [ArgumentFormat("--isolation {value}")]
         public virtual string Isolation { get; internal set; }
         /// <summary>
         ///   Kernel memory limit.
         /// </summary>
+        [ArgumentFormat("--kernel-memory {value}")]
         public virtual long? KernelMemory { get; internal set; }
         /// <summary>
         ///   Set meta data on a container.
         /// </summary>
+        [ArgumentFormat("--label {value}")]
         public virtual IReadOnlyList<string> Label => LabelInternal.AsReadOnly();
         internal List<string> LabelInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Read in a line delimited file of labels.
         /// </summary>
+        [ArgumentFormat("--label-file {value}")]
         public virtual IReadOnlyList<string> LabelFile => LabelFileInternal.AsReadOnly();
         internal List<string> LabelFileInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Add link to another container.
         /// </summary>
+        [ArgumentFormat("--link {value}")]
         public virtual IReadOnlyList<string> Link => LinkInternal.AsReadOnly();
         internal List<string> LinkInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Container IPv4/IPv6 link-local addresses.
         /// </summary>
+        [ArgumentFormat("--link-local-ip {value}")]
         public virtual IReadOnlyList<string> LinkLocalIp => LinkLocalIpInternal.AsReadOnly();
         internal List<string> LinkLocalIpInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Logging driver for the container.
         /// </summary>
+        [ArgumentFormat("--log-driver {value}")]
         public virtual string LogDriver { get; internal set; }
         /// <summary>
         ///   Log driver options.
         /// </summary>
+        [ArgumentFormat("--log-opt {value}")]
         public virtual IReadOnlyList<string> LogOpt => LogOptInternal.AsReadOnly();
         internal List<string> LogOptInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Container MAC address (e.g., 92:d0:c6:0a:29:33).
         /// </summary>
+        [ArgumentFormat("--mac-address {value}")]
         public virtual string MacAddress { get; internal set; }
         /// <summary>
         ///   Memory limit.
         /// </summary>
+        [ArgumentFormat("--memory {value}")]
         public virtual long? Memory { get; internal set; }
         /// <summary>
         ///   Memory soft limit.
         /// </summary>
+        [ArgumentFormat("--memory-reservation {value}")]
         public virtual long? MemoryReservation { get; internal set; }
         /// <summary>
         ///   Swap limit equal to memory plus swap: '-1' to enable unlimited swap.
         /// </summary>
+        [ArgumentFormat("--memory-swap {value}")]
         public virtual long? MemorySwap { get; internal set; }
         /// <summary>
         ///   Tune container memory swappiness (0 to 100).
         /// </summary>
+        [ArgumentFormat("--memory-swappiness {value}")]
         public virtual long? MemorySwappiness { get; internal set; }
         /// <summary>
         ///   Attach a filesystem mount to the container.
         /// </summary>
+        [ArgumentFormat("--mount {value}")]
         public virtual string Mount { get; internal set; }
         /// <summary>
         ///   Assign a name to the container.
         /// </summary>
+        [ArgumentFormat("--name {value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   Connect a container to a network.
         /// </summary>
+        [ArgumentFormat("--net {value}")]
         public virtual string Net { get; internal set; }
         /// <summary>
         ///   Add network-scoped alias for the container.
         /// </summary>
+        [ArgumentFormat("--net-alias {value}")]
         public virtual IReadOnlyList<string> NetAlias => NetAliasInternal.AsReadOnly();
         internal List<string> NetAliasInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Connect a container to a network.
         /// </summary>
+        [ArgumentFormat("--network {value}")]
         public virtual string Network { get; internal set; }
         /// <summary>
         ///   Add network-scoped alias for the container.
         /// </summary>
+        [ArgumentFormat("--network-alias {value}")]
         public virtual IReadOnlyList<string> NetworkAlias => NetworkAliasInternal.AsReadOnly();
         internal List<string> NetworkAliasInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Disable any container-specified HEALTHCHECK.
         /// </summary>
+        [ArgumentFormat("--no-healthcheck")]
         public virtual bool? NoHealthcheck { get; internal set; }
         /// <summary>
         ///   Disable OOM Killer.
         /// </summary>
+        [ArgumentFormat("--oom-kill-disable")]
         public virtual bool? OomKillDisable { get; internal set; }
         /// <summary>
         ///   Tune host's OOM preferences (-1000 to 1000).
         /// </summary>
+        [ArgumentFormat("--oom-score-adj {value}")]
         public virtual int? OomScoreAdj { get; internal set; }
         /// <summary>
         ///   PID namespace to use.
         /// </summary>
+        [ArgumentFormat("--pid {value}")]
         public virtual string Pid { get; internal set; }
         /// <summary>
         ///   Tune container pids limit (set -1 for unlimited).
         /// </summary>
+        [ArgumentFormat("--pids-limit {value}")]
         public virtual long? PidsLimit { get; internal set; }
         /// <summary>
         ///   Set platform if server is multi-platform capable.
         /// </summary>
+        [ArgumentFormat("--platform {value}")]
         public virtual string Platform { get; internal set; }
         /// <summary>
         ///   Give extended privileges to this container.
         /// </summary>
+        [ArgumentFormat("--privileged")]
         public virtual bool? Privileged { get; internal set; }
         /// <summary>
         ///   Publish a container's port(s) to the host.
         /// </summary>
+        [ArgumentFormat("--publish {value}")]
         public virtual IReadOnlyList<string> Publish => PublishInternal.AsReadOnly();
         internal List<string> PublishInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Publish all exposed ports to random ports.
         /// </summary>
+        [ArgumentFormat("--publish-all")]
         public virtual bool? PublishAll { get; internal set; }
         /// <summary>
         ///   Mount the container's root filesystem as read only.
         /// </summary>
+        [ArgumentFormat("--read-only")]
         public virtual bool? ReadOnly { get; internal set; }
         /// <summary>
         ///   Restart policy to apply when a container exits.
         /// </summary>
+        [ArgumentFormat("--restart {value}")]
         public virtual string Restart { get; internal set; }
         /// <summary>
         ///   Automatically remove the container when it exits.
         /// </summary>
+        [ArgumentFormat("--rm")]
         public virtual bool? Rm { get; internal set; }
         /// <summary>
         ///   Runtime to use for this container.
         /// </summary>
+        [ArgumentFormat("--runtime {value}")]
         public virtual string Runtime { get; internal set; }
         /// <summary>
         ///   Security Options.
         /// </summary>
+        [ArgumentFormat("--security-opt {value}")]
         public virtual IReadOnlyList<string> SecurityOpt => SecurityOptInternal.AsReadOnly();
         internal List<string> SecurityOptInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Size of /dev/shm.
         /// </summary>
+        [ArgumentFormat("--shm-size {value}")]
         public virtual long? ShmSize { get; internal set; }
         /// <summary>
         ///   Signal to stop a container.
         /// </summary>
+        [ArgumentFormat("--stop-signal {value}")]
         public virtual string StopSignal { get; internal set; }
         /// <summary>
         ///   Timeout (in seconds) to stop a container.
         /// </summary>
+        [ArgumentFormat("--stop-timeout {value}")]
         public virtual int? StopTimeout { get; internal set; }
         /// <summary>
         ///   Storage driver options for the container.
         /// </summary>
+        [ArgumentFormat("--storage-opt {value}")]
         public virtual IReadOnlyList<string> StorageOpt => StorageOptInternal.AsReadOnly();
         internal List<string> StorageOptInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Sysctl options.
         /// </summary>
+        [ArgumentFormat("--sysctl {value}")]
+        [ItemFormat("{key}:{value}")]
         public virtual IReadOnlyDictionary<string, string> Sysctl => SysctlInternal.AsReadOnly();
         internal Dictionary<string,string> SysctlInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Mount a tmpfs directory.
         /// </summary>
+        [ArgumentFormat("--tmpfs {value}")]
         public virtual IReadOnlyList<string> Tmpfs => TmpfsInternal.AsReadOnly();
         internal List<string> TmpfsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Allocate a pseudo-TTY.
         /// </summary>
+        [ArgumentFormat("--tty")]
         public virtual bool? Tty { get; internal set; }
         /// <summary>
         ///   Ulimit options.
         /// </summary>
+        [ArgumentFormat("--ulimit {value}")]
         public virtual string Ulimit { get; internal set; }
         /// <summary>
         ///   Username or UID (format: &lt;name|uid&gt;[:&lt;group|gid&gt;]).
         /// </summary>
+        [ArgumentFormat("--user {value}")]
         public virtual string User { get; internal set; }
         /// <summary>
         ///   User namespace to use.
         /// </summary>
+        [ArgumentFormat("--userns {value}")]
         public virtual string Userns { get; internal set; }
         /// <summary>
         ///   UTS namespace to use.
         /// </summary>
+        [ArgumentFormat("--uts {value}")]
         public virtual string Uts { get; internal set; }
         /// <summary>
         ///   Bind mount a volume.
         /// </summary>
+        [ArgumentFormat("--volume {value}")]
         public virtual IReadOnlyList<string> Volume => VolumeInternal.AsReadOnly();
         internal List<string> VolumeInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Optional volume driver for the container.
         /// </summary>
+        [ArgumentFormat("--volume-driver {value}")]
         public virtual string VolumeDriver { get; internal set; }
         /// <summary>
         ///   Mount volumes from the specified container(s).
         /// </summary>
+        [ArgumentFormat("--volumes-from {value}")]
         public virtual IReadOnlyList<string> VolumesFrom => VolumesFromInternal.AsReadOnly();
         internal List<string> VolumesFromInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Working directory inside the container.
         /// </summary>
+        [ArgumentFormat("--workdir {value}")]
         public virtual string Workdir { get; internal set; }
         /// <summary>
         ///   IMAGE
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Image { get; internal set; }
         /// <summary>
         ///   [COMMAND]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Command { get; internal set; }
         /// <summary>
         ///   [ARG...]
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Args => ArgsInternal.AsReadOnly();
         internal List<string> ArgsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -18348,24 +19321,30 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Specify volume driver name.
         /// </summary>
+        [ArgumentFormat("--driver {value}")]
         public virtual string Driver { get; internal set; }
         /// <summary>
         ///   Set metadata for a volume.
         /// </summary>
+        [ArgumentFormat("--label {value}")]
         public virtual IReadOnlyList<string> Label => LabelInternal.AsReadOnly();
         internal List<string> LabelInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Specify volume name.
         /// </summary>
+        [ArgumentFormat("--name {value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   Set driver specific options.
         /// </summary>
+        [ArgumentFormat("--opt {value}")]
+        [ItemFormat("{key}:{value}")]
         public virtual IReadOnlyDictionary<string, string> Opt => OptInternal.AsReadOnly();
         internal Dictionary<string,string> OptInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   [VOLUME]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Volume { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -18421,14 +19400,17 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Password.
         /// </summary>
+        [ArgumentFormat("--password {value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   Username.
         /// </summary>
+        [ArgumentFormat("--username {value}")]
         public virtual string Username { get; internal set; }
         /// <summary>
         ///   [SERVER]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Server { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -18459,10 +19441,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Only display token.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   Rotate unlock key.
         /// </summary>
+        [ArgumentFormat("--rotate")]
         public virtual bool? Rotate { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -18492,26 +19476,33 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Attach STDOUT/STDERR and forward signals.
         /// </summary>
+        [ArgumentFormat("--attach")]
         public virtual bool? Attach { get; internal set; }
         /// <summary>
         ///   Restore from this checkpoint.
         /// </summary>
+        [ArgumentFormat("--checkpoint {value}")]
         public virtual string Checkpoint { get; internal set; }
         /// <summary>
         ///   Use a custom checkpoint storage directory.
         /// </summary>
+        [ArgumentFormat("--checkpoint-dir {value}")]
         public virtual string CheckpointDir { get; internal set; }
         /// <summary>
         ///   Override the key sequence for detaching a container.
         /// </summary>
+        [ArgumentFormat("--detach-keys {value}")]
         public virtual string DetachKeys { get; internal set; }
         /// <summary>
         ///   Attach container's STDIN.
         /// </summary>
+        [ArgumentFormat("--interactive")]
         public virtual bool? Interactive { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -18546,62 +19537,77 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Advertised address (format: &lt;ip|interface&gt;[:port]).
         /// </summary>
+        [ArgumentFormat("--advertise-addr {value}")]
         public virtual string AdvertiseAddr { get; internal set; }
         /// <summary>
         ///   Enable manager autolocking (requiring an unlock key to start a stopped manager).
         /// </summary>
+        [ArgumentFormat("--autolock")]
         public virtual bool? Autolock { get; internal set; }
         /// <summary>
         ///   Availability of the node ("active"|"pause"|"drain").
         /// </summary>
+        [ArgumentFormat("--availability {value}")]
         public virtual Availability Availability { get; internal set; }
         /// <summary>
         ///   Validity period for node certificates (ns|us|ms|s|m|h).
         /// </summary>
+        [ArgumentFormat("--cert-expiry {value}")]
         public virtual string CertExpiry { get; internal set; }
         /// <summary>
         ///   Address or interface to use for data path traffic (format: &lt;ip|interface&gt;).
         /// </summary>
+        [ArgumentFormat("--data-path-addr {value}")]
         public virtual string DataPathAddr { get; internal set; }
         /// <summary>
         ///   Port number to use for data path traffic (1024 - 49151). If no value is set or is set to 0, the default port (4789) is used.
         /// </summary>
+        [ArgumentFormat("--data-path-port {value}")]
         public virtual string DataPathPort { get; internal set; }
         /// <summary>
         ///   default address pool in CIDR format.
         /// </summary>
+        [ArgumentFormat("--default-addr-pool {value}")]
         public virtual string DefaultAddrPool { get; internal set; }
         /// <summary>
         ///   default address pool subnet mask length.
         /// </summary>
+        [ArgumentFormat("--default-addr-pool-mask-length {value}")]
         public virtual string DefaultAddrPoolMaskLength { get; internal set; }
         /// <summary>
         ///   Dispatcher heartbeat period (ns|us|ms|s|m|h).
         /// </summary>
+        [ArgumentFormat("--dispatcher-heartbeat {value}")]
         public virtual string DispatcherHeartbeat { get; internal set; }
         /// <summary>
         ///   Specifications of one or more certificate signing endpoints.
         /// </summary>
+        [ArgumentFormat("--external-ca {value}")]
         public virtual string ExternalCa { get; internal set; }
         /// <summary>
         ///   Force create a new cluster from current state.
         /// </summary>
+        [ArgumentFormat("--force-new-cluster")]
         public virtual bool? ForceNewCluster { get; internal set; }
         /// <summary>
         ///   Listen address (format: &lt;ip|interface&gt;[:port]).
         /// </summary>
+        [ArgumentFormat("--listen-addr {value}")]
         public virtual string ListenAddr { get; internal set; }
         /// <summary>
         ///   Number of additional Raft snapshots to retain.
         /// </summary>
+        [ArgumentFormat("--max-snapshots {value}")]
         public virtual int? MaxSnapshots { get; internal set; }
         /// <summary>
         ///   Number of log entries between Raft snapshots.
         /// </summary>
+        [ArgumentFormat("--snapshot-interval {value}")]
         public virtual int? SnapshotInterval { get; internal set; }
         /// <summary>
         ///   Task history retention limit.
         /// </summary>
+        [ArgumentFormat("--task-history-limit {value}")]
         public virtual long? TaskHistoryLimit { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -18644,6 +19650,7 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -18672,10 +19679,13 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Seconds to wait for stop before killing the container.
         /// </summary>
+        [ArgumentFormat("--time {value}")]
         public virtual int? Time { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -18729,10 +19739,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Force the disable of an active plugin.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   PLUGIN
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Plugin { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -18762,6 +19774,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -18791,10 +19805,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   CONTEXT
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Context { get; internal set; }
         /// <summary>
         ///   FILE|-
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string File { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -18824,18 +19840,23 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Force the removal of a running container (uses SIGKILL).
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Remove the specified link.
         /// </summary>
+        [ArgumentFormat("--link")]
         public virtual bool? Link { get; internal set; }
         /// <summary>
         ///   Remove the volumes associated with the container.
         /// </summary>
+        [ArgumentFormat("--volumes")]
         public virtual bool? Volumes { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -18868,31 +19889,38 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Path to a Distributed Application Bundle file.
         /// </summary>
+        [ArgumentFormat("--bundle-file {value}")]
         public virtual string BundleFile { get; internal set; }
         /// <summary>
         ///   Path to a Compose file, or "-" to read from stdin.
         /// </summary>
+        [ArgumentFormat("--compose-file {value}")]
         public virtual IReadOnlyList<string> ComposeFile => ComposeFileInternal.AsReadOnly();
         internal List<string> ComposeFileInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Kubernetes namespace to use.
         /// </summary>
+        [ArgumentFormat("--namespace {value}")]
         public virtual string Namespace { get; internal set; }
         /// <summary>
         ///   Prune services that are no longer referenced.
         /// </summary>
+        [ArgumentFormat("--prune")]
         public virtual bool? Prune { get; internal set; }
         /// <summary>
         ///   Query the registry to resolve image digest and supported platforms ("always"|"changed"|"never").
         /// </summary>
+        [ArgumentFormat("--resolve-image {value}")]
         public virtual ResolveImage ResolveImage { get; internal set; }
         /// <summary>
         ///   Send registry authentication details to Swarm agents.
         /// </summary>
+        [ArgumentFormat("--with-registry-auth")]
         public virtual bool? WithRegistryAuth { get; internal set; }
         /// <summary>
         ///   STACK
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Stack { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -18927,10 +19955,13 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Force remove a node from the swarm.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   NODE
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Nodes => NodesInternal.AsReadOnly();
         internal List<string> NodesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -18961,14 +19992,17 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Use a custom checkpoint storage directory.
         /// </summary>
+        [ArgumentFormat("--checkpoint-dir {value}")]
         public virtual string CheckpointDir { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         /// <summary>
         ///   CHECKPOINT
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Checkpoint { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -18999,10 +20033,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Skip image signing.
         /// </summary>
+        [ArgumentFormat("--disable-content-trust")]
         public virtual bool? DisableContentTrust { get; internal set; }
         /// <summary>
         ///   NAME[:TAG]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Name { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -19032,77 +20068,97 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Enable manual container attachment.
         /// </summary>
+        [ArgumentFormat("--attachable")]
         public virtual bool? Attachable { get; internal set; }
         /// <summary>
         ///   Auxiliary IPv4 or IPv6 addresses used by Network driver.
         /// </summary>
+        [ArgumentFormat("--aux-address {value}")]
+        [ItemFormat("{key}:{value}")]
         public virtual IReadOnlyDictionary<string, string> AuxAddress => AuxAddressInternal.AsReadOnly();
         internal Dictionary<string,string> AuxAddressInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   The network from which copying the configuration.
         /// </summary>
+        [ArgumentFormat("--config-from {value}")]
         public virtual string ConfigFrom { get; internal set; }
         /// <summary>
         ///   Create a configuration only network.
         /// </summary>
+        [ArgumentFormat("--config-only")]
         public virtual bool? ConfigOnly { get; internal set; }
         /// <summary>
         ///   Driver to manage the Network.
         /// </summary>
+        [ArgumentFormat("--driver {value}")]
         public virtual string Driver { get; internal set; }
         /// <summary>
         ///   IPv4 or IPv6 Gateway for the master subnet.
         /// </summary>
+        [ArgumentFormat("--gateway {value}")]
         public virtual IReadOnlyList<string> Gateway => GatewayInternal.AsReadOnly();
         internal List<string> GatewayInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Create swarm routing-mesh network.
         /// </summary>
+        [ArgumentFormat("--ingress")]
         public virtual bool? Ingress { get; internal set; }
         /// <summary>
         ///   Restrict external access to the network.
         /// </summary>
+        [ArgumentFormat("--internal")]
         public virtual bool? Internal { get; internal set; }
         /// <summary>
         ///   Allocate container ip from a sub-range.
         /// </summary>
+        [ArgumentFormat("--ip-range {value}")]
         public virtual IReadOnlyList<string> IpRange => IpRangeInternal.AsReadOnly();
         internal List<string> IpRangeInternal { get; set; } = new List<string>();
         /// <summary>
         ///   IP Address Management Driver.
         /// </summary>
+        [ArgumentFormat("--ipam-driver {value}")]
         public virtual string IpamDriver { get; internal set; }
         /// <summary>
         ///   Set IPAM driver specific options.
         /// </summary>
+        [ArgumentFormat("--ipam-opt {value}")]
+        [ItemFormat("{key}:{value}")]
         public virtual IReadOnlyDictionary<string, string> IpamOpt => IpamOptInternal.AsReadOnly();
         internal Dictionary<string,string> IpamOptInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Enable IPv6 networking.
         /// </summary>
+        [ArgumentFormat("--ipv6")]
         public virtual bool? Ipv6 { get; internal set; }
         /// <summary>
         ///   Set metadata on a network.
         /// </summary>
+        [ArgumentFormat("--label {value}")]
         public virtual IReadOnlyList<string> Label => LabelInternal.AsReadOnly();
         internal List<string> LabelInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set driver specific options.
         /// </summary>
+        [ArgumentFormat("--opt {value}")]
+        [ItemFormat("{key}:{value}")]
         public virtual IReadOnlyDictionary<string, string> Opt => OptInternal.AsReadOnly();
         internal Dictionary<string,string> OptInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Control the network's scope.
         /// </summary>
+        [ArgumentFormat("--scope {value}")]
         public virtual string Scope { get; internal set; }
         /// <summary>
         ///   Subnet in CIDR format that represents a network segment.
         /// </summary>
+        [ArgumentFormat("--subnet {value}")]
         public virtual IReadOnlyList<string> Subnet => SubnetInternal.AsReadOnly();
         internal List<string> SubnetInternal { get; set; } = new List<string>();
         /// <summary>
         ///   NETWORK
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Network { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -19147,14 +20203,17 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Provide filter values (e.g. 'dangling=true').
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Pretty-print volumes using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Only display volume names.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -19185,6 +20244,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   IMAGE[:TAG]
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Images => ImagesInternal.AsReadOnly();
         internal List<string> ImagesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -19214,14 +20275,18 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Verbose output for diagnostics.
         /// </summary>
+        [ArgumentFormat("--verbose")]
         public virtual bool? Verbose { get; internal set; }
         /// <summary>
         ///   NETWORK
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Networks => NetworksInternal.AsReadOnly();
         internal List<string> NetworksInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -19253,34 +20318,42 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   override default location of containerd endpoint.
         /// </summary>
+        [ArgumentFormat("--containerd {value}")]
         public virtual string Containerd { get; internal set; }
         /// <summary>
         ///   only display license information and exit.
         /// </summary>
+        [ArgumentFormat("--display-only")]
         public virtual bool? DisplayOnly { get; internal set; }
         /// <summary>
         ///   Specify engine image.
         /// </summary>
+        [ArgumentFormat("--engine-image {value}")]
         public virtual string EngineImage { get; internal set; }
         /// <summary>
         ///   Pretty-print licenses using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   License File.
         /// </summary>
+        [ArgumentFormat("--license {value}")]
         public virtual string License { get; internal set; }
         /// <summary>
         ///   Only display available licenses by ID.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   Override the default location where engine images are pulled.
         /// </summary>
+        [ArgumentFormat("--registry-prefix {value}")]
         public virtual string RegistryPrefix { get; internal set; }
         /// <summary>
         ///   Specify engine version (default is to use currently running version).
         /// </summary>
+        [ArgumentFormat("--version {value}")]
         public virtual string Version { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -19316,6 +20389,7 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   CONTEXT
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Context { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -19344,10 +20418,13 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Force the removal of one or more volumes.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   VOLUME
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Volumes => VolumesInternal.AsReadOnly();
         internal List<string> VolumesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -19378,10 +20455,13 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   MANIFEST_LIST
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string ManifestList { get; internal set; }
         /// <summary>
         ///   MANIFEST
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Manifests => ManifestsInternal.AsReadOnly();
         internal List<string> ManifestsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -19412,14 +20492,17 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Allow push to an insecure registry.
         /// </summary>
+        [ArgumentFormat("--insecure")]
         public virtual bool? Insecure { get; internal set; }
         /// <summary>
         ///   Remove the local manifest list after push.
         /// </summary>
+        [ArgumentFormat("--purge")]
         public virtual bool? Purge { get; internal set; }
         /// <summary>
         ///   MANIFEST_LIST
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string ManifestList { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -19450,10 +20533,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   HTTP client timeout (in seconds).
         /// </summary>
+        [ArgumentFormat("--timeout {value}")]
         public virtual int? Timeout { get; internal set; }
         /// <summary>
         ///   PLUGIN
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Plugin { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -19483,23 +20568,28 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Apply Dockerfile instruction to the created image.
         /// </summary>
+        [ArgumentFormat("--change {value}")]
         public virtual IReadOnlyList<string> Change => ChangeInternal.AsReadOnly();
         internal List<string> ChangeInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set commit message for imported image.
         /// </summary>
+        [ArgumentFormat("--message {value}")]
         public virtual string Message { get; internal set; }
         /// <summary>
         ///   Set platform if server is multi-platform capable.
         /// </summary>
+        [ArgumentFormat("--platform {value}")]
         public virtual string Platform { get; internal set; }
         /// <summary>
         ///   file|URL|-
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string File { get; internal set; }
         /// <summary>
         ///   [REPOSITORY[:TAG]]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Repository { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -19532,451 +20622,557 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Add a custom host-to-IP mapping (host:ip).
         /// </summary>
+        [ArgumentFormat("--add-host {value}")]
         public virtual IReadOnlyList<string> AddHost => AddHostInternal.AsReadOnly();
         internal List<string> AddHostInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Attach to STDIN, STDOUT or STDERR.
         /// </summary>
+        [ArgumentFormat("--attach {value}")]
         public virtual IReadOnlyList<string> Attach => AttachInternal.AsReadOnly();
         internal List<string> AttachInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0).
         /// </summary>
+        [ArgumentFormat("--blkio-weight {value}")]
         public virtual int? BlkioWeight { get; internal set; }
         /// <summary>
         ///   Block IO weight (relative device weight).
         /// </summary>
+        [ArgumentFormat("--blkio-weight-device {value}")]
         public virtual IReadOnlyList<string> BlkioWeightDevice => BlkioWeightDeviceInternal.AsReadOnly();
         internal List<string> BlkioWeightDeviceInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Add Linux capabilities.
         /// </summary>
+        [ArgumentFormat("--cap-add {value}")]
         public virtual IReadOnlyList<string> CapAdd => CapAddInternal.AsReadOnly();
         internal List<string> CapAddInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Drop Linux capabilities.
         /// </summary>
+        [ArgumentFormat("--cap-drop {value}")]
         public virtual IReadOnlyList<string> CapDrop => CapDropInternal.AsReadOnly();
         internal List<string> CapDropInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Optional parent cgroup for the container.
         /// </summary>
+        [ArgumentFormat("--cgroup-parent {value}")]
         public virtual string CgroupParent { get; internal set; }
         /// <summary>
         ///   Write the container ID to the file.
         /// </summary>
+        [ArgumentFormat("--cidfile {value}")]
         public virtual string Cidfile { get; internal set; }
         /// <summary>
         ///   CPU count (Windows only).
         /// </summary>
+        [ArgumentFormat("--cpu-count {value}")]
         public virtual long? CpuCount { get; internal set; }
         /// <summary>
         ///   CPU percent (Windows only).
         /// </summary>
+        [ArgumentFormat("--cpu-percent {value}")]
         public virtual long? CpuPercent { get; internal set; }
         /// <summary>
         ///   Limit CPU CFS (Completely Fair Scheduler) period.
         /// </summary>
+        [ArgumentFormat("--cpu-period {value}")]
         public virtual long? CpuPeriod { get; internal set; }
         /// <summary>
         ///   Limit CPU CFS (Completely Fair Scheduler) quota.
         /// </summary>
+        [ArgumentFormat("--cpu-quota {value}")]
         public virtual long? CpuQuota { get; internal set; }
         /// <summary>
         ///   Limit CPU real-time period in microseconds.
         /// </summary>
+        [ArgumentFormat("--cpu-rt-period {value}")]
         public virtual long? CpuRtPeriod { get; internal set; }
         /// <summary>
         ///   Limit CPU real-time runtime in microseconds.
         /// </summary>
+        [ArgumentFormat("--cpu-rt-runtime {value}")]
         public virtual long? CpuRtRuntime { get; internal set; }
         /// <summary>
         ///   CPU shares (relative weight).
         /// </summary>
+        [ArgumentFormat("--cpu-shares {value}")]
         public virtual long? CpuShares { get; internal set; }
         /// <summary>
         ///   Number of CPUs.
         /// </summary>
+        [ArgumentFormat("--cpus {value}")]
         public virtual decimal? Cpus { get; internal set; }
         /// <summary>
         ///   CPUs in which to allow execution (0-3, 0,1).
         /// </summary>
+        [ArgumentFormat("--cpuset-cpus {value}")]
         public virtual string CpusetCpus { get; internal set; }
         /// <summary>
         ///   MEMs in which to allow execution (0-3, 0,1).
         /// </summary>
+        [ArgumentFormat("--cpuset-mems {value}")]
         public virtual string CpusetMems { get; internal set; }
         /// <summary>
         ///   Run container in background and print container ID.
         /// </summary>
+        [ArgumentFormat("--detach")]
         public virtual bool? Detach { get; internal set; }
         /// <summary>
         ///   Override the key sequence for detaching a container.
         /// </summary>
+        [ArgumentFormat("--detach-keys {value}")]
         public virtual string DetachKeys { get; internal set; }
         /// <summary>
         ///   Add a host device to the container.
         /// </summary>
+        [ArgumentFormat("--device {value}")]
         public virtual IReadOnlyList<string> Device => DeviceInternal.AsReadOnly();
         internal List<string> DeviceInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Add a rule to the cgroup allowed devices list.
         /// </summary>
+        [ArgumentFormat("--device-cgroup-rule {value}")]
         public virtual IReadOnlyList<string> DeviceCgroupRule => DeviceCgroupRuleInternal.AsReadOnly();
         internal List<string> DeviceCgroupRuleInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Limit read rate (bytes per second) from a device.
         /// </summary>
+        [ArgumentFormat("--device-read-bps {value}")]
         public virtual IReadOnlyList<string> DeviceReadBps => DeviceReadBpsInternal.AsReadOnly();
         internal List<string> DeviceReadBpsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Limit read rate (IO per second) from a device.
         /// </summary>
+        [ArgumentFormat("--device-read-iops {value}")]
         public virtual IReadOnlyList<string> DeviceReadIops => DeviceReadIopsInternal.AsReadOnly();
         internal List<string> DeviceReadIopsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Limit write rate (bytes per second) to a device.
         /// </summary>
+        [ArgumentFormat("--device-write-bps {value}")]
         public virtual IReadOnlyList<string> DeviceWriteBps => DeviceWriteBpsInternal.AsReadOnly();
         internal List<string> DeviceWriteBpsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Limit write rate (IO per second) to a device.
         /// </summary>
+        [ArgumentFormat("--device-write-iops {value}")]
         public virtual IReadOnlyList<string> DeviceWriteIops => DeviceWriteIopsInternal.AsReadOnly();
         internal List<string> DeviceWriteIopsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Skip image verification.
         /// </summary>
+        [ArgumentFormat("--disable-content-trust")]
         public virtual bool? DisableContentTrust { get; internal set; }
         /// <summary>
         ///   Set custom DNS servers.
         /// </summary>
+        [ArgumentFormat("--dns {value}")]
         public virtual IReadOnlyList<string> Dns => DnsInternal.AsReadOnly();
         internal List<string> DnsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set DNS options.
         /// </summary>
+        [ArgumentFormat("--dns-opt {value}")]
         public virtual IReadOnlyList<string> DnsOpt => DnsOptInternal.AsReadOnly();
         internal List<string> DnsOptInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set DNS options.
         /// </summary>
+        [ArgumentFormat("--dns-option {value}")]
         public virtual IReadOnlyList<string> DnsOption => DnsOptionInternal.AsReadOnly();
         internal List<string> DnsOptionInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set custom DNS search domains.
         /// </summary>
+        [ArgumentFormat("--dns-search {value}")]
         public virtual IReadOnlyList<string> DnsSearch => DnsSearchInternal.AsReadOnly();
         internal List<string> DnsSearchInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Container NIS domain name.
         /// </summary>
+        [ArgumentFormat("--domainname {value}")]
         public virtual string Domainname { get; internal set; }
         /// <summary>
         ///   Overwrite the default ENTRYPOINT of the image.
         /// </summary>
+        [ArgumentFormat("--entrypoint {value}")]
         public virtual string Entrypoint { get; internal set; }
         /// <summary>
         ///   Set environment variables.
         /// </summary>
+        [ArgumentFormat("--env {value}")]
         public virtual IReadOnlyList<string> Env => EnvInternal.AsReadOnly();
         internal List<string> EnvInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Read in a file of environment variables.
         /// </summary>
+        [ArgumentFormat("--env-file {value}")]
         public virtual IReadOnlyList<string> EnvFile => EnvFileInternal.AsReadOnly();
         internal List<string> EnvFileInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Expose a port or a range of ports.
         /// </summary>
+        [ArgumentFormat("--expose {value}")]
         public virtual IReadOnlyList<string> Expose => ExposeInternal.AsReadOnly();
         internal List<string> ExposeInternal { get; set; } = new List<string>();
         /// <summary>
         ///   GPU devices to add to the container ('all' to pass all GPUs).
         /// </summary>
+        [ArgumentFormat("--gpus {value}")]
         public virtual string Gpus { get; internal set; }
         /// <summary>
         ///   Add additional groups to join.
         /// </summary>
+        [ArgumentFormat("--group-add {value}")]
         public virtual IReadOnlyList<string> GroupAdd => GroupAddInternal.AsReadOnly();
         internal List<string> GroupAddInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Command to run to check health.
         /// </summary>
+        [ArgumentFormat("--health-cmd {value}")]
         public virtual string HealthCmd { get; internal set; }
         /// <summary>
         ///   Time between running the check (ms|s|m|h) (default 0s).
         /// </summary>
+        [ArgumentFormat("--health-interval {value}")]
         public virtual string HealthInterval { get; internal set; }
         /// <summary>
         ///   Consecutive failures needed to report unhealthy.
         /// </summary>
+        [ArgumentFormat("--health-retries {value}")]
         public virtual int? HealthRetries { get; internal set; }
         /// <summary>
         ///   Start period for the container to initialize before starting health-retries countdown (ms|s|m|h) (default 0s).
         /// </summary>
+        [ArgumentFormat("--health-start-period {value}")]
         public virtual string HealthStartPeriod { get; internal set; }
         /// <summary>
         ///   Maximum time to allow one check to run (ms|s|m|h) (default 0s).
         /// </summary>
+        [ArgumentFormat("--health-timeout {value}")]
         public virtual string HealthTimeout { get; internal set; }
         /// <summary>
         ///   Print usage.
         /// </summary>
+        [ArgumentFormat("--help")]
         public virtual bool? Help { get; internal set; }
         /// <summary>
         ///   Container host name.
         /// </summary>
+        [ArgumentFormat("--hostname {value}")]
         public virtual string Hostname { get; internal set; }
         /// <summary>
         ///   Run an init inside the container that forwards signals and reaps processes.
         /// </summary>
+        [ArgumentFormat("--init")]
         public virtual bool? Init { get; internal set; }
         /// <summary>
         ///   Keep STDIN open even if not attached.
         /// </summary>
+        [ArgumentFormat("--interactive")]
         public virtual bool? Interactive { get; internal set; }
         /// <summary>
         ///   Maximum IO bandwidth limit for the system drive (Windows only).
         /// </summary>
+        [ArgumentFormat("--io-maxbandwidth {value}")]
         public virtual long? IoMaxbandwidth { get; internal set; }
         /// <summary>
         ///   Maximum IOps limit for the system drive (Windows only).
         /// </summary>
+        [ArgumentFormat("--io-maxiops {value}")]
         public virtual int? IoMaxiops { get; internal set; }
         /// <summary>
         ///   IPv4 address (e.g., 172.30.100.104).
         /// </summary>
+        [ArgumentFormat("--ip {value}")]
         public virtual string Ip { get; internal set; }
         /// <summary>
         ///   IPv6 address (e.g., 2001:db8::33).
         /// </summary>
+        [ArgumentFormat("--ip6 {value}")]
         public virtual string Ip6 { get; internal set; }
         /// <summary>
         ///   IPC mode to use.
         /// </summary>
+        [ArgumentFormat("--ipc {value}")]
         public virtual string Ipc { get; internal set; }
         /// <summary>
         ///   Container isolation technology.
         /// </summary>
+        [ArgumentFormat("--isolation {value}")]
         public virtual string Isolation { get; internal set; }
         /// <summary>
         ///   Kernel memory limit.
         /// </summary>
+        [ArgumentFormat("--kernel-memory {value}")]
         public virtual long? KernelMemory { get; internal set; }
         /// <summary>
         ///   Set meta data on a container.
         /// </summary>
+        [ArgumentFormat("--label {value}")]
         public virtual IReadOnlyList<string> Label => LabelInternal.AsReadOnly();
         internal List<string> LabelInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Read in a line delimited file of labels.
         /// </summary>
+        [ArgumentFormat("--label-file {value}")]
         public virtual IReadOnlyList<string> LabelFile => LabelFileInternal.AsReadOnly();
         internal List<string> LabelFileInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Add link to another container.
         /// </summary>
+        [ArgumentFormat("--link {value}")]
         public virtual IReadOnlyList<string> Link => LinkInternal.AsReadOnly();
         internal List<string> LinkInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Container IPv4/IPv6 link-local addresses.
         /// </summary>
+        [ArgumentFormat("--link-local-ip {value}")]
         public virtual IReadOnlyList<string> LinkLocalIp => LinkLocalIpInternal.AsReadOnly();
         internal List<string> LinkLocalIpInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Logging driver for the container.
         /// </summary>
+        [ArgumentFormat("--log-driver {value}")]
         public virtual string LogDriver { get; internal set; }
         /// <summary>
         ///   Log driver options.
         /// </summary>
+        [ArgumentFormat("--log-opt {value}")]
         public virtual IReadOnlyList<string> LogOpt => LogOptInternal.AsReadOnly();
         internal List<string> LogOptInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Container MAC address (e.g., 92:d0:c6:0a:29:33).
         /// </summary>
+        [ArgumentFormat("--mac-address {value}")]
         public virtual string MacAddress { get; internal set; }
         /// <summary>
         ///   Memory limit.
         /// </summary>
+        [ArgumentFormat("--memory {value}")]
         public virtual long? Memory { get; internal set; }
         /// <summary>
         ///   Memory soft limit.
         /// </summary>
+        [ArgumentFormat("--memory-reservation {value}")]
         public virtual long? MemoryReservation { get; internal set; }
         /// <summary>
         ///   Swap limit equal to memory plus swap: '-1' to enable unlimited swap.
         /// </summary>
+        [ArgumentFormat("--memory-swap {value}")]
         public virtual long? MemorySwap { get; internal set; }
         /// <summary>
         ///   Tune container memory swappiness (0 to 100).
         /// </summary>
+        [ArgumentFormat("--memory-swappiness {value}")]
         public virtual long? MemorySwappiness { get; internal set; }
         /// <summary>
         ///   Attach a filesystem mount to the container.
         /// </summary>
+        [ArgumentFormat("--mount {value}")]
         public virtual string Mount { get; internal set; }
         /// <summary>
         ///   Assign a name to the container.
         /// </summary>
+        [ArgumentFormat("--name {value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   Connect a container to a network.
         /// </summary>
+        [ArgumentFormat("--net {value}")]
         public virtual string Net { get; internal set; }
         /// <summary>
         ///   Add network-scoped alias for the container.
         /// </summary>
+        [ArgumentFormat("--net-alias {value}")]
         public virtual IReadOnlyList<string> NetAlias => NetAliasInternal.AsReadOnly();
         internal List<string> NetAliasInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Connect a container to a network.
         /// </summary>
+        [ArgumentFormat("--network {value}")]
         public virtual string Network { get; internal set; }
         /// <summary>
         ///   Add network-scoped alias for the container.
         /// </summary>
+        [ArgumentFormat("--network-alias {value}")]
         public virtual IReadOnlyList<string> NetworkAlias => NetworkAliasInternal.AsReadOnly();
         internal List<string> NetworkAliasInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Disable any container-specified HEALTHCHECK.
         /// </summary>
+        [ArgumentFormat("--no-healthcheck")]
         public virtual bool? NoHealthcheck { get; internal set; }
         /// <summary>
         ///   Disable OOM Killer.
         /// </summary>
+        [ArgumentFormat("--oom-kill-disable")]
         public virtual bool? OomKillDisable { get; internal set; }
         /// <summary>
         ///   Tune host's OOM preferences (-1000 to 1000).
         /// </summary>
+        [ArgumentFormat("--oom-score-adj {value}")]
         public virtual int? OomScoreAdj { get; internal set; }
         /// <summary>
         ///   PID namespace to use.
         /// </summary>
+        [ArgumentFormat("--pid {value}")]
         public virtual string Pid { get; internal set; }
         /// <summary>
         ///   Tune container pids limit (set -1 for unlimited).
         /// </summary>
+        [ArgumentFormat("--pids-limit {value}")]
         public virtual long? PidsLimit { get; internal set; }
         /// <summary>
         ///   Set platform if server is multi-platform capable.
         /// </summary>
+        [ArgumentFormat("--platform {value}")]
         public virtual string Platform { get; internal set; }
         /// <summary>
         ///   Give extended privileges to this container.
         /// </summary>
+        [ArgumentFormat("--privileged")]
         public virtual bool? Privileged { get; internal set; }
         /// <summary>
         ///   Publish a container's port(s) to the host.
         /// </summary>
+        [ArgumentFormat("--publish {value}")]
         public virtual IReadOnlyList<string> Publish => PublishInternal.AsReadOnly();
         internal List<string> PublishInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Publish all exposed ports to random ports.
         /// </summary>
+        [ArgumentFormat("--publish-all")]
         public virtual bool? PublishAll { get; internal set; }
         /// <summary>
         ///   Mount the container's root filesystem as read only.
         /// </summary>
+        [ArgumentFormat("--read-only")]
         public virtual bool? ReadOnly { get; internal set; }
         /// <summary>
         ///   Restart policy to apply when a container exits.
         /// </summary>
+        [ArgumentFormat("--restart {value}")]
         public virtual string Restart { get; internal set; }
         /// <summary>
         ///   Automatically remove the container when it exits.
         /// </summary>
+        [ArgumentFormat("--rm")]
         public virtual bool? Rm { get; internal set; }
         /// <summary>
         ///   Runtime to use for this container.
         /// </summary>
+        [ArgumentFormat("--runtime {value}")]
         public virtual string Runtime { get; internal set; }
         /// <summary>
         ///   Security Options.
         /// </summary>
+        [ArgumentFormat("--security-opt {value}")]
         public virtual IReadOnlyList<string> SecurityOpt => SecurityOptInternal.AsReadOnly();
         internal List<string> SecurityOptInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Size of /dev/shm.
         /// </summary>
+        [ArgumentFormat("--shm-size {value}")]
         public virtual long? ShmSize { get; internal set; }
         /// <summary>
         ///   Proxy received signals to the process.
         /// </summary>
+        [ArgumentFormat("--sig-proxy")]
         public virtual bool? SigProxy { get; internal set; }
         /// <summary>
         ///   Signal to stop a container.
         /// </summary>
+        [ArgumentFormat("--stop-signal {value}")]
         public virtual string StopSignal { get; internal set; }
         /// <summary>
         ///   Timeout (in seconds) to stop a container.
         /// </summary>
+        [ArgumentFormat("--stop-timeout {value}")]
         public virtual int? StopTimeout { get; internal set; }
         /// <summary>
         ///   Storage driver options for the container.
         /// </summary>
+        [ArgumentFormat("--storage-opt {value}")]
         public virtual IReadOnlyList<string> StorageOpt => StorageOptInternal.AsReadOnly();
         internal List<string> StorageOptInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Sysctl options.
         /// </summary>
+        [ArgumentFormat("--sysctl {value}")]
+        [ItemFormat("{key}:{value}")]
         public virtual IReadOnlyDictionary<string, string> Sysctl => SysctlInternal.AsReadOnly();
         internal Dictionary<string,string> SysctlInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Mount a tmpfs directory.
         /// </summary>
+        [ArgumentFormat("--tmpfs {value}")]
         public virtual IReadOnlyList<string> Tmpfs => TmpfsInternal.AsReadOnly();
         internal List<string> TmpfsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Allocate a pseudo-TTY.
         /// </summary>
+        [ArgumentFormat("--tty")]
         public virtual bool? Tty { get; internal set; }
         /// <summary>
         ///   Ulimit options.
         /// </summary>
+        [ArgumentFormat("--ulimit {value}")]
         public virtual string Ulimit { get; internal set; }
         /// <summary>
         ///   Username or UID (format: &lt;name|uid&gt;[:&lt;group|gid&gt;]).
         /// </summary>
+        [ArgumentFormat("--user {value}")]
         public virtual string User { get; internal set; }
         /// <summary>
         ///   User namespace to use.
         /// </summary>
+        [ArgumentFormat("--userns {value}")]
         public virtual string Userns { get; internal set; }
         /// <summary>
         ///   UTS namespace to use.
         /// </summary>
+        [ArgumentFormat("--uts {value}")]
         public virtual string Uts { get; internal set; }
         /// <summary>
         ///   Bind mount a volume.
         /// </summary>
+        [ArgumentFormat("--volume {value}")]
         public virtual IReadOnlyList<string> Volume => VolumeInternal.AsReadOnly();
         internal List<string> VolumeInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Optional volume driver for the container.
         /// </summary>
+        [ArgumentFormat("--volume-driver {value}")]
         public virtual string VolumeDriver { get; internal set; }
         /// <summary>
         ///   Mount volumes from the specified container(s).
         /// </summary>
+        [ArgumentFormat("--volumes-from {value}")]
         public virtual IReadOnlyList<string> VolumesFrom => VolumesFromInternal.AsReadOnly();
         internal List<string> VolumesFromInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Working directory inside the container.
         /// </summary>
+        [ArgumentFormat("--workdir {value}")]
         public virtual string Workdir { get; internal set; }
         /// <summary>
         ///   IMAGE
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Image { get; internal set; }
         /// <summary>
         ///   [COMMAND]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Command { get; internal set; }
         /// <summary>
         ///   [ARG...]
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Args => ArgsInternal.AsReadOnly();
         internal List<string> ArgsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -20109,14 +21305,18 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Print the information in a human friendly format.
         /// </summary>
+        [ArgumentFormat("--pretty")]
         public virtual bool? Pretty { get; internal set; }
         /// <summary>
         ///   self|NODE
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Selves => SelvesInternal.AsReadOnly();
         internal List<string> SelvesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -20148,10 +21348,13 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Write to a file, instead of STDOUT.
         /// </summary>
+        [ArgumentFormat("--output {value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   IMAGE
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Images => ImagesInternal.AsReadOnly();
         internal List<string> ImagesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -20182,22 +21385,28 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Show all containers (default shows just running).
         /// </summary>
+        [ArgumentFormat("--all")]
         public virtual bool? All { get; internal set; }
         /// <summary>
         ///   Pretty-print images using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Disable streaming stats and only pull the first result.
         /// </summary>
+        [ArgumentFormat("--no-stream")]
         public virtual bool? NoStream { get; internal set; }
         /// <summary>
         ///   Do not truncate output.
         /// </summary>
+        [ArgumentFormat("--no-trunc")]
         public virtual bool? NoTrunc { get; internal set; }
         /// <summary>
         ///   [CONTAINER...]
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -20231,47 +21440,59 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Detached mode: run command in the background.
         /// </summary>
+        [ArgumentFormat("--detach")]
         public virtual bool? Detach { get; internal set; }
         /// <summary>
         ///   Override the key sequence for detaching a container.
         /// </summary>
+        [ArgumentFormat("--detach-keys {value}")]
         public virtual string DetachKeys { get; internal set; }
         /// <summary>
         ///   Set environment variables.
         /// </summary>
+        [ArgumentFormat("--env {value}")]
         public virtual IReadOnlyList<string> Env => EnvInternal.AsReadOnly();
         internal List<string> EnvInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Keep STDIN open even if not attached.
         /// </summary>
+        [ArgumentFormat("--interactive")]
         public virtual bool? Interactive { get; internal set; }
         /// <summary>
         ///   Give extended privileges to the command.
         /// </summary>
+        [ArgumentFormat("--privileged")]
         public virtual bool? Privileged { get; internal set; }
         /// <summary>
         ///   Allocate a pseudo-TTY.
         /// </summary>
+        [ArgumentFormat("--tty")]
         public virtual bool? Tty { get; internal set; }
         /// <summary>
         ///   Username or UID (format: &lt;name|uid&gt;[:&lt;group|gid&gt;]).
         /// </summary>
+        [ArgumentFormat("--user {value}")]
         public virtual string User { get; internal set; }
         /// <summary>
         ///   Working directory inside the container.
         /// </summary>
+        [ArgumentFormat("--workdir {value}")]
         public virtual string Workdir { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         /// <summary>
         ///   COMMAND
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Command { get; internal set; }
         /// <summary>
         ///   [ARG...]
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Args => ArgsInternal.AsReadOnly();
         internal List<string> ArgsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -20311,14 +21532,17 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Pretty-print nodes using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Only display IDs.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -20349,22 +21573,27 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Advertised address (format: &lt;ip|interface&gt;[:port]).
         /// </summary>
+        [ArgumentFormat("--advertise-addr {value}")]
         public virtual string AdvertiseAddr { get; internal set; }
         /// <summary>
         ///   Availability of the node ("active"|"pause"|"drain").
         /// </summary>
+        [ArgumentFormat("--availability {value}")]
         public virtual Availability Availability { get; internal set; }
         /// <summary>
         ///   Address or interface to use for data path traffic (format: &lt;ip|interface&gt;).
         /// </summary>
+        [ArgumentFormat("--data-path-addr {value}")]
         public virtual string DataPathAddr { get; internal set; }
         /// <summary>
         ///   Listen address (format: &lt;ip|interface&gt;[:port]).
         /// </summary>
+        [ArgumentFormat("--listen-addr {value}")]
         public virtual string ListenAddr { get; internal set; }
         /// <summary>
         ///   Token for entry into the swarm.
         /// </summary>
+        [ArgumentFormat("--token {value}")]
         public virtual string Token { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -20397,30 +21626,37 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Show extra details provided to logs.
         /// </summary>
+        [ArgumentFormat("--details")]
         public virtual bool? Details { get; internal set; }
         /// <summary>
         ///   Follow log output.
         /// </summary>
+        [ArgumentFormat("--follow")]
         public virtual bool? Follow { get; internal set; }
         /// <summary>
         ///   Show logs since timestamp (e.g. 2013-01-02T13:23:37) or relative (e.g. 42m for 42 minutes).
         /// </summary>
+        [ArgumentFormat("--since {value}")]
         public virtual string Since { get; internal set; }
         /// <summary>
         ///   Number of lines to show from the end of the logs.
         /// </summary>
+        [ArgumentFormat("--tail {value}")]
         public virtual string Tail { get; internal set; }
         /// <summary>
         ///   Show timestamps.
         /// </summary>
+        [ArgumentFormat("--timestamps")]
         public virtual bool? Timestamps { get; internal set; }
         /// <summary>
         ///   Show logs before a timestamp (e.g. 2013-01-02T13:23:37) or relative (e.g. 42m for 42 minutes).
         /// </summary>
+        [ArgumentFormat("--until {value}")]
         public virtual string Until { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -20455,10 +21691,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Use a custom checkpoint storage directory.
         /// </summary>
+        [ArgumentFormat("--checkpoint-dir {value}")]
         public virtual string CheckpointDir { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -20488,10 +21726,13 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Signal to send to the container.
         /// </summary>
+        [ArgumentFormat("--signal {value}")]
         public virtual string Signal { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -20522,26 +21763,33 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Local name for plugin.
         /// </summary>
+        [ArgumentFormat("--alias {value}")]
         public virtual string Alias { get; internal set; }
         /// <summary>
         ///   Do not enable the plugin on install.
         /// </summary>
+        [ArgumentFormat("--disable")]
         public virtual bool? Disable { get; internal set; }
         /// <summary>
         ///   Skip image verification.
         /// </summary>
+        [ArgumentFormat("--disable-content-trust")]
         public virtual bool? DisableContentTrust { get; internal set; }
         /// <summary>
         ///   Grant all permissions necessary to run the plugin.
         /// </summary>
+        [ArgumentFormat("--grant-all-permissions")]
         public virtual bool? GrantAllPermissions { get; internal set; }
         /// <summary>
         ///   PLUGIN
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Plugin { get; internal set; }
         /// <summary>
         ///   [KEY=VALUE...]
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [ItemFormat("{key=value}")]
         public virtual IReadOnlyDictionary<string, string> KeyValues => KeyValuesInternal.AsReadOnly();
         internal Dictionary<string,string> KeyValuesInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -20576,14 +21824,17 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Remove all unused images, not just dangling ones.
         /// </summary>
+        [ArgumentFormat("--all")]
         public virtual bool? All { get; internal set; }
         /// <summary>
         ///   Provide filter values (e.g. 'until=&lt;timestamp&gt;').
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Do not prompt for confirmation.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -20614,23 +21865,28 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Apply Dockerfile instruction to the created image.
         /// </summary>
+        [ArgumentFormat("--change {value}")]
         public virtual IReadOnlyList<string> Change => ChangeInternal.AsReadOnly();
         internal List<string> ChangeInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set commit message for imported image.
         /// </summary>
+        [ArgumentFormat("--message {value}")]
         public virtual string Message { get; internal set; }
         /// <summary>
         ///   Set platform if server is multi-platform capable.
         /// </summary>
+        [ArgumentFormat("--platform {value}")]
         public virtual string Platform { get; internal set; }
         /// <summary>
         ///   file|URL|-
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string File { get; internal set; }
         /// <summary>
         ///   [REPOSITORY[:TAG]]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Repository { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -20663,6 +21919,7 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -20691,6 +21948,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -20720,34 +21979,42 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Show all containers (default shows just running).
         /// </summary>
+        [ArgumentFormat("--all")]
         public virtual bool? All { get; internal set; }
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Pretty-print containers using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Show n last created containers (includes all states).
         /// </summary>
+        [ArgumentFormat("--last {value}")]
         public virtual int? Last { get; internal set; }
         /// <summary>
         ///   Show the latest created container (includes all states).
         /// </summary>
+        [ArgumentFormat("--latest")]
         public virtual bool? Latest { get; internal set; }
         /// <summary>
         ///   Don't truncate output.
         /// </summary>
+        [ArgumentFormat("--no-trunc")]
         public virtual bool? NoTrunc { get; internal set; }
         /// <summary>
         ///   Only display numeric IDs.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   Display total file sizes.
         /// </summary>
+        [ArgumentFormat("--size")]
         public virtual bool? Size { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -20783,26 +22050,33 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Pretty-print tasks using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Do not map IDs to Names.
         /// </summary>
+        [ArgumentFormat("--no-resolve")]
         public virtual bool? NoResolve { get; internal set; }
         /// <summary>
         ///   Do not truncate output.
         /// </summary>
+        [ArgumentFormat("--no-trunc")]
         public virtual bool? NoTrunc { get; internal set; }
         /// <summary>
         ///   Only display task IDs.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   [NODE...]
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Nodes => NodesInternal.AsReadOnly();
         internal List<string> NodesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -20837,10 +22111,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         /// <summary>
         ///   OPTIONS]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Options { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -20870,10 +22146,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         /// <summary>
         ///   NEW_NAME
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string NewName { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -20903,22 +22181,27 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Pretty-print images using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Print sizes and dates in human readable format.
         /// </summary>
+        [ArgumentFormat("--human")]
         public virtual bool? Human { get; internal set; }
         /// <summary>
         ///   Don't truncate output.
         /// </summary>
+        [ArgumentFormat("--no-trunc")]
         public virtual bool? NoTrunc { get; internal set; }
         /// <summary>
         ///   Only show numeric IDs.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   IMAGE
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Image { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -20951,34 +22234,42 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Show all containers (default shows just running).
         /// </summary>
+        [ArgumentFormat("--all")]
         public virtual bool? All { get; internal set; }
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Pretty-print containers using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Show n last created containers (includes all states).
         /// </summary>
+        [ArgumentFormat("--last {value}")]
         public virtual int? Last { get; internal set; }
         /// <summary>
         ///   Show the latest created container (includes all states).
         /// </summary>
+        [ArgumentFormat("--latest")]
         public virtual bool? Latest { get; internal set; }
         /// <summary>
         ///   Don't truncate output.
         /// </summary>
+        [ArgumentFormat("--no-trunc")]
         public virtual bool? NoTrunc { get; internal set; }
         /// <summary>
         ///   Only display numeric IDs.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   Display total file sizes.
         /// </summary>
+        [ArgumentFormat("--size")]
         public virtual bool? Size { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -21014,10 +22305,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   SOURCE_IMAGE[:TAG]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string SourceImage { get; internal set; }
         /// <summary>
         ///   TARGET_IMAGE[:TAG]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string TargetImage { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -21047,10 +22340,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Write to a file, instead of STDOUT.
         /// </summary>
+        [ArgumentFormat("--output {value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -21080,14 +22375,17 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Force the container to disconnect from a network.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   NETWORK
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Network { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -21118,152 +22416,188 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Add a custom host-to-IP mapping (host:ip).
         /// </summary>
+        [ArgumentFormat("--add-host {value}")]
         public virtual IReadOnlyList<string> AddHost => AddHostInternal.AsReadOnly();
         internal List<string> AddHostInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set build-time variables.
         /// </summary>
+        [ArgumentFormat("--build-arg {value}")]
         public virtual IReadOnlyList<string> BuildArg => BuildArgInternal.AsReadOnly();
         internal List<string> BuildArgInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Images to consider as cache sources.
         /// </summary>
+        [ArgumentFormat("--cache-from {value}")]
         public virtual IReadOnlyList<string> CacheFrom => CacheFromInternal.AsReadOnly();
         internal List<string> CacheFromInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Optional parent cgroup for the container.
         /// </summary>
+        [ArgumentFormat("--cgroup-parent {value}")]
         public virtual string CgroupParent { get; internal set; }
         /// <summary>
         ///   Compress the build context using gzip.
         /// </summary>
+        [ArgumentFormat("--compress")]
         public virtual bool? Compress { get; internal set; }
         /// <summary>
         ///   Limit the CPU CFS (Completely Fair Scheduler) period.
         /// </summary>
+        [ArgumentFormat("--cpu-period {value}")]
         public virtual long? CpuPeriod { get; internal set; }
         /// <summary>
         ///   Limit the CPU CFS (Completely Fair Scheduler) quota.
         /// </summary>
+        [ArgumentFormat("--cpu-quota {value}")]
         public virtual long? CpuQuota { get; internal set; }
         /// <summary>
         ///   CPU shares (relative weight).
         /// </summary>
+        [ArgumentFormat("--cpu-shares {value}")]
         public virtual long? CpuShares { get; internal set; }
         /// <summary>
         ///   CPUs in which to allow execution (0-3, 0,1).
         /// </summary>
+        [ArgumentFormat("--cpuset-cpus {value}")]
         public virtual string CpusetCpus { get; internal set; }
         /// <summary>
         ///   MEMs in which to allow execution (0-3, 0,1).
         /// </summary>
+        [ArgumentFormat("--cpuset-mems {value}")]
         public virtual string CpusetMems { get; internal set; }
         /// <summary>
         ///   Skip image verification.
         /// </summary>
+        [ArgumentFormat("--disable-content-trust")]
         public virtual bool? DisableContentTrust { get; internal set; }
         /// <summary>
         ///   Name of the Dockerfile (Default is 'PATH/Dockerfile').
         /// </summary>
+        [ArgumentFormat("--file {value}")]
         public virtual string File { get; internal set; }
         /// <summary>
         ///   Always remove intermediate containers.
         /// </summary>
+        [ArgumentFormat("--force-rm")]
         public virtual bool? ForceRm { get; internal set; }
         /// <summary>
         ///   Write the image ID to the file.
         /// </summary>
+        [ArgumentFormat("--iidfile {value}")]
         public virtual string Iidfile { get; internal set; }
         /// <summary>
         ///   Container isolation technology.
         /// </summary>
+        [ArgumentFormat("--isolation {value}")]
         public virtual string Isolation { get; internal set; }
         /// <summary>
         ///   Set metadata for an image.
         /// </summary>
+        [ArgumentFormat("--label {value}")]
         public virtual IReadOnlyList<string> Label => LabelInternal.AsReadOnly();
         internal List<string> LabelInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Memory limit.
         /// </summary>
+        [ArgumentFormat("--memory {value}")]
         public virtual long? Memory { get; internal set; }
         /// <summary>
         ///   Swap limit equal to memory plus swap: '-1' to enable unlimited swap.
         /// </summary>
+        [ArgumentFormat("--memory-swap {value}")]
         public virtual long? MemorySwap { get; internal set; }
         /// <summary>
         ///   Set the networking mode for the RUN instructions during build.
         /// </summary>
+        [ArgumentFormat("--network {value}")]
         public virtual string Network { get; internal set; }
         /// <summary>
         ///   Do not use cache when building the image.
         /// </summary>
+        [ArgumentFormat("--no-cache")]
         public virtual bool? NoCache { get; internal set; }
         /// <summary>
         ///   Output destination (format: type=local,dest=path).
         /// </summary>
+        [ArgumentFormat("--output {value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   Set platform if server is multi-platform capable.
         /// </summary>
+        [ArgumentFormat("--platform {value}")]
         public virtual string Platform { get; internal set; }
         /// <summary>
         ///   Set type of progress output (auto, plain, tty). Use plain to show container output.
         /// </summary>
+        [ArgumentFormat("--progress {value}")]
         public virtual string Progress { get; internal set; }
         /// <summary>
         ///   Always attempt to pull a newer version of the image.
         /// </summary>
+        [ArgumentFormat("--pull")]
         public virtual bool? Pull { get; internal set; }
         /// <summary>
         ///   Suppress the build output and print image ID on success.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   Remove intermediate containers after a successful build.
         /// </summary>
+        [ArgumentFormat("--rm")]
         public virtual bool? Rm { get; internal set; }
         /// <summary>
         ///   Secret file to expose to the build (only if BuildKit enabled): id=mysecret,src=/local/secret.
         /// </summary>
+        [ArgumentFormat("--secret {value}")]
         public virtual string Secret { get; internal set; }
         /// <summary>
         ///   Security options.
         /// </summary>
+        [ArgumentFormat("--security-opt {value}")]
         public virtual IReadOnlyList<string> SecurityOpt => SecurityOptInternal.AsReadOnly();
         internal List<string> SecurityOptInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Size of /dev/shm.
         /// </summary>
+        [ArgumentFormat("--shm-size {value}")]
         public virtual long? ShmSize { get; internal set; }
         /// <summary>
         ///   Squash newly built layers into a single new layer.
         /// </summary>
+        [ArgumentFormat("--squash")]
         public virtual bool? Squash { get; internal set; }
         /// <summary>
         ///   SSH agent socket or keys to expose to the build (only if BuildKit enabled) (format: default|&lt;id&gt;[=&lt;socket&gt;|&lt;key&gt;[,&lt;key&gt;]]).
         /// </summary>
+        [ArgumentFormat("--ssh {value}")]
         public virtual string Ssh { get; internal set; }
         /// <summary>
         ///   Stream attaches to server to negotiate build context.
         /// </summary>
+        [ArgumentFormat("--stream")]
         public virtual bool? Stream { get; internal set; }
         /// <summary>
         ///   Name and optionally a tag in the 'name:tag' format.
         /// </summary>
+        [ArgumentFormat("--tag {value}")]
         public virtual IReadOnlyList<string> Tag => TagInternal.AsReadOnly();
         internal List<string> TagInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set the target build stage to build.
         /// </summary>
+        [ArgumentFormat("--target {value}")]
         public virtual string Target { get; internal set; }
         /// <summary>
         ///   Ulimit options.
         /// </summary>
+        [ArgumentFormat("--ulimit {value}")]
         public virtual string Ulimit { get; internal set; }
         /// <summary>
         ///   Path or url where the build context is located.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Path { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -21327,22 +22661,28 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Show all containers (default shows just running).
         /// </summary>
+        [ArgumentFormat("--all")]
         public virtual bool? All { get; internal set; }
         /// <summary>
         ///   Pretty-print images using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Disable streaming stats and only pull the first result.
         /// </summary>
+        [ArgumentFormat("--no-stream")]
         public virtual bool? NoStream { get; internal set; }
         /// <summary>
         ///   Do not truncate output.
         /// </summary>
+        [ArgumentFormat("--no-trunc")]
         public virtual bool? NoTrunc { get; internal set; }
         /// <summary>
         ///   [CONTAINER...]
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -21376,30 +22716,37 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Only show automated builds.
         /// </summary>
+        [ArgumentFormat("--automated")]
         public virtual bool? Automated { get; internal set; }
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Pretty-print search using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Max number of search results.
         /// </summary>
+        [ArgumentFormat("--limit {value}")]
         public virtual int? Limit { get; internal set; }
         /// <summary>
         ///   Don't truncate output.
         /// </summary>
+        [ArgumentFormat("--no-trunc")]
         public virtual bool? NoTrunc { get; internal set; }
         /// <summary>
         ///   Only displays with at least x stars.
         /// </summary>
+        [ArgumentFormat("--stars {value}")]
         public virtual int? Stars { get; internal set; }
         /// <summary>
         ///   TERM
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Term { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -21434,6 +22781,7 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   COMMAND
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Command { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -21462,10 +22810,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Skip image signing.
         /// </summary>
+        [ArgumentFormat("--disable-content-trust")]
         public virtual bool? DisableContentTrust { get; internal set; }
         /// <summary>
         ///   PLUGIN[:TAG]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Plugin { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -21495,10 +22845,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Read from tar archive file, instead of STDIN.
         /// </summary>
+        [ArgumentFormat("--input {value}")]
         public virtual string Input { get; internal set; }
         /// <summary>
         ///   Suppress the load output.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -21551,18 +22903,23 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Force the removal of a running container (uses SIGKILL).
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Remove the specified link.
         /// </summary>
+        [ArgumentFormat("--link")]
         public virtual bool? Link { get; internal set; }
         /// <summary>
         ///   Remove the volumes associated with the container.
         /// </summary>
+        [ArgumentFormat("--volumes")]
         public virtual bool? Volumes { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -21595,66 +22952,83 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0).
         /// </summary>
+        [ArgumentFormat("--blkio-weight {value}")]
         public virtual int? BlkioWeight { get; internal set; }
         /// <summary>
         ///   Limit CPU CFS (Completely Fair Scheduler) period.
         /// </summary>
+        [ArgumentFormat("--cpu-period {value}")]
         public virtual long? CpuPeriod { get; internal set; }
         /// <summary>
         ///   Limit CPU CFS (Completely Fair Scheduler) quota.
         /// </summary>
+        [ArgumentFormat("--cpu-quota {value}")]
         public virtual long? CpuQuota { get; internal set; }
         /// <summary>
         ///   Limit the CPU real-time period in microseconds.
         /// </summary>
+        [ArgumentFormat("--cpu-rt-period {value}")]
         public virtual long? CpuRtPeriod { get; internal set; }
         /// <summary>
         ///   Limit the CPU real-time runtime in microseconds.
         /// </summary>
+        [ArgumentFormat("--cpu-rt-runtime {value}")]
         public virtual long? CpuRtRuntime { get; internal set; }
         /// <summary>
         ///   CPU shares (relative weight).
         /// </summary>
+        [ArgumentFormat("--cpu-shares {value}")]
         public virtual long? CpuShares { get; internal set; }
         /// <summary>
         ///   Number of CPUs.
         /// </summary>
+        [ArgumentFormat("--cpus {value}")]
         public virtual decimal? Cpus { get; internal set; }
         /// <summary>
         ///   CPUs in which to allow execution (0-3, 0,1).
         /// </summary>
+        [ArgumentFormat("--cpuset-cpus {value}")]
         public virtual string CpusetCpus { get; internal set; }
         /// <summary>
         ///   MEMs in which to allow execution (0-3, 0,1).
         /// </summary>
+        [ArgumentFormat("--cpuset-mems {value}")]
         public virtual string CpusetMems { get; internal set; }
         /// <summary>
         ///   Kernel memory limit.
         /// </summary>
+        [ArgumentFormat("--kernel-memory {value}")]
         public virtual long? KernelMemory { get; internal set; }
         /// <summary>
         ///   Memory limit.
         /// </summary>
+        [ArgumentFormat("--memory {value}")]
         public virtual long? Memory { get; internal set; }
         /// <summary>
         ///   Memory soft limit.
         /// </summary>
+        [ArgumentFormat("--memory-reservation {value}")]
         public virtual long? MemoryReservation { get; internal set; }
         /// <summary>
         ///   Swap limit equal to memory plus swap: '-1' to enable unlimited swap.
         /// </summary>
+        [ArgumentFormat("--memory-swap {value}")]
         public virtual long? MemorySwap { get; internal set; }
         /// <summary>
         ///   Tune container pids limit (set -1 for unlimited).
         /// </summary>
+        [ArgumentFormat("--pids-limit {value}")]
         public virtual long? PidsLimit { get; internal set; }
         /// <summary>
         ///   Restart policy to apply when a container exits.
         /// </summary>
+        [ArgumentFormat("--restart {value}")]
         public virtual string Restart { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -21699,10 +23073,13 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   PLUGIN
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Plugin { get; internal set; }
         /// <summary>
         ///   KEY=VALUE
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [ItemFormat("{key=value}")]
         public virtual IReadOnlyDictionary<string, string> KeyValues => KeyValuesInternal.AsReadOnly();
         internal Dictionary<string,string> KeyValuesInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -21733,6 +23110,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -21762,14 +23141,17 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Export as a kubeconfig file.
         /// </summary>
+        [ArgumentFormat("--kubeconfig")]
         public virtual bool? Kubeconfig { get; internal set; }
         /// <summary>
         ///   CONTEXT
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Context { get; internal set; }
         /// <summary>
         ///   [FILE|-]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string File { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -21800,27 +23182,33 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Set architecture.
         /// </summary>
+        [ArgumentFormat("--arch {value}")]
         public virtual string Arch { get; internal set; }
         /// <summary>
         ///   Set operating system.
         /// </summary>
+        [ArgumentFormat("--os {value}")]
         public virtual string Os { get; internal set; }
         /// <summary>
         ///   Set operating system feature.
         /// </summary>
+        [ArgumentFormat("--os-features {value}")]
         public virtual IReadOnlyList<string> OsFeatures => OsFeaturesInternal.AsReadOnly();
         internal List<string> OsFeaturesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set architecture variant.
         /// </summary>
+        [ArgumentFormat("--variant {value}")]
         public virtual string Variant { get; internal set; }
         /// <summary>
         ///   MANIFEST_LIST
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string ManifestList { get; internal set; }
         /// <summary>
         ///   MANIFEST
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Manifest { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -21854,22 +23242,27 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Download all tagged images in the repository.
         /// </summary>
+        [ArgumentFormat("--all-tags")]
         public virtual bool? AllTags { get; internal set; }
         /// <summary>
         ///   Skip image verification.
         /// </summary>
+        [ArgumentFormat("--disable-content-trust")]
         public virtual bool? DisableContentTrust { get; internal set; }
         /// <summary>
         ///   Set platform if server is multi-platform capable.
         /// </summary>
+        [ArgumentFormat("--platform {value}")]
         public virtual string Platform { get; internal set; }
         /// <summary>
         ///   Suppress verbose output.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   NAME[:TAG|@DIGEST]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Name { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -21902,18 +23295,22 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Show all events created since timestamp.
         /// </summary>
+        [ArgumentFormat("--since {value}")]
         public virtual string Since { get; internal set; }
         /// <summary>
         ///   Stream events until this timestamp.
         /// </summary>
+        [ArgumentFormat("--until {value}")]
         public virtual string Until { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -21945,14 +23342,17 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   List stacks from all Kubernetes namespaces.
         /// </summary>
+        [ArgumentFormat("--all-namespaces")]
         public virtual bool? AllNamespaces { get; internal set; }
         /// <summary>
         ///   Pretty-print stacks using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Kubernetes namespaces to use.
         /// </summary>
+        [ArgumentFormat("--namespace {value}")]
         public virtual IReadOnlyList<string> Namespace => NamespaceInternal.AsReadOnly();
         internal List<string> NamespaceInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -21984,14 +23384,18 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Display total file sizes.
         /// </summary>
+        [ArgumentFormat("--size")]
         public virtual bool? Size { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -22023,10 +23427,13 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Signal to send to the container.
         /// </summary>
+        [ArgumentFormat("--signal {value}")]
         public virtual string Signal { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -22057,18 +23464,22 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Use a custom checkpoint storage directory.
         /// </summary>
+        [ArgumentFormat("--checkpoint-dir {value}")]
         public virtual string CheckpointDir { get; internal set; }
         /// <summary>
         ///   Leave the container running after checkpoint.
         /// </summary>
+        [ArgumentFormat("--leave-running")]
         public virtual bool? LeaveRunning { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         /// <summary>
         ///   CHECKPOINT
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Checkpoint { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -22100,6 +23511,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -22129,30 +23542,37 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Show extra details provided to logs.
         /// </summary>
+        [ArgumentFormat("--details")]
         public virtual bool? Details { get; internal set; }
         /// <summary>
         ///   Follow log output.
         /// </summary>
+        [ArgumentFormat("--follow")]
         public virtual bool? Follow { get; internal set; }
         /// <summary>
         ///   Show logs since timestamp (e.g. 2013-01-02T13:23:37) or relative (e.g. 42m for 42 minutes).
         /// </summary>
+        [ArgumentFormat("--since {value}")]
         public virtual string Since { get; internal set; }
         /// <summary>
         ///   Number of lines to show from the end of the logs.
         /// </summary>
+        [ArgumentFormat("--tail {value}")]
         public virtual string Tail { get; internal set; }
         /// <summary>
         ///   Show timestamps.
         /// </summary>
+        [ArgumentFormat("--timestamps")]
         public virtual bool? Timestamps { get; internal set; }
         /// <summary>
         ///   Show logs before a timestamp (e.g. 2013-01-02T13:23:37) or relative (e.g. 42m for 42 minutes).
         /// </summary>
+        [ArgumentFormat("--until {value}")]
         public virtual string Until { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -22187,14 +23607,18 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   [CONTEXT]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Context { get; internal set; }
         /// <summary>
         ///   [CONTEXT...]
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Contexts => ContextsInternal.AsReadOnly();
         internal List<string> ContextsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -22226,6 +23650,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   NODE
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Nodes => NodesInternal.AsReadOnly();
         internal List<string> NodesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -22255,6 +23681,8 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   NODE
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Nodes => NodesInternal.AsReadOnly();
         internal List<string> NodesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -22284,47 +23712,59 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Detached mode: run command in the background.
         /// </summary>
+        [ArgumentFormat("--detach")]
         public virtual bool? Detach { get; internal set; }
         /// <summary>
         ///   Override the key sequence for detaching a container.
         /// </summary>
+        [ArgumentFormat("--detach-keys {value}")]
         public virtual string DetachKeys { get; internal set; }
         /// <summary>
         ///   Set environment variables.
         /// </summary>
+        [ArgumentFormat("--env {value}")]
         public virtual IReadOnlyList<string> Env => EnvInternal.AsReadOnly();
         internal List<string> EnvInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Keep STDIN open even if not attached.
         /// </summary>
+        [ArgumentFormat("--interactive")]
         public virtual bool? Interactive { get; internal set; }
         /// <summary>
         ///   Give extended privileges to the command.
         /// </summary>
+        [ArgumentFormat("--privileged")]
         public virtual bool? Privileged { get; internal set; }
         /// <summary>
         ///   Allocate a pseudo-TTY.
         /// </summary>
+        [ArgumentFormat("--tty")]
         public virtual bool? Tty { get; internal set; }
         /// <summary>
         ///   Username or UID (format: &lt;name|uid&gt;[:&lt;group|gid&gt;]).
         /// </summary>
+        [ArgumentFormat("--user {value}")]
         public virtual string User { get; internal set; }
         /// <summary>
         ///   Working directory inside the container.
         /// </summary>
+        [ArgumentFormat("--workdir {value}")]
         public virtual string Workdir { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Container { get; internal set; }
         /// <summary>
         ///   COMMAND
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Command { get; internal set; }
         /// <summary>
         ///   [ARG...]
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Args => ArgsInternal.AsReadOnly();
         internal List<string> ArgsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -22364,14 +23804,18 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Force removal of the image.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Do not delete untagged parents.
         /// </summary>
+        [ArgumentFormat("--no-prune")]
         public virtual bool? NoPrune { get; internal set; }
         /// <summary>
         ///   IMAGE
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Images => ImagesInternal.AsReadOnly();
         internal List<string> ImagesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -22449,6 +23893,7 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   COMMAND
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Command { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -22477,26 +23922,33 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Attach STDOUT/STDERR and forward signals.
         /// </summary>
+        [ArgumentFormat("--attach")]
         public virtual bool? Attach { get; internal set; }
         /// <summary>
         ///   Restore from this checkpoint.
         /// </summary>
+        [ArgumentFormat("--checkpoint {value}")]
         public virtual string Checkpoint { get; internal set; }
         /// <summary>
         ///   Use a custom checkpoint storage directory.
         /// </summary>
+        [ArgumentFormat("--checkpoint-dir {value}")]
         public virtual string CheckpointDir { get; internal set; }
         /// <summary>
         ///   Override the key sequence for detaching a container.
         /// </summary>
+        [ArgumentFormat("--detach-keys {value}")]
         public virtual string DetachKeys { get; internal set; }
         /// <summary>
         ///   Attach container's STDIN.
         /// </summary>
+        [ArgumentFormat("--interactive")]
         public virtual bool? Interactive { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -22531,10 +23983,13 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Format the output using the given Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   PLUGIN
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Plugins => PluginsInternal.AsReadOnly();
         internal List<string> PluginsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -22565,6 +24020,7 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   [SERVER]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Server { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -22616,30 +24072,37 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Show all images (default hides intermediate images).
         /// </summary>
+        [ArgumentFormat("--all")]
         public virtual bool? All { get; internal set; }
         /// <summary>
         ///   Show digests.
         /// </summary>
+        [ArgumentFormat("--digests")]
         public virtual bool? Digests { get; internal set; }
         /// <summary>
         ///   Filter output based on conditions provided.
         /// </summary>
+        [ArgumentFormat("--filter {value}")]
         public virtual string Filter { get; internal set; }
         /// <summary>
         ///   Pretty-print images using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Don't truncate output.
         /// </summary>
+        [ArgumentFormat("--no-trunc")]
         public virtual bool? NoTrunc { get; internal set; }
         /// <summary>
         ///   Only show numeric IDs.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   [REPOSITORY[:TAG]]
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Repository { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -22674,10 +24137,12 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Pretty-print images using a Go template.
         /// </summary>
+        [ArgumentFormat("--format {value}")]
         public virtual string Format { get; internal set; }
         /// <summary>
         ///   Show detailed information on space usage.
         /// </summary>
+        [ArgumentFormat("--verbose")]
         public virtual bool? Verbose { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -22707,14 +24172,17 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Exit immediately instead of waiting for the service to converge.
         /// </summary>
+        [ArgumentFormat("--detach")]
         public virtual bool? Detach { get; internal set; }
         /// <summary>
         ///   Suppress progress output.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   SERVICE
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Service { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -22745,10 +24213,13 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Seconds to wait for stop before killing the container.
         /// </summary>
+        [ArgumentFormat("--time {value}")]
         public virtual int? Time { get; internal set; }
         /// <summary>
         ///   CONTAINER
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Containers => ContainersInternal.AsReadOnly();
         internal List<string> ContainersInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -22779,14 +24250,18 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Do not prompt for confirmation before removing the most recent signer.
         /// </summary>
+        [ArgumentFormat("--force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   NAME
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Name { get; internal set; }
         /// <summary>
         ///   REPOSITORY
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Repositories => RepositoriesInternal.AsReadOnly();
         internal List<string> RepositoriesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -22818,10 +24293,13 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Kubernetes namespace to use.
         /// </summary>
+        [ArgumentFormat("--namespace {value}")]
         public virtual string Namespace { get; internal set; }
         /// <summary>
         ///   STACK
         /// </summary>
+        [ArgumentFormat("{value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> Stacks => StacksInternal.AsReadOnly();
         internal List<string> StacksInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -22852,152 +24330,188 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Add a custom host-to-IP mapping (host:ip).
         /// </summary>
+        [ArgumentFormat("--add-host {value}")]
         public virtual IReadOnlyList<string> AddHost => AddHostInternal.AsReadOnly();
         internal List<string> AddHostInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set build-time variables.
         /// </summary>
+        [ArgumentFormat("--build-arg {value}")]
         public virtual IReadOnlyList<string> BuildArg => BuildArgInternal.AsReadOnly();
         internal List<string> BuildArgInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Images to consider as cache sources.
         /// </summary>
+        [ArgumentFormat("--cache-from {value}")]
         public virtual IReadOnlyList<string> CacheFrom => CacheFromInternal.AsReadOnly();
         internal List<string> CacheFromInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Optional parent cgroup for the container.
         /// </summary>
+        [ArgumentFormat("--cgroup-parent {value}")]
         public virtual string CgroupParent { get; internal set; }
         /// <summary>
         ///   Compress the build context using gzip.
         /// </summary>
+        [ArgumentFormat("--compress")]
         public virtual bool? Compress { get; internal set; }
         /// <summary>
         ///   Limit the CPU CFS (Completely Fair Scheduler) period.
         /// </summary>
+        [ArgumentFormat("--cpu-period {value}")]
         public virtual long? CpuPeriod { get; internal set; }
         /// <summary>
         ///   Limit the CPU CFS (Completely Fair Scheduler) quota.
         /// </summary>
+        [ArgumentFormat("--cpu-quota {value}")]
         public virtual long? CpuQuota { get; internal set; }
         /// <summary>
         ///   CPU shares (relative weight).
         /// </summary>
+        [ArgumentFormat("--cpu-shares {value}")]
         public virtual long? CpuShares { get; internal set; }
         /// <summary>
         ///   CPUs in which to allow execution (0-3, 0,1).
         /// </summary>
+        [ArgumentFormat("--cpuset-cpus {value}")]
         public virtual string CpusetCpus { get; internal set; }
         /// <summary>
         ///   MEMs in which to allow execution (0-3, 0,1).
         /// </summary>
+        [ArgumentFormat("--cpuset-mems {value}")]
         public virtual string CpusetMems { get; internal set; }
         /// <summary>
         ///   Skip image verification.
         /// </summary>
+        [ArgumentFormat("--disable-content-trust")]
         public virtual bool? DisableContentTrust { get; internal set; }
         /// <summary>
         ///   Name of the Dockerfile (Default is 'PATH/Dockerfile').
         /// </summary>
+        [ArgumentFormat("--file {value}")]
         public virtual string File { get; internal set; }
         /// <summary>
         ///   Always remove intermediate containers.
         /// </summary>
+        [ArgumentFormat("--force-rm")]
         public virtual bool? ForceRm { get; internal set; }
         /// <summary>
         ///   Write the image ID to the file.
         /// </summary>
+        [ArgumentFormat("--iidfile {value}")]
         public virtual string Iidfile { get; internal set; }
         /// <summary>
         ///   Container isolation technology.
         /// </summary>
+        [ArgumentFormat("--isolation {value}")]
         public virtual string Isolation { get; internal set; }
         /// <summary>
         ///   Set metadata for an image.
         /// </summary>
+        [ArgumentFormat("--label {value}")]
         public virtual IReadOnlyList<string> Label => LabelInternal.AsReadOnly();
         internal List<string> LabelInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Memory limit.
         /// </summary>
+        [ArgumentFormat("--memory {value}")]
         public virtual long? Memory { get; internal set; }
         /// <summary>
         ///   Swap limit equal to memory plus swap: '-1' to enable unlimited swap.
         /// </summary>
+        [ArgumentFormat("--memory-swap {value}")]
         public virtual long? MemorySwap { get; internal set; }
         /// <summary>
         ///   Set the networking mode for the RUN instructions during build.
         /// </summary>
+        [ArgumentFormat("--network {value}")]
         public virtual string Network { get; internal set; }
         /// <summary>
         ///   Do not use cache when building the image.
         /// </summary>
+        [ArgumentFormat("--no-cache")]
         public virtual bool? NoCache { get; internal set; }
         /// <summary>
         ///   Output destination (format: type=local,dest=path).
         /// </summary>
+        [ArgumentFormat("--output {value}")]
         public virtual string Output { get; internal set; }
         /// <summary>
         ///   Set platform if server is multi-platform capable.
         /// </summary>
+        [ArgumentFormat("--platform {value}")]
         public virtual string Platform { get; internal set; }
         /// <summary>
         ///   Set type of progress output (auto, plain, tty). Use plain to show container output.
         /// </summary>
+        [ArgumentFormat("--progress {value}")]
         public virtual string Progress { get; internal set; }
         /// <summary>
         ///   Always attempt to pull a newer version of the image.
         /// </summary>
+        [ArgumentFormat("--pull")]
         public virtual bool? Pull { get; internal set; }
         /// <summary>
         ///   Suppress the build output and print image ID on success.
         /// </summary>
+        [ArgumentFormat("--quiet")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   Remove intermediate containers after a successful build.
         /// </summary>
+        [ArgumentFormat("--rm")]
         public virtual bool? Rm { get; internal set; }
         /// <summary>
         ///   Secret file to expose to the build (only if BuildKit enabled): id=mysecret,src=/local/secret.
         /// </summary>
+        [ArgumentFormat("--secret {value}")]
         public virtual string Secret { get; internal set; }
         /// <summary>
         ///   Security options.
         /// </summary>
+        [ArgumentFormat("--security-opt {value}")]
         public virtual IReadOnlyList<string> SecurityOpt => SecurityOptInternal.AsReadOnly();
         internal List<string> SecurityOptInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Size of /dev/shm.
         /// </summary>
+        [ArgumentFormat("--shm-size {value}")]
         public virtual long? ShmSize { get; internal set; }
         /// <summary>
         ///   Squash newly built layers into a single new layer.
         /// </summary>
+        [ArgumentFormat("--squash")]
         public virtual bool? Squash { get; internal set; }
         /// <summary>
         ///   SSH agent socket or keys to expose to the build (only if BuildKit enabled) (format: default|&lt;id&gt;[=&lt;socket&gt;|&lt;key&gt;[,&lt;key&gt;]]).
         /// </summary>
+        [ArgumentFormat("--ssh {value}")]
         public virtual string Ssh { get; internal set; }
         /// <summary>
         ///   Stream attaches to server to negotiate build context.
         /// </summary>
+        [ArgumentFormat("--stream")]
         public virtual bool? Stream { get; internal set; }
         /// <summary>
         ///   Name and optionally a tag in the 'name:tag' format.
         /// </summary>
+        [ArgumentFormat("--tag {value}")]
         public virtual IReadOnlyList<string> Tag => TagInternal.AsReadOnly();
         internal List<string> TagInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Set the target build stage to build.
         /// </summary>
+        [ArgumentFormat("--target {value}")]
         public virtual string Target { get; internal set; }
         /// <summary>
         ///   Ulimit options.
         /// </summary>
+        [ArgumentFormat("--ulimit {value}")]
         public virtual string Ulimit { get; internal set; }
         /// <summary>
         ///   Path or url where the build context is located.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string Path { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -23056,34 +24570,42 @@ namespace Nuke.Common.Tools.Docker
         /// <summary>
         ///   Set the logging level.
         /// </summary>
+        [ArgumentFormat("--log-level {value}")]
         public virtual LogLevel LogLevel { get; internal set; }
         /// <summary>
         ///   Location of client config files (default ~/.docker).
         /// </summary>
+        [ArgumentFormat("--config {value}")]
         public virtual string Config { get; internal set; }
         /// <summary>
         ///   Enable debug mode.
         /// </summary>
+        [ArgumentFormat("--debug")]
         public virtual bool? Debug { get; internal set; }
         /// <summary>
         ///   Use TLS; implied by --tlsverify.
         /// </summary>
+        [ArgumentFormat("--tls")]
         public virtual bool? TLS { get; internal set; }
         /// <summary>
         ///   Use TLS and verify the remote.
         /// </summary>
+        [ArgumentFormat("--tlsverify")]
         public virtual bool? TLSVerify { get; internal set; }
         /// <summary>
         ///   Trust certs signed only by this CA (default ~/.docker/ca.pem).
         /// </summary>
+        [ArgumentFormat("--tlscacert {value}")]
         public virtual string TLSCaCert { get; internal set; }
         /// <summary>
         ///   Path to TLS certificate file (default ~/.docker/cert.pem).
         /// </summary>
+        [ArgumentFormat("--tlscert {value}")]
         public virtual string TLSCert { get; internal set; }
         /// <summary>
         ///   Path to TLS key file (default ~/.docker/key.pem).
         /// </summary>
+        [ArgumentFormat("--tlskey {value}")]
         public virtual string TLSKey { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {

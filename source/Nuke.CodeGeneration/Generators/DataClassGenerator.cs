@@ -136,6 +136,10 @@ namespace Nuke.CodeGeneration.Generators
             return writer
                 .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteLine(GetJsonSerializationAttribute(property))
+                .WriteLine($"[ArgumentFormat({property.Format.DoubleQuote()})]")
+                .WriteLineIfTrue(property.ItemFormat != null, $"[ItemFormat({property.ItemFormat.DoubleQuote()})]")
+                .WriteLineIfTrue(property.Separator != null, $"[Separator({property.Separator.ToString().DoubleQuote()})]")
+                .ForEachWriteLine(property.Delegates.Select(x => $"[Delegate({x.Name.DoubleQuote()}, {x.Separator.ToString().DoubleQuote()})]"))
                 .WriteLine($"public virtual {type} {property.Name} {implementation}");
         }
 

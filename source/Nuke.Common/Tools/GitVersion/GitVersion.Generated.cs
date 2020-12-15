@@ -116,6 +116,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///     <li><c>/version</c> via <see cref="GitVersionSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("")]
         public static (GitVersion Result, IReadOnlyCollection<Output> Output) GitVersion(Configure<GitVersionSettings> configurator)
         {
             return GitVersion(configurator(new GitVersionSettings()));
@@ -175,101 +176,128 @@ namespace Nuke.Common.Tools.GitVersion
         /// <summary>
         ///   The directory containing .git. If not defined current directory is used. (Must be first argument).
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual string TargetPath { get; internal set; }
         /// <summary>
         ///   Displays the version of GitVersion.
         /// </summary>
+        [ArgumentFormat("/version")]
         public virtual bool? Version { get; internal set; }
         /// <summary>
         ///   Runs GitVersion with additional diagnostic information (requires git.exe to be installed).
         /// </summary>
+        [ArgumentFormat("/diag")]
         public virtual bool? Diagnostics { get; internal set; }
         /// <summary>
         ///   Determines the output to the console. Can be either <em>json</em> or <em>buildserver</em>, will default to <em>json</em>.
         /// </summary>
+        [ArgumentFormat("/output {value}")]
         public virtual GitVersionOutput Output { get; internal set; }
         /// <summary>
         ///   Used in conjuntion with <c>/output</c> json, will output just a particular variable. E.g., <c>/output json /showvariable SemVer</c> - will output <c>1.2.3+beta.4</c>.
         /// </summary>
+        [ArgumentFormat("/showvariable {value}")]
         public virtual string ShowVariable { get; internal set; }
         /// <summary>
         ///   Path to logfile.
         /// </summary>
+        [ArgumentFormat("/l {value}")]
         public virtual string LogFile { get; internal set; }
         /// <summary>
         ///   Outputs the effective GitVersion config (defaults + custom from GitVersion.yml) in yaml format.
         /// </summary>
+        [ArgumentFormat("/showconfig")]
         public virtual bool? ShowConfig { get; internal set; }
         /// <summary>
         ///   Overrides GitVersion config values inline (semicolon-separated key value pairs e.g. <c>/overrideconfig tag-prefix=Foo</c>). Currently supported config overrides: <c>tag-prefix</c>.
         /// </summary>
+        [ArgumentFormat("/overrideconfig {value}")]
+        [ItemFormat("{key}={value}")]
         public virtual IReadOnlyDictionary<string, object> ConfigurationOverride => ConfigurationOverrideInternal.AsReadOnly();
         internal Dictionary<string, object> ConfigurationOverrideInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Bypasses the cache, result will not be written to the cache.
         /// </summary>
+        [ArgumentFormat("/nocache")]
         public virtual bool? NoCache { get; internal set; }
         /// <summary>
         ///   Will recursively search for all 'AssemblyInfo.cs' files in the git repo and update them.
         /// </summary>
+        [ArgumentFormat("/updateassemblyinfo")]
         public virtual bool? UpdateAssemblyInfo { get; internal set; }
         /// <summary>
         ///   Specify name of AssemblyInfo files to update.
         /// </summary>
+        [ArgumentFormat("/updateassemblyinfofilename {value}")]
+        [Separator(" ")]
         public virtual IReadOnlyList<string> UpdateAssemblyInfoFileNames => UpdateAssemblyInfoFileNamesInternal.AsReadOnly();
         internal List<string> UpdateAssemblyInfoFileNamesInternal { get; set; } = new List<string>();
         /// <summary>
         ///   If the assembly info file specified with <c>/updateassemblyinfo</c> or <c>/updateassemblyinfofilename</c> is not found, it will be created with these attributes: AssemblyFileVersion, AssemblyVersion and AssemblyInformationalVersion.
         /// </summary>
+        [ArgumentFormat("/ensureassemblyinfo")]
         public virtual bool? EnsureAssemblyInfo { get; internal set; }
         /// <summary>
         ///   Url to remote git repository.
         /// </summary>
+        [ArgumentFormat("/url {value}")]
         public virtual string Url { get; internal set; }
         /// <summary>
         ///   Name of the branch to use on the remote repository, must be used in combination with <c>/url</c>.
         /// </summary>
+        [ArgumentFormat("/b {value}")]
         public virtual string Branch { get; internal set; }
         /// <summary>
         ///   Username in case authentication is required.
         /// </summary>
+        [ArgumentFormat("/u {value}")]
         public virtual string Username { get; internal set; }
         /// <summary>
         ///   Password in case authentication is required.
         /// </summary>
+        [ArgumentFormat("/p {value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   The commit id to check. If not specified, the latest available commit on the specified branch will be used.
         /// </summary>
+        [ArgumentFormat("/c {value}")]
         public virtual string Commit { get; internal set; }
         /// <summary>
         ///   By default dynamic repositories will be cloned to %tmp%. Use this switch to override.
         /// </summary>
+        [ArgumentFormat("/dynamicRepoLocation {value}")]
         public virtual string DynamicRepositoryLocation { get; internal set; }
         /// <summary>
         ///   Disables <c>git fetch</c> during version calculation. Might cause GitVersion to not calculate your version as expected.
         /// </summary>
+        [ArgumentFormat("/nofetch")]
         public virtual bool? NoFetch { get; internal set; }
         /// <summary>
         ///   Executes target executable making GitVersion variables available as environmental variables.
         /// </summary>
+        [ArgumentFormat("/exec {value}")]
         public virtual string Executable { get; internal set; }
         /// <summary>
         ///   Arguments for the executable specified by <c>/exec</c>.
         /// </summary>
+        [ArgumentFormat("/execargs {value}")]
         public virtual string ExecutableArguments { get; internal set; }
         /// <summary>
         ///   Build an MSBuild file, GitVersion variables will be passed as MSBuild properties.
         /// </summary>
+        [ArgumentFormat("/proj {value}")]
         public virtual string MSBuildProject { get; internal set; }
         /// <summary>
         ///   Additional arguments to pass to MSBuild.
         /// </summary>
+        [ArgumentFormat("/projargs {value}")]
         public virtual string MSBuildProjectArguments { get; internal set; }
         /// <summary>
         ///   Set Verbosity level (<c>debug</c>, <c>info</c>, <c>warn</c>, <c>error</c>, <c>none</c>). Default is <c>info</c>.
         /// </summary>
+        [ArgumentFormat("/verbosity {value}")]
         public virtual GitVersionVerbosity Verbosity { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -311,33 +339,61 @@ namespace Nuke.Common.Tools.GitVersion
     [Serializable]
     public partial class GitVersion : ISettingsEntity
     {
+        [ArgumentFormat("")]
         public virtual int Major { get; internal set; }
+        [ArgumentFormat("")]
         public virtual int Minor { get; internal set; }
+        [ArgumentFormat("")]
         public virtual int Patch { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string PreReleaseTag { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string PreReleaseTagWithDash { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string PreReleaseLabel { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string PreReleaseNumber { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string BuildMetaData { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string BuildMetaDataPadded { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string FullBuildMetaData { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string MajorMinorPatch { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string SemVer { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string LegacySemVer { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string LegacySemVerPadded { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string AssemblySemVer { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string AssemblySemFileVer { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string FullSemVer { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string InformationalVersion { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string BranchName { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string Sha { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string NuGetVersionV2 { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string NuGetVersion { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string NuGetPreReleaseTagV2 { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string NuGetPreReleaseTag { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string VersionSourceSha { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string CommitsSinceVersionSource { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string CommitsSinceVersionSourcePadded { get; internal set; }
+        [ArgumentFormat("")]
         public virtual string CommitDate { get; internal set; }
     }
     #endregion

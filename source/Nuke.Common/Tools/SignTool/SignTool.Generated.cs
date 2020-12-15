@@ -156,6 +156,7 @@ namespace Nuke.Common.Tools.SignTool
         ///     <li><c>/v</c> via <see cref="SignToolSettings.Verbose"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("sign")]
         public static IReadOnlyCollection<Output> SignTool(Configure<SignToolSettings> configurator)
         {
             return SignTool(configurator(new SignToolSettings()));
@@ -235,179 +236,224 @@ namespace Nuke.Common.Tools.SignTool
         /// <summary>
         ///   Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.
         /// </summary>
+        [ArgumentFormat("/a")]
         public virtual bool? AutomaticSelection { get; internal set; }
         /// <summary>
         ///   Add an additional certificate to the signature block.
         /// </summary>
+        [ArgumentFormat("/ac {value}")]
         public virtual string AdditionalCertificate { get; internal set; }
         /// <summary>
         ///   Specify the Certificate Template Name (Microsoft extension) of the signing cert.
         /// </summary>
+        [ArgumentFormat("/c {value}")]
         public virtual string CertificateTemplateName { get; internal set; }
         /// <summary>
         ///   Specify the signing cert in a file. If this file is a PFX with a password, the password may be supplied with the <c>/p</c> option. If the file does not contain private keys, use the <c>/csp</c> and <c>/kc</c> options to specify the CSP and container name of the private key.
         /// </summary>
+        [ArgumentFormat("/f {value}")]
         public virtual string File { get; internal set; }
         /// <summary>
         ///   Specify the Issuer of the signing cert, or a substring.
         /// </summary>
+        [ArgumentFormat("/i {value}")]
         public virtual string Issuer { get; internal set; }
         /// <summary>
         ///   Specify the Subject Name of the signing cert, or a substring.
         /// </summary>
+        [ArgumentFormat("/n {value}")]
         public virtual string SigningSubjectName { get; internal set; }
         /// <summary>
         ///   Specify a password to use when opening the PFX file.
         /// </summary>
+        [ArgumentFormat("/p {value}")]
         public virtual string Password { get; internal set; }
         /// <summary>
         ///   Specify the Subject Name of a Root cert that the signing cert must chain to.
         /// </summary>
+        [ArgumentFormat("/r {value}")]
         public virtual string RootSubjectName { get; internal set; }
         /// <summary>
         ///   Specify the Store to open when searching for the cert. The default is the <c>MY</c> Store.
         /// </summary>
+        [ArgumentFormat("/s {value}")]
         public virtual string Store { get; internal set; }
         /// <summary>
         ///   Open a Machine store instead of a User store.
         /// </summary>
+        [ArgumentFormat("/sm")]
         public virtual bool? MachineStore { get; internal set; }
         /// <summary>
         ///   Specify the SHA1 thumbprint of the signing cert.
         /// </summary>
+        [ArgumentFormat("/sha1 {value}")]
         public virtual string Sha1Thumbprint { get; internal set; }
         /// <summary>
         ///   Specifies the file digest algorithm to use for creating file signatures. (Default is <c>SHA1</c>)
         /// </summary>
+        [ArgumentFormat("/fd {value}")]
         public virtual string FileDigestAlgorithm { get; internal set; }
         /// <summary>
         ///   Specify the Enhanced Key Usage that must be present in the cert.<para/>The parameter may be specified by OID or by string. The default usage is <em>Code Signing</em> (1.3.6.1.5.5.7.3.3).
         /// </summary>
+        [ArgumentFormat("/u {value}")]
         public virtual string EnhancedKeyUsage { get; internal set; }
         /// <summary>
         ///   Specify usage of <em>Windows System Component Verification</em> (1.3.6.1.4.1.311.10.3.6).
         /// </summary>
+        [ArgumentFormat("/uw")]
         public virtual bool? WindowsSystemComponentVerification { get; internal set; }
         /// <summary>
         ///   Specify the CSP containing the Private Key Container.
         /// </summary>
+        [ArgumentFormat("/csp {value}")]
         public virtual string Csp { get; internal set; }
         /// <summary>
         ///   Specify the Key Container Name of the Private Key.
         /// </summary>
+        [ArgumentFormat("/kc {value}")]
         public virtual string KeyContainer { get; internal set; }
         /// <summary>
         ///   Append this signature. If no primary signature is present, this signature will be made the primary signature instead.
         /// </summary>
+        [ArgumentFormat("/as")]
         public virtual bool? AppendSignature { get; internal set; }
         /// <summary>
         ///   Provide a description of the signed content.
         /// </summary>
+        [ArgumentFormat("/d {value}")]
         public virtual string Description { get; internal set; }
         /// <summary>
         ///   Provide a URL with more information about the signed content.
         /// </summary>
+        [ArgumentFormat("/du {value}")]
         public virtual string Url { get; internal set; }
         /// <summary>
         ///   Specify the timestamp server's URL. If this option is not present, the signed file will not be timestamped. A warning is generated if timestamping fails.
         /// </summary>
+        [ArgumentFormat("/t {value}")]
         public virtual string TimestampServerUrl { get; internal set; }
         /// <summary>
         ///   Specifies the RFC 3161 timestamp server's URL. If this option (or <c>/t</c>) is not specified, the signed file will not be timestamped. A warning is generated if timestamping fails. This switch cannot be used with the <c>/t</c> switch.
         /// </summary>
+        [ArgumentFormat("/tr {value}")]
         public virtual string Rfc3161TimestampServerUrl { get; internal set; }
         /// <summary>
         ///   Specifies the RFC 3161 timestamp server's URL for timestamping a sealed file.
         /// </summary>
+        [ArgumentFormat("/tseal {value}")]
         public virtual string Rfc3161TimestampServerUrlSealed { get; internal set; }
         /// <summary>
         ///   Used with the <c>/tr</c> or <c>/tseal</c> switch to request a digest algorithm used by the RFC 3161 timestamp server.
         /// </summary>
+        [ArgumentFormat("/td {value}")]
         public virtual string TimestampServerDigestAlgorithm { get; internal set; }
         /// <summary>
         ///   Specify an OID and value to be included as an authenticated attribute in the signature. The value will be encoded as an ASN1 UTF8 string. This option may be given multiple times.
         /// </summary>
+        [ArgumentFormat("/sa {value}")]
+        [ItemFormat("{key} {value}")]
         public virtual IReadOnlyDictionary<string, string> AuthenticatedAttributes => AuthenticatedAttributesInternal.AsReadOnly();
         internal Dictionary<string, string> AuthenticatedAttributesInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Add a sealing signature if the file format supports it.
         /// </summary>
+        [ArgumentFormat("/seal")]
         public virtual bool? SealingSignature { get; internal set; }
         /// <summary>
         ///   Create a primary signature with the intent-to-seal attribute.
         /// </summary>
+        [ArgumentFormat("/itos")]
         public virtual bool? IntentToSealAttribute { get; internal set; }
         /// <summary>
         ///   Continue to seal or sign in situations where the existing signature or sealing signature needs to be removed to support sealing.
         /// </summary>
+        [ArgumentFormat("/force")]
         public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Sealing-related warnings do not affect SignTool's return code.
         /// </summary>
+        [ArgumentFormat("/nosealwarn")]
         public virtual bool? NoSealWarn { get; internal set; }
         /// <summary>
         ///   Generates the to be signed digest and the unsigned PKCS7 files. The output digest and PKCS7 files will be: <c>&lt;path&gt;\&lt;file&gt;.dig</c> and <c>&lt;path&gt;\&lt;file&gt;.p7u</c>. To output an additional XML file, see <c>/dxml</c>.
         /// </summary>
+        [ArgumentFormat("/dg {value}")]
         public virtual string SignedDigestAndUnsignedPkcs7Path { get; internal set; }
         /// <summary>
         ///   Signs the digest only. The input file should be the digest generated by the <c>/dg</c> option. The output file will be: <c>&lt;file&gt;.signed</c>.
         /// </summary>
+        [ArgumentFormat("/ds")]
         public virtual bool? SignDigestOnly { get; internal set; }
         /// <summary>
         ///   Creates the signature by ingesting the signed digest to the unsigned PKCS7 file. The input signed digest and unsigned PKCS7 files should be: <c>&lt;path&gt;\&lt;file&gt;.dig.signed</c> and <c>&lt;path&gt;\&lt;file&gt;.p7u</c>.
         /// </summary>
+        [ArgumentFormat("/di {value}")]
         public virtual string GenerateSignature { get; internal set; }
         /// <summary>
         ///   When used with the <c>/dg</c> option, produces an XML file. The output file will be: <c>&lt;path&gt;\&lt;file&gt;.dig.xml</c>.
         /// </summary>
+        [ArgumentFormat("/dxml")]
         public virtual bool? XmlFile { get; internal set; }
         /// <summary>
         ///   Specifies the DLL implementing the AuthenticodeDigestSign function to sign the digest with. This option is equivalent to using SignTool separately with the <c>/dg</c>, <c>/ds</c>, and <c>/di</c> switches, except this option invokes all three as one atomic operation.
         /// </summary>
+        [ArgumentFormat("/dlib {value}")]
         public virtual string AuthenticodeDigestSignLibDll { get; internal set; }
         /// <summary>
         ///   When used with the <c>/dlib</c> option, passes the file's contents to the AuthenticodeDigestSign function without modification.
         /// </summary>
+        [ArgumentFormat("/dmdf {value}")]
         public virtual string AuthenticodeDigestSignPassUnmodified { get; internal set; }
         /// <summary>
         ///   Specifies that for each specified content file a PKCS7 file is produced. The PKCS7 file will be named: <c>&lt;path&gt;\&lt;file&gt;.p7</c>
         /// </summary>
+        [ArgumentFormat("/p7 {value}")]
         public virtual string ContentFileToPkcs7 { get; internal set; }
         /// <summary>
         ///   Specifies the <c>&lt;OID&gt;</c> that identifies the signed content.
         /// </summary>
+        [ArgumentFormat("/p7co {value}")]
         public virtual string SignedContentIdentifier { get; internal set; }
         /// <summary>
         ///   efined values:<ul><li><b>Embedded:</b> Embeds the signed content in the PKCS7.</li><li><b>DetachedSignedData:</b> Produces the signed data part of a detached PKCS7.</li></ul>The default is <c>Embedded</c>.
         /// </summary>
+        [ArgumentFormat("/p7ce {value}")]
         public virtual SignToolContentMethod SignedContentMethod { get; internal set; }
         /// <summary>
         ///   Generate page hashes for executable files if supported.
         /// </summary>
+        [ArgumentFormat("/ph")]
         public virtual bool? PageHashes { get; internal set; }
         /// <summary>
         ///   Suppress page hashes for executable files if supported. The default is determined by the <c>SIGNTOOL_PAGE_HASHES</c> environment variable and by the <em>wintrust.dll</em> version.
         /// </summary>
+        [ArgumentFormat("/nph")]
         public virtual bool? SuppressPageHashes { get; internal set; }
         /// <summary>
         ///   Specifies signing a PE file with the relaxed marker check semantic. The flag is ignored for non-PE files. During verification, certain authenticated sections of the signature will bypass invalid PE markers check. This option should only be used after careful consideration and reviewing the details of MSRC case MS12-024 to ensure that no vulnerabilities are introduced.
         /// </summary>
+        [ArgumentFormat("/rmc")]
         public virtual bool? RelaxedMarkerCheck { get; internal set; }
         /// <summary>
         ///   No output on success and minimal output on failure.
         /// </summary>
+        [ArgumentFormat("/q")]
         public virtual bool? Quiet { get; internal set; }
         /// <summary>
         ///   Print verbose success and status messages. This may also provide slightly more information on error.
         /// </summary>
+        [ArgumentFormat("/v")]
         public virtual bool? Verbose { get; internal set; }
         /// <summary>
         ///   Display additional debug information.
         /// </summary>
+        [ArgumentFormat("/debug")]
         public virtual bool? Debug { get; internal set; }
         /// <summary>
         ///   Files to sign.
         /// </summary>
+        [ArgumentFormat("{value}")]
         public virtual IReadOnlyList<string> Files => FilesInternal.AsReadOnly();
         internal List<string> FilesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)

@@ -116,6 +116,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///     <li><c>--updateSelf</c> via <see cref="SquirrelSettings.UpdateSelf"/></li>
         ///   </ul>
         /// </remarks>
+        [CommandFormat("")]
         public static IReadOnlyCollection<Output> Squirrel(Configure<SquirrelSettings> configurator)
         {
             return Squirrel(configurator(new SquirrelSettings()));
@@ -175,99 +176,124 @@ namespace Nuke.Common.Tools.Squirrel
         /// <summary>
         ///   Install the app whose package is in the specified directory.
         /// </summary>
+        [ArgumentFormat("--install={value}")]
         public virtual string Install { get; internal set; }
         /// <summary>
         ///   Uninstall the app the same dir as Update.exe.
         /// </summary>
+        [ArgumentFormat("--uninstall")]
         public virtual bool? Uninstall { get; internal set; }
         /// <summary>
         ///   Download the releases specified by the URL and write new results to stdout as JSON.
         /// </summary>
+        [ArgumentFormat("--download")]
         public virtual bool? Download { get; internal set; }
         /// <summary>
         ///   Check for one available update and writes new results to stdout as JSON.
         /// </summary>
+        [ArgumentFormat("--checkForUpdate")]
         public virtual bool? CheckForUpdate { get; internal set; }
         /// <summary>
         ///   Update the application to the latest remote version specified by URL.
         /// </summary>
+        [ArgumentFormat("--update={value}")]
         public virtual string Update { get; internal set; }
         /// <summary>
         ///   Update or generate a releases directory with a given NuGet package.
         /// </summary>
+        [ArgumentFormat("--releasify={value}")]
         public virtual string Releasify { get; internal set; }
         /// <summary>
         ///   Create a shortcut for the given executable name.
         /// </summary>
+        [ArgumentFormat("--createShortcut={value}")]
         public virtual string CreateShortcut { get; internal set; }
         /// <summary>
         ///   Remove a shortcut for the given executable name.
         /// </summary>
+        [ArgumentFormat("--removeShortcut={value}")]
         public virtual string RemoveShortcut { get; internal set; }
         /// <summary>
         ///   Copy the currently executing Update.exe into the default location.
         /// </summary>
+        [ArgumentFormat("--updateSelf={value}")]
         public virtual string UpdateSelf { get; internal set; }
         /// <summary>
         ///   Start an executable in the latest version of the app package.
         /// </summary>
+        [ArgumentFormat("--processStart={value}")]
         public virtual string ProcessStart { get; internal set; }
         /// <summary>
         ///   Start an executable in the latest version of the app package.
         /// </summary>
+        [ArgumentFormat("--processStartAndWait={value}")]
         public virtual string ProcessStartAndWait { get; internal set; }
         /// <summary>
         ///   Path to a release directory to use with releasify.
         /// </summary>
+        [ArgumentFormat("--releaseDir={value}")]
         public virtual string ReleaseDirectory { get; internal set; }
         /// <summary>
         ///   Path to the NuGet Packages directory for C# apps.
         /// </summary>
+        [ArgumentFormat("--packagesDir={value}")]
         public virtual string PackagesDirectory { get; internal set; }
         /// <summary>
         ///   Path to the Setup.exe to use as a template.
         /// </summary>
+        [ArgumentFormat("--bootstrapperExe={value}")]
         public virtual string BootstrapperExecutable { get; internal set; }
         /// <summary>
         ///   Path to an animated GIF to be displayed during installation.
         /// </summary>
+        [ArgumentFormat("--loadingGif={value}")]
         public virtual string LoadingGif { get; internal set; }
         /// <summary>
         ///   Path to an ICO file that will be used for icon shortcuts.
         /// </summary>
+        [ArgumentFormat("--icon={value}")]
         public virtual string Icon { get; internal set; }
         /// <summary>
         ///   Path to an ICO file that will be used for the Setup executable's icon.
         /// </summary>
+        [ArgumentFormat("--setupIcon={value}")]
         public virtual string SetupIcon { get; internal set; }
         /// <summary>
         ///   Sign the installer via SignTool.exe with the parameters given.
         /// </summary>
+        [ArgumentFormat("--signWithParams={value}")]
         public virtual string SignWithParameters { get; internal set; }
         /// <summary>
         ///   Provides a base URL to prefix the RELEASES file packages with.
         /// </summary>
+        [ArgumentFormat("--baseUrl={value}")]
         public virtual string BaseUrl { get; internal set; }
         /// <summary>
         ///   Arguments that will be used when starting executable.
         /// </summary>
+        [ArgumentFormat("--process-start-args={value}")]
         public virtual string ProcessStartArguments { get; internal set; }
         /// <summary>
         ///   Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.
         /// </summary>
+        [ArgumentFormat("--shortcut-locations={value}")]
+        [Separator(",")]
         public virtual IReadOnlyList<string> ShortcutLocations => ShortcutLocationsInternal.AsReadOnly();
         internal List<string> ShortcutLocationsInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Don't generate an MSI package.
         /// </summary>
+        [ArgumentFormat("--no-msi")]
         public virtual bool? GenerateNoMsi { get; internal set; }
         /// <summary>
         ///   Don't generate delta packages to save time
         /// </summary>
+        [ArgumentFormat("--no-delta")]
         public virtual bool? GenerateNoDelta { get; internal set; }
         /// <summary>
         ///   Set the required .NET framework version, e.g. net461
         /// </summary>
+        [ArgumentFormat("--framework-version={value}")]
         public virtual string FrameworkVersion { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
