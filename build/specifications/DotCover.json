@@ -16,15 +16,15 @@
       "settingsClass": {
         "properties": [
           {
+            "name": "Configuration",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
             "name": "TargetExecutable",
             "type": "string",
             "format": "--TargetExecutable={value}",
             "help": "File name of the program to analyse."
-          },
-          {
-            "name": "Configuration",
-            "type": "string",
-            "format": "{value}"
           },
           {
             "name": "ReportType",
@@ -56,15 +56,15 @@
       "settingsClass": {
         "properties": [
           {
+            "name": "Configuration",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
             "name": "TargetExecutable",
             "type": "string",
             "format": "--TargetExecutable={value}",
             "help": "File name of the program to analyse."
-          },
-          {
-            "name": "Configuration",
-            "type": "string",
-            "format": "{value}"
           },
           {
             "name": "OutputFile",
