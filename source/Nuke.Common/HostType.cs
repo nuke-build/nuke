@@ -18,6 +18,7 @@ namespace Nuke.Common
         Jenkins,
         Travis,
         GitLab,
-        GitHubActions
+        GitHubActions,
+        SpaceAutomation
     }
 }
