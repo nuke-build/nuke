@@ -14,11 +14,11 @@ using Nuke.Common.CI.Bitrise;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.CI.GitLab;
 using Nuke.Common.CI.Jenkins;
+using Nuke.Common.CI.SpaceAutomation;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.CI.TravisCI;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
-using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Git
 {
@@ -106,7 +106,8 @@ namespace Nuke.Common.Git
                    TeamCity.Instance?.BranchName ??
                    AzurePipelines.Instance?.SourceBranchName ??
                    TravisCI.Instance?.Branch ??
-                   GitHubActions.Instance?.GitHubRef;
+                   GitHubActions.Instance?.GitHubRef ??
+                   SpaceAutomation.Instance?.GitBranch;
         }
 
         internal static string GetCommitFromCI()
@@ -118,7 +119,8 @@ namespace Nuke.Common.Git
                    TeamCity.Instance?.BuildVcsNumber ??
                    AzurePipelines.Instance?.SourceVersion ??
                    TravisCI.Instance?.Commit ??
-                   GitHubActions.Instance?.GitHubSha;
+                   GitHubActions.Instance?.GitHubSha ??
+                   SpaceAutomation.Instance?.GitRevision;
         }
 
         private static IReadOnlyCollection<string> GetTagsFromCommit(string gitDirectory, string commit)

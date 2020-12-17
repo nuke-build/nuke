@@ -14,6 +14,7 @@ using Nuke.Common.CI.Bitrise;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.CI.GitLab;
 using Nuke.Common.CI.Jenkins;
+using Nuke.Common.CI.SpaceAutomation;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.CI.TravisCI;
 using Nuke.Common.IO;
@@ -180,6 +181,8 @@ namespace Nuke.Common
                 return HostType.Travis;
             if (GitHubActions.IsRunningGitHubActions)
                 return HostType.GitHubActions;
+            if (SpaceAutomation.IsRunningSpaceAutomation)
+                return HostType.SpaceAutomation;
 
             return HostType.Console;
         }
