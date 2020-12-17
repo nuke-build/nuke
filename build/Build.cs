@@ -11,6 +11,7 @@ using Nuke.Common.CI;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.GitHubActions;
+using Nuke.Common.CI.SpaceAutomation;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.Execution;
 using Nuke.Common.Git;
@@ -57,6 +58,11 @@ using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
             nameof(TwitterAccessToken),
             nameof(TwitterAccessTokenSecret)
         })]
+[SpaceAutomation(
+    name: "continuous",
+    image: "mcr.microsoft.com/dotnet/sdk:5.0",
+    OnPush = true,
+    InvokedTargets = new[] { nameof(Test) })]
 [TeamCity(
     TeamCityAgentPlatform.Unix,
     Version = "2020.1",
