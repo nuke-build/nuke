@@ -142,6 +142,25 @@ namespace Nuke.Common.Tests.CI
                         OnPullRequestExcludePaths = new[] { "pull_request_exclude_path" },
                     }
                 );
+
+                yield return
+                (
+                    null,
+                    new TestSpaceAutomationAttribute("Name", "mcr.microsoft.com/dotnet/sdk:5.0")
+                    {
+                        InvokedTargets = new[] { nameof(Test) },
+                        ResourcesCpu = 2048,
+                        ResourcesMemory = 4096,
+                        OnPush = true,
+                        OnPushBranchIncludes = new[] { "refs/heads/include" },
+                        OnPushBranchExcludes = new[] { "refs/heads/exclude" },
+                        OnPushBranchRegexIncludes = new[] { "\binclude\b" },
+                        OnPushBranchRegexExcludes = new[] { "\bexclude\b" },
+                        OnPushPathIncludes = new[] { "include-path" },
+                        OnPushPathExcludes = new[] { "exclude-path" },
+                        OnCronSchedule = "* 0 * * *",
+                    }
+                );
             }
 
             public AbsolutePath SourceDirectory => RootDirectory / "src";
@@ -162,7 +181,6 @@ namespace Nuke.Common.Tests.CI
             public Target Compile => _ => _
                 .DependsOn(Restore)
                 .Produces(SourceDirectory / "*/bin/**");
-
 
             public AbsolutePath PackageDirectory => OutputDirectory / "packages";
 
@@ -194,7 +212,9 @@ namespace Nuke.Common.Tests.CI
             public readonly string Source = "https://api.nuget.org/v3/index.json";
 
             [Parameter("GitHub Token")] public readonly string GitHubToken;
-            [Parameter("Azure Pipelines System Access Token")] public readonly string AzurePipelinesSystemAccessToken;
+
+            [Parameter("Azure Pipelines System Access Token")]
+            public readonly string AzurePipelinesSystemAccessToken;
 
             public Target Publish => _ => _
                 .DependsOn(Clean, Test, Pack)

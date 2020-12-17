@@ -15,6 +15,7 @@ Host:
 - GitHubActions
 - GitLab
 - Jenkins
+- SpaceAutomation
 - TeamCity
 - Travis
 IgnoreFailedSources: 
