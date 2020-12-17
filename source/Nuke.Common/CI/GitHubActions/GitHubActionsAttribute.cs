@@ -79,8 +79,11 @@ namespace Nuke.Common.CI.GitHubActions
                                     DetailedTriggers = GetTriggers().ToArray(),
                                     Jobs = _images.Select(x => GetJobs(x, relevantTargets)).ToArray()
                                 };
+
             ControlFlow.Assert(configuration.ShortTriggers.Length == 0 || configuration.DetailedTriggers.Length == 0,
-                "configuration.ShortTriggers.Length == 0 || configuration.DetailedTriggers.Length == 0");
+                $"Workflows can only define either shorthand '{On}' or '{On}*' triggers.");
+            ControlFlow.Assert(configuration.ShortTriggers.Length > 0 || configuration.DetailedTriggers.Length > 0,
+                "Workflows must define either shorthand '{On}' or '{On}*' triggers.");
 
             return configuration;
         }
