@@ -15,14 +15,18 @@
 // ------------------------------------------------------------------------------
 
 job("continuous") {
-    container("mcr.microsoft.com/dotnet/sdk:5.0") {
-        shellScript {
-            content = "./build.sh Test"
-        }
+    volumeSize = 5.gb
+    git {
+        depth = UNLIMITED_DEPTH
     }
     startOn {
         gitPush {
             enabled = true
+        }
+    }
+    container("mcr.microsoft.com/dotnet/sdk:5.0") {
+        shellScript {
+            content = "./build.sh Test"
         }
     }
 }

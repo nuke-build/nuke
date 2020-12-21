@@ -33,6 +33,9 @@ namespace Nuke.Common.CI.SpaceAutomation
         public override IEnumerable<string> RelevantTargetNames => InvokedTargets;
         public override IEnumerable<string> IrrelevantTargetNames => new string[0];
 
+        private bool? _cloneRepository;
+        private int? _cloneDepth;
+        
         private int? _resourcesCpu;
         private int? _resourcesMemory;
         private bool? _onPush;
@@ -43,6 +46,20 @@ namespace Nuke.Common.CI.SpaceAutomation
         private bool? _failOnTimeout;
         private int? _failOnTimeoutInMinutes;
 
+        public string VolumeSize { get; set; }
+        
+        public bool CloneRepository
+        {
+            set => _cloneRepository = value;
+            get => _cloneRepository ?? true;
+        }
+        
+        public int CloneDepth
+        {
+            set => _cloneDepth = value;
+            get => _cloneDepth ?? 1;
+        }
+        
         public int ResourcesCpu
         {
             set => _resourcesCpu = value;
@@ -112,6 +129,9 @@ namespace Nuke.Common.CI.SpaceAutomation
             return new SpaceAutomationConfiguration
                    {
                        Name = _name,
+                       VolumeSize = VolumeSize,
+                       CloneRepository = _cloneRepository,
+                       CloneDepth = _cloneDepth,
                        Container = GetContainer(),
                        Triggers = GetTriggers().ToArray(),
                        FailureConditions = GetFailureConditions().ToArray()

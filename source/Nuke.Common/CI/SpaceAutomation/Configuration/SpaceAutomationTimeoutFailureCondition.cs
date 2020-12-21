@@ -15,10 +15,10 @@ namespace Nuke.Common.CI.SpaceAutomation.Configuration
             {
                 using (writer.WriteBlock("timeOut"))
                 {
-                    if (Timeout.HasValue)
+                    if (Timeout != null)
                         writer.WriteLine($"enabled = {Timeout.ToString().ToLowerInvariant()}");
 
-                    if (TimeoutInMinutes.HasValue)
+                    if (TimeoutInMinutes != null)
                         writer.WriteLine($"timeOutInMinutes = {TimeoutInMinutes}");
                 }
             }

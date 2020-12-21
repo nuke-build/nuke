@@ -149,6 +149,9 @@ namespace Nuke.Common.Tests.CI
                     new TestSpaceAutomationAttribute("Name", "mcr.microsoft.com/dotnet/sdk:5.0")
                     {
                         InvokedTargets = new[] { nameof(Test) },
+                        VolumeSize = "1.gb",
+                        CloneRepository = true,
+                        CloneDepth = 10,
                         ResourcesCpu = 2048,
                         ResourcesMemory = 4096,
                         OnPush = true,

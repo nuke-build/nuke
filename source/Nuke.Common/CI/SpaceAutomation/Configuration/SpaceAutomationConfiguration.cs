@@ -11,6 +11,14 @@ namespace Nuke.Common.CI.SpaceAutomation.Configuration
     public class SpaceAutomationConfiguration : ConfigurationEntity
     {
         public string Name { get; set; }
+        public string VolumeSize { get; set; }
+        public bool? CloneRepository { get; set; }
+        
+        /// <summary>
+        /// Set to -1 for UNLIMITED_DEPTH
+        /// </summary>
+        public int? CloneDepth { get; set; }
+        
         public SpaceAutomationContainer Container { get; set; }
         public SpaceAutomationTrigger[] Triggers { get; set; }
         public SpaceAutomationFailureCondition[] FailureConditions { get; set; }
@@ -19,6 +27,20 @@ namespace Nuke.Common.CI.SpaceAutomation.Configuration
         {
             using (writer.WriteBlock($"job({Name.DoubleQuote()})"))
             {
+                if (VolumeSize != null)
+                    writer.WriteLine($"volumeSize = {VolumeSize}");
+                
+                if (CloneRepository != null)
+                    writer.WriteLine($"cloneRepository = {CloneRepository.ToString().ToLowerInvariant()}");
+
+                if (CloneDepth != null)
+                {
+                    using (writer.WriteBlock("git"))
+                    {
+                        writer.WriteLine($"depth = {(CloneDepth == -1 ? "UNLIMITED_DEPTH" : CloneDepth.ToString())}");
+                    }
+                }
+                
                 if (Triggers.Any())
                 {
                     using (writer.WriteBlock("startOn"))

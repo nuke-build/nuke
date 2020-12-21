@@ -10,7 +10,7 @@ namespace Nuke.Common.CI.SpaceAutomation.Configuration
 
         public override void Write(CustomFileWriter writer)
         {
-            if (NonZeroExitCode.HasValue && NonZeroExitCode.Value == false)
+            if (NonZeroExitCode != null && NonZeroExitCode == false)
                 writer.WriteLine($"nonZeroExitCode {{ enabled = {NonZeroExitCode.ToString().ToLowerInvariant()} }}");
         }
     }

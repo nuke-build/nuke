@@ -10,7 +10,7 @@ namespace Nuke.Common.CI.SpaceAutomation.Configuration
         
         public override void Write(CustomFileWriter writer)
         {
-            if (OutOfMemory.HasValue && OutOfMemory.Value == false)
+            if (OutOfMemory != null && OutOfMemory == false)
                 writer.WriteLine($"outOfMemory {{ enabled = {OutOfMemory.ToString().ToLowerInvariant()} }}");
         }
     }

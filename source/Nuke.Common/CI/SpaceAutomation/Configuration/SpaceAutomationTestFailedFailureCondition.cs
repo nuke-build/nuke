@@ -10,7 +10,7 @@ namespace Nuke.Common.CI.SpaceAutomation.Configuration
         
         public override void Write(CustomFileWriter writer)
         {
-            if (TestFailed.HasValue && TestFailed.Value == false)
+            if (TestFailed != null && TestFailed == false)
                 writer.WriteLine($"testFailed {{ enabled = {TestFailed.ToString().ToLowerInvariant()} }}");
         }
     }

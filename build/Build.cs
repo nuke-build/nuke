@@ -59,6 +59,8 @@ using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
 [SpaceAutomation(
     name: "continuous",
     image: "mcr.microsoft.com/dotnet/sdk:5.0",
+    CloneDepth = -1,
+    VolumeSize = "5.gb",
     OnPush = true,
     InvokedTargets = new[] { nameof(Test) })]
 [TeamCity(

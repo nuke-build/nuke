@@ -15,6 +15,11 @@
 // ------------------------------------------------------------------------------
 
 job("Name") {
+    volumeSize = 1.gb
+    cloneRepository = true
+    git {
+        depth = 10
+    }
     startOn {
         gitPush {
             enabled = true
