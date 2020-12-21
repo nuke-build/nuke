@@ -15,15 +15,6 @@
 // ------------------------------------------------------------------------------
 
 job("Name") {
-    container("mcr.microsoft.com/dotnet/sdk:5.0") {
-        resources {
-            cpu = 2048
-            memory = 4096
-        }
-        shellScript {
-            content = "./build.sh Test"
-        }
-    }
     startOn {
         gitPush {
             enabled = true
@@ -38,6 +29,15 @@ job("Name") {
                 -"exclude-path"
             }
         }
-        cron("* 0 * * *")
+        schedule { cron("* 0 * * *") }
+    }
+    container("mcr.microsoft.com/dotnet/sdk:5.0") {
+        resources {
+            cpu = 2048
+            memory = 4096
+        }
+        shellScript {
+            content = "./build.sh Test"
+        }
     }
 }

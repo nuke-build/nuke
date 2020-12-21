@@ -18,8 +18,6 @@ namespace Nuke.Common.CI.SpaceAutomation.Configuration
         {
             using (writer.WriteBlock($"job({Name.DoubleQuote()})"))
             {
-                Container.Write(writer);
-
                 if (Triggers.Any())
                 {
                     using (writer.WriteBlock("startOn"))
@@ -27,6 +25,7 @@ namespace Nuke.Common.CI.SpaceAutomation.Configuration
                         Triggers.ForEach(x => x.Write(writer));
                     }
                 }
+                Container.Write(writer);
             }
         }
     }
