@@ -159,6 +159,11 @@ namespace Nuke.Common.Tests.CI
                         OnPushPathIncludes = new[] { "include-path" },
                         OnPushPathExcludes = new[] { "exclude-path" },
                         OnCronSchedule = "* 0 * * *",
+                        FailOnNonZeroExitCode = false,
+                        FailOnTestFailed = false,
+                        FailOnOutOfMemory = false,
+                        FailOnTimeout = true,
+                        FailOnTimeoutInMinutes = 15
                     }
                 );
             }

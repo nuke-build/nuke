@@ -13,6 +13,7 @@ namespace Nuke.Common.CI.SpaceAutomation.Configuration
         public string Name { get; set; }
         public SpaceAutomationContainer Container { get; set; }
         public SpaceAutomationTrigger[] Triggers { get; set; }
+        public SpaceAutomationFailureCondition[] FailureConditions { get; set; }
 
         public override void Write(CustomFileWriter writer)
         {
@@ -25,6 +26,15 @@ namespace Nuke.Common.CI.SpaceAutomation.Configuration
                         Triggers.ForEach(x => x.Write(writer));
                     }
                 }
+
+                if (FailureConditions.Any())
+                {
+                    using (writer.WriteBlock("failOn"))
+                    {
+                        FailureConditions.ForEach(x => x.Write(writer));
+                    }
+                }
+                
                 Container.Write(writer);
             }
         }

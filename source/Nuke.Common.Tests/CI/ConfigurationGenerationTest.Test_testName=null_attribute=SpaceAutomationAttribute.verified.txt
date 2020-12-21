@@ -31,6 +31,15 @@ job("Name") {
         }
         schedule { cron("* 0 * * *") }
     }
+    failOn {
+        nonZeroExitCode { enabled = false }
+        testFailed { enabled = false }
+        outOfMemory { enabled = false }
+        timeOut {
+            enabled = true
+            timeOutInMinutes = 15
+        }
+    }
     container("mcr.microsoft.com/dotnet/sdk:5.0") {
         resources {
             cpu = 2048

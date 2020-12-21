@@ -36,6 +36,12 @@ namespace Nuke.Common.CI.SpaceAutomation
         private int? _resourcesCpu;
         private int? _resourcesMemory;
         private bool? _onPush;
+        
+        private bool? _failOnNonZeroExitCode;
+        private bool? _failOnTestFailed;
+        private bool? _failOnOutOfMemory;
+        private bool? _failOnTimeout;
+        private int? _failOnTimeoutInMinutes;
 
         public int ResourcesCpu
         {
@@ -65,6 +71,36 @@ namespace Nuke.Common.CI.SpaceAutomation
         public string[] OnPushPathExcludes { get; set; }
 
         public string OnCronSchedule { get; set; }
+        
+        public bool FailOnNonZeroExitCode
+        {
+            set => _failOnNonZeroExitCode = value;
+            get => _failOnNonZeroExitCode ?? false;
+        }
+
+        public bool FailOnTestFailed
+        {
+            set => _failOnTestFailed = value;
+            get => _failOnTestFailed ?? false;
+        }
+        
+        public bool FailOnOutOfMemory
+        {
+            set => _failOnOutOfMemory = value;
+            get => _failOnOutOfMemory ?? false;
+        }
+        
+        public bool FailOnTimeout
+        {
+            set => _failOnTimeout = value;
+            get => _failOnTimeout ?? false;
+        }
+
+        public int FailOnTimeoutInMinutes
+        {
+            set => _failOnTimeoutInMinutes = value;
+            get => _failOnTimeoutInMinutes ?? 120;
+        }
 
         public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
         {
@@ -77,7 +113,8 @@ namespace Nuke.Common.CI.SpaceAutomation
                    {
                        Name = _name,
                        Container = GetContainer(),
-                       Triggers = GetTriggers().ToArray()
+                       Triggers = GetTriggers().ToArray(),
+                       FailureConditions = GetFailureConditions().ToArray()
                    };
         }
 
@@ -124,6 +161,28 @@ namespace Nuke.Common.CI.SpaceAutomation
 
             if (OnCronSchedule != null)
                 yield return new SpaceAutomationCronScheduleTrigger { CronExpression = OnCronSchedule };
+        }
+
+        protected virtual IEnumerable<SpaceAutomationFailureCondition> GetFailureConditions()
+        {
+            if (_failOnNonZeroExitCode != null)
+                yield return new SpaceAutomationNonZeroExitCodeFailureCondition { NonZeroExitCode = _failOnNonZeroExitCode };
+            
+            if (_failOnTestFailed != null)
+                yield return new SpaceAutomationTestFailedFailureCondition { TestFailed = _failOnTestFailed };
+            
+            if (_failOnOutOfMemory != null)
+                yield return new SpaceAutomationOutOfMemoryFailureCondition { OutOfMemory = _failOnOutOfMemory };
+            
+            ControlFlow.Assert(FailOnTimeoutInMinutes > 0 && FailOnTimeoutInMinutes <= 120, "FailOnTimeoutInMinutes > 0 && FailOnTimeoutInMinutes <= 120");
+            if (_failOnTimeout != null || _failOnTimeoutInMinutes != null)
+            {
+                yield return new SpaceAutomationTimeoutFailureCondition
+                             {
+                                 Timeout = _failOnTimeout,
+                                 TimeoutInMinutes = _failOnTimeoutInMinutes
+                             };
+            }
         }
     }
 }
