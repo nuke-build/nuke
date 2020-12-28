@@ -48,15 +48,5 @@ namespace Nuke.Common.Tools.GitVersion
                     exception);
             }
         }
-
-        private class AllWritableContractResolver : DefaultContractResolver
-        {
-            protected override JsonProperty CreateProperty([NotNull] MemberInfo member, MemberSerialization memberSerialization)
-            {
-                var property = base.CreateProperty(member, memberSerialization);
-                property.Writable = true;
-                return property;
-            }
-        }
     }
 }

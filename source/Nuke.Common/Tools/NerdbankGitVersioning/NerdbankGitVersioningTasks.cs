@@ -20,7 +20,8 @@ namespace Nuke.Common.Tools.NerdbankGitVersioning
             try
             {
                 var output = process.Output.EnsureOnlyStd().Select(x => x.Text).ToList();
-                return JsonConvert.DeserializeObject<NerdbankGitVersioning>(string.Join("\r\n", output));
+                var settings = new JsonSerializerSettings { ContractResolver = new AllWritableContractResolver() };
+                return JsonConvert.DeserializeObject<NerdbankGitVersioning>(string.Join("\r\n", output), settings);
             }
             catch (Exception exception)
             {
