@@ -121,6 +121,13 @@
             "help": "Comma separated list of files to exclude from coverage calculations. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>)."
           },
           {
+            "name": "GenericCoveragePaths",
+            "type": "List<string>",
+            "format": "/d:sonar.coverageReportPaths={value}",
+            "separator": ",",
+            "help": "Comma separated list of coverage reports in the <a href=\"https://docs.sonarqube.org/latest/analysis/generic-test/\">Generic Test Data</a> format. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>)."
+          },
+          {
             "name": "VisualStudioCoveragePaths",
             "type": "List<string>",
             "format": "/d:sonar.cs.vscoveragexml.reportsPaths={value}",
