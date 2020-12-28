@@ -21,6 +21,12 @@
             "format": "{value}"
           },
           {
+            "name": "TargetExecutable",
+            "type": "string",
+            "format": "--TargetExecutable={value}",
+            "help": "File name of the program to analyse."
+          },
+          {
             "name": "ReportType",
             "type": "DotCoverReportType",
             "format": "--ReportType={value}",
@@ -47,6 +53,40 @@
         "analyse-cover"
       ],
       "definiteArgument": "cover",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Configuration",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
+            "name": "TargetExecutable",
+            "type": "string",
+            "format": "--TargetExecutable={value}",
+            "help": "File name of the program to analyse."
+          },
+          {
+            "name": "OutputFile",
+            "type": "string",
+            "format": "--Output={value}",
+            "help": "Path to the resulting coverage snapshot."
+          },
+          {
+            "name": "ReportType",
+            "type": "DotCoverReportType",
+            "format": "--ReportType={value}",
+            "help": "A type of the report. The default value is <c>XML</c>."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "CoverDotNet",
+      "commonPropertySets": [
+        "analyse-cover"
+      ],
+      "definiteArgument": "dotnet",
       "settingsClass": {
         "properties": [
           {
@@ -195,12 +235,6 @@
   ],
   "commonTaskPropertySets": {
     "analyse-cover": [
-      {
-        "name": "TargetExecutable",
-        "type": "string",
-        "format": "--TargetExecutable={value}",
-        "help": "File name of the program to analyse."
-      },
       {
         "name": "TargetArguments",
         "type": "string",
