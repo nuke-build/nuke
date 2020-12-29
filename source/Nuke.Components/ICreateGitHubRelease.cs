@@ -1,4 +1,8 @@
-﻿// using System.Linq;
+﻿// Copyright 2020 Maintainers of NUKE.
+// Distributed under the MIT License.
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
+
+// using System.Linq;
 //
 // using Nuke.Common;
 // using Nuke.Common.Tools.GitHub;
@@ -29,3 +33,5 @@
 //                 .SetArtifactPaths(new string[0]));
 //         });
 // }
+
+

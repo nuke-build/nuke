@@ -10,7 +10,10 @@ namespace Nuke.Components
 {
     public static class ToolSettingsExtensions
     {
-        public static TSettings WhenNotNull<TSettings, TObject>(this TSettings settings, TObject obj, Func<TSettings, TObject, TSettings> configurator)
+        public static TSettings WhenNotNull<TSettings, TObject>(
+            this TSettings settings,
+            TObject obj,
+            Func<TSettings, TObject, TSettings> configurator)
             where TSettings : ToolSettings
         {
             return obj != null ? configurator.Invoke(settings, obj) : settings;

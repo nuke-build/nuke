@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright 2020 Maintainers of NUKE.
+// Distributed under the MIT License.
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
+
+using System;
 using System.Linq;
 using Nuke.Common;
 using Nuke.Common.CI;
@@ -24,7 +28,9 @@ namespace Nuke.Components
                     .SetNoBuild(InvokedTargets.Contains(Compile))
                     .SetOutputDirectory(PackagesDirectory)
                     .WhenNotNull(this as IHazGitVersion, (_, o) => _
-                        .SetVersion(o.GitVersion.NuGetVersionV2))
+                        .SetVersion(o.Versioning.NuGetVersionV2))
+                    .WhenNotNull(this as IHazNerdbankGitVersioning, (_, o) => _
+                        .SetVersion(o.Versioning.NuGetPackageVersion))
                     .WhenNotNull(this as IHazChangelog, (_, o) => _
                         .SetPackageReleaseNotes(o.ReleaseNotes))
                     .Apply(PackSettings));
