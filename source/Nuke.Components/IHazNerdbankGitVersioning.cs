@@ -4,14 +4,14 @@
 
 using System;
 using System.Linq;
-using Nuke.Common.Tools.GitVersion;
+using Nuke.Common.Tools.NerdbankGitVersioning;
 using static Nuke.Common.ValueInjection.ValueInjectionUtility;
 
 namespace Nuke.Components
 {
-    public interface IHazGitVersion
+    public interface IHazNerdbankGitVersioning
     {
-        [GitVersion]
-        GitVersion Versioning => TryGetValue(() => Versioning);
+        [NerdbankGitVersioning]
+        NerdbankGitVersioning Versioning => TryGetValue(() => Versioning);
     }
 }

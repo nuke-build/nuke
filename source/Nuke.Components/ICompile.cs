@@ -26,9 +26,13 @@ namespace Nuke.Components
                     .WhenNotNull(this as IHazGitRepository, (_, o) => _
                         .SetRepositoryUrl(o.GitRepository.HttpsUrl))
                     .WhenNotNull(this as IHazGitVersion, (_, o) => _
-                        .SetAssemblyVersion(o.GitVersion.AssemblySemVer)
-                        .SetFileVersion(o.GitVersion.AssemblySemFileVer)
-                        .SetInformationalVersion(o.GitVersion.InformationalVersion))
+                        .SetAssemblyVersion(o.Versioning.AssemblySemVer)
+                        .SetFileVersion(o.Versioning.AssemblySemFileVer)
+                        .SetInformationalVersion(o.Versioning.InformationalVersion))
+                    .WhenNotNull(this as IHazNerdbankGitVersioning, (_, o) => _
+                        .SetAssemblyVersion(o.Versioning.AssemblyVersion)
+                        .SetFileVersion(o.Versioning.AssemblyFileVersion)
+                        .SetInformationalVersion(o.Versioning.AssemblyInformationalVersion))
                     .When(IsServerBuild, _ => _
                         .SetProperty("ContinuesIntegrationBuild", true))
                     .Apply(CompileSettings));
@@ -39,9 +43,13 @@ namespace Nuke.Components
                         .WhenNotNull(this as IHazGitRepository, (_, o) => _
                             .SetRepositoryUrl(o.GitRepository.HttpsUrl))
                         .WhenNotNull(this as IHazGitVersion, (_, o) => _
-                            .SetAssemblyVersion(o.GitVersion.AssemblySemVer)
-                            .SetFileVersion(o.GitVersion.AssemblySemFileVer)
-                            .SetInformationalVersion(o.GitVersion.InformationalVersion))
+                            .SetAssemblyVersion(o.Versioning.AssemblySemVer)
+                            .SetFileVersion(o.Versioning.AssemblySemFileVer)
+                            .SetInformationalVersion(o.Versioning.InformationalVersion))
+                        .WhenNotNull(this as IHazNerdbankGitVersioning, (_, o) => _
+                            .SetAssemblyVersion(o.Versioning.AssemblyVersion)
+                            .SetFileVersion(o.Versioning.AssemblyFileVersion)
+                            .SetInformationalVersion(o.Versioning.AssemblyInformationalVersion))
                         .When(IsServerBuild, _ => _
                             .SetProperty("ContinuesIntegrationBuild", true))
                         .CombineWith(PublishConfigurations, (_, v) => _
