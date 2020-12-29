@@ -49,16 +49,32 @@ namespace Nuke.Common.Tools.ReSharper
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;targetPath&gt;</c> via <see cref="ReSharperInspectCodeSettings.TargetPath"/></li>
+        ///     <li><c>--absolute-paths</c> via <see cref="ReSharperInspectCodeSettings.AbsolutePaths"/></li>
         ///     <li><c>--caches-home</c> via <see cref="ReSharperInspectCodeSettings.CachesHome"/></li>
+        ///     <li><c>--config</c> via <see cref="ReSharperInspectCodeSettings.ConfigFile"/></li>
+        ///     <li><c>--config-create</c> via <see cref="ReSharperInspectCodeSettings.CreateConfigFile"/></li>
+        ///     <li><c>--debug</c> via <see cref="ReSharperInspectCodeSettings.Debug"/></li>
         ///     <li><c>--disable-settings-layers</c> via <see cref="ReSharperInspectCodeSettings.DisableSettingsLayers"/></li>
+        ///     <li><c>--dotnetcore</c> via <see cref="ReSharperInspectCodeSettings.DotNetCore"/></li>
+        ///     <li><c>--dotnetcoresdk</c> via <see cref="ReSharperInspectCodeSettings.DotNetCoreSdk"/></li>
         ///     <li><c>--dumpIssuesTypes</c> via <see cref="ReSharperInspectCodeSettings.DumpIssuesTypes"/></li>
+        ///     <li><c>--exclude</c> via <see cref="ReSharperInspectCodeSettings.Exclude"/></li>
+        ///     <li><c>--format</c> via <see cref="ReSharperInspectCodeSettings.Format"/></li>
+        ///     <li><c>--include</c> via <see cref="ReSharperInspectCodeSettings.Include"/></li>
+        ///     <li><c>--jobs</c> via <see cref="ReSharperInspectCodeSettings.Jobs"/></li>
+        ///     <li><c>--mono</c> via <see cref="ReSharperInspectCodeSettings.MonoPath"/></li>
         ///     <li><c>--no-buildin-settings</c> via <see cref="ReSharperInspectCodeSettings.NoBuiltinSettings"/></li>
         ///     <li><c>--no-swea</c> via <see cref="ReSharperInspectCodeSettings.NoSwea"/></li>
         ///     <li><c>--output</c> via <see cref="ReSharperInspectCodeSettings.Output"/></li>
-        ///     <li><c>--profile</c> via <see cref="ReSharperInspectCodeSettings.Profile"/></li>
         ///     <li><c>--project</c> via <see cref="ReSharperInspectCodeSettings.Project"/></li>
         ///     <li><c>--properties</c> via <see cref="ReSharperInspectCodeSettings.Properties"/></li>
+        ///     <li><c>--settings</c> via <see cref="ReSharperInspectCodeSettings.Settings"/></li>
+        ///     <li><c>--severity</c> via <see cref="ReSharperInspectCodeSettings.Severity"/></li>
+        ///     <li><c>--targets-for-items</c> via <see cref="ReSharperInspectCodeSettings.ItemTargets"/></li>
+        ///     <li><c>--targets-for-references</c> via <see cref="ReSharperInspectCodeSettings.ReferenceTargets"/></li>
         ///     <li><c>--toolset</c> via <see cref="ReSharperInspectCodeSettings.Toolset"/></li>
+        ///     <li><c>--toolset-path</c> via <see cref="ReSharperInspectCodeSettings.ToolsetPath"/></li>
+        ///     <li><c>--verbosity</c> via <see cref="ReSharperInspectCodeSettings.Verbosity"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> ReSharperInspectCode(ReSharperInspectCodeSettings toolSettings = null)
@@ -78,16 +94,32 @@ namespace Nuke.Common.Tools.ReSharper
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;targetPath&gt;</c> via <see cref="ReSharperInspectCodeSettings.TargetPath"/></li>
+        ///     <li><c>--absolute-paths</c> via <see cref="ReSharperInspectCodeSettings.AbsolutePaths"/></li>
         ///     <li><c>--caches-home</c> via <see cref="ReSharperInspectCodeSettings.CachesHome"/></li>
+        ///     <li><c>--config</c> via <see cref="ReSharperInspectCodeSettings.ConfigFile"/></li>
+        ///     <li><c>--config-create</c> via <see cref="ReSharperInspectCodeSettings.CreateConfigFile"/></li>
+        ///     <li><c>--debug</c> via <see cref="ReSharperInspectCodeSettings.Debug"/></li>
         ///     <li><c>--disable-settings-layers</c> via <see cref="ReSharperInspectCodeSettings.DisableSettingsLayers"/></li>
+        ///     <li><c>--dotnetcore</c> via <see cref="ReSharperInspectCodeSettings.DotNetCore"/></li>
+        ///     <li><c>--dotnetcoresdk</c> via <see cref="ReSharperInspectCodeSettings.DotNetCoreSdk"/></li>
         ///     <li><c>--dumpIssuesTypes</c> via <see cref="ReSharperInspectCodeSettings.DumpIssuesTypes"/></li>
+        ///     <li><c>--exclude</c> via <see cref="ReSharperInspectCodeSettings.Exclude"/></li>
+        ///     <li><c>--format</c> via <see cref="ReSharperInspectCodeSettings.Format"/></li>
+        ///     <li><c>--include</c> via <see cref="ReSharperInspectCodeSettings.Include"/></li>
+        ///     <li><c>--jobs</c> via <see cref="ReSharperInspectCodeSettings.Jobs"/></li>
+        ///     <li><c>--mono</c> via <see cref="ReSharperInspectCodeSettings.MonoPath"/></li>
         ///     <li><c>--no-buildin-settings</c> via <see cref="ReSharperInspectCodeSettings.NoBuiltinSettings"/></li>
         ///     <li><c>--no-swea</c> via <see cref="ReSharperInspectCodeSettings.NoSwea"/></li>
         ///     <li><c>--output</c> via <see cref="ReSharperInspectCodeSettings.Output"/></li>
-        ///     <li><c>--profile</c> via <see cref="ReSharperInspectCodeSettings.Profile"/></li>
         ///     <li><c>--project</c> via <see cref="ReSharperInspectCodeSettings.Project"/></li>
         ///     <li><c>--properties</c> via <see cref="ReSharperInspectCodeSettings.Properties"/></li>
+        ///     <li><c>--settings</c> via <see cref="ReSharperInspectCodeSettings.Settings"/></li>
+        ///     <li><c>--severity</c> via <see cref="ReSharperInspectCodeSettings.Severity"/></li>
+        ///     <li><c>--targets-for-items</c> via <see cref="ReSharperInspectCodeSettings.ItemTargets"/></li>
+        ///     <li><c>--targets-for-references</c> via <see cref="ReSharperInspectCodeSettings.ReferenceTargets"/></li>
         ///     <li><c>--toolset</c> via <see cref="ReSharperInspectCodeSettings.Toolset"/></li>
+        ///     <li><c>--toolset-path</c> via <see cref="ReSharperInspectCodeSettings.ToolsetPath"/></li>
+        ///     <li><c>--verbosity</c> via <see cref="ReSharperInspectCodeSettings.Verbosity"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> ReSharperInspectCode(Configure<ReSharperInspectCodeSettings> configurator)
@@ -102,16 +134,32 @@ namespace Nuke.Common.Tools.ReSharper
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;targetPath&gt;</c> via <see cref="ReSharperInspectCodeSettings.TargetPath"/></li>
+        ///     <li><c>--absolute-paths</c> via <see cref="ReSharperInspectCodeSettings.AbsolutePaths"/></li>
         ///     <li><c>--caches-home</c> via <see cref="ReSharperInspectCodeSettings.CachesHome"/></li>
+        ///     <li><c>--config</c> via <see cref="ReSharperInspectCodeSettings.ConfigFile"/></li>
+        ///     <li><c>--config-create</c> via <see cref="ReSharperInspectCodeSettings.CreateConfigFile"/></li>
+        ///     <li><c>--debug</c> via <see cref="ReSharperInspectCodeSettings.Debug"/></li>
         ///     <li><c>--disable-settings-layers</c> via <see cref="ReSharperInspectCodeSettings.DisableSettingsLayers"/></li>
+        ///     <li><c>--dotnetcore</c> via <see cref="ReSharperInspectCodeSettings.DotNetCore"/></li>
+        ///     <li><c>--dotnetcoresdk</c> via <see cref="ReSharperInspectCodeSettings.DotNetCoreSdk"/></li>
         ///     <li><c>--dumpIssuesTypes</c> via <see cref="ReSharperInspectCodeSettings.DumpIssuesTypes"/></li>
+        ///     <li><c>--exclude</c> via <see cref="ReSharperInspectCodeSettings.Exclude"/></li>
+        ///     <li><c>--format</c> via <see cref="ReSharperInspectCodeSettings.Format"/></li>
+        ///     <li><c>--include</c> via <see cref="ReSharperInspectCodeSettings.Include"/></li>
+        ///     <li><c>--jobs</c> via <see cref="ReSharperInspectCodeSettings.Jobs"/></li>
+        ///     <li><c>--mono</c> via <see cref="ReSharperInspectCodeSettings.MonoPath"/></li>
         ///     <li><c>--no-buildin-settings</c> via <see cref="ReSharperInspectCodeSettings.NoBuiltinSettings"/></li>
         ///     <li><c>--no-swea</c> via <see cref="ReSharperInspectCodeSettings.NoSwea"/></li>
         ///     <li><c>--output</c> via <see cref="ReSharperInspectCodeSettings.Output"/></li>
-        ///     <li><c>--profile</c> via <see cref="ReSharperInspectCodeSettings.Profile"/></li>
         ///     <li><c>--project</c> via <see cref="ReSharperInspectCodeSettings.Project"/></li>
         ///     <li><c>--properties</c> via <see cref="ReSharperInspectCodeSettings.Properties"/></li>
+        ///     <li><c>--settings</c> via <see cref="ReSharperInspectCodeSettings.Settings"/></li>
+        ///     <li><c>--severity</c> via <see cref="ReSharperInspectCodeSettings.Severity"/></li>
+        ///     <li><c>--targets-for-items</c> via <see cref="ReSharperInspectCodeSettings.ItemTargets"/></li>
+        ///     <li><c>--targets-for-references</c> via <see cref="ReSharperInspectCodeSettings.ReferenceTargets"/></li>
         ///     <li><c>--toolset</c> via <see cref="ReSharperInspectCodeSettings.Toolset"/></li>
+        ///     <li><c>--toolset-path</c> via <see cref="ReSharperInspectCodeSettings.ToolsetPath"/></li>
+        ///     <li><c>--verbosity</c> via <see cref="ReSharperInspectCodeSettings.Verbosity"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(ReSharperInspectCodeSettings Settings, IReadOnlyCollection<Output> Output)> ReSharperInspectCode(CombinatorialConfigure<ReSharperInspectCodeSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -127,6 +175,9 @@ namespace Nuke.Common.Tools.ReSharper
         ///   <ul>
         ///     <li><c>&lt;targetPath&gt;</c> via <see cref="ReSharperCleanupCodeSettings.TargetPath"/></li>
         ///     <li><c>--caches-home</c> via <see cref="ReSharperCleanupCodeSettings.CachesHome"/></li>
+        ///     <li><c>--config</c> via <see cref="ReSharperCleanupCodeSettings.ConfigFile"/></li>
+        ///     <li><c>--config-create</c> via <see cref="ReSharperCleanupCodeSettings.CreateConfigFile"/></li>
+        ///     <li><c>--debug</c> via <see cref="ReSharperCleanupCodeSettings.Debug"/></li>
         ///     <li><c>--disable-settings-layers</c> via <see cref="ReSharperCleanupCodeSettings.DisableSettingsLayers"/></li>
         ///     <li><c>--dotnetcore</c> via <see cref="ReSharperCleanupCodeSettings.DotNetCore"/></li>
         ///     <li><c>--dotnetcoresdk</c> via <see cref="ReSharperCleanupCodeSettings.DotNetCoreSdk"/></li>
@@ -136,10 +187,12 @@ namespace Nuke.Common.Tools.ReSharper
         ///     <li><c>--no-buildin-settings</c> via <see cref="ReSharperCleanupCodeSettings.NoBuiltinSettings"/></li>
         ///     <li><c>--profile</c> via <see cref="ReSharperCleanupCodeSettings.Profile"/></li>
         ///     <li><c>--properties</c> via <see cref="ReSharperCleanupCodeSettings.Properties"/></li>
+        ///     <li><c>--settings</c> via <see cref="ReSharperCleanupCodeSettings.Settings"/></li>
         ///     <li><c>--targets-for-items</c> via <see cref="ReSharperCleanupCodeSettings.ItemTargets"/></li>
         ///     <li><c>--targets-for-references</c> via <see cref="ReSharperCleanupCodeSettings.ReferenceTargets"/></li>
         ///     <li><c>--toolset</c> via <see cref="ReSharperCleanupCodeSettings.Toolset"/></li>
         ///     <li><c>--toolset-path</c> via <see cref="ReSharperCleanupCodeSettings.ToolsetPath"/></li>
+        ///     <li><c>--verbosity</c> via <see cref="ReSharperCleanupCodeSettings.Verbosity"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> ReSharperCleanupCode(ReSharperCleanupCodeSettings toolSettings = null)
@@ -159,6 +212,9 @@ namespace Nuke.Common.Tools.ReSharper
         ///   <ul>
         ///     <li><c>&lt;targetPath&gt;</c> via <see cref="ReSharperCleanupCodeSettings.TargetPath"/></li>
         ///     <li><c>--caches-home</c> via <see cref="ReSharperCleanupCodeSettings.CachesHome"/></li>
+        ///     <li><c>--config</c> via <see cref="ReSharperCleanupCodeSettings.ConfigFile"/></li>
+        ///     <li><c>--config-create</c> via <see cref="ReSharperCleanupCodeSettings.CreateConfigFile"/></li>
+        ///     <li><c>--debug</c> via <see cref="ReSharperCleanupCodeSettings.Debug"/></li>
         ///     <li><c>--disable-settings-layers</c> via <see cref="ReSharperCleanupCodeSettings.DisableSettingsLayers"/></li>
         ///     <li><c>--dotnetcore</c> via <see cref="ReSharperCleanupCodeSettings.DotNetCore"/></li>
         ///     <li><c>--dotnetcoresdk</c> via <see cref="ReSharperCleanupCodeSettings.DotNetCoreSdk"/></li>
@@ -168,10 +224,12 @@ namespace Nuke.Common.Tools.ReSharper
         ///     <li><c>--no-buildin-settings</c> via <see cref="ReSharperCleanupCodeSettings.NoBuiltinSettings"/></li>
         ///     <li><c>--profile</c> via <see cref="ReSharperCleanupCodeSettings.Profile"/></li>
         ///     <li><c>--properties</c> via <see cref="ReSharperCleanupCodeSettings.Properties"/></li>
+        ///     <li><c>--settings</c> via <see cref="ReSharperCleanupCodeSettings.Settings"/></li>
         ///     <li><c>--targets-for-items</c> via <see cref="ReSharperCleanupCodeSettings.ItemTargets"/></li>
         ///     <li><c>--targets-for-references</c> via <see cref="ReSharperCleanupCodeSettings.ReferenceTargets"/></li>
         ///     <li><c>--toolset</c> via <see cref="ReSharperCleanupCodeSettings.Toolset"/></li>
         ///     <li><c>--toolset-path</c> via <see cref="ReSharperCleanupCodeSettings.ToolsetPath"/></li>
+        ///     <li><c>--verbosity</c> via <see cref="ReSharperCleanupCodeSettings.Verbosity"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> ReSharperCleanupCode(Configure<ReSharperCleanupCodeSettings> configurator)
@@ -187,6 +245,9 @@ namespace Nuke.Common.Tools.ReSharper
         ///   <ul>
         ///     <li><c>&lt;targetPath&gt;</c> via <see cref="ReSharperCleanupCodeSettings.TargetPath"/></li>
         ///     <li><c>--caches-home</c> via <see cref="ReSharperCleanupCodeSettings.CachesHome"/></li>
+        ///     <li><c>--config</c> via <see cref="ReSharperCleanupCodeSettings.ConfigFile"/></li>
+        ///     <li><c>--config-create</c> via <see cref="ReSharperCleanupCodeSettings.CreateConfigFile"/></li>
+        ///     <li><c>--debug</c> via <see cref="ReSharperCleanupCodeSettings.Debug"/></li>
         ///     <li><c>--disable-settings-layers</c> via <see cref="ReSharperCleanupCodeSettings.DisableSettingsLayers"/></li>
         ///     <li><c>--dotnetcore</c> via <see cref="ReSharperCleanupCodeSettings.DotNetCore"/></li>
         ///     <li><c>--dotnetcoresdk</c> via <see cref="ReSharperCleanupCodeSettings.DotNetCoreSdk"/></li>
@@ -196,10 +257,12 @@ namespace Nuke.Common.Tools.ReSharper
         ///     <li><c>--no-buildin-settings</c> via <see cref="ReSharperCleanupCodeSettings.NoBuiltinSettings"/></li>
         ///     <li><c>--profile</c> via <see cref="ReSharperCleanupCodeSettings.Profile"/></li>
         ///     <li><c>--properties</c> via <see cref="ReSharperCleanupCodeSettings.Properties"/></li>
+        ///     <li><c>--settings</c> via <see cref="ReSharperCleanupCodeSettings.Settings"/></li>
         ///     <li><c>--targets-for-items</c> via <see cref="ReSharperCleanupCodeSettings.ItemTargets"/></li>
         ///     <li><c>--targets-for-references</c> via <see cref="ReSharperCleanupCodeSettings.ReferenceTargets"/></li>
         ///     <li><c>--toolset</c> via <see cref="ReSharperCleanupCodeSettings.Toolset"/></li>
         ///     <li><c>--toolset-path</c> via <see cref="ReSharperCleanupCodeSettings.ToolsetPath"/></li>
+        ///     <li><c>--verbosity</c> via <see cref="ReSharperCleanupCodeSettings.Verbosity"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(ReSharperCleanupCodeSettings Settings, IReadOnlyCollection<Output> Output)> ReSharperCleanupCode(CombinatorialConfigure<ReSharperCleanupCodeSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -214,8 +277,10 @@ namespace Nuke.Common.Tools.ReSharper
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;source&gt;</c> via <see cref="ReSharperDupFinderSettings.Source"/></li>
+        ///     <li><c>--caches-home</c> via <see cref="ReSharperDupFinderSettings.CachesHome"/></li>
         ///     <li><c>--config</c> via <see cref="ReSharperDupFinderSettings.ConfigFile"/></li>
         ///     <li><c>--config-create</c> via <see cref="ReSharperDupFinderSettings.CreateConfigFile"/></li>
+        ///     <li><c>--debug</c> via <see cref="ReSharperDupFinderSettings.Debug"/></li>
         ///     <li><c>--discard-cost</c> via <see cref="ReSharperDupFinderSettings.DiscardCost"/></li>
         ///     <li><c>--discard-fields</c> via <see cref="ReSharperDupFinderSettings.DiscardFields"/></li>
         ///     <li><c>--discard-literals</c> via <see cref="ReSharperDupFinderSettings.DiscardLiterals"/></li>
@@ -228,6 +293,7 @@ namespace Nuke.Common.Tools.ReSharper
         ///     <li><c>--output</c> via <see cref="ReSharperDupFinderSettings.OutputFile"/></li>
         ///     <li><c>--properties</c> via <see cref="ReSharperDupFinderSettings.Properties"/></li>
         ///     <li><c>--show-text</c> via <see cref="ReSharperDupFinderSettings.ShowText"/></li>
+        ///     <li><c>--verbosity</c> via <see cref="ReSharperDupFinderSettings.Verbosity"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> ReSharperDupFinder(ReSharperDupFinderSettings toolSettings = null)
@@ -245,8 +311,10 @@ namespace Nuke.Common.Tools.ReSharper
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;source&gt;</c> via <see cref="ReSharperDupFinderSettings.Source"/></li>
+        ///     <li><c>--caches-home</c> via <see cref="ReSharperDupFinderSettings.CachesHome"/></li>
         ///     <li><c>--config</c> via <see cref="ReSharperDupFinderSettings.ConfigFile"/></li>
         ///     <li><c>--config-create</c> via <see cref="ReSharperDupFinderSettings.CreateConfigFile"/></li>
+        ///     <li><c>--debug</c> via <see cref="ReSharperDupFinderSettings.Debug"/></li>
         ///     <li><c>--discard-cost</c> via <see cref="ReSharperDupFinderSettings.DiscardCost"/></li>
         ///     <li><c>--discard-fields</c> via <see cref="ReSharperDupFinderSettings.DiscardFields"/></li>
         ///     <li><c>--discard-literals</c> via <see cref="ReSharperDupFinderSettings.DiscardLiterals"/></li>
@@ -259,6 +327,7 @@ namespace Nuke.Common.Tools.ReSharper
         ///     <li><c>--output</c> via <see cref="ReSharperDupFinderSettings.OutputFile"/></li>
         ///     <li><c>--properties</c> via <see cref="ReSharperDupFinderSettings.Properties"/></li>
         ///     <li><c>--show-text</c> via <see cref="ReSharperDupFinderSettings.ShowText"/></li>
+        ///     <li><c>--verbosity</c> via <see cref="ReSharperDupFinderSettings.Verbosity"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> ReSharperDupFinder(Configure<ReSharperDupFinderSettings> configurator)
@@ -273,8 +342,10 @@ namespace Nuke.Common.Tools.ReSharper
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;source&gt;</c> via <see cref="ReSharperDupFinderSettings.Source"/></li>
+        ///     <li><c>--caches-home</c> via <see cref="ReSharperDupFinderSettings.CachesHome"/></li>
         ///     <li><c>--config</c> via <see cref="ReSharperDupFinderSettings.ConfigFile"/></li>
         ///     <li><c>--config-create</c> via <see cref="ReSharperDupFinderSettings.CreateConfigFile"/></li>
+        ///     <li><c>--debug</c> via <see cref="ReSharperDupFinderSettings.Debug"/></li>
         ///     <li><c>--discard-cost</c> via <see cref="ReSharperDupFinderSettings.DiscardCost"/></li>
         ///     <li><c>--discard-fields</c> via <see cref="ReSharperDupFinderSettings.DiscardFields"/></li>
         ///     <li><c>--discard-literals</c> via <see cref="ReSharperDupFinderSettings.DiscardLiterals"/></li>
@@ -287,6 +358,7 @@ namespace Nuke.Common.Tools.ReSharper
         ///     <li><c>--output</c> via <see cref="ReSharperDupFinderSettings.OutputFile"/></li>
         ///     <li><c>--properties</c> via <see cref="ReSharperDupFinderSettings.Properties"/></li>
         ///     <li><c>--show-text</c> via <see cref="ReSharperDupFinderSettings.ShowText"/></li>
+        ///     <li><c>--verbosity</c> via <see cref="ReSharperDupFinderSettings.Verbosity"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(ReSharperDupFinderSettings Settings, IReadOnlyCollection<Output> Output)> ReSharperDupFinder(CombinatorialConfigure<ReSharperDupFinderSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -317,17 +389,37 @@ namespace Nuke.Common.Tools.ReSharper
         /// </summary>
         public virtual string Output { get; internal set; }
         /// <summary>
-        ///   Disables solution-wide analysis.
+        ///   By default, InspectCode writes its output in <c>XML</c> format. If necessary, you can specify other output formats with this parameter.
         /// </summary>
-        public virtual bool? NoSwea { get; internal set; }
+        public virtual ReSharperFormat Format { get; internal set; }
         /// <summary>
-        ///   Specifies an additional .DotSettings file used for inspection settings.
+        ///   By default, InspectCode uses heuristics to split its jobs and run them in parallel using as many threads/cores as available. If necessary, you can limit the number of threads.
         /// </summary>
-        public virtual string Profile { get; internal set; }
+        public virtual int? Jobs { get; internal set; }
+        /// <summary>
+        ///   By default, files in InspectCode's report are written with paths relative to the solution file. You can use this switch to have absolute paths in the report.
+        /// </summary>
+        public virtual bool? AbsolutePaths { get; internal set; }
         /// <summary>
         ///   Allows analyzing particular project(s) instead of the whole solution. After this parameter, you can type a project name or a wildcard that matches several projects within your solution. For example, <c>--project=*Billing</c>
         /// </summary>
         public virtual string Project { get; internal set; }
+        /// <summary>
+        ///   Disables solution-wide analysis.
+        /// </summary>
+        public virtual bool? NoSwea { get; internal set; }
+        /// <summary>
+        ///   By default, InspectCode only reports issues with the severity level Suggestion and higher. This parameter lets you change the minimal reported severity level to <c>INFO</c>, <c>HINT</c>, <c>SUGGESTION</c>, <c>WARNING</c>, <c>ERROR</c>. For example, <c>-s=WARNING</c>.
+        /// </summary>
+        public virtual ReSharperSeverity Severity { get; internal set; }
+        /// <summary>
+        ///   Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.
+        /// </summary>
+        public virtual bool? DumpIssuesTypes { get; internal set; }
+        /// <summary>
+        ///   Default settings are overridden from the <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#solution-team-shared-layer">team-shared layer</a>, if it exists. If necessary, you can use this parameter to specify another <c>.DotSettings</c> file, which will override all other settings.
+        /// </summary>
+        public virtual string Settings { get; internal set; }
         /// <summary>
         ///   Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.
         /// </summary>
@@ -338,73 +430,25 @@ namespace Nuke.Common.Tools.ReSharper
         /// </summary>
         public virtual bool? NoBuiltinSettings { get; internal set; }
         /// <summary>
-        ///   Lets you specify a custom location for the data that InspectCode caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.
+        ///   Lets you specify a custom location for the ReSharper caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.
         /// </summary>
         public virtual string CachesHome { get; internal set; }
         /// <summary>
-        ///   Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.
+        ///   Used to save the current parameters to a configuration file.
         /// </summary>
-        public virtual IReadOnlyDictionary<string, string> Properties => PropertiesInternal.AsReadOnly();
-        internal Dictionary<string, string> PropertiesInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        public virtual string CreateConfigFile { get; internal set; }
         /// <summary>
-        ///   Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.
+        ///   Used to load the parameters described above from a configuration file.
         /// </summary>
-        public virtual bool? DumpIssuesTypes { get; internal set; }
+        public virtual string ConfigFile { get; internal set; }
         /// <summary>
-        ///   Explicitly specified MsBuild Toolset version (12.0, 14.0, 15.0). For example, <c>--toolset=12.0</c>.
+        ///   By default, only information messages appear in the log. Use this parameter to change the amount of information written to the log by the following levels (the order is from less to more detailed): <c>OFF</c>, <c>FATAL</c>, <c>ERROR</c>, <c>WARN</c>, <c>INFO</c>, <c>VERBOSE</c>, <c>TRACE</c>.<para/>For example, if something goes wrong, you can contact the <a href="https://resharper-support.jetbrains.com/">support team</a> and share a log file with all <c>TRACE</c> messages.
         /// </summary>
-        public virtual ReSharperMSBuildToolset Toolset { get; internal set; }
-        protected override Arguments ConfigureProcessArguments(Arguments arguments)
-        {
-            arguments
-              .Add("inspectcode")
-              .Add("{value}", TargetPath)
-              .Add("--output={value}", Output)
-              .Add("--no-swea", NoSwea)
-              .Add("--profile={value}", Profile)
-              .Add("--project={value}", Project)
-              .Add("--disable-settings-layers={value}", DisableSettingsLayers, separator: ';')
-              .Add("--no-buildin-settings", NoBuiltinSettings)
-              .Add("--caches-home={value}", CachesHome)
-              .Add("--properties={value}", Properties, "{key}={value}")
-              .Add("--dumpIssuesTypes", DumpIssuesTypes)
-              .Add("--toolset={value}", Toolset);
-            return base.ConfigureProcessArguments(arguments);
-        }
-    }
-    #endregion
-    #region ReSharperCleanupCodeSettings
-    /// <summary>
-    ///   Used within <see cref="ReSharperTasks"/>.
-    /// </summary>
-    [PublicAPI]
-    [ExcludeFromCodeCoverage]
-    [Serializable]
-    public partial class ReSharperCleanupCodeSettings : ReSharperSettingsBase
-    {
+        public virtual ReSharperVerbosity Verbosity { get; internal set; }
         /// <summary>
-        ///   Path to the ReSharper executable.
+        ///   use this option to add execution details of CleanupCode to the output. If you have problems with CleanupCode, these details will be helpful when contacting the <a href="https://resharper-support.jetbrains.com/">support team</a>.
         /// </summary>
-        public override string ProcessToolPath => base.ProcessToolPath ?? ReSharperTasks.ReSharperPath;
-        public override Action<OutputType, string> ProcessCustomLogger => ReSharperTasks.ReSharperLogger;
-        /// <summary>
-        ///   Target path.
-        /// </summary>
-        public virtual string TargetPath { get; internal set; }
-        /// <summary>
-        ///   A code cleanup profile that lists cleanup tasks to execute.<p/>By default, CleanupCode will apply code cleanup tasks specified in the <a href="https://www.jetbrains.com/help/resharper/Code_Cleanup__Index.html#profiles">Built-in: Full Cleanup profile</a>, that is all <a href="https://www.jetbrains.com/help/resharper/Code_Cleanup__Index.html#tasks">available cleanup tasks</a> tasks except <a href="https://www.jetbrains.com/help/resharper/File_Header_Style.html">updating file header</a>. 
-        /// </summary>
-        public virtual string Profile { get; internal set; }
-        /// <summary>
-        ///   Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.
-        /// </summary>
-        public virtual IReadOnlyList<string> Include => IncludeInternal.AsReadOnly();
-        internal List<string> IncludeInternal { get; set; } = new List<string>();
-        /// <summary>
-        ///   Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.
-        /// </summary>
-        public virtual IReadOnlyList<string> Exclude => ExcludeInternal.AsReadOnly();
-        internal List<string> ExcludeInternal { get; set; } = new List<string>();
+        public virtual bool? Debug { get; internal set; }
         /// <summary>
         ///   Lets you override MSBuild properties. You can set each property separately ( <c>--properties:prop1=val1</c> <c>--properties:prop2=val2</c>), or use a semicolon to separate multiple properties <c>--properties:prop1=val1;prop2=val2</c>.<para/>Note that the semicolon cannot be used inside values, for example: <c>--properties:ReferencePath="r:\reference1\;r:\reference2\"</c>. In such cases, add each value separately using another <c>--properties</c> parameter — the values will be combined.<para/>The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in CleanupCode parameters.
         /// </summary>
@@ -441,9 +485,76 @@ namespace Nuke.Common.Tools.ReSharper
         public virtual IReadOnlyList<string> ItemTargets => ItemTargetsInternal.AsReadOnly();
         internal List<string> ItemTargetsInternal { get; set; } = new List<string>();
         /// <summary>
-        ///   Lets you specify a custom location for the data that CleanupCode caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.
+        ///   Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.
         /// </summary>
-        public virtual string CachesHome { get; internal set; }
+        public virtual IReadOnlyList<string> Include => IncludeInternal.AsReadOnly();
+        internal List<string> IncludeInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.
+        /// </summary>
+        public virtual IReadOnlyList<string> Exclude => ExcludeInternal.AsReadOnly();
+        internal List<string> ExcludeInternal { get; set; } = new List<string>();
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
+        {
+            arguments
+              .Add("inspectcode")
+              .Add("{value}", TargetPath)
+              .Add("--output={value}", Output)
+              .Add("--format={value}", Format)
+              .Add("--jobs={value}", Jobs)
+              .Add("--absolute-paths", AbsolutePaths)
+              .Add("--project={value}", Project)
+              .Add("--no-swea", NoSwea)
+              .Add("--severity {value}", Severity)
+              .Add("--dumpIssuesTypes", DumpIssuesTypes)
+              .Add("--settings={value}", Settings)
+              .Add("--disable-settings-layers={value}", DisableSettingsLayers, separator: ';')
+              .Add("--no-buildin-settings", NoBuiltinSettings)
+              .Add("--caches-home={value}", CachesHome)
+              .Add("--config-create={value}", CreateConfigFile)
+              .Add("--config={value}", ConfigFile)
+              .Add("--verbosity={value}", Verbosity)
+              .Add("--debug", Debug)
+              .Add("--properties={value}", Properties, "{key}={value}")
+              .Add("--toolset={value}", Toolset)
+              .Add("--toolset-path={value}", ToolsetPath)
+              .Add("--dotnetcore={value}", DotNetCore)
+              .Add("--dotnetcoresdk={value}", DotNetCoreSdk)
+              .Add("--mono={value}", MonoPath)
+              .Add("--targets-for-references={value}", ReferenceTargets, separator: ';')
+              .Add("--targets-for-items={value}", ItemTargets, separator: ';')
+              .Add("--include={value}", Include, separator: ';')
+              .Add("--exclude={value}", Exclude, separator: ';');
+            return base.ConfigureProcessArguments(arguments);
+        }
+    }
+    #endregion
+    #region ReSharperCleanupCodeSettings
+    /// <summary>
+    ///   Used within <see cref="ReSharperTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class ReSharperCleanupCodeSettings : ReSharperSettingsBase
+    {
+        /// <summary>
+        ///   Path to the ReSharper executable.
+        /// </summary>
+        public override string ProcessToolPath => base.ProcessToolPath ?? ReSharperTasks.ReSharperPath;
+        public override Action<OutputType, string> ProcessCustomLogger => ReSharperTasks.ReSharperLogger;
+        /// <summary>
+        ///   Target path.
+        /// </summary>
+        public virtual string TargetPath { get; internal set; }
+        /// <summary>
+        ///   A code cleanup profile that lists cleanup tasks to execute.<p/>By default, CleanupCode will apply code cleanup tasks specified in the <a href="https://www.jetbrains.com/help/resharper/Code_Cleanup__Index.html#profiles">Built-in: Full Cleanup profile</a>, that is all <a href="https://www.jetbrains.com/help/resharper/Code_Cleanup__Index.html#tasks">available cleanup tasks</a> tasks except <a href="https://www.jetbrains.com/help/resharper/File_Header_Style.html">updating file header</a>. 
+        /// </summary>
+        public virtual string Profile { get; internal set; }
+        /// <summary>
+        ///   Default settings are overridden from the <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#solution-team-shared-layer">team-shared layer</a>, if it exists. If necessary, you can use this parameter to specify another <c>.DotSettings</c> file, which will override all other settings.
+        /// </summary>
+        public virtual string Settings { get; internal set; }
         /// <summary>
         ///   Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.
         /// </summary>
@@ -453,14 +564,85 @@ namespace Nuke.Common.Tools.ReSharper
         ///   Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c>
         /// </summary>
         public virtual bool? NoBuiltinSettings { get; internal set; }
+        /// <summary>
+        ///   Lets you specify a custom location for the ReSharper caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.
+        /// </summary>
+        public virtual string CachesHome { get; internal set; }
+        /// <summary>
+        ///   Used to save the current parameters to a configuration file.
+        /// </summary>
+        public virtual string CreateConfigFile { get; internal set; }
+        /// <summary>
+        ///   Used to load the parameters described above from a configuration file.
+        /// </summary>
+        public virtual string ConfigFile { get; internal set; }
+        /// <summary>
+        ///   By default, only information messages appear in the log. Use this parameter to change the amount of information written to the log by the following levels (the order is from less to more detailed): <c>OFF</c>, <c>FATAL</c>, <c>ERROR</c>, <c>WARN</c>, <c>INFO</c>, <c>VERBOSE</c>, <c>TRACE</c>.<para/>For example, if something goes wrong, you can contact the <a href="https://resharper-support.jetbrains.com/">support team</a> and share a log file with all <c>TRACE</c> messages.
+        /// </summary>
+        public virtual ReSharperVerbosity Verbosity { get; internal set; }
+        /// <summary>
+        ///   use this option to add execution details of CleanupCode to the output. If you have problems with CleanupCode, these details will be helpful when contacting the <a href="https://resharper-support.jetbrains.com/">support team</a>.
+        /// </summary>
+        public virtual bool? Debug { get; internal set; }
+        /// <summary>
+        ///   Lets you override MSBuild properties. You can set each property separately ( <c>--properties:prop1=val1</c> <c>--properties:prop2=val2</c>), or use a semicolon to separate multiple properties <c>--properties:prop1=val1;prop2=val2</c>.<para/>Note that the semicolon cannot be used inside values, for example: <c>--properties:ReferencePath="r:\reference1\;r:\reference2\"</c>. In such cases, add each value separately using another <c>--properties</c> parameter — the values will be combined.<para/>The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in CleanupCode parameters.
+        /// </summary>
+        public virtual IReadOnlyDictionary<string, string> Properties => PropertiesInternal.AsReadOnly();
+        internal Dictionary<string, string> PropertiesInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        /// <summary>
+        ///   Use this option to specify the exact MSBuild version. For example 12.0: <c>--toolset=12.0</c>. By default the highest available MSBuild version is used. This option might not work if you have several installations with the same version, for example 16.0 from Visual Studio 2019 and 16.0 from .NET Core 3.x.
+        /// </summary>
+        public virtual ReSharperMSBuildToolset Toolset { get; internal set; }
+        /// <summary>
+        ///   Use this option to specify the exact path to MSBuild. This might be helpful if you have a custom MSBuild installation and want to use it with CleanupCode, for example: <c>--toolset-path="C:\tools\msbuild\bin\MsBuild.exe"</c>
+        /// </summary>
+        public virtual string ToolsetPath { get; internal set; }
+        /// <summary>
+        ///   By default, .NET Core installation is auto-detected. You can use this option to point to the specific .NET Core installation if the auto-detection results in a conflict. Use it without arguments to ignore .NET Core. Example: <c>--dotnetcore=/usr/local/share/dotnet/dotnet</c>.
+        /// </summary>
+        public virtual string DotNetCore { get; internal set; }
+        /// <summary>
+        ///   Use this option to specify .NET Core SDK version that should provide MSBuild. For example, if you have installed .NET Core with SDKs 2.0.3 and 3.0.100, CleanupCode will prefer 3.0.100 (the latest, including preview versions). Now if you want to run CleanupCode with .NET Core SDK 2.0.3, add <c>--dotnetcoresdk=2.0.3</c> to the command line.
+        /// </summary>
+        public virtual string DotNetCoreSdk { get; internal set; }
+        /// <summary>
+        ///   Mono path. Empty to ignore Mono. Not specified for autodetect. Example: <c>--mono=/Library/Frameworks/Mono.framework/Versions/Current/bin/mono.</c>
+        /// </summary>
+        public virtual string MonoPath { get; internal set; }
+        /// <summary>
+        ///   Names of custom MSBuild targets that will be executed to get referenced assemblies of projects. The targets are defined either in the project file or in the <c>.targets</c> file. Multiple values are separated with the semicolon. For example, <c>--targets-for-references="GetReferences"</c>.
+        /// </summary>
+        public virtual IReadOnlyList<string> ReferenceTargets => ReferenceTargetsInternal.AsReadOnly();
+        internal List<string> ReferenceTargetsInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Names of custom MSBuild targets that will be executed to get other items (for example, a Compile item) of projects. The targets are defined either in the project file or in the <c>.targets</c> file. Multiple values are separated with the semicolon. For example, <c>--targets-for-items="GetCompileItems"</c>.
+        /// </summary>
+        public virtual IReadOnlyList<string> ItemTargets => ItemTargetsInternal.AsReadOnly();
+        internal List<string> ItemTargetsInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.
+        /// </summary>
+        public virtual IReadOnlyList<string> Include => IncludeInternal.AsReadOnly();
+        internal List<string> IncludeInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.
+        /// </summary>
+        public virtual IReadOnlyList<string> Exclude => ExcludeInternal.AsReadOnly();
+        internal List<string> ExcludeInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("cleanupcode")
               .Add("{value}", TargetPath)
               .Add("--profile={value}", Profile)
-              .Add("--include={value}", Include, separator: ';')
-              .Add("--exclude={value}", Exclude, separator: ';')
+              .Add("--settings={value}", Settings)
+              .Add("--disable-settings-layers={value}", DisableSettingsLayers, separator: ';')
+              .Add("--no-buildin-settings", NoBuiltinSettings)
+              .Add("--caches-home={value}", CachesHome)
+              .Add("--config-create={value}", CreateConfigFile)
+              .Add("--config={value}", ConfigFile)
+              .Add("--verbosity={value}", Verbosity)
+              .Add("--debug", Debug)
               .Add("--properties={value}", Properties, "{key}={value}")
               .Add("--toolset={value}", Toolset)
               .Add("--toolset-path={value}", ToolsetPath)
@@ -469,9 +651,8 @@ namespace Nuke.Common.Tools.ReSharper
               .Add("--mono={value}", MonoPath)
               .Add("--targets-for-references={value}", ReferenceTargets, separator: ';')
               .Add("--targets-for-items={value}", ItemTargets, separator: ';')
-              .Add("--caches-home={value}", CachesHome)
-              .Add("--disable-settings-layers={value}", DisableSettingsLayers, separator: ';')
-              .Add("--no-buildin-settings", NoBuiltinSettings);
+              .Add("--include={value}", Include, separator: ';')
+              .Add("--exclude={value}", Exclude, separator: ';');
             return base.ConfigureProcessArguments(arguments);
         }
     }
@@ -547,6 +728,10 @@ namespace Nuke.Common.Tools.ReSharper
         /// </summary>
         public virtual bool? ShowText { get; internal set; }
         /// <summary>
+        ///   Lets you specify a custom location for the ReSharper caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.
+        /// </summary>
+        public virtual string CachesHome { get; internal set; }
+        /// <summary>
         ///   Used to save the current parameters to a configuration file.
         /// </summary>
         public virtual string CreateConfigFile { get; internal set; }
@@ -554,6 +739,14 @@ namespace Nuke.Common.Tools.ReSharper
         ///   Used to load the parameters described above from a configuration file.
         /// </summary>
         public virtual string ConfigFile { get; internal set; }
+        /// <summary>
+        ///   By default, only information messages appear in the log. Use this parameter to change the amount of information written to the log by the following levels (the order is from less to more detailed): <c>OFF</c>, <c>FATAL</c>, <c>ERROR</c>, <c>WARN</c>, <c>INFO</c>, <c>VERBOSE</c>, <c>TRACE</c>.<para/>For example, if something goes wrong, you can contact the <a href="https://resharper-support.jetbrains.com/">support team</a> and share a log file with all <c>TRACE</c> messages.
+        /// </summary>
+        public virtual ReSharperVerbosity Verbosity { get; internal set; }
+        /// <summary>
+        ///   use this option to add execution details of CleanupCode to the output. If you have problems with CleanupCode, these details will be helpful when contacting the <a href="https://resharper-support.jetbrains.com/">support team</a>.
+        /// </summary>
+        public virtual bool? Debug { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
@@ -571,8 +764,11 @@ namespace Nuke.Common.Tools.ReSharper
               .Add("--properties:{value}", Properties, "{key}={value}")
               .Add("--normalize-types={value}", NormalizeTypes)
               .Add("--show-text={value}", ShowText)
+              .Add("--caches-home={value}", CachesHome)
               .Add("--config-create={value}", CreateConfigFile)
-              .Add("--config={value}", ConfigFile);
+              .Add("--config={value}", ConfigFile)
+              .Add("--verbosity={value}", Verbosity)
+              .Add("--debug", Debug);
             return base.ConfigureProcessArguments(arguments);
         }
     }
@@ -649,6 +845,135 @@ namespace Nuke.Common.Tools.ReSharper
             return toolSettings;
         }
         #endregion
+        #region Format
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.Format"/></em></p>
+        ///   <p>By default, InspectCode writes its output in <c>XML</c> format. If necessary, you can specify other output formats with this parameter.</p>
+        /// </summary>
+        [Pure]
+        public static T SetFormat<T>(this T toolSettings, ReSharperFormat format) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Format = format;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="ReSharperInspectCodeSettings.Format"/></em></p>
+        ///   <p>By default, InspectCode writes its output in <c>XML</c> format. If necessary, you can specify other output formats with this parameter.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetFormat<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Format = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Jobs
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.Jobs"/></em></p>
+        ///   <p>By default, InspectCode uses heuristics to split its jobs and run them in parallel using as many threads/cores as available. If necessary, you can limit the number of threads.</p>
+        /// </summary>
+        [Pure]
+        public static T SetJobs<T>(this T toolSettings, int? jobs) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Jobs = jobs;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="ReSharperInspectCodeSettings.Jobs"/></em></p>
+        ///   <p>By default, InspectCode uses heuristics to split its jobs and run them in parallel using as many threads/cores as available. If necessary, you can limit the number of threads.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetJobs<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Jobs = null;
+            return toolSettings;
+        }
+        #endregion
+        #region AbsolutePaths
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.AbsolutePaths"/></em></p>
+        ///   <p>By default, files in InspectCode's report are written with paths relative to the solution file. You can use this switch to have absolute paths in the report.</p>
+        /// </summary>
+        [Pure]
+        public static T SetAbsolutePaths<T>(this T toolSettings, bool? absolutePaths) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AbsolutePaths = absolutePaths;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="ReSharperInspectCodeSettings.AbsolutePaths"/></em></p>
+        ///   <p>By default, files in InspectCode's report are written with paths relative to the solution file. You can use this switch to have absolute paths in the report.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetAbsolutePaths<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AbsolutePaths = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="ReSharperInspectCodeSettings.AbsolutePaths"/></em></p>
+        ///   <p>By default, files in InspectCode's report are written with paths relative to the solution file. You can use this switch to have absolute paths in the report.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableAbsolutePaths<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AbsolutePaths = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="ReSharperInspectCodeSettings.AbsolutePaths"/></em></p>
+        ///   <p>By default, files in InspectCode's report are written with paths relative to the solution file. You can use this switch to have absolute paths in the report.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableAbsolutePaths<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AbsolutePaths = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="ReSharperInspectCodeSettings.AbsolutePaths"/></em></p>
+        ///   <p>By default, files in InspectCode's report are written with paths relative to the solution file. You can use this switch to have absolute paths in the report.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleAbsolutePaths<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AbsolutePaths = !toolSettings.AbsolutePaths;
+            return toolSettings;
+        }
+        #endregion
+        #region Project
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.Project"/></em></p>
+        ///   <p>Allows analyzing particular project(s) instead of the whole solution. After this parameter, you can type a project name or a wildcard that matches several projects within your solution. For example, <c>--project=*Billing</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetProject<T>(this T toolSettings, string project) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Project = project;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="ReSharperInspectCodeSettings.Project"/></em></p>
+        ///   <p>Allows analyzing particular project(s) instead of the whole solution. After this parameter, you can type a project name or a wildcard that matches several projects within your solution. For example, <c>--project=*Billing</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetProject<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Project = null;
+            return toolSettings;
+        }
+        #endregion
         #region NoSwea
         /// <summary>
         ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.NoSwea"/></em></p>
@@ -706,51 +1031,108 @@ namespace Nuke.Common.Tools.ReSharper
             return toolSettings;
         }
         #endregion
-        #region Profile
+        #region Severity
         /// <summary>
-        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.Profile"/></em></p>
-        ///   <p>Specifies an additional .DotSettings file used for inspection settings.</p>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.Severity"/></em></p>
+        ///   <p>By default, InspectCode only reports issues with the severity level Suggestion and higher. This parameter lets you change the minimal reported severity level to <c>INFO</c>, <c>HINT</c>, <c>SUGGESTION</c>, <c>WARNING</c>, <c>ERROR</c>. For example, <c>-s=WARNING</c>.</p>
         /// </summary>
         [Pure]
-        public static T SetProfile<T>(this T toolSettings, string profile) where T : ReSharperInspectCodeSettings
+        public static T SetSeverity<T>(this T toolSettings, ReSharperSeverity severity) where T : ReSharperInspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Profile = profile;
+            toolSettings.Severity = severity;
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Resets <see cref="ReSharperInspectCodeSettings.Profile"/></em></p>
-        ///   <p>Specifies an additional .DotSettings file used for inspection settings.</p>
+        ///   <p><em>Resets <see cref="ReSharperInspectCodeSettings.Severity"/></em></p>
+        ///   <p>By default, InspectCode only reports issues with the severity level Suggestion and higher. This parameter lets you change the minimal reported severity level to <c>INFO</c>, <c>HINT</c>, <c>SUGGESTION</c>, <c>WARNING</c>, <c>ERROR</c>. For example, <c>-s=WARNING</c>.</p>
         /// </summary>
         [Pure]
-        public static T ResetProfile<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        public static T ResetSeverity<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Profile = null;
+            toolSettings.Severity = null;
             return toolSettings;
         }
         #endregion
-        #region Project
+        #region DumpIssuesTypes
         /// <summary>
-        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.Project"/></em></p>
-        ///   <p>Allows analyzing particular project(s) instead of the whole solution. After this parameter, you can type a project name or a wildcard that matches several projects within your solution. For example, <c>--project=*Billing</c></p>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.DumpIssuesTypes"/></em></p>
+        ///   <p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p>
         /// </summary>
         [Pure]
-        public static T SetProject<T>(this T toolSettings, string project) where T : ReSharperInspectCodeSettings
+        public static T SetDumpIssuesTypes<T>(this T toolSettings, bool? dumpIssuesTypes) where T : ReSharperInspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Project = project;
+            toolSettings.DumpIssuesTypes = dumpIssuesTypes;
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Resets <see cref="ReSharperInspectCodeSettings.Project"/></em></p>
-        ///   <p>Allows analyzing particular project(s) instead of the whole solution. After this parameter, you can type a project name or a wildcard that matches several projects within your solution. For example, <c>--project=*Billing</c></p>
+        ///   <p><em>Resets <see cref="ReSharperInspectCodeSettings.DumpIssuesTypes"/></em></p>
+        ///   <p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p>
         /// </summary>
         [Pure]
-        public static T ResetProject<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        public static T ResetDumpIssuesTypes<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Project = null;
+            toolSettings.DumpIssuesTypes = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="ReSharperInspectCodeSettings.DumpIssuesTypes"/></em></p>
+        ///   <p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableDumpIssuesTypes<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DumpIssuesTypes = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="ReSharperInspectCodeSettings.DumpIssuesTypes"/></em></p>
+        ///   <p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableDumpIssuesTypes<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DumpIssuesTypes = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="ReSharperInspectCodeSettings.DumpIssuesTypes"/></em></p>
+        ///   <p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleDumpIssuesTypes<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DumpIssuesTypes = !toolSettings.DumpIssuesTypes;
+            return toolSettings;
+        }
+        #endregion
+        #region Settings
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.Settings"/></em></p>
+        ///   <p>Default settings are overridden from the <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#solution-team-shared-layer">team-shared layer</a>, if it exists. If necessary, you can use this parameter to specify another <c>.DotSettings</c> file, which will override all other settings.</p>
+        /// </summary>
+        [Pure]
+        public static T SetSettings<T>(this T toolSettings, string settings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Settings = settings;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="ReSharperInspectCodeSettings.Settings"/></em></p>
+        ///   <p>Default settings are overridden from the <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#solution-team-shared-layer">team-shared layer</a>, if it exists. If necessary, you can use this parameter to specify another <c>.DotSettings</c> file, which will override all other settings.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetSettings<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Settings = null;
             return toolSettings;
         }
         #endregion
@@ -895,7 +1277,7 @@ namespace Nuke.Common.Tools.ReSharper
         #region CachesHome
         /// <summary>
         ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.CachesHome"/></em></p>
-        ///   <p>Lets you specify a custom location for the data that InspectCode caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.</p>
+        ///   <p>Lets you specify a custom location for the ReSharper caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.</p>
         /// </summary>
         [Pure]
         public static T SetCachesHome<T>(this T toolSettings, string cachesHome) where T : ReSharperInspectCodeSettings
@@ -906,7 +1288,7 @@ namespace Nuke.Common.Tools.ReSharper
         }
         /// <summary>
         ///   <p><em>Resets <see cref="ReSharperInspectCodeSettings.CachesHome"/></em></p>
-        ///   <p>Lets you specify a custom location for the data that InspectCode caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.</p>
+        ///   <p>Lets you specify a custom location for the ReSharper caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.</p>
         /// </summary>
         [Pure]
         public static T ResetCachesHome<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
@@ -916,10 +1298,139 @@ namespace Nuke.Common.Tools.ReSharper
             return toolSettings;
         }
         #endregion
+        #region CreateConfigFile
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.CreateConfigFile"/></em></p>
+        ///   <p>Used to save the current parameters to a configuration file.</p>
+        /// </summary>
+        [Pure]
+        public static T SetCreateConfigFile<T>(this T toolSettings, string createConfigFile) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CreateConfigFile = createConfigFile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="ReSharperInspectCodeSettings.CreateConfigFile"/></em></p>
+        ///   <p>Used to save the current parameters to a configuration file.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetCreateConfigFile<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CreateConfigFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ConfigFile
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.ConfigFile"/></em></p>
+        ///   <p>Used to load the parameters described above from a configuration file.</p>
+        /// </summary>
+        [Pure]
+        public static T SetConfigFile<T>(this T toolSettings, string configFile) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = configFile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="ReSharperInspectCodeSettings.ConfigFile"/></em></p>
+        ///   <p>Used to load the parameters described above from a configuration file.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetConfigFile<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Verbosity
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.Verbosity"/></em></p>
+        ///   <p>By default, only information messages appear in the log. Use this parameter to change the amount of information written to the log by the following levels (the order is from less to more detailed): <c>OFF</c>, <c>FATAL</c>, <c>ERROR</c>, <c>WARN</c>, <c>INFO</c>, <c>VERBOSE</c>, <c>TRACE</c>.<para/>For example, if something goes wrong, you can contact the <a href="https://resharper-support.jetbrains.com/">support team</a> and share a log file with all <c>TRACE</c> messages.</p>
+        /// </summary>
+        [Pure]
+        public static T SetVerbosity<T>(this T toolSettings, ReSharperVerbosity verbosity) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = verbosity;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="ReSharperInspectCodeSettings.Verbosity"/></em></p>
+        ///   <p>By default, only information messages appear in the log. Use this parameter to change the amount of information written to the log by the following levels (the order is from less to more detailed): <c>OFF</c>, <c>FATAL</c>, <c>ERROR</c>, <c>WARN</c>, <c>INFO</c>, <c>VERBOSE</c>, <c>TRACE</c>.<para/>For example, if something goes wrong, you can contact the <a href="https://resharper-support.jetbrains.com/">support team</a> and share a log file with all <c>TRACE</c> messages.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetVerbosity<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Debug
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.Debug"/></em></p>
+        ///   <p>use this option to add execution details of CleanupCode to the output. If you have problems with CleanupCode, these details will be helpful when contacting the <a href="https://resharper-support.jetbrains.com/">support team</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetDebug<T>(this T toolSettings, bool? debug) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = debug;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="ReSharperInspectCodeSettings.Debug"/></em></p>
+        ///   <p>use this option to add execution details of CleanupCode to the output. If you have problems with CleanupCode, these details will be helpful when contacting the <a href="https://resharper-support.jetbrains.com/">support team</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetDebug<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="ReSharperInspectCodeSettings.Debug"/></em></p>
+        ///   <p>use this option to add execution details of CleanupCode to the output. If you have problems with CleanupCode, these details will be helpful when contacting the <a href="https://resharper-support.jetbrains.com/">support team</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableDebug<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="ReSharperInspectCodeSettings.Debug"/></em></p>
+        ///   <p>use this option to add execution details of CleanupCode to the output. If you have problems with CleanupCode, these details will be helpful when contacting the <a href="https://resharper-support.jetbrains.com/">support team</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableDebug<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="ReSharperInspectCodeSettings.Debug"/></em></p>
+        ///   <p>use this option to add execution details of CleanupCode to the output. If you have problems with CleanupCode, these details will be helpful when contacting the <a href="https://resharper-support.jetbrains.com/">support team</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleDebug<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = !toolSettings.Debug;
+            return toolSettings;
+        }
+        #endregion
         #region Properties
         /// <summary>
         ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.Properties"/> to a new dictionary</em></p>
-        ///   <p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p>
+        ///   <p>Lets you override MSBuild properties. You can set each property separately ( <c>--properties:prop1=val1</c> <c>--properties:prop2=val2</c>), or use a semicolon to separate multiple properties <c>--properties:prop1=val1;prop2=val2</c>.<para/>Note that the semicolon cannot be used inside values, for example: <c>--properties:ReferencePath="r:\reference1\;r:\reference2\"</c>. In such cases, add each value separately using another <c>--properties</c> parameter — the values will be combined.<para/>The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in CleanupCode parameters.</p>
         /// </summary>
         [Pure]
         public static T SetProperties<T>(this T toolSettings, IDictionary<string, string> properties) where T : ReSharperInspectCodeSettings
@@ -930,7 +1441,7 @@ namespace Nuke.Common.Tools.ReSharper
         }
         /// <summary>
         ///   <p><em>Clears <see cref="ReSharperInspectCodeSettings.Properties"/></em></p>
-        ///   <p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p>
+        ///   <p>Lets you override MSBuild properties. You can set each property separately ( <c>--properties:prop1=val1</c> <c>--properties:prop2=val2</c>), or use a semicolon to separate multiple properties <c>--properties:prop1=val1;prop2=val2</c>.<para/>Note that the semicolon cannot be used inside values, for example: <c>--properties:ReferencePath="r:\reference1\;r:\reference2\"</c>. In such cases, add each value separately using another <c>--properties</c> parameter — the values will be combined.<para/>The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in CleanupCode parameters.</p>
         /// </summary>
         [Pure]
         public static T ClearProperties<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
@@ -941,7 +1452,7 @@ namespace Nuke.Common.Tools.ReSharper
         }
         /// <summary>
         ///   <p><em>Adds a new key-value-pair <see cref="ReSharperInspectCodeSettings.Properties"/></em></p>
-        ///   <p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p>
+        ///   <p>Lets you override MSBuild properties. You can set each property separately ( <c>--properties:prop1=val1</c> <c>--properties:prop2=val2</c>), or use a semicolon to separate multiple properties <c>--properties:prop1=val1;prop2=val2</c>.<para/>Note that the semicolon cannot be used inside values, for example: <c>--properties:ReferencePath="r:\reference1\;r:\reference2\"</c>. In such cases, add each value separately using another <c>--properties</c> parameter — the values will be combined.<para/>The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in CleanupCode parameters.</p>
         /// </summary>
         [Pure]
         public static T AddProperty<T>(this T toolSettings, string propertyKey, string propertyValue) where T : ReSharperInspectCodeSettings
@@ -952,7 +1463,7 @@ namespace Nuke.Common.Tools.ReSharper
         }
         /// <summary>
         ///   <p><em>Removes a key-value-pair from <see cref="ReSharperInspectCodeSettings.Properties"/></em></p>
-        ///   <p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p>
+        ///   <p>Lets you override MSBuild properties. You can set each property separately ( <c>--properties:prop1=val1</c> <c>--properties:prop2=val2</c>), or use a semicolon to separate multiple properties <c>--properties:prop1=val1;prop2=val2</c>.<para/>Note that the semicolon cannot be used inside values, for example: <c>--properties:ReferencePath="r:\reference1\;r:\reference2\"</c>. In such cases, add each value separately using another <c>--properties</c> parameter — the values will be combined.<para/>The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in CleanupCode parameters.</p>
         /// </summary>
         [Pure]
         public static T RemoveProperty<T>(this T toolSettings, string propertyKey) where T : ReSharperInspectCodeSettings
@@ -963,7 +1474,7 @@ namespace Nuke.Common.Tools.ReSharper
         }
         /// <summary>
         ///   <p><em>Sets a key-value-pair in <see cref="ReSharperInspectCodeSettings.Properties"/></em></p>
-        ///   <p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p>
+        ///   <p>Lets you override MSBuild properties. You can set each property separately ( <c>--properties:prop1=val1</c> <c>--properties:prop2=val2</c>), or use a semicolon to separate multiple properties <c>--properties:prop1=val1;prop2=val2</c>.<para/>Note that the semicolon cannot be used inside values, for example: <c>--properties:ReferencePath="r:\reference1\;r:\reference2\"</c>. In such cases, add each value separately using another <c>--properties</c> parameter — the values will be combined.<para/>The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in CleanupCode parameters.</p>
         /// </summary>
         [Pure]
         public static T SetProperty<T>(this T toolSettings, string propertyKey, string propertyValue) where T : ReSharperInspectCodeSettings
@@ -973,67 +1484,10 @@ namespace Nuke.Common.Tools.ReSharper
             return toolSettings;
         }
         #endregion
-        #region DumpIssuesTypes
-        /// <summary>
-        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.DumpIssuesTypes"/></em></p>
-        ///   <p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p>
-        /// </summary>
-        [Pure]
-        public static T SetDumpIssuesTypes<T>(this T toolSettings, bool? dumpIssuesTypes) where T : ReSharperInspectCodeSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DumpIssuesTypes = dumpIssuesTypes;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <see cref="ReSharperInspectCodeSettings.DumpIssuesTypes"/></em></p>
-        ///   <p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p>
-        /// </summary>
-        [Pure]
-        public static T ResetDumpIssuesTypes<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DumpIssuesTypes = null;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Enables <see cref="ReSharperInspectCodeSettings.DumpIssuesTypes"/></em></p>
-        ///   <p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p>
-        /// </summary>
-        [Pure]
-        public static T EnableDumpIssuesTypes<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DumpIssuesTypes = true;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Disables <see cref="ReSharperInspectCodeSettings.DumpIssuesTypes"/></em></p>
-        ///   <p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p>
-        /// </summary>
-        [Pure]
-        public static T DisableDumpIssuesTypes<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DumpIssuesTypes = false;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Toggles <see cref="ReSharperInspectCodeSettings.DumpIssuesTypes"/></em></p>
-        ///   <p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p>
-        /// </summary>
-        [Pure]
-        public static T ToggleDumpIssuesTypes<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DumpIssuesTypes = !toolSettings.DumpIssuesTypes;
-            return toolSettings;
-        }
-        #endregion
         #region Toolset
         /// <summary>
         ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.Toolset"/></em></p>
-        ///   <p>Explicitly specified MsBuild Toolset version (12.0, 14.0, 15.0). For example, <c>--toolset=12.0</c>.</p>
+        ///   <p>Use this option to specify the exact MSBuild version. For example 12.0: <c>--toolset=12.0</c>. By default the highest available MSBuild version is used. This option might not work if you have several installations with the same version, for example 16.0 from Visual Studio 2019 and 16.0 from .NET Core 3.x.</p>
         /// </summary>
         [Pure]
         public static T SetToolset<T>(this T toolSettings, ReSharperMSBuildToolset toolset) where T : ReSharperInspectCodeSettings
@@ -1044,13 +1498,433 @@ namespace Nuke.Common.Tools.ReSharper
         }
         /// <summary>
         ///   <p><em>Resets <see cref="ReSharperInspectCodeSettings.Toolset"/></em></p>
-        ///   <p>Explicitly specified MsBuild Toolset version (12.0, 14.0, 15.0). For example, <c>--toolset=12.0</c>.</p>
+        ///   <p>Use this option to specify the exact MSBuild version. For example 12.0: <c>--toolset=12.0</c>. By default the highest available MSBuild version is used. This option might not work if you have several installations with the same version, for example 16.0 from Visual Studio 2019 and 16.0 from .NET Core 3.x.</p>
         /// </summary>
         [Pure]
         public static T ResetToolset<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Toolset = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ToolsetPath
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.ToolsetPath"/></em></p>
+        ///   <p>Use this option to specify the exact path to MSBuild. This might be helpful if you have a custom MSBuild installation and want to use it with CleanupCode, for example: <c>--toolset-path="C:\tools\msbuild\bin\MsBuild.exe"</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetToolsetPath<T>(this T toolSettings, string toolsetPath) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ToolsetPath = toolsetPath;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="ReSharperInspectCodeSettings.ToolsetPath"/></em></p>
+        ///   <p>Use this option to specify the exact path to MSBuild. This might be helpful if you have a custom MSBuild installation and want to use it with CleanupCode, for example: <c>--toolset-path="C:\tools\msbuild\bin\MsBuild.exe"</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetToolsetPath<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ToolsetPath = null;
+            return toolSettings;
+        }
+        #endregion
+        #region DotNetCore
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.DotNetCore"/></em></p>
+        ///   <p>By default, .NET Core installation is auto-detected. You can use this option to point to the specific .NET Core installation if the auto-detection results in a conflict. Use it without arguments to ignore .NET Core. Example: <c>--dotnetcore=/usr/local/share/dotnet/dotnet</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetDotNetCore<T>(this T toolSettings, string dotNetCore) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DotNetCore = dotNetCore;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="ReSharperInspectCodeSettings.DotNetCore"/></em></p>
+        ///   <p>By default, .NET Core installation is auto-detected. You can use this option to point to the specific .NET Core installation if the auto-detection results in a conflict. Use it without arguments to ignore .NET Core. Example: <c>--dotnetcore=/usr/local/share/dotnet/dotnet</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetDotNetCore<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DotNetCore = null;
+            return toolSettings;
+        }
+        #endregion
+        #region DotNetCoreSdk
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.DotNetCoreSdk"/></em></p>
+        ///   <p>Use this option to specify .NET Core SDK version that should provide MSBuild. For example, if you have installed .NET Core with SDKs 2.0.3 and 3.0.100, CleanupCode will prefer 3.0.100 (the latest, including preview versions). Now if you want to run CleanupCode with .NET Core SDK 2.0.3, add <c>--dotnetcoresdk=2.0.3</c> to the command line.</p>
+        /// </summary>
+        [Pure]
+        public static T SetDotNetCoreSdk<T>(this T toolSettings, string dotNetCoreSdk) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DotNetCoreSdk = dotNetCoreSdk;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="ReSharperInspectCodeSettings.DotNetCoreSdk"/></em></p>
+        ///   <p>Use this option to specify .NET Core SDK version that should provide MSBuild. For example, if you have installed .NET Core with SDKs 2.0.3 and 3.0.100, CleanupCode will prefer 3.0.100 (the latest, including preview versions). Now if you want to run CleanupCode with .NET Core SDK 2.0.3, add <c>--dotnetcoresdk=2.0.3</c> to the command line.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetDotNetCoreSdk<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DotNetCoreSdk = null;
+            return toolSettings;
+        }
+        #endregion
+        #region MonoPath
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.MonoPath"/></em></p>
+        ///   <p>Mono path. Empty to ignore Mono. Not specified for autodetect. Example: <c>--mono=/Library/Frameworks/Mono.framework/Versions/Current/bin/mono.</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetMonoPath<T>(this T toolSettings, string monoPath) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MonoPath = monoPath;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="ReSharperInspectCodeSettings.MonoPath"/></em></p>
+        ///   <p>Mono path. Empty to ignore Mono. Not specified for autodetect. Example: <c>--mono=/Library/Frameworks/Mono.framework/Versions/Current/bin/mono.</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetMonoPath<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MonoPath = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ReferenceTargets
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.ReferenceTargets"/> to a new list</em></p>
+        ///   <p>Names of custom MSBuild targets that will be executed to get referenced assemblies of projects. The targets are defined either in the project file or in the <c>.targets</c> file. Multiple values are separated with the semicolon. For example, <c>--targets-for-references="GetReferences"</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetReferenceTargets<T>(this T toolSettings, params string[] referenceTargets) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReferenceTargetsInternal = referenceTargets.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.ReferenceTargets"/> to a new list</em></p>
+        ///   <p>Names of custom MSBuild targets that will be executed to get referenced assemblies of projects. The targets are defined either in the project file or in the <c>.targets</c> file. Multiple values are separated with the semicolon. For example, <c>--targets-for-references="GetReferences"</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetReferenceTargets<T>(this T toolSettings, IEnumerable<string> referenceTargets) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReferenceTargetsInternal = referenceTargets.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="ReSharperInspectCodeSettings.ReferenceTargets"/></em></p>
+        ///   <p>Names of custom MSBuild targets that will be executed to get referenced assemblies of projects. The targets are defined either in the project file or in the <c>.targets</c> file. Multiple values are separated with the semicolon. For example, <c>--targets-for-references="GetReferences"</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T AddReferenceTargets<T>(this T toolSettings, params string[] referenceTargets) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReferenceTargetsInternal.AddRange(referenceTargets);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="ReSharperInspectCodeSettings.ReferenceTargets"/></em></p>
+        ///   <p>Names of custom MSBuild targets that will be executed to get referenced assemblies of projects. The targets are defined either in the project file or in the <c>.targets</c> file. Multiple values are separated with the semicolon. For example, <c>--targets-for-references="GetReferences"</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T AddReferenceTargets<T>(this T toolSettings, IEnumerable<string> referenceTargets) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReferenceTargetsInternal.AddRange(referenceTargets);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="ReSharperInspectCodeSettings.ReferenceTargets"/></em></p>
+        ///   <p>Names of custom MSBuild targets that will be executed to get referenced assemblies of projects. The targets are defined either in the project file or in the <c>.targets</c> file. Multiple values are separated with the semicolon. For example, <c>--targets-for-references="GetReferences"</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearReferenceTargets<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReferenceTargetsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="ReSharperInspectCodeSettings.ReferenceTargets"/></em></p>
+        ///   <p>Names of custom MSBuild targets that will be executed to get referenced assemblies of projects. The targets are defined either in the project file or in the <c>.targets</c> file. Multiple values are separated with the semicolon. For example, <c>--targets-for-references="GetReferences"</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveReferenceTargets<T>(this T toolSettings, params string[] referenceTargets) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(referenceTargets);
+            toolSettings.ReferenceTargetsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="ReSharperInspectCodeSettings.ReferenceTargets"/></em></p>
+        ///   <p>Names of custom MSBuild targets that will be executed to get referenced assemblies of projects. The targets are defined either in the project file or in the <c>.targets</c> file. Multiple values are separated with the semicolon. For example, <c>--targets-for-references="GetReferences"</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveReferenceTargets<T>(this T toolSettings, IEnumerable<string> referenceTargets) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(referenceTargets);
+            toolSettings.ReferenceTargetsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region ItemTargets
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.ItemTargets"/> to a new list</em></p>
+        ///   <p>Names of custom MSBuild targets that will be executed to get other items (for example, a Compile item) of projects. The targets are defined either in the project file or in the <c>.targets</c> file. Multiple values are separated with the semicolon. For example, <c>--targets-for-items="GetCompileItems"</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetItemTargets<T>(this T toolSettings, params string[] itemTargets) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ItemTargetsInternal = itemTargets.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.ItemTargets"/> to a new list</em></p>
+        ///   <p>Names of custom MSBuild targets that will be executed to get other items (for example, a Compile item) of projects. The targets are defined either in the project file or in the <c>.targets</c> file. Multiple values are separated with the semicolon. For example, <c>--targets-for-items="GetCompileItems"</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetItemTargets<T>(this T toolSettings, IEnumerable<string> itemTargets) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ItemTargetsInternal = itemTargets.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="ReSharperInspectCodeSettings.ItemTargets"/></em></p>
+        ///   <p>Names of custom MSBuild targets that will be executed to get other items (for example, a Compile item) of projects. The targets are defined either in the project file or in the <c>.targets</c> file. Multiple values are separated with the semicolon. For example, <c>--targets-for-items="GetCompileItems"</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T AddItemTargets<T>(this T toolSettings, params string[] itemTargets) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ItemTargetsInternal.AddRange(itemTargets);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="ReSharperInspectCodeSettings.ItemTargets"/></em></p>
+        ///   <p>Names of custom MSBuild targets that will be executed to get other items (for example, a Compile item) of projects. The targets are defined either in the project file or in the <c>.targets</c> file. Multiple values are separated with the semicolon. For example, <c>--targets-for-items="GetCompileItems"</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T AddItemTargets<T>(this T toolSettings, IEnumerable<string> itemTargets) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ItemTargetsInternal.AddRange(itemTargets);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="ReSharperInspectCodeSettings.ItemTargets"/></em></p>
+        ///   <p>Names of custom MSBuild targets that will be executed to get other items (for example, a Compile item) of projects. The targets are defined either in the project file or in the <c>.targets</c> file. Multiple values are separated with the semicolon. For example, <c>--targets-for-items="GetCompileItems"</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearItemTargets<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ItemTargetsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="ReSharperInspectCodeSettings.ItemTargets"/></em></p>
+        ///   <p>Names of custom MSBuild targets that will be executed to get other items (for example, a Compile item) of projects. The targets are defined either in the project file or in the <c>.targets</c> file. Multiple values are separated with the semicolon. For example, <c>--targets-for-items="GetCompileItems"</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveItemTargets<T>(this T toolSettings, params string[] itemTargets) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(itemTargets);
+            toolSettings.ItemTargetsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="ReSharperInspectCodeSettings.ItemTargets"/></em></p>
+        ///   <p>Names of custom MSBuild targets that will be executed to get other items (for example, a Compile item) of projects. The targets are defined either in the project file or in the <c>.targets</c> file. Multiple values are separated with the semicolon. For example, <c>--targets-for-items="GetCompileItems"</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveItemTargets<T>(this T toolSettings, IEnumerable<string> itemTargets) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(itemTargets);
+            toolSettings.ItemTargetsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region Include
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.Include"/> to a new list</em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        /// </summary>
+        [Pure]
+        public static T SetInclude<T>(this T toolSettings, params string[] include) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeInternal = include.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.Include"/> to a new list</em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        /// </summary>
+        [Pure]
+        public static T SetInclude<T>(this T toolSettings, IEnumerable<string> include) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeInternal = include.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="ReSharperInspectCodeSettings.Include"/></em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        /// </summary>
+        [Pure]
+        public static T AddInclude<T>(this T toolSettings, params string[] include) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeInternal.AddRange(include);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="ReSharperInspectCodeSettings.Include"/></em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        /// </summary>
+        [Pure]
+        public static T AddInclude<T>(this T toolSettings, IEnumerable<string> include) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeInternal.AddRange(include);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="ReSharperInspectCodeSettings.Include"/></em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearInclude<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="ReSharperInspectCodeSettings.Include"/></em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveInclude<T>(this T toolSettings, params string[] include) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(include);
+            toolSettings.IncludeInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="ReSharperInspectCodeSettings.Include"/></em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveInclude<T>(this T toolSettings, IEnumerable<string> include) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(include);
+            toolSettings.IncludeInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region Exclude
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.Exclude"/> to a new list</em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        /// </summary>
+        [Pure]
+        public static T SetExclude<T>(this T toolSettings, params string[] exclude) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeInternal = exclude.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperInspectCodeSettings.Exclude"/> to a new list</em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        /// </summary>
+        [Pure]
+        public static T SetExclude<T>(this T toolSettings, IEnumerable<string> exclude) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeInternal = exclude.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="ReSharperInspectCodeSettings.Exclude"/></em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        /// </summary>
+        [Pure]
+        public static T AddExclude<T>(this T toolSettings, params string[] exclude) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeInternal.AddRange(exclude);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="ReSharperInspectCodeSettings.Exclude"/></em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        /// </summary>
+        [Pure]
+        public static T AddExclude<T>(this T toolSettings, IEnumerable<string> exclude) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeInternal.AddRange(exclude);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="ReSharperInspectCodeSettings.Exclude"/></em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearExclude<T>(this T toolSettings) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="ReSharperInspectCodeSettings.Exclude"/></em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveExclude<T>(this T toolSettings, params string[] exclude) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(exclude);
+            toolSettings.ExcludeInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="ReSharperInspectCodeSettings.Exclude"/></em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveExclude<T>(this T toolSettings, IEnumerable<string> exclude) where T : ReSharperInspectCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(exclude);
+            toolSettings.ExcludeInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion
@@ -1112,165 +1986,318 @@ namespace Nuke.Common.Tools.ReSharper
             return toolSettings;
         }
         #endregion
-        #region Include
+        #region Settings
         /// <summary>
-        ///   <p><em>Sets <see cref="ReSharperCleanupCodeSettings.Include"/> to a new list</em></p>
-        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        ///   <p><em>Sets <see cref="ReSharperCleanupCodeSettings.Settings"/></em></p>
+        ///   <p>Default settings are overridden from the <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#solution-team-shared-layer">team-shared layer</a>, if it exists. If necessary, you can use this parameter to specify another <c>.DotSettings</c> file, which will override all other settings.</p>
         /// </summary>
         [Pure]
-        public static T SetInclude<T>(this T toolSettings, params string[] include) where T : ReSharperCleanupCodeSettings
+        public static T SetSettings<T>(this T toolSettings, string settings) where T : ReSharperCleanupCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.IncludeInternal = include.ToList();
+            toolSettings.Settings = settings;
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Sets <see cref="ReSharperCleanupCodeSettings.Include"/> to a new list</em></p>
-        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        ///   <p><em>Resets <see cref="ReSharperCleanupCodeSettings.Settings"/></em></p>
+        ///   <p>Default settings are overridden from the <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#solution-team-shared-layer">team-shared layer</a>, if it exists. If necessary, you can use this parameter to specify another <c>.DotSettings</c> file, which will override all other settings.</p>
         /// </summary>
         [Pure]
-        public static T SetInclude<T>(this T toolSettings, IEnumerable<string> include) where T : ReSharperCleanupCodeSettings
+        public static T ResetSettings<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.IncludeInternal = include.ToList();
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Adds values to <see cref="ReSharperCleanupCodeSettings.Include"/></em></p>
-        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
-        /// </summary>
-        [Pure]
-        public static T AddInclude<T>(this T toolSettings, params string[] include) where T : ReSharperCleanupCodeSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.IncludeInternal.AddRange(include);
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Adds values to <see cref="ReSharperCleanupCodeSettings.Include"/></em></p>
-        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
-        /// </summary>
-        [Pure]
-        public static T AddInclude<T>(this T toolSettings, IEnumerable<string> include) where T : ReSharperCleanupCodeSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.IncludeInternal.AddRange(include);
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Clears <see cref="ReSharperCleanupCodeSettings.Include"/></em></p>
-        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
-        /// </summary>
-        [Pure]
-        public static T ClearInclude<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.IncludeInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Removes values from <see cref="ReSharperCleanupCodeSettings.Include"/></em></p>
-        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
-        /// </summary>
-        [Pure]
-        public static T RemoveInclude<T>(this T toolSettings, params string[] include) where T : ReSharperCleanupCodeSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(include);
-            toolSettings.IncludeInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Removes values from <see cref="ReSharperCleanupCodeSettings.Include"/></em></p>
-        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
-        /// </summary>
-        [Pure]
-        public static T RemoveInclude<T>(this T toolSettings, IEnumerable<string> include) where T : ReSharperCleanupCodeSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(include);
-            toolSettings.IncludeInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.Settings = null;
             return toolSettings;
         }
         #endregion
-        #region Exclude
+        #region DisableSettingsLayers
         /// <summary>
-        ///   <p><em>Sets <see cref="ReSharperCleanupCodeSettings.Exclude"/> to a new list</em></p>
-        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        ///   <p><em>Sets <see cref="ReSharperCleanupCodeSettings.DisableSettingsLayers"/> to a new list</em></p>
+        ///   <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
         /// </summary>
         [Pure]
-        public static T SetExclude<T>(this T toolSettings, params string[] exclude) where T : ReSharperCleanupCodeSettings
+        public static T SetDisableSettingsLayers<T>(this T toolSettings, params ReSharperSettingsLayers[] disableSettingsLayers) where T : ReSharperCleanupCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludeInternal = exclude.ToList();
+            toolSettings.DisableSettingsLayersInternal = disableSettingsLayers.ToList();
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Sets <see cref="ReSharperCleanupCodeSettings.Exclude"/> to a new list</em></p>
-        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        ///   <p><em>Sets <see cref="ReSharperCleanupCodeSettings.DisableSettingsLayers"/> to a new list</em></p>
+        ///   <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
         /// </summary>
         [Pure]
-        public static T SetExclude<T>(this T toolSettings, IEnumerable<string> exclude) where T : ReSharperCleanupCodeSettings
+        public static T SetDisableSettingsLayers<T>(this T toolSettings, IEnumerable<ReSharperSettingsLayers> disableSettingsLayers) where T : ReSharperCleanupCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludeInternal = exclude.ToList();
+            toolSettings.DisableSettingsLayersInternal = disableSettingsLayers.ToList();
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Adds values to <see cref="ReSharperCleanupCodeSettings.Exclude"/></em></p>
-        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        ///   <p><em>Adds values to <see cref="ReSharperCleanupCodeSettings.DisableSettingsLayers"/></em></p>
+        ///   <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
         /// </summary>
         [Pure]
-        public static T AddExclude<T>(this T toolSettings, params string[] exclude) where T : ReSharperCleanupCodeSettings
+        public static T AddDisableSettingsLayers<T>(this T toolSettings, params ReSharperSettingsLayers[] disableSettingsLayers) where T : ReSharperCleanupCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludeInternal.AddRange(exclude);
+            toolSettings.DisableSettingsLayersInternal.AddRange(disableSettingsLayers);
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Adds values to <see cref="ReSharperCleanupCodeSettings.Exclude"/></em></p>
-        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        ///   <p><em>Adds values to <see cref="ReSharperCleanupCodeSettings.DisableSettingsLayers"/></em></p>
+        ///   <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
         /// </summary>
         [Pure]
-        public static T AddExclude<T>(this T toolSettings, IEnumerable<string> exclude) where T : ReSharperCleanupCodeSettings
+        public static T AddDisableSettingsLayers<T>(this T toolSettings, IEnumerable<ReSharperSettingsLayers> disableSettingsLayers) where T : ReSharperCleanupCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludeInternal.AddRange(exclude);
+            toolSettings.DisableSettingsLayersInternal.AddRange(disableSettingsLayers);
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Clears <see cref="ReSharperCleanupCodeSettings.Exclude"/></em></p>
-        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        ///   <p><em>Clears <see cref="ReSharperCleanupCodeSettings.DisableSettingsLayers"/></em></p>
+        ///   <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
         /// </summary>
         [Pure]
-        public static T ClearExclude<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
+        public static T ClearDisableSettingsLayers<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludeInternal.Clear();
+            toolSettings.DisableSettingsLayersInternal.Clear();
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Removes values from <see cref="ReSharperCleanupCodeSettings.Exclude"/></em></p>
-        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        ///   <p><em>Removes values from <see cref="ReSharperCleanupCodeSettings.DisableSettingsLayers"/></em></p>
+        ///   <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
         /// </summary>
         [Pure]
-        public static T RemoveExclude<T>(this T toolSettings, params string[] exclude) where T : ReSharperCleanupCodeSettings
+        public static T RemoveDisableSettingsLayers<T>(this T toolSettings, params ReSharperSettingsLayers[] disableSettingsLayers) where T : ReSharperCleanupCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(exclude);
-            toolSettings.ExcludeInternal.RemoveAll(x => hashSet.Contains(x));
+            var hashSet = new HashSet<ReSharperSettingsLayers>(disableSettingsLayers);
+            toolSettings.DisableSettingsLayersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Removes values from <see cref="ReSharperCleanupCodeSettings.Exclude"/></em></p>
-        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        ///   <p><em>Removes values from <see cref="ReSharperCleanupCodeSettings.DisableSettingsLayers"/></em></p>
+        ///   <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
         /// </summary>
         [Pure]
-        public static T RemoveExclude<T>(this T toolSettings, IEnumerable<string> exclude) where T : ReSharperCleanupCodeSettings
+        public static T RemoveDisableSettingsLayers<T>(this T toolSettings, IEnumerable<ReSharperSettingsLayers> disableSettingsLayers) where T : ReSharperCleanupCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(exclude);
-            toolSettings.ExcludeInternal.RemoveAll(x => hashSet.Contains(x));
+            var hashSet = new HashSet<ReSharperSettingsLayers>(disableSettingsLayers);
+            toolSettings.DisableSettingsLayersInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region NoBuiltinSettings
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperCleanupCodeSettings.NoBuiltinSettings"/></em></p>
+        ///   <p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetNoBuiltinSettings<T>(this T toolSettings, bool? noBuiltinSettings) where T : ReSharperCleanupCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuiltinSettings = noBuiltinSettings;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="ReSharperCleanupCodeSettings.NoBuiltinSettings"/></em></p>
+        ///   <p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoBuiltinSettings<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuiltinSettings = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="ReSharperCleanupCodeSettings.NoBuiltinSettings"/></em></p>
+        ///   <p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoBuiltinSettings<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuiltinSettings = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="ReSharperCleanupCodeSettings.NoBuiltinSettings"/></em></p>
+        ///   <p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoBuiltinSettings<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuiltinSettings = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="ReSharperCleanupCodeSettings.NoBuiltinSettings"/></em></p>
+        ///   <p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoBuiltinSettings<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuiltinSettings = !toolSettings.NoBuiltinSettings;
+            return toolSettings;
+        }
+        #endregion
+        #region CachesHome
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperCleanupCodeSettings.CachesHome"/></em></p>
+        ///   <p>Lets you specify a custom location for the ReSharper caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.</p>
+        /// </summary>
+        [Pure]
+        public static T SetCachesHome<T>(this T toolSettings, string cachesHome) where T : ReSharperCleanupCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CachesHome = cachesHome;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="ReSharperCleanupCodeSettings.CachesHome"/></em></p>
+        ///   <p>Lets you specify a custom location for the ReSharper caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetCachesHome<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CachesHome = null;
+            return toolSettings;
+        }
+        #endregion
+        #region CreateConfigFile
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperCleanupCodeSettings.CreateConfigFile"/></em></p>
+        ///   <p>Used to save the current parameters to a configuration file.</p>
+        /// </summary>
+        [Pure]
+        public static T SetCreateConfigFile<T>(this T toolSettings, string createConfigFile) where T : ReSharperCleanupCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CreateConfigFile = createConfigFile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="ReSharperCleanupCodeSettings.CreateConfigFile"/></em></p>
+        ///   <p>Used to save the current parameters to a configuration file.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetCreateConfigFile<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CreateConfigFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ConfigFile
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperCleanupCodeSettings.ConfigFile"/></em></p>
+        ///   <p>Used to load the parameters described above from a configuration file.</p>
+        /// </summary>
+        [Pure]
+        public static T SetConfigFile<T>(this T toolSettings, string configFile) where T : ReSharperCleanupCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = configFile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="ReSharperCleanupCodeSettings.ConfigFile"/></em></p>
+        ///   <p>Used to load the parameters described above from a configuration file.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetConfigFile<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Verbosity
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperCleanupCodeSettings.Verbosity"/></em></p>
+        ///   <p>By default, only information messages appear in the log. Use this parameter to change the amount of information written to the log by the following levels (the order is from less to more detailed): <c>OFF</c>, <c>FATAL</c>, <c>ERROR</c>, <c>WARN</c>, <c>INFO</c>, <c>VERBOSE</c>, <c>TRACE</c>.<para/>For example, if something goes wrong, you can contact the <a href="https://resharper-support.jetbrains.com/">support team</a> and share a log file with all <c>TRACE</c> messages.</p>
+        /// </summary>
+        [Pure]
+        public static T SetVerbosity<T>(this T toolSettings, ReSharperVerbosity verbosity) where T : ReSharperCleanupCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = verbosity;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="ReSharperCleanupCodeSettings.Verbosity"/></em></p>
+        ///   <p>By default, only information messages appear in the log. Use this parameter to change the amount of information written to the log by the following levels (the order is from less to more detailed): <c>OFF</c>, <c>FATAL</c>, <c>ERROR</c>, <c>WARN</c>, <c>INFO</c>, <c>VERBOSE</c>, <c>TRACE</c>.<para/>For example, if something goes wrong, you can contact the <a href="https://resharper-support.jetbrains.com/">support team</a> and share a log file with all <c>TRACE</c> messages.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetVerbosity<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Debug
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperCleanupCodeSettings.Debug"/></em></p>
+        ///   <p>use this option to add execution details of CleanupCode to the output. If you have problems with CleanupCode, these details will be helpful when contacting the <a href="https://resharper-support.jetbrains.com/">support team</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetDebug<T>(this T toolSettings, bool? debug) where T : ReSharperCleanupCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = debug;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="ReSharperCleanupCodeSettings.Debug"/></em></p>
+        ///   <p>use this option to add execution details of CleanupCode to the output. If you have problems with CleanupCode, these details will be helpful when contacting the <a href="https://resharper-support.jetbrains.com/">support team</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetDebug<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="ReSharperCleanupCodeSettings.Debug"/></em></p>
+        ///   <p>use this option to add execution details of CleanupCode to the output. If you have problems with CleanupCode, these details will be helpful when contacting the <a href="https://resharper-support.jetbrains.com/">support team</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableDebug<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="ReSharperCleanupCodeSettings.Debug"/></em></p>
+        ///   <p>use this option to add execution details of CleanupCode to the output. If you have problems with CleanupCode, these details will be helpful when contacting the <a href="https://resharper-support.jetbrains.com/">support team</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableDebug<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="ReSharperCleanupCodeSettings.Debug"/></em></p>
+        ///   <p>use this option to add execution details of CleanupCode to the output. If you have problems with CleanupCode, these details will be helpful when contacting the <a href="https://resharper-support.jetbrains.com/">support team</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleDebug<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = !toolSettings.Debug;
             return toolSettings;
         }
         #endregion
@@ -1613,165 +2640,165 @@ namespace Nuke.Common.Tools.ReSharper
             return toolSettings;
         }
         #endregion
-        #region CachesHome
+        #region Include
         /// <summary>
-        ///   <p><em>Sets <see cref="ReSharperCleanupCodeSettings.CachesHome"/></em></p>
-        ///   <p>Lets you specify a custom location for the data that CleanupCode caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.</p>
+        ///   <p><em>Sets <see cref="ReSharperCleanupCodeSettings.Include"/> to a new list</em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
         /// </summary>
         [Pure]
-        public static T SetCachesHome<T>(this T toolSettings, string cachesHome) where T : ReSharperCleanupCodeSettings
+        public static T SetInclude<T>(this T toolSettings, params string[] include) where T : ReSharperCleanupCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CachesHome = cachesHome;
+            toolSettings.IncludeInternal = include.ToList();
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Resets <see cref="ReSharperCleanupCodeSettings.CachesHome"/></em></p>
-        ///   <p>Lets you specify a custom location for the data that CleanupCode caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.</p>
+        ///   <p><em>Sets <see cref="ReSharperCleanupCodeSettings.Include"/> to a new list</em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
         /// </summary>
         [Pure]
-        public static T ResetCachesHome<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
+        public static T SetInclude<T>(this T toolSettings, IEnumerable<string> include) where T : ReSharperCleanupCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.CachesHome = null;
-            return toolSettings;
-        }
-        #endregion
-        #region DisableSettingsLayers
-        /// <summary>
-        ///   <p><em>Sets <see cref="ReSharperCleanupCodeSettings.DisableSettingsLayers"/> to a new list</em></p>
-        ///   <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
-        /// </summary>
-        [Pure]
-        public static T SetDisableSettingsLayers<T>(this T toolSettings, params ReSharperSettingsLayers[] disableSettingsLayers) where T : ReSharperCleanupCodeSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DisableSettingsLayersInternal = disableSettingsLayers.ToList();
+            toolSettings.IncludeInternal = include.ToList();
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Sets <see cref="ReSharperCleanupCodeSettings.DisableSettingsLayers"/> to a new list</em></p>
-        ///   <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
+        ///   <p><em>Adds values to <see cref="ReSharperCleanupCodeSettings.Include"/></em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
         /// </summary>
         [Pure]
-        public static T SetDisableSettingsLayers<T>(this T toolSettings, IEnumerable<ReSharperSettingsLayers> disableSettingsLayers) where T : ReSharperCleanupCodeSettings
+        public static T AddInclude<T>(this T toolSettings, params string[] include) where T : ReSharperCleanupCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DisableSettingsLayersInternal = disableSettingsLayers.ToList();
+            toolSettings.IncludeInternal.AddRange(include);
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Adds values to <see cref="ReSharperCleanupCodeSettings.DisableSettingsLayers"/></em></p>
-        ///   <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
+        ///   <p><em>Adds values to <see cref="ReSharperCleanupCodeSettings.Include"/></em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
         /// </summary>
         [Pure]
-        public static T AddDisableSettingsLayers<T>(this T toolSettings, params ReSharperSettingsLayers[] disableSettingsLayers) where T : ReSharperCleanupCodeSettings
+        public static T AddInclude<T>(this T toolSettings, IEnumerable<string> include) where T : ReSharperCleanupCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DisableSettingsLayersInternal.AddRange(disableSettingsLayers);
+            toolSettings.IncludeInternal.AddRange(include);
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Adds values to <see cref="ReSharperCleanupCodeSettings.DisableSettingsLayers"/></em></p>
-        ///   <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
+        ///   <p><em>Clears <see cref="ReSharperCleanupCodeSettings.Include"/></em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
         /// </summary>
         [Pure]
-        public static T AddDisableSettingsLayers<T>(this T toolSettings, IEnumerable<ReSharperSettingsLayers> disableSettingsLayers) where T : ReSharperCleanupCodeSettings
+        public static T ClearInclude<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DisableSettingsLayersInternal.AddRange(disableSettingsLayers);
+            toolSettings.IncludeInternal.Clear();
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Clears <see cref="ReSharperCleanupCodeSettings.DisableSettingsLayers"/></em></p>
-        ///   <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
+        ///   <p><em>Removes values from <see cref="ReSharperCleanupCodeSettings.Include"/></em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
         /// </summary>
         [Pure]
-        public static T ClearDisableSettingsLayers<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
+        public static T RemoveInclude<T>(this T toolSettings, params string[] include) where T : ReSharperCleanupCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DisableSettingsLayersInternal.Clear();
+            var hashSet = new HashSet<string>(include);
+            toolSettings.IncludeInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Removes values from <see cref="ReSharperCleanupCodeSettings.DisableSettingsLayers"/></em></p>
-        ///   <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
+        ///   <p><em>Removes values from <see cref="ReSharperCleanupCodeSettings.Include"/></em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
         /// </summary>
         [Pure]
-        public static T RemoveDisableSettingsLayers<T>(this T toolSettings, params ReSharperSettingsLayers[] disableSettingsLayers) where T : ReSharperCleanupCodeSettings
+        public static T RemoveInclude<T>(this T toolSettings, IEnumerable<string> include) where T : ReSharperCleanupCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<ReSharperSettingsLayers>(disableSettingsLayers);
-            toolSettings.DisableSettingsLayersInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Removes values from <see cref="ReSharperCleanupCodeSettings.DisableSettingsLayers"/></em></p>
-        ///   <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
-        /// </summary>
-        [Pure]
-        public static T RemoveDisableSettingsLayers<T>(this T toolSettings, IEnumerable<ReSharperSettingsLayers> disableSettingsLayers) where T : ReSharperCleanupCodeSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<ReSharperSettingsLayers>(disableSettingsLayers);
-            toolSettings.DisableSettingsLayersInternal.RemoveAll(x => hashSet.Contains(x));
+            var hashSet = new HashSet<string>(include);
+            toolSettings.IncludeInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion
-        #region NoBuiltinSettings
+        #region Exclude
         /// <summary>
-        ///   <p><em>Sets <see cref="ReSharperCleanupCodeSettings.NoBuiltinSettings"/></em></p>
-        ///   <p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p>
+        ///   <p><em>Sets <see cref="ReSharperCleanupCodeSettings.Exclude"/> to a new list</em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
         /// </summary>
         [Pure]
-        public static T SetNoBuiltinSettings<T>(this T toolSettings, bool? noBuiltinSettings) where T : ReSharperCleanupCodeSettings
+        public static T SetExclude<T>(this T toolSettings, params string[] exclude) where T : ReSharperCleanupCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoBuiltinSettings = noBuiltinSettings;
+            toolSettings.ExcludeInternal = exclude.ToList();
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Resets <see cref="ReSharperCleanupCodeSettings.NoBuiltinSettings"/></em></p>
-        ///   <p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p>
+        ///   <p><em>Sets <see cref="ReSharperCleanupCodeSettings.Exclude"/> to a new list</em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
         /// </summary>
         [Pure]
-        public static T ResetNoBuiltinSettings<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
+        public static T SetExclude<T>(this T toolSettings, IEnumerable<string> exclude) where T : ReSharperCleanupCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoBuiltinSettings = null;
+            toolSettings.ExcludeInternal = exclude.ToList();
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Enables <see cref="ReSharperCleanupCodeSettings.NoBuiltinSettings"/></em></p>
-        ///   <p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p>
+        ///   <p><em>Adds values to <see cref="ReSharperCleanupCodeSettings.Exclude"/></em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
         /// </summary>
         [Pure]
-        public static T EnableNoBuiltinSettings<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
+        public static T AddExclude<T>(this T toolSettings, params string[] exclude) where T : ReSharperCleanupCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoBuiltinSettings = true;
+            toolSettings.ExcludeInternal.AddRange(exclude);
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Disables <see cref="ReSharperCleanupCodeSettings.NoBuiltinSettings"/></em></p>
-        ///   <p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p>
+        ///   <p><em>Adds values to <see cref="ReSharperCleanupCodeSettings.Exclude"/></em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
         /// </summary>
         [Pure]
-        public static T DisableNoBuiltinSettings<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
+        public static T AddExclude<T>(this T toolSettings, IEnumerable<string> exclude) where T : ReSharperCleanupCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoBuiltinSettings = false;
+            toolSettings.ExcludeInternal.AddRange(exclude);
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Toggles <see cref="ReSharperCleanupCodeSettings.NoBuiltinSettings"/></em></p>
-        ///   <p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p>
+        ///   <p><em>Clears <see cref="ReSharperCleanupCodeSettings.Exclude"/></em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
         /// </summary>
         [Pure]
-        public static T ToggleNoBuiltinSettings<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
+        public static T ClearExclude<T>(this T toolSettings) where T : ReSharperCleanupCodeSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NoBuiltinSettings = !toolSettings.NoBuiltinSettings;
+            toolSettings.ExcludeInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="ReSharperCleanupCodeSettings.Exclude"/></em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveExclude<T>(this T toolSettings, params string[] exclude) where T : ReSharperCleanupCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(exclude);
+            toolSettings.ExcludeInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="ReSharperCleanupCodeSettings.Exclude"/></em></p>
+        ///   <p>Relative path(s) or wildcards that define the files to include/exclude during the cleanup. If both <c>--include</c> and <c>--exclude</c> are defined and cover the same set of files, <c>--exclude</c> will have higher priority. To specify multiple paths or wildcards, separate them with the semicolon or use the <c>--include</c>/<c>--exclude</c> parameters several times.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveExclude<T>(this T toolSettings, IEnumerable<string> exclude) where T : ReSharperCleanupCodeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(exclude);
+            toolSettings.ExcludeInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion
@@ -2499,6 +3526,30 @@ namespace Nuke.Common.Tools.ReSharper
             return toolSettings;
         }
         #endregion
+        #region CachesHome
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperDupFinderSettings.CachesHome"/></em></p>
+        ///   <p>Lets you specify a custom location for the ReSharper caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.</p>
+        /// </summary>
+        [Pure]
+        public static T SetCachesHome<T>(this T toolSettings, string cachesHome) where T : ReSharperDupFinderSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CachesHome = cachesHome;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="ReSharperDupFinderSettings.CachesHome"/></em></p>
+        ///   <p>Lets you specify a custom location for the ReSharper caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetCachesHome<T>(this T toolSettings) where T : ReSharperDupFinderSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CachesHome = null;
+            return toolSettings;
+        }
+        #endregion
         #region CreateConfigFile
         /// <summary>
         ///   <p><em>Sets <see cref="ReSharperDupFinderSettings.CreateConfigFile"/></em></p>
@@ -2544,6 +3595,87 @@ namespace Nuke.Common.Tools.ReSharper
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Verbosity
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperDupFinderSettings.Verbosity"/></em></p>
+        ///   <p>By default, only information messages appear in the log. Use this parameter to change the amount of information written to the log by the following levels (the order is from less to more detailed): <c>OFF</c>, <c>FATAL</c>, <c>ERROR</c>, <c>WARN</c>, <c>INFO</c>, <c>VERBOSE</c>, <c>TRACE</c>.<para/>For example, if something goes wrong, you can contact the <a href="https://resharper-support.jetbrains.com/">support team</a> and share a log file with all <c>TRACE</c> messages.</p>
+        /// </summary>
+        [Pure]
+        public static T SetVerbosity<T>(this T toolSettings, ReSharperVerbosity verbosity) where T : ReSharperDupFinderSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = verbosity;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="ReSharperDupFinderSettings.Verbosity"/></em></p>
+        ///   <p>By default, only information messages appear in the log. Use this parameter to change the amount of information written to the log by the following levels (the order is from less to more detailed): <c>OFF</c>, <c>FATAL</c>, <c>ERROR</c>, <c>WARN</c>, <c>INFO</c>, <c>VERBOSE</c>, <c>TRACE</c>.<para/>For example, if something goes wrong, you can contact the <a href="https://resharper-support.jetbrains.com/">support team</a> and share a log file with all <c>TRACE</c> messages.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetVerbosity<T>(this T toolSettings) where T : ReSharperDupFinderSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Debug
+        /// <summary>
+        ///   <p><em>Sets <see cref="ReSharperDupFinderSettings.Debug"/></em></p>
+        ///   <p>use this option to add execution details of CleanupCode to the output. If you have problems with CleanupCode, these details will be helpful when contacting the <a href="https://resharper-support.jetbrains.com/">support team</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetDebug<T>(this T toolSettings, bool? debug) where T : ReSharperDupFinderSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = debug;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="ReSharperDupFinderSettings.Debug"/></em></p>
+        ///   <p>use this option to add execution details of CleanupCode to the output. If you have problems with CleanupCode, these details will be helpful when contacting the <a href="https://resharper-support.jetbrains.com/">support team</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetDebug<T>(this T toolSettings) where T : ReSharperDupFinderSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="ReSharperDupFinderSettings.Debug"/></em></p>
+        ///   <p>use this option to add execution details of CleanupCode to the output. If you have problems with CleanupCode, these details will be helpful when contacting the <a href="https://resharper-support.jetbrains.com/">support team</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableDebug<T>(this T toolSettings) where T : ReSharperDupFinderSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="ReSharperDupFinderSettings.Debug"/></em></p>
+        ///   <p>use this option to add execution details of CleanupCode to the output. If you have problems with CleanupCode, these details will be helpful when contacting the <a href="https://resharper-support.jetbrains.com/">support team</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableDebug<T>(this T toolSettings) where T : ReSharperDupFinderSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="ReSharperDupFinderSettings.Debug"/></em></p>
+        ///   <p>use this option to add execution details of CleanupCode to the output. If you have problems with CleanupCode, these details will be helpful when contacting the <a href="https://resharper-support.jetbrains.com/">support team</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleDebug<T>(this T toolSettings) where T : ReSharperDupFinderSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = !toolSettings.Debug;
             return toolSettings;
         }
         #endregion
@@ -2652,6 +3784,69 @@ namespace Nuke.Common.Tools.ReSharper
         public static explicit operator ReSharperMSBuildToolset(string value)
         {
             return new ReSharperMSBuildToolset { Value = value };
+        }
+    }
+    #endregion
+    #region ReSharperFormat
+    /// <summary>
+    ///   Used within <see cref="ReSharperTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [Serializable]
+    [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<ReSharperFormat>))]
+    public partial class ReSharperFormat : Enumeration
+    {
+        public static ReSharperFormat Xml = (ReSharperFormat) "Xml";
+        public static ReSharperFormat Html = (ReSharperFormat) "Html";
+        public static ReSharperFormat Text = (ReSharperFormat) "Text";
+        public static explicit operator ReSharperFormat(string value)
+        {
+            return new ReSharperFormat { Value = value };
+        }
+    }
+    #endregion
+    #region ReSharperVerbosity
+    /// <summary>
+    ///   Used within <see cref="ReSharperTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [Serializable]
+    [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<ReSharperVerbosity>))]
+    public partial class ReSharperVerbosity : Enumeration
+    {
+        public static ReSharperVerbosity OFF = (ReSharperVerbosity) "OFF";
+        public static ReSharperVerbosity FATAL = (ReSharperVerbosity) "FATAL";
+        public static ReSharperVerbosity ERROR = (ReSharperVerbosity) "ERROR";
+        public static ReSharperVerbosity WARN = (ReSharperVerbosity) "WARN";
+        public static ReSharperVerbosity INFO = (ReSharperVerbosity) "INFO";
+        public static ReSharperVerbosity VERBOSE = (ReSharperVerbosity) "VERBOSE";
+        public static ReSharperVerbosity TRACE = (ReSharperVerbosity) "TRACE";
+        public static explicit operator ReSharperVerbosity(string value)
+        {
+            return new ReSharperVerbosity { Value = value };
+        }
+    }
+    #endregion
+    #region ReSharperSeverity
+    /// <summary>
+    ///   Used within <see cref="ReSharperTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [Serializable]
+    [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<ReSharperSeverity>))]
+    public partial class ReSharperSeverity : Enumeration
+    {
+        public static ReSharperSeverity INFO = (ReSharperSeverity) "INFO";
+        public static ReSharperSeverity HINT = (ReSharperSeverity) "HINT";
+        public static ReSharperSeverity SUGGESTION = (ReSharperSeverity) "SUGGESTION";
+        public static ReSharperSeverity WARNING = (ReSharperSeverity) "WARNING";
+        public static ReSharperSeverity ERROR = (ReSharperSeverity) "ERROR";
+        public static explicit operator ReSharperSeverity(string value)
+        {
+            return new ReSharperSeverity { Value = value };
         }
     }
     #endregion
