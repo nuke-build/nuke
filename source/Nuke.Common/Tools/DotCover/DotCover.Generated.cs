@@ -245,6 +245,99 @@ namespace Nuke.Common.Tools.DotCover
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverCoverDotNetSettings.Configuration"/></li>
+        ///     <li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/></li>
+        ///     <li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/></li>
+        ///     <li><c>--AttributeFilters</c> via <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/></li>
+        ///     <li><c>--DisableDefaultFilters</c> via <see cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/></li>
+        ///     <li><c>--Filters</c> via <see cref="DotCoverCoverDotNetSettings.Filters"/></li>
+        ///     <li><c>--InheritConsole</c> via <see cref="DotCoverCoverDotNetSettings.InheritConsole"/></li>
+        ///     <li><c>--LogFile</c> via <see cref="DotCoverCoverDotNetSettings.LogFile"/></li>
+        ///     <li><c>--Output</c> via <see cref="DotCoverCoverDotNetSettings.OutputFile"/></li>
+        ///     <li><c>--ProcessFilters</c> via <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/></li>
+        ///     <li><c>--ReportType</c> via <see cref="DotCoverCoverDotNetSettings.ReportType"/></li>
+        ///     <li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/></li>
+        ///     <li><c>--Scope</c> via <see cref="DotCoverCoverDotNetSettings.Scope"/></li>
+        ///     <li><c>--SymbolSearchPaths</c> via <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/></li>
+        ///     <li><c>--TargetArguments</c> via <see cref="DotCoverCoverDotNetSettings.TargetArguments"/></li>
+        ///     <li><c>--TargetWorkingDir</c> via <see cref="DotCoverCoverDotNetSettings.TargetWorkingDirectory"/></li>
+        ///     <li><c>--TempDir</c> via <see cref="DotCoverCoverDotNetSettings.TempDirectory"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> DotCoverCoverDotNet(DotCoverCoverDotNetSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new DotCoverCoverDotNetSettings();
+            using var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary>
+        ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
+        ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverCoverDotNetSettings.Configuration"/></li>
+        ///     <li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/></li>
+        ///     <li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/></li>
+        ///     <li><c>--AttributeFilters</c> via <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/></li>
+        ///     <li><c>--DisableDefaultFilters</c> via <see cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/></li>
+        ///     <li><c>--Filters</c> via <see cref="DotCoverCoverDotNetSettings.Filters"/></li>
+        ///     <li><c>--InheritConsole</c> via <see cref="DotCoverCoverDotNetSettings.InheritConsole"/></li>
+        ///     <li><c>--LogFile</c> via <see cref="DotCoverCoverDotNetSettings.LogFile"/></li>
+        ///     <li><c>--Output</c> via <see cref="DotCoverCoverDotNetSettings.OutputFile"/></li>
+        ///     <li><c>--ProcessFilters</c> via <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/></li>
+        ///     <li><c>--ReportType</c> via <see cref="DotCoverCoverDotNetSettings.ReportType"/></li>
+        ///     <li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/></li>
+        ///     <li><c>--Scope</c> via <see cref="DotCoverCoverDotNetSettings.Scope"/></li>
+        ///     <li><c>--SymbolSearchPaths</c> via <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/></li>
+        ///     <li><c>--TargetArguments</c> via <see cref="DotCoverCoverDotNetSettings.TargetArguments"/></li>
+        ///     <li><c>--TargetWorkingDir</c> via <see cref="DotCoverCoverDotNetSettings.TargetWorkingDirectory"/></li>
+        ///     <li><c>--TempDir</c> via <see cref="DotCoverCoverDotNetSettings.TempDirectory"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> DotCoverCoverDotNet(Configure<DotCoverCoverDotNetSettings> configurator)
+        {
+            return DotCoverCoverDotNet(configurator(new DotCoverCoverDotNetSettings()));
+        }
+        /// <summary>
+        ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
+        ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverCoverDotNetSettings.Configuration"/></li>
+        ///     <li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/></li>
+        ///     <li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/></li>
+        ///     <li><c>--AttributeFilters</c> via <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/></li>
+        ///     <li><c>--DisableDefaultFilters</c> via <see cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/></li>
+        ///     <li><c>--Filters</c> via <see cref="DotCoverCoverDotNetSettings.Filters"/></li>
+        ///     <li><c>--InheritConsole</c> via <see cref="DotCoverCoverDotNetSettings.InheritConsole"/></li>
+        ///     <li><c>--LogFile</c> via <see cref="DotCoverCoverDotNetSettings.LogFile"/></li>
+        ///     <li><c>--Output</c> via <see cref="DotCoverCoverDotNetSettings.OutputFile"/></li>
+        ///     <li><c>--ProcessFilters</c> via <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/></li>
+        ///     <li><c>--ReportType</c> via <see cref="DotCoverCoverDotNetSettings.ReportType"/></li>
+        ///     <li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/></li>
+        ///     <li><c>--Scope</c> via <see cref="DotCoverCoverDotNetSettings.Scope"/></li>
+        ///     <li><c>--SymbolSearchPaths</c> via <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/></li>
+        ///     <li><c>--TargetArguments</c> via <see cref="DotCoverCoverDotNetSettings.TargetArguments"/></li>
+        ///     <li><c>--TargetWorkingDir</c> via <see cref="DotCoverCoverDotNetSettings.TargetWorkingDirectory"/></li>
+        ///     <li><c>--TempDir</c> via <see cref="DotCoverCoverDotNetSettings.TempDirectory"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(DotCoverCoverDotNetSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverCoverDotNet(CombinatorialConfigure<DotCoverCoverDotNetSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+        {
+            return configurator.Invoke(DotCoverCoverDotNet, DotCoverLogger, degreeOfParallelism, completeOnFailure);
+        }
+        /// <summary>
+        ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
+        ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
         ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverDeleteSettings.Configuration"/></li>
         ///     <li><c>--LogFile</c> via <see cref="DotCoverDeleteSettings.LogFile"/></li>
         ///     <li><c>--Source</c> via <see cref="DotCoverDeleteSettings.Source"/></li>
@@ -477,6 +570,10 @@ namespace Nuke.Common.Tools.DotCover
         public override Action<OutputType, string> ProcessCustomLogger => DotCoverTasks.DotCoverLogger;
         public virtual string Configuration { get; internal set; }
         /// <summary>
+        ///   File name of the program to analyse.
+        /// </summary>
+        public virtual string TargetExecutable { get; internal set; }
+        /// <summary>
         ///   A type of the report. The default value is <c>XML</c>.
         /// </summary>
         public virtual DotCoverReportType ReportType { get; internal set; }
@@ -488,10 +585,6 @@ namespace Nuke.Common.Tools.DotCover
         ///   Remove auto-implemented properties from report.
         /// </summary>
         public virtual bool? HideAutoProperties { get; internal set; }
-        /// <summary>
-        ///   File name of the program to analyse.
-        /// </summary>
-        public virtual string TargetExecutable { get; internal set; }
         /// <summary>
         ///   Program arguments.
         /// </summary>
@@ -558,10 +651,10 @@ namespace Nuke.Common.Tools.DotCover
             arguments
               .Add("analyse")
               .Add("{value}", Configuration)
+              .Add("--TargetExecutable={value}", TargetExecutable)
               .Add("--ReportType={value}", ReportType)
               .Add("--Output={value}", OutputFile)
               .Add("--HideAutoProperties", HideAutoProperties)
-              .Add("--TargetExecutable={value}", TargetExecutable)
               .Add("--TargetArguments={value}", TargetArguments)
               .Add("--TargetWorkingDir={value}", TargetWorkingDirectory)
               .Add("--TempDir={value}", TempDirectory)
@@ -596,6 +689,10 @@ namespace Nuke.Common.Tools.DotCover
         public override Action<OutputType, string> ProcessCustomLogger => DotCoverTasks.DotCoverLogger;
         public virtual string Configuration { get; internal set; }
         /// <summary>
+        ///   File name of the program to analyse.
+        /// </summary>
+        public virtual string TargetExecutable { get; internal set; }
+        /// <summary>
         ///   Path to the resulting coverage snapshot.
         /// </summary>
         public virtual string OutputFile { get; internal set; }
@@ -603,10 +700,6 @@ namespace Nuke.Common.Tools.DotCover
         ///   A type of the report. The default value is <c>XML</c>.
         /// </summary>
         public virtual DotCoverReportType ReportType { get; internal set; }
-        /// <summary>
-        ///   File name of the program to analyse.
-        /// </summary>
-        public virtual string TargetExecutable { get; internal set; }
         /// <summary>
         ///   Program arguments.
         /// </summary>
@@ -673,9 +766,118 @@ namespace Nuke.Common.Tools.DotCover
             arguments
               .Add("cover")
               .Add("{value}", Configuration)
+              .Add("--TargetExecutable={value}", TargetExecutable)
               .Add("--Output={value}", OutputFile)
               .Add("--ReportType={value}", ReportType)
-              .Add("--TargetExecutable={value}", TargetExecutable)
+              .Add("--TargetArguments={value}", TargetArguments)
+              .Add("--TargetWorkingDir={value}", TargetWorkingDirectory)
+              .Add("--TempDir={value}", TempDirectory)
+              .Add("--InheritConsole={value}", InheritConsole)
+              .Add("--AnalyseTargetArguments={value}", AnalyseTargetArguments)
+              .Add("--Scope={value}", Scope, separator: ';')
+              .Add("--Filters={value}", Filters, separator: ';')
+              .Add("--AttributeFilters={value}", AttributeFilters, separator: ';')
+              .Add("--DisableDefaultFilters", DisableDefaultFilters)
+              .Add("--SymbolSearchPaths={value}", SymbolSearchPaths, separator: ';')
+              .Add("--AllowSymbolServerAccess", AllowSymbolServerAccess)
+              .Add("--ReturnTargetExitCode", ReturnTargetExitCode)
+              .Add("--ProcessFilters={value}", ProcessFilters, separator: ';')
+              .Add("--LogFile={value}", LogFile);
+            return base.ConfigureProcessArguments(arguments);
+        }
+    }
+    #endregion
+    #region DotCoverCoverDotNetSettings
+    /// <summary>
+    ///   Used within <see cref="DotCoverTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class DotCoverCoverDotNetSettings : ToolSettings
+    {
+        /// <summary>
+        ///   Path to the DotCover executable.
+        /// </summary>
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotCoverTasks.DotCoverLogger;
+        public virtual string Configuration { get; internal set; }
+        /// <summary>
+        ///   Path to the resulting coverage snapshot.
+        /// </summary>
+        public virtual string OutputFile { get; internal set; }
+        /// <summary>
+        ///   A type of the report. The default value is <c>XML</c>.
+        /// </summary>
+        public virtual DotCoverReportType ReportType { get; internal set; }
+        /// <summary>
+        ///   Program arguments.
+        /// </summary>
+        public virtual string TargetArguments { get; internal set; }
+        /// <summary>
+        ///   Program working directory.
+        /// </summary>
+        public virtual string TargetWorkingDirectory { get; internal set; }
+        /// <summary>
+        ///   Directory for auxiliary files. Set to the system temp by default.
+        /// </summary>
+        public virtual string TempDirectory { get; internal set; }
+        /// <summary>
+        ///   Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.
+        /// </summary>
+        public virtual bool? InheritConsole { get; internal set; } = true;
+        /// <summary>
+        ///   Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.
+        /// </summary>
+        public virtual bool? AnalyseTargetArguments { get; internal set; } = true;
+        /// <summary>
+        ///   Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).
+        /// </summary>
+        public virtual IReadOnlyList<string> Scope => ScopeInternal.AsReadOnly();
+        internal List<string> ScopeInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.
+        /// </summary>
+        public virtual IReadOnlyList<string> Filters => FiltersInternal.AsReadOnly();
+        internal List<string> FiltersInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.
+        /// </summary>
+        public virtual IReadOnlyList<string> AttributeFilters => AttributeFiltersInternal.AsReadOnly();
+        internal List<string> AttributeFiltersInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Disables default (automatically added) filters.
+        /// </summary>
+        public virtual bool? DisableDefaultFilters { get; internal set; }
+        /// <summary>
+        ///   Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.
+        /// </summary>
+        public virtual IReadOnlyList<string> SymbolSearchPaths => SymbolSearchPathsInternal.AsReadOnly();
+        internal List<string> SymbolSearchPathsInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Allows dotCover to search for PDB files on a symbol server.
+        /// </summary>
+        public virtual bool? AllowSymbolServerAccess { get; internal set; }
+        /// <summary>
+        ///   Returns the exit code of the target executable in case coverage analysis succeeded.
+        /// </summary>
+        public virtual bool? ReturnTargetExitCode { get; internal set; }
+        /// <summary>
+        ///   Specifies process filters. Syntax: <c>+:process1;-:process2</c>.
+        /// </summary>
+        public virtual IReadOnlyList<string> ProcessFilters => ProcessFiltersInternal.AsReadOnly();
+        internal List<string> ProcessFiltersInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Enables logging and specifies log file name.
+        /// </summary>
+        public virtual string LogFile { get; internal set; }
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
+        {
+            arguments
+              .Add("dotnet")
+              .Add("{value}", Configuration)
+              .Add("--Output={value}", OutputFile)
+              .Add("--ReportType={value}", ReportType)
               .Add("--TargetArguments={value}", TargetArguments)
               .Add("--TargetWorkingDir={value}", TargetWorkingDirectory)
               .Add("--TempDir={value}", TempDirectory)
@@ -893,6 +1095,30 @@ namespace Nuke.Common.Tools.DotCover
             return toolSettings;
         }
         #endregion
+        #region TargetExecutable
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.TargetExecutable"/></em></p>
+        ///   <p>File name of the program to analyse.</p>
+        /// </summary>
+        [Pure]
+        public static T SetTargetExecutable<T>(this T toolSettings, string targetExecutable) where T : DotCoverAnalyseSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetExecutable = targetExecutable;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotCoverAnalyseSettings.TargetExecutable"/></em></p>
+        ///   <p>File name of the program to analyse.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetTargetExecutable<T>(this T toolSettings) where T : DotCoverAnalyseSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetExecutable = null;
+            return toolSettings;
+        }
+        #endregion
         #region ReportType
         /// <summary>
         ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.ReportType"/></em></p>
@@ -995,30 +1221,6 @@ namespace Nuke.Common.Tools.DotCover
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HideAutoProperties = !toolSettings.HideAutoProperties;
-            return toolSettings;
-        }
-        #endregion
-        #region TargetExecutable
-        /// <summary>
-        ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.TargetExecutable"/></em></p>
-        ///   <p>File name of the program to analyse.</p>
-        /// </summary>
-        [Pure]
-        public static T SetTargetExecutable<T>(this T toolSettings, string targetExecutable) where T : DotCoverAnalyseSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TargetExecutable = targetExecutable;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <see cref="DotCoverAnalyseSettings.TargetExecutable"/></em></p>
-        ///   <p>File name of the program to analyse.</p>
-        /// </summary>
-        [Pure]
-        public static T ResetTargetExecutable<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TargetExecutable = null;
             return toolSettings;
         }
         #endregion
@@ -1840,6 +2042,30 @@ namespace Nuke.Common.Tools.DotCover
             return toolSettings;
         }
         #endregion
+        #region TargetExecutable
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverSettings.TargetExecutable"/></em></p>
+        ///   <p>File name of the program to analyse.</p>
+        /// </summary>
+        [Pure]
+        public static T SetTargetExecutable<T>(this T toolSettings, string targetExecutable) where T : DotCoverCoverSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetExecutable = targetExecutable;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotCoverCoverSettings.TargetExecutable"/></em></p>
+        ///   <p>File name of the program to analyse.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetTargetExecutable<T>(this T toolSettings) where T : DotCoverCoverSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetExecutable = null;
+            return toolSettings;
+        }
+        #endregion
         #region OutputFile
         /// <summary>
         ///   <p><em>Sets <see cref="DotCoverCoverSettings.OutputFile"/></em></p>
@@ -1885,30 +2111,6 @@ namespace Nuke.Common.Tools.DotCover
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ReportType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region TargetExecutable
-        /// <summary>
-        ///   <p><em>Sets <see cref="DotCoverCoverSettings.TargetExecutable"/></em></p>
-        ///   <p>File name of the program to analyse.</p>
-        /// </summary>
-        [Pure]
-        public static T SetTargetExecutable<T>(this T toolSettings, string targetExecutable) where T : DotCoverCoverSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TargetExecutable = targetExecutable;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <see cref="DotCoverCoverSettings.TargetExecutable"/></em></p>
-        ///   <p>File name of the program to analyse.</p>
-        /// </summary>
-        [Pure]
-        public static T ResetTargetExecutable<T>(this T toolSettings) where T : DotCoverCoverSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TargetExecutable = null;
             return toolSettings;
         }
         #endregion
@@ -2692,6 +2894,872 @@ namespace Nuke.Common.Tools.DotCover
         /// </summary>
         [Pure]
         public static T ResetLogFile<T>(this T toolSettings) where T : DotCoverCoverSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogFile = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region DotCoverCoverDotNetSettingsExtensions
+    /// <summary>
+    ///   Used within <see cref="DotCoverTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class DotCoverCoverDotNetSettingsExtensions
+    {
+        #region Configuration
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.Configuration"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Configuration = configuration;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.Configuration"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T ResetConfiguration<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Configuration = null;
+            return toolSettings;
+        }
+        #endregion
+        #region OutputFile
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.OutputFile"/></em></p>
+        ///   <p>Path to the resulting coverage snapshot.</p>
+        /// </summary>
+        [Pure]
+        public static T SetOutputFile<T>(this T toolSettings, string outputFile) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OutputFile = outputFile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.OutputFile"/></em></p>
+        ///   <p>Path to the resulting coverage snapshot.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetOutputFile<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OutputFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ReportType
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.ReportType"/></em></p>
+        ///   <p>A type of the report. The default value is <c>XML</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetReportType<T>(this T toolSettings, DotCoverReportType reportType) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReportType = reportType;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.ReportType"/></em></p>
+        ///   <p>A type of the report. The default value is <c>XML</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetReportType<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReportType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region TargetArguments
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.TargetArguments"/></em></p>
+        ///   <p>Program arguments.</p>
+        /// </summary>
+        [Pure]
+        public static T SetTargetArguments<T>(this T toolSettings, string targetArguments) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetArguments = targetArguments;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.TargetArguments"/></em></p>
+        ///   <p>Program arguments.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetTargetArguments<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetArguments = null;
+            return toolSettings;
+        }
+        #endregion
+        #region TargetWorkingDirectory
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.TargetWorkingDirectory"/></em></p>
+        ///   <p>Program working directory.</p>
+        /// </summary>
+        [Pure]
+        public static T SetTargetWorkingDirectory<T>(this T toolSettings, string targetWorkingDirectory) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetWorkingDirectory = targetWorkingDirectory;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.TargetWorkingDirectory"/></em></p>
+        ///   <p>Program working directory.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetTargetWorkingDirectory<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetWorkingDirectory = null;
+            return toolSettings;
+        }
+        #endregion
+        #region TempDirectory
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.TempDirectory"/></em></p>
+        ///   <p>Directory for auxiliary files. Set to the system temp by default.</p>
+        /// </summary>
+        [Pure]
+        public static T SetTempDirectory<T>(this T toolSettings, string tempDirectory) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TempDirectory = tempDirectory;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.TempDirectory"/></em></p>
+        ///   <p>Directory for auxiliary files. Set to the system temp by default.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetTempDirectory<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TempDirectory = null;
+            return toolSettings;
+        }
+        #endregion
+        #region InheritConsole
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.InheritConsole"/></em></p>
+        ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
+        /// </summary>
+        [Pure]
+        public static T SetInheritConsole<T>(this T toolSettings, bool? inheritConsole) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.InheritConsole = inheritConsole;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.InheritConsole"/></em></p>
+        ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetInheritConsole<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.InheritConsole = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotCoverCoverDotNetSettings.InheritConsole"/></em></p>
+        ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableInheritConsole<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.InheritConsole = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotCoverCoverDotNetSettings.InheritConsole"/></em></p>
+        ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableInheritConsole<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.InheritConsole = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotCoverCoverDotNetSettings.InheritConsole"/></em></p>
+        ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleInheritConsole<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.InheritConsole = !toolSettings.InheritConsole;
+            return toolSettings;
+        }
+        #endregion
+        #region AnalyseTargetArguments
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/></em></p>
+        ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetAnalyseTargetArguments<T>(this T toolSettings, bool? analyseTargetArguments) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AnalyseTargetArguments = analyseTargetArguments;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/></em></p>
+        ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AnalyseTargetArguments = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/></em></p>
+        ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AnalyseTargetArguments = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/></em></p>
+        ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AnalyseTargetArguments = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/></em></p>
+        ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AnalyseTargetArguments = !toolSettings.AnalyseTargetArguments;
+            return toolSettings;
+        }
+        #endregion
+        #region Scope
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.Scope"/> to a new list</em></p>
+        ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T SetScope<T>(this T toolSettings, params string[] scope) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScopeInternal = scope.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.Scope"/> to a new list</em></p>
+        ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T SetScope<T>(this T toolSettings, IEnumerable<string> scope) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScopeInternal = scope.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotCoverCoverDotNetSettings.Scope"/></em></p>
+        ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T AddScope<T>(this T toolSettings, params string[] scope) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScopeInternal.AddRange(scope);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotCoverCoverDotNetSettings.Scope"/></em></p>
+        ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T AddScope<T>(this T toolSettings, IEnumerable<string> scope) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScopeInternal.AddRange(scope);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DotCoverCoverDotNetSettings.Scope"/></em></p>
+        ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T ClearScope<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScopeInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotCoverCoverDotNetSettings.Scope"/></em></p>
+        ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveScope<T>(this T toolSettings, params string[] scope) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(scope);
+            toolSettings.ScopeInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotCoverCoverDotNetSettings.Scope"/></em></p>
+        ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveScope<T>(this T toolSettings, IEnumerable<string> scope) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(scope);
+            toolSettings.ScopeInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region Filters
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.Filters"/> to a new list</em></p>
+        ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
+        /// </summary>
+        [Pure]
+        public static T SetFilters<T>(this T toolSettings, params string[] filters) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FiltersInternal = filters.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.Filters"/> to a new list</em></p>
+        ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
+        /// </summary>
+        [Pure]
+        public static T SetFilters<T>(this T toolSettings, IEnumerable<string> filters) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FiltersInternal = filters.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotCoverCoverDotNetSettings.Filters"/></em></p>
+        ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
+        /// </summary>
+        [Pure]
+        public static T AddFilters<T>(this T toolSettings, params string[] filters) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FiltersInternal.AddRange(filters);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotCoverCoverDotNetSettings.Filters"/></em></p>
+        ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
+        /// </summary>
+        [Pure]
+        public static T AddFilters<T>(this T toolSettings, IEnumerable<string> filters) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FiltersInternal.AddRange(filters);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DotCoverCoverDotNetSettings.Filters"/></em></p>
+        ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearFilters<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FiltersInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotCoverCoverDotNetSettings.Filters"/></em></p>
+        ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveFilters<T>(this T toolSettings, params string[] filters) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(filters);
+            toolSettings.FiltersInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotCoverCoverDotNetSettings.Filters"/></em></p>
+        ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveFilters<T>(this T toolSettings, IEnumerable<string> filters) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(filters);
+            toolSettings.FiltersInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region AttributeFilters
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/> to a new list</em></p>
+        ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
+        /// </summary>
+        [Pure]
+        public static T SetAttributeFilters<T>(this T toolSettings, params string[] attributeFilters) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AttributeFiltersInternal = attributeFilters.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/> to a new list</em></p>
+        ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
+        /// </summary>
+        [Pure]
+        public static T SetAttributeFilters<T>(this T toolSettings, IEnumerable<string> attributeFilters) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AttributeFiltersInternal = attributeFilters.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/></em></p>
+        ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
+        /// </summary>
+        [Pure]
+        public static T AddAttributeFilters<T>(this T toolSettings, params string[] attributeFilters) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AttributeFiltersInternal.AddRange(attributeFilters);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/></em></p>
+        ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
+        /// </summary>
+        [Pure]
+        public static T AddAttributeFilters<T>(this T toolSettings, IEnumerable<string> attributeFilters) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AttributeFiltersInternal.AddRange(attributeFilters);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/></em></p>
+        ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearAttributeFilters<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AttributeFiltersInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/></em></p>
+        ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveAttributeFilters<T>(this T toolSettings, params string[] attributeFilters) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(attributeFilters);
+            toolSettings.AttributeFiltersInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/></em></p>
+        ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveAttributeFilters<T>(this T toolSettings, IEnumerable<string> attributeFilters) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(attributeFilters);
+            toolSettings.AttributeFiltersInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region DisableDefaultFilters
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/></em></p>
+        ///   <p>Disables default (automatically added) filters.</p>
+        /// </summary>
+        [Pure]
+        public static T SetDisableDefaultFilters<T>(this T toolSettings, bool? disableDefaultFilters) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableDefaultFilters = disableDefaultFilters;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/></em></p>
+        ///   <p>Disables default (automatically added) filters.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableDefaultFilters = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/></em></p>
+        ///   <p>Disables default (automatically added) filters.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableDefaultFilters = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/></em></p>
+        ///   <p>Disables default (automatically added) filters.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableDefaultFilters = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/></em></p>
+        ///   <p>Disables default (automatically added) filters.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableDefaultFilters = !toolSettings.DisableDefaultFilters;
+            return toolSettings;
+        }
+        #endregion
+        #region SymbolSearchPaths
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/> to a new list</em></p>
+        ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
+        /// </summary>
+        [Pure]
+        public static T SetSymbolSearchPaths<T>(this T toolSettings, params string[] symbolSearchPaths) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SymbolSearchPathsInternal = symbolSearchPaths.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/> to a new list</em></p>
+        ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
+        /// </summary>
+        [Pure]
+        public static T SetSymbolSearchPaths<T>(this T toolSettings, IEnumerable<string> symbolSearchPaths) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SymbolSearchPathsInternal = symbolSearchPaths.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/></em></p>
+        ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
+        /// </summary>
+        [Pure]
+        public static T AddSymbolSearchPaths<T>(this T toolSettings, params string[] symbolSearchPaths) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SymbolSearchPathsInternal.AddRange(symbolSearchPaths);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/></em></p>
+        ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
+        /// </summary>
+        [Pure]
+        public static T AddSymbolSearchPaths<T>(this T toolSettings, IEnumerable<string> symbolSearchPaths) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SymbolSearchPathsInternal.AddRange(symbolSearchPaths);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/></em></p>
+        ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearSymbolSearchPaths<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SymbolSearchPathsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/></em></p>
+        ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveSymbolSearchPaths<T>(this T toolSettings, params string[] symbolSearchPaths) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(symbolSearchPaths);
+            toolSettings.SymbolSearchPathsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/></em></p>
+        ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveSymbolSearchPaths<T>(this T toolSettings, IEnumerable<string> symbolSearchPaths) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(symbolSearchPaths);
+            toolSettings.SymbolSearchPathsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region AllowSymbolServerAccess
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/></em></p>
+        ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
+        /// </summary>
+        [Pure]
+        public static T SetAllowSymbolServerAccess<T>(this T toolSettings, bool? allowSymbolServerAccess) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowSymbolServerAccess = allowSymbolServerAccess;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/></em></p>
+        ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowSymbolServerAccess = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/></em></p>
+        ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowSymbolServerAccess = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/></em></p>
+        ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowSymbolServerAccess = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/></em></p>
+        ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowSymbolServerAccess = !toolSettings.AllowSymbolServerAccess;
+            return toolSettings;
+        }
+        #endregion
+        #region ReturnTargetExitCode
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/></em></p>
+        ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
+        /// </summary>
+        [Pure]
+        public static T SetReturnTargetExitCode<T>(this T toolSettings, bool? returnTargetExitCode) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReturnTargetExitCode = returnTargetExitCode;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/></em></p>
+        ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReturnTargetExitCode = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/></em></p>
+        ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReturnTargetExitCode = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/></em></p>
+        ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReturnTargetExitCode = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/></em></p>
+        ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReturnTargetExitCode = !toolSettings.ReturnTargetExitCode;
+            return toolSettings;
+        }
+        #endregion
+        #region ProcessFilters
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/> to a new list</em></p>
+        ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetProcessFilters<T>(this T toolSettings, params string[] processFilters) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProcessFiltersInternal = processFilters.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/> to a new list</em></p>
+        ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetProcessFilters<T>(this T toolSettings, IEnumerable<string> processFilters) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProcessFiltersInternal = processFilters.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/></em></p>
+        ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T AddProcessFilters<T>(this T toolSettings, params string[] processFilters) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProcessFiltersInternal.AddRange(processFilters);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/></em></p>
+        ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T AddProcessFilters<T>(this T toolSettings, IEnumerable<string> processFilters) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProcessFiltersInternal.AddRange(processFilters);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/></em></p>
+        ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearProcessFilters<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProcessFiltersInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/></em></p>
+        ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveProcessFilters<T>(this T toolSettings, params string[] processFilters) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(processFilters);
+            toolSettings.ProcessFiltersInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/></em></p>
+        ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveProcessFilters<T>(this T toolSettings, IEnumerable<string> processFilters) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(processFilters);
+            toolSettings.ProcessFiltersInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region LogFile
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.LogFile"/></em></p>
+        ///   <p>Enables logging and specifies log file name.</p>
+        /// </summary>
+        [Pure]
+        public static T SetLogFile<T>(this T toolSettings, string logFile) where T : DotCoverCoverDotNetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogFile = logFile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.LogFile"/></em></p>
+        ///   <p>Enables logging and specifies log file name.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetLogFile<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LogFile = null;

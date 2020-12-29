@@ -52,6 +52,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <ul>
         ///     <li><c>/d:sonar.branch.name</c> via <see cref="SonarScannerBeginSettings.BranchName"/></li>
         ///     <li><c>/d:sonar.coverage.exclusions</c> via <see cref="SonarScannerBeginSettings.CoverageExclusions"/></li>
+        ///     <li><c>/d:sonar.coverageReportPaths</c> via <see cref="SonarScannerBeginSettings.GenericCoveragePaths"/></li>
         ///     <li><c>/d:sonar.cpd.exclusions</c> via <see cref="SonarScannerBeginSettings.DuplicationExclusions"/></li>
         ///     <li><c>/d:sonar.cs.dotcover.reportsPaths</c> via <see cref="SonarScannerBeginSettings.DotCoverPaths"/></li>
         ///     <li><c>/d:sonar.cs.nunit.reportsPaths</c> via <see cref="SonarScannerBeginSettings.NUnitTestReports"/></li>
@@ -98,6 +99,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <ul>
         ///     <li><c>/d:sonar.branch.name</c> via <see cref="SonarScannerBeginSettings.BranchName"/></li>
         ///     <li><c>/d:sonar.coverage.exclusions</c> via <see cref="SonarScannerBeginSettings.CoverageExclusions"/></li>
+        ///     <li><c>/d:sonar.coverageReportPaths</c> via <see cref="SonarScannerBeginSettings.GenericCoveragePaths"/></li>
         ///     <li><c>/d:sonar.cpd.exclusions</c> via <see cref="SonarScannerBeginSettings.DuplicationExclusions"/></li>
         ///     <li><c>/d:sonar.cs.dotcover.reportsPaths</c> via <see cref="SonarScannerBeginSettings.DotCoverPaths"/></li>
         ///     <li><c>/d:sonar.cs.nunit.reportsPaths</c> via <see cref="SonarScannerBeginSettings.NUnitTestReports"/></li>
@@ -141,6 +143,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <ul>
         ///     <li><c>/d:sonar.branch.name</c> via <see cref="SonarScannerBeginSettings.BranchName"/></li>
         ///     <li><c>/d:sonar.coverage.exclusions</c> via <see cref="SonarScannerBeginSettings.CoverageExclusions"/></li>
+        ///     <li><c>/d:sonar.coverageReportPaths</c> via <see cref="SonarScannerBeginSettings.GenericCoveragePaths"/></li>
         ///     <li><c>/d:sonar.cpd.exclusions</c> via <see cref="SonarScannerBeginSettings.DuplicationExclusions"/></li>
         ///     <li><c>/d:sonar.cs.dotcover.reportsPaths</c> via <see cref="SonarScannerBeginSettings.DotCoverPaths"/></li>
         ///     <li><c>/d:sonar.cs.nunit.reportsPaths</c> via <see cref="SonarScannerBeginSettings.NUnitTestReports"/></li>
@@ -311,6 +314,11 @@ namespace Nuke.Common.Tools.SonarScanner
         public virtual IReadOnlyList<string> CoverageExclusions => CoverageExclusionsInternal.AsReadOnly();
         internal List<string> CoverageExclusionsInternal { get; set; } = new List<string>();
         /// <summary>
+        ///   Comma separated list of coverage reports in the <a href="https://docs.sonarqube.org/latest/analysis/generic-test/">Generic Test Data</a> format. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).
+        /// </summary>
+        public virtual IReadOnlyList<string> GenericCoveragePaths => GenericCoveragePathsInternal.AsReadOnly();
+        internal List<string> GenericCoveragePathsInternal { get; set; } = new List<string>();
+        /// <summary>
         ///   Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).
         /// </summary>
         public virtual IReadOnlyList<string> VisualStudioCoveragePaths => VisualStudioCoveragePathsInternal.AsReadOnly();
@@ -391,6 +399,7 @@ namespace Nuke.Common.Tools.SonarScanner
               .Add("/d:sonar.test.exclusions={value}", TestFileExclusions, separator: ',')
               .Add("/d:sonar.test.inclusions={value}", TestFileInclusions, separator: ',')
               .Add("/d:sonar.coverage.exclusions={value}", CoverageExclusions, separator: ',')
+              .Add("/d:sonar.coverageReportPaths={value}", GenericCoveragePaths, separator: ',')
               .Add("/d:sonar.cs.vscoveragexml.reportsPaths={value}", VisualStudioCoveragePaths, separator: ',')
               .Add("/d:sonar.cs.dotcover.reportsPaths={value}", DotCoverPaths, separator: ',')
               .Add("/d:sonar.cs.opencover.reportsPaths={value}", OpenCoverPaths, separator: ',')
@@ -1320,6 +1329,87 @@ namespace Nuke.Common.Tools.SonarScanner
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(coverageExclusions);
             toolSettings.CoverageExclusionsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region GenericCoveragePaths
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.GenericCoveragePaths"/> to a new list</em></p>
+        ///   <p>Comma separated list of coverage reports in the <a href="https://docs.sonarqube.org/latest/analysis/generic-test/">Generic Test Data</a> format. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T SetGenericCoveragePaths<T>(this T toolSettings, params string[] genericCoveragePaths) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenericCoveragePathsInternal = genericCoveragePaths.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.GenericCoveragePaths"/> to a new list</em></p>
+        ///   <p>Comma separated list of coverage reports in the <a href="https://docs.sonarqube.org/latest/analysis/generic-test/">Generic Test Data</a> format. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T SetGenericCoveragePaths<T>(this T toolSettings, IEnumerable<string> genericCoveragePaths) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenericCoveragePathsInternal = genericCoveragePaths.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.GenericCoveragePaths"/></em></p>
+        ///   <p>Comma separated list of coverage reports in the <a href="https://docs.sonarqube.org/latest/analysis/generic-test/">Generic Test Data</a> format. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T AddGenericCoveragePaths<T>(this T toolSettings, params string[] genericCoveragePaths) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenericCoveragePathsInternal.AddRange(genericCoveragePaths);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.GenericCoveragePaths"/></em></p>
+        ///   <p>Comma separated list of coverage reports in the <a href="https://docs.sonarqube.org/latest/analysis/generic-test/">Generic Test Data</a> format. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T AddGenericCoveragePaths<T>(this T toolSettings, IEnumerable<string> genericCoveragePaths) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenericCoveragePathsInternal.AddRange(genericCoveragePaths);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="SonarScannerBeginSettings.GenericCoveragePaths"/></em></p>
+        ///   <p>Comma separated list of coverage reports in the <a href="https://docs.sonarqube.org/latest/analysis/generic-test/">Generic Test Data</a> format. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T ClearGenericCoveragePaths<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenericCoveragePathsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.GenericCoveragePaths"/></em></p>
+        ///   <p>Comma separated list of coverage reports in the <a href="https://docs.sonarqube.org/latest/analysis/generic-test/">Generic Test Data</a> format. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveGenericCoveragePaths<T>(this T toolSettings, params string[] genericCoveragePaths) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(genericCoveragePaths);
+            toolSettings.GenericCoveragePathsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.GenericCoveragePaths"/></em></p>
+        ///   <p>Comma separated list of coverage reports in the <a href="https://docs.sonarqube.org/latest/analysis/generic-test/">Generic Test Data</a> format. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveGenericCoveragePaths<T>(this T toolSettings, IEnumerable<string> genericCoveragePaths) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(genericCoveragePaths);
+            toolSettings.GenericCoveragePathsInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion
