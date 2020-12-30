@@ -5,9 +5,9 @@ using Nuke.Common.CI.AppVeyor;
 
 namespace Nuke.Common.Tests.CI
 {
-    public class TestAppVeyorAttribute : AppVeyorAttribute, ITestConfigurationGenerator
+    public class TestAppVeyorConfigurationGenerator : AppVeyorConfigurationGenerator, ITestConfigurationGenerator
     {
-        public TestAppVeyorAttribute(AppVeyorImage image, params AppVeyorImage[] images)
+        public TestAppVeyorConfigurationGenerator(AppVeyorImage image, params AppVeyorImage[] images)
             : base(image, images)
         {
         }

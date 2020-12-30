@@ -25,6 +25,7 @@ using Nuke.Common.Tools.ReportGenerator;
 using Nuke.Common.Tools.ReSharper;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Nuke.Components;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.ControlFlow;
 using static Nuke.Common.IO.CompressionTasks;
@@ -110,6 +111,27 @@ partial class Build : NukeBuild
     const string DevelopBranch = "develop";
     const string ReleaseBranchPrefix = "release";
     const string HotfixBranchPrefix = "hotfix";
+
+    // IEnumerable<CIConfiguration> CIConfigurations =>
+    //     new[]
+    //     {
+    //         new GitHubActions("continuous",
+    //                 GitHubActionsImage.WindowsLatest,
+    //                 GitHubActionsImage.UbuntuLatest,
+    //                 GitHubActionsImage.MacOsLatest)
+    //             .SetInvokedTargets(Clean, ((ISignPackages)this).SignPackages)
+    //             .SetOnPushBranchesIgnore(MasterBranch, ReleaseBranchPrefix + "/*"),
+    //         new AppVeyor(
+    //                 AppVeyorImage.VisualStudio2019,
+    //                 AppVeyorImage.Ubuntu1804)
+    //             .DisableAutoGenerate()
+    //             .AddSecureEnvironmentVariable(
+    //                 nameof(ISignPackages.SignPathApiToken),
+    //                 "zYFzA/7H1MDXDlpX6SAyv41kiBmu8Vh3kvWC7tPfk7eVdhh9mGQgXC7AzgcGnpsg")
+    //             .AddEnvironmentVariable(
+    //                 nameof(ISignPackages.SignPathOrganizationId),
+    //                 "0fdaf334-6910-41f4-83d2-e58e4cccb087")
+    //     }
 
     Target Clean => _ => _
         .Before(Restore)

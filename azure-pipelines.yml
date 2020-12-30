@@ -5,7 +5,7 @@
 #
 #     - To turn off auto-generation set:
 #
-#         [AzurePipelines (AutoGenerate = false)]
+#         [AzurePipelinesConfigurationGenerator (AutoGenerate = false)]
 #
 #     - To trigger manual generation invoke:
 #

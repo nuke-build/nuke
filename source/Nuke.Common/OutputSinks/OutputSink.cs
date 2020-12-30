@@ -80,7 +80,8 @@ namespace Nuke.Common.OutputSinks
                 => // global tool
                    build.GetType().GetInterfaces().Length > 1 ||
                    // configuration generation
-                   build.GetType().GetCustomAttributes<ConfigurationAttributeBase>().Any() ||
+                   build.GetType().GetCustomAttributes<ConfigurationGeneratorAttributeBase>().Any() ||
+                   build.ConfigurationGenerators.Any() ||
                    // interface implementations
                    NukeBuild.BuildProjectFile == null;
 

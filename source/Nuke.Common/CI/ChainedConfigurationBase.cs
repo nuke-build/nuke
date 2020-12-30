@@ -12,7 +12,7 @@ using Nuke.Common.Utilities.Collections;
 namespace Nuke.Common.CI
 {
     [PublicAPI]
-    public abstract class ChainedConfigurationAttributeBase : ConfigurationAttributeBase
+    public abstract class ChainedConfigurationBase : ConfigurationGeneratorBase
     {
         public override IEnumerable<string> IrrelevantTargetNames => NonEntryTargets.Concat(ExcludedTargets);
 

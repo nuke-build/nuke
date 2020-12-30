@@ -5,7 +5,7 @@
 //
 //     - To turn off auto-generation set:
 //
-//         [TeamCity (AutoGenerate = false)]
+//         [TeamCityConfigurationGenerator (AutoGenerate = false)]
 //
 //     - To trigger manual generation invoke:
 //

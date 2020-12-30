@@ -26,7 +26,7 @@ namespace Nuke.Common.Tests.CI
     public class ConfigurationGenerationTest
     {
         [Theory]
-        [MemberData(nameof(GetAttributes))]
+        [MemberData(nameof(GetConfigurationGenerators))]
         public Task Test(string testName, ITestConfigurationGenerator attribute)
         {
             var build = new TestBuild();
@@ -44,19 +44,19 @@ namespace Nuke.Common.Tests.CI
                 .UseParameters(testName, attribute.GetType().BaseType.NotNull().Name);
         }
 
-        public static IEnumerable<object[]> GetAttributes()
+        public static IEnumerable<object[]> GetConfigurationGenerators()
         {
-            return TestBuild.GetAttributes().Select(x => new object[] { x.TestName, x.Generator });
+            return TestBuild.GetConfigurationGenerators().Select(x => new object[] { x.TestName, x.Generator });
         }
 
         public class TestBuild : NukeBuild
         {
-            public static IEnumerable<(string TestName, IConfigurationGenerator Generator)> GetAttributes()
+            public static IEnumerable<(string TestName, IConfigurationGenerator Generator)> GetConfigurationGenerators()
             {
                 yield return
                 (
                     null,
-                    new TestTeamCityAttribute(TeamCityAgentPlatform.Unix)
+                    new TestTeamCityConfigurationGenerator(TeamCityAgentPlatform.Unix)
                     {
                         Description = "description",
                         Version = "1.3.3.7",
@@ -72,7 +72,7 @@ namespace Nuke.Common.Tests.CI
                 yield return
                 (
                     null,
-                    new TestAzurePipelinesAttribute(
+                    new TestAzurePipelinesConfigurationGenerator(
                         AzurePipelinesImage.Ubuntu1804,
                         AzurePipelinesImage.Windows2019)
                     {
@@ -95,7 +95,7 @@ namespace Nuke.Common.Tests.CI
                 yield return
                 (
                     null,
-                    new TestAppVeyorAttribute(
+                    new TestAppVeyorConfigurationGenerator(
                         AppVeyorImage.UbuntuLatest,
                         AppVeyorImage.VisualStudioLatest)
                     {
@@ -110,7 +110,7 @@ namespace Nuke.Common.Tests.CI
                 yield return
                 (
                     "simple-triggers",
-                    new TestGitHubActionsAttribute(
+                    new TestGitHubActionsConfigurationGenerator(
                         GitHubActionsImage.MacOsLatest,
                         GitHubActionsImage.UbuntuLatest,
                         GitHubActionsImage.WindowsLatest)
@@ -125,7 +125,7 @@ namespace Nuke.Common.Tests.CI
                 yield return
                 (
                     "detailed-triggers",
-                    new TestGitHubActionsAttribute(
+                    new TestGitHubActionsConfigurationGenerator(
                         GitHubActionsImage.MacOsLatest,
                         GitHubActionsImage.UbuntuLatest,
                         GitHubActionsImage.WindowsLatest)

@@ -16,7 +16,15 @@ namespace Nuke.Common.CI
 {
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Class)]
-    public abstract class ConfigurationAttributeBase : Attribute, IConfigurationGenerator
+    public abstract class ConfigurationGeneratorAttributeBase : Attribute
+    {
+        public abstract IConfigurationGenerator GetConfigurationGenerator();
+
+        public bool AutoGenerate { get; set; } = true;
+    }
+
+    [PublicAPI]
+    public abstract class ConfigurationGeneratorBase : IConfigurationGenerator
     {
         public string Name => HostType + (string.IsNullOrEmpty(IdPostfix) ? string.Empty : $" ({IdPostfix})");
         public string Id => HostType + (string.IsNullOrEmpty(IdPostfix) ? string.Empty : $"_{IdPostfix}");

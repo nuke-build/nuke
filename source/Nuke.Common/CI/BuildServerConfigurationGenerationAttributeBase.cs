@@ -16,7 +16,15 @@ namespace Nuke.Common.CI
 
         protected static IEnumerable<IConfigurationGenerator> GetGenerators(NukeBuild build)
         {
-            return build.GetType().GetCustomAttributes<ConfigurationAttributeBase>();
+            var configurationGenerators = build.ConfigurationGenerators
+                .Concat(build.GetType().GetCustomAttributes<ConfigurationGeneratorAttributeBase>().Select(x => x.GetConfigurationGenerator()))
+                .ToList();
+
+            ControlFlow.Assert(
+                configurationGenerators.GroupBy(x => x.Id).Count() == configurationGenerators.Count,
+                "Multiple configurations with same ID.");
+
+            return configurationGenerators;
         }
     }
 }

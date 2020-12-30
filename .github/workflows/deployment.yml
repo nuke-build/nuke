@@ -5,7 +5,7 @@
 #
 #     - To turn off auto-generation set:
 #
-#         [GitHubActions (AutoGenerate = false)]
+#         [GitHubActionsConfigurationGenerator (AutoGenerate = false)]
 #
 #     - To trigger manual generation invoke:
 #

@@ -9,9 +9,9 @@ using Nuke.Common.CI.TeamCity;
 
 namespace Nuke.Common.Tests.CI
 {
-    public class TestTeamCityAttribute : TeamCityAttribute, ITestConfigurationGenerator
+    public class TestTeamCityConfigurationGenerator : TeamCityConfigurationGenerator, ITestConfigurationGenerator
     {
-        public TestTeamCityAttribute(TeamCityAgentPlatform platform)
+        public TestTeamCityConfigurationGenerator(TeamCityAgentPlatform platform)
             : base(platform)
         {
         }

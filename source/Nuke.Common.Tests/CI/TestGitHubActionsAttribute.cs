@@ -5,9 +5,9 @@ using Nuke.Common.CI.GitHubActions;
 
 namespace Nuke.Common.Tests.CI
 {
-    public class TestGitHubActionsAttribute : GitHubActionsAttribute, ITestConfigurationGenerator
+    public class TestGitHubActionsConfigurationGenerator : GitHubActionsConfigurationGenerator, ITestConfigurationGenerator
     {
-        public TestGitHubActionsAttribute(GitHubActionsImage image, params GitHubActionsImage[] images)
+        public TestGitHubActionsConfigurationGenerator(GitHubActionsImage image, params GitHubActionsImage[] images)
             : base("test", image, images)
         {
         }

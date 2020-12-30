@@ -134,5 +134,7 @@ namespace Nuke.Common
         /// When set to a non-null value, <see cref="Execute{T}"/> will return the value of <see cref="ExitCode"/>.
         /// </summary>
         public int? ExitCode { get; set; }
+
+        public virtual IEnumerable<IConfigurationGenerator> ConfigurationGenerators => new IConfigurationGenerator[0];
     }
 }

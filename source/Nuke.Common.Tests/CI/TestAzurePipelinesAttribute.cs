@@ -5,9 +5,9 @@ using Nuke.Common.CI.AzurePipelines;
 
 namespace Nuke.Common.Tests.CI
 {
-    public class TestAzurePipelinesAttribute : AzurePipelinesAttribute, ITestConfigurationGenerator
+    public class TestAzurePipelinesConfigurationGenerator : AzurePipelinesConfigurationGenerator, ITestConfigurationGenerator
     {
-        public TestAzurePipelinesAttribute(AzurePipelinesImage image, params AzurePipelinesImage[] images)
+        public TestAzurePipelinesConfigurationGenerator(AzurePipelinesImage image, params AzurePipelinesImage[] images)
             : base(image, images)
         {
         }
