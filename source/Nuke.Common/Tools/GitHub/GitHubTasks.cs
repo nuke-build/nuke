@@ -93,7 +93,7 @@ namespace Nuke.Common.Tools.GitHub
         {
             ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
 
-            await GitHubClient.Issue.Milestone.Create(
+            await Client.Issue.Milestone.Create(
                 repository.GetGitHubOwner(),
                 repository.GetGitHubName(),
                 new NewMilestone(title));
@@ -111,7 +111,7 @@ namespace Nuke.Common.Tools.GitHub
                 ControlFlow.Assert(milestone.ClosedIssues != 0, "milestone.ClosedIssues != 0");
             }
 
-            await GitHubClient.Issue.Milestone.Update(
+            await Client.Issue.Milestone.Update(
                 repository.GetGitHubOwner(),
                 repository.GetGitHubName(),
                 milestone.Number,
