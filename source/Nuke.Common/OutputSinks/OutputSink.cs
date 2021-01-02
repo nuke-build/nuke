@@ -96,7 +96,12 @@ namespace Nuke.Common.OutputSinks
                 }
             }
 
-            if (build.IsSuccessful &&
+            if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName.EqualsOrdinalIgnoreCase("zh"))
+            {
+                WriteNormal();
+                WriteTranslationRequest();
+            }
+            else if (build.IsSuccessful &&
                 HasHighUsage() &&
                 TryGetValue(() => GitRepository.FromLocalDirectory(NukeBuild.RootDirectory)) is { } repository &&
                 TryGetValue(() => repository.GetDefaultBranch().GetAwaiter().GetResult()) == null)
@@ -104,6 +109,16 @@ namespace Nuke.Common.OutputSinks
                 WriteNormal();
                 WriteSponsorshipInfo();
             }
+        }
+
+        private void WriteTranslationRequest()
+        {
+            WriteInformation("We want to make NUKE more accessible by providing");
+            WriteInformation("our documentation in simplified chinese (zh-CN). 🇨🇳");
+            WriteInformation("If you're interested to help, please contact us:");
+            WriteInformation("     📧 ithrowexceptions@gmail.com");
+            WriteNormal();
+            WriteInformation("Happy building! 🌟");
         }
 
         private void WriteSponsorshipInfo()
