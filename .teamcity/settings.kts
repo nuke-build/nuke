@@ -43,6 +43,12 @@ project {
             options = listOf("Minimal" to "Minimal", "Normal" to "Normal", "Quiet" to "Quiet", "Verbose" to "Verbose"),
             display = ParameterDisplay.NORMAL)
         text (
+            "env.CodecovToken",
+            label = "CodecovToken",
+            value = "",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
+        text (
             "env.NuGetApiKey",
             label = "NuGetApiKey",
             value = "",

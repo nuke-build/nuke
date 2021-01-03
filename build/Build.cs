@@ -18,6 +18,7 @@ using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
+using Nuke.Common.Tools.Codecov;
 using Nuke.Common.Tools.Coverlet;
 using Nuke.Common.Tools.DotCover;
 using Nuke.Common.Tools.DotNet;
@@ -32,6 +33,7 @@ using static Nuke.Common.IO.CompressionTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
 using static Nuke.Common.IO.FileSystemTasks;
+using static Nuke.Common.Tools.Codecov.CodecovTasks;
 using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
 using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
 
@@ -77,7 +79,8 @@ using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
     OnPushBranchesIgnore = new[] { MasterBranch, ReleaseBranchPrefix + "/*" },
     OnPullRequestBranches = new[] { DevelopBranch },
     PublishArtifacts = false,
-    InvokedTargets = new[] { nameof(Test), nameof(Pack) })]
+    InvokedTargets = new[] { nameof(Test), nameof(Pack) },
+    ImportSecrets = new[] { nameof(CodecovToken) })]
 [AppVeyor(
     AppVeyorImage.VisualStudio2019,
     AppVeyorImage.Ubuntu1804,
@@ -228,14 +231,28 @@ partial class Build : NukeBuild
 
     string CoverageReportDirectory => OutputDirectory / "coverage-report";
     string CoverageReportArchive => OutputDirectory / "coverage-report.zip";
+    bool PublishCodecov => GitHubActions != null && !GitRepository.IsOnMasterBranch();
+    [Parameter] readonly string CodecovToken;
 
     Target Coverage => _ => _
         .DependsOn(Test)
         .TriggeredBy(Test)
         .Consumes(Test)
         .Produces(CoverageReportArchive)
+        .Requires(() => !PublishCodecov || CodecovToken != null)
         .Executes(() =>
         {
+            if (PublishCodecov)
+            {
+                Codecov(_ => _
+                    .SetFiles(TestResultDirectory.GlobFiles("*.xml").Select(x => x.ToString()))
+                    .SetToken(CodecovToken)
+                    .SetBranch(GitRepository.Branch)
+                    .SetSha(GitRepository.Commit)
+                    .SetBuild(GitVersion.FullSemVer)
+                    .SetFramework("netcoreapp3.0"));
+            }
+
             ReportGenerator(_ => _
                 .SetReports(TestResultDirectory / "*.xml")
                 .SetReportTypes(ReportTypes.HtmlInline)
