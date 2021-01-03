@@ -1,0 +1,141 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://raw.githubusercontent.com/codecov/codecov-exe/master/Source/Codecov/Program/CommandLineOptions.cs"
+  ],
+  "name": "Codecov",
+  "officialUrl": "https://about.codecov.io/",
+  "help": "Code coverage is a measurement used to express which lines of code were executed by a test suite. We use three primary terms to describe each line executed.<para/><ul><li>hit - indicates that the source code was executed by the test suite.</li><li>partial - indicates that the source code was not fully executed by the test suite; there are remaining branches that were not executed.</li><li>miss - indicates that the source code was not executed by the test suite.</li></ul><para/>Coverage is the ratio of <c>hits / (sum of hit + partial + miss)</c>. A code base that has 5 lines executed by tests out of 12 total lines will receive a coverage ratio of 41% (rounding down).<para/>Phrased simply, code coverage provides a visual measurement of what source code is being executed by a test suite. This information indicates to the software developer where they should write new tests in an effort to achieve higher coverage.<para/>Testing source code helps to prevent bugs and syntax errors by executing each line with a known variable and cross-checking it with an expected output.",
+  "customExecutable": true,
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Branch",
+            "type": "string",
+            "format": "--branch {value}",
+            "help": "Specify the branch name."
+          },
+          {
+            "name": "Build",
+            "type": "string",
+            "format": "--build {value}",
+            "help": "Specify the build number."
+          },
+          {
+            "name": "Sha",
+            "type": "string",
+            "format": "--sha {value}",
+            "help": "Specify the commit sha."
+          },
+          {
+            "name": "DisableNetwork",
+            "type": "bool",
+            "format": "--disable-network",
+            "help": "Disable uploading the file network."
+          },
+          {
+            "name": "Dump",
+            "type": "bool",
+            "format": "--dump",
+            "help": "Don't upload and dump to stdin."
+          },
+          {
+            "name": "EnvironmentVariables",
+            "type": "List<string>",
+            "format": "--env {value}",
+            "separator": " ",
+            "help": "Specify environment variables to be included with this build."
+          },
+          {
+            "name": "Features",
+            "type": "List<string>",
+            "format": "--feature {value}",
+            "help": "Specify features to disable."
+          },
+          {
+            "name": "Files",
+            "type": "List<string>",
+            "format": "--file {value}",
+            "separator": " ",
+            "help": "Target file(s) to upload."
+          },
+          {
+            "name": "Flags",
+            "type": "string",
+            "format": "--flag {value}",
+            "separator": ",",
+            "help": "Flag the upload to group coverage metrics."
+          },
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "--name {value}",
+            "help": "Custom defined name of the upload. Visible in Codecov UI."
+          },
+          {
+            "name": "NoColor",
+            "type": "bool",
+            "format": "--no-color",
+            "help": "Remove color from the output."
+          },
+          {
+            "name": "PullRequest",
+            "type": "string",
+            "format": "--pr {value}",
+            "help": "Specify the pull request number."
+          },
+          {
+            "name": "RepositoryRoot",
+            "type": "string",
+            "format": "--root {value}",
+            "help": "Used when not in git/hg project to identify project root directory."
+          },
+          {
+            "name": "Required",
+            "type": "bool",
+            "format": "--required",
+            "help": "Exit with <c>1</c> if not successful. Default will Exit with <c>0</c>."
+          },
+          {
+            "name": "Slug",
+            "type": "string",
+            "format": "--slug {value}",
+            "help": "Owner/repo slug used instead of the private repo token in Enterprise."
+          },
+          {
+            "name": "Tag",
+            "type": "string",
+            "format": "--tag {value}",
+            "help": "Specify the git tag."
+          },
+          {
+            "name": "Token",
+            "type": "string",
+            "format": "--token {value}",
+            "secret": true,
+            "help": "Set the private repository token."
+          },
+          {
+            "name": "Url",
+            "type": "string",
+            "format": "--url {value}",
+            "help": "Set the target url for Enterprise customers."
+          },
+          {
+            "name": "Verbose",
+            "type": "bool",
+            "format": "--verbose",
+            "help": "Verbose mode."
+          },
+          {
+            "name": "Framework",
+            "type": "string",
+            "noArgument": true
+          }
+        ]
+      }
+    }
+  ]
+}
