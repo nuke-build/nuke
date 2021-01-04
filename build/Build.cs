@@ -255,6 +255,8 @@ partial class Build : NukeBuild
             ReSharperInspectCode(_ => _
                 .SetTargetPath(Solution)
                 .SetOutput(OutputDirectory / "inspectCode.xml")
+                .When(RootDirectory.Contains(DotNetPath), _ => _
+                    .SetDotNetCore(DotNetPath))
                 .AddPlugin("ReSharperPlugin.CognitiveComplexity", ReSharperPluginLatest));
         });
 
