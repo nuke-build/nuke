@@ -112,6 +112,10 @@ project {
             value = "",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
+        param(
+            "teamcity.runner.commandline.stdstreams.encoding",
+            "UTF-8"
+        )
     }
 }
 object Compile : BuildType({
@@ -122,8 +126,14 @@ object Compile : BuildType({
     }
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "Restore Compile --skip"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "Restore Compile --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
     params {
@@ -142,8 +152,14 @@ object Pack : BuildType({
     artifactRules = "output/packages/*.nupkg => output/packages"
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "Pack --skip"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "Pack --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
     params {
@@ -186,8 +202,14 @@ object Test_P1T2 : BuildType({
     """.trimIndent()
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "Test --skip --test-partition 1"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "Test --skip --test-partition 1"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
     dependencies {
@@ -209,8 +231,14 @@ object Test_P2T2 : BuildType({
     """.trimIndent()
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "Test --skip --test-partition 2"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "Test --skip --test-partition 2"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
     dependencies {
@@ -276,8 +304,14 @@ object Coverage : BuildType({
     artifactRules = "output/coverage-report.zip => output"
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "Coverage --skip"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "Coverage --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
     params {
@@ -313,8 +347,14 @@ object Publish : BuildType({
     }
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "Publish --skip"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "Publish --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
     params {
@@ -345,8 +385,14 @@ object Announce : BuildType({
     }
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "DownloadFonts InstallFonts ReleaseImage Announce --skip"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "DownloadFonts InstallFonts ReleaseImage Announce --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
     params {

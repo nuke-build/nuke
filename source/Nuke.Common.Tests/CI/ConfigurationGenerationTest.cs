@@ -56,7 +56,7 @@ namespace Nuke.Common.Tests.CI
                 yield return
                 (
                     null,
-                    new TestTeamCityAttribute(TeamCityAgentPlatform.Unix)
+                    new TestTeamCityAttribute()
                     {
                         Description = "description",
                         Version = "1.3.3.7",

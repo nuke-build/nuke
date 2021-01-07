@@ -11,11 +11,6 @@ namespace Nuke.Common.Tests.CI
 {
     public class TestTeamCityAttribute : TeamCityAttribute, ITestConfigurationGenerator
     {
-        public TestTeamCityAttribute(TeamCityAgentPlatform platform)
-            : base(platform)
-        {
-        }
-
         public StreamWriter Stream { get; set; }
 
         protected override StreamWriter CreateStream()
