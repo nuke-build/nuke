@@ -144,16 +144,6 @@ object Pack : BuildType({
         vcs {
             triggerRules = "+:**"
         }
-        schedule {
-            schedulingPolicy = daily {
-                hour = 3
-            }
-            triggerRules = "+:**"
-            triggerBuild = always()
-            withPendingChangesOnly = false
-            enableQueueOptimization = true
-            param("cronExpression_min", "3")
-        }
     }
     dependencies {
         snapshot(Compile) {
@@ -220,16 +210,6 @@ object Test : BuildType({
     triggers {
         vcs {
             triggerRules = "+:**"
-        }
-        schedule {
-            schedulingPolicy = daily {
-                hour = 3
-            }
-            triggerRules = "+:**"
-            triggerBuild = always()
-            withPendingChangesOnly = false
-            enableQueueOptimization = true
-            param("cronExpression_min", "3")
         }
     }
     dependencies {

@@ -67,7 +67,6 @@ using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
     TeamCityAgentPlatform.Unix,
     Version = "2020.1",
     VcsTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
-    NightlyTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
     ManuallyTriggeredTargets = new[] { nameof(Publish) },
     NonEntryTargets = new[] { nameof(Restore), nameof(DownloadFonts), nameof(InstallFonts), nameof(ReleaseImage) },
     ExcludedTargets = new[] { nameof(Clean), nameof(SignPackages) })]
@@ -239,7 +238,7 @@ partial class Build : NukeBuild
         .TriggeredBy(Test)
         .Consumes(Test)
         .Produces(CoverageReportArchive)
-        .Requires(() => !PublishCodecov || CodecovToken != null)
+        .Requires(() => !PublishCodecov || !CodecovToken.IsNullOrEmpty())
         .Executes(() =>
         {
             if (PublishCodecov)
