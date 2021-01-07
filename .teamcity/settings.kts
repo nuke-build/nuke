@@ -22,7 +22,8 @@ import jetbrains.buildServer.configs.kotlin.v2018_1.vcs.*
 
 version = "2020.1"
 
-project {
+subproject {
+    id("bla")
     buildType(Compile)
     buildType(Pack)
     buildType(Test_P1T2)
