@@ -23,7 +23,6 @@ namespace Nuke.Common.CI.TeamCity.Configuration
         public string PartitionName { get; set; }
         public TeamCityParameter[] Parameters { get; set; }
         public string[] ArtifactRules { get; set; }
-        public TeamCityAgentPlatform Platform { get; set; }
 
         public TeamCityTrigger[] Triggers { get; set; }
         public TeamCityDependency[] Dependencies { get; set; }
@@ -106,14 +105,18 @@ namespace Nuke.Common.CI.TeamCity.Configuration
                 if (Partition != null)
                     arguments += $" --{ParameterService.GetParameterDashedName(PartitionName)} {Partition.Part}";
 
-                using (writer.WriteBlock("exec"))
+                void WriteConditionalExec(string path, string condition, string platform)
                 {
-                    var path = Platform == TeamCityAgentPlatform.Windows
-                        ? BuildCmdPath
-                        : BuildCmdPath.Replace(".cmd", ".sh");
-                    writer.WriteLine($"path = {path.DoubleQuote()}");
-                    writer.WriteLine($"arguments = {arguments.DoubleQuote()}");
+                    using (writer.WriteBlock("exec"))
+                    {
+                        writer.WriteLine($"path = {path.DoubleQuote()}");
+                        writer.WriteLine($"arguments = {arguments.DoubleQuote()}");
+                        writer.WriteLine($"conditions {{ {condition}(\"teamcity.agent.jvm.os.name\", {platform.DoubleQuote()}) }}");
+                    }
                 }
+
+                WriteConditionalExec(BuildCmdPath, "contains", "Windows");
+                WriteConditionalExec(BuildCmdPath.Replace(".cmd", ".sh"), "doesNotContain", "Windows");
             }
         }
     }
