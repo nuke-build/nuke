@@ -23,99 +23,101 @@ import jetbrains.buildServer.configs.kotlin.v2018_1.vcs.*
 version = "2020.1"
 
 project {
-subproject {
-    id("bla")
-    buildType(Compile)
-    buildType(Pack)
-    buildType(Test_P1T2)
-    buildType(Test_P2T2)
-    buildType(Test)
-    buildType(Coverage)
-    buildType(Publish)
-    buildType(Announce)
+    subProject {
 
-    buildTypesOrder = arrayListOf(Compile, Pack, Test_P1T2, Test_P2T2, Test, Coverage, Publish, Announce)
+        id("bla")
+        buildType(Compile)
+        buildType(Pack)
+        buildType(Test_P1T2)
+        buildType(Test_P2T2)
+        buildType(Test)
+        buildType(Coverage)
+        buildType(Publish)
+        buildType(Announce)
 
-    params {
-        select (
-            "env.Verbosity",
-            label = "Verbosity",
-            description = "Logging verbosity during build execution. Default is 'Normal'.",
-            value = "Normal",
-            options = listOf("Minimal" to "Minimal", "Normal" to "Normal", "Quiet" to "Quiet", "Verbose" to "Verbose"),
-            display = ParameterDisplay.NORMAL)
-        text (
-            "env.CodecovToken",
-            label = "CodecovToken",
-            value = "",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        text (
-            "env.NuGetApiKey",
-            label = "NuGetApiKey",
-            value = "",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        select (
-            "env.Configuration",
-            label = "Configuration",
-            description = "Configuration to build - Default is 'Debug' (local) or 'Release' (server)",
-            value = "Release",
-            options = listOf("Debug" to "Debug", "Release" to "Release"),
-            display = ParameterDisplay.NORMAL)
-        text (
-            "env.GitHubToken",
-            label = "GitHubToken",
-            value = "",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        checkbox (
-            "env.IgnoreFailedSources",
-            label = "IgnoreFailedSources",
-            value = "False",
-            checked = "True",
-            unchecked = "False",
-            display = ParameterDisplay.NORMAL)
-        checkbox (
-            "env.AutoStash",
-            label = "AutoStash",
-            value = "True",
-            checked = "True",
-            unchecked = "False",
-            display = ParameterDisplay.NORMAL)
-        checkbox (
-            "env.UseHttps",
-            label = "UseHttps",
-            value = "False",
-            checked = "True",
-            unchecked = "False",
-            display = ParameterDisplay.NORMAL)
-        text (
-            "env.SignPathApiToken",
-            label = "SignPathApiToken",
-            value = "",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        text (
-            "env.SignPathOrganizationId",
-            label = "SignPathOrganizationId",
-            value = "",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        text (
-            "env.SignPathProjectSlug",
-            label = "SignPathProjectSlug",
-            value = "",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        text (
-            "env.SignPathPolicySlug",
-            label = "SignPathPolicySlug",
-            value = "",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
+        buildTypesOrder = arrayListOf(Compile, Pack, Test_P1T2, Test_P2T2, Test, Coverage, Publish, Announce)
+
+        params {
+            select(
+                    "env.Verbosity",
+                    label = "Verbosity",
+                    description = "Logging verbosity during build execution. Default is 'Normal'.",
+                    value = "Normal",
+                    options = listOf("Minimal" to "Minimal", "Normal" to "Normal", "Quiet" to "Quiet", "Verbose" to "Verbose"),
+                    display = ParameterDisplay.NORMAL)
+            text(
+                    "env.CodecovToken",
+                    label = "CodecovToken",
+                    value = "",
+                    allowEmpty = true,
+                    display = ParameterDisplay.NORMAL)
+            text(
+                    "env.NuGetApiKey",
+                    label = "NuGetApiKey",
+                    value = "",
+                    allowEmpty = true,
+                    display = ParameterDisplay.NORMAL)
+            select(
+                    "env.Configuration",
+                    label = "Configuration",
+                    description = "Configuration to build - Default is 'Debug' (local) or 'Release' (server)",
+                    value = "Release",
+                    options = listOf("Debug" to "Debug", "Release" to "Release"),
+                    display = ParameterDisplay.NORMAL)
+            text(
+                    "env.GitHubToken",
+                    label = "GitHubToken",
+                    value = "",
+                    allowEmpty = true,
+                    display = ParameterDisplay.NORMAL)
+            checkbox(
+                    "env.IgnoreFailedSources",
+                    label = "IgnoreFailedSources",
+                    value = "False",
+                    checked = "True",
+                    unchecked = "False",
+                    display = ParameterDisplay.NORMAL)
+            checkbox(
+                    "env.AutoStash",
+                    label = "AutoStash",
+                    value = "True",
+                    checked = "True",
+                    unchecked = "False",
+                    display = ParameterDisplay.NORMAL)
+            checkbox(
+                    "env.UseHttps",
+                    label = "UseHttps",
+                    value = "False",
+                    checked = "True",
+                    unchecked = "False",
+                    display = ParameterDisplay.NORMAL)
+            text(
+                    "env.SignPathApiToken",
+                    label = "SignPathApiToken",
+                    value = "",
+                    allowEmpty = true,
+                    display = ParameterDisplay.NORMAL)
+            text(
+                    "env.SignPathOrganizationId",
+                    label = "SignPathOrganizationId",
+                    value = "",
+                    allowEmpty = true,
+                    display = ParameterDisplay.NORMAL)
+            text(
+                    "env.SignPathProjectSlug",
+                    label = "SignPathProjectSlug",
+                    value = "",
+                    allowEmpty = true,
+                    display = ParameterDisplay.NORMAL)
+            text(
+                    "env.SignPathPolicySlug",
+                    label = "SignPathPolicySlug",
+                    value = "",
+                    allowEmpty = true,
+                    display = ParameterDisplay.NORMAL)
+        }
     }
-}}
+}
 object Compile : BuildType({
     name = "⚙️ Compile"
     vcs {
