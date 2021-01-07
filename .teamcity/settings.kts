@@ -22,6 +22,7 @@ import jetbrains.buildServer.configs.kotlin.v2018_1.vcs.*
 
 version = "2020.1"
 
+project {
 subproject {
     id("bla")
     buildType(Compile)
@@ -114,7 +115,7 @@ subproject {
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
     }
-}
+}}
 object Compile : BuildType({
     name = "⚙️ Compile"
     vcs {
