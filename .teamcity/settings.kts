@@ -127,7 +127,7 @@ object Compile : BuildType({
     }
     steps {
         exec {
-            path = "build.sh"
+            path = "build.cmd"
             arguments = "Restore Compile --skip"
         }
     }
@@ -141,7 +141,7 @@ object Pack : BuildType({
     artifactRules = "output/packages/*.nupkg => output/packages"
     steps {
         exec {
-            path = "build.sh"
+            path = "build.cmd"
             arguments = "Pack --skip"
         }
     }
@@ -169,7 +169,7 @@ object Test_P1T2 : BuildType({
     """.trimIndent()
     steps {
         exec {
-            path = "build.sh"
+            path = "build.cmd"
             arguments = "Test --skip --test-partition 1"
         }
     }
