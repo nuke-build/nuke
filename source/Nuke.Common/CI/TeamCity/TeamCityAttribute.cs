@@ -24,11 +24,6 @@ namespace Nuke.Common.CI.TeamCity
     [PublicAPI]
     public class TeamCityAttribute : ChainedConfigurationAttributeBase
     {
-        public TeamCityAttribute(TeamCityAgentPlatform platform)
-        {
-            Platform = platform;
-        }
-
         public override HostType HostType => HostType.TeamCity;
         public override string ConfigurationFile => TeamcityDirectory / "settings.kts";
         public override IEnumerable<string> GeneratedFiles => new[] { PomFile, ConfigurationFile };
@@ -42,7 +37,6 @@ namespace Nuke.Common.CI.TeamCity
 
         public string Version { get; set; } = "2018.2";
 
-        public TeamCityAgentPlatform Platform { get; }
         public string Description { get; set; }
         public bool CleanCheckoutDirectory { get; set; } = true;
 
@@ -100,11 +94,6 @@ namespace Nuke.Common.CI.TeamCity
                 .Select(x => x.BuildType).ToArray();
 
             var parameters = GetGlobalParameters(build, relevantTargets);
-            if (Platform == TeamCityAgentPlatform.Windows)
-            {
-                parameters = parameters
-                    .Concat(new TeamCityKeyValueParameter("teamcity.runner.commandline.stdstreams.encoding", "UTF-8"));
-            }
 
             return new TeamCityProject
                    {
@@ -160,7 +149,6 @@ namespace Nuke.Common.CI.TeamCity
                                      Id = $"{executableTarget.Name}_P{partition.Part}T{partition.Total}",
                                      Name = $"{executableTarget.Name} {partition}",
                                      Description = executableTarget.Description,
-                                     Platform = Platform,
                                      BuildCmdPath = BuildCmdPath,
                                      ArtifactRules = artifactRules,
                                      Partition = partition,
@@ -198,7 +186,6 @@ namespace Nuke.Common.CI.TeamCity
                              Id = executableTarget.Name,
                              Name = executableTarget.Name,
                              Description = executableTarget.Description,
-                             Platform = Platform,
                              BuildCmdPath = BuildCmdPath,
                              VcsRoot = new TeamCityBuildTypeVcsRoot
                                        {
@@ -262,7 +249,13 @@ namespace Nuke.Common.CI.TeamCity
                     .Where(y => !(y is Expression<Func<bool>>))
                     .Select(y => y.GetMemberInfo())))
                 .Where(x => x.DeclaringType != typeof(NukeBuild) || x.Name == nameof(NukeBuild.Verbosity))
-                .Select(x => GetParameter(x, build, required: false));
+                .Select(x => GetParameter(x, build, required: false))
+                .Concat(GetDefaultParameters());
+        }
+
+        protected virtual IEnumerable<TeamCityParameter> GetDefaultParameters()
+        {
+            yield return new TeamCityKeyValueParameter("teamcity.runner.commandline.stdstreams.encoding", "UTF-8");
         }
 
         protected virtual TeamCityParameter GetParameter(MemberInfo member, NukeBuild build, bool required)

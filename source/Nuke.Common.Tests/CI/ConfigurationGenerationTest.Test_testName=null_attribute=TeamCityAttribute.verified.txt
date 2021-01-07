@@ -78,6 +78,10 @@ project {
             value = "",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
+        param(
+            "teamcity.runner.commandline.stdstreams.encoding",
+            "UTF-8"
+        )
     }
 }
 object Restore : BuildType({
@@ -89,8 +93,14 @@ object Restore : BuildType({
     artifactRules = "src/*/obj/** => src"
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "Restore --skip"
+            conditions { contains("teamcity.agent.jvm.os.family", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "Restore --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.family", "Windows") }
         }
     }
     params {
@@ -109,8 +119,14 @@ object Compile : BuildType({
     artifactRules = "src/*/bin/** => src"
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "Compile --skip"
+            conditions { contains("teamcity.agent.jvm.os.family", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "Compile --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.family", "Windows") }
         }
     }
     params {
@@ -138,8 +154,14 @@ object Test_P1T2 : BuildType({
     """.trimIndent()
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "Test --skip --test-partition 1"
+            conditions { contains("teamcity.agent.jvm.os.family", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "Test --skip --test-partition 1"
+            conditions { doesNotContain("teamcity.agent.jvm.os.family", "Windows") }
         }
     }
     dependencies {
@@ -161,8 +183,14 @@ object Test_P2T2 : BuildType({
     """.trimIndent()
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "Test --skip --test-partition 2"
+            conditions { contains("teamcity.agent.jvm.os.family", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "Test --skip --test-partition 2"
+            conditions { doesNotContain("teamcity.agent.jvm.os.family", "Windows") }
         }
     }
     dependencies {
@@ -219,8 +247,14 @@ object Coverage : BuildType({
     artifactRules = "output/coverage-report.zip => output"
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "Coverage --skip"
+            conditions { contains("teamcity.agent.jvm.os.family", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "Coverage --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.family", "Windows") }
         }
     }
     params {
@@ -256,8 +290,14 @@ object Pack : BuildType({
     artifactRules = "output/packages/*.nupkg => output/packages"
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "Pack --skip"
+            conditions { contains("teamcity.agent.jvm.os.family", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "Pack --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.family", "Windows") }
         }
     }
     params {
@@ -294,8 +334,14 @@ object Publish : BuildType({
     }
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "Clean Publish --skip"
+            conditions { contains("teamcity.agent.jvm.os.family", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "Clean Publish --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.family", "Windows") }
         }
     }
     params {
@@ -346,8 +392,14 @@ object Announce : BuildType({
     }
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "Announce --skip"
+            conditions { contains("teamcity.agent.jvm.os.family", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "Announce --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.family", "Windows") }
         }
     }
     params {

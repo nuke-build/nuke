@@ -21,7 +21,7 @@ job("continuous") {
 
     container("mcr.microsoft.com/dotnet/sdk:5.0") {
         shellScript {
-            content = "./build.sh Test --verbosity verbose"
+            content = "./build.sh Test"
         }
     }
 

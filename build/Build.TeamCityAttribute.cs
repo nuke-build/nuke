@@ -16,11 +16,6 @@ partial class Build
 {
     public class TeamCityAttribute : Nuke.Common.CI.TeamCity.TeamCityAttribute
     {
-        public TeamCityAttribute(TeamCityAgentPlatform platform)
-            : base(platform)
-        {
-        }
-
         protected override IEnumerable<TeamCityBuildType> GetBuildTypes(
             NukeBuild build,
             ExecutableTarget executableTarget,
