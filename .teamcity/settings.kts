@@ -26,6 +26,7 @@ project {
     subProject {
 
         id("bla")
+        name = "UNIX"
         buildType(Compile)
         buildType(Pack)
         buildType(Test_P1T2)
