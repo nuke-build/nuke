@@ -93,6 +93,12 @@ object Restore : BuildType({
             arguments = "Restore --skip"
         }
     }
+    params {
+        param(
+            "teamcity.ui.runButton.caption",
+            "Restore"
+        )
+    }
 })
 object Compile : BuildType({
     name = "Compile"
@@ -106,6 +112,12 @@ object Compile : BuildType({
             path = "build.sh"
             arguments = "Compile --skip"
         }
+    }
+    params {
+        param(
+            "teamcity.ui.runButton.caption",
+            "Compile"
+        )
     }
     dependencies {
         snapshot(Restore) {
@@ -169,6 +181,12 @@ object Test : BuildType({
         showDependenciesChanges = true
     }
     artifactRules = "**/*"
+    params {
+        param(
+            "teamcity.ui.runButton.caption",
+            "Test"
+        )
+    }
     triggers {
         vcs {
             branchFilter = "vcs_branch_filter"
@@ -205,6 +223,12 @@ object Coverage : BuildType({
             arguments = "Coverage --skip"
         }
     }
+    params {
+        param(
+            "teamcity.ui.runButton.caption",
+            "Coverage"
+        )
+    }
     triggers {
         finishBuildTrigger {
             buildType = "${Test.id}"
@@ -235,6 +259,12 @@ object Pack : BuildType({
             path = "build.sh"
             arguments = "Pack --skip"
         }
+    }
+    params {
+        param(
+            "teamcity.ui.runButton.caption",
+            "Pack"
+        )
     }
     triggers {
         vcs {
@@ -276,6 +306,10 @@ object Publish : BuildType({
             value = "",
             allowEmpty = false,
             display = ParameterDisplay.PROMPT)
+        param(
+            "teamcity.ui.runButton.caption",
+            "Publish"
+        )
     }
     triggers {
         schedule {
@@ -315,6 +349,12 @@ object Announce : BuildType({
             path = "build.sh"
             arguments = "Announce --skip"
         }
+    }
+    params {
+        param(
+            "teamcity.ui.runButton.caption",
+            "Announce"
+        )
     }
     triggers {
         finishBuildTrigger {

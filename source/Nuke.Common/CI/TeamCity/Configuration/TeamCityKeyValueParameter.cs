@@ -10,6 +10,12 @@ namespace Nuke.Common.CI.TeamCity.Configuration
 {
     public class TeamCityKeyValueParameter : TeamCityParameter
     {
+        public TeamCityKeyValueParameter(string key, string value)
+        {
+            Key = key;
+            Value = value;
+        }
+
         public string Key { get; set; }
         public string Value { get; set; }
 
