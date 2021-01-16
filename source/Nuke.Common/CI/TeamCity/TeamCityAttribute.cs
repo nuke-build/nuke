@@ -180,7 +180,7 @@ namespace Nuke.Common.CI.TeamCity
                     .Select(x => new TeamCitySnapshotDependency
                                  {
                                      BuildType = x,
-                                     FailureAction = TeamCityDependencyFailureAction.FailToStart,
+                                     FailureAction = TeamCityDependencyFailureAction.AddProblem,
                                      CancelAction = TeamCityDependencyFailureAction.Cancel
                                  }).ToArray<TeamCityDependency>();
                 artifactDependencies = buildTypes[executableTarget]
