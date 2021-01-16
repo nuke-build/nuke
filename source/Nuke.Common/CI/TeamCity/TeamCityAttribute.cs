@@ -103,11 +103,7 @@ namespace Nuke.Common.CI.TeamCity
             if (Platform == TeamCityAgentPlatform.Windows)
             {
                 parameters = parameters
-                    .Concat(new TeamCityKeyValueParameter
-                            {
-                                Key = "teamcity.runner.commandline.stdstreams.encoding",
-                                Value = "UTF-8"
-                            });
+                    .Concat(new TeamCityKeyValueParameter("teamcity.runner.commandline.stdstreams.encoding", "UTF-8"));
             }
 
             return new TeamCityProject
@@ -130,7 +126,7 @@ namespace Nuke.Common.CI.TeamCity
 
             var artifactRules = chainLinkTargets.SelectMany(x =>
                 ArtifactExtensions.ArtifactProducts[x.Definition].Select(GetArtifactRule)).ToArray();
-            var artifactDependencies = chainLinkTargets.SelectMany(x => (
+            var artifactDependencies = chainLinkTargets.SelectMany(x =>
                 from artifactDependency in ArtifactExtensions.ArtifactDependencies[x.Definition]
                 let dependency = relevantTargets.Single(y => y.Factory == artifactDependency.Item1)
                 let rules = (artifactDependency.Item2.Any()
@@ -141,7 +137,7 @@ namespace Nuke.Common.CI.TeamCity
                        {
                            BuildType = buildTypes[dependency].Single(y => y.Partition == null),
                            ArtifactRules = rules
-                       })).ToArray<TeamCityDependency>();
+                       }).ToArray<TeamCityDependency>();
 
             var snapshotDependencies = GetTargetDependencies(executableTarget)
                 .SelectMany(x => buildTypes[x])
@@ -193,7 +189,10 @@ namespace Nuke.Common.CI.TeamCity
 
             var parameters = executableTarget.Requirements
                 .Where(x => !(x is Expression<Func<bool>>))
-                .Select(x => GetParameter(x.GetMemberInfo(), build, required: true)).ToArray();
+                .Select(x => GetParameter(x.GetMemberInfo(), build, required: true))
+                .Concat(new TeamCityKeyValueParameter(
+                    "teamcity.ui.runButton.caption",
+                    executableTarget.Name.SplitCamelHumpsWithSeparator(" ", Constants.KnownWords))).ToArray();
             var triggers = GetTriggers(executableTarget, buildTypes).ToArray();
 
             yield return new TeamCityBuildType
@@ -268,7 +267,7 @@ namespace Nuke.Common.CI.TeamCity
                 .Select(x => GetParameter(x, build, required: false));
         }
 
-        protected virtual TeamCityConfigurationParameter GetParameter(MemberInfo member, NukeBuild build, bool required)
+        protected virtual TeamCityParameter GetParameter(MemberInfo member, NukeBuild build, bool required)
         {
             var attribute = member.GetCustomAttribute<ParameterAttribute>();
             var valueSet = ParameterService.GetParameterValueSet(member, build);

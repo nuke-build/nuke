@@ -21,7 +21,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
         public string[] InvokedTargets { get; set; }
         public Partition Partition { get; set; }
         public string PartitionName { get; set; }
-        public TeamCityConfigurationParameter[] Parameters { get; set; }
+        public TeamCityParameter[] Parameters { get; set; }
         public string[] ArtifactRules { get; set; }
         public TeamCityAgentPlatform Platform { get; set; }
 

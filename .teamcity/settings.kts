@@ -126,6 +126,12 @@ object Compile : BuildType({
             arguments = "Restore Compile --skip"
         }
     }
+    params {
+        param(
+            "teamcity.ui.runButton.caption",
+            "Compile"
+        )
+    }
 })
 object Pack : BuildType({
     name = "📦 Pack"
@@ -139,6 +145,12 @@ object Pack : BuildType({
             path = "build.sh"
             arguments = "Pack --skip"
         }
+    }
+    params {
+        param(
+            "teamcity.ui.runButton.caption",
+            "Pack"
+        )
     }
     triggers {
         vcs {
@@ -217,6 +229,12 @@ object Test : BuildType({
         showDependenciesChanges = true
     }
     artifactRules = "**/*"
+    params {
+        param(
+            "teamcity.ui.runButton.caption",
+            "Test"
+        )
+    }
     triggers {
         vcs {
             triggerRules = "+:**"
@@ -262,6 +280,12 @@ object Coverage : BuildType({
             arguments = "Coverage --skip"
         }
     }
+    params {
+        param(
+            "teamcity.ui.runButton.caption",
+            "Coverage"
+        )
+    }
     triggers {
         finishBuildTrigger {
             buildType = "${Test.id}"
@@ -292,6 +316,12 @@ object Publish : BuildType({
             path = "build.sh"
             arguments = "Publish --skip"
         }
+    }
+    params {
+        param(
+            "teamcity.ui.runButton.caption",
+            "Publish"
+        )
     }
     dependencies {
         snapshot(Test) {
@@ -356,6 +386,10 @@ object Announce : BuildType({
             value = "",
             allowEmpty = false,
             display = ParameterDisplay.PROMPT)
+        param(
+            "teamcity.ui.runButton.caption",
+            "Announce"
+        )
     }
     triggers {
         finishBuildTrigger {
