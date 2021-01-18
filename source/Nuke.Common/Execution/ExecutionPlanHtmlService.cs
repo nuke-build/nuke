@@ -55,6 +55,9 @@ namespace Nuke.Common.Execution
                             builder.AppendLine($"{executableTarget.Name} ==> {dependency.Name}");
                     }
                 }
+
+                if (executableTarget.Listed == false)
+                    builder.AppendLine($"class {executableTarget.Name} unlisted");
             }
 
             return builder.ToString();
