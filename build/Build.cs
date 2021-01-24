@@ -303,20 +303,11 @@ partial class Build : NukeBuild
                         !IsOriginalRepository && GitRepository.IsOnDevelopBranch())
         .Executes(() =>
         {
-            if (!IsOriginalRepository)
-            {
-                DotNetNuGetAddSource(_ => _
-                    .SetSource(GitHubPackageSource)
-                    .SetUsername(GitHubActions.GitHubActor)
-                    .SetPassword(GitHubToken)
-                    .EnableStorePasswordInClearText());
-            }
-
             Assert(PackageFiles.Count == 4, "packages.Count == 4");
 
             DotNetNuGetPush(_ => _
                     .SetSource(Source)
-                    .SetApiKey(NuGetApiKey)
+                    .SetApiKey(NuGetApiKey ?? GitHubToken)
                     .CombineWith(PackageFiles, (_, v) => _
                         .SetTargetPath(v)),
                 degreeOfParallelism: 5,
