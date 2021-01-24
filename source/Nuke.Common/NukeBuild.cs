@@ -45,6 +45,7 @@ namespace Nuke.Common
     [PublicAPI]
     // Before logo
     [ArgumentsFromParametersFile(Priority = 150)]
+    [ArgumentsFromCommitMessage(Priority = 150)]
     [InjectParameterValues(Priority = 100)]
     [GenerateBuildServerConfigurations(Priority = 50)]
     [InvokeBuildServerConfigurationGeneration(Priority = 45)]

@@ -22,6 +22,7 @@ namespace Nuke.Common.ValueInjection
             () => EnvironmentInfo.Variables);
 
         internal ParameterService ArgumentsFromFilesService;
+        internal ParameterService ArgumentsFromCommitMessageService;
 
         private readonly Func<IEnumerable<string>> _commandLineArgumentsProvider;
         private readonly Func<IReadOnlyDictionary<string, string>> _environmentVariablesProvider;
@@ -150,7 +151,11 @@ namespace Nuke.Common.ValueInjection
             object TryFromProfileArguments() =>
                 ArgumentsFromFilesService?.GetCommandLineArgument(parameterName, destinationType, separator);
 
-            return TryFromCommandLineArguments() ??
+            object TryFromCommitMessageArguments() =>
+                ArgumentsFromCommitMessageService?.GetCommandLineArgument(parameterName, destinationType, separator);
+
+            return TryFromCommitMessageArguments() ??
+                   TryFromCommandLineArguments() ??
                    TryFromCommandLinePositionalArguments() ??
                    TryFromEnvironmentVariables() ??
                    TryFromProfileArguments();
