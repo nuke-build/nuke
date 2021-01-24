@@ -24,11 +24,9 @@ namespace Nuke.Common.Git
     [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
     public class GitRepository
     {
-        private static readonly Regex s_headRegex = new Regex("^ref: (?<reference>refs/heads/(?<branch>.*))");
-
         public static GitRepository FromUrl(string url, string branch = null)
         {
-            var (protocol, endpoint, identifier) = GetRemoteFromUrl(url);
+            var (protocol, endpoint, identifier) = GetRemoteConnectionFromUrl(url);
             return new GitRepository(
                 protocol,
                 endpoint,
@@ -37,47 +35,70 @@ namespace Nuke.Common.Git
                 localDirectory: null,
                 head: null,
                 commit: null,
-                tags: null);
+                tags: null,
+                remoteName: null,
+                remoteBranch: null);
         }
 
         /// <summary>
         /// Obtains information from a local git repository. Auto-injection can be utilized via <see cref="GitRepositoryAttribute"/>.
         /// </summary>
-        public static GitRepository FromLocalDirectory(string directory, string branch = null, string remote = null)
+        public static GitRepository FromLocalDirectory(string directory)
         {
             var rootDirectory = FileSystemTasks.FindParentDirectory(directory, x => x.GetDirectories(".git").Any());
             ControlFlow.Assert(rootDirectory != null, $"Could not find git directory for '{directory}'.");
             var gitDirectory = Path.Combine(rootDirectory, ".git");
 
-            var (protocol, endpoint, identifier) = GetRemoteFromConfig(gitDirectory, remote ?? "origin");
             var head = GetHead(gitDirectory);
+            var branch = ((Host.Instance as IBuildServer)?.Branch ?? GetHeadIfAttached(head))?.TrimStart("refs/heads/").TrimStart("origin/");
             var commit = (Host.Instance as IBuildServer)?.Commit ?? GetCommitFromHead(gitDirectory, head);
             var tags = GetTagsFromCommit(gitDirectory, commit);
+            var (remoteName, remoteBranch) = GetRemoteNameAndBranch(gitDirectory, branch);
+            var (protocol, endpoint, identifier) = GetRemoteConnectionFromConfig(gitDirectory, remoteName);
 
             return new GitRepository(
                 protocol,
                 endpoint,
                 identifier,
-                branch ?? ((Host.Instance as IBuildServer)?.Branch ?? GetBranchFromHead(head)).TrimStart("refs/heads/").TrimStart("origin/"),
+                branch,
                 rootDirectory,
                 head,
                 commit,
-                tags);
+                tags,
+                remoteName,
+                remoteBranch);
         }
 
-        internal static string GetBranchFromHead(string head)
+        private static (string Name, string Branch) GetRemoteNameAndBranch(string gitDirectory, [CanBeNull] string branch)
         {
-            var match = s_headRegex.Match(head);
-            return match.Success ? match.Groups["branch"].Value : null;
+            if (branch == null)
+                return (null, null);
+
+            var configFile = Path.Combine(gitDirectory, "config");
+            var configFileContent = File.ReadAllLines(configFile);
+            var data = configFileContent
+                .Select(x => x.Trim())
+                .SkipWhile(x => x != $"[branch {branch.DoubleQuote()}]")
+                .Skip(1)
+                .TakeWhile(x => !x.StartsWith("["))
+                .Select(x => x.Split('='))
+                .ToDictionary(x => x.ElementAt(0).Trim(), x => x.ElementAt(1).Trim());
+            return data.Count == 2
+                ? (data["remote"], data["merge"].TrimStart("refs/heads/"))
+                : (null, null);
+        }
+
+        internal static string GetHeadIfAttached(string head)
+        {
+            return head.StartsWith("refs/heads/") ? head : null;
         }
 
         internal static string GetCommitFromHead(string gitDirectory, string head)
         {
-            var match = s_headRegex.Match(head);
-            if (!match.Success)
+            if (!head.StartsWith("refs/heads/"))
                 return head;
 
-            var headRefFile = Path.Combine(gitDirectory, match.Groups["reference"].Value);
+            var headRefFile = Path.Combine(gitDirectory, head);
             ControlFlow.Assert(File.Exists(headRefFile), $"File.Exists({headRefFile})");
             return File.ReadAllLines(headRefFile).First();
         }
@@ -86,7 +107,7 @@ namespace Nuke.Common.Git
         {
             var headFile = Path.Combine(gitDirectory, "HEAD");
             ControlFlow.Assert(File.Exists(headFile), $"File.Exists({headFile})");
-            return File.ReadAllText(headFile).Trim();
+            return File.ReadAllText(headFile).TrimStart("ref: ").Trim();
         }
 
         internal static string GetBranchFromCI()
@@ -123,7 +144,7 @@ namespace Nuke.Common.Git
             return localTags.Concat(packedTags).ToList();
         }
 
-        private static (GitProtocol Protocol, string Endpoint, string Identifier) GetRemoteFromUrl(string url)
+        private static (GitProtocol Protocol, string Endpoint, string Identifier) GetRemoteConnectionFromUrl(string url)
         {
             var regex = new Regex(
                 @"^(?'protocol'\w+)?(\:\/\/)?(?>(?'user'.*)@)?(?'endpoint'[^\/:]+)(?>\:(?'port'\d+))?[\/:](?'identifier'.*?)\/?(?>\.git)?$");
@@ -136,20 +157,20 @@ namespace Nuke.Common.Git
             return (protocol, match.Groups["endpoint"].Value, match.Groups["identifier"].Value);
         }
 
-        private static (GitProtocol Protocol, string Endpoint, string Identifier) GetRemoteFromConfig(string gitDirectory, string remote)
+        private static (GitProtocol Protocol, string Endpoint, string Identifier) GetRemoteConnectionFromConfig(string gitDirectory, string remote)
         {
             var configFile = Path.Combine(gitDirectory, "config");
             var configFileContent = File.ReadAllLines(configFile);
             var url = configFileContent
                 .Select(x => x.Trim())
-                .SkipWhile(x => x != $"[remote \"{remote}\"]")
+                .SkipWhile(x => x != $"[remote {remote.DoubleQuote()}]")
                 .Skip(1)
                 .TakeWhile(x => !x.StartsWith("["))
                 .SingleOrDefault(x => x.StartsWithOrdinalIgnoreCase("url = "))
                 ?.Split('=').ElementAt(1)
                 .Trim();
 
-            return GetRemoteFromUrl(url);
+            return GetRemoteConnectionFromUrl(url);
         }
 
         public GitRepository(
@@ -160,7 +181,9 @@ namespace Nuke.Common.Git
             string localDirectory,
             string head,
             string commit,
-            IReadOnlyCollection<string> tags)
+            IReadOnlyCollection<string> tags,
+            string remoteName,
+            string remoteBranch)
         {
             Protocol = protocol;
             Endpoint = endpoint;
@@ -170,6 +193,8 @@ namespace Nuke.Common.Git
             Head = head;
             Commit = commit;
             Tags = tags;
+            RemoteName = remoteName;
+            RemoteBranch = remoteBranch;
         }
 
         /// <summary>Default protocol for the repository.</summary>
@@ -195,6 +220,12 @@ namespace Nuke.Common.Git
         /// <summary>List of tags; <c>null</c> if parsed from URL.</summary>
         public IReadOnlyCollection<string> Tags { get; }
 
+        /// <summary>Name of the remote.</summary>
+        public string RemoteName { get; }
+
+        /// <summary>Name of the remote branch.</summary>
+        public string RemoteBranch { get; }
+
         /// <summary>Current branch; <c>null</c> if head is detached.</summary>
         [CanBeNull]
         public string Branch { get; private set; }
@@ -215,7 +246,9 @@ namespace Nuke.Common.Git
                 LocalDirectory,
                 Head,
                 Commit,
-                Tags);
+                Tags,
+                RemoteName,
+                RemoteBranch);
         }
 
         public override string ToString()

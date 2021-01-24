@@ -26,15 +26,9 @@ namespace Nuke.Common.Git
     [UsedImplicitly(ImplicitUseKindFlags.Default)]
     public class GitRepositoryAttribute : ValueInjectionAttributeBase
     {
-        [CanBeNull]
-        public string Branch { get; set; }
-
-        [CanBeNull]
-        public string Remote { get; set; }
-
         public override object GetValue(MemberInfo member, object instance)
         {
-            return GitRepository.FromLocalDirectory(NukeBuild.RootDirectory, Branch, Remote);
+            return GitRepository.FromLocalDirectory(NukeBuild.RootDirectory);
         }
     }
 }
