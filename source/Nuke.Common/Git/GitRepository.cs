@@ -24,6 +24,8 @@ namespace Nuke.Common.Git
     [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
     public class GitRepository
     {
+        private const string FallbackRemoteName = "origin";
+
         public static GitRepository FromUrl(string url, string branch = null)
         {
             var (protocol, endpoint, identifier) = GetRemoteConnectionFromUrl(url);
@@ -54,7 +56,7 @@ namespace Nuke.Common.Git
             var commit = (Host.Instance as IBuildServer)?.Commit ?? GetCommitFromHead(gitDirectory, head);
             var tags = GetTagsFromCommit(gitDirectory, commit);
             var (remoteName, remoteBranch) = GetRemoteNameAndBranch(gitDirectory, branch);
-            var (protocol, endpoint, identifier) = GetRemoteConnectionFromConfig(gitDirectory, remoteName);
+            var (protocol, endpoint, identifier) = GetRemoteConnectionFromConfig(gitDirectory, remoteName ?? FallbackRemoteName);
 
             return new GitRepository(
                 protocol,
@@ -110,11 +112,13 @@ namespace Nuke.Common.Git
             return File.ReadAllText(headFile).TrimStart("ref: ").Trim();
         }
 
+        [CanBeNull]
         internal static string GetBranchFromCI()
         {
             return (Host.Instance as IBuildServer)?.Branch;
         }
 
+        [CanBeNull]
         internal static string GetCommitFromCI()
         {
             return (Host.Instance as IBuildServer)?.Commit;
