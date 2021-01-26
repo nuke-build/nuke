@@ -217,18 +217,6 @@ namespace Nuke.Common.Tests.CI
             public readonly string AzurePipelinesSystemAccessToken;
 
             [Parameter("Test collections work as input")]
-            public readonly List<string> ListParam = new()
-                                                     {
-                                                         "one", "two"
-                                                     };
-
-            [Parameter("Test collections work as input")]
-            public readonly IEnumerable<string> IEnumParam = new[]
-                                                             {
-                                                                 "one", "two"
-                                                             };
-
-            [Parameter("Test collections work as input")]
             public readonly string[] ArrayParam = new[]
                                                   {
                                                       "one", "two"

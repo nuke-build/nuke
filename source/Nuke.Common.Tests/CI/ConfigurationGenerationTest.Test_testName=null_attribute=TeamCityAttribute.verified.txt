@@ -79,20 +79,6 @@ project {
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         text (
-            "env.ListParam",
-            label = "ListParam",
-            description = "Test collections work as input",
-            value = "one two",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        text (
-            "env.IEnumParam",
-            label = "IEnumParam",
-            description = "Test collections work as input",
-            value = "one two",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        text (
             "env.ArrayParam",
             label = "ArrayParam",
             description = "Test collections work as input",

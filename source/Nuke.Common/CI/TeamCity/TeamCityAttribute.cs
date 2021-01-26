@@ -3,7 +3,6 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -286,20 +285,14 @@ namespace Nuke.Common.CI.TeamCity
                     return TeamCityParameterType.Select;
                 return TeamCityParameterType.Text;
             }
-            
-            var defValue = defaultValue?.ToString();
-            if (defaultValue is IEnumerable<string> coll)
-            {
-                defValue = string.Join(" ", coll);
-            }
-            
+
             return new TeamCityConfigurationParameter
                    {
                        Name = member.Name,
                        Description = attribute.Description,
                        Options = valueSet?.ToDictionary(x => x.Item1, x => x.Item2),
                        Type = GetParameterType(),
-                       DefaultValue = defValue,
+                       DefaultValue = defaultValue is IEnumerable<string> coll ? string.Join(" ", coll) : defaultValue?.ToString(),
                        Display = required ? TeamCityParameterDisplay.Prompt : TeamCityParameterDisplay.Normal,
                        AllowMultiple = member.GetMemberType().IsArray,
                        ValueSeparator = attribute.Separator ?? " "
