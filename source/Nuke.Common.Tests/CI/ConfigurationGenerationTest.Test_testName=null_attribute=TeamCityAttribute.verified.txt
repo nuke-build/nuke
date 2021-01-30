@@ -58,6 +58,24 @@ project {
             options = listOf("Debug" to "Debug", "Release" to "Release"),
             display = ParameterDisplay.NORMAL)
         text (
+            "env.StringArray",
+            label = "StringArray",
+            value = "first second",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
+        text (
+            "env.IntegerArray",
+            label = "IntegerArray",
+            value = "1 2",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
+        text (
+            "env.ConfigurationArray",
+            label = "ConfigurationArray",
+            value = "Debug Release",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
+        text (
             "env.Source",
             label = "Source",
             description = "NuGet Source for Packages",
