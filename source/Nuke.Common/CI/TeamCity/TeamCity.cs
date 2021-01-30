@@ -124,6 +124,7 @@ namespace Nuke.Common.CI.TeamCity
         public string ServerUrl => ConfigurationProperties["teamcity.serverUrl"];
         [NoConvert] public string BranchName => ConfigurationProperties.GetValueOrDefault("teamcity.build.branch")
             .NotNull("Configuration property 'teamcity.build.branch' is null. See https://youtrack.jetbrains.com/issue/TW-62888.");
+        public bool IsBuildPersonal => bool.Parse(SystemProperties.GetValueOrDefault("build.is.personal", bool.FalseString));
 
         public void DisableServiceMessages()
         {
