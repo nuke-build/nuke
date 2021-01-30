@@ -92,25 +92,16 @@ This project is driven by contributors investing their private free time. If it 
 
 ## Users
 
-- [aspnetboilerplate/aspnetboilerplate](https://github.com/aspnetboilerplate/aspnetboilerplate/tree/dev/build) ⭐️
-- [AvaloniaUI](https://avaloniaui.net/) ([AvaloniaUI/Avalonia](https://github.com/AvaloniaUI/Avalonia/tree/master/nukebuild)) ⭐️
-- [Allors](http://www.allors.com/) ([documents](https://github.com/Allors/documents), [excel](https://github.com/Allors/excel))
-- [Aviva Solutions](https://www.avivasolutions.com/) ([sitecore-commerce-docker](https://github.com/avivasolutionsnl/sitecore-commerce-docker/tree/master/build), [sitecore-docker](https://github.com/avivasolutionsnl/sitecore-docker/tree/master/build))
-- [DNN Community](https://dnncommunity.org/) ([Dnn.ModuleCreator](https://github.com/DNNCommunity/Dnn.ModuleCreator))
-- [fluentassertions/fluentassertions](https://github.com/fluentassertions/fluentassertions/tree/master/Build) ⭐️
-- [GeorgDangl/LightQuery](https://github.com/GeorgDangl/LightQuery/tree/dev/build)
-- [ChilliCream/HotChocolate](https://github.com/ChilliCream/hotchocolate/tree/main/.build)
-- [JetBrains](https://www.jetbrains.com/) ([.NET SDK for Space](https://github.com/JetBrains/space-dotnet-sdk), [YouTrackSharp](https://github.com/JetBrains/YouTrackSharp))
-- [joaomatossilva/DateTimeExtensions](https://github.com/joaomatossilva/DateTimeExtensions)
-- [JoshClose/CsvHelper](https://github.com/JoshClose/CsvHelper/tree/master/build) ⭐️
-- [ModPlus](https://modplus.org/en/) ([various projects](https://github.com/ModPlus-Software))
-- [nuke-build/nuke](https://github.com/nuke-build/nuke/tree/develop/build) ⭐️
-- [nuke-build/web](https://github.com/nuke-build/web/tree/master/build)
-- [Octopus Deploy](https://www.octopus.com/) ([Time](https://github.com/OctopusDeploy/Time), [Shellfish](https://github.com/OctopusDeploy/Shellfish), [Octopus Configuration Language (OCL)](https://github.com/OctopusDeploy/Ocl) and many more)
-- [OmniSharp/csharp-language-server-protocol](https://github.com/OmniSharp/csharp-language-server-protocol)
-- [ViGEm/HidGuardian](https://github.com/ViGEm/HidGuardian/tree/master/build)
-- [VirtoCommerce/vc-platform](https://github.com/VirtoCommerce/vc-platform/tree/release/3.0.0/build) ⭐️
-- [zarunbal/LogExpert](https://github.com/zarunbal/LogExpert/tree/master/build) ⭐️
+- [ASP.NET Boilerplate](https://aspnetboilerplate.com/) <sup><a href="https://github.com/aspnetboilerplate/aspnetboilerplate">1</a></sup>
+- [AvaloniaUI](https://avaloniaui.net/) <sup><a href="https://github.com/AvaloniaUI/Avalonia">1</a></sup>
+- **[Aviva Solutions Inc.](https://www.avivasolutions.com/)** <sup><a href="https://github.com/avivasolutionsnl/sitecore-commerce-docker">1</a> <a href="https://github.com/avivasolutionsnl/sitecore-docker">2</a></sup>
+- [ChilliCream](https://chillicream.com/) <sup><a href="https://github.com/ChilliCream/hotchocolate">1</a></sup>
+- [CvsHelper](https://joshclose.github.io/CsvHelper/) <sup><a href="https://github.com/JoshClose/CsvHelper">1</a></sup>
+- [DNN Community](https://dnncommunity.org/) <sup><a href="https://github.com/DNNCommunity/Dnn.ModuleCreator">1</a></sup>
+- [FluentAssertions](https://fluentassertions.com/) <sup><a href="https://github.com/fluentassertions/fluentassertions">1</a></sup>
+- **[JetBrains s.r.o.](https://www.jetbrains.com/)** <sup><a href="https://github.com/JetBrains/space-dotnet-sdk">1</a> <a href="https://github.com/JetBrains/YouTrackSharp">2</a></sup>
+- **[Octopus Deploy Pty. Ltd.](https://www.octopus.com/)** <sup><a href="https://github.com/OctopusDeploy/Time">1</a> <a href="https://github.com/OctopusDeploy/Shellfish">2</a> <a href="https://github.com/OctopusDeploy/Ocl">3</a></sup>
+- [OmniSharp](http://www.omnisharp.net/) <sup><a href="https://github.com/OmniSharp/csharp-language-server-protocol">1</a></sup>
 
 ## Acknowledgements
 
