@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -262,8 +263,10 @@ namespace Nuke.Common.CI.TeamCity
         {
             var attribute = member.GetCustomAttribute<ParameterAttribute>();
             var valueSet = ParameterService.GetParameterValueSet(member, build);
+            var valueSeparator = attribute.Separator ?? " ";
 
             var defaultValue = member.GetValue(build);
+            // TODO: enumerables of ...
             if (defaultValue != null &&
                 (member.GetMemberType() == typeof(AbsolutePath) ||
                  member.GetMemberType() == typeof(Solution) ||
@@ -285,10 +288,12 @@ namespace Nuke.Common.CI.TeamCity
                        Description = attribute.Description,
                        Options = valueSet?.ToDictionary(x => x.Item1, x => x.Item2),
                        Type = GetParameterType(),
-                       DefaultValue = defaultValue?.ToString(),
+                       DefaultValue = member.GetMemberType().IsArray && defaultValue is IEnumerable enumerable
+                           ? enumerable.Cast<object>().Select(x => x.ToString()).Join(valueSeparator)
+                           : defaultValue?.ToString(),
                        Display = required ? TeamCityParameterDisplay.Prompt : TeamCityParameterDisplay.Normal,
-                       AllowMultiple = member.GetMemberType().IsArray,
-                       ValueSeparator = attribute.Separator ?? " "
+                       AllowMultiple = member.GetMemberType().IsArray && valueSet is not null,
+                       ValueSeparator = valueSeparator
                    };
         }
 

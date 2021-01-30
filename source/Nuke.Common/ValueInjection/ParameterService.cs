@@ -74,7 +74,7 @@ namespace Nuke.Common.ValueInjection
         public static IEnumerable<(string Text, object Object)> GetParameterValueSet(MemberInfo member, object instance)
         {
             var attribute = member.GetCustomAttribute<ParameterAttribute>();
-            var memberType = member.GetMemberType();
+            var memberType = member.GetMemberType(); // TODO: use GetScalarType
 
             IEnumerable<(string Text, object Object)> TryGetFromValueProvider()
             {
