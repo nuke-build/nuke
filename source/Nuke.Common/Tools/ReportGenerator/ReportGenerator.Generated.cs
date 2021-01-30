@@ -187,7 +187,7 @@ namespace Nuke.Common.Tools.ReportGenerator
               .Add("-historydir:{value}", HistoryDirectory)
               .Add("-assemblyfilters:{value}", AssemblyFilters, separator: ';')
               .Add("-classfilters:{value}", ClassFilters, separator: ';')
-              .Add("-classfilters:{value}", FileFilters, separator: ';')
+              .Add("-filefilters:{value}", FileFilters, separator: ';')
               .Add("-tag:{value}", Tag)
               .Add("-verbosity:{value}", Verbosity);
             return base.ConfigureProcessArguments(arguments);
