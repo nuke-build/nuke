@@ -52,7 +52,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <ul>
         ///     <li><c>-assemblyfilters</c> via <see cref="ReportGeneratorSettings.AssemblyFilters"/></li>
         ///     <li><c>-classfilters</c> via <see cref="ReportGeneratorSettings.ClassFilters"/></li>
-        ///     <li><c>-classfilters</c> via <see cref="ReportGeneratorSettings.FileFilters"/></li>
+        ///     <li><c>-filefilters</c> via <see cref="ReportGeneratorSettings.FileFilters"/></li>
         ///     <li><c>-historydir</c> via <see cref="ReportGeneratorSettings.HistoryDirectory"/></li>
         ///     <li><c>-reports</c> via <see cref="ReportGeneratorSettings.Reports"/></li>
         ///     <li><c>-reporttypes</c> via <see cref="ReportGeneratorSettings.ReportTypes"/></li>
@@ -78,7 +78,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <ul>
         ///     <li><c>-assemblyfilters</c> via <see cref="ReportGeneratorSettings.AssemblyFilters"/></li>
         ///     <li><c>-classfilters</c> via <see cref="ReportGeneratorSettings.ClassFilters"/></li>
-        ///     <li><c>-classfilters</c> via <see cref="ReportGeneratorSettings.FileFilters"/></li>
+        ///     <li><c>-filefilters</c> via <see cref="ReportGeneratorSettings.FileFilters"/></li>
         ///     <li><c>-historydir</c> via <see cref="ReportGeneratorSettings.HistoryDirectory"/></li>
         ///     <li><c>-reports</c> via <see cref="ReportGeneratorSettings.Reports"/></li>
         ///     <li><c>-reporttypes</c> via <see cref="ReportGeneratorSettings.ReportTypes"/></li>
@@ -101,7 +101,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         ///   <ul>
         ///     <li><c>-assemblyfilters</c> via <see cref="ReportGeneratorSettings.AssemblyFilters"/></li>
         ///     <li><c>-classfilters</c> via <see cref="ReportGeneratorSettings.ClassFilters"/></li>
-        ///     <li><c>-classfilters</c> via <see cref="ReportGeneratorSettings.FileFilters"/></li>
+        ///     <li><c>-filefilters</c> via <see cref="ReportGeneratorSettings.FileFilters"/></li>
         ///     <li><c>-historydir</c> via <see cref="ReportGeneratorSettings.HistoryDirectory"/></li>
         ///     <li><c>-reports</c> via <see cref="ReportGeneratorSettings.Reports"/></li>
         ///     <li><c>-reporttypes</c> via <see cref="ReportGeneratorSettings.ReportTypes"/></li>
@@ -187,7 +187,7 @@ namespace Nuke.Common.Tools.ReportGenerator
               .Add("-historydir:{value}", HistoryDirectory)
               .Add("-assemblyfilters:{value}", AssemblyFilters, separator: ';')
               .Add("-classfilters:{value}", ClassFilters, separator: ';')
-              .Add("-classfilters:{value}", FileFilters, separator: ';')
+              .Add("-filefilters:{value}", FileFilters, separator: ';')
               .Add("-tag:{value}", Tag)
               .Add("-verbosity:{value}", Verbosity);
             return base.ConfigureProcessArguments(arguments);
