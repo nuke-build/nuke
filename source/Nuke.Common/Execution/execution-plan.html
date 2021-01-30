@@ -153,16 +153,16 @@ window.addEventListener("load",function(){e.contentLoaded()},!1)}).call(e,n(9))}
             width: 75% !important;
             font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
         }
-        .legend ul .triggers {
+        .legend ul .ordering {
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAAAQCAYAAACr+QluAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsAAAA7AAWrWiQkAAAC1SURBVFhH7ZcxDsMgDEVxjpGsjD1G105woB6II3TqdXoINyBcuY2dkK72k76I0Gd5SggAIgZny9RHGzwAWwawJYYYEGRTDLEjyLYYQhDkYjhMEKSUPqZKKdAfv8g5q9/j2TVS/0y3IvWPupflFe63Z5sbYYoxBooG7/xGQ+rWSEi9Go1/uss895kx/I1RsHXAU/5AG64IvvlyViEtKy6mwoQQtsUIQgibYnaEEH67VvA9RiSEN3PJZYhJnX8MAAAAAElFTkSuQmCC') no-repeat left center;
+            padding-left: 70px;
+        }
+        .legend ul .execution {
             background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAAAQCAYAAACr+QluAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAACXSURBVFhH7dexDYAgEEDROzewtrS1cwVbK2ZwBlrHcQgrN7F2iBMJl5AIQmvuXkII7Q85FIkI1FsTdhl2JL8qyArDKgLJDMM+AskOwxKBNEwsCoTGmKph9HdDd8E6H+FUhtZaEWH69oRl3MKpTG9MhqwPvMwL9DIR6vCNuSB+ORrmEQVhssMkgjCZYT6CMP27ztAZkwRwA4U0NbVgLwtTAAAAAElFTkSuQmCC') no-repeat left center;
             padding-left: 70px;
         }
-        .legend ul .beforeafter {
+        .legend ul .triggers {
             background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAAAQCAYAAACr+QluAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsEAAA7BAbiRa+0AAABwSURBVFhH7ddbCsAwCERR7dq663ZvJg0VhGjwf+aA5P8S8lAzE9pd/4rhVVvTgBXGNQJhhnGHQNhhXBKIYaIQSO2R1mGEhjumwDAFrAdecQNtblPumGgGWTMxzCcEcdhhkiAOM8whiOPvusAzJiUyAMjlKkXWoN66AAAAAElFTkSuQmCC') no-repeat left center;
-            padding-left: 70px;
-        }
-        .legend ul .dependson {
-            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAAAQCAYAAACr+QluAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsAAAA7AAWrWiQkAAAC1SURBVFhH7ZcxDsMgDEVxjpGsjD1G105woB6II3TqdXoINyBcuY2dkK72k76I0Gd5SggAIgZny9RHGzwAWwawJYYYEGRTDLEjyLYYQhDkYjhMEKSUPqZKKdAfv8g5q9/j2TVS/0y3IvWPupflFe63Z5sbYYoxBooG7/xGQ+rWSEi9Go1/uss895kx/I1RsHXAU/5AG64IvvlyViEtKy6mwoQQtsUIQgibYnaEEH67VvA9RiSEN3PJZYhJnX8MAAAAAElFTkSuQmCC') no-repeat left center;
             padding-left: 70px;
         }
         .legend-arrows ul li {
@@ -210,33 +210,33 @@ __EVENTS__
       <div class="close">X</div>
       <div class="legend">
           <div class="legend-title">
-              Hover over a target to visualize what Targets will run if that target is executed.
+              Hovering a target highlights its associated execution plan.
           </div>
           <div class='legend-scale target-legend-scale'>
               <ul class='legend-labels'>
                   <li>
-                      <span style='background:#222;color:#fff;font-weight: bold;'>Target Name</span>
-                      <div>Will not execute</div>
+                      <span style='background:#222;color:#fff;font-weight: bold;'>Target</span>
+                      <div>Not Executing</div>
                   </li>
                   <li>
-                      <span style='background:gold;color:#000;font-weight: bold;'>Target Name</span>
-                      <div>Will execute</div>
+                      <span style='background:gold;color:#000;font-weight: bold;'>Target</span>
+                      <div>Executing</div>
                   </li>
               </ul>
           </div>
           <hr />
 
           <div class="legend-title">
-              The type of lines connecting targets will describe how the target is connected.
+              Target edges denote how they are related to each other.
           </div>
           <div class='legend-scale legend-arrows'>
               <ul class='legend-labels'>
-                  <li><span class="dependson"></span>Depends on</li>
+                  <li><span class="ordering"></span>Ordering</li>
+                  <li><span class="execution"></span>Execution</li>
                   <li><span class="triggers"></span>Triggers</li>
-                  <li><span class="beforeafter"></span>Runs before/after</li>
               </ul>
           </div>
-          <div class='legend-footer'>More information on targets: <a href="https://nuke.build/docs/authoring-builds/fundamentals.html" target="_blank">Nuke Fundementals</a></div>
+          <div class='legend-footer'><a href="https://nuke.build/docs/authoring-builds/fundamentals.html" target="_blank">More information</a></div>
       </div>
     </div>
     
