@@ -118,7 +118,9 @@ namespace Nuke.Common.IO
         [Pure]
         public static bool IsDescendantPath(string basePath, string destinationPath)
         {
-            return NormalizePath(destinationPath).StartsWith(NormalizePath(basePath));
+            var destinationPathParts = NormalizePath(destinationPath).Split(s_allSeparators);
+            var basePathParts = NormalizePath(basePath).Split(s_allSeparators);
+            return destinationPathParts.SequenceStartsWith(basePathParts);
         }
 
         [Pure]
