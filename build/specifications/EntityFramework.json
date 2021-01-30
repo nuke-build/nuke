@@ -42,10 +42,10 @@
             "help": "The target migration. Migrations may be identified by name or by ID. The number 0 is a special case that means before the first migration and causes all migrations to be reverted. If no migration is specified, the command defaults to the last migration."
           },
           {
-            "name": "DryRun",
-            "type": "bool",
-            "format": "--dry-run",
-            "help": "This option shows which database would be dropped, but doesn't drop it."
+            "name": "Connection",
+            "type": "string",
+            "format": "--connection {value}",
+            "help": "The connection string to the database. Defaults to the one specified in <c>AddDbContext</c> or <c>OnConfiguring</c>. Added in EF Core 5.0."
           }
         ]
       }
@@ -99,6 +99,12 @@
             "help": "The directory to put the <c>DbContext</c> class file in. Paths are relative to the project directory. Namespaces are derived from the folder names."
           },
           {
+            "name": "ContextNamespace",
+            "type": "string",
+            "format": "--context-namespace {value}",
+            "help": "The namespace to use for the generated <c>DbContext</c> class. Note: overrides <c>--namespace</c>. Added in EF Core 5.0."
+          },
+          {
             "name": "Force",
             "type": "bool",
             "format": "--force",
@@ -109,6 +115,12 @@
             "type": "string",
             "format": "--output-dir {value}",
             "help": "The directory to put entity class files in. Paths are relative to the project directory."
+          },
+          {
+            "name": "Namespace",
+            "type": "string",
+            "format": "--namespace {value}",
+            "help": "The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory. Added in EF Core 5.0."
           },
           {
             "name": "Schemas",
@@ -127,6 +139,33 @@
             "type": "bool",
             "format": "--use-database-names",
             "help": "Use table and column names exactly as they appear in the database. If this option is omitted, database names are changed to more closely conform to C# name style conventions."
+          },
+          {
+            "name": "NoOnConfiguring",
+            "type": "bool",
+            "format": "--no-onconfiguring",
+            "help": "Suppresses generation of the <c>OnConfiguring</c> method in the generated <c>DbContext</c> class. Added in EF Core 5.0."
+          },
+          {
+            "name": "NoPluralize",
+            "type": "bool",
+            "format": "--no-pluralize",
+            "help": "Don't use the pluralizer. Added in EF Core 5.0"
+          }
+        ]
+      }
+    },
+    {
+      "help": "The <c>dotnet ef dbcontext script</c> command is used to generate a SQL script from the <c>DbContext</c>, bypassing any migrations.",
+      "postfix": "DbContextScript",
+      "definiteArgument": "ef dbcontext script",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "--output {value}",
+            "help": "The file to write the result to."
           }
         ]
       }
@@ -148,6 +187,12 @@
             "type": "string",
             "format": "--output-dir {value}",
             "help": "The directory (and sub-namespace) to use. Paths are relative to the project directory. Defaults to 'Migrations'."
+          },
+          {
+            "name": "Namespace",
+            "type": "string",
+            "format": "--namespace {value}",
+            "help": "The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory. Added in EF Core 5.0."
           }
         ]
       }
@@ -156,7 +201,22 @@
       "help": "The <c>dotnet ef migrations list</c> command is used to list available migrations.",
       "postfix": "MigrationsList",
       "definiteArgument": "ef migrations list",
-      "settingsClass": {}
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Connection",
+            "type": "string",
+            "format": "--connection {value}",
+            "help": "The connection string to the database. Defaults to the one specified in AddDbContext or OnConfiguring. Added in EF Core 5.0."
+          },
+          {
+            "name": "NoConnect",
+            "type": "bool",
+            "format": "--no-connect",
+            "help": "Don't connect to the database. Added in EF Core 5.0."
+          }
+        ]
+      }
     },
     {
       "help": "The <c>dotnet ef migrations remove</c> command is used to remove the last migration (rolls back the code changes that were done for the migration).",
@@ -165,10 +225,10 @@
       "settingsClass": {
         "properties": [
           {
-            "name": "OutputDirectory",
-            "type": "string",
-            "format": "--output-dir {value}",
-            "help": "The directory (and sub-namespace) to use. Paths are relative to the project directory. Defaults to 'Migrations'."
+            "name": "Force",
+            "type": "bool",
+            "format": "--force",
+            "help": "Revert the migration (roll back the changes that were applied to the database)."
           }
         ]
       }
@@ -202,6 +262,12 @@
             "type": "bool",
             "format": "--idempotent",
             "help": "Generate a script that can be used on a database at any migration."
+          },
+          {
+            "name": "NoTransactions",
+            "type": "bool",
+            "format": "--no-transactions",
+            "help": "Don't generate SQL transaction statements. Added in EF Core 5.0."
           }
         ]
       }
@@ -249,6 +315,12 @@
       "type": "string",
       "format": "--runtime {value}",
       "help": "The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/rid-catalog\">RID catalog</a>."
+    },
+    {
+      "name": "NoBuild",
+      "type": "bool",
+      "format": "--no-build",
+      "help": "Don't build the project. Intended to be used when the build is up-to-date."
     },
     {
       "name": "NoColor",
