@@ -178,7 +178,7 @@ namespace Nuke.Common.Utilities
 
         private static string Replace(this string str, [CanBeNull] IReadOnlyDictionary<string, string> tokens)
         {
-            return tokens?.Aggregate(str, (t, r) => t.Replace($"_{r.Key}_", r.Value));
+            return tokens?.OrderByDescending(x => x.Key.Length).Aggregate(str, (t, r) => t.Replace($"_{r.Key}_", r.Value));
         }
     }
 }
