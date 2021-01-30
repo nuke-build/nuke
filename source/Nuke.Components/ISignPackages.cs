@@ -58,7 +58,7 @@ namespace Nuke.Components
         AbsolutePath SignPathRequestDirectory => SignPathTemporaryDirectory / "signing-request";
         AbsolutePath SignPathResponseDirectory => SignPathTemporaryDirectory / "signing-response";
         string SignPathRequestArchive => Path.ChangeExtension(SignPathRequestDirectory, ".zip");
-        string SignPathResponseArchive => Path.ChangeExtension(SignPathRequestDirectory, ".zip");
+        string SignPathResponseArchive => Path.ChangeExtension(SignPathResponseDirectory, ".zip");
 
         IEnumerable<AbsolutePath> SignPathPackages { get; }
         bool SignPathReplacePackages => true;
