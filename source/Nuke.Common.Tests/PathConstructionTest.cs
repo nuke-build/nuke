@@ -45,8 +45,12 @@ namespace Nuke.Common.Tests
         }
 
         [Theory]
-        [InlineData("C:\\A\\B\\C", "C:\\A\\B", false)]
+        [InlineData("C:\\A\\B", "C:\\A\\B\\C", true)]
         [InlineData("C:\\A\\B", "C:\\A\\B\\C\\", true)]
+        [InlineData("C:\\A\\B", "C:\\A", false)]
+        [InlineData("C:\\A\\B", "C:\\A\\C", false)]
+        [InlineData("C:\\A\\B\\C", "C:\\A\\B", false)]
+        [InlineData("C:\\A\\B\\C", "C:\\A\\B\\CD", false)]
         [InlineData("C:\\A\\B\\..\\C", "C:\\A\\B\\..\\C\\D", true)]
         [InlineData("/bin/etc", "/bin/etc/../etc/foo", true)]
         [InlineData("/bin/etc", "/bin/etc/../bar/foo", false)]
