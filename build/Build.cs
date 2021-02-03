@@ -66,7 +66,6 @@ using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
 [TeamCity(
     Version = "2020.1",
     VcsTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
-    NightlyTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
     ManuallyTriggeredTargets = new[] { nameof(Publish) },
     NonEntryTargets = new[] { nameof(Restore), nameof(DownloadFonts), nameof(InstallFonts), nameof(ReleaseImage) },
     ExcludedTargets = new[] { nameof(Clean), nameof(SignPackages) })]
