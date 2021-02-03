@@ -35,9 +35,6 @@ namespace Nuke.Common.Execution
             Console.CancelKeyPress += (s, e) => s_cancellationHandlers.ForEach(x => x());
 
             var build = Create<T>();
-            build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpressions);
-
-            Logger.LogLevel = NukeBuild.LogLevel;
 
             void ExecuteExtension<TExtension>(Expression<Action<TExtension>> action)
                 where TExtension : IBuildExtension =>
@@ -45,11 +42,16 @@ namespace Nuke.Common.Execution
                     .GetCustomAttributes()
                     .OfType<TExtension>()
                     .OrderByDescending(x => x.Priority)
-                    .ForEachLazy(x => Logger.Trace($"[{action.GetMemberInfo().Name}] {x.GetType().Name.TrimEnd(nameof(Attribute))} ({x.Priority})"))
+                    .ForEachLazy(x =>
+                        Logger.Trace($"[{action.GetMemberInfo().Name}] {x.GetType().Name.TrimEnd(nameof(Attribute))} ({x.Priority})"))
                     .ForEach(action.Compile());
 
             try
             {
+                build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpressions);
+
+                Logger.LogLevel = NukeBuild.LogLevel;
+
                 ExecuteExtension<IOnBeforeLogo>(x => x.OnBeforeLogo(build, build.ExecutableTargets));
                 build.OnBuildCreated();
 
