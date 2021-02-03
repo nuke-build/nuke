@@ -30,6 +30,6 @@ namespace Nuke.Components
         Configure<DotNetRestoreSettings> RestoreSettings => _ => _;
 
         [Parameter("Ignore unreachable sources during " + nameof(Restore))]
-        bool IgnoreFailedSources => TryGetValue(() => IgnoreFailedSources);
+        bool IgnoreFailedSources => TryGetValue<bool?>(() => IgnoreFailedSources) ?? false;
     }
 }
