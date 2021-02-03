@@ -19,6 +19,13 @@ namespace Nuke.Common.ValueInjection
 
         [CanBeNull]
         public static T TryGetValue<T>(Expression<Func<T>> parameterExpression)
+            where T : class
+        {
+            return TryGetValueWithCache<T>(parameterExpression);
+        }
+
+        [CanBeNull]
+        public static T TryGetValue<T>(Expression<Func<object>> parameterExpression)
         {
             return TryGetValueWithCache<T>(parameterExpression);
         }
