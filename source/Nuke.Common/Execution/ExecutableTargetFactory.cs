@@ -35,7 +35,7 @@ namespace Nuke.Common.Execution
                     .Select(x => x.GetProperty(property.Name))
                     .Where(x => x != null && x.DeclaringType == x.ReflectedType)
                     .Reverse().ToList();
-                var definition = new TargetDefinition(build, new Stack<PropertyInfo>(baseMembers));
+                var definition = new TargetDefinition(property, build, new Stack<PropertyInfo>(baseMembers));
 
                 var factory = (Target) property.GetValue(build);
                 factory.Invoke(definition);

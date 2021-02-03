@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
+using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Execution
@@ -16,12 +17,14 @@ namespace Nuke.Common.Execution
     {
         private readonly Stack<PropertyInfo> _baseMembers;
 
-        public TargetDefinition(NukeBuild build, Stack<PropertyInfo> baseMembers)
+        public TargetDefinition(PropertyInfo target, NukeBuild build, Stack<PropertyInfo> baseMembers)
         {
+            Target = target;
             Build = build;
             _baseMembers = baseMembers;
         }
 
+        public PropertyInfo Target { get; }
         public NukeBuild Build { get; }
 
         internal string Description { get; set; }
@@ -217,7 +220,12 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition Base()
         {
-            ControlFlow.Assert(_baseMembers.Count > 0, "_baseMembers.Count > 0");
+            ControlFlow.Assert(_baseMembers.Count > 0,
+                new[]
+                {
+                    $"Target '{Target.DeclaringType}.{Target.Name}' does not have any base members.",
+                    "To inherit from a interface default implementation, use Inherit<T>."
+                }.JoinNewLine());
             Inherit(_baseMembers.Pop().GetValueNonVirtual<Target>(Build));
             return this;
         }
