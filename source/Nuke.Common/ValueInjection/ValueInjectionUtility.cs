@@ -15,12 +15,25 @@ namespace Nuke.Common.ValueInjection
 {
     public static class ValueInjectionUtility
     {
+        private static readonly Dictionary<MemberInfo, object> s_valueCache = new Dictionary<MemberInfo, object>();
+
+        [CanBeNull]
         public static T TryGetValue<T>(Expression<Func<T>> parameterExpression)
         {
-            // TODO: caching?
-            var parameter = parameterExpression.GetMemberInfo();
-            var attribute = parameter.GetCustomAttribute<ValueInjectionAttributeBase>().NotNull();
-            return (T) attribute.TryGetValue(parameter, instance: null);
+            return TryGetValueWithCache<T>(parameterExpression);
+        }
+
+        private static T TryGetValueWithCache<T>(LambdaExpression lambdaExpression)
+        {
+            var parameter = lambdaExpression.GetMemberInfo();
+
+            object GetValue()
+            {
+                var attribute = parameter.GetCustomAttribute<ValueInjectionAttributeBase>().NotNull();
+                return attribute.TryGetValue(parameter, instance: null);
+            }
+
+            return (T) (s_valueCache[parameter] = s_valueCache.GetValueOrDefault(parameter) ?? GetValue());
         }
 
         public static void InjectValues<T>(T instance = default, Func<ValueInjectionAttributeBase, bool> filter = null)
