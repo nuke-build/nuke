@@ -89,6 +89,7 @@
     "https://raw.githubusercontent.com/docker/docker.github.io/50fe61e/_data/engine-cli/docker_engine.yaml",
     "https://raw.githubusercontent.com/docker/docker.github.io/50fe61e/_data/engine-cli/docker_system_prune.yaml",
     "https://raw.githubusercontent.com/docker/docker.github.io/50fe61e/_data/engine-cli/docker_builder.yaml",
+    "https://raw.githubusercontent.com/docker/docker.github.io/50fe61e/_data/buildx/docker_buildx_build.yaml",
     "https://raw.githubusercontent.com/docker/docker.github.io/50fe61e/_data/engine-cli/docker_container_pause.yaml",
     "https://raw.githubusercontent.com/docker/docker.github.io/50fe61e/_data/engine-cli/docker_container_commit.yaml",
     "https://raw.githubusercontent.com/docker/docker.github.io/50fe61e/_data/engine-cli/docker_context_ls.yaml",
@@ -8271,6 +8272,238 @@
       }
     },
     {
+      "help": "Build an image from a Dockerfile using Docker Buildx plugin.",
+      "postfix": "BuildxBuild",
+      "definiteArgument": "buildx build",
+      "settingsClass": {
+        "baseClass": "DockerSettings",
+        "properties": [
+          {
+            "name": "AddHost",
+            "type": "List<string>",
+            "format": "--add-host {value}",
+            "help": "Add a custom host-to-IP mapping <c>host:ip</c>."
+          },
+          {
+            "name": "Allow",
+            "type": "List<string>",
+            "format": "--allow  {value}",
+            "help": "Allow extra privileged entitlement, e.g. <c>network.host</c>, <c>security.insecure</c>."
+          },
+          {
+            "name": "BuildArg",
+            "type": "List<string>",
+            "format": "--build-arg {value}",
+            "help": "Set build-time variables."
+          },
+          {
+            "name": "Builder",
+            "type": "string",
+            "format": "--builder {value}",
+            "help": "Override the configured builder instance."
+          },
+          {
+            "name": "CacheFrom",
+            "type": "List<string>",
+            "format": "--cache-from {value}",
+            "help": "External cache sources (eg. <c>user/app:cache, type=local,src=path/to/dir</c>)."
+          },
+          {
+            "name": "CacheTo",
+            "type": "List<string>",
+            "format": "--cache-to {value}",
+            "help": "Cache export destinations (eg. <c>user/app:cache, type=local,dest=path/to/dir</c>)"
+          },
+          {
+            "name": "CgroupParent",
+            "type": "string",
+            "format": "--cgroup-parent {value}",
+            "help": "Optional parent cgroup for the container."
+          },
+          {
+            "name": "Compress",
+            "type": "bool",
+            "format": "--compress",
+            "help": "Compress the build context using gzip."
+          },
+          {
+            "name": "CpuPeriod",
+            "type": "long?",
+            "format": "--cpu-period {value}",
+            "help": "Limit the CPU CFS (Completely Fair Scheduler) period."
+          },
+          {
+            "name": "CpuQuota",
+            "type": "long?",
+            "format": "--cpu-quota {value}",
+            "help": "Limit the CPU CFS (Completely Fair Scheduler) quota."
+          },
+          {
+            "name": "CpuShares",
+            "type": "long?",
+            "format": "--cpu-shares {value}",
+            "help": "CPU shares (relative weight)."
+          },
+          {
+            "name": "CpusetCpus",
+            "type": "string",
+            "format": "--cpuset-cpus {value}",
+            "help": "CPUs in which to allow execution (<c>0-3</c>, <c>0,1</c>)."
+          },
+          {
+            "name": "CpusetMems",
+            "type": "string",
+            "format": "--cpuset-mems {value}",
+            "help": "MEMs in which to allow execution (<c>0-3</c>, <c>0,1</c>)."
+          },
+          {
+            "name": "File",
+            "type": "string",
+            "format": "--file {value}",
+            "help": "Name of the Dockerfile (Default is <c>PATH/Dockerfile</c>)."
+          },
+          {
+            "name": "Iidfile",
+            "type": "string",
+            "format": "--iidfile {value}",
+            "help": "Write the image ID to the file."
+          },
+          {
+            "name": "Isolation",
+            "type": "string",
+            "format": "--isolation {value}",
+            "help": "Container isolation technology."
+          },
+          {
+            "name": "Label",
+            "type": "List<string>",
+            "format": "--label {value}",
+            "help": "Set metadata for an image."
+          },
+          {
+            "name": "Load",
+            "type": "bool",
+            "format": "--load",
+            "help": "Shorthand for <c>--output=type=docker</c>"
+          },
+          {
+            "name": "Memory",
+            "type": "long?",
+            "format": "--memory {value}",
+            "help": "Memory limit."
+          },
+          {
+            "name": "MemorySwap",
+            "type": "long?",
+            "format": "--memory-swap {value}",
+            "help": "Swap limit equal to memory plus swap: <c>-1</c> to enable unlimited swap."
+          },
+          {
+            "name": "Network",
+            "type": "string",
+            "format": "--network {value}",
+            "help": "Set the networking mode for the <c>RUN</c> instructions during build."
+          },
+          {
+            "name": "NoCache",
+            "type": "bool",
+            "format": "--no-cache",
+            "help": "Do not use cache when building the image."
+          },
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "--output {value}",
+            "help": "Output destination (format: <c>type=local,dest=path</c>)."
+          },
+          {
+            "name": "Platform",
+            "type": "string",
+            "format": "--platform {value}",
+            "help": "Set platform if server is multi-platform capable."
+          },
+          {
+            "name": "Progress",
+            "type": "ProgressType",
+            "format": "--progress {value}",
+            "help": "Set type of progress output (<c>auto</c>, <c>plain</c>, <c>tty</c>). Use plain to show container output."
+          },
+          {
+            "name": "Pull",
+            "type": "bool",
+            "format": "--pull",
+            "help": "Always attempt to pull a newer version of the image."
+          },
+          {
+            "name": "Push",
+            "type": "bool",
+            "format": "--push",
+            "help": "Shorthand for <c>--output=type=registry</c>"
+          },
+          {
+            "name": "Quiet",
+            "type": "bool",
+            "format": "--quiet",
+            "help": "Suppress the build output and print image ID on success."
+          },
+          {
+            "name": "Rm",
+            "type": "bool",
+            "format": "--rm",
+            "help": "Remove intermediate containers after a successful build."
+          },
+          {
+            "name": "Secret",
+            "type": "string",
+            "format": "--secret {value}",
+            "help": "Secret file to expose to the build (only if BuildKit enabled): <c>id=mysecret,src=/local/secret</c>."
+          },
+          {
+            "name": "SecurityOpt",
+            "type": "List<string>",
+            "format": "--security-opt {value}",
+            "help": "Security options."
+          },
+          {
+            "name": "ShmSize",
+            "type": "long?",
+            "format": "--shm-size {value}",
+            "help": "Size of <c>/dev/shm</c>."
+          },
+          {
+            "name": "Ssh",
+            "type": "string",
+            "format": "--ssh {value}",
+            "help": "SSH agent socket or keys to expose to the build (only if BuildKit enabled) (format: default|&lt;id&gt;[=&lt;socket&gt;|&lt;key&gt;[,&lt;key&gt;]])."
+          },
+          {
+            "name": "Tag",
+            "type": "List<string>",
+            "format": "--tag {value}",
+            "help": "Name and optionally a tag in the <c>name:tag</c> format."
+          },
+          {
+            "name": "Target",
+            "type": "string",
+            "format": "--target {value}",
+            "help": "Set the target build stage to build."
+          },
+          {
+            "name": "Ulimit",
+            "type": "string",
+            "format": "--ulimit {value}",
+            "help": "Ulimit options."
+          },
+          {
+            "name": "Path",
+            "type": "string",
+            "format": "{value}",
+            "help": "Path or url where the build context is located."
+          }
+        ]
+      }
+    },
+    {
       "help": "Display a live stream of container(s) resource usage statistics.",
       "postfix": "Stats",
       "definiteArgument": "stats",
@@ -9557,9 +9790,9 @@
           },
           {
             "name": "Progress",
-            "type": "string",
+            "type": "ProgressType",
             "format": "--progress {value}",
-            "help": "Set type of progress output (auto, plain, tty). Use plain to show container output."
+            "help": "Set type of progress output (<c>auto</c>, <c>plain</c>, <c>tty</c>). Use plain to show container output."
           },
           {
             "name": "Pull",
@@ -9776,6 +10009,14 @@
         "always",
         "changed",
         "never"
+      ]
+    },
+    {
+      "name": "ProgressType",
+      "values": [
+        "auto",
+        "plain",
+        "tty"
       ]
     }
   ]
