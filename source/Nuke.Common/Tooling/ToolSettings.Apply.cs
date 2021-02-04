@@ -9,13 +9,13 @@ namespace Nuke.Common.Tooling
     partial class ToolSettingsExtensions
     {
         public static T Apply<T>(this T settings, Configure<T> configurator)
-            where T : ToolSettings
+            where T : ToolSettings, new()
         {
             return configurator(settings);
         }
 
         public static T[] Apply<T>(this T[] settings, Configure<T> configurator)
-            where T : ToolSettings
+            where T : ToolSettings, new()
         {
             return settings.Select(x => configurator(x)).ToArray();
         }

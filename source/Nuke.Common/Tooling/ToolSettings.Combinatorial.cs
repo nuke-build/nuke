@@ -11,25 +11,25 @@ namespace Nuke.Common.Tooling
     partial class ToolSettingsExtensions
     {
         public static T[] CombineWith<T>(this T toolSettings, params Configure<T>[] configurators)
-            where T : ToolSettings
+            where T : ToolSettings, new()
         {
             return configurators.Select(x => x(toolSettings)).ToArray();
         }
 
         public static T[] CombineWith<T>(this T toolSettings, params CombinatorialConfigure<T>[] configurators)
-            where T : ToolSettings
+            where T : ToolSettings, new()
         {
             return configurators.SelectMany(x => x(toolSettings)).ToArray();
         }
 
         public static T[] CombineWith<T>(this IEnumerable<T> toolSettings, params Configure<T>[] configurators)
-            where T : ToolSettings
+            where T : ToolSettings, new()
         {
             return configurators.SelectMany(x => toolSettings.Select(y => x(y))).ToArray();
         }
 
         public static T[] CombineWith<T>(this IEnumerable<T> toolSettings, params CombinatorialConfigure<T>[] configurators)
-            where T : ToolSettings
+            where T : ToolSettings, new()
         {
             return configurators.SelectMany(x => toolSettings.SelectMany(y => x(y))).ToArray();
         }
@@ -55,6 +55,7 @@ namespace Nuke.Common.Tooling
         public static T[] CombineWith<T, TValue>(
             this IEnumerable<T> toolSettings,
             IEnumerable<TValue> values,
+            // TODO: add delegate type?
             Func<T, TValue, IEnumerable<T>> configurator)
             where T : ToolSettings
         {
