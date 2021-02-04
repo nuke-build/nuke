@@ -14,6 +14,9 @@ namespace Nuke.Common.Tooling
     public delegate T Configure<T>(T settings)
         where T : new();
 
+    public delegate TSettings Configure<TSettings, in TValue>(TSettings settings, TValue value)
+        where TSettings : new();
+
     public delegate IEnumerable<T> CombinatorialConfigure<T>(T settings)
         where T : new();
 

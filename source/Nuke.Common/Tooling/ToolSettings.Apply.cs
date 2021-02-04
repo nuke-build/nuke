@@ -19,5 +19,17 @@ namespace Nuke.Common.Tooling
         {
             return settings.Select(x => configurator(x)).ToArray();
         }
+
+        public static TSettings Apply<TSettings, TValue>(this TSettings settings, Configure<TSettings, TValue> configurator, TValue value)
+            where TSettings : ToolSettings, new()
+        {
+            return configurator(settings, value);
+        }
+
+        public static TSettings[] Apply<TSettings, TValue>(this TSettings[] settings, Configure<TSettings, TValue> configurator, TValue value)
+            where TSettings : ToolSettings, new()
+        {
+            return settings.Select(x => configurator(x, value)).ToArray();
+        }
     }
 }
