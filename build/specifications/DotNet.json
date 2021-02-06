@@ -743,12 +743,6 @@
             "help": "Adds an additional NuGet package source to use during installation."
           },
           {
-            "name": "PackageName",
-            "type": "string",
-            "format": "{value}",
-            "help": "The Name/ID of the NuGet package that contains the .NET Core Global Tool to install."
-          },
-          {
             "name": "ToolManifest",
             "type": "string",
             "format": "--tool-manifest {value}",
