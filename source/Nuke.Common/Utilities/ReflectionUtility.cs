@@ -132,5 +132,10 @@ namespace Nuke.Common.Utilities
                    method.HasCustomAttribute<ExtensionAttribute>() &&
                    method.GetParameters().First() == parameter;
         }
+
+        public static string GetPossibleExplicitName(this MemberInfo member)
+        {
+            return $"{member.DeclaringType.NotNull().FullName.NotNull().Replace("+", ".")}.{member.Name}";
+        }
     }
 }
