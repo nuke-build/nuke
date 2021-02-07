@@ -12,6 +12,11 @@ namespace Nuke.Common.Utilities
 {
     public static partial class ReflectionUtility
     {
+        public static T CreateInstance<T>(this Type type, params object[] args)
+        {
+            return (T) Activator.CreateInstance(type, args);
+        }
+
         public static T GetValue<T>(this MemberInfo member, object obj = null, object[] args = null)
         {
             return (T) GetValue(member, obj, args);
