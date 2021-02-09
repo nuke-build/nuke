@@ -137,5 +137,15 @@ namespace Nuke.Common.Utilities
         {
             return $"{member.DeclaringType.NotNull().FullName.NotNull().Replace("+", ".")}.{member.Name}";
         }
+
+        public static MemberInfo GetImplementedOrInterfaceMember(this MemberInfo member, Type classType)
+        {
+            ControlFlow.Assert(classType.IsClass, "classType.IsClass");
+            return member.DeclaringType != classType
+                ? classType.GetMember(member.Name).SingleOrDefault() ??
+                  classType.GetMember(member.GetPossibleExplicitName(), Instance).SingleOrDefault() ??
+                  member
+                : member;
+        }
     }
 }
