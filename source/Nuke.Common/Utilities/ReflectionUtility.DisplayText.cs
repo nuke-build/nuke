@@ -23,6 +23,11 @@ namespace Nuke.Common.Utilities
             return type.GetDisplayShortName(tupleNames: null);
         }
 
+        public static string GetDisplayShortName(this MemberInfo member)
+        {
+            return member.Name.Split('.').Last();
+        }
+
         internal static string GetDisplayShortName(this Type type, IList<string> tupleNames)
         {
             var aliases = new Dictionary<Type, string>
