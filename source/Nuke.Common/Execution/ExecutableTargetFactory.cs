@@ -24,7 +24,7 @@ namespace Nuke.Common.Execution
             where T : NukeBuild
         {
             var buildType = build.GetType();
-            var targetProperties = GetTargetProperties(buildType);
+            var targetProperties = GetTargetProperties(build.GetType()).ToList();
             var defaultTargets = defaultTargetExpressions.Select(x => x.Compile().Invoke(build)).ToList();
 
             var executables = new List<ExecutableTarget>();
@@ -42,7 +42,7 @@ namespace Nuke.Common.Execution
 
                 var target = new ExecutableTarget
                              {
-                                 Name = property.Name,
+                                 Name = property.GetDisplayShortName(),
                                  Member = property,
                                  Definition = definition,
                                  Description = definition.Description,
@@ -87,34 +87,13 @@ namespace Nuke.Common.Execution
             return executables;
         }
 
+
         internal static IEnumerable<PropertyInfo> GetTargetProperties(Type buildType)
         {
             // TODO: static targets?
-            var interfaceProperties = buildType.GetInterfaces()
-                .SelectMany(x => x.GetProperties(ReflectionUtility.Instance))
-                .Where(x => x.PropertyType == typeof(Target))
-                .Where(x => buildType.GetProperty(x.Name) == null).ToLookup(x => x.Name);
-            var classProperties = buildType
-                .GetProperties(ReflectionUtility.Instance)
-                .Where(x => x.PropertyType == typeof(Target))
-                .Where(x => !x.Name.Contains(".")).ToDictionary(x => x.Name);
-
-            foreach (var interfacePropertiesByName in interfaceProperties)
-            {
-                var propertyName = interfacePropertiesByName.Key;
-                var classProperty = classProperties.GetValueOrDefault(propertyName);
-                ControlFlow.Assert(interfacePropertiesByName.Count() == 1 || classProperty != null,
-                    new[] { $"Target '{propertyName}' must be implemented explicitly because it is inherited from multiple interfaces:" }
-                        .Concat(interfacePropertiesByName.Select(x => $" - {x.DeclaringType.NotNull().Name}"))
-                        .JoinNewLine());
-                ControlFlow.Assert(classProperty == null || classProperty.IsPublic(),
-                    new[] { $"Target '{propertyName}' must be marked public to override inherited member from:" }
-                        .Concat(interfacePropertiesByName.Select(x => $" - {x.DeclaringType.NotNull().Name}"))
-                        .JoinNewLine());
-            }
-
-            return classProperties.Values
-                .Concat(interfaceProperties.SelectMany(x => x)).ToList();
+            return buildType.GetAllMembers(
+                x => x is PropertyInfo property && property.PropertyType == typeof(Target),
+                ReflectionUtility.Instance).Cast<PropertyInfo>();
         }
     }
 }
