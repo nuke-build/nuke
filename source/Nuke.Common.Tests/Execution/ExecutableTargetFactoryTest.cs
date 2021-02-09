@@ -87,18 +87,20 @@ namespace Nuke.Common.Tests.Execution
             var build = new TestFinalBuild();
             var targets = ExecutableTargetFactory.CreateAll(build);
 
-            var shared = targets.Single(x => x.Name == nameof(TestFinalBuild.SharedTarget));
-            var specific = targets.Single(x => x.Name == nameof(TestFinalBuild.SpecificTarget));
+            var shared = targets.Should().ContainSingle(x => x.Name == nameof(TestFinalBuild.SharedTarget)).Subject;
+            var override_ = targets.Should().ContainSingle(x => x.Name == nameof(TestFinalBuild.SpecificTarget)).Subject;
+            var explicitBase = targets.Should().ContainSingle(x => x.Name == nameof(ITestSharedBuild.ExplicitSharedTarget)).Subject;
+            var explicit_ = targets.Should().ContainSingle(x => x.Name == nameof(IAnotherSharedBuild.ExplicitTarget)).Subject;
 
             shared.Actions.Should().HaveCount(1);
             shared.ExecutionDependencies.Single().Name.Should().Be(nameof(TestFinalBuild.SpecificTarget));
             shared.Description.Should().Be(nameof(TestFinalBuild.SharedTarget));
 
-            specific.Actions.Should().HaveCount(1);
-            specific.OrderDependencies.Single().Name.Should().Be(nameof(TestFinalBuild.SharedTarget));
-            specific.Description.Should().Be(nameof(TestFinalBuild.SpecificTarget));
+            override_.Actions.Should().HaveCount(1);
+            override_.OrderDependencies.Single().Name.Should().Be(nameof(TestFinalBuild.SharedTarget));
+            override_.Description.Should().Be(nameof(TestFinalBuild.SpecificTarget));
 
-            targets.Should().HaveCount(7);
+            targets.Should().HaveCount(8);
             targets.Single(x => x.Name == nameof(ITestSharedBuild.AbstractSharedTarget)).Description.Should().Be("RIGHT");
             targets.Single(x => x.Name == nameof(ITestSharedBuild.ExplicitSharedTarget)).Description.Should().Be("RIGHT");
             targets.Single(x => x.Name == nameof(IAnotherSharedBuild.ExplicitTargetWithDefault)).Description.Should().Be("RIGHT");
@@ -107,6 +109,7 @@ namespace Nuke.Common.Tests.Execution
         }
 
         private interface ITestSharedBuild
+            : INukeBuild
         {
             Target SharedTarget => _ => _
                 .Executes(() => { });
@@ -136,10 +139,12 @@ namespace Nuke.Common.Tests.Execution
         }
 
         private interface IAnotherSharedBuild
+            : INukeBuild
         {
             Target ExplicitTargetWithDefault => _ => _.Description("WRONG");
             Target ExplicitTargetWithoutDefault { get; }
             Target TargetWithDefault => _ => _.Description("RIGHT");
+            Target ExplicitTarget => _ => _;
         }
 
         private class TestFinalBuild : TestIntermediateBuild, IAnotherSharedBuild
@@ -156,6 +161,7 @@ namespace Nuke.Common.Tests.Execution
 
             Target IAnotherSharedBuild.ExplicitTargetWithDefault => _ => _.Description("RIGHT");
             Target IAnotherSharedBuild.ExplicitTargetWithoutDefault => _ => _.Description("RIGHT");
+            Target IAnotherSharedBuild.ExplicitTarget => _ => _;
         }
     }
 }
