@@ -28,6 +28,8 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile --skip'
+            env:
+              EnterpriseAccessToken: $(EnterpriseAccessToken)
       - job: Test
         displayName: '🚦 Test 🧩'
         dependsOn: [ Compile ]
@@ -37,6 +39,8 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
+            env:
+              EnterpriseAccessToken: $(EnterpriseAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: test-results
@@ -48,6 +52,8 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Pack --skip'
+            env:
+              EnterpriseAccessToken: $(EnterpriseAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: packages
@@ -65,6 +71,8 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile --skip'
+            env:
+              EnterpriseAccessToken: $(EnterpriseAccessToken)
       - job: Test
         displayName: '🚦 Test 🧩'
         dependsOn: [ Compile ]
@@ -74,6 +82,8 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
+            env:
+              EnterpriseAccessToken: $(EnterpriseAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: test-results
@@ -85,6 +95,8 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Pack --skip'
+            env:
+              EnterpriseAccessToken: $(EnterpriseAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: packages
@@ -102,6 +114,8 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile --skip'
+            env:
+              EnterpriseAccessToken: $(EnterpriseAccessToken)
       - job: Test
         displayName: '🚦 Test 🧩'
         dependsOn: [ Compile ]
@@ -111,6 +125,8 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
+            env:
+              EnterpriseAccessToken: $(EnterpriseAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: test-results
@@ -122,6 +138,8 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Pack --skip'
+            env:
+              EnterpriseAccessToken: $(EnterpriseAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: packages

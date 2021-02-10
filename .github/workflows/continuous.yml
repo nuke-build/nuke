@@ -42,6 +42,7 @@ jobs:
         run: ./build.cmd Test Pack
         env:
             CodecovToken: ${{ secrets.CODECOV_TOKEN }}
+            EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
   ubuntu-latest:
     name: ubuntu-latest
     runs-on: ubuntu-latest
@@ -58,6 +59,7 @@ jobs:
         run: ./build.cmd Test Pack
         env:
             CodecovToken: ${{ secrets.CODECOV_TOKEN }}
+            EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
   macOS-latest:
     name: macOS-latest
     runs-on: macOS-latest
@@ -74,3 +76,4 @@ jobs:
         run: ./build.cmd Test Pack
         env:
             CodecovToken: ${{ secrets.CODECOV_TOKEN }}
+            EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}

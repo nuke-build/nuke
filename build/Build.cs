@@ -78,7 +78,7 @@ using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
     OnPullRequestBranches = new[] { DevelopBranch },
     PublishArtifacts = false,
     InvokedTargets = new[] { nameof(Test), nameof(Pack) },
-    ImportSecrets = new[] { nameof(CodecovToken) })]
+    ImportSecrets = new[] { nameof(CodecovToken), nameof(EnterpriseAccessToken) })]
 [AppVeyor(
     AppVeyorImage.VisualStudio2019,
     AppVeyorImage.Ubuntu1804,
@@ -90,6 +90,7 @@ using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
     AzurePipelinesImage.UbuntuLatest,
     AzurePipelinesImage.WindowsLatest,
     AzurePipelinesImage.MacOsLatest,
+    ImportSecrets = new[] { nameof(EnterpriseAccessToken) },
     InvokedTargets = new[] { nameof(Test), nameof(Pack) },
     NonEntryTargets = new[] { nameof(Restore), nameof(DownloadFonts), nameof(InstallFonts), nameof(ReleaseImage) },
     ExcludedTargets = new[] { nameof(Clean), nameof(Coverage), nameof(SignPackages) })]
