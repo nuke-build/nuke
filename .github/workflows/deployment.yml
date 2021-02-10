@@ -20,8 +20,6 @@ on:
   push:
     branches:
       - master
-      - release/*
-      - develop
 
 jobs:
   macOS-latest:
