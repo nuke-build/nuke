@@ -74,6 +74,12 @@ project {
             checked = "True",
             unchecked = "False",
             display = ParameterDisplay.NORMAL)
+        text (
+            "env.EnterpriseAccessToken",
+            label = "EnterpriseAccessToken",
+            value = "",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
         checkbox (
             "env.AutoStash",
             label = "AutoStash",

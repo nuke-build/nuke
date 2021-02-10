@@ -24,7 +24,7 @@ namespace Nuke.Common.Tests
             var solution = ProjectModelTasks.ParseSolution(SolutionFile);
 
             solution.SolutionFolders.Select(x => x.Name).Should().BeEquivalentTo("misc");
-            solution.AllProjects.Where(x => x.Is(ProjectType.CSharpProject)).Should().HaveCount(9);
+            solution.AllProjects.Where(x => x.Is(ProjectType.CSharpProject)).Should().HaveCountGreaterOrEqualTo(9);
 
             var buildProject = solution.AllProjects.SingleOrDefault(x => x.Name == "_build");
             buildProject.Should().NotBeNull();

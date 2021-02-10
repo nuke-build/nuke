@@ -50,6 +50,17 @@
     <ProjectReference Include="..\source\Nuke.CodeGeneration\Nuke.CodeGeneration.csproj" />
   </ItemGroup>
 
+  <!-- Import Nuke.Enterprise -->
+  <PropertyGroup Condition="Exists('..\external\enterprise\Nuke.Enterprise.csproj')">
+    <DefineConstants>$(DefineConstants);ENTERPRISE</DefineConstants>
+    <NukeEnterprise>True</NukeEnterprise>
+    <AppendTargetFrameworkToOutputPath>True</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\external\enterprise\Nuke.Enterprise.csproj" Condition="'$(NukeEnterprise)' == 'True'" />
+  </ItemGroup>
+
   <Import Project="..\source\Nuke.Common\Nuke.Common.targets" />
 
 </Project>

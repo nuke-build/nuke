@@ -36,3 +36,5 @@ environment:
   SignPathOrganizationId: 0fdaf334-6910-41f4-83d2-e58e4cccb087
   SignPathProjectSlug: nuke
   SignPathPolicySlug: release-signing
+  EnterpriseAccessToken:
+    secure: 3nWSVRsMDisi41a6kclhRl7pwacy5zLuWIMZy2J5yD+62uHga2Pquc1SiuIZgu2K
