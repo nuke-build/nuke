@@ -44,7 +44,7 @@ using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
 [GitHubActions(
     "deployment",
     GitHubActionsImage.MacOsLatest,
-    OnPushBranches = new[] { MasterBranch, ReleaseBranchPrefix + "/*", DevelopBranch },
+    OnPushBranches = new[] { MasterBranch },
     InvokedTargets = new[] { nameof(Publish) },
     ImportGitHubTokenAs = nameof(GitHubToken),
     ImportSecrets =
