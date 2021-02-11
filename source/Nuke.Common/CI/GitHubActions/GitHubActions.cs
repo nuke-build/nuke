@@ -72,6 +72,9 @@ namespace Nuke.Common.CI.GitHubActions
         public string GitHubBaseRef => EnvironmentInfo.GetVariable<string>("GITHUB_BASE_REF");
 
         public string GitHubRunNumber => EnvironmentInfo.GetVariable<string>("GITHUB_RUN_NUMBER");
+        public string GitHubRunId => EnvironmentInfo.GetVariable<string>("GITHUB_RUN_ID");
+        public string GitHubServerUrl => EnvironmentInfo.GetVariable<string>("GITHUB_SERVER_URL");
+        public string GitHubJob => EnvironmentInfo.GetVariable<string>("GITHUB_JOB");
 
         // https://github.com/actions/toolkit/tree/master/packages/core/src
 
