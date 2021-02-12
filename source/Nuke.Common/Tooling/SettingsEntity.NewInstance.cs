@@ -9,7 +9,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Nuke.Common.Tooling
 {
-    public static class SettingsEntityExtensions
+    public static partial class SettingsEntityExtensions
     {
         public static T NewInstance<T>(this T settingsEntity)
             where T : ISettingsEntity

@@ -6,28 +6,28 @@ using System.Linq;
 
 namespace Nuke.Common.Tooling
 {
-    partial class ToolSettingsExtensions
+    partial class SettingsEntityExtensions
     {
         public static T Apply<T>(this T settings, Configure<T> configurator)
-            where T : ToolSettings, new()
+            where T : ISettingsEntity, new()
         {
             return configurator(settings);
         }
 
         public static T[] Apply<T>(this T[] settings, Configure<T> configurator)
-            where T : ToolSettings, new()
+            where T : ISettingsEntity, new()
         {
             return settings.Select(x => configurator(x)).ToArray();
         }
 
         public static TSettings Apply<TSettings, TValue>(this TSettings settings, Configure<TSettings, TValue> configurator, TValue value)
-            where TSettings : ToolSettings, new()
+            where TSettings : ISettingsEntity, new()
         {
             return configurator(settings, value);
         }
 
         public static TSettings[] Apply<TSettings, TValue>(this TSettings[] settings, Configure<TSettings, TValue> configurator, TValue value)
-            where TSettings : ToolSettings, new()
+            where TSettings : ISettingsEntity, new()
         {
             return settings.Select(x => configurator(x, value)).ToArray();
         }
