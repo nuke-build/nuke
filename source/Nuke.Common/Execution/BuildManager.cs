@@ -36,21 +36,11 @@ namespace Nuke.Common.Execution
 
             var build = Create<T>();
 
-            void ExecuteExtension<TExtension>(Expression<Action<TExtension>> action)
-                where TExtension : IBuildExtension =>
-                build.GetType()
-                    .GetCustomAttributes()
-                    .OfType<TExtension>()
-                    .OrderByDescending(x => x.Priority)
-                    .ForEachLazy(x =>
-                        Logger.Trace($"[{action.GetMemberInfo().Name}] {x.GetType().Name.TrimEnd(nameof(Attribute))} ({x.Priority})"))
-                    .ForEach(action.Compile());
-
             try
             {
                 build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpressions);
 
-                ExecuteExtension<IOnBeforeLogo>(x => x.OnBeforeLogo(build, build.ExecutableTargets));
+                build.ExecuteExtension<IOnBeforeLogo>(x => x.OnBeforeLogo(build, build.ExecutableTargets));
                 build.OnBuildCreated();
 
                 Logger.OutputSink = NukeBuild.Host.OutputSink;
@@ -75,7 +65,7 @@ namespace Nuke.Common.Execution
                     build.ExecutableTargets,
                     EnvironmentInfo.GetParameter<string[]>(() => build.InvokedTargets));
 
-                ExecuteExtension<IOnAfterLogo>(x => x.OnAfterLogo(build, build.ExecutableTargets, build.ExecutionPlan));
+                build.ExecuteExtension<IOnAfterLogo>(x => x.OnAfterLogo(build, build.ExecutableTargets, build.ExecutionPlan));
                 build.OnBuildInitialized();
 
                 CancellationHandler += Finish;
@@ -107,7 +97,7 @@ namespace Nuke.Common.Execution
                 Logger.OutputSink.WriteSummary(build);
 
                 build.OnBuildFinished();
-                ExecuteExtension<IOnBuildFinished>(x => x.OnBuildFinished(build));
+                build.ExecuteExtension<IOnBuildFinished>(x => x.OnBuildFinished(build));
             }
         }
 
