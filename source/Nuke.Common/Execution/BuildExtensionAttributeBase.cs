@@ -32,6 +32,26 @@ namespace Nuke.Common.Execution
             IReadOnlyCollection<ExecutableTarget> executionPlan);
     }
 
+    public interface IOnTargetSkipped : IBuildExtension
+    {
+        void OnTargetSkipped(NukeBuild build, ExecutableTarget target);
+    }
+
+    public interface IOnTargetStart : IBuildExtension
+    {
+        void OnTargetStart(NukeBuild build, ExecutableTarget target);
+    }
+
+    public interface IOnTargetExecuted : IBuildExtension
+    {
+        void OnTargetExecuted(NukeBuild build, ExecutableTarget target);
+    }
+
+    public interface IOnTargetFailed : IBuildExtension
+    {
+        void OnTargetFailed(NukeBuild build, ExecutableTarget target);
+    }
+
     public interface IOnBuildFinished : IBuildExtension
     {
         void OnBuildFinished(NukeBuild build);
