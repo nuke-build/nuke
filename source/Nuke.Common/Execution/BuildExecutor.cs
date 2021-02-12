@@ -89,6 +89,7 @@ namespace Nuke.Common.Execution
                 HasSkippingCondition(target, target.DynamicConditions))
             {
                 target.Status = ExecutionStatus.Skipped;
+                build.ExecuteExtension<IOnTargetSkipped>(x => x.OnTargetSkipped(build, target));
                 build.OnTargetSkipped(target.Name);
                 AppendToBuildAttemptFile(target.Name);
                 return;
@@ -103,12 +104,14 @@ namespace Nuke.Common.Execution
             using (Logger.Block(target.Name))
             {
                 target.Status = ExecutionStatus.Executing;
+                build.ExecuteExtension<IOnTargetStart>(x => x.OnTargetStart(build, target));
                 build.OnTargetStart(target.Name);
                 var stopwatch = Stopwatch.StartNew();
                 try
                 {
                     target.Actions.ForEach(x => x());
                     target.Status = ExecutionStatus.Executed;
+                    build.ExecuteExtension<IOnTargetExecuted>(x => x.OnTargetExecuted(build, target));
                     build.OnTargetExecuted(target.Name);
                     AppendToBuildAttemptFile(target.Name);
                 }
@@ -116,6 +119,7 @@ namespace Nuke.Common.Execution
                 {
                     Logger.Error(exception);
                     target.Status = ExecutionStatus.Failed;
+                    build.ExecuteExtension<IOnTargetFailed>(x => x.OnTargetFailed(build, target));
                     build.OnTargetFailed(target.Name);
                     if (!target.ProceedAfterFailure && !failureMode)
                         throw new TargetExecutionException(target.Name, exception);
