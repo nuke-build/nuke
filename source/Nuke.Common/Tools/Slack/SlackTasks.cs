@@ -6,11 +6,15 @@ using System;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Nuke.Common.Gitter;
+using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.Slack
@@ -51,6 +55,31 @@ namespace Nuke.Common.Tools.Slack
             var response = await client.UploadDataTaskAsync(webhook, "POST", bytes);
             var responseText = Encoding.UTF8.GetString(response);
             ControlFlow.Assert(responseText == "ok", $"'{responseText}' == 'ok'");
+        }
+
+        public static async Task<string> SendOrUpdateSlackMessage(Configure<SlackMessage> configurator, string accessToken)
+        {
+            var message = configurator(new SlackMessage());
+            var response = await PostMessage(
+                message.Timestamp == null
+                    ? "https://slack.com/api/chat.postMessage"
+                    : "https://slack.com/api/chat.update",
+                message,
+                accessToken);
+            return response["ts"].NotNull().Value<string>();
+        }
+
+        private static async Task<JObject> PostMessage(string url, object message, string accessToken)
+        {
+            var httpHandler = new GitterTasks.AuthenticatedHttpClientHandler(accessToken);
+            using var client = new HttpClient(httpHandler);
+
+            var payload = JsonConvert.SerializeObject(message);
+            var response = await client.PostAsync(url, new StringContent(payload, Encoding.UTF8, "application/json"));
+            var responseContent = await response.Content.ReadAsStringAsync();
+            ControlFlow.Assert(response.StatusCode == HttpStatusCode.OK, responseContent);
+
+            return SerializationTasks.JsonDeserialize<JObject>(responseContent);
         }
     }
 }

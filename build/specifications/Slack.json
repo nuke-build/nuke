@@ -13,6 +13,16 @@
       "extensionMethods": true,
       "properties": [
         {
+          "name": "Timestamp",
+          "type": "string",
+          "json": "ts"
+        },
+        {
+          "name": "ThreadTimestamp",
+          "type": "string",
+          "json": "thread_ts"
+        },
+        {
           "name": "Channel",
           "type": "string",
           "json": "channel"
