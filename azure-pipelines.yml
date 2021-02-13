@@ -29,7 +29,10 @@ stages:
             inputs:
               script: './build.cmd Restore Compile --skip'
             env:
+              AccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
+              AppAccessToken: $(AppAccessToken)
+              UserAccessToken: $(UserAccessToken)
       - job: Test
         displayName: '🚦 Test 🧩'
         dependsOn: [ Compile ]
@@ -40,7 +43,10 @@ stages:
             inputs:
               script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
             env:
+              AccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
+              AppAccessToken: $(AppAccessToken)
+              UserAccessToken: $(UserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: test-results
@@ -53,7 +59,10 @@ stages:
             inputs:
               script: './build.cmd Pack --skip'
             env:
+              AccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
+              AppAccessToken: $(AppAccessToken)
+              UserAccessToken: $(UserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: packages
@@ -72,7 +81,10 @@ stages:
             inputs:
               script: './build.cmd Restore Compile --skip'
             env:
+              AccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
+              AppAccessToken: $(AppAccessToken)
+              UserAccessToken: $(UserAccessToken)
       - job: Test
         displayName: '🚦 Test 🧩'
         dependsOn: [ Compile ]
@@ -83,7 +95,10 @@ stages:
             inputs:
               script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
             env:
+              AccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
+              AppAccessToken: $(AppAccessToken)
+              UserAccessToken: $(UserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: test-results
@@ -96,7 +111,10 @@ stages:
             inputs:
               script: './build.cmd Pack --skip'
             env:
+              AccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
+              AppAccessToken: $(AppAccessToken)
+              UserAccessToken: $(UserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: packages
@@ -115,7 +133,10 @@ stages:
             inputs:
               script: './build.cmd Restore Compile --skip'
             env:
+              AccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
+              AppAccessToken: $(AppAccessToken)
+              UserAccessToken: $(UserAccessToken)
       - job: Test
         displayName: '🚦 Test 🧩'
         dependsOn: [ Compile ]
@@ -126,7 +147,10 @@ stages:
             inputs:
               script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
             env:
+              AccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
+              AppAccessToken: $(AppAccessToken)
+              UserAccessToken: $(UserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: test-results
@@ -139,7 +163,10 @@ stages:
             inputs:
               script: './build.cmd Pack --skip'
             env:
+              AccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
+              AppAccessToken: $(AppAccessToken)
+              UserAccessToken: $(UserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: packages

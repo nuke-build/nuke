@@ -43,6 +43,8 @@ jobs:
         env:
             CodecovToken: ${{ secrets.CODECOV_TOKEN }}
             EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
+            AppAccessToken: ${{ secrets.APP_ACCESS_TOKEN }}
+            UserAccessToken: ${{ secrets.USER_ACCESS_TOKEN }}
   ubuntu-latest:
     name: ubuntu-latest
     runs-on: ubuntu-latest
@@ -60,6 +62,8 @@ jobs:
         env:
             CodecovToken: ${{ secrets.CODECOV_TOKEN }}
             EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
+            AppAccessToken: ${{ secrets.APP_ACCESS_TOKEN }}
+            UserAccessToken: ${{ secrets.USER_ACCESS_TOKEN }}
   macOS-latest:
     name: macOS-latest
     runs-on: macOS-latest
@@ -77,3 +81,5 @@ jobs:
         env:
             CodecovToken: ${{ secrets.CODECOV_TOKEN }}
             EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
+            AppAccessToken: ${{ secrets.APP_ACCESS_TOKEN }}
+            UserAccessToken: ${{ secrets.USER_ACCESS_TOKEN }}
