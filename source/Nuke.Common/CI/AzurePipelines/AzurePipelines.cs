@@ -110,6 +110,7 @@ namespace Nuke.Common.CI.AzurePipelines
         public void UpdateBuildNumber(string buildNumber)
         {
             WriteCommand("build.updatebuildnumber", buildNumber);
+            EnvironmentInfo.SetVariable("BUILD_BUILDNUMBER", buildNumber);
         }
 
         public void AddBuildTag(string buildTag)
