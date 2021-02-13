@@ -120,7 +120,7 @@ namespace Nuke.Common.CI.TeamCity
 
         public string BuildConfiguration => SystemProperties["teamcity.buildConfName"];
         public string BuildTypeId => SystemProperties["teamcity.buildType.id"];
-        [NoConvert] public string BuildNumber => SystemProperties["build.number"];
+        [NoConvert] public string BuildNumber => EnvironmentInfo.GetVariable<string>("BUILD_NUMBER");
         public string BuildVcsNumber => SystemProperties["build.vcs.number"];
         public string Version => SystemProperties["teamcity.version"];
         public string ProjectName => SystemProperties["teamcity.projectName"];
@@ -188,6 +188,7 @@ namespace Nuke.Common.CI.TeamCity
         public void SetBuildNumber(string number)
         {
             Write("buildNumber", number);
+            EnvironmentInfo.SetVariable("BUILD_NUMBER", number);
         }
 
         public void SetConfigurationParameter(string name, string value)
