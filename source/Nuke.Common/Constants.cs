@@ -18,7 +18,10 @@ namespace Nuke.Common
             "GitVersion",
             "MSBuild",
             "NuGet",
-            "ReSharper"
+            "ReSharper",
+            "AppVeyor",
+            "TeamCity",
+            "GitLab"
         };
 
         internal const string ConfigurationFileName = ".nuke";
