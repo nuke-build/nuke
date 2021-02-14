@@ -68,7 +68,8 @@ namespace Nuke.Common
 
         protected Host()
         {
-            ControlFlow.Assert(Instance == null, "Instance == null");
+            // TODO: check assertion
+            // ControlFlow.Assert(Instance == null, "Instance == null");
             Instance = this;
         }
 
