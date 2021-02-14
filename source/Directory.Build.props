@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <LangVersion>preview</LangVersion>
-    <NoWarn>1701;1702;1591;NU5129;NU5118</NoWarn>
+    <NoWarn>CS1701;CS1702;CS1591;CS0169;NU5129;NU5118</NoWarn>
     <DefineConstants>$(DefineConstants);JETBRAINS_ANNOTATIONS</DefineConstants>
     <DebugSymbols>True</DebugSymbols>
     <DebugType>portable</DebugType>
