@@ -69,11 +69,13 @@ project {
             value = "1 2",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
-        text (
+        select (
             "env.ConfigurationArray",
             label = "ConfigurationArray",
             value = "Debug Release",
-            allowEmpty = true,
+            allowMultiple = true,
+            valueSeparator = " ",
+            options = listOf("Debug" to "Debug", "Release" to "Release"),
             display = ParameterDisplay.NORMAL)
         text (
             "env.Source",
