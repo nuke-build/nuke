@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Newtonsoft.Json.Linq;
 using Nuke.Common.Execution;
+using Nuke.Common.ValueInjection;
 using VerifyXunit;
 using Xunit;
 
@@ -71,10 +72,17 @@ namespace Nuke.Common.Tests
                 });
         }
 
-        class TestBuild : NukeBuild
+        class TestBuild : NukeBuild, ITestComponent
         {
-            [Parameter] private bool? NullableBool;
-            [Parameter] private int? NullableInteger;
+            [Parameter] public string Param;
+            [Parameter] public bool? NullableBool;
+            [Parameter] public int? NullableInteger;
+        }
+
+        [ParameterPrefix("Component")]
+        interface ITestComponent : INukeBuild
+        {
+            [Parameter] string Param => ValueInjectionUtility.TryGetValue(() => Param);
         }
     }
 }
