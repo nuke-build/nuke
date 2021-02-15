@@ -50,6 +50,7 @@ namespace Nuke.Common
         internal static IEnumerable<Type> AvailableTypes
             => AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(x => x.GetTypes())
+                .Where(x => x.IsPublic)
                 .Where(x => x.IsSubclassOf(typeof(Host)));
 
         private static bool IsRunning(Type hostType)
