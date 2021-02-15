@@ -77,6 +77,18 @@
             "enum": []
           }
         },
+        "Verbosities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "Minimal",
+              "Normal",
+              "Quiet",
+              "Verbose"
+            ]
+          }
+        },
         "Verbosity": {
           "type": "string",
           "description": "Logging verbosity during build execution. Default is 'Normal'",

@@ -77,6 +77,7 @@ namespace Nuke.Common.Tests
             [Parameter] public string Param;
             [Parameter] public bool? NullableBool;
             [Parameter] public int? NullableInteger;
+            [Parameter] public Verbosity[] Verbosities;
         }
 
         [ParameterPrefix("Component")]
