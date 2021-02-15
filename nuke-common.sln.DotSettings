@@ -7,6 +7,7 @@
 Distributed under the MIT License.&#xD;
 https://github.com/nuke-build/nuke/blob/master/LICENSE</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/PredefinedNamingRules/=PrivateConstants/@EntryIndexedValue">&lt;Policy Inspect="True" Prefix="" Suffix="" Style="AaBb_AaBb" /&gt;</s:String>
+	<s:String x:Key="/Default/CustomTools/CustomToolsData/@EntryValue"></s:String>
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=971D2D0D6A22C84E9A514D1166017346/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=971D2D0D6A22C84E9A514D1166017346/AbsolutePath/@EntryValue">C:\code\nuke-build\nuke\shared\Inspections.DotSettings</s:String>
 	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=971D2D0D6A22C84E9A514D1166017346/RelativePath/@EntryValue">..\source\Inspections.DotSettings</s:String>
@@ -20,4 +21,15 @@ https://github.com/nuke-build/nuke/blob/master/LICENSE</s:String>
 	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=FileA321B7F1C678C84CAFFD23C2D9D03A36/RelativePriority/@EntryValue">3</s:Double>
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=FileA68CFA51EFE4364DA61BFD270E021A11/@KeyIndexDefined">True</s:Boolean>
 	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=FileA68CFA51EFE4364DA61BFD270E021A11/RelativePriority/@EntryValue">1</s:Double>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E47D5473795B38439C5210AE4477E7CF/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E47D5473795B38439C5210AE4477E7CF/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E47D5473795B38439C5210AE4477E7CF/Field/=VAR/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E47D5473795B38439C5210AE4477E7CF/Field/=VAR/Order/@EntryValue">0</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E47D5473795B38439C5210AE4477E7CF/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E47D5473795B38439C5210AE4477E7CF/Scope/=C3001E7C0DA78E4487072B7E050D86C5/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E47D5473795B38439C5210AE4477E7CF/Scope/=C3001E7C0DA78E4487072B7E050D86C5/CustomProperties/=minimumLanguageVersion/@EntryIndexedValue">2.0</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E47D5473795B38439C5210AE4477E7CF/Scope/=C3001E7C0DA78E4487072B7E050D86C5/Type/@EntryValue">InCSharpFile</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E47D5473795B38439C5210AE4477E7CF/Shortcut/@EntryValue">log</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E47D5473795B38439C5210AE4477E7CF/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E47D5473795B38439C5210AE4477E7CF/Text/@EntryValue">Nuke.Common.Logger.Info($"{nameof($VAR$)} = {$VAR$}");</s:String>
 	</wpf:ResourceDictionary>
