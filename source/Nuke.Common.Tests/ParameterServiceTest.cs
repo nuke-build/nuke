@@ -206,10 +206,28 @@ namespace Nuke.Common.Tests
                 .Should().BeOfType<bool>().Subject.Should().BeTrue();
         }
 
+        [Fact]
+        public void TestValueSet()
+        {
+            var build = new TestBuild();
+            var verbosities = new[]
+                              {
+                                  (nameof(Verbosity.Minimal), Verbosity.Minimal),
+                                  (nameof(Verbosity.Normal), Verbosity.Normal),
+                                  (nameof(Verbosity.Quiet), Verbosity.Quiet),
+                                  (nameof(Verbosity.Verbose), Verbosity.Verbose),
+                              };
+            ParameterService.GetParameterValueSet(GetMemberInfo(() => NukeBuild.Verbosity), instance: null)
+                .Should().BeEquivalentTo(verbosities);
+            ParameterService.GetParameterValueSet(GetMemberInfo(() => build.Verbosities), instance: null)
+                .Should().BeEquivalentTo(verbosities);
+        }
+
         class TestBuild : NukeBuild, ITestComponent
         {
             [Parameter] public string String;
             [Parameter] public int[] Set;
+            [Parameter] public Verbosity[] Verbosities;
         }
 
         [ParameterPrefix("Interface")]
