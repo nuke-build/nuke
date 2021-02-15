@@ -5,6 +5,9 @@
     "build": {
       "type": "object",
       "properties": {
+        "ComponentParam": {
+          "type": "string"
+        },
         "Continue": {
           "type": "boolean",
           "description": "Indicates to continue a previously failed build attempt"
@@ -30,21 +33,6 @@
             "TravisCI"
           ]
         },
-        "Target": {
-          "type": "array",
-          "description": "List of targets to be executed. Default is '{default_target}'",
-          "items": {
-            "type": "string",
-            "enum": []
-          }
-        },
-        "Profile": {
-          "type": "array",
-          "description": "Defines the profiles to load",
-          "items": {
-            "type": "string"
-          }
-        },
         "NoLogo": {
           "type": "boolean",
           "description": "Disables displaying the NUKE logo"
@@ -55,9 +43,19 @@
         "NullableInteger": {
           "type": "integer"
         },
+        "Param": {
+          "type": "string"
+        },
         "Plan": {
           "type": "boolean",
           "description": "Shows the execution plan (HTML)"
+        },
+        "Profile": {
+          "type": "array",
+          "description": "Defines the profiles to load",
+          "items": {
+            "type": "string"
+          }
         },
         "Root": {
           "type": "string",
@@ -66,6 +64,14 @@
         "Skip": {
           "type": "array",
           "description": "List of targets to be skipped. Empty list skips all dependencies",
+          "items": {
+            "type": "string",
+            "enum": []
+          }
+        },
+        "Target": {
+          "type": "array",
+          "description": "List of targets to be executed. Default is '{default_target}'",
           "items": {
             "type": "string",
             "enum": []

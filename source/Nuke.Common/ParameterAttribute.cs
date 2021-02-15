@@ -77,4 +77,15 @@ namespace Nuke.Common
     public class SecretAttribute : Attribute
     {
     }
+
+    [AttributeUsage(AttributeTargets.Interface, AllowMultiple = false, Inherited = false)]
+    public class ParameterPrefixAttribute : Attribute
+    {
+        public ParameterPrefixAttribute(string prefix)
+        {
+            Prefix = prefix.TrimEnd("Prefix");
+        }
+
+        public string Prefix { get; }
+    }
 }

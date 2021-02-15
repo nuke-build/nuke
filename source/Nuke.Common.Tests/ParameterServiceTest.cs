@@ -183,24 +183,39 @@ namespace Nuke.Common.Tests
             var service = GetService(
                 new[]
                 {
-                    "--root",
+                    "--string",
                     "--set",
                     "1",
                     "2",
-                    "3"
+                    "3",
+                    "--interface-param"
                 });
 
-            ParameterService.GetFromMemberInfo(GetMemberInfo(() => RootDirectory), typeof(AbsolutePath), service.GetParameter)
+            var build = new TestBuild();
+
+            ParameterService.GetFromMemberInfo(GetMemberInfo(() => build.String), typeof(AbsolutePath), service.GetParameter)
                 .Should().BeNull();
 
-            ParameterService.GetFromMemberInfo(GetMemberInfo(() => RootDirectory), typeof(bool), service.GetParameter)
+            ParameterService.GetFromMemberInfo(GetMemberInfo(() => build.String), typeof(bool), service.GetParameter)
                 .Should().BeOfType<bool>().Subject.Should().BeTrue();
 
-            ParameterService.GetFromMemberInfo(GetMemberInfo(() => Set), destinationType: null, service.GetParameter)
+            ParameterService.GetFromMemberInfo(GetMemberInfo(() => build.Set), destinationType: null, service.GetParameter)
                 .Should().BeOfType<int[]>().Subject.Should().BeEquivalentTo(1, 2, 3);
+
+            ParameterService.GetFromMemberInfo(GetMemberInfo(() => ((ITestComponent) build).Param), destinationType: null, service.GetParameter)
+                .Should().BeOfType<bool>().Subject.Should().BeTrue();
         }
 
-        [Parameter(Name = "root")] private string RootDirectory { get; }
-        [Parameter] private int[] Set { get; }
+        class TestBuild : NukeBuild, ITestComponent
+        {
+            [Parameter] public string String;
+            [Parameter] public int[] Set;
+        }
+
+        [ParameterPrefix("Interface")]
+        interface ITestComponent : INukeBuild
+        {
+            [Parameter] bool Param => ValueInjectionUtility.TryGetValue<bool?>(() => Param) ?? false;
+        }
     }
 }

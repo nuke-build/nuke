@@ -67,7 +67,8 @@ namespace Nuke.Common.ValueInjection
         public static string GetParameterMemberName(MemberInfo member)
         {
             var attribute = member.GetCustomAttribute<ParameterAttribute>();
-            return attribute.Name ?? member.Name;
+            var prefix = member.DeclaringType.NotNull().GetCustomAttribute<ParameterPrefixAttribute>()?.Prefix;
+            return prefix + (attribute.Name ?? member.Name);
         }
 
         [CanBeNull]
@@ -128,7 +129,7 @@ namespace Nuke.Common.ValueInjection
         {
             var attribute = member.GetCustomAttribute<ParameterAttribute>();
             var separator = (attribute.Separator ?? string.Empty).SingleOrDefault();
-            return provider.Invoke(attribute.Name ?? member.Name, destinationType ?? member.GetMemberType(), separator);
+            return provider.Invoke(GetParameterMemberName(member), destinationType ?? member.GetMemberType(), separator);
         }
 
         [CanBeNull]
