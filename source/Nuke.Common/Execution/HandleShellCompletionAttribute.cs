@@ -19,7 +19,7 @@ namespace Nuke.Common.Execution
         public void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             SchemaUtility.WriteBuildSchemaFile(build);
-            SchemaUtility.WriteParametersSchemaFile();
+            SchemaUtility.WriteDefaultParametersFile();
 
             if (EnvironmentInfo.GetParameter<bool>(CompletionParameterName))
                 Environment.Exit(exitCode: 0);

@@ -11,6 +11,7 @@ using Newtonsoft.Json.Linq;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 using Nuke.Common.ValueInjection;
 using static Nuke.Common.CI.BuildServerConfigurationGenerationAttributeBase;
 
@@ -45,45 +46,30 @@ namespace Nuke.Common.Execution
 
         private IEnumerable<(string Name, string[] Values)> GetParameters()
         {
-            JObject Load(string file)
-            {
-                try
-                {
-                    return JObject.Parse(File.ReadAllText(file));
-                }
-                catch (Exception exception)
-                {
-                    throw new Exception($"Failed to parse file '{file}'.", exception);
-                }
-            }
-
-            return new[]
-                   {
-                       Constants.GetLocalParametersFile(NukeBuild.RootDirectory),
-                       Constants.GetLocalParametersUserFile(NukeBuild.RootDirectory)
-                   }
-                .Where(x => File.Exists(x))
-                .Select(x => Load(x))
-                .SelectMany(GetParameters);
-        }
-
-        private IEnumerable<(string Name, string[] Values)> GetParameters(JObject json)
-        {
-            var profiles = json["$profiles"]
-                               ?.Children<JProperty>()
-                               .Where(x => x.Name.EqualsAnyOrdinalIgnoreCase(NukeBuild.LoadedLocalProfiles))
-                               .SelectMany(x => x.Values<JObject>()).ToArray()
-                           ?? new JObject[0];
-
-            json.Remove("$schema");
-            json.Remove("$profiles");
-
             IEnumerable<string> GetValues(JProperty property)
                 => property.Value is JArray array
                     ? array.Values<string>()
                     : property.Values<string>();
 
-            return new[] { json }.Concat(profiles).SelectMany(x => x.Properties()).Select(x => (x.Name, GetValues(x).ToArray()));
+            IEnumerable<(string Name, string[] Values)> Load(AbsolutePath file)
+            {
+                try
+                {
+                    var jobject = JObject.Parse(File.ReadAllText(file));
+                    return jobject.Properties()
+                        .Where(x => x.Name != "$schema")
+                        .Select(x => (x.Name, GetValues(x).ToArray()));
+                }
+                catch (Exception exception)
+                {
+                    throw new Exception($"Failed to parse parameters file '{file}'.", exception);
+                }
+            }
+
+            return new[] { Constants.GetDefaultParametersFile(NukeBuild.RootDirectory) }
+                .Concat(NukeBuild.LoadedLocalProfiles.Select(x => Constants.GetParameterProfileFile(NukeBuild.RootDirectory, x)))
+                .ForEachLazy(x => ControlFlow.Assert(File.Exists(x), $"File.Exists({x})"))
+                .SelectMany(Load);
         }
     }
 }

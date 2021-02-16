@@ -3,10 +3,12 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common
 {
@@ -33,6 +35,7 @@ namespace Nuke.Common
 
         public const string VisualStudioDebugParameterName = "visual-studio-debug";
         internal const string CompletionParameterName = "shell-completion";
+        internal const string ParametersFilePrefix = "parameters";
 
         internal static AbsolutePath GlobalTemporaryDirectory => (AbsolutePath) Path.GetTempPath();
 
@@ -77,19 +80,27 @@ namespace Nuke.Common
             return GetTemporaryDirectory(rootDirectory) / "build.schema.json";
         }
 
-        internal static AbsolutePath GetParametersSchemaFile(AbsolutePath rootDirectory)
+        internal static AbsolutePath GetDefaultParametersFile(AbsolutePath rootDirectory)
         {
-            return GetTemporaryDirectory(rootDirectory) / "parameters.schema.json";
+            return GetTemporaryDirectory(rootDirectory) / $"{ParametersFilePrefix}.json";
         }
 
-        internal static AbsolutePath GetLocalParametersFile(AbsolutePath rootDirectory)
+        internal static IEnumerable<AbsolutePath> GetParametersProfileFiles(AbsolutePath rootDirectory)
         {
-            return GetTemporaryDirectory(rootDirectory) / "parameters.local.json";
+            return GetTemporaryDirectory(rootDirectory).GlobFiles($"{ParametersFilePrefix}.*.json");
         }
 
-        internal static AbsolutePath GetLocalParametersUserFile(AbsolutePath rootDirectory)
+        internal static AbsolutePath GetParametersProfileFile(AbsolutePath rootDirectory, string name)
         {
-            return GetTemporaryDirectory(rootDirectory) / "parameters.local.user.json";
+            return GetTemporaryDirectory(rootDirectory) / $"{ParametersFilePrefix}.{name}.json";
+        }
+
+        public static IEnumerable<string> GetProfileNames(AbsolutePath rootDirectory)
+        {
+            return GetParametersProfileFiles(rootDirectory)
+                .Select(x => x.ToString())
+                .Select(Path.GetFileNameWithoutExtension)
+                .Select(x => x.TrimStart(ParametersFilePrefix).TrimStart("."));
         }
     }
 }
