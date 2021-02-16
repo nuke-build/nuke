@@ -978,6 +978,69 @@ namespace Nuke.Common.Tools.DotNet
             return configurator.Invoke(DotNetToolInstall, DotNetLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary>
+        ///   <p>The <c>dotnet tool restore</c> command finds the tool manifest file that is in scope for the current directory and installs the tools that are listed in it.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--add-source</c> via <see cref="DotNetToolRestoreSettings.Sources"/></li>
+        ///     <li><c>--configfile</c> via <see cref="DotNetToolRestoreSettings.ConfigFile"/></li>
+        ///     <li><c>--disable-parallel</c> via <see cref="DotNetToolRestoreSettings.DisableParallel"/></li>
+        ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetToolRestoreSettings.IgnoreFailedSources"/></li>
+        ///     <li><c>--interactive</c> via <see cref="DotNetToolRestoreSettings.Interactive"/></li>
+        ///     <li><c>--no-cache</c> via <see cref="DotNetToolRestoreSettings.NoCache"/></li>
+        ///     <li><c>--tool-manifest</c> via <see cref="DotNetToolRestoreSettings.ToolManifest"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> DotNetToolRestore(DotNetToolRestoreSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new DotNetToolRestoreSettings();
+            using var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary>
+        ///   <p>The <c>dotnet tool restore</c> command finds the tool manifest file that is in scope for the current directory and installs the tools that are listed in it.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--add-source</c> via <see cref="DotNetToolRestoreSettings.Sources"/></li>
+        ///     <li><c>--configfile</c> via <see cref="DotNetToolRestoreSettings.ConfigFile"/></li>
+        ///     <li><c>--disable-parallel</c> via <see cref="DotNetToolRestoreSettings.DisableParallel"/></li>
+        ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetToolRestoreSettings.IgnoreFailedSources"/></li>
+        ///     <li><c>--interactive</c> via <see cref="DotNetToolRestoreSettings.Interactive"/></li>
+        ///     <li><c>--no-cache</c> via <see cref="DotNetToolRestoreSettings.NoCache"/></li>
+        ///     <li><c>--tool-manifest</c> via <see cref="DotNetToolRestoreSettings.ToolManifest"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> DotNetToolRestore(Configure<DotNetToolRestoreSettings> configurator)
+        {
+            return DotNetToolRestore(configurator(new DotNetToolRestoreSettings()));
+        }
+        /// <summary>
+        ///   <p>The <c>dotnet tool restore</c> command finds the tool manifest file that is in scope for the current directory and installs the tools that are listed in it.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--add-source</c> via <see cref="DotNetToolRestoreSettings.Sources"/></li>
+        ///     <li><c>--configfile</c> via <see cref="DotNetToolRestoreSettings.ConfigFile"/></li>
+        ///     <li><c>--disable-parallel</c> via <see cref="DotNetToolRestoreSettings.DisableParallel"/></li>
+        ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetToolRestoreSettings.IgnoreFailedSources"/></li>
+        ///     <li><c>--interactive</c> via <see cref="DotNetToolRestoreSettings.Interactive"/></li>
+        ///     <li><c>--no-cache</c> via <see cref="DotNetToolRestoreSettings.NoCache"/></li>
+        ///     <li><c>--tool-manifest</c> via <see cref="DotNetToolRestoreSettings.ToolManifest"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(DotNetToolRestoreSettings Settings, IReadOnlyCollection<Output> Output)> DotNetToolRestore(CombinatorialConfigure<DotNetToolRestoreSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+        {
+            return configurator.Invoke(DotNetToolRestore, DotNetLogger, degreeOfParallelism, completeOnFailure);
+        }
+        /// <summary>
         ///   <p>The <c>dotnet tool uninstall</c> command provides a way for you to uninstall .NET Core Global Tools from your machine. To use the command, you either have to specify that you want to remove a user-wide tool using the <c>--global</c> option or specify a path to where the tool is installed using the <c>--tool-path</c> option.</p>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
         /// </summary>
@@ -2188,6 +2251,64 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--tool-path {value}", ToolInstallationPath)
               .Add("--verbosity {value}", Verbosity)
               .Add("--version {value}", Version);
+            return base.ConfigureProcessArguments(arguments);
+        }
+    }
+    #endregion
+    #region DotNetToolRestoreSettings
+    /// <summary>
+    ///   Used within <see cref="DotNetTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class DotNetToolRestoreSettings : ToolSettings
+    {
+        /// <summary>
+        ///   Path to the DotNet executable.
+        /// </summary>
+        public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DotNetTasks.DotNetLogger;
+        /// <summary>
+        ///   Specifies the NuGet configuration (<em>nuget.config</em>) file to use.
+        /// </summary>
+        public virtual string ConfigFile { get; internal set; }
+        /// <summary>
+        ///   Adds an additional NuGet package source to use during installation.
+        /// </summary>
+        public virtual IReadOnlyList<string> Sources => SourcesInternal.AsReadOnly();
+        internal List<string> SourcesInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Path to the manifest file.
+        /// </summary>
+        public virtual string ToolManifest { get; internal set; }
+        /// <summary>
+        ///   Prevent restoring multiple projects in parallel.
+        /// </summary>
+        public virtual bool? DisableParallel { get; internal set; }
+        /// <summary>
+        ///   Treat package source failures as warnings.
+        /// </summary>
+        public virtual bool? IgnoreFailedSources { get; internal set; }
+        /// <summary>
+        ///   Do not cache packages and http requests.
+        /// </summary>
+        public virtual bool? NoCache { get; internal set; }
+        /// <summary>
+        ///   Allows the command to stop and wait for user input or action (for example to complete authentication).
+        /// </summary>
+        public virtual bool? Interactive { get; internal set; }
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
+        {
+            arguments
+              .Add("tool restore")
+              .Add("--configfile {value}", ConfigFile)
+              .Add("--add-source {value}", Sources)
+              .Add("--tool-manifest {value}", ToolManifest)
+              .Add("--disable-parallel", DisableParallel)
+              .Add("--ignore-failed-sources", IgnoreFailedSources)
+              .Add("--no-cache", NoCache)
+              .Add("--interactive", Interactive);
             return base.ConfigureProcessArguments(arguments);
         }
     }
@@ -16373,6 +16494,373 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region DotNetToolRestoreSettingsExtensions
+    /// <summary>
+    ///   Used within <see cref="DotNetTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class DotNetToolRestoreSettingsExtensions
+    {
+        #region ConfigFile
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolRestoreSettings.ConfigFile"/></em></p>
+        ///   <p>Specifies the NuGet configuration (<em>nuget.config</em>) file to use.</p>
+        /// </summary>
+        [Pure]
+        public static T SetConfigFile<T>(this T toolSettings, string configFile) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = configFile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolRestoreSettings.ConfigFile"/></em></p>
+        ///   <p>Specifies the NuGet configuration (<em>nuget.config</em>) file to use.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetConfigFile<T>(this T toolSettings) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Sources
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolRestoreSettings.Sources"/> to a new list</em></p>
+        ///   <p>Adds an additional NuGet package source to use during installation.</p>
+        /// </summary>
+        [Pure]
+        public static T SetSources<T>(this T toolSettings, params string[] sources) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal = sources.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolRestoreSettings.Sources"/> to a new list</em></p>
+        ///   <p>Adds an additional NuGet package source to use during installation.</p>
+        /// </summary>
+        [Pure]
+        public static T SetSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal = sources.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotNetToolRestoreSettings.Sources"/></em></p>
+        ///   <p>Adds an additional NuGet package source to use during installation.</p>
+        /// </summary>
+        [Pure]
+        public static T AddSources<T>(this T toolSettings, params string[] sources) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.AddRange(sources);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotNetToolRestoreSettings.Sources"/></em></p>
+        ///   <p>Adds an additional NuGet package source to use during installation.</p>
+        /// </summary>
+        [Pure]
+        public static T AddSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.AddRange(sources);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DotNetToolRestoreSettings.Sources"/></em></p>
+        ///   <p>Adds an additional NuGet package source to use during installation.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearSources<T>(this T toolSettings) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotNetToolRestoreSettings.Sources"/></em></p>
+        ///   <p>Adds an additional NuGet package source to use during installation.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveSources<T>(this T toolSettings, params string[] sources) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(sources);
+            toolSettings.SourcesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotNetToolRestoreSettings.Sources"/></em></p>
+        ///   <p>Adds an additional NuGet package source to use during installation.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveSources<T>(this T toolSettings, IEnumerable<string> sources) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(sources);
+            toolSettings.SourcesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region ToolManifest
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolRestoreSettings.ToolManifest"/></em></p>
+        ///   <p>Path to the manifest file.</p>
+        /// </summary>
+        [Pure]
+        public static T SetToolManifest<T>(this T toolSettings, string toolManifest) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ToolManifest = toolManifest;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolRestoreSettings.ToolManifest"/></em></p>
+        ///   <p>Path to the manifest file.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetToolManifest<T>(this T toolSettings) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ToolManifest = null;
+            return toolSettings;
+        }
+        #endregion
+        #region DisableParallel
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolRestoreSettings.DisableParallel"/></em></p>
+        ///   <p>Prevent restoring multiple projects in parallel.</p>
+        /// </summary>
+        [Pure]
+        public static T SetDisableParallel<T>(this T toolSettings, bool? disableParallel) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = disableParallel;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolRestoreSettings.DisableParallel"/></em></p>
+        ///   <p>Prevent restoring multiple projects in parallel.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetDisableParallel<T>(this T toolSettings) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetToolRestoreSettings.DisableParallel"/></em></p>
+        ///   <p>Prevent restoring multiple projects in parallel.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableDisableParallel<T>(this T toolSettings) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetToolRestoreSettings.DisableParallel"/></em></p>
+        ///   <p>Prevent restoring multiple projects in parallel.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableDisableParallel<T>(this T toolSettings) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetToolRestoreSettings.DisableParallel"/></em></p>
+        ///   <p>Prevent restoring multiple projects in parallel.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleDisableParallel<T>(this T toolSettings) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = !toolSettings.DisableParallel;
+            return toolSettings;
+        }
+        #endregion
+        #region IgnoreFailedSources
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolRestoreSettings.IgnoreFailedSources"/></em></p>
+        ///   <p>Treat package source failures as warnings.</p>
+        /// </summary>
+        [Pure]
+        public static T SetIgnoreFailedSources<T>(this T toolSettings, bool? ignoreFailedSources) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = ignoreFailedSources;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolRestoreSettings.IgnoreFailedSources"/></em></p>
+        ///   <p>Treat package source failures as warnings.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetIgnoreFailedSources<T>(this T toolSettings) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetToolRestoreSettings.IgnoreFailedSources"/></em></p>
+        ///   <p>Treat package source failures as warnings.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableIgnoreFailedSources<T>(this T toolSettings) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetToolRestoreSettings.IgnoreFailedSources"/></em></p>
+        ///   <p>Treat package source failures as warnings.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableIgnoreFailedSources<T>(this T toolSettings) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetToolRestoreSettings.IgnoreFailedSources"/></em></p>
+        ///   <p>Treat package source failures as warnings.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleIgnoreFailedSources<T>(this T toolSettings) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = !toolSettings.IgnoreFailedSources;
+            return toolSettings;
+        }
+        #endregion
+        #region NoCache
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolRestoreSettings.NoCache"/></em></p>
+        ///   <p>Do not cache packages and http requests.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoCache<T>(this T toolSettings, bool? noCache) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = noCache;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolRestoreSettings.NoCache"/></em></p>
+        ///   <p>Do not cache packages and http requests.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoCache<T>(this T toolSettings) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetToolRestoreSettings.NoCache"/></em></p>
+        ///   <p>Do not cache packages and http requests.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoCache<T>(this T toolSettings) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetToolRestoreSettings.NoCache"/></em></p>
+        ///   <p>Do not cache packages and http requests.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoCache<T>(this T toolSettings) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetToolRestoreSettings.NoCache"/></em></p>
+        ///   <p>Do not cache packages and http requests.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoCache<T>(this T toolSettings) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = !toolSettings.NoCache;
+            return toolSettings;
+        }
+        #endregion
+        #region Interactive
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolRestoreSettings.Interactive"/></em></p>
+        ///   <p>Allows the command to stop and wait for user input or action (for example to complete authentication).</p>
+        /// </summary>
+        [Pure]
+        public static T SetInteractive<T>(this T toolSettings, bool? interactive) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Interactive = interactive;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolRestoreSettings.Interactive"/></em></p>
+        ///   <p>Allows the command to stop and wait for user input or action (for example to complete authentication).</p>
+        /// </summary>
+        [Pure]
+        public static T ResetInteractive<T>(this T toolSettings) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Interactive = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetToolRestoreSettings.Interactive"/></em></p>
+        ///   <p>Allows the command to stop and wait for user input or action (for example to complete authentication).</p>
+        /// </summary>
+        [Pure]
+        public static T EnableInteractive<T>(this T toolSettings) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Interactive = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetToolRestoreSettings.Interactive"/></em></p>
+        ///   <p>Allows the command to stop and wait for user input or action (for example to complete authentication).</p>
+        /// </summary>
+        [Pure]
+        public static T DisableInteractive<T>(this T toolSettings) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Interactive = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetToolRestoreSettings.Interactive"/></em></p>
+        ///   <p>Allows the command to stop and wait for user input or action (for example to complete authentication).</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleInteractive<T>(this T toolSettings) where T : DotNetToolRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Interactive = !toolSettings.Interactive;
             return toolSettings;
         }
         #endregion
