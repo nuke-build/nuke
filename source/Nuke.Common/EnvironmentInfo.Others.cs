@@ -33,7 +33,7 @@ namespace Nuke.Common
 
         public static IDisposable SwitchWorkingDirectory(string workingDirectory, bool allowCreate = true)
         {
-            if (!Directory.Exists(workingDirectory))
+            if (allowCreate)
                 FileSystemTasks.EnsureExistingDirectory(workingDirectory);
 
             var previousWorkingDirectory = WorkingDirectory;
